@@ -1,0 +1,30 @@
+[Title]IMAGEN/ES
+[DBTable]gs_portfolio
+[DBIndex]cd_gs_portfolio
+[DBOrder]nm_gs_portfolio
+[DBSerial]cd_gs_portfolio
+[NoTools]PW
+[UploadFile]fichero|/_datos/portfolio|cd_gs_portfolio|1.000.000|Imagen|png,jpg,jpeg,gif||50,50|_mini
+[AddOption]*|tipo|_
+,;					_
+B,Borde;			_
+F,Firma;			_
+N,Fondo;			_
+I,Imagen;			_
+L,Logo;				_
+S,Sello
+[PDFCol],0
+[Format]
+$_vF["img"] = "<img src='edes.php?R:/_datos/portfolio/".$_vF["cd_gs_portfolio"]."_mini.".$_vF["extension"]."'>";
+[Fields]l
+|cd_gs_portfolio|+|T|9||*|||
+Miniatura|extension as img|n|T|4||-||=|
+Imagen|nm_gs_portfolio|D|T|60||-|||
+Extensión|extension|n|T|4||-||=|
+Fichero|fichero|#|F|60||-QLD|||
+Tipo|tipo|D|SV|6||-|||
+|tipo as xtipo|D|T|1||*|||
+Fecha·Alta|dt_insert|F4|T|10||-|||
+[JSSelRow]*|$form.php
+_WOPENER.InsertImagen($cd_gs_portfolio+"."+$extension);
+[DBGatewayOne]Mode|$form.php

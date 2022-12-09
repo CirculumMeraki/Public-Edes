@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>DBSerial 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[DBSerial] Field [ | Sequence ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>El campo de la tabla indicada en la etiqueta [DBTable] es un campo serial o autoincremental. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;<STRONG>Field</STRONG></TD>
+<TD>Campo de una tabla de la BBDD</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Sequence</STRONG></TD>
+<TD>En el gestor de BBDD Oracle el sistema por defecto creará las secuencias, si marcamos en el "create table" un campo con la partícula "serial",&nbsp;con el prefijo "sq" mas el nombre de la tabla, este parámetro se puede para utilizar el valor de otra secuencia, le damos el valor de "NO" los seriales los generarán triggers.<BR>La definición puede ser global poniendo en el fichero "sql.ini" la variable "$_DBSEQUENCE".</TD></TR></TBODY></TABLE></STRONG>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT language=JavaScript>
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>

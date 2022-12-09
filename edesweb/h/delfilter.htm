@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>DelFilter 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[DelFilter] Mode | DefinitionFile | FieldsToDelete&nbsp; [ [ [ [ | Title ]&nbsp; | NoList ] | IncludePhp ]&nbsp;| UrlSubmit ]
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Realiza una b?squeda alternativa si no encuentra registros en la b?squeda actual, es decir, cuando se hace una consulta con filtro y no encuentra registros, quita las condiciones&nbsp;definidas en [DelFilter] y si hay mas&nbsp;condiciones har? una nueva&nbsp;b?squeda sin ellas, mostrando los resultados seg?n marque el fichero de definici?n se?alado en la etiqueta. <BR>Adem?s, si la etiqueta [DBAddFilter] est? rellena tambi?n quitar? esta condici?n a la hora de realizar la b?squeda alternativa. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>DefinitionFile</STRONG>: Fichero de definici?n (EDF) a ejecutar. Si se quiere usar el mismo modo&nbsp;en el que se est? ejecutando hay que poner "{op}".<BR><STRONG>FieldsToDelete</STRONG>: Qu? campos del filtro deseamos eliminar. <BR><STRONG>Title</STRONG>: Es el TITLE alternativo si se quiere llamar al mismo DF en otro modo. <BR><STRONG>NoList</STRONG>: Constante para que solo se ejecute en modo ficha y no en listados, es decir si solo encuentra un registro se ejecuta "DefinitionFile" y si hay mas de uno te muestra el mensage de que no hay registros que cumplan la condici?n. <BR><STRONG>IncludePhp</STRONG>: Fichero php a incluir.<BR><STRONG>UrlSubmit</STRONG>: Url a ejecutar en el nuevo formulario. Si se quiere usar el mismo modo&nbsp;en el que se est? ejecutando hay que poner "{op}".
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[DelFilter] cR,mR,bR | F{Op}:vi/vivienda | cd_prov,cd_muni <BR>[DelFilter]&nbsp;&nbsp;&nbsp; ?R&nbsp;&nbsp; &nbsp;| E:script.php&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| cd_prov,cd_muni <BR>[DelFilter]&nbsp;&nbsp;&nbsp; mR,bR | E:Function()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cd_prov,cd_muni | | NoList<BR>[DelFilter] ?R | FcR:cliente_sin_acceso.edf | cd_auto,cd_prov | | NoList | | Gc:cliente.gdf
+<TR>
+<TD id=txt>Si a parte de la provincia y el municipio en la b?squeda se meten mas condiciones y con todas no encuentra ning?n registro quitar? las condiciones de provincia y municipio y volver? a hacer la busqueda con el resto de condiciones, si no hubiera puesto otras condiciones no quitaria estas.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,116 @@
+[Title]Inventario de ficheros
+[DBTable]
+[DBOrder]
+[Format],M,M,M
+[ColsOp],+,+,+
+[Fields]
+Extensión|ext|N|T|10||M||=|
+Ficheros|file|+|T|20||M|||
+Lineas|lineas|+|T|20||M|||
+Carácteres|byts|+|T|20||M|||
+[DBSql]l
+if( strtoupper(substr(PHP_OS,0,3)) != 'LIN' ) eMessage('SOLO SISTEMA Linux/Unix','HSE');
+$uDimFile = array( 'php', 'gs', 'inc', 'js', 'htm', 'html', 'css', 'ini',  'edf','gdf','ldf','fdf','sdf','lst' );
+$usuCursor = array();
+$uDim = array();
+$uDimTmp = array();
+$uOtrasExt = array();
+$uDimDir = array();
+WCFile( '..', $uDimFile, $uDim, $uOtrasExt );
+foreach( $uDim as $key => $value ) $uDimTmp[] = $key.'|'.$value[2].'|'.$value[0].'|'.$value[1];
+sort( $uDimTmp );
+for( $n=0; $n<count($uDimTmp); $n++ ) $usuCursor[] = explode('|',$uDimTmp[$n]);
+$uDimTmp = array();
+foreach( $uOtrasExt as $key => $value ) $uDimTmp[] = $key.'|'.$value[0].'|'.$value[1];
+sort( $uDimTmp );
+$uOtrasExt = array();
+for( $n=0; $n<count($uDimTmp); $n++ ) $uOtrasExt[] = explode('|',$uDimTmp[$n]);
+$uDimTmp = array();
+foreach( $uDimDir as $key => $value ) $uDimTmp[] = $key.'|'.$value;
+sort( $uDimTmp );
+$uDimDir = array();
+for( $n=0; $n<count($uDimTmp); $n++ ) $uDimDir[] = explode('|',$uDimTmp[$n]);
+function WCFile( $dorg, $uDimFile, &$uDim, &$uOtrasExt ){
+global $uDimDir;
+$di = opendir( $dorg );
+$uDimDir[$dorg] = 0;
+while( $file = readdir( $di ) ){
+if( ($file != ".") && ($file != "..") ){
+if( is_dir("{$dorg}/{$file}") ){
+if( "{$dorg}/{$file}" == '../tmp' || "{$dorg}/{$file}" == '../_bak_' ) continue;
+WCFile( "{$dorg}/{$file}", $uDimFile, $uDim, $uOtrasExt );
+}else{
+$uDimDir[$dorg]++;
+$ext = substr($file, strrpos($file,'.')+1);
+if( in_array( $ext, $uDimFile ) ){
+$ext = strtoupper($ext);
+exec( "wc -c -l {$dorg}/{$file}", $uDimSalida );
+for( $n=0; $n<count($uDimSalida); $n++ ){
+$uDimSalida[$n] = trim($uDimSalida[$n]);
+while( substr_count($uDimSalida[$n],'  ')>0 ){
+$uDimSalida[$n] = str_replace( '  ',' ',$uDimSalida[$n]);
+}
+$tmp = explode(' ',$uDimSalida[$n]);
+if( $tmp[2]=="{$dorg}/{$file}" ){
+$uDim[$ext][0] += $tmp[0]*1;
+$uDim[$ext][1] += $tmp[1]*1;
+$uDim[$ext][2]++;
+}
+}
+}else{
+$ext = strtoupper($ext);
+$uOtrasExt[$ext][0] += filesize( "{$dorg}/{$file}" );
+$uOtrasExt[$ext][1]++;
+}
+}
+}
+}
+closedir( $di );
+}
+[PHPEnd]l
+echo '<center>';
+?>
+<br>
+<TABLE class=TITULO border=0 cellspacing=0 cellpadding=0 style='background:transparent'>
+<tr><td id=TITULO align=center nowrap style='cursor:default;background:transparent;'>
+OTRAS EXTENSIONES
+</td></tr>
+</TABLE>
+<?PHP
+$tf = 0;
+$tc = 0;
+echo '<table>';
+echo '<tr><th>EXTENSION<TH>FICHEROS<TH>CARACTERES';
+echo "<COL class='Celda'><COL id=d class='Celda'><COL id=d class='Celda'>";
+for( $n=0; $n<count($uOtrasExt); $n++ ){
+echo '<tr><td>'.$uOtrasExt[$n][0];
+echo '<td>'.eNumberFormat($uOtrasExt[$n][2]);
+echo '<td>'.eNumberFormat($uOtrasExt[$n][1]);
+$tf += $uOtrasExt[$n][2];
+$tc += $uOtrasExt[$n][1];
+}
+echo '<tr class=PieLista><td id=d>'.eNumberFormat(count($uOtrasExt));
+echo '<td id=d>'.eNumberFormat($tf);
+echo '<td id=d>'.eNumberFormat($tc);
+echo '</table>';
+?>
+<br>
+<TABLE class=TITULO border=0 cellspacing=0 cellpadding=0 style='background:transparent'>
+<tr><td id=TITULO align=center nowrap style='cursor:default;background:transparent;'>
+DIRECTORIOS
+</td></tr>
+</TABLE>
+<?PHP
+$tf2 = 0;
+echo '<table>';
+echo '<tr><TH>FICHEROS<th>DIRECTORIO';
+echo "<COL id=d class='Celda'><COL class='Celda'>";
+for( $n=0; $n<count($uDimDir); $n++ ){
+echo '<tr><td>'.eNumberFormat($uDimDir[$n][1]).'<td>'.$uDimDir[$n][0];
+$tf2 += $uDimDir[$n][1];
+}
+echo '<tr class=PieLista><td id=d>'.eNumberFormat($tf2);
+echo '<td>'.eNumberFormat(count($uDimDir));
+echo '</table>';
+echo '</center>';
+$php_errormsg = '';

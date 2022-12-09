@@ -1,0 +1,19 @@
+[Title]Multitenan
+[DBTable]{$_SESSION["ShareDictionary"]}gs_sharedb
+[DBOrder]company
+[DBIndex]pk
+[DBSerial]pk
+[EditList]*|||Table
+[AddOption]*|status|,; A,Activo; D,De Baja
+[Fields]
+PK|pk|+|T|5||-|||
+Company|company|#|T|60||M||#|
+Domain|domain|#|T|125||M|||
+Path|db_path|#|T|45||M||#|
+Hostname|db_hostname|#|T|45||M||#|
+Dictionary|db_dictionary|#|T|32||M||#|
+User|db_user|#|T|32||M||#|
+Password|dt_password|#|T|32||M||#|
+D. Insert|dt_insert|F4|T|10||M||#|
+D. Delete|dt_delete|F4|T|10||M|||
+Status|status|#|SV|15||M||#|

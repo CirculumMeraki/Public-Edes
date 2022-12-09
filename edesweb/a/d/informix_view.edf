@@ -1,0 +1,12 @@
+[Title]VIEWS
+[DBTable]systables
+[DBIndex]tabid, seqno
+[DBOrder]tabid, seqno
+[Fields]
+VIEW|tabname|#D|T|128||MQ|||
+[DBSql]l
+qQuery('select tabname from systables where tabid>100 and tabid in (select tabid from sysviews group by tabid)');
+[JSOnClickRow]l
+var n = eGF("tabname").replace(/\s/g,'');
+top.eCallSrv( window, 'edes.php?V:&TITLE=VIEW: '+eGF("tabname")+'&VIEW='+eGF("tabname")+'&WIDTH=100%&HEIGHT=100%&SCRIPT=$t/sql_script.gs&STYLE='+escape('font-family:monospace') );
+return false;

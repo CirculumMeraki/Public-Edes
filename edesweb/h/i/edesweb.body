@@ -1,0 +1,14 @@
+<DIV id=CONTENIDO style="BORDER:0; MARGIN:0; PADDING-LEFT:0; FLOAT:left; OVERFLOW:auto; WIDTH:100%; HEIGHT:100%">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width=100%>
+<TR><TD id=Etiqueta>
+<TR><TD id=tSintaxis>SINTAXIS
+<TR><TD id=Sintaxis>
+<TR><TD id=tDescripcion>DESCRIPCION
+<TR><TD id=Descripcion>
+<TR><TD id=tParametro>PARAMETROS
+<TR><TD id=Parametro>
+<TR><TD id=tEjemplo>EJEMPLO
+<TR><TD id=Ejemplo>
+<TR><TD id=txt>
+</TABLE>
+</DIV>

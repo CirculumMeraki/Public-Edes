@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>ChartCol 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[ChartCol] NumCol | AnchoGráfica | TítuloCol&nbsp;| NomGráficoPositivo | NomGráficoNegativo [| AltoGráfico] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Añade una columna al final del listado mostrando una gráfica de barras. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>&nbsp;<STRONG>NumCol</STRONG> </TD>
+<TD>Número de la columna a representar, empezando por la cero, si se deja vacío este parámetro tomará la última columna.&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>AnchoGráfica</STRONG> </TD>
+<TD>Ancho máximo de la gráfica.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>TítuloCol</STRONG>&nbsp;</TD>
+<TD>&nbsp;Título en el TH del listado, si se deja en blanco en la columna anterior se hará "colspan".</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>NomGráficoPositivo</STRONG> </TD>
+<TD>Por defecto "chart_p.jpg" (positivo).</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>NomGráficoNegativo</STRONG> </TD>
+<TD>Por defecto "chart_n.jpg" (negativo).</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>AltoGráfico</STRONG></TD>
+<TD>Alto del gráfico, por defecto es 12 (px).</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[ChartCol] 1 | 100 
+<TR>
+<TD id=txt>Representa el valor de la columna uno con un ancho de gráfico de 100 px.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,24 @@
+[Title]USUARIOS DE UN GRUPO
+[DBTable]gs_group_user
+[DBIndex]cd_gs_group,cd_gs_user
+[DBOrder]cd_gs_user
+#include(*) /_datos/config/file_manager.ini | true
+[RelationFields]cd_gs_group,cd_gs_user
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]
+Grupo|cd_gs_group|0|S|30||AQ||#|
+#!(l) Usuario|_cd_gs_user|D|T|68||QA||#|
+#!(l)|cd_gs_user|+|T|5||*Q*|||
+#(l) Usuario|cd_gs_user{gs_user,cd_gs_user,user_name," ",user_surname}|+|S|68||-|||
+{FS}{ Permisos
+]Consultar|op_view|N|C|1||M|||
+,]Modificar|op_update|N|C|1||M|||
+,]Insertar|op_insert|N|C|1||M|||
+,]Borrar|op_delete|N|C|1||M|||
+}
+|cdi_insert|CDI|T|19||*|#y2s#||

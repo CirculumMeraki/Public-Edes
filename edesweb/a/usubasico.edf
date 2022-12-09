@@ -1,0 +1,2 @@
+[MyData]cd_gs_user=_User
+#include(*) $a/d/usu_basico.edf          // en el que ya está asignada la variable "_User"

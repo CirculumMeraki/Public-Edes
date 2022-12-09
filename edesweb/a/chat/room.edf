@@ -1,0 +1,133 @@
+[Title]SALA DE CHAT
+[DBTable]gs_chat_room
+[DBIndex]cd_gs_chat_room
+[DBOrder]nm_gs_chat_room
+[DBSerial]cd_gs_chat_room
+[DBAddFilter]cdi_close is null
+[UploadFile]image|/_datos/chat|cd_gs_chat_room|250.000|Ver imagen|gif,jpg,png
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[AddOption]*|type_room|,; S,System; P,Privada; G,Grupo
+[Assign]bR|cdi_close
+[Assign]mR|_cdi_insert_user
+[Fields]
+|cd_gs_chat_room|+|T|9||*|||
+Nombre|nm_gs_chat_room|#|T|60||MQ||#|
+Descripción|description|#|A|255,80,3|nm_gs_chat_room|ML|||
+Imagen|image|#|F|60|nm_gs_chat_room|*|||
+Tipo Sala|type_room|D|SV|10||A|G|#|
+,Dias a·mostrar|last_days_send|+|T|4||M|7|#|
+,F.creación|cdi_create|CDI|T|19||-|#y2s#|#|
+#(bR),F.cierre|cdi_close|CDI|T|19||*|#y2s#||
+#(mR),|_cdi_insert_user|CDI|T|19||*|#y2s#||
+Filtro|filter|#|T|60||M|||
+#(?) Propietario|_cd_gs_user|D|T|60||Q|||
+#(?) Propietario|cd_gs_user|+|T|6||*Q|||
+#!(?) Propietario|cd_gs_user{gs_user,cd_gs_user,email}|+|S|60||-|_User||
+#(a,?R)¿
+-|SUBFICHA "Usuario"
+Usuario|_cd_gs_user{gs_user,cd_gs_user, email}|+|S|60||M||#|
+F. Inicio|_cdi_ini|CDI|T|19||-|#y2s#||
+,F. Fin|_cdi_end|CDI|T|19||-|||
+Msg send|_msg_send|D|C|1||M|||
+,Msg receive|_msg_receive|D|C|1||M|||
+,Chat create|_chat_create|D|C|1||M|||
+,Chat silence|_chat_silence|D|C|1||M|||
+,Chat export|_chat_export|D|C|1||M|||
+,Chat exit|_chat_exit|D|C|1||M|||
+-|LISTADO "Usuarios
+|[__gs_chat_user]|o|||||||
+?
+[SubList]a,?R|__gs_chat_user
+{slGL} Sql        | TypeData | Align | ColsWidth | Format     | ColsOp | Menu          | TH
+''             |          | I     |           | [u][d]\[v] |        | IMG           | [i]\
+c.cd_gs_user   | T        | H     |           |            |        | _cd_gs_user   | Usuario
+u.email        | T        | I     |           |            |        | *_cd_gs_user  | EMail
+c.cdi_ini      | T        | C     |           |            |        | _cdi_ini      | Fecha Inicio
+c.cdi_end      | T        | C     |           |            |        | _cdi_end      | Fecha Fin
+c.msg_send     | C        | C     |           |            |        | _msg_send     | Mensages·Enviar
+c.msg_receive  | C        | C     |           |            |        | _msg_receive  | Mensages·Recibir
+c.chat_create  | C        | C     |           |            |        | _chat_create  | Crear
+c.chat_silence | C        | C     |           |            |        | _chat_silence | Silenciar
+c.chat_export  | C        | C     |           |            |        | _chat_export  | Exportar
+c.chat_exit    | C        | C     |           |            |        | _chat_exit    | Salir de·la Sala
+{slSql} select # from gs_chat_user c, gs_user u where c.cd_gs_chat_room='{cd_gs_chat_room}' and c.cd_gs_user=u.cd_gs_user and c.cdi_end is null order by c.cd_gs_user,c.cd_gs_chat_room,c.cdi_ini |||| cdi_end is null
+{slUnique} u.email
+{slMenu}  a,mR | Insertar:i, Borrar:d, Modificar:u, Consultar:v | # || FormOnLine | [u][d]
+{slMenu} cR,bR |                                    Consultar:v | # || FormOnLine |
+{slWin} ,5
+[JSIni]mR
+function FUNCTION___gs_chat_user(Desde, Cuando, MODO, rowIndex, ObjTR, window, slCol){
+if( Desde=="F" && Cuando=="S" && MODO=="D" && ObjTR.getAttribute("isNew")==null ){
+DGI("[__gs_chat_user]").setAttribute("MODO","U");
+DGI("[__gs_chat_user]").MODO = "U";
+DGI("[__gs_chat_user]").ModeIni = "D";
+S(":_cdi_end").val(S.date('Y-m-d H:i:s'));
+}
+if( Desde=="F" && Cuando=="E" && MODO=="U" && DGI("[__gs_chat_user]").ModeIni=="D" && ObjTR.getAttribute("isNew")==null ){
+DGI("[__gs_chat_user]").ModeIni = "";
+DGI("[__gs_chat_user]").removeAttribute("ModeIni");
+S([".ICON-UPDATE", ".ICON-DELETE"], ObjTR).hidden();
+}
+}
+[JSCheck]a,?R
+if( eSLCount("__gs_chat_user")==0 ){
+S.error("ERROR: Como mínimo hace falta un usuario en la Sala");
+return false;
+}
+var dim = eSLGet("__gs_chat_user"), ok=false;
+S(dim).each(function(k, o){
+if( o[_pCol["email"]]=="<?=$_SESSION["_UserEMail"]?>" ){
+ok = true;
+}
+});
+if( !ok ) ePE("_cd_gs_user", "Faltas tú en la lista de EMail");
+[JSCheck]bR
+if( eOkForm() ){
+S("TBODY TR", DGI("[__gs_chat_user]")).each(function(k,o){
+if( o.cells[0].tagName=="TD" && o.getAttribute("Libre")==null ){
+o.cells[4].innerText = $cdi_close;
+}
+});
+}
+[DBEnd]?R
+if( qCount("gs_chat_user", "cd_gs_user=".$_SESSION["_User"]." and cd_gs_chat_room=".$_vF["cd_gs_chat_room"]." and cdi_end is null")==0 ){
+eExeScript("top.S.error('ERROR: Acceso denegado');top.S.windowClose(window)");
+}
+[JSEnd]a
+eSubListInsert("__gs_chat_user", ["", <?=$_SESSION["_User"]?>, "<?=$_SESSION["_UserEMail"]?>", "<?=eGetCDI()?>","","S","S","S","S","S","S"]);
+[JSEnd]?R
+if( $type_room=="P" ){
+var dim = eSLGet("__gs_chat_user");
+ePF("nm_gs_chat_room", dim[0][1]+" / "+dim[1][1]);
+eHide("filter,description", "TR");
+setTimeout(function(){
+var fIni = S("TR[ttr]").dim[0].rowIndex,
+fEnd = S("TR[ttr]").dim[1].rowIndex, n;
+for(n=fIni; n<fEnd; n++) S("#TABNumber1").obj.rows[n].style.display = "none";
+S(".BROWSE").class("-col_0l,+col_0n");
+}, 1);
+}
+[DBEnd]A
+eNodeSend(array("room"=>"tools", "type"=>"room_insert", "room_pk"=>$_vF["cd_gs_chat_room"], "room_name"=>$_vF["nm_gs_chat_room"]));
+[DBEnd]M
+eNodeSend(array("room"=>"tools", "type"=>"room_rename", "room_pk"=>$_vF["cd_gs_chat_room"], "room_name"=>$_vF["nm_gs_chat_room"]));
+qQuery("select cd_gs_user from gs_chat_user where cd_gs_chat_room=".$_vF["cd_gs_chat_room"]." and cdi_ini='".$_vF["_cdi_insert_user"]."' and cdi_end is null");
+while($r=qArray()){
+eNodeSend(array("room"=>"tools", "type"=>"user_insert", "room_pk"=>$_vF["cd_gs_chat_room"], "room_name"=>$_vF["nm_gs_chat_room"], "user_pk"=>$r["cd_gs_user"]));
+}
+qQuery("select cd_gs_user from gs_chat_user where cd_gs_chat_room=".$_vF["cd_gs_chat_room"]." and cdi_end='".$_vF["_cdi_insert_user"]."'");
+while($r=qArray()){
+eNodeSend(array("room"=>"tools", "type"=>"user_delete", "room_pk"=>$_vF["cd_gs_chat_room"], "room_name"=>$_vF["nm_gs_chat_room"], "user_pk"=>$r["cd_gs_user"]));
+}
+[DBIni]B
+$_Mode = "M";
+$Opcion = "M";
+$_vF["cdi_close"] = eGetCDI();
+$_POST["cdi_close"] = $_vF["cdi_close"];
+eNodeSend(array("room"=>"tools", "type"=>"room_delete", "room_pk"=>$_vF["cd_gs_chat_room"], "room_name"=>$_vF["nm_gs_chat_room"]));

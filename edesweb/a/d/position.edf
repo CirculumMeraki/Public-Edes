@@ -1,0 +1,10 @@
+#include(*) lng
+[Title]@titulo@
+[DBTable]gs_position
+[DBIndex]cd_gs_position
+[DBOrder]nm_gs_position
+[DBSerial]cd_gs_position
+[FormStatic]
+[Fields]
+|cd_gs_position|+|T|4||*|||
+@Nombre@|nm_gs_position|D|T|30||QM|||

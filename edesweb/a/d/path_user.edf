@@ -1,0 +1,40 @@
+[PHPIni]*
+eMessage("Opción no implementada","HE");
+[Title]=DIRECTORIO TEMPORAL PARA LAS DESCARGAS
+[AddCode]*|_TemporaryCopyTo|E|<img src='edes.php?R:$a/g/c2_0.gif' onclick='uSelDir()' style='margin-left:5px;vertical-align:middle' title='Seleccionar directorio'><img src='g/t_op_delete.gif' onclick='ePF("_TemporaryCopyTo","")' title='Borrar directorio'>
+[Button]a|<img src='edes.php?R:$a/g/desa.gif'> Asignar
+[Fields]a
+Directorio|_TemporaryCopyTo|#D|T|60||-|||
+<Asignarlo por defecto|_Permanente|N|C|1||M|||
+[JSIni]a
+function uSelDir(){
+ePF( '_TemporaryCopyTo', top.eDirectorySelect( 'Seleccionar directorio', 'MyComputer', true ) );
+}
+[PHPStart]A
+$_POST['_TemporaryCopyTo'] = str_replace( '&#92;', '\\', $_POST['_TemporaryCopyTo'] );
+if( $_POST['_TemporaryCopyTo']!='' && substr($_POST['_TemporaryCopyTo'],-1)!='\\' )  $_POST['_TemporaryCopyTo'] .= '\\';
+if( $_POST['_Permanente']=='S' && $_POST['_TemporaryCopyTo']!='' ){
+file_put_contents( '../_datos/usr/'.$_SESSION['_User'].'.pth', $_POST['_TemporaryCopyTo'] );
+}else{
+if( file_exists( '../_datos/usr/'.$_SESSION['_User'].'.pth' ) ) @unlink( '../_datos/usr/'.$_SESSION['_User'].'.pth' );
+}
+$_SESSION['_TemporaryCopyTo'] = $_POST['_TemporaryCopyTo'];
+if( $_POST['_TemporaryCopyTo']=='' ){
+eMessage('Directorio temporal desactivado', 'HS' );
+}else{
+eMessage('Directorio temporal <b>"'.$_POST['_TemporaryCopyTo'].'</b>" asignado', 'HS' );
+}
+[PHPEnd]a
+if( file_exists( '../_datos/usr/'.$_SESSION['_User'].'.pth' ) ){
+$tmp = file_get_contents( '../_datos/usr/'.$_SESSION['_User'].'.pth' );
+$tmp = str_replace( chr(92), chr(92).chr(92), $tmp );
+echo '<script type="text/javascript">';
+echo "ePF('_TemporaryCopyTo','{$tmp}');";
+echo "ePF('_Permanente','S');";
+echo '</script>';
+}else if( $_SESSION['_TemporaryCopyTo']!='' ){
+$tmp = str_replace( chr(92), chr(92).chr(92), $_SESSION['_TemporaryCopyTo'] );
+echo '<script type="text/javascript">';
+echo "ePF('_TemporaryCopyTo','{$tmp}');";
+echo '</script>';
+}

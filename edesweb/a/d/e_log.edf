@@ -1,0 +1,22 @@
+[Title]LOG DE TABLAS MODIFICADAS
+[DBTable]gs_log
+[DBIndex]cdi,tabla
+[DBOrder]cdi desc
+[DBLimit]2000,1000
+[Expire]300
+[NoSort]1
+[AutoMenu]l|1
+[ColsWidth],,,,,300
+[PDFCol],25,,,12,95
+[PDFWrap]7, false
+[PDFVar]PDF_Grid = true
+[ShowFields]cR|_name|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}
+[Fields]
+Cdi|cdi|CDI|T|19||Q-|#sy2s#||
+#!(l) ,Usuario|cd_gs_user|+|T|5||M|||
+#(l) Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|N|S|40||M|||
+,|_name|N|T|30||ML|||
+Tabla|tabla|x|T|15||Q-|||
+,Operación\Op|operacion|X|T|1||Q-||=|
+,Clave|clave|#X|T|20||Q-|||
+SQL|sqlexe|#|A|800,95,15||-|||

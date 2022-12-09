@@ -1,0 +1,28 @@
+#include(*) lng
+[Title]@CONEXION/ES@
+#(l) [Title] @LISTADO DE CONEXIONES@
+[DBTable]gs_conexion
+[DBIndex]id
+[DBOrder]cdi desc
+[DBLimit]10000,1000
+#Include(l) /_datos/config/history.ayo | true
+[Cursor]
+[AutoMenu]l|1
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[DBAddFilter]cd_gs_user not in (select cd_gs_user from gs_user where system_user='S')
+[Fields]||trim
+     @Instante Desde@    | _desde                                                     | F4  | T  | 10 |  | QF | #today# |   |
+  ,                      | _desde_hours                                               | H   | T  | 8  |  | Q  |         |   |
+  ,  @Hasta@             | _hasta                                                     | F4  | T  | 10 |  | QF |         |   |
+  ,                      | _hasta_hours                                               | H   | T  | 8  |  | Q  |         |   |
+     @Instante@          | cdi                                                        | CDI | T  | 19 |  | -  |         |   |
+     @DNI@               | cd_gs_user{gs_user,cd_gs_user,dni}                         | 0   | S  | 7  |  | A  |         |   |
+     @Nombre@            | cd_gs_user{gs_user,cd_gs_user,user_surname,', ',user_name} | 0   | S  | 60 |  | A  |         |   |
+     @Local@             | cd_gs_node                                                 | 0   | S  | 60 |  | Q- |         |   |
+     @Sg@                | sg_carga                                                   | +   | T  | 3  |  | A  |         |   |
+     @IP@                | ip                                                         | X   | T  | 15 |  | Q- |         |   |
+     @Id@                | id                                                         | X   | T  | 40 |  | *  |         |   |
+     #(w) Aplicación\App | exe                                                        | X   | SV | 5  |  | Q- |         | % |
+#(w)[AddOption] *|exe|,.NET; W,WEB
+#(w)[AddOption] ?|exe|,; =,.NET; W,WEB

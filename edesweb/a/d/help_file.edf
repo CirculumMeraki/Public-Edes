@@ -1,0 +1,23 @@
+[Title]=FICHERO DE AYUDA
+[DBTable]gs_help_file
+[DBIndex]cd_gs_help_file
+[DBOrder]nm_gs_help_file
+[DBSerial]cd_gs_help_file
+[UploadFile]nm_file|/help/doc|cd_gs_help_file|50.000.000|Fichero de ayuda|htm,html,pdf,chm,mp4|help_
+[Format],,,,b
+$_vF[4] = substr_count($_vF[4],',');
+[Fields]
+|cd_gs_help_file|+|T|9||*|||
+Descripción|nm_gs_help_file|D|T|80||MQ||#|
+Fichero|nm_file|D|F|80||MD||#|
+#(l) Tipo|nm_file tipo|X|I|||-|||
+#!(l) Nº de·Optiones|options|#|A|100,80,2||*|||
+#(l) Nº de·Optiones|options|+|T|2||-|||
+[PHPStart]A,M
+$_POST['nm_file'] = eStrLower($_POST['nm_file']);
+[JSIni]a,mR
+var _FileTrimName = true;
+[JSOnClickRow]l||4
+top.eCallSrv( window, 'CallSrv=$a/d/usu_ficha.edf&_TreeOpLoad=4&Tipo=I&Modos=&Posicion=2&User=88&Modo=mR&_OpTreeTYPE=user&VerA=');
+[]
+#include(*) $a/plugin/usertree.zdf

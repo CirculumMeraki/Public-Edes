@@ -1,0 +1,31 @@
+[Title]TEMA DE LA INTRANET
+[DBTable]gs_theme
+[DBIndex]cd_gs_theme
+[DBOrder]nm_gs_theme
+[FormStatic]
+[AddOption]a,?R|path_css,path_img|Directorios()
+[Fields]l
+|cd_gs_theme|+|T|5||*|||
+,Activo|tf_active|D|C|1||MQ|||
+Directorio CSS|path_css|D|SV|15||M|||
+Directorio IMG|path_img|D|SV|15||M|||
+Descripción|nm_gs_theme|D|T|45||MQ|||
+[Fields]
+|cd_gs_theme|+|T|5||*|||
+Directorio CSS|path_css|D|SV|15||M|||
+,Activo|tf_active|D|C|1||MQ|||
+Directorio IMG|path_img|D|SV|15||M|||
+Descripción|nm_gs_theme|D|T|45||MQ|||
+[PHPIni]a,?R
+function Directorios(){
+$Dim = array(array('',''));
+$di = opendir( '.' );
+while( $file = readdir( $di ) ){
+if( $file != '.' && $file != '..' ){
+if( is_dir( "{$file}" ) && substr_count($file,'.')==0 ){
+$Dim[] = array($file,$file);
+}
+}
+}
+return $Dim;
+}

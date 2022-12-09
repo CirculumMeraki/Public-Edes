@@ -1,0 +1,76 @@
+[Title]=TITULO DEL LISTADO
+[Title2]Linea del Segundo título
+[SubTitle]
+[PHPIni]l
+eAddShowFilter("CAMPO: Condición");
+[FootTitle]echo "Linea del FootTitle";
+[DBIndex]pk
+[DBLimit]1000,10
+[THColSpan]a,b,XXX
+[Fields]
+PK|pk|+|T|3||M|||
+Caption|campo|D|T|40||M|||
+EditList|edit_list|D|T|5||M|||
+[ColsOp]#
+[EditList]edit_list
+[DBSql]l
+for($l=0; $l<100; $l++){
+$usuCursor[] = array($l, "Linea ".$l, "XXX");
+}
+eAddButton("on", "Titulo2"  , "uOnOff('.Titulo2')"  	, "", "id=BOTONTitulo2"  );
+eAddButton("on", "Condition", "uOnOff('#CONDICIONES')"	, "", "id=BOTONCondition");
+eAddButton("on", "SubTitle" , "uOnOff('#SubTitle')" 	, "", "id=BOTONSubTitle" );
+eAddButton("on", "FootTitle", "uOnOff('#FootTitle')"	, "", "id=BOTONFootTitle");
+eAddButton("on", "GreenBar" , "uGreenBar()" 			, "", "id=BOTONGreenBar" );
+eAddButton("on", "EditList" , "uEditList()"				, "", "id=BOTONEditList" );
+[JSinclude]*|js/jquery-3.4.1
+[JSIni]l
+function uOnOff(txt){
+if( !S(txt).width() ){
+S(txt).block();
+S.eventObj(event).children[0].innerText = "j";
+}else{
+S(txt).none();
+S.eventObj(event).children[0].innerText = "i";
+}
+}
+function uGreenBar(){
+var on;
+if( S(".BROWSE").class("?GREENBAR") ){
+S(".BROWSE").class("-GREENBAR");
+S.eventObj(event).children[0].innerText = "i";
+on = false;
+}else{
+S(".BROWSE").class("+GREENBAR");
+S.eventObj(event).children[0].innerText = "j";
+on = true;
+}
+var EditList = top.S.ruleGet(window, ".EditList"),
+EditListGreenBar = top.S.ruleGet(window, ".EditListGreenBar"),
+dim = "2l".split(","), n;
+if( !on ) EditListGreenBar = EditList;
+for(n=0; n<dim.length; n++){
+top.S(window).rule("+.col_"+dim[n]+" td:nth-child("+(top.S.mid(dim[n],0,-1)*1+1)+"){"+EditList+"}", "list");
+top.S(window).rule("+.col_"+dim[n]+" TBODY TR:nth-child(even) td:nth-child("+(top.S.mid(dim[n],0,-1)*1+1)+"){"+EditListGreenBar+"}", "list");
+}
+}
+function uEditList(){
+if( S(".BROWSE").class("?col_2l") ){
+S(".BROWSE").class("-col_2l");
+S.eventObj(event).children[0].innerText = "i";
+}else{
+S(".BROWSE").class("+col_2l");
+S.eventObj(event).children[0].innerText = "j";
+}
+}
+[JSEnd]l
+S("#BOTONTitulo2"  ).fixed(5, -181);
+S("#BOTONCondition").fixed(5, -145);
+S("#BOTONSubTitle" ).fixed(5, -109);
+S("#BOTONFootTitle").fixed(5, -73);
+S("#BOTONGreenBar" ).fixed(5, -37);
+S("#BOTONEditList" ).fixed(5, -1);
+S(S("#UtilList", window).block("table").move(false,".TITULO")).css({right:0, top:50});
+S(S("#UtilSeek", window).block("table").move(false,".TITULO")).css({right:0, top:120});
+S(S("#oUtilFilter", window).block("table").move(false,".TITULO")).css({right:0, top:185});
+S(".FilterSubTitle", "#oUtilFilter").css("text-align:center").text("Caption");

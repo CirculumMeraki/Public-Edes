@@ -1,0 +1,74 @@
+[Title]GRUPO/S DE USUARIOS
+[DBTable]gs_group
+[DBIndex]cd_gs_group;nm_gs_group||true|nm_gs_grupo|El Grupo ya existe
+[DBOrder]nm_gs_group
+[DBSerial]cd_gs_group
+#include(*) /_datos/config/file_manager.ini | true
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]__cd_gs_user|_cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]__cd_gs_user|_cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[AddCode]*|_op_insert|S|Alta
+[Fields]
+|cd_gs_group|+|T|9||*Q*|||
+Grupo|nm_gs_group|D|T|50|370|AQ||#|
+|cd_gs_user|+|T|9||*|_User||
+|cdi_insert|CDI|T|19||*|#y2s#|#|
+#(a,mR)¿
+-|SUBFICHA "USUARIO DEL GRUPO"
+|_cd_gs_user|+|T|5||*Q*|||
+Usuario|__cd_gs_user|D|T|68|370|QA||#|
+{FS}{ Opciones de mantenimiento
+|_op_insert|#D|C|1||M|||
+,Modificar|_op_update|#D|C|1||M|||
+,Borrar|_op_delete|#D|C|1||M|||
+,Propietario|_op_moderator|#D|C|1||M|||
+|_cdi_insert|CDI|T|19||*|||
+}
+?
+#(a,mR,cR,bR)¿
+-|LISTADO "USUARIOS DEL GRUPO"
+|[__gs_group_user]|o|||||||
+?
+[SubList]a,mR,bR,cR|__gs_group_user
+{slGL} Sql        | Align | ColsWidth | TypeData |  Format  | Fields        | TH
+''			  |	 C\H  |   25\0	  |          |   AMB()  | IMG	        | <IMG SRC="g/l_op_insert.gif" title="" onclick="eSLAction('__gs_group_user','i')">\
+g.cd_gs_user   |   H   |     5     |   +      |          | _cd_gs_user   | USER
+concat(u.user_name&#44;' '&#44;u.user_surname) _usuario |   I   |   370     |   N      |          | __cd_gs_user  | USUARIO
+g.op_insert    |   C   |     1     |   N      |          | _op_insert    | <img src='g/op_insert.gif'>
+g.op_update    |   C   |     1     |   N      |          | _op_update    | <img src='g/op_update.gif'>
+g.op_delete    |   C   |     1     |   N      |          | _op_delete    | <img src='g/op_delete.gif'>
+g.op_moderator |   C   |     1     |   N      |          | _op_moderator | <img src='g/op_user.gif'>
+cdi_insert     |   H   |           |   CDI    |          | _cdi_insert   | CDI_INSERT
+{slSql} select # from gs_group_user g, gs_user u where g.cd_gs_group='{cd_gs_group}' and g.cd_gs_user=u.cd_gs_user order by _usuario | cd_gs_group
+{slMenu}  a,mR | Insertar:i, Modificar:u, Borrar:d | # || FormOnLine | <IMG SRC='g/l_op_update.gif' title='Modificar' onclick=eSLAction('__gs_group_user','u')><IMG SRC='g/l_op_delete.gif' title='Borrar' onclick=eSLAction('__gs_group_user','d')>
+{slMenu} cR,bR |                                   | # || FormOnLine |
+{slSort} _usuario
+{slUnique} g.cd_gs_user | El Usuario ya está en el Grupo
+{slWin} ,6
+#(a,mR) {slOnClick} uOnClikSubLIst
+[JSIni]a,mR
+function uOnClikSubLIst(a){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+if( Obj.cellIndex > 2 ){
+Obj.textContent = ( eTrim(Obj.textContent)=='' ) ? 'S' : '';
+DGI('[__gs_group_user]').ENVIAR = 1;
+}
+return eClearEvent();
+}
+function FUNCTION___gs_group_user( Objeto, BA, slMODE, slROW, oFila ){
+if( Objeto=='F' && slMODE=='I' && BA=='E' ){
+oFila.cells[7].textContent = eS2S(_ymd)+' '+_Time;
+}
+}
+[PHPIni]cR,bR
+function AMB(){
+}
+[PHPIni]a,mR
+function AMB(){
+echo '<IMG SRC="g/l_op_update.gif" title="Modificar" onclick=eSLAction("__gs_group_user","u")>';
+echo '<IMG SRC="g/l_op_delete.gif" title="Borrar" onclick=eSLAction("__gs_group_user","d")>';
+}

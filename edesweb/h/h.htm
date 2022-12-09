@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>H 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{H} RefName [ | NoTD ]
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Es una sub-etiqueta de [Fields].<BR>Añadir código HTML en una fila de la rejilla del formulario.<BR>Dentro de la etiqueta [Fields], en la definición de un campo, "{H}"&nbsp;seguido de un nombre de referencia (por ejemplo "myRef"). Después de la etiqueta [Fields] volvemos a insertar "[H]" seguido del mismo nombre de referencia y en las siguientes líneas el código HTML que necesitemos. Con éste método podemos instroducir código HTML a nuestro antojo en cualquier fila de la rejilla del formulario. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>RefName:</STRONG> Nombre identificativo. <br>Si la constante "NoTD" no se pone te dejará una única celda con el cospan que corresponda para que metas lo que quieras, pero si le pones "NoTD" tu tienes que definir todos los TD de la fila.
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[Fields] <BR>&nbsp;&nbsp; Client Code | cd_cli | ...&nbsp;<BR>&nbsp;&nbsp; {H} myRef<BR><SPAN style="WIDTH: 25px"></SPAN>...</P>
+<P>[H] myRef<BR>&lt;table border=1&gt;<BR>&lt;tr&gt;<BR><SPAN style="WIDTH: 25px"></SPAN>&lt;td height="10" width="600" cellpadding="1" cellspacing="1" align=center&gt;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&lt;strong&gt;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&lt;font color="#ff0f00" size="3"&gt; AVISO&nbsp;&lt;/font&gt;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&lt;/strong&gt;<BR><SPAN style="WIDTH: 25px"></SPAN>&lt;/td&gt;<BR>&lt;/tr&gt;<BR>&lt;/table&gt;</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

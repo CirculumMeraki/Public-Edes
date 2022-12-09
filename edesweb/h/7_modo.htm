@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">7. Modo</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">
+Marca el modo de trabajo con el campo.<br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>A</td>
+<td>El campo ser? solo modificable en Altas</td>
+</tr>
+<tr>
+<td>M</td>
+<td>El campo ser? modificable en Altas y en Modificaciones</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>El campo ser? editable al preguntar por una ficha en los modos [c,m,b,q,s].</td>
+</tr>
+<tr>
+<td>L</td>
+<td>El campo no se mostrar? en los listados</td>
+</tr>
+<tr>
+<td> -</td>
+<td>El campo se mostrar?, pero no ser? editable, ni siquiera en el caso de las altas ( signo menos )</td>
+</tr>
+<tr>
+<td> -Q</td>
+<td>Solo al preguntar ir? el campo en modo no editable, en el resto de modos no ir?</td>
+</tr>
+<tr>
+<td>Q-</td>
+<td>Ir? al preguntar y como no editable en el resto de modos.</td>
+</tr>
+<tr>
+<td>-Q-</td>
+<td>Ir? como no editable en todos los modos.</td>
+</tr>
+<tr>
+<td>*</td>
+<td>El campo ser? oculto.</td>
+</tr>
+<tr>
+<td>*Q</td>
+<td>Solo al preguntar ir? el campo en modo oculto, en el resto de modos no ir?.</td>
+</tr>
+<tr>
+<td>Q*</td>
+<td>Ir? al preguntar y oculto en el resto de modos </td>
+</tr>
+<tr>
+<td>*Q*</td>
+<td>Ir? tanto al preguntar como en el resto de campos oculto.</td>
+</tr>
+</tbody>
+</table>
+<br /> Ayudas adicionales al campo.<br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>c</td>
+<td>Copy [b,c,m,s] cuando va con un indicador de modo.<br />Y si va solo en un listado indica campo que se puede condicionar y no viene en la lista de campos que viajan al cliente.</td>
+</tr>
+<tr>
+<td>p</td>
+<td>Paste [b,c,m,s]</td>
+</tr>
+<tr>
+<td>d</td>
+<td>Fijar valor por defecto [a,b,c,m,s,q,l]</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Buscar en formulario con condiciones. (utilizando NomCampo.fdf, una ficha ) , añade una lupa para la búsqueda.<br />Esta opci?n y la (b) son excluyentes. [a,mR]</td>
+</tr>
+<tr>
+<td>b</td>
+<td>Buscar mediante listado (utiliza el script "NomCampo.ldf") [a,mR], añade una lupa para la búsqueda.</td>
+</tr>
+<tr>
+<td>F</td>
+<td>Fechas. Ayuda de calendario [a,mR]</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1. Documentos/Archivos [a,mR,cR,bR]. Muestra icon para ver el documento del PC y del Server ademas de ser un activador de las opciones C,U,P,O<br />2. En los campos que empiezan por "dct_" de "dictionary" saldr? una lupa para seleccionar las palabras claves.</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Unlink Documentos/Archivos [a,mR] ( borra fichero del servidor ), el campo no puede estar como dato obligatorio, si no, no saldr? el icono de borrar.</td>
+</tr>
+<tr>
+<td>a</td>
+<td>En campos no editables en el modo de modificar se actualizará el valor por defecto.</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Modificar (Cambiar) Documentos/Archivos [a,mR] en el servidor</td>
+</tr>
+<tr>
+<td>P</td>
+<td>En los campos tipo "periodo" mostrar? la ayuda de calendario de periodos.</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Web ir a la p?gina web [a,mR,cR]. Si en el nombre del campo aparece la palabra "facebook" o "twitter" mostrar? los iconos de estas redes sociales.</td>
+</tr>
+<tr>
+<td>i</td>
+<td>(i latina minúscula)  Se ver? el dato interno del select (ver "4.Tipo de control"). [*]</td>
+</tr>
+<tr>
+<td>I</td>
+<td>(I latina mayúscula)  Se podr? editar el dato interno del select (ver "4.Tipo de control"). [*]</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Email. [cR]</td>
+</tr>
+<tr>
+<td>S/s</td>
+<td>En números enteros y en periodos pondrá un control deslizante para el cambio del valor del control, si es en mayúsculas el control será editable. Con la rueda del ratón se puede cambiar el valor al estar soble la imagen.<br />Si el campo es de texto con "S/s" activará el corrector ortográfico.</td>
+</tr>
+<tr>
+<td>S</td>
+<td>Futuro uso:<br />1. En campos textarea funciona como corrector ortográfico y si al hacer click pulsamos la tecla control también pasará el corrector gramatical.<br />2. En campos tipo file mostrará un scanner para capturar imágenes.</td>
+</tr>
+<tr>
+<td>k</td>
+<td>(Hará un Paste del ClipBoard)</td>
+</tr>
+<tr>
+<td>q</td>
+<td>En modo consulta (c,b,m) puedes filtrar por múltiples valores</td>
+</tr>
+<tr>
+<td>O</td>
+<td>(Owner. Descarga el fichero en tu directorio local y lo ejecuta (variable "_working_directory"))</td>
+</tr>
+</tbody>
+</table>
+<br />En el modo listado cuando se muestra las condiciones hay dos valores que cuando se encuentran solos tienen los siguientes comportamientos<br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>c</td>
+<td> Pondr? el label indicado, pasa cuando condicionas un campo que no est? en el listado no en la ddbb "gs_campo"</td>
+</tr>
+<tr>
+<td>h</td>
+<td> Ocultar? el campo en la lista de condiciones</td>
+</tr>
+</tbody>
+</table>
+<br />La ayuda del campo "d", fijar valor por defecto, llamar? a la funci?n de usuario "eDefaultShow( NomField, ValueField, InnerTextField )" ubicada en el fichero de configuraci?n "desktop_user.ini" por si se quiere mostrar el valor por defecto en el desktop.<br />En el Modo tambi?n podremos poner tipos alternativos de edici?n indicando una lista de modos separados por coma igual a "A", "M", "Q", "-", "*", "L", etc y punto y coma y la siguiente definici?n si se quiere poner mas, al acabar para cojer el resto de modos que quede se podr? poner "*=" y el modo, ejemplo: <br /><span style="font-family: Courier;">a=*; *=- <br /></span><span style="font-family: Courier;">a,b,c,m=M; mR=A; *=M<br /></span><br />La ayuda del campo tipo "d" (Fijar valor por defecto) cada vez que se ejecuta llama a una funci?n javascript almacenada en el fichero de configuraci?n "desktop_user.ini" para si se quiere, mostrar los valores fijados en el desktop.<br /><br />En los campos de tipo fichero se puede agrupar los iconos secundarios mediante el s?mbolo "#" quedando visible los iconos de seleccionar fichero y un submen? con el resto de opciones.
+ <br /><br />
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">&nbsp;</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eFilePutVar 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eFilePutVar( $File, $Array ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Modifica el valor de variables de configuración. Retorna si ha grabado bien.
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>$File&nbsp;</TD>
+<TD>Nombre del fichero de variables&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;$Array</TD>
+<TD>Matriz bidimensional con el nombre de la variable a modificar y su valor&nbsp;</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>eFilePutVar('/_datos/config/desktop.ini', array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('$_PrintMarginTop',12),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('$_PrintHeader','Empresa ...')<BR><SPAN style="WIDTH: 25px"></SPAN>)<BR>); 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

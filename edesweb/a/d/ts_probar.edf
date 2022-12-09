@@ -1,0 +1,29 @@
+[Title]=PROBAR ENCUESTA
+[DBTable]ts_encuesta
+[DBIndex]cd_ts_encuesta
+[DBOrder]cd_ts_test,dt_inicio
+[DBSerial]cd_ts_encuesta
+[FormAction]a|Probar()
+[Button]a|<img src='edes.php?R:$a/g/setup.gif'> Probar Encuesta
+[Fields]
+]Cuestionario|cd_ts_test|+|S|150|450|MQ||#|
+[JSIni]a
+function Probar(){
+top.eSWOpen( window, 'edes.php?E:$a/d/ts_encuestar.gs', 'ENCUESTA', false, 500 );
+return eClearEvent();
+}
+function IrAlServidor(){
+top.eTestSg();
+var xmlhttp=new XMLHttpRequest();
+xmlhttp.open("GET","edes.php?E:puega_ajax.php",false);
+xmlhttp.send();
+top.eTestSg();
+alert( xmlhttp.responseText );
+}
+function IrAlIFrame(){
+top.eTestSg();
+eCallSrv( window,"edes.php?E:puega_iframe.php");
+}
+[HTMIni]a
+<input type=button onclick=IrAlServidor() value='Ejecutar XML'>
+<input type=button onclick=IrAlIFrame() value='Ejecutar IFRAME'>

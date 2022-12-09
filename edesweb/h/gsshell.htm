@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>gsShell 
+<TR>
+<TD id=Descripcion>- Si pulsamos en el texto del directorio de la barra superior nos moveremos a él excepto si es el directorio actual que hará un "ls -lv".<BR>- Si marcamos el nombre de un subdirectorio entraremos en él.<BR>- Si marcamos un nombre de archivo lo añadirá mas un espacio a la línea de comandos, para evitar teclear.<BR>- Para subir ficheros al servidor lo haremos mediante el botón "Examinar...".<BR>- Para descargar ficheros utilizaremos el comando "cp NomFile".<BR>- Con solo "cd" bajaremos un nivel de subdirectorios<BR>- Funciona "cd.." como en MsDos sin espacio de separación<BR>- Si tecleamos el nombre de un fichero lo visualizaremos<BR>- Si tecleamos el nombre de un SubDirectorio nos moveremos a él sin necesidad de precederlo por "cd "<BR>- A través de la orden "man" se puede ver la descripción de las opciones.<BR>- Si marcamos un nombre de archivo lo añadirá mas un espacio a la línea de comandos, para evitar teclear etc.<BR>- Si marcamos el nombre de un subdirectorio entraremos en él.<BR>- Si pulsamos en el texto del directorio de la barra superior nos moveremos a él excepto si es el directorio actual que hará un "ls -l".<BR>- Los comandos "ftpput" y "ftpget" el parámetro puede ser un fichero, una lista de ficheros separados por coma o un nombre de fichero con patrón valiendo los símbolos "*" y "?".<BR>- El comando "cat" admite tres&nbsp;parámetros, el primero es el fichero si solo ponemos este se mostrará este si la longitud es menor de 250kb, longitud máxima por defecto, el segundo parámetro es para indicar la longitud máxima a mostrar,&nbsp;&nbsp;si es negativo el valor los mostrará desde el final y si se pone el tercer parámetro entonces el segundo indica desde donde se empieza a visualizar y el tercero la longitud total a visualizar.<BR>- El comando "hex" admite dos parámetros el primero es el nombre del fichero y el segundo opcional es la longitud a visualizar, por defecto son 50kb de fichero que equivalen 250Kb en pantalla por el "dump", el segundo fichero será la longitud a visualizar desde el principio si el valor es positivo y desde el final si es negativo el valor.<BR>- El comando "recursive [rm|ls] patron" ejecuta de forma recursiva el comando "rm" para borrar ficheros o el comando "ls" para mostrar la lista.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

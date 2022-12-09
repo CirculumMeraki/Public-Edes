@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">MyData</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[MyData] Nomcampo=VariableDeSesión</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En los modos de consulta o modificación muestra la ficha o multificha ejecutando la busqueda mediante la etiqueta [MyData] para sacar la ficha directamente sin pasar por la ficha de búsqueda, esto evita que se llame a una ficha sin permisos.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">En la opción de menú:<br /><code>Opción Ficha con cR | FcR:$mydata.edf&prueba</code><br /><code>Opción Ficha con mR | FmR:$mydata.edf&prueba</code><br /><br /><code>Opción GrupoDeFichas con cR | GcR:$mydata.gdf&prueba</code><br /><code>Opción GrupoDeFichas con mR | GmR:$mydata.gdf&prueba</code><br /><br /><code>Y en el script de "prueba.edf" o "prueba.gdf" se pondrá la etiqueta:</code><br /><br /><code>[MyData] cd_gs_user=_User</code><br /><code></code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

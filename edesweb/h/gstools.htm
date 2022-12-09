@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>gsTools 
+<TR>
+<TD id=Descripcion>
+<P>Se accede desde la aplicación y tiene las siguientes herramientas:</P>
+<UL>
+<LI>
+<DIV>Editor interactivo de hojas de estilo</DIV>
+<LI>
+<DIV>Navegador de los objetos de la página de trabajo, la central</DIV>
+<LI>
+<DIV>Visor de iconos activos</DIV>
+<LI>
+<DIV>Visor del código fuente</DIV>
+<LI>
+<DIV>Visor del esquema de la página<BR></DIV>
+<LI>
+<DIV>Si haces click en el primer input de color saldrá una ventana con el código de color en varios formatos %, decimal y&nbsp;RGB.</DIV>
+<LI>Botón derecho en la barra central de degradados pondrá el color pulsado en el centro para que se degrade al blanco y al negro. 
+<LI>En las Hojas de estilo si pulsas con el botón derecho en el nombre de un atributo generará uno en blanco y si se vuelve a pulsar se borrará. 
+<LI>Si pulsas en el valor del atributo te sacará un promp para introducir un nuevo&nbsp;valor. 
+<LI>Si pulsas en el valor del atributo con el botón derecho cuando está vacío se borrará el atributo. 
+<LI>BotonDch encima del valor del atributo copia el valor original en el clipboard, es una forma de restaurar el valor original. </LI></UL></TD></TR></TBODY></TABLE>
+<SCRIPT>document.title=Etiqueta.innerText;</SCRIPT>
+</DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

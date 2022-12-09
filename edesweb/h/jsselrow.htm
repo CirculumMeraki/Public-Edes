@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">JSSelRow</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[JSSelRow] Mode [ | NomDF/else,... [ | UNIQUE/Condition ] ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Código Javascript a ejecutar cuando se selecciona un registro de un listado. Suele usarse para copiar información de la ventana actual a la ventana padre.<br /><br />Se pasan las siguientes variables de la fila pulsada.<br />     _vF = Matriz asociativa con el valor de las celdas.<br />     _oF = Matriz asociativa con los objetos (TD).<br />     _oTR = Objeto TR.<br />     _oTD = Objeto TD.<br />     $+NombreVariable = obtienes el valor o le asignas otro valor.<br /><br />Variables/funciones obsoletas:<br />      _Celda  = La celda pulsada.<br />      _Fila  = La fila pulsada.<br />     _ValCol  = Matriz asociativa con el valor de las celdas de la fila pulsada.<br />     _Columna = Matriz ordinal con el valor de las celdas de la fila pulsada.<br />     eGF() = Con esta función podemos cojer el valor de cualquier campo de la fila pulsada.<br /><br />- Si al final de la etiqueta [JSSelRow] no pones un "return;" y es una lista de selección se seleccionará el registro y no se cerrará la ventana.<br />- Si retornas true se mantendrá uno en el listado si se retorna false irá a mostrar la ficha de la fila actual.<br />- Si se está en una subventana y no se pone "return" se cerrará la ventana.<br /><br />En el momento de pulsar saldrá un icono para indicar que se está procesando, si se quiere quitar el icono se puede ocultar con la función eHideBusy(). <br />Esta etiqueta predomina sobre [JsOnClickRow] <br />Cuando se utiliza esta etiqueta desactiva la opción de poder ejecutar sublistados.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[JSSelRow] l</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ePPF('campo1', _Columna[0]);</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ePPF('campo2', _Columna[1]);</code></td>
+</tr>
+<tr>
+<td id="txt">En este ejemplo al seleccionar una fila tomará los valores de las columnas '0' y '1' y los asignará al formulario de la ventana de donde fué llamado.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

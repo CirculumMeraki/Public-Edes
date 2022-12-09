@@ -1,0 +1,25 @@
+#include(*) lng
+[Title]=@ACTIVAR ACCESO DE USUARIO@
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]user_surname, user_name
+[DBSerial]cd_gs_user
+[Cursor]
+[Button]mR|@Confirmar@
+[MsgAnswer]M|@Acceso activado@
+[OnChange]?|dni|ePadLeft(this,8)
+[Assign]mR|dt_access_last,permission
+[Fields]
+     @DNI@       | dni            | D  | T | 9  |               | AQcp |         |  |
+  ,  Usuario     | cd_gs_user     | +  | T | 4  | <user_name    | AQ   |         |  |
+     @Nombre@    | user_name      | X  | T | 20 | user_surname  | AQ   |         |  |
+  ,  @Apellidos@ | user_surname   | X  | T | 30 |               | AQ   |         |  |
+     @Local@     | cd_gs_node     | X  | S | 60 | +user_surname | AQ   |         |  |
+                 | cd_gs_user     | *  | T | 5  |               | *    |         |  |
+                 | dt_access_last | F4 | T | 10 |               | *    | #today# |  |
+                 | permission     | X  | T | 1  |               | *    | S       |  |
+[DBIni]M
+$_ClaveReset = eFileGetVar("Login.ClaveReset");
+array_push($DimNomVar, 'pass');
+array_push($DimValor , $_ClaveReset);
+$_vF['pass'] = $_ClaveReset;

@@ -1,0 +1,57 @@
+[Title]=ASIGNACION MASIVA DE ARBOL POR EMAIL - SIN USO -
+[DBTable]gs_user_tree
+[DBIndex]cd_gs_user cd_gs_tree
+[DBOrder]cd_gs_user cd_gs_tree
+[Expire]0
+[Button]*|Asignar Arbol
+[MsgSubmit]*|¿ Confirmar la operación ?
+[WhereSelect]*|cd_gs_tree|permission='S'
+[Fields]
+]Arbol|cd_gs_tree|#|S|80|430|A||#|
+]Lista de EMail|_email|#|A|5000,88,12|430,190|Mk||#|
+[PHPIni]A
+eInit();
+$tReg = 0;
+$tErrores = 0;
+$ArbolNew = $_POST['cd_gs_tree'];
+$Modo = '';
+$Dim = explode("\n",$_POST['_email']);
+eTrace('USUARIOS NO ENCONTRADOS');
+eTrace('-----------------------');
+qQuery( "select distinct(select mode from {$_SESSION['ShareDictionary']}gs_op where mode is not null and mode<>'' and cd_gs_op={$_SESSION['ShareDictionary']}gs_tree_op.cd_gs_op) from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree={$ArbolNew}" );
+while( $r=qRow() ){
+if( trim($r[0])!='' ){
+if( $Modo!='' ) $Modo .= ',';
+$Modo .= trim($r[0]);
+}
+}
+if( $Modo=='' ) die('El árbol no tiene ninguna opción');
+$DimUser = array();
+for( $n=0; $n<count($Dim); $n++ ){
+$Dim[$n] = trim($Dim[$n]);
+if( $Dim[$n]<>'' ){
+qQuery( "select cd_gs_user from gs_user where email='{$Dim[$n]}'" );
+list( $User ) = qRow();
+if( $User == 0 ){
+eTrace( $Dim[$n] );
+$tErrores++;
+}else{
+$tReg++;
+$DimUser[] = $User;
+}
+}
+}
+unset($Dim);
+$Usuarios = implode(',',$DimUser);
+qQuery( "delete from gs_user_tree where cd_gs_tree={$ArbolNew} and cd_gs_user in ( {$Usuarios} )" );
+for( $n=0; $n<count($DimUser); $n++ ){
+$User = $DimUser[$n];
+qQuery( "insert into gs_user_tree ( cd_gs_user, cd_gs_tree, mode ) values ( {$User}, {$ArbolNew}, '{$Modo}' )" );
+}
+unset($DimUser);
+qQuery( "update gs_user set cd_type_tree='P', permission='S' where cd_gs_user in ( {$Usuarios} )" );
+eTrace( '-----------------------' );
+eTrace( 'Total Errores..: '.$tErrores );
+eTrace( 'Total Registros: '.$tReg );
+eTrace( '-----------------------' );
+eEnd();

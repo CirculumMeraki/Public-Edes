@@ -1,0 +1,93 @@
+[Language]es
+Opciones afectadas | Opciones a Asignar&nbsp;
+[Title]=ASIGNAR OPCION DE FORMA MASIVA
+[FormButtons]-
+[AddCode]a|dni|A|[filter, onclick='_FilterUser("dni")' title='Lista de selección']
+[AddCode]a|email|A|[filter, onclick='_FilterUser("email")' title='Lista de selección']
+[Fields]
+DNI|dni|X|T|9||MQq|||
+EMail|email|@|T|65||MQq|||
+#Include( a ) $a/d/optree.zdf
+[JSCheck]a
+var ok = 0;
+if( eGF("dni")!="" ) ok++;
+if( DGI("_FILTER_dni") && eGF("_FILTER_dni")!="" ) ok++;
+if( eGF("email")!="" ) ok++;
+if( DGI("_FILTER_email") && eGF("_FILTER_email")!="" ) ok++;
+if( ok==0 ) ePE('email','Falta definir a que usuarios se les asigna las opciones', 1);
+if( eGF('options')=='' ) ePE('email','Falta definir las opciones a Asignar', 1);
+[PHPIni]A
+$InUser = array();
+$NoUser = array();
+$options = explode(",", $_POST["options"]);
+$DNI = array();
+if( $_POST["_FILTER_dni"]!="" ){
+$DNI = explode(chr(13), str_replace(",",chr(13),$_POST["_FILTER_dni"]));
+}
+if( $_POST["dni"]!="" ){
+$DNI[] = $_POST["dni"];
+}
+$buscarDNI = array();
+for($n=0; $n<count($DNI); $n++){
+$v = trim($DNI[$n]);
+if( $v!="" ){
+$buscarDNI[] = $v;
+$InUser[$v] = 1;
+}
+}
+$buscarDNI = implode(",",$buscarDNI);
+$EMAIL = array();
+if( $_POST["_FILTER_email"]!="" ){
+$EMAIL = explode(chr(13), str_replace(",",chr(13),$_POST["_FILTER_email"]));
+}
+if( $_POST["email"]!="" ){
+$EMAIL[] = $_POST["email"];
+}
+$buscarEMAIL = array();
+for($n=0; $n<count($EMAIL); $n++){
+$v = trim($EMAIL[$n]);
+if( $v!="" ){
+$buscarEMAIL[] = $v;
+$InUser[$v] = 1;
+}
+}
+$buscarEMAIL = implode("','",$buscarEMAIL);
+$usuarios = array();
+if( $buscarDNI!="" ){
+qQuery("select cd_gs_user, dni from gs_user where dni in ({$buscarDNI})");
+while( $r=qRow() ){
+$usuarios[$r[0]] = 1;
+$InUser[$r[1]] = 0;
+}
+}
+if( $buscarEMAIL!="" ){
+qQuery("select cd_gs_user, email from gs_user where email in ('{$buscarEMAIL}')");
+while( $r=qRow() ){
+$usuarios[$r[0]] = 1;
+$InUser[$r[1]] = 0;
+}
+}
+foreach($InUser as $k=>$v) if( $v==1 ) $NoUser[] = $k;
+$NoUser = implode("<br> - ", $NoUser);
+if( $NoUser!="" ) $NoUser = "<br><br> Usuarios NO encontrados:<br> - ".$NoUser;
+$buscarUser = array();
+foreach($usuarios as $k=>$v) $buscarUser[] = $k;
+$xBuscarUser = implode(",",$buscarUser);
+$total = count($buscarUser);
+for($n=0; $n<count($options); $n++){
+$op = $options[$n];
+qQuery("select cd_gs_tree from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_op={$op} and cd_gs_tree in (select cd_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where permission='S') order by cd_gs_tree");
+list($tree) = qRow();
+if( trim($xBuscarUser)!="" ){
+qQuery("delete from gs_user_op where cd_gs_op={$op} and cd_gs_user in ({$xBuscarUser})");
+}
+for($u=0; $u<count($buscarUser); $u++){
+$user = trim($buscarUser[$u]);
+if( $user!="" ){
+qQuery("insert into gs_user_op (cd_gs_user, cd_gs_tree, action, cd_gs_op) values ({$user}, {$tree}, 'I', {$op})");
+}
+}
+}
+eInit();
+eMessage($total.' Permisos asignados.'.$NoUser, 'HS');
+eEnd();

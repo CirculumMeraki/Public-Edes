@@ -1,0 +1,403 @@
+#include(*) $lng/activity.edf.lng
+[Title]=@CREAR PAQUETE DE ACTUALIZACION@|l
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]2
+[Expire]0
+[MaxRec]0
+[DBAddFilter](edes='F' or edes='C') and cdi_ftp is null and cd_gs_user={$_User}
+[DBGroupBy]2
+[PHPStart]*
+@include("../_d_/".$_SESSION["_User"].".dvl");
+if( count($_gsDirAccess)>0 ){
+$_DBADDFILTER = "edes='F' and cdi_ftp is null and cd_gs_user=".$_SESSION["_User"];
+}
+$txt = "";
+for($n=0; $n<count($_gsDirAccess); $n++){
+$_gsDirAccess[$n] = trim($_gsDirAccess[$n]);
+if( $_gsDirAccess[$n]!="" ){
+if( substr($_gsDirAccess[$n],0,2)=="d/" ) $_gsDirAccess[$n] = substr($_gsDirAccess[$n],2);
+if( substr($_gsDirAccess[$n],-1)<>"/" ) $_gsDirAccess[$n] .= "/";
+if( $txt!="" ) $txt .= " or ";
+$txt .= " script like '".$_gsDirAccess[$n]."%'";
+}
+}
+if( $txt!="" ) $_DBADDFILTER .= " and (".$txt.")";
+[FormAction]*|edes.php?Ll:
+[AutoMenu]*|1
+[ColsOp]C
+[Format]
+$_vF[2] = '<img src="edes.php?R:$t/g/s/check_n.gif" onclick="AnularSCRIPT()">';
+if( $_vF[1][0]=='$' ) $_CellsStyle[1] = 'color:#ff00ff;font-weight:bold';
+if( $_vF[1]=='/_datos/config/sql.log' ){
+$GLOBALS['_LogDB'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/directory.log' ){
+$GLOBALS['_LogDIR'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/update.log' ){
+$GLOBALS['_LogScript'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( substr_count($_vF[1],'/tree/')>0 ) $_CellsStyle[1] = 'color:green;font-weight:bold';
+if( $_vF[3] > 1 ) $_CellsStyle[3] = 'background:#FFB5B5;font-weight:bold';
+[PDFCol],,0,0
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Nº Desarrolladores por script@
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[ColsWidth]script=250
+[Fields]
+@Instante Desde@|_desde|F4|T|10||QF|||
+,|_desde_hours|H|T|8||Q|||
+,@Hasta@|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+#(?) @CDI@|cdi|CDI|T|19||*Q|||
+#!(?) @CDI@|max(cdi)|CDI|T|19||M|||
+@Script@|script|#|T|60|+_hasta_hours|MQ|||
+@Anular@|'' as ico|x|T|1||-||=|
+@NºDev.@|'' as ndev|+|T|2||-|||
+[HTMIni]l
+<table border=0px cellspacing=0px cellpadding=0px style='display:block; width:100%;height:100%;background:transparent;'>
+<tr>
+<td style="vertical-align:top; text-align:center">
+[HTMEnd]l
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td width='100%' id='cIFrame' style="vertical-align:top; text-align:center">
+<script type="text/javascript">
+top.eNewIframe(window, 'cIFrame', 'uIFRAME', 'edes.php?Fa:$a/d/pack.edf');
+</script>
+</td>
+</tr>
+</table>
+[PHPStart]l
+eInclude($_Sql);
+qQuery("select count(distinct cd_gs_user) from {$_SESSION['ShareDictionary']}gs_activity where edes='F' and cdi_ftp is null");
+list( $GLOBALS['TotalDesarrolladores'] ) = qRow();
+[JSEnd]l
+DGI('BROWSE').rows[DGI('BROWSE').rows.length-1].cells[3].textContent = '<?= $TotalDesarrolladores ?>';
+DGI('BROWSE').rows[DGI('BROWSE').rows.length-1].cells[3].title = '@Total nº Desarrolladores distintos@';
+[DBSql]l
+$_uCondi = qGetWhere();
+$NomFile = '../_d_/usr/pack.'.$_User;
+$DesdeCDI = '';
+if( file_exists($NomFile) ){
+$DesdeCDI = trim(file_get_contents($NomFile));
+if( strlen($DesdeCDI)==19 ){
+$_TReg = 0;
+qQuery( "select distinct(script) from {$_SESSION['ShareDictionary']}gs_activity where edes='F' and cdi<='{$DesdeCDI}' and cdi_ftp is null and cd_gs_user={$_User}" );
+while( $r=qRow() ) $_TReg = $_TReg+1;
+$_TITLE .= '<br><span style="color:red"> desde '.$DesdeCDI.' ('.$_TReg.' script pendientes)</span>';
+$DesdeCDI = " and cdi>'{$DesdeCDI}'";
+}else $DesdeCDI = '';
+}
+$_TReg = qCount("{$_SESSION['ShareDictionary']}gs_activity", $_uCondi." {$DesdeCDI} and edes='F' and cdi_ftp is null");
+if( $_TReg>0 ){
+$usuCursor = array();
+qQuery("
+select max(a.cdi), a.script, '' as ico, (select count(distinct cd_gs_user) from {$_SESSION['ShareDictionary']}gs_activity as c where c.script=a.script and c.edes='F' {$DesdeCDI} and c.cdi_ftp is null)
+from {$_SESSION['ShareDictionary']}gs_activity as a
+where ".$_uCondi." {$DesdeCDI} and edes='F' and cdi_ftp is null
+group by 2 order by 1");
+while( $r=qRow() ){
+$usuCursor[] = $r;
+}
+}
+[OnLoad]l|BROWSE.rows[0].cells[1].style.width = BROWSE.rows[0].cells[1].offsetWidth;	document.ondblclick = null;
+[JSOnClickRow]l
+if( ColNumber==2 ){
+eClearEvent();
+S(BROWSE.rows[RowNumber].cells[ColNumber].children[0]).eventClick();
+}else{
+top.eSWOpen(window, 'Ll:$a/u/activity_df&_FILTER='+escape('script="'+eTrim(_oTR.cells[1].innerHTML)+'"'), '', false);
+}
+[JSIni]l
+function AnularSCRIPT(){
+BROWSE.deleteRow(S.event(window).parentNode.parentNode.rowIndex);
+eClearEvent();
+MovTitulos();
+}
+function AnulaTR( nTR, File ){
+BROWSE.deleteRow(nTR);
+BROWSE.rows[BROWSE.rows.length-1].cells[0].textContent = BROWSE.rows.length-2;
+if( File=='/_datos/config/sql.log' ) DGI("TodoDB").style.display = 'none';
+if( File=='/_datos/config/directory.log' ) DGI("TodoDIR").style.display = 'none';
+MovTitulos();
+}
+function OcultaIcons(){
+DGI("BROWSE").style.display = DGI("TodoNo").style.display = DGI("TodoSi").style.display = 'none';
+DGI("TodoDB").style.display = DGI("TodoDIR").style.display = 'none';
+}
+function CrearPaquete_2( Op ){
+if( Op!=2 ) return;
+if( BROWSE.rows.length<3 ) return;
+var txt = '', n;
+for(n=1; n<BROWSE.rows.length-1; n++) txt += BROWSE.rows[n].cells[1].textContent+'|';
+top.eCallSrv(window, 'PackUpdate="<'+txt.replace(/#/g,'{:35:}')+'>"', window);
+}
+function CrearPaquete(){
+top.eAlert(S.lng(209), "@Confirmar Crear paquete de actualización@", 'A,C', 'edes.php?R:$t/g/s/pack_update.gif', CrearPaquete_2);
+}
+function EditDB(){
+top.gsEdit(window, "/_datos/config/sql.log" );
+}
+function EditDIR(){
+top.gsEdit(window, "/_datos/config/directory.log" );
+}
+function EditScript(){
+top.gsEdit(window, "/_datos/config/update.log" );
+}
+function NewCrearPaquete(){
+var nError = 0, txt='';
+if( uIFRAME.eGF('cd_type')=='' ){
+txt = 'Falta definir el "TIPO"';
+nError++;
+}
+if( uIFRAME.eGF('description')=='' ){
+if( txt!='' ) txt += '<br>';
+txt += 'Falta definir La "DESCRIPCIÓN"';
+nError++;
+}
+if( nError>0 ){
+top.eAlert('ERROR', txt, 'A', 'E');
+return;
+}
+CrearPaquete();
+}
+[JSEnd]l
+S("#PAGINA").css("display:-webkit-box");
+[PHPIni]l
+$_LogDB = false;
+$_LogDIR = false;
+$_LogScript = false;
+echo '<br><div>';
+echo '<img id="TodoDB"  src="edes.php?R:$t/g/s/ed_log_db_all.gif" onclick="EditDB()" style="margin-right:10px" title="@Edita log de Base de datos@" style="display:'.(($_LogDB)?'':'none').'">';
+echo '<img id="TodoDIR" src="edes.php?R:$t/g/s/ed_log_dir_all.gif" onclick="EditDIR()" title="@Edita log de Directorios@" style="display:'.(($_LogDIR)?'':'none').'">';
+echo '<img id="TodoDIR" src="edes.php?R:$t/g/s/ed_log_script.gif" onclick="EditScript()" title="@Edita log de Script@" style="display:'.(($_LogScript)?'':'none').'">';
+echo '<img id="TodoSi" src="edes.php?R:$t/g/s/pack_update.gif" onclick="NewCrearPaquete()" style="margin-left:20px" title="@CREAR PAQUETE DE ACTUALIZACION@">';
+echo '</div><br>';
+[PHPEnd]l
+if( $_SESSION['_D_']=='' ){
+$_LogDB = false;
+$_LogDIR = false;
+$_LogScript = false;
+}
+$_HttpConfigLoad = true;
+$Dim = include( eScript('$a/u/_http.gs') );
+$IdSrv = _IDSRV();
+echo '<script type="text/javascript">';
+echo '_Origen = "'.$IdSrv.'";';
+echo 'var _Server = new Array();';
+$i = 0;
+for( $n=0; $n<count($Dim); $n++ ) if( $IdSrv<>$Dim[$n][1] ){
+if( count($Dim[$n])==3 ){
+echo "_Server[{$i}] = Array('{$Dim[$n][0]}','{$Dim[$n][1]}','{$Dim[$n][2]}');";
+$i++;
+}
+}
+if( $i>1 ){
+echo "_Server[{$i}] = Array('-','');";
+echo "_Server[{$i}+1] = Array('*','','TODO');";
+}
+if( count($Dim)==0 || $i==0 ) echo 'BROWSE.children[0].children[3].style.display=document.all.TodoSi.style.display="none"';
+if( !$_Development ) echo 'eBlink(); document.body.style.backgroundColor="#fff1ef";';
+echo '</script>';
+[CallSrv]PackUpdate
+$Test = false;
+$PackUpdate = trim($PackUpdate);
+if( $Test ) eTron(eGetMicrotime().': INICIO: '.$PackUpdate);
+if( $PackUpdate[0]!='<' || substr($PackUpdate,-1)!='>' ){
+?>
+<script type="text/javascript">
+top.eInfoError(window.frameElement.WOPENER, '@ERROR: La lista de actualización no está completa.@', 7);
+</script>
+<?PHP
+eEnd();
+}
+$PackUpdate = str_replace('{:35:}', '#', substr($PackUpdate,1,-1));
+if( $Test ) eTron(eGetMicrotime().': '.$PackUpdate);
+$Dim = explode('|',$PackUpdate);
+$i = (int)eGetMicrotime();
+$Cdi = date('Y-m-d H:i:s',$i);
+if( $Test ) eTron(eGetMicrotime().': '.'Chequeo Ini');
+for( $n=0; $n<count($Dim)-1; $n++ ){
+if( !file_exists(eScript($Dim[$n])) ){
+$Script = trim($Dim[$n]);
+$sql = "update {$_SESSION['ShareDictionary']}gs_activity set cdi_ftp='{$Cdi}' where cdi_ftp is null and script='{$Script}'";
+if( $Test ){
+eTron(eGetMicrotime().': '.$sql);
+}else{
+qQuery($sql);
+}
+$Dim[$n] = '';
+continue;
+}
+if( $Test ) eTron(eGetMicrotime().': '.$n.' Chequea: '.$Dim[$n]);
+if( substr($Dim[$n],0,4)!='[OP]' && $Dim[$n]!='/tree/gs_op.unl' && $Dim[$n]!='/tree/gs_op_lng.unl' && TieneComandosDebug( eScript($Dim[$n]), $NoComando ) ){
+if( $Test ) eTron(eGetMicrotime().': '.'Script con comandos de depuración: '.$Dim[$n]);
+?>
+<script type="text/javascript">
+top.eInfoError(window.frameElement.WOPENER, '<?=eLng('ERROR: Script con comandos de depuración', $Dim[$n], $NoComando )?>', 7);
+</script>
+<?PHP
+eEnd();
+}
+}
+if( $Test ) eTron( eGetMicrotime().': '.'Chequeo End' );
+$sDir = '../_bak_/update/';
+if( !is_dir( $sDir ) ) mkdir( $sDir, 0777 );
+$MFile = $sDir.'_update_.'.$i;
+if( $Test ) eTron( eGetMicrotime().': '.'Empacar: '.$MFile );
+$fp = fopen( $MFile, 'w' );
+for( $n=0; $n<count($Dim)-1; $n++ ){
+if( $Dim[$n]=='' ) continue;
+if( $Test ) eTron(eGetMicrotime().': '.$n.': '.$Dim[$n]);
+fwrite( $fp, str_pad( strlen($Dim[$n]), 2, '0', STR_PAD_LEFT ) );
+fwrite( $fp, $Dim[$n] );
+if( substr($Dim[$n],0,4)!='[OP]' ){
+$File = eScript($Dim[$n]);
+fwrite( $fp, str_pad( filesize($File), 8, '0', STR_PAD_LEFT ) );
+fwrite( $fp, file_get_contents($File) );
+}else{
+fwrite( $fp, str_pad( 0, 8, '0', STR_PAD_LEFT ) );
+}
+}
+fclose( $fp );
+if( $Test ) eTron( eGetMicrotime().': '.'Paso 3' );
+for( $n=0; $n<count($Dim)-1; $n++ ){
+if( $Dim[$n]=='' ) continue;
+$Script = $Dim[$n];
+if( $Test ) eTron(eGetMicrotime().': '.$n.': '.$Dim[$n]);
+if( substr($Script,0,4)=='[OP]' ){
+if( file_exists('../_datos/config/manager_op.cdi') ){
+$File = '../_datos/config/manager_op.add';
+$txt = '';
+if( file_exists($File) ) $txt = file_get_contents( $File )."\n";
+$txt .= $Script;
+file_put_contents( $File, $txt );
+}else{
+$tmp = explode('~',substr($Script,4));
+if( $Test ){
+eTron(eGetMicrotime().': '."update {$_SESSION['ShareDictionary']}gs_op set show_type='{$tmp[2]}' where cd_gs_op='{$tmp[1]}'");
+}else{
+qQuery("update {$_SESSION['ShareDictionary']}gs_op set show_type='{$tmp[2]}' where cd_gs_op='{$tmp[1]}'");
+}
+}
+}
+if( $Test ){
+eTron(eGetMicrotime().': '."update {$_SESSION['ShareDictionary']}gs_activity set cdi_ftp='{$Cdi}' where cdi_ftp is null and script='{$Script}'");
+}else{
+qQuery("update {$_SESSION['ShareDictionary']}gs_activity set cdi_ftp='{$Cdi}' where cdi_ftp is null and script='{$Script}'");
+}
+}
+$MFile = substr($MFile,2);
+$sql = "insert into {$_SESSION['ShareDictionary']}gs_activity (cd_gs_user, cdi, script, edes, email) values ({$_User}, '{$Cdi}', '{$MFile}', 'P', '{$_SESSION['_UserEMail']}')";
+if( $Test ){
+eTron(eGetMicrotime().': '.$sql);
+eTron(eGetMicrotime().': '.'---FIN---');
+}else{
+qQuery($sql);
+}
+include_once('../_d_/cfg/edes.ini');
+if( isset($_PackageReportTo) && $_PackageReportTo!='' ){
+qQuery( "select * from gs_user where cd_gs_user={$_User}" );
+$User = qArray();
+$Cabeceras  = "MIME-Version: 1.0\r\n";
+$Cabeceras .= "Content-type: text/html; charset=ISO-8859-1\r\n";
+$Cabeceras .= "From: ".$User['email']."\r\n";
+if( $_PackageReportCc  !='' ) $Cabeceras .= "Cc: ".$_PackageReportCc."\r\n";
+if( $_PackageReportBCc !='' ) $Cabeceras .= "Bcc: ".$_PackageReportBCc."\r\n";
+$Cabeceras .= "X-Mailer: PHP/" . phpversion();
+$cd = md5(microtime());
+@mail($_PackageReportTo, $_PackageReportMessage.' '.$User['user_name'], 'Action: New Package '.$cd.'<br>From: '.trim($User['user_name']).' '.trim($User['user_surname']).'<br>CDI: '.$Cdi, $Cabeceras);
+}
+?>
+<script type="text/javascript">
+var Obj = window.frameElement.WOPENER;
+Obj.DGI("BROWSE").style.display = 'none';
+Obj.DGI("GROUPTITLE").style.display = 'none';
+for(var n=0; n<Obj.document.getElementsByTagName('img').length; n++) Obj.document.getElementsByTagName('img')[n].style.display = 'none';
+top.eInfo(Obj, '@CREADO PAQUETE DE ACTUALIZACION@');
+Obj.uIFRAME.ePF('cdi', '<?= $Cdi ?>');
+Obj.uIFRAME.eSubmit();
+</script>
+<?PHP
+eEnd();
+function TieneComandosDebug( $NomFile, &$NoComando ){
+global $Test;
+if( $NomFile[0]=='[' ) return false;
+if( substr_count( $NomFile, '.' )==0 ) return false;
+$Ext = substr( $NomFile, strrpos($NomFile,'.')+1 );
+if( $Ext<>'js' && substr($Ext,-2)<>'df' && $Ext<>'lng' && $Ext<>'php' && substr($Ext,0,3)<>'htm' ) return false;
+$Long2 = array(6,6);
+$LabelExit = array( '['.'NOTE]', '['.'EXIT]' );
+$Long = array();
+$Reservado = array( '['.'LANGUAGE]', '['.'DEBUG]', '['.'GPFIELDS]', '['.'SAVEFORM]' );
+for( $n=0; $n<count($Reservado); $n++ ) $Long[] = strlen($Reservado[$n]);
+$PHPReservado = array(	'TOP.ETRACE(' , 'TOP.ETRON(' , 'ETRACE(' , 'ETRON(' , 'EPARSEERROR(' , "console.log(" , "console.table(" ,
+'TOP.ETRACE (', 'TOP.ETRON (', 'ETRACE (', 'ETRON (', 'EPARSEERROR (', "console.log (", "console.table (",
+'$_DEBUG', '$'."GLOBALS['_DEBUG']", '$GLOBALS["_DEBUG"]', 'debugger;', 'debugger ;' );
+if( !file_exists( $NomFile ) ) return false;
+$fd = fopen( eScript($NomFile), 'r' );
+while( !feof($fd) ){
+$oBuffer = trim(fgets($fd,4096));
+$buffer = strtoupper(substr(str_replace(' ','',$oBuffer),0,20));
+if( $buffer!='' ){
+if( substr_count( $oBuffer, '_PERMISSIONDEBUG_' ) > 0 ){
+fclose( $fd );
+return false;
+}
+list($oBuffer) = explode( '/'.'/', $oBuffer );
+list($buffer)  = explode( '/'.'/', $buffer );
+for( $n=0; $n<count($LabelExit); $n++ ){
+if( substr($buffer,0,$Long2[$n])==$LabelExit[$n] ){
+if( $Test ) eTrace( $LabelExit[$n].' == '.$buffer );
+fclose( $fd );
+return false;
+}
+}
+if( substr($buffer,0,$Long[0])==$Reservado[0] ){
+if( $Test ) eTrace( $Reservado[$n].' == '.$buffer );
+list(,,$buffer) = explode('|',$buffer);
+$buffer = trim($buffer);
+if( $buffer=='TRUE' || $buffer=='1' ){
+fclose( $fd );
+$NoComando = $Reservado[0];
+return true;
+}
+}
+for( $n=1; $n<count($Reservado); $n++ ){
+if( substr($buffer,0,$Long[$n])==$Reservado[$n] ){
+if( $Test ) eTrace( $Reservado[$n].' == '.$buffer );
+fclose( $fd );
+$NoComando = $Reservado[$n];
+return true;
+}
+}
+$bufferPHP = strtoupper($oBuffer);
+for( $n=0; $n<count($PHPReservado); $n++ ){
+if( substr_count( $bufferPHP, $PHPReservado[$n] ) > 0 ){
+$i = strpos($bufferPHP,$PHPReservado[$n])-1;
+if( substr($bufferPHP,i,7)<>'.ETRACE' && substr($bufferPHP,i,6)<>'.ETRON' ){
+$i = strpos($bufferPHP,$PHPReservado[$n])-2;
+if( substr( $bufferPHP, $i, 2 )<>'/'.'/' ){
+if( ($PHPReservado[$n]=='ETRACE(' || $PHPReservado[$n]=='ETRACE (') && substr_count( $bufferPHP, 'FUNCTION ' ) > 0 ){
+continue;
+}
+if( $Test ) eTrace( $PHPReservado[$n].' == '.$bufferPHP );
+fclose( $fd );
+if( substr_count( $PHPReservado[$n],'(' ) > 0 ) $PHPReservado[$n] .= ')';
+$NoComando = $PHPReservado[$n];
+return true;
+}
+}
+}
+}
+}
+}
+fclose( $fd );
+return false;
+}

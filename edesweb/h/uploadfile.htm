@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">UploadFile</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[UploadFile] Field | Folder | Filename | Bytes [ | Title ] [ | Extensiones | Prefijo | Tamaños | Prefijos | ConCopia ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Configura el envío de archivos al servidor.<br />Para saber donde se ha grabado el fichero se puede usar las siguientes variables<br />$_FILES[ Field ]["tmp_name"]<br />$GLOBALS[ "Field_tmp_name"]<br />Por defecto no se puede seleccionar un nombre de fichero que no entre en el campo, si quisieramos que se cortase el nombre para entrar en el campo declarariamos la variable javascript "var <strong>_FileTrimName</strong> = true;" <br />Si se define la variable "<strong>$_CNTFREEDISKSPACE</strong>" a "true" el sistema controlará el tamaño disponible en el directorio indicado y con la variable <strong>$_CNTDISKSPACE</strong> el tamaño máximo en Gigabyts.. <br />Si existe la función de usuario "<strong>eBeforeUploadFile()</strong>" será llamada después del alta del registro y antes de mover los ficheros descargados. <br /><br /><strong>$_DefaultPathType:</strong> puede tener los valores "G" indicando que es global o "S" para el script actual<br /><strong>$_DefaultPathFile:</strong> Para definir el sufijo del nombre del fichero donde se almacena el directorio<br /><br />Se puede definir el directorio por defecto donde se lee y donde se graba:<br /><strong>$PathLoad</strong>: Se define desde el icono de leer ficheros<br /><strong>$PathSave</strong>: Se define desde la opción "Directorio Personal"</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Field</td>
+<td>Nombre del archivo a subir  </td>
+</tr>
+<tr>
+<td>Folder</td>
+<td>Carpeta destino. Cuando se quiere balancear ficheros entre varios directorios se puede poner el simbolo "!" siendo sustituido por los últimos caracteres del nombre del fichero, por ejemplo si pones "/doc/!!" y el fichero se llama "1234.pdf" utilizará el directorio "/doc/34" o lo creará si no existe, si la longitud del nombre del fichero es menor al nº de "!" se rellenará con "0" por la izquierda. El nº de "!" puede ser de 0 a n la única condición es que todos las "!" tienen que ir juntas.<br />Si el campo "Folder" se deja en blanco grabará el fichero dentro de la ddbb en el campo "Filename".</td>
+</tr>
+<tr>
+<td>Filename</td>
+<td>Es el nombre que se le va a dar al fichero tomando de referencia un campo o el valor devuelto por una función. Si empieza por "=" será un nombre constante, se utiliza para ficheros con nombre propio, por ej. el ficheo se llama "manual.php" pues pondremos "=manual" y la extensión es automática. Se pueden poner variables de la forma {$nmVar}</td>
+</tr>
+<tr>
+<td>Bytes</td>
+<td>Número máximo de bytes que puede tener el archivo a subir, puede ponerse con separadores de miles</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Title del icono para visualizar el fichero, si no se pone el parámetro pondrá "Ver fichero".</td>
+</tr>
+<tr>
+<td>Extensiones</td>
+<td>Lista de extensiones permitidas del fichero separadas por coma.</td>
+</tr>
+<tr>
+<td>Prefijo</td>
+<td>Prefijo del nombre del fichero, se utiliza cuando el nombre del fichero queremos que sea el serial y queremos que halla mas de un fichero con el nombre del código serial diferenciandolos por el prefijo. Si el prefijo empieza por "_" será un sufijo.</td>
+</tr>
+<tr>
+<td>Tamaños</td>
+<td>Ancho,Alto[,...]<br />Si solo se pone el Ancho o el Alto calculará el otro valor de forma proporcional, también se puede poner "Max [Tamaño]" y pondrá a la longitud mas desfavorable el tamaño máximo definido.</td>
+</tr>
+<tr>
+<td>Prefijos</td>
+<td>Prefijo[,...]</td>
+</tr>
+<tr>
+<td><strong>ConCopia</strong></td>
+<td>Directorio de la copia</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[UploadFile] fichero | /_datos/fotos | cd_foto | 300.000 | Ver foto | gif,jpg,png</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[UploadFile] foto | /http/go | cd_regalo | 300.000 | Ver gr&aacute;fico | jpg,gif,png | i_ | 120,120,60,60 | ig_, ip_| /http/g</td>
+</tr>
+<tr>
+<td id="txt">Este ejemplo pone el gráfico original en el directorio "/http/go/" y una copia en el directorio "/http/g" con el prefijo "ig_" con el tama?o 120x120 y otro gráfico con prefijo "ip_" y tamaño 60x60.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[UploadFile] fichero | //doc/!!! | cd_gs_store | 20.000.000 | | avi,wav,mp3,mp4,txt,doc,docx,xls,xlsx,pdf,htm,html,pps,ppt</td>
+</tr>
+<tr>
+<td id="txt">Balancea el directorio donde se guardan los ficheros utilizando 999 directorios si el nombre del fichero en el servidor es el serial.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[UploadFile] archivo | =intranet.datos/{$_SESSION['_Cli_']}/files | cd_docu | 5.000.000 | Seleccionar documento | txt,doc,pdf,xls,htm,html,rtf,ppt,docx,xlsx,gif,jpeg,jpg,png,tiff | | | | | true </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

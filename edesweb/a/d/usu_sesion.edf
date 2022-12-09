@@ -1,0 +1,84 @@
+#include(*) lng
+[Title]=@VARIABLES DE SESION@
+[SessionVar]
+[FormButtons]
+[Width]c|_AvisoStatus_|287
+[AddCode]*|_WebMaster|S|&nbsp;&nbsp;@WebMaster@
+[PHPStart]*
+include( '../_datos/config/desktop.ini' );
+[CC]#ConTree|eFileGetVar("Desktop.DesktopTreeType")!='O'
+[Fields]
+@Usuario@|_User|+|T|6||M|||
+¿ #ConTree ? ,@Arbol@|_Tree|+|T|3||M|||
+,@Nodo@|_Node|+|T|4||M|||
+,@Conexión@|_Connection_|+|T|7||A|||
+{FS}{ @Ventana@
+<]@Alto px@|_pxH_|+|T|4||M|||
+}
+{FS}{ @Avisos@
+<]@Aviso CDI@|_CDI_|0|T|10||M|||
+,]@Novedades@|_novedades_|CDI|T|19||M|||
+,]@Aviso status@|_AvisoStatus_|0|T|40||M|||
+}
+{FS}{ @Permisos@
+<|_WebMaster|N|C|1||M|||
+,@LogUser@|_LogUser_|N|C|1||M|||
+,@LogHistory@|_LogHistory_|N|C|1||M|||
+}
+{FS}{ @Cache y Sesión@
+<]@Cache SRV@|_CacheSrv|N|C|1||-|||
+,]@Cache PC@|_CachePc|H|T|8||-|||
+,]@Sesión PHP@|_sesion_|X|T|32|225|-|||
+}
+-|@Variables particulares@
+{P} OtrasVariables
+[PHPHead]*
+global $_Form;
+$Pasar = 0;
+foreach( $_SESSION as $key => $value ){
+if( $Pasar == 1 ) $Pasar = 2;
+if( $key == '_Tree' ) $Pasar = 1;
+}
+if( $Pasar < 2 ){
+array_pop($_Form);
+array_pop($_Form);
+}
+[P]OtrasVariables
+global $_Form;
+$Pasar = false;
+echo '<table border=0 cellspacing=0 cellpadding=0>';
+foreach($_SESSION as $key=>$value) if( getType($value)!="array" && getType($value)!="boolean" && getType($value)!="NULL" ){
+if( $Pasar && $key!='_User' && $key!='_Tree' && $key!='_Node' ){
+echo "<tr><td style='text-align:right'>{$key}<td>";
+switch( getType($value) ){
+case 'double':
+eAddField("| {$key} | -, | T | 6,3 |  | M | | |", str_replace(".",",",$value));
+break;
+case 'integer':
+eAddField("| {$key} | - | T | 6 |  | M | | |", str_replace(".",",",$value));
+break;
+default:
+eAddField("| {$key} | #X | T | 100 | 225 | M | | |", $value);
+}
+}
+if( $key=='_Tree' ) $Pasar = true;
+}
+echo '</table>';
+[PHPIni]M
+global $_pField;
+$Pasar = false;
+foreach($_SESSION as $key=>$value) if( getType($value)!="array" && getType($value)!="boolean" && getType($value)!="NULL" ){
+if( $Pasar && $key!='_User' && $key!='_Tree' && $key!='_Node' ){
+switch( getType($value) ){
+case 'double':
+$_pField[$key] = explode("|", "| {$key} | -, | T | 6,3 |  | M | | |");
+break;
+case 'integer':
+$_pField[$key] = explode("|", "| {$key} | - | T | 6 |  | M | | |");
+break;
+default:
+$_pField[$key] = explode("|", "| {$key} | #X | T | 100 | 225 | M | | |");
+}
+}
+if( $key=='_Tree' ) $Pasar = true;
+}

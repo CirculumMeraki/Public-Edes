@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">PDFInclude</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[PDFInclude] Modo [ | AddMargenTop=0 ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Inserta código PHP fundamentalmente instrucciones para modificar el PDF al principio y/o final de cada página con posibilidad de crear una primera hoja de portada y una última hoja. El Modo se puede definir con las iniciales o con el literal. Es una etiqueta multilinea, no se pueden definir funciones en esta zona y las variables a las que se accede son:<br />
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>$handle </td>
+<td>El manejador del fichero PDF </td>
+</tr>
+<tr>
+<td>$dw </td>
+<td>Ancho del documento </td>
+</tr>
+<tr>
+<td>$dh </td>
+<td>Alto del documento </td>
+</tr>
+<tr>
+<td>$page</td>
+<td>Número de página, este parámetro es modificable.</td>
+</tr>
+<tr>
+<td>$header_line</td>
+<td>Matriz con los siguientes valores de la posición de la cabecera: $x, $y, $x2</td>
+</tr>
+<tr>
+<td>$BreakPage</td>
+<td>Matriz con los valores del cursor de los campo  definidos en [PDFBreakPage]</td>
+</tr>
+</tbody>
+</table>
+En este código PHP no se puede sacar nada por pantalla al estar generandose el PDF, en caso de querer tener alguna información mientras se desarrolla utilizar la función "eTron()".</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="_Opciones" border="1" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>M</td>
+<td>Main </td>
+<td>Nada mas crear el PDF </td>
+</tr>
+<tr>
+<td>S</td>
+<td>Start </td>
+<td>Una p?gina en blanco al empezar </td>
+</tr>
+<tr>
+<td>FH</td>
+<td>First-Header </td>
+<td>Antes de la cabecera de la primera página </td>
+</tr>
+<tr>
+<td>EH</td>
+<td>Each-Header </td>
+<td>Antes de la cabecera de cada página </td>
+</tr>
+<tr>
+<td>FB</td>
+<td>First-Before </td>
+<td>Al inicio de la primera página </td>
+</tr>
+<tr>
+<td>FA</td>
+<td>First-After </td>
+<td>Al final de la primera página </td>
+</tr>
+<tr>
+<td>EB</td>
+<td>Each-Before </td>
+<td>Al principio de cada página </td>
+</tr>
+<tr>
+<td>EA</td>
+<td>Each-After </td>
+<td>Al final de cada página </td>
+</tr>
+<tr>
+<td>LB</td>
+<td>Last-Before </td>
+<td>Al principio de la última página </td>
+</tr>
+<tr>
+<td>LA</td>
+<td>Last-After </td>
+<td>Al final de la última página </td>
+</tr>
+<tr>
+<td>E</td>
+<td>End </td>
+<td>Una página en blanco al terminar </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[PDFInclude] LA<br />PDF_show_xy( $handle, 'Fdo: XXXXXXXX', 400, 40 );<br />PDF_show_xy( $handle, 'Consejero delegado en funciones', 400, 30 );</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

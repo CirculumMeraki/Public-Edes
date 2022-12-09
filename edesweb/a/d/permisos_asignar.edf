@@ -1,0 +1,442 @@
+[Title]=ASIGNAR PERMISOS|l
+[DBTable]gs_user
+[DBIndex]cd_gs_user; login
+[DBOrder]user_name,user_surname
+[DBSerial]cd_gs_user
+¿ $_SystemUser!='S' ? [DBAddFilter] (system_user!='S' or system_user is null or system_user='')
+[DBLimit]5000,750,750
+[DBLog]cd_gs_user
+[ForUsers]*|select count(*) from gs_tree_admin where cd_gs_user={$_User} and action='A'
+[AddOption]?|permission|,; S,@Si@; N,@No@; C,@Caducado@; )'S'(,@Sin permiso@
+[OnChange]c,n|dni|ePadLeft(this,8)
+[Fields]?|2
+DNI|dni|DNI|T|8||Qcp|||
+,2 Usuario|cd_gs_user|+|T|5||Qcp|||
+Nombre|user_name|X|T|20||Q|||
+,2 Apellidos|user_surname|X|T|30||Q|||
+Local|cd_gs_node|+|S|60|+user_surname|Q|||
+Cargo|cd_gs_position|+|S|30|+user_surname|Q|||
+E-Mail|email|@|T|65|+user_surname|QE|||
+|permission|N|T|1||*Q|S||
+#Include(?) /_datos/config/admin_per.idf|true
+[FormAction]m,c|MostrarListado()
+[JSIni]m,c
+function MostrarListado(){
+var txt = '<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY style="display:none">'+"<FORM action='edes.php?E:CallSrv="+_Source+"&ListUser=1&_Mode="+_Mode+"' METHOD='POST'>";
+var t = document.FRM1.elements, n;
+for( n=0; n<t.length; n++ ) txt += t[n].outerHTML;
+txt += "</FORM><"+"script>document.forms[0].submit();<"+"/script></BODY></HTML>";
+frames['uIFRAME2'].document.write(txt);
+frames['uIFRAME'].location.href = 'edes.php?R:/_datos/config/empty_html.htm';
+}
+[HTMIni]*
+<table border=0 cellspacing=0 cellpadding=0 style='width:100%;height:100%;'>
+<tr>
+<td valign=middle align=center>
+<table border=0 cellspacing=0 cellpadding=0 style='width:1px;height:100%;'>
+<tr>
+<td valign=middle align=center style='height:1px'>
+[HTMEnd]*
+<tr>
+<td valign=middle align=center id=cIFrame2>
+<script type="text/javascript">
+top.eNewIframe( window, 'cIFrame2', 'uIFRAME2', 'edes.php?R:/_datos/config/empty_html.htm' );
+</SCRIPT>
+</table>
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td valign=middle align=center width=100% id=cIFrame>
+<script type="text/javascript">
+top.eNewIframe( window, 'cIFrame', 'uIFRAME', 'edes.php?R:/_datos/config/empty_html.htm' );
+</SCRIPT>
+</td>
+</tr>
+</table>
+[CallSrv]ListUser
+$Where = qGetWhere();
+if( $Where<>'' ) $Where = " where {$Where}";
+?>
+<!DOCTYPE HTML>
+<HTML><HEAD><TITLE></TITLE>
+<LINK REL='stylesheet' HREF='css/lista.css' TYPE='text/css'>
+<LINK REL='off' id='CssOffWindow' HREF='css/lista_off.css' TYPE='text/css'>
+<?=_FileNoCache('edes.js')?>
+<SCRIPT type='text/javascript'>
+var _UltimaSel = -1;
+function SelectUser(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+var txt = '<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY style="display:none">'+"<FORM action='edes.php?E:CallSrv="+_WOPENER._Source+"&ListArbolesDe="+Obj.parentNode.cells[0].textContent+"' METHOD='POST'>";
+txt += '<input name="cd_gs_user" value="'+Obj.parentNode.cells[0].textContent+'">';
+txt += '<input name="_Mode" value="<?=$_Mode?>">';
+txt += "</FORM><"+"script>document.forms[0].submit();<"+"/script></BODY></HTML>";
+_WOPENER.frames['uIFRAME'].document.write(txt);
+if( _UltimaSel>-1 ){
+BROWSE.rows[_UltimaSel].style.backgroundColor = '';
+BROWSE.rows[_UltimaSel].style.color = '#bbbbbb';
+}
+Obj.parentNode.style.color = 'red';
+_UltimaSel = Obj.parentNode.rowIndex;
+}
+</SCRIPT>
+</HEAD><BODY>
+<div id=CONTENEDOR style="height:1px;width:100%;text-align:right">
+<table id=BROWSE onclick=SelectUser()>
+<COL style='display:none'>
+<COL style='cursor:pointer' class='Celda' style="white-space:nowrap">
+<COL style='cursor:pointer' class='Celda' style="white-space:nowrap">
+<tr><th></th><th colspan=2>USUARIOS</th></tr>
+<tr><th></th><th>NOMBRE</th><th>APELLIDOS</th></tr>
+<?PHP
+qQuery("select cd_gs_user,user_name,user_surname from gs_user {$Where} order by user_name,user_surname");
+while($r=qArray()){
+echo '<tr><td>'.$r['cd_gs_user'].'</td><td>'.$r['user_name'].'</td><td>'.$r['user_surname'].'</td></tr>';
+}
+echo '</table></div></BODY></HTML>';
+eEnd();
+[CallSrv]ListArbolesDe
+$Where = qGetWhere();
+if( $Where<>'' ) $Where = " where {$Where}";
+$Usuario = $_POST['cd_gs_user'];
+qQuery("select cd_gs_user,user_name,user_surname from gs_user where cd_gs_user={$Usuario} order by user_name,user_surname");
+$r=qArray();
+?>
+<!DOCTYPE HTML>
+<HTML><HEAD><TITLE></TITLE>
+<LINK REL='stylesheet' HREF='css/lista.css' TYPE='text/css'>
+<LINK REL='off' id='CssOffWindow' HREF='css/lista_off.css' TYPE='text/css'>
+<style>
+#o { display: none; }
+#n0 { padding-left: 5px; }
+#n1 { padding-left: 22px; }
+#n2 { padding-left: 39px; }
+#n3 { padding-left: 56px; }
+#n4 { padding-left: 73px; }
+#n5 { padding-left: 90px; }
+#n6 { padding-left: 107px; }
+#n7 { padding-left: 124px; }
+#n8 { padding-left: 141px; }
+#n9 { padding-left: 158px; }
+TH { text-transform: none; }
+</style>
+<?=_FileNoCache('edes.js')?>
+<SCRIPT type='text/javascript'>
+function SelectArbol(){
+var Obj = S.event(window), Estado;
+if( Obj.tagName!='TD' ) return;
+if( Obj.parentNode.disabled ) return;
+Estado = ( top.eTrim(Obj.parentNode.cells[0].textContent)=='S' ) ? '' : 'S';
+Obj.parentNode.cells[0].textContent = Estado;
+if( top.eTrim(Obj.parentNode.cells[3].textContent)=='' ) return;
+var Dim = Obj.parentNode.cells[3].textContent.split(',');
+var TR = LSTOP.children[0].rows,n;
+for( n=0; n<Dim.length; n++ ){
+TR[PosicionOp[Dim[n]]].cells[0].textContent = Estado;
+}
+if( Estado=='' ){
+var TR = LSTTREE.children[0].rows,a,o;
+for( a=1; a<TR.length; a++ ){
+if( TR[a].cells[0].textContent=='S' ){
+if( top.eTrim(TR[a].cells[3].textContent)!='' ){
+Dim = TR[a].cells[3].textContent.split(',');
+var oTR = LSTOP.children[0].rows,n;
+for( o=0; o<Dim.length; o++ ){
+oTR[PosicionOp[Dim[o]]].cells[0].textContent = 'S';
+}
+}
+}
+}
+}
+}
+function SelectOpcion(){
+var Obj = S.event(window), Estado;
+if( Obj.tagName!='TD' ) return;
+Estado = ( top.eTrim(Obj.parentNode.cells[0].textContent)=='S' ) ? '' : 'S';
+Obj.parentNode.cells[0].textContent = Estado;
+}
+function Grabar(){
+var TR = LSTTREE.children[0].rows,f,datos='',ops='';
+for( f=1; f<TR.length; f++ ){
+datos += TR[f].pk+';'+TR[f].cells[0].textContent+';'+TR[f].cells[2].textContent+';'+TR[f].cells[3].textContent+'|';
+}
+TR = LSTOP.children[0].rows;
+for( f=1; f<TR.length; f++ ){
+if( TR[f].cells[0].textContent=='S' ) ops += ','+TR[f].pk;
+}
+var txt = '<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY style="display:none">'+"<FORM action='edes.php?E:CallSrv="+_WOPENER._Source+"&Grabar=1' METHOD='POST'>";
+txt += '<input name="cd_gs_user" value="<?=$Usuario?>">';
+txt += '<textarea name="datos">'+datos+'</textarea>';
+txt += '<textarea name="ops">'+ops+'</textarea>';
+txt += "</FORM><"+"script>document.forms[0].submit();<"+"/script></BODY></HTML>";
+top.TLF.document.write(txt);
+}
+</SCRIPT>
+</HEAD><BODY>
+<TABLE style='background:transparent;margin-top:7px''>
+<tr>
+<td>
+<TABLE>
+<COL style='cursor:default'>
+<COL style='cursor:default' class='Celda' style="white-space:nowrap">
+<TR><TH>Nombre</TH><TD><?=$r['user_name']?></TD></TR>
+<TR><TH>Apellidos</TH><TD><?=$r['user_surname']?></TD></TR>
+</TABLE>
+<td>
+<?PHP if( $_Mode=='m' ){ ?>
+<input type=button value='Grabar' onclick='Grabar()' style='cursor:pointer;margin-left:20px'>
+<?PHP } ?>
+</tr>
+</table>
+<br>
+<div id=CONTENEDOR style="height:1">
+<TABLE style='background:transparent'>
+<tr>
+<td style='vertical-align:top' id=LSTTREE>
+<table id=BROWSE cellspacing=1px cellpaddingpx=2 border=0px<?=(($_Mode=='m')?' onclick=SelectArbol()':'')?>>
+<COL style='cursor:pointer;text-align:center' class='Celda' style="white-space:nowrap">
+<COL style='cursor:default' class='Celda' style="white-space:nowrap">
+<col id='o'>
+<col id='o'>
+<tr><th>Sel</th><th>ARBOL DE OPCIONES</th><th>Modos</th><th>Lista de opciones</th></tr>
+<?PHP
+$ArbolesDelUsuario = '';
+$Arboles = '';
+qQuery("select cd_gs_tree,nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where permission='S' and cd_gs_tree in (select cd_gs_tree from gs_tree_admin where cd_gs_user={$_User} and action='A') order by nm_gs_tree", $p1);
+while($r=qArray($p1)){
+if( $Arboles<>'' ) $Arboles .= ',';
+$Arboles .= $r['cd_gs_tree'];
+$Modos = '';
+qQuery( "select distinct(select mode from {$_SESSION['ShareDictionary']}gs_op where mode is not null and mode<>'' and cd_gs_op={$_SESSION['ShareDictionary']}gs_tree_op.cd_gs_op) from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree={$r['cd_gs_tree']} order by 1");
+while($m=qRow()){
+if( $Modos<>'' ) $Modos .= ',';
+$Modos .= $m[0];
+}
+$Opciones = '';
+qQuery( "select cd_gs_op from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree={$r['cd_gs_tree']} and cd_gs_op in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op where show_type<>'U')" );
+while($o=qRow()){
+if( $Opciones<>'' ) $Opciones .= ',';
+$Opciones .= $o[0];
+}
+$TieneElArbol = ((qCount("gs_user_tree","cd_gs_user={$Usuario} and cd_gs_tree={$r['cd_gs_tree']}")>0)?'S':'');
+if( $TieneElArbol=='S' ){
+if( $ArbolesDelUsuario<>'' ) $ArbolesDelUsuario .= ',';
+$ArbolesDelUsuario .= $r['cd_gs_tree'];
+}
+$Activo = (( $_SESSION['_D_']<>'~' && $_SESSION['_D_']<>'A' && trim($r['nm_gs_tree'])=='MASTER' ) ? ' disabled' : '' );
+echo '<tr pk='.$r['cd_gs_tree'].$Activo.'><td>'.$TieneElArbol.'</td><td>'.$r['nm_gs_tree'].'</td><td>'.$Modos.'</td><td>'.$Opciones.'</td></tr>';
+}
+?>
+</table>
+</td>
+<td style='vertical-align:top' id=LSTOP>
+<table id=BROWSE<?=(($_Mode=='m')?' onclick=SelectOpcion()':'')?>>
+<COL style='cursor:pointer;text-align:center' class='Celda' style="white-space:nowrap">
+<COL style='cursor:default;' class='Celda' style="white-space:nowrap">
+<COL><COL>
+<tr><th>Sel</th><th>OPCION</th></tr>
+<?PHP
+if( $ArbolesDelUsuario=='' ) $ArbolesDelUsuario = -1;
+$OpAsignada = array();
+qQuery("select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op where
+cd_gs_op in ( select distinct(cd_gs_op) from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree in ({$ArbolesDelUsuario}) )
+or
+cd_gs_op in ( select cd_gs_op from gs_user_op where cd_gs_user={$Usuario} and action='I' )");
+while($r=qArray()) $OpAsignada[$r['cd_gs_op']] = 1;
+$OpAnulada = array();
+qQuery("select cd_gs_op from gs_user_op where cd_gs_user={$Usuario} and action='D'");
+while($r=qArray()) $OpAnulada[$r['cd_gs_op']] = 1;
+$PosicionOp = array();
+$p = 0;
+qQuery("select cd_gs_op,caption,type,indent from {$_SESSION['ShareDictionary']}gs_op where show_type<>'U' and cd_gs_op in ( select distinct(cd_gs_op) from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree in ({$Arboles}) ) order by seq", $p1);
+while($r=qArray($p1)){
+$Caption = str_replace( '"', '&quot;', trim($r['caption']) );
+$TieneLaOp = (($OpAsignada[$r['cd_gs_op']])?'S':'');
+if( $OpAnulada[$r['cd_gs_op']] ) $TieneLaOp = '';
+if( $r['type']=='F' ) $Caption = '<img src=g/tree_0.gif>'.$Caption;
+if( $r['type']=='L' ){
+echo '<tr pk='.$r['cd_gs_op']."><td>{$TieneLaOp}</td><td id=n{$r['indent']}><img src=g/linea.gif width=100% height=2></td></tr>";
+}else{
+echo '<tr pk='.$r['cd_gs_op']."><td>{$TieneLaOp}</td><td id=n{$r['indent']}>".$Caption.'</td></tr>';
+}
+$PosicionOp[$r['cd_gs_op']] = ++$p;
+}
+?>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<script type="text/javascript">
+var PosicionOp = {'-1':0
+<?PHP
+foreach($PosicionOp as $k=>$v ) echo ",{$k}:{$v}";
+?>
+};
+</script>
+</BODY></HTML>
+<?PHP
+eEnd();
+[CallSrv]Grabar
+$Tracear = false;
+$Grabar = true;
+eInit();
+if( $Tracear ){ eTron( '', 0, 1 ); eTron( 'Hora: '. date('H:i:s') ); }
+$PkUser = $_POST['cd_gs_user'];
+$DimOpReal = array();
+qQuery( "select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op where type='O'" );
+while( $r=qArray() ) $DimOpReal[$r['cd_gs_op']] = 1;
+$DimOldAdd = array();
+$DimOldDel = array();
+qQuery( "select cd_gs_op,action from gs_user_op where cd_gs_user={$PkUser}" );
+while( $r=qArray() ){
+if( $r['action']=='I' ){
+$DimOldAdd[$r['cd_gs_op']] = 1;
+}else{
+$DimOldDel[$r['cd_gs_op']] = 1;
+}
+}
+$DimOpsAdd = array();
+$Dim = explode(',',substr($_POST['ops'],1));
+for( $i=0; $i<count($Dim); $i++ ) $DimOpsAdd[$Dim[$i]] = 1;
+$DimOpsDel = $DimOpsAdd;
+$OpsDel = '';
+$DimSumaOps = array();
+$DimListaArboles = '';
+$DimArbolesON = '';
+$DimArbolesOFF = '';
+$DimModos = array();
+$Dim = explode('|',$_POST['datos']);
+for( $n=0; $n<count($Dim)-1; $n++ ){
+list( $ArbolPK, $ArbolON, $ArbolModos, $ArbolOps ) = explode(';',$Dim[$n]);
+$DimModos[$ArbolPK] = $ArbolModos;
+if( $DimListaArboles<>'' ) $DimListaArboles .= ',';
+$DimListaArboles .= $ArbolPK;
+if( $ArbolON=='S' ){
+if( $DimArbolesON<>'' ) $DimArbolesON .= ',';
+$DimArbolesON .= $ArbolPK;
+if( qCount("gs_user_tree","cd_gs_user={$PkUser} and cd_gs_tree={$ArbolPK}")==0 ){
+$Sql = "insert into gs_user_tree values ('{$PkUser}','{$ArbolPK}','{$ArbolModos}')";
+}else{
+$Sql = "update gs_user_tree set mode='{$ArbolModos}' where cd_gs_user='{$PkUser}' and cd_gs_tree='{$ArbolPK}'";
+}
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+$Ops = explode(',',$ArbolOps);
+for( $i=0; $i<count($Ops); $i++ ){
+if( $DimOpsAdd[$Ops[$i]]=='' && $DimOpReal[$Ops[$i]]==1 ){
+if( $OpsDel<>'' ) $OpsDel .= ',';
+$OpsDel .= $Ops[$i];
+}
+$DimOpsAdd[$Ops[$i]] = 2;
+}
+}else{
+if( $DimArbolesOFF<>'' ) $DimArbolesOFF .= ',';
+$DimArbolesOFF .= $ArbolPK;
+}
+}
+if( $Tracear ) eTron( '$OpsDel OK......: '.$OpsDel );
+$Sql = "delete from gs_user_op where cd_gs_user={$PkUser} and action='D' and cd_gs_op in ( select cd_gs_op from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree in ( {$DimListaArboles} ))";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+$OpsAdd = '';
+for( $n=0; $n<count($Dim)-1; $n++ ){
+list( $ArbolPK, $ArbolON, $ArbolModos, $ArbolOps ) = explode(';',$Dim[$n]);
+if( $ArbolON<>'S' ){
+$Ops = explode(',',$ArbolOps);
+for( $i=0; $i<count($Ops); $i++ ){
+if( $DimOpsAdd[$Ops[$i]]==1 ){
+if( $DimOpReal[$Ops[$i]]==1 ){
+if( $OpsAdd<>'' ) $OpsAdd .= ',';
+$OpsAdd .= $Ops[$i];
+}
+$DimOpsAdd[$Ops[$i]] = 0;
+}
+}
+}
+}
+if( $Tracear ) eTron( '$OpsAdd OK......: '.$OpsAdd );
+if( $DimListaArboles<>'' ){
+$Sql = "delete from gs_user_tree where cd_gs_user={$PkUser} and cd_gs_tree in ({$DimListaArboles})";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+for( $n=0; $n<count($Dim)-1; $n++ ){
+list( $ArbolPK, $ArbolON, $ArbolModos ) = explode(';',$Dim[$n]);
+if( $ArbolON=='S' ){
+$Sql = "insert into gs_user_tree (cd_gs_user,cd_gs_tree,mode) values ( {$PkUser}, {$ArbolPK}, '{$ArbolModos}' )";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+}
+}
+}
+if( $OpsAdd<>'' || $OpsDel<>'' ){
+$i = 0;
+qQuery( "select cd_gs_tree,count(*) from {$_SESSION['ShareDictionary']}gs_tree_op where cd_gs_tree in ({$DimArbolesOFF}) group by 1 order by 2 desc" );
+while( $r=qArray() ) $ArbolAMirar[$i++] = $r['cd_gs_tree'];
+}
+if( $OpsAdd<>'' ){
+$DimEstanOpsAdd = array();
+$Sql = "select cd_gs_op from gs_user_op where cd_gs_user={$PkUser} and action='I' and cd_gs_op in ({$OpsAdd})";
+if( $Tracear ) eTron( $Sql );
+qQuery( $Sql );
+while( $r=qArray() ) $DimEstanOpsAdd[$r['cd_gs_op']] = 1;
+$Sql = "delete from gs_user_op where cd_gs_user={$PkUser} and action='I' and cd_gs_op not in ({$OpsAdd}) and cd_gs_tree in ( {$DimListaArboles} )";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+$DimGrabarOpsAdd = array();
+$Dim = explode(',',$OpsAdd);
+for( $n=0; $n<count($Dim); $n++ ){
+if( $DimEstanOpsAdd[$Dim[$n]]<>1 ) $DimGrabarOpsAdd[] = $Dim[$n];
+}
+if( $Tracear ) eTron( '$DimGrabarOpsAdd: '.implode(',',$DimGrabarOpsAdd));
+for( $n=0; $n<count($DimGrabarOpsAdd); $n++ ){
+$AddArbol = -1;
+for( $i=0; $i<count($ArbolAMirar); $i++ ){
+if( qCount("{$_SESSION['ShareDictionary']}gs_tree_op","cd_gs_tree={$ArbolAMirar[$i]} and cd_gs_op={$Dim[$n]}" ) ){
+$AddArbol = $ArbolAMirar[$i];
+break;
+}
+}
+$Sql = "delete from gs_user_op where cd_gs_user={$PkUser} and action='D' and cd_gs_op={$DimGrabarOpsAdd[$n]} and cd_gs_tree in ( {$DimListaArboles} )";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+$Sql = "insert into gs_user_op (cd_gs_user, cd_gs_tree, action, cd_gs_op ) values ( {$PkUser}, {$AddArbol} ,'I', {$DimGrabarOpsAdd[$n]} )";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+}
+}
+if( $OpsDel<>'' ){
+$DimEstanOpsDel = array();
+$Sql = "select cd_gs_op from gs_user_op where cd_gs_user={$PkUser} and action='D' and cd_gs_op in ({$OpsDel})";
+if( $Tracear ) eTron( $Sql );
+qQuery( $Sql );
+while( $r=qArray() ) $DimEstanOpsDel[$r['cd_gs_op']] = 1;
+$Sql = "delete from gs_user_op where cd_gs_user={$PkUser} and action='D' and cd_gs_op not in ({$OpsDel}) and cd_gs_tree in ( {$DimListaArboles} )";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+$DimGrabarOpsDel = array();
+$Dim = explode(',',$OpsDel);
+for( $n=0; $n<count($Dim); $n++ ){
+if( $DimEstanOpsDel[$Dim[$n]]<>1 ) $DimGrabarOpsDel[] = $Dim[$n];
+}
+if( $Tracear ) eTron( '$DimGrabarOpsDel: '.implode(',',$DimGrabarOpsDel));
+for( $n=0; $n<count($DimGrabarOpsDel); $n++ ){
+$DelArbol = -1;
+for( $i=0; $i<count($ArbolAMirar); $i++ ){
+if( qCount("{$_SESSION['ShareDictionary']}gs_tree_op","cd_gs_tree={$ArbolAMirar[$i]} and cd_gs_op={$Dim[$n]}" ) ){
+$DelArbol = $ArbolAMirar[$i];
+break;
+}
+}
+$Sql = "insert into gs_user_op (cd_gs_user, cd_gs_tree, action, cd_gs_op ) values ( {$PkUser}, {$DelArbol} ,'D', {$DimGrabarOpsDel[$n]} )";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+}
+}
+if( $Tracear ){
+eTron( '$DimListaArboles: '.$DimListaArboles );
+eTron( '$DimArbolesON...: '.$DimArbolesON );
+eTron( '$DimArbolesOFF..: '.$DimArbolesOFF );
+}
+echo '<html><head><title></title></head><body><script type="text/javascript">top.eInfo(window.frameElement.WOPENER,"Grabado...");</script></body></html>';
+eEnd();

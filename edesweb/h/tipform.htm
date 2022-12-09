@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">TipForm</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[TipForm] Mode [ | L/F/* ] | Field [, Field... ] [ | Text [ | Width [ | Sg ] ] ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Genera un TITLE en un determinado campo, la ayuda es visible al ponerte con el ratón encima del label y/o del campo, también cuando el foco se pone en un campo que tiene ayuda se mostrará durante 2 segundos independientemente de su tiempo de exposición y pulsado F1 se mostrará la yuda sin tiempo de caducidad. <br />También se puede visualizar la ayuda desde un icono mediante la función "eTipForm(NomCampo)"</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Field:</strong> Nombre de un campo existente en la etiqueta [Fields]. <br />
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td style="width: 48.75px;"> Mode</td>
+<td style="width: 794.205px;"> Modo</td>
+</tr>
+<tr>
+<td style="width: 48.75px;"> L/F/*<br />    I<br />   E</td>
+<td style="width: 794.205px;"> Este campo es opcional si no se define el Tip irá en el Field, sino será:<br />L: En el Label<br />F: En el Field<br />*: En los dos o dejarlo en blanco<br />I: En icono a la derecha del campo<br />E: En icono a la derecha del campo con el texto en un fichero externo</td>
+</tr>
+<tr>
+<td style="width: 48.75px;"> Field</td>
+<td style="width: 794.205px;">Nombre del campo o lista de campos separados por coma.<br />TITLE: Para el titulo, el los GDF se define en el GDF.<br />BUTTON: Para el botón en submit.<span style="color: #ff0000;"><br /></span>AddButton[nº]: Los botones añadidos con [AddButton]</td>
+</tr>
+<tr>
+<td style="width: 48.75px;"> Text</td>
+<td style="width: 794.205px;">Texto a mostrar, si hay un "#" se sustituirá por el valor del campo.<br />Funcion()<br />Si empieza por ">" le seguirá el nombre de un fichero html<br />Si está vacio el contenido irá como multilinea.<br />El "Texto" tanto en linea como en multilinia admite variables {$variable} y/o funciones <!--?uFunc()?--> o <!--?=uFunc()?--></td>
+</tr>
+<tr>
+<td style="width: 48.75px;"> Width</td>
+<td style="width: 794.205px;"> Ancho de la ayuda</td>
+</tr>
+<tr>
+<td style="width: 48.75px;"> Sq</td>
+<td style="width: 794.205px;"> Nº de segundos a mostrar la ayuda, si se omite será hasta que se quite el cursor</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[TipForm] * |   | cd_auto | Title en el control Cod.Auto      // Se pone en el Label y en el Field</code><br /><code>[TipForm] * | L | cd_auto | Title en el control Cod.Auto </code><br /><code>[TipForm] * | F | cd_auto | Title en el control Cod.Auto </code><br /><code>[TipForm] * | * | cd_auto | Title en el control Cod.Auto      // Se pone en el Label y en el Field</code><br /><br /><code>[TipForm] * | * | cd_auto || 200</code><br /><code>...</code><br /><br /><code>[TipForm] * | * | cd_auto | CargaAyuda()</code><br /><code>[PHPIni] *</code><br /><code>function CargaAyuda(){</code><br /><code>return <<<eof< code=""><br /><code></code><br /><code>...</code><br /><code></code><br /><code>EOF;</code><br /><code>}</code></eof<></code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddCode] mR | campo | A | <img src="g/info_field.png" /></code>
+<p><code>[TipForm] * | * | campo || 350</code><br /><code><img src="g/buscar.gif" /></code><br /><code>...</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">Se puede desde un icono visualizar la ayuda de un campo mediante la función "eTipForm(NomCampo)"</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

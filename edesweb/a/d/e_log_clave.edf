@@ -1,0 +1,14 @@
+[Title]¿ CLAVE A RASTREAR ?
+[Title]LOG DE MODIFICACIONES
+[DBTable]gs_log
+[DBIndex]clave
+[DBOrder]cdi
+[AutoMenu]l
+[Expire]300
+[FormAction]c|edes.php?E:$loghistory.gs
+[Fields]
+Tabla|tabla|#X|T|20||Q||#|
+Clave|clave|#X|T|20||Q||#|
+|_no_fields|X|T|80||*Q*|passwd||
+[JSCheck]*
+if( eGF('clave')=='' ) ePE('clave','Debe introducir algún dato para buscar');

@@ -1,0 +1,98 @@
+#include(*) $lng/activity.edf.lng
+[Title]=CHANGELOG
+[DBTable]{$_SESSION['ShareDictionary']}gs_pack
+[DBIndex]cd_gs_user,cdi
+[DBOrder]cdi desc
+[AutoMenu]l
+[MaxRec]0
+[FormAction]c|edes.php?Ll:
+[ColsOp]C
+[PHPIni]*||UNIQUE
+$_QuestionsEmptyData = false;
+function uLoadUser(){
+$Dim = array(array('',''));
+$xDim = file_get_contents( '../_d_/cfg/dim.lp' );
+$DimUser = array();
+if( $xDim!='' ) $DimUser = unserialize( gzuncompress($xDim) );
+foreach( $DimUser as $k=>$v ){
+$uTxt .= ','.substr($k,1);
+$Dim[] = array(substr($k,1),$v);
+if( trim($v=='') || substr_count($v,'@')==0 ){
+unset($DimUser[$k]);
+$xDim = serialize( $DimUser );
+file_put_contents( '../_d_/cfg/dim.lp', gzcompress($xDim,1) );
+}
+}
+return $Dim;
+}
+[PHPStart]?
+function uMes(){
+return date('Y-m-d', strtotime('-1 month'));
+}
+[PHPIni]l
+$uDim = uLoadUser();
+$uDimUser = array();
+foreach( $uDim as $k=>$v ) $uDimUser[$v[0]] = $v[1];
+[Format]
+if( $_vF[3]=='0' ) $_vF[3] = '';
+$_vF[4] = $GLOBALS['uDimUser'][$_vF[4]];
+switch( $_vF[1] ){
+case 'O':
+$_CellsStyle[1] = 'color:blue';
+break;
+case 'M':
+$_CellsStyle[1] = 'color:green';
+break;
+case 'E':
+$_CellsStyle[1] = 'color:red';
+break;
+case 'V':
+$_CellsStyle[1] = 'color:#cc00ff';
+break;
+case 'I':
+break;
+case 'C':
+break;
+case 'A':
+break;
+}
+[JSEnd]*
+if( top._M_!='~' ) eEF('cd_gs_user',0);
+[PDFCol],12,65,40,30
+[PDFWrap]20
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Actualizar por HTTP@|@Nº Desarrolladores por script@
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[AddOption]?|cd_gs_user|uLoadUser()
+[Fields]?
+@FTP Desde@|_desde|F4|T|10||QF|>uMes()||
+,|_desde_hours|H|T|8||Q|||
+@Hasta@|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+@Instante@|cdi|CDI|T|19||-|||
+User|cd_gs_user|D|SV|45||Q|_User||
+[AddOption]*|cd_type|,; O,Nueva Opción; M,Mejora; E,Error; ~,~; A,Arreglo Datos; I,Importación; C,Proceso Cron; X,Proceso Interno; V,Varios
+[ColsWidth]description=550
+[Fields]else
+#(a) FTP|cdi|CDI|T|19||*|#y2s#||
+#(l) FTP|cdi|CDI|T|19||-|||
+Type|cd_type|D|SV|15||M||#|
+Descripción|description|#|H|2000,80,15||M||#|
+#(l) Options|options|#|T|70||-|||
+#!(l) User|cd_gs_user|D|T|45||*|_User|#|
+#(l) User|cd_gs_user|D|T|45||-|||
+#Include(a) $a/d/optree.zdf
+[DBSql]l
+$AddFilter = qGetWhere();
+if( $AddFilter!='' ) $AddFilter = " where {$AddFilter}";
+$usuCursor = array();
+$DimUser = array();
+qQuery("select cdi, cd_type, description, options, cd_gs_user from {$_SESSION['ShareDictionary']}gs_pack as a {$AddFilter} order by 1 desc");
+$DimOptions = array();
+while( $r=qRow() ){
+$script = trim($r[1]);
+$nUsu = '';
+$usuCursor[] = $r;
+$tmp = explode(',',$r[3]);
+for( $n=0; $n<count($tmp); $n++ ) if( $tmp[$n]>0 ) $DimOptions[$tmp[$n]] = true;
+}

@@ -1,0 +1,13 @@
+#include(*) $lng/m_opcion.edf.lng
+[Title]@TituloInforme@
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBOrder]type,caption
+[DBLimit]5000,500
+[AddOption]cR,mR|type|O,@Option@; F,@Folder@; L,@Line@
+[ColsOp]s,c,#,#
+[PDFCol],30,80,0
+[Fields]
+,@Tipo@|type|0|SV|6||-|||
+@Nombre Opción@|caption|#D|T|80||-|||
+@Acción@|script_url|#X|A|255||-|||
+@Icon@|icon|#|T|25||-|||

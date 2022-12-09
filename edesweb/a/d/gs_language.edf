@@ -1,0 +1,65 @@
+#include(*) lng
+[Title]@IDIOMA/S@
+[DBTable]{$_SESSION['ShareDictionary']}gs_language
+[DBIndex]cd_gs_language|Edit
+[DBOrder]cd_gs_language
+[Format]img_sel=IMG
+[UploadFile]img_sel|/http/g|cd_gs_language|20000|@Ver icono@|gif,jpg,png		 //|lng_
+[Fields]||trim
+@Código@|cd_gs_language|n|T|2||AQ||=|
+,  @Lenguaje@|nm_gs_language|X|T|40||MQ||#|
+,  @Activo@|tf_translation|N|C|1||MQ|||
+@Icono@|img_sel|f|F|40|+nm_gs_language|MQDC|||
+#(a)  @Crear nuevo lenguaje desde@|_cd_gs_language_desde{{$_SESSION['ShareDictionary']}gs_language,cd_gs_language,nm_gs_language as xx}|n|S|20||A|_LANGUAGE_|#|
+#(mR) @Generar traducciones desde@|_cd_gs_language_desde{{$_SESSION['ShareDictionary']}gs_language,cd_gs_language,nm_gs_language as xx}|n|S|20||M|_LANGUAGE_||
+[JSEnd]mR
+eEF('cd_gs_language',false);
+if( '<?=$_SESSION['_LANGUAGE_']?>'==eGF('cd_gs_language') ){
+ePF('_cd_gs_language_desde','');
+eHide('_cd_gs_language_desde','L');
+}else{
+eDelOption('_cd_gs_language_desde', eGF('cd_gs_language') );
+}
+[DBEnd]A,M
+$deflang = $_SESSION['_LANGUAGE_'];
+if($deflang=='') $deflang='es';
+$nuevo_cd_gs_language = $_vF['cd_gs_language'];
+if( $_Mode=='A' || ($_Mode=='M' && trim($_vF['_cd_gs_language_desde'])!='') ){
+$Instante = date('Y-m-d H:i:s');
+qQuery("select * from gs_transchange where cd_gs_language='{$_vF['_cd_gs_language_desde']}'",$p1);
+while($r=qArray($p1)){
+$nr=qCount('gs_transchange',"cd_gs_script='{$r['cd_gs_script']}' and cd_gs_language='{$nuevo_cd_gs_language}' and word_id='{$r['word_id']}'");
+if( $nr==0 ){
+$q = "insert into gs_transchange(cd_gs_script,cd_gs_language,word_id,word_val,word_val_md5,cdi_add,tf_changed,tf_script,comment,type,word_val_old,word_val_md5_old)
+values('{$r['cd_gs_script']}','{$nuevo_cd_gs_language}','{$r['word_id']}','{$r['word_val']}','{$r['word_val_md5']}','{$Instante}','','','{$r['comment']}','{$r['type']}','{$r['word_val']}','{$r['word_val_md5']}')";
+qQuery($q,$p4);
+}
+}
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$_vF['_cd_gs_language_desde']}'",$p1);
+while($r=qArray($p1)){
+$nr=qCount("{$_SESSION['ShareDictionary']}gs_op_lng", "cd_tree='{$r['cd_tree']}' and cd_gs_language='{$nuevo_cd_gs_language}' and id='{$r['id']}'");
+if( $nr==0 ){
+$q = "insert into {$_SESSION['ShareDictionary']}gs_op_lng (cd_tree,id,cd_gs_language,caption,tip,md5,tf_changed)
+values('{$r['cd_tree']}','{$r['id']}','{$nuevo_cd_gs_language}','{$r['caption']}','{$r['tip']}','{$r['md5']}','')";
+qQuery($q,$p4);
+}
+}
+if( $_Mode=='A' ){
+qQuery( "alter table {$_SESSION['ShareDictionary']}gs_entidad add nm_gs_entidad_{$nuevo_cd_gs_language} varchar(30)" );
+qQuery( "update {$_SESSION['ShareDictionary']}gs_entidad set nm_gs_entidad_{$nuevo_cd_gs_language}=nm_gs_entidad" );
+qQuery( "alter table {$_SESSION['ShareDictionary']}gs_grupo add nm_gs_grupo_{$nuevo_cd_gs_language} varchar(30)" );
+qQuery( "update {$_SESSION['ShareDictionary']}gs_grupo set nm_gs_grupo_{$nuevo_cd_gs_language}=nm_gs_grupo" );
+qQuery( "alter table {$_SESSION['ShareDictionary']}gs_campo add etiqueta_{$nuevo_cd_gs_language} varchar(30), add label_tab_{$nuevo_cd_gs_language} varchar(30), add label_inf_{$nuevo_cd_gs_language} varchar(30)" );
+qQuery( "update {$_SESSION['ShareDictionary']}gs_campo set etiqueta_{$nuevo_cd_gs_language}=etiqueta, label_tab_{$nuevo_cd_gs_language}=label_tab, label_inf_{$nuevo_cd_gs_language}=label_inf" );
+if( file_exists('../_datos/config/docsecurity_es.htm') ){
+copy( '../_datos/config/docsecurity_es.htm', str_replace( '_es.', "_{$nuevo_cd_gs_language}.", '../_datos/config/docsecurity_es.htm' ) );
+}
+}
+}
+[DBEnd]B
+qQuery("delete from gs_transchange where cd_gs_language='{$_vF['cd_gs_language']}' and type='A'");
+qQuery("delete from {$_SESSION['ShareDictionary']}gs_op_lng  where cd_gs_language='{$_vF['cd_gs_language']}'");
+$nuevo_cd_gs_language = $_vF['cd_gs_language'];
+qQuery( "alter table {$_SESSION['ShareDictionary']}gs_entidad drop nm_gs_entidad_{$nuevo_cd_gs_language}" );
+qQuery( "alter table {$_SESSION['ShareDictionary']}gs_grupo drop nm_gs_grupo_{$nuevo_cd_gs_language}" );
+qQuery( "alter table {$_SESSION['ShareDictionary']}gs_campo drop etiqueta_{$nuevo_cd_gs_language}, drop label_tab_{$nuevo_cd_gs_language}" );

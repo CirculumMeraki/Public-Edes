@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>WinList 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[WinList] Width, Height&nbsp;[ , Scroll [, Title ] ]&nbsp; 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Define&nbsp;el ancho y el alto en píxeles al mostrar una ventana auxiliar con un listado, además centra la ventana. <BR>El tercer parámetro (scroll yes/no,auto) es opcional y marca si la ventana dispone de barra de scroll, si se omite o tiene un valor diferente de "NO" la ventana&nbsp; tendrá barra de scroll. (lo contrario que en la etiqueta <STRONG>[WinList]</STRONG>) 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>Width </STRONG>y<STRONG> Height:</STRONG> Longitud en pixel de la ventana, si ponemos "-1" será el ancho o alto máximo.<BR><STRONG>Scroll: </STRONG>Puede contener <B>YES</B>, <B>NO</B>, <B>AUTO</B>. Por defecto <STRONG>NO</STRONG>.<BR><B>Title: </B>Título de la ventana. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[WinList] 810,550,AUTO,Empresas 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

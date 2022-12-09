@@ -1,0 +1,240 @@
+[Title]=DELEGAR PERMISOS|l
+¿ $_GET['_Admin']==1 ? [Title] =ADMINISTRAR PERMISOS DELEGADOS | l
+[DBTable]gs_user
+[DBIndex]cd_gs_user; login
+[DBOrder]user_name,user_surname
+[DBSerial]cd_gs_user
+¿ $_SystemUser!='S' ? [DBAddFilter] (system_user!='S' or system_user is null or system_user='')
+[DBLimit]5000,750,750
+[DBLog]cd_gs_user
+¿ $_GET['_Admin']==1 ? [ForUsers] * | select count(*) from gs_user where cd_gs_user={$_User} and system_user='S'
+¿ $_GET['_Admin']<>1 ? [ForUsers] * | select count(*) from gs_tree_admin where cd_gs_user={$_User} and action='D'
+[AddOption]?|permission|,; S,@Si@; N,@No@; C,@Caducado@; )'S'(,@Sin permiso@
+[AddOption]?|_tipo_permiso|A,Asignar; D,Delegar
+[OnChange]c,n|dni|ePadLeft(this,8)
+[Fields]?|2
+DNI|dni|DNI|T|8||Qcp|||
+,2 Usuario|cd_gs_user|+|T|5||Qcp|||
+Nombre|user_name|X|T|20||Q|||
+,2 Apellidos|user_surname|X|T|30||Q|||
+Local|cd_gs_node|+|S|60|+user_surname|Q|||
+Cargo|cd_gs_position|+|S|30|+user_surname|Q|||
+E-Mail|email|@|T|65|+user_surname|QE|||
+Tipo Permiso|_tipo_permiso|N|SV|10|+user_name|Q|A||
+|permission|N|T|1||*Q|S||
+#Include(?) /_datos/config/admin_per.idf|true
+[PHPEnd]?
+if( $_GET['_Admin']<>1 ) echo '<script type="text/javascript">eHide("_tipo_permiso","TR");</script>';
+[FormAction]m,c|MostrarListado()
+[JSIni]m,c
+function MostrarListado(){
+var txt = '<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY style="display:none">'+"<FORM action='edes.php?E:CallSrv="+_Source+"&ListUser=1&_Mode="+_Mode+"' METHOD='POST'>";
+var t = document.FRM1.elements, n;
+for( n=0; n<t.length; n++ ) txt += t[n].outerHTML;
+txt += '<input name="_Admin" value="<?=$_GET['_Admin']?>">';
+txt += "</FORM><"+"script>document.forms[0].submit();<"+"/script></BODY></HTML>";
+frames['uIFRAME2'].document.write(txt);
+frames['uIFRAME'].location.href = 'edes.php?R:/_datos/config/empty_html.htm';
+}
+[HTMIni]*
+<table border=0 cellspacing=0 cellpadding=0 style='width:100%;height:100%;'>
+<tr>
+<td valign=middle align=center>
+<table border=0 cellspacing=0 cellpadding=0 style='width:1px;height:100%;'>
+<tr>
+<td valign=middle align=center style='height:1px'>
+[HTMEnd]*
+<tr>
+<td valign=middle align=center id=cIFrame2>
+<script type="text/javascript">
+top.eNewIframe( window, 'cIFrame2', 'uIFRAME2', 'edes.php?R:/_datos/config/empty_html.htm' );
+</SCRIPT>
+</table>
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td valign=middle align=center width=100% id=cIFrame>
+<script type="text/javascript">
+top.eNewIframe( window, 'cIFrame', 'uIFRAME', 'edes.php?R:/_datos/config/empty_html.htm' );
+</SCRIPT>
+</td>
+</tr>
+</table>
+[CallSrv]ListUser
+$Where = qGetWhere();
+if( $Where<>'' ) $Where = " where {$Where}";
+?>
+<!DOCTYPE HTML>
+<HTML><HEAD><TITLE></TITLE>
+<LINK REL='stylesheet' HREF='css/lista.css' TYPE='text/css'>
+<LINK REL='off' id='CssOffWindow' HREF='css/lista_off.css' TYPE='text/css'>
+<?=_FileNoCache('edes.js')?>
+<SCRIPT type='text/javascript'>
+var _UltimaSel = -1;
+function SelectUser(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+var txt = '<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY style="display:none">'+"<FORM action='edes.php?E:CallSrv="+_WOPENER._Source+"&ListArbolesDe="+Obj.parentNode.cells[0].textContent+"' METHOD='POST'>";
+txt += '<input name="cd_gs_user" value="'+Obj.parentNode.cells[0].textContent+'">';
+txt += '<input name="_Admin" value="<?=$_POST['_Admin']?>">';
+txt += '<input name="_Mode" value="<?=$_Mode?>">';
+txt += '<input name="_tipo_permiso" value="<?=$_POST['_tipo_permiso']?>">';
+txt += "</FORM><"+"script>document.forms[0].submit();<"+"/script></BODY></HTML>";
+_WOPENER.frames['uIFRAME'].document.write(txt);
+if( _UltimaSel>-1 ){
+BROWSE.rows[_UltimaSel].style.backgroundColor = '';
+BROWSE.rows[_UltimaSel].style.color = '#bbbbbb';
+}
+Obj.parentNode.style.color = 'red';
+_UltimaSel = Obj.parentNode.rowIndex;
+}
+</SCRIPT>
+</HEAD><BODY>
+<div id=CONTENEDOR style="height:1px;width:100%;text-align:right">
+<table id=BROWSE onclick=SelectUser()>
+<COL style='display:none'>
+<COL style='cursor:pointer' class='Celda' style="white-space:nowrap">
+<COL style='cursor:pointer' class='Celda' style="white-space:nowrap">
+<tr><th></th><th colspan=2>USUARIOS</th></tr>
+<tr><th></th><th>NOMBRE</th><th>APELLIDOS</th></tr>
+<?PHP
+qQuery("select cd_gs_user,user_name,user_surname from gs_user {$Where} order by user_name,user_surname");
+while($r=qArray()){
+echo '<tr><td>'.$r['cd_gs_user'].'</td><td>'.$r['user_name'].'</td><td>'.$r['user_surname'].'</td></tr>';
+}
+echo '</table></div></BODY></HTML>';
+eEnd();
+[CallSrv]ListArbolesDe
+$Where = qGetWhere();
+if( $Where<>'' ) $Where = " where {$Where}";
+$Usuario = $_POST['cd_gs_user'];
+qQuery("select cd_gs_user,user_name,user_surname from gs_user where cd_gs_user={$Usuario} order by user_name,user_surname");
+$r=qArray();
+?>
+<!DOCTYPE HTML>
+<HTML><HEAD><TITLE></TITLE>
+<LINK REL='stylesheet' HREF='css/lista.css' TYPE='text/css'>
+<LINK REL='off' id='CssOffWindow' HREF='css/lista_off.css' TYPE='text/css'>
+<style>
+#o { display: none; }
+#n0 { padding-left: 5px; }
+#n1 { padding-left: 22px; }
+#n2 { padding-left: 39px; }
+#n3 { padding-left: 56px; }
+#n4 { padding-left: 73px; }
+#n5 { padding-left: 90px; }
+#n6 { padding-left: 107px; }
+#n7 { padding-left: 124px; }
+#n8 { padding-left: 141px; }
+#n9 { padding-left: 158px; }
+TH { text-transform: none; }
+</style>
+<?=_FileNoCache('edes.js')?>
+<SCRIPT type='text/javascript'>
+function SelectArbol(){
+var Obj = S.event(window), Estado;
+if( Obj.tagName!='TD' ) return;
+if( Obj.parentNode.disabled ) return;
+Obj.parentNode.cells[0].textContent = ( top.eTrim(Obj.parentNode.cells[0].textContent)=='S' ) ? '' : 'S';
+}
+function Grabar(){
+var TR = LSTTREE.children[0].rows,f,datos='',ops='';
+for( f=1; f<TR.length; f++ ){
+datos += TR[f].pk+';'+TR[f].cells[0].textContent+'|';
+}
+var txt = '<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY style="display:none">'+"<FORM action='edes.php?E:CallSrv="+_WOPENER._Source+"&Grabar=1' METHOD='POST'>";
+txt += '<input name="cd_gs_user" value="<?=$Usuario?>">';
+txt += '<textarea name="datos">'+datos+'</textarea>';
+txt += '<input name="_tipo_permiso" value="<?=$_POST['_tipo_permiso']?>">';
+txt += "</FORM><"+"script>document.forms[0].submit();<"+"/script></BODY></HTML>";
+top.TLF.document.write(txt);
+}
+function MarcarTodo(){
+var TR = LSTTREE.children[0].rows,f, Actual=((TR[1].cells[0].textContent=='S')?'':'S');
+for( f=1; f<TR.length; f++ ){
+TR[f].cells[0].textContent = Actual;
+}
+}
+</SCRIPT>
+</HEAD><BODY>
+<TABLE style='background:transparent;margin-top:7px''>
+<tr>
+<td>
+<TABLE>
+<COL style='cursor:default'>
+<COL style='cursor:default' class='Celda' style="white-space:nowrap">
+<TR><TH>Nombre</TH><TD><?=$r['user_name']?></TD></TR>
+<TR><TH>Apellidos</TH><TD><?=$r['user_surname']?></TD></TR>
+</TABLE>
+<tr>
+<td style='text-align:center'>
+<?PHP if( $_Mode=='m' ){ ?>
+<input type=button value='Grabar' onclick='Grabar()' style='cursor:pointer'>
+<input type=button value='Marcar todo' onclick='MarcarTodo()' style='cursor:pointer;margin-left:20px'>
+<?PHP } ?>
+<tr>
+<td>
+<TABLE style='background:transparent'>
+<tr>
+<td style='vertical-align:top' id=LSTTREE>
+<table id=BROWSE<?=(($_Mode=='m')?' onclick=SelectArbol()':'')?>>
+<COL style='cursor:pointer;text-align:center' class='Celda' style="white-space:nowrap">
+<COL style='cursor:default' class='Celda' style="white-space:nowrap">
+<COL style='display:none'>
+<tr><th>Sel</th><th>ARBOL DE OPCIONES</th></tr>
+<?PHP
+$ArbolesDelUsuario = '';
+$Arboles = '';
+if( $_POST['_Admin']==1 ){
+qQuery("select cd_gs_tree,nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where permission='S' and cd_gs_tree in (select cd_gs_tree from gs_tree_admin where cd_gs_user={$_User} and action='{$_POST['_tipo_permiso']}') order by nm_gs_tree", $p1);
+}else{
+qQuery("select cd_gs_tree,nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where permission='S' and cd_gs_tree in (select cd_gs_tree from gs_tree_admin where cd_gs_user={$_User} and action='D') order by nm_gs_tree", $p1);
+}
+$n=0;
+while($r=qArray($p1)){
+$n++;
+if( $Arboles<>'' ) $Arboles .= ',';
+$Arboles .= $r['cd_gs_tree'];
+$TieneElArbol = ((qCount("gs_tree_admin","cd_gs_user={$Usuario} and cd_gs_tree={$r['cd_gs_tree']} and action='{$_POST['_tipo_permiso']}'")>0)?'S':'');
+if( $TieneElArbol=='S' ){
+if( $ArbolesDelUsuario<>'' ) $ArbolesDelUsuario .= ',';
+$ArbolesDelUsuario .= $r['cd_gs_tree'];
+}
+$Activo = (( $_SESSION['_D_']<>'~' && $_SESSION['_D_']<>'A' && trim($r['nm_gs_tree'])=='MASTER' ) ? ' disabled' : '' );
+echo '<tr pk='.$r['cd_gs_tree'].$Activo.'><td>'.$TieneElArbol.'</td><td>'.$r['nm_gs_tree'].'</td></tr>';
+}
+if( $n==0 ){
+eInclude('message');
+eMessage('No tiene permisos para Delegar','HSE');
+}
+?>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</BODY></HTML>
+<?PHP
+eEnd();
+[CallSrv]Grabar
+$Tracear = false;
+$Grabar = true;
+eInit();
+if( $Tracear ){ eTron( '', 0, 1 ); eTron( 'Hora: '. date('H:i:s') ); }
+$PkUser = $_POST['cd_gs_user'];
+$Dim = explode('|',$_POST['datos']);
+$Action = $_POST['_tipo_permiso'];
+eTron('___'.$Action);
+$Sql = "delete from gs_tree_admin where cd_gs_user={$PkUser} and action='{$Action}'";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+for( $n=0; $n<count($Dim)-1; $n++ ){
+list( $ArbolPK, $ArbolON, $ArbolModos ) = explode(';',$Dim[$n]);
+if( $ArbolON=='S' ){
+$Sql = "insert into gs_tree_admin values ('{$PkUser}','{$ArbolPK}','{$Action}')";
+if( $Tracear ) eTron( $Sql );
+if( $Grabar ) qQuery( $Sql );
+}
+}
+echo '<html><head><title></title></head><body><script type="text/javascript">top.eInfo(window.frameElement.WOPENER,"Grabado...");</script></body></html>';
+eEnd();

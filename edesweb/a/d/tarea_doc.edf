@@ -1,0 +1,23 @@
+[Title]DOCUMENTO/S DE DESARROLLO
+[DBTable]gs_doc
+[DBIndex]cd_gs_doc
+[DBOrder]nm_gs_doc
+[DBSerial]cd_gs_doc
+[WinClose]
+[UploadFile]fichero|/_d_/doc|cd_gs_doc|300000||gif,jpg,png,avi,txt,doc,xls,pdf
+[SubListDF]documentos|$a/d/tarea.edf|codigo
+[Fields]
+|cd_gs_doc|*|T|2||*|||
+Descripción|nm_gs_doc|X|T|56||MQ||#|
+#(a,A) ¿
+Fichero|fichero|X|F|40||MQD||#|
+?
+#(mR,M) ¿
+Fichero|fichero|X|F|40||MQ|||
+?
+#(bR,B) ¿
+Fichero|fichero|X|T|40||MQ|||
+?
+|codigo|*|T|2||*|||
+|conexion|*|T|2||*|||
+CDI|cdi|X|T|19||-Q-|#y2s#|#|

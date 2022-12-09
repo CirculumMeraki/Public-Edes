@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">AddCode</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[AddCode] Mode | Field [,Field,..] | [S:B:I:A:E] | HTMLCode<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">A?ade c?digo HTML antes, dentro o despu?s de la definici?n del campo.<br />La utilizaci?n m?s frecuente es para la inclusi?n de gr?ficos antes o despu?s del campo, por ejemplo una lupa. <br />Si lo que se a?ade es una imagen esta puede tener dos atributos para cuando hay mas de una poder mostrar un submen? y poder ejecutar el icono son su inicial de acceso, los atributos son:<br />eTrigger: Inicial de acceso r?pido<br />eTitle: Para poner un titulo o linea en el submen?.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">Field: Campo o lista de campos.<br />[S:B:I:A:E]: En d?nde queremos a?adir el c?digo HTML.<br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col valign="middle" /> </colgroup>
+<tbody>
+<tr>
+<td>S</td>
+<td>Start ( en el inicio )</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Before ( antes )</td>
+</tr>
+<tr>
+<td>I</td>
+<td>Inside ( dentro )</td>
+</tr>
+<tr>
+<td>A</td>
+<td>After ( despu?s )</td>
+</tr>
+<tr>
+<td>E</td>
+<td>End ( al final )</td>
+</tr>
+</tbody>
+</table>
+HTMLCode: C?digo HTML en una sola l?nea, si se quiere poner un par de par?ntesis se tendr?n que poner con "(" para el "(" y/o  ")" para el ")" para identificar que no es una funci?n. <br />Con los  par?metros "B" (Before) y "A" (After) tambi?n se puede llamar a una funci?n, en este caso si se pintan los parentesis. <br /><br />Los campos tipo input de puede definir un m?nimo "eFrom" y un m?ximo "eTo":<br />[AddCode] * | importe | I |  eFrom="200" eTo="500"<br /><br />En los campos textarea se puede limitar el n? de lineas a los visibles con:<br />[AddCode] * | notas | I | eNoScroll<br /><br />(sin uso) En los campos tipo textarea con el atributo "eFitHeight", que indica que se adapte al contenido, se puede limitar el námero múximo de filas, ejemplo:<br />[AddCode] a,mR | reclamacion | I | eMaxRows=15<br /><br />Los campos textarea se puede modificar el alto del textarea de forma dinamicamente mediante:<br />[AddCode] a,mR | obs | I | eFitHeight<br /><br />Si el campo es un SubSelect se puede insertar un atributo para cuando cambie de valor se ejecute una funci?n, ejemplo:<br />[AddCode] * | cd_prov | I | EXECUTE=NomFuncUsuario<br /><br />En los campos select se puede modificar el n?mero de filas a visualizar mediante (si ponemos -1 ser? sin descensor):<br />[AddCode]  * | cd_auto | I | MaxRows=3<br />[AddCode]  * | cd_auto | I | MaxRows=-1<br /><br />Los campos que se quiera que admitan acentos se pondr? la propiedad "eAccent=1"<br />[AddCode] a,mR | campo | I | eAccent=1<br /><br />Para que un campo admita mas caracteres<br />[AddCode] * | campo | I | eAddChar="XI"<br />Si quisieramos que fuera el caracter "-" tendr?amos que poner una barra invertida delante:<br />[AddCode] * | campo | I | eAddChar="-"<br /><br />Para que un campo no admita uno o varios caracteres<br />[AddCode] * | campo | I | eDeleteChar="XI"<br /><br />En los campos SubSelect se pueden a?adir option al principio, ejemplo:<br />[AddCode] * | campos,... | I | ADDOPTION='VE,Valor externo; ... <br />hay que tener en cuenta que si en el select se llevan mas datos con la etiqueta [AddOptionValue] en el par?metro ADDOPTION se le tendr? que a?adir los valores separados por coma ADDOPTION='VE,Valor externo;OtroValor; <br /><br />Los campos fipo "file" al seleccionar el fichero se pueden rellenar otros campos con información del fichero.<br />[AddCode] * | fichero | I | eCopy='tamayo=size, extension=format, fecha=date, hora=hour, cdi=datetime'<br />...<br /><br />Los campos del tipo checkbox se puede provocar que tengan un valor distinto de " "/"S"/"<>S" mediante esta etiqueta, ejemplo:<br />[AddCode] * | Campo | I | uValue="Valor1|Valor2|Valor3"<br />El Valor1 es cuando no se ha clickeado ninguna vez.<br />El Valor2 es cuando el checkbox se le ha clickeado una sola vez.<br />El Valor3 es cuando el checkbox se le ha clickeado dos veces y solo activo en ? Qu? ficha ...?. <br /><br />Para en un input/textarea que no se filtren ning?n caracter se pondr? "NotFilter"<br />[AddCode]  * | nm_auto | I | NotFilter=1<br /><br />Ordenar subselect por otro campo<br />[AddCode] * | cd_prov | I | ORDERBY=prueba<br /><br />En los select que representen números, fechas, etc, se puede poner la fuente monospace mediante el atributo "NUMBERS":<br />[AddCode] * | campo | I | NUMBERS<br /><br />En el editor de textarea enriquecido se pueden ocultar botones de la siguiente forma:<br />[AddCode] a,mR | texto_hu | I | eIconNone="fontsize3, fontsize2, fontsize1, space3, outdent, indent, insertorderedlist, insertunorderedlist, image"<br /><br />
+     bold, italic, underline, removeformat, space1<br />     color, background, space2<br />     fontsize3, fontsize2, fontsize1, space3<br />     justifyleft, justifycenter, justifyfull, outdent, indent, insertorderedlist, insertunorderedlist, image<br /><br />
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[AddCode] <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a,mR | nif&nbsp;&nbsp;&nbsp; | A | &lt;img src="g buscar.gif" /&gt; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a,mR | nombre | A | FuncionDeUsuario() <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a,mR | periodo| A | &nbsp;(aaaa-mm)</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+[Fields]<br />&nbsp;&nbsp; Sexo&nbsp;&nbsp;&nbsp;&nbsp; | sexo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | N | SV | 5&nbsp; || M || #&nbsp;|&nbsp;<br />&nbsp;&nbsp;Profesi?n | cd_profe{profe_sexo,cd_profe,nm_profe_h} | 0 | Ss | 30 || M&nbsp;||&nbsp;&nbsp; |<br />&nbsp; ...<br /><br />[RelationFields] sexo, cd_profe<br /><br />
+[AddCode] a,A,?R | cd_profe | I | DynamicSQL=SqlProfesion<br /><br />[PHPIni] a,A,?R// en multifichas va en el GDF<br />function SqlProfesion(){<br />global $_vF;<br />if( $_vF['sexo']&lt;&gt;'' ){<br />qQuery( 'select cd_profe,nm_profe_'.strtolower($_vF['sexo']).' from profe_sexo order by 2' );<br />}else{<br />qQuery( 'select cd_profe,nm_profe_h from profe_sexo order by 2' );<br />}<br />}<br /><br />[JSIni] a,A,?R// en multifichas va en el GDF<br />function SqlProfesion(){<br />var Valor = '';<br />if( eGO('cd_profe').oValue!=undefined ) Valor = eGO('cd_profe').oValue;<br />if( eGF('sexo')!='' ){<br />return Array( 'select cd_profe,nm_profe_'+eGF('sexo').toLowerCase()+' from profe_sexo order by 2', Valor );// 3 par?metro opcional<br />}else{<br />return Array( 'select cd_profe,nm_profe_h from profe_sexo order by 2', Valor );// 3 par?metro opcional<br />}<br />}<br />/* El Array tiene 3 par?metros<br />1.- Sentencia SQL a ejecutar para rellenar el select<br />2.- Valor por defecto <br />3.- Parametro opcional con el nombre de funci?n a ejecutar despues de rellenar el select<br />*/<br /><br />
+</td>
+</tr>
+<tr>
+<td id="txt">Forma de cambiar el SQL dinamicamente a un select relacionado (SubSelect). En JS el Array podr?a devolver "Array("","")" cadenas vacias para indicar el select vacio.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[AddCode] a,mR | reclamacion | I | MaxRows=15</td>
+</tr>
+<tr>
+<td id="txt">El textarea no admite mas de 15 lineas</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[AddCode] ? | _desdeI_hours,_hastaI_hours | I | noConditions</td>
+</tr>
+<tr>
+<td id="txt">Los campos "_desdeI_hours" y "_hastaI_hours" no admite condiciones m?ltiples, es decir no se puede poner mas de una condici?n sin poder usar los caracteres ">", "<" ni "=".</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[AddCode] a,mR | campo | A | [S,&nbsp;onclick="top.eSWOpen(window,'...')" title='Selecciona ...']</td>
+</tr>
+<tr>
+<td id="txt">Define un icono tipo Font</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

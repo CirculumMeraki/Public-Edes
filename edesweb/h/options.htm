@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">Options</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Options] Mode [ | NomDF, ... [ | UNIQUE/Condition ] <br />NombreOpcion | Función a ejecutar [ | CondiciónPHP ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En las fichas se activa un icono de "Menú de opciones", si se ejecuta una ventana nueva con "top.eSWOpen()" se buscará la url en el árbol del usuario y si no tiene acceso a esta opción no saldrá en la lista de opciones y si la url no existe en el árbol para ningún árbol si se mostrará.<br />Se pueden poner lineas divisorias mediante un "-" en el nombre de la opción, así como preceder a la opción de un icono (si la extensión es ".gif" no hace falta indicarlo) si lo encerramos entre llaves y dentro de las funciones se pueden poner variables de la forma {$NomVar}.<br />Si en el "Título del SubMenú" se ponen dos títulos indicará que el submenú se indicará con un botón siendo la definición "TítuloBotón\TítuloSubMenú"</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Options] cR<br />     TITULO SUBMENU<br />     Nueva ventana | top.eSWOpen( window, 'FmR:visita.edf&_SEEK&cd_visita="{$cd_visita}"', 'VISTAS', true )<br />     LoadDiv| eLoadDiv( 'NomVentana', 'edes.php?E:prueba.php', 'TITULO', -3, -3 )<br />     -<br />     {g/aviso.gif} Función | uFunction() <br />     Reactivar  | ...| $_vF['estado']=='B'</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Options] cR<br />     TítuloBotón\TITULO SUBMENU<br />     Nueva ventana | top.eSWOpen( window, 'FmR:visita.edf&_SEEK&cd_visita="{$cd_visita}"', 'VISTAS', true )<br />     ...</td>
+</tr>
+<tr>
+<td id="txt">En lugar de un icono de acceso será un botón de acceso.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

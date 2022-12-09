@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eGroupPDF 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eGroupPDF(&nbsp; ArrayURLs [, NomFile [ , CachearFile=false ]&nbsp;] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Descargar varios PDF unidos solicitandolos desde un solo formulario. 
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>&nbsp;&nbsp;eGroupPDF( ['dl/inf_asa_fc.edf',<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp; 'dl/inf_asa_tc.edf',<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp; 'dl/inf_conceptos.edf',<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp; 'dl/inf_cuota15.edf']&nbsp;);
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>function uGenerarInfo(){<BR><SPAN style="WIDTH: 25px"></SPAN>var uDocOrg = '';<BR><SPAN style="WIDTH: 25px"></SPAN>uDocOrg += ( eGF('cd_auto')&nbsp; =='' ) ? '00' : eGF('cd_auto');<BR><SPAN style="WIDTH: 25px"></SPAN>uDocOrg += ( eGF('cd_prov')&nbsp; =='' ) ? '00' : eGF('cd_prov');<BR><SPAN style="WIDTH: 25px"></SPAN>uDocOrg += ( eGF('cd_coma')&nbsp; =='' ) ? '00' : eGF('cd_coma');<BR><SPAN style="WIDTH: 25px"></SPAN>uDocOrg += ( eGF('cd_muni')&nbsp; =='' ) ? '000': eGF('cd_muni');<BR><SPAN style="WIDTH: 25px"></SPAN>uDocOrg += ( eGF('cd_distri')=='' ) ? '00' : eGF('cd_distri');<BR><SPAN style="WIDTH: 25px"></SPAN>uDocOrg = '//doc_cch/liq_'+eGF('periodo')+'_'+uDocOrg+'_'+eGF('_nivel')+'.pdf';<BR><SPAN style="WIDTH: 25px"></SPAN>var Dim = [ 'dl/inf_asa_fc.edf',<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN>'dl/inf_asa_tc.edf',<BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;'dl/inf_conceptos.edf',<BR>&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN>'cen/caja_per_deuda.edf',<BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;'dl/inf_cuota15.edf'];<BR>&nbsp;&nbsp;&nbsp;&nbsp;eGroupPDF( Dim, uDocOrg, true );<BR>}</P></TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

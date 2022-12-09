@@ -1,0 +1,46 @@
+#include(*) lng
+[Title]@ENTIDADES DE LOS FORMATOS@
+[DBTable]{$_SESSION['ShareDictionary']}gs_entidad
+[DBIndex]cd_gs_entidad
+[DBOrder]nm_gs_entidad
+[DBSerial]cd_gs_entidad
+[PersistentVar]_LngEdit
+[EditList]nm_gs_entidad
+[FormStatic]
+[Fields]
+|cd_gs_entidad|+|T|3||*Q*|||
+@Nombre entidad@|nm_gs_entidad|D|T|30||MQ||#|
+@Tabla principal@|tabla|#X|T|20||MQ||#|
+[PHPIni]m,ml
+global $_Mode, $_SubMode, $_Form;
+if( qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+$LngEdit = ( ($_LngEdit!='') ? '_'.$_LngEdit:'' );
+$_Form[1][1] = 'nm_gs_entidad'.$LngEdit;
+if( $_SubMode=='ml' ){
+global $_EDITLIST;
+$_EDITLIST[0] = ',nm_gs_entidad'.$LngEdit.',';
+}
+}
+[PHPForm]*
+global $_Mode, $_SubMode, $_Form;
+if( qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+if( substr_count(',b,bR,c,cR,m,l,',$_Mode)>0 ){
+if( $_SESSION['_LANGUAGE_']!='' ) $_Form['nm_gs_entidad'][1] = 'nm_gs_entidad_'.$_SESSION['_LANGUAGE_'];
+}else if( substr_count(',a,mR,',",{$_Mode},")>0 ){
+global $_ONCHANGE;
+eAddField('-|@Lenguaje@||||||||');
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_language where tf_translation='S' order by nm_gs_language", $p );
+while( $r=qArray($p) ){
+$r['cd_gs_language'] = trim($r['cd_gs_language']);
+if( $r['cd_gs_language']=='es' ){
+eAddField( eUcFirst(trim($r['nm_gs_language'])).' | nm_gs_entidad_'.$r['cd_gs_language'].' | D | T | 30 || * || # |');
+$_ONCHANGE[] = array( 'nm_gs_entidad', 'ePF("nm_gs_entidad_es",eGF("nm_gs_entidad"));', '', '' );
+}else{
+eAddField( eUcFirst(trim($r['nm_gs_language'])).' | nm_gs_entidad_'.$r['cd_gs_language'].' | D | T | 30 || M || # |');
+if( $_Mode=='a' ) $_ONCHANGE[] = array( 'nm_gs_entidad', 'ePF("nm_gs_entidad_'.trim($r['cd_gs_language']).'",eGF("nm_gs_entidad"));', '', '' );
+}
+}
+}
+}
+[DBEnd]A,M,B
+eExportSrvTable("{$_SESSION['ShareDictionary']}gs_entidad", false);

@@ -1,0 +1,11 @@
+[Title]CATEGORIA/S MULTIMEDIA
+[DBTable]gs_img_class
+[DBIndex]cd_gs_img_class; type_file,nm_gs_img_class
+[DBOrder]nm_gs_img_class
+[DBSerial]cd_gs_img_class
+#include(*) /_datos/config/file_manager.ini | true
+[AddOption]*|type_file|,; A,Audio; D,Documento; I,Icono; P,Imagen; S,Sonido; V,Video
+[Fields]
+|cd_gs_img_class|+|T|9||*|||
+Clase|type_file|N|SV|16||MQd||#|
+Categoría|nm_gs_img_class|D|T|30||MQ||#|

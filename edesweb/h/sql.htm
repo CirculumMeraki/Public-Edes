@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>sql.ini 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P><BR>Variables SQL %u2013 sql.usu </P>
+<P>Dentro de las variables sql existen varios tipos: <BR>&nbsp;- Generales<BR>&nbsp;- De Procesos<BR>&nbsp;- De Extracciones<BR>&nbsp;- Otras</P>
+<P>(queda pendiente meter algún ejemplo) <BR></P>
+<P>Estéticas<BR><FONT size=2><B>$_WidthField</B>[0] </FONT><FONT color=#ff0000 size=2>=</FONT><FONT size=2> </FONT><B><FONT color=#0000ff size=2>array</B></FONT><FONT size=2>( </FONT><FONT color=#800080 size=2>'P4'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>46, </FONT><FONT color=#800080 size=2>'F4'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>62, </FONT><FONT color=#800080 size=2>'DNI'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>54, </FONT><FONT color=#800080 size=2>'T'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>60, </FONT><FONT color=#800080 size=2>'CIF'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>62, </FONT><FONT color=#800080 size=2>'NSS'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>72, </FONT><FONT color=#800080 size=2>'H'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>48, </FONT><FONT color=#800080 size=2>'CDI'</FONT><FONT color=#ff0000 size=2>=&gt;</FONT><FONT size=2>107 );<BR><B>$_WidthField</B>[1] </FONT><FONT color=#ff0000 size=2>=</FONT><FONT size=2> </FONT><B><FONT color=#0000ff size=2>array</B></FONT><FONT size=2>( 10, 8, 6, 6, 9 ); </FONT><I><FONT color=#008000 size=2>//.MaxLong, AnchoChar, AnchoNumero, ValorIni, ValorIniConDecimal<BR></I></FONT><B><FONT size=2>$_WidthField</B>[2] </FONT><FONT color=#ff0000 size=2>=</FONT><FONT size=2> 2; </FONT><I><FONT color=#008000 size=2>//.Separacion del select cuando se ve su interior<BR></I></FONT><STRONG>$_CntMarginLeft</STRONG>: Distancia entre dos controles que se ponen seguidos cuando el segundo no tiene label.<BR><BR>Generales de DDBB&nbsp;</P>
+<P>$_Sql: Contiene, entre comillas simples, el nombre del controlador actual de la base de datos.<BR>$_Limit: Número máximo de registros a extraer.</P>
+<P>De Procesos</P>
+<P>$_SqlHostName: Nombre del host del motor usado para procesos.<BR>$_SqlUsuario: Nombre del usuario para el motor de procesos.<BR>$_SqlPassword: Password para el usuario ($_SqlUsuario) del motor de procesos.<BR>$_SqlDiccionario. Nombre del diccionario de datos a utilizar en el motor de procesos.</P>
+<P>De Extracciones</P>
+<P>$_SqlExHostName: Nombre del Host del motor usado para extracciones.<BR>$_SqlExUsuario: Nombre del usuario para el motor de extracciones.<BR>$_SqlExPassword: Password para el usuario ($_SqlExUsuario) del motor de extracciones.<BR>$_SqlExDiccionario: Nombre del diccionario de datos utilizado en el motor de extracciones.</P>
+<P>Otras</P>
+<P>$_Estadística: Valor booleano (true/false ) que determina si se graban o no datos estadísticos de acceso, operaciones, etc.<BR>
+$_Development: Valor booleano (true/false) que determina si el motor actual es de desarrollo o no.<BR>
+$_Debug: Valor numérico que indica el modo de depuración actual:<BR>
+&nbsp;0. Sin depuración.<BR>
+&nbsp;2. Sentencias SQL.<BR>
+&nbsp;3. Muestra las líneas de las celdas.</P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

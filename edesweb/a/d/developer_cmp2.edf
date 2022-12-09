@@ -1,0 +1,127 @@
+[Title]=ACTIVIDAD DE LOS DESARROLLADORES
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]cdi
+[FormAction]*|Ll:
+[NoSelectRow]
+[PDFVar]PDF_Grid = true
+[ChartRow]-0,*|100%
+[ChartCol]|100
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_surname,', ',user_name
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # and cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # and cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 1|7
+?
+[Fields]a,?,?R
+CDI Desde|_desde|F4|T|10||QF|#today#||
+,|_desde_hours|H|T|8||Q|||
+,Hasta|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+script|script|#|A|100,80,1||ML|||
+edes|edes|#D|T|1||M|||
+byts|byts|-|T|9||M|||
+cdi|cdi|CDI|T|19||*|||
+[Fields]l
+Día|dia|F4|T|10||-|||
+Grabaciones|grabaciones|+|T|5||-|||
+[DBSql]l
+global $_DimNUser;
+$Condicion = qGetWhere( 'a' );
+if( $Condicion!='' ) $Condicion = ' and '.$Condicion;
+if( eSqlType('mysql,mysqli') ){
+qQuery( "select date_format(a.cdi, '%Y-%m-%d'), a.cd_gs_user, count(*) contador from {$_SESSION['ShareDictionary']}gs_activity a, gs_user u where a.cd_gs_user>0 and u.cd_gs_user=a.cd_gs_user {$Condicion} group by 1,2 order by a.cdi desc" );
+}else{
+qQuery( "select extend(a.cdi, year to day) cdi, a.cd_gs_user, count(*) contador from {$_SESSION['ShareDictionary']}gs_activity a, gs_user u where a.cd_gs_user>0 and u.cd_gs_user=a.cd_gs_user {$Condicion} group by 1,2 order by cdi desc" );
+}
+$tmp = array('');
+for( $n=0; $n<count($_DimNUser); $n++ ) $tmp[]='';
+$uFecha = '';
+$usuCursor = array();
+while( $r=qRow() ){
+if( $uFecha!=$r[0] ){
+$tmp[0] = $r[0];
+$usuCursor[] = $tmp;
+}
+$usuCursor[ count($usuCursor)-1 ][ $_DimNUser['u'.$r[1]] ] = $r[2];
+$uFecha = $r[0];
+}
+$_TReg = count($usuCursor);
+[PHPForm]l
+global $_ALIGN,$_COLSOP,$_ROWSOP,$_PDFTH,$_FORMATTOTALS, $_ListaUser;
+$sForm = $_Form;
+if( eSqlType('mysql,mysqli') ){
+qQuery( "select distinct concat(u.user_name,' ',u.user_surname), a.cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity a, gs_user u where a.cd_gs_user>0 and u.cd_gs_user=a.cd_gs_user order by 1" );
+}else{
+qQuery( "select distinct u.user_name||' '||u.user_surname, a.cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity a, gs_user u where a.cd_gs_user>0 and u.cd_gs_user=a.cd_gs_user order by 1" );
+}
+global $_DimNUser, $_ALIGN, $_COLSOP, $_ROWSOP, $_PDFTH, $_FORMATTOTALS;
+$_DimNUser = array();
+$n=0;
+$sColsOp = 'C,+';
+$_ListaUser = '0';
+while( $r=qRow() ){
+$_ListaUser .= ','.$r[1];
+$_DimNUser['u'.$r[1]] = ($n+1);
+$tmp = explode(' ',$r[0]);
+$TH = ''; for($i=0; $i<count($tmp); $i++) $TH .= $tmp[$i][0];
+if( $n==0 ){
+$_Form['grabaciones'][_LABEL] = $r[0];
+$cp = $_Form['grabaciones'];
+$_PDFTH[1] = $TH;
+}else{
+$cp['grabaciones'][_LABEL] = $r[0];
+$cp[0] = str_replace(' ','&nbsp;',$r[0]);
+$cp[1] = 'grabaciones'.$n;
+$cp[2] = '+';
+$_Form[] = $cp;
+$_ALIGN[count($_Form)-1] = ' id=d';
+$sColsOp .= ',+';
+$_ROWSOP[count($_Form)-1] = '+';
+$_PDFTH[count($_Form)-1] = $TH;
+$_FORMATTOTALS[count($_Form)-1] = "eNumberFormat(#,0)";
+}
+$n++;
+}
+eColsOp( $sColsOp );
+$_ROWSOP[count($_Form)-1] = 'TOTAL';
+$_FORMATTOTALS[count($_Form)-1] = "eNumberFormat(#,0)";
+echo '<script type="text/javascript">';
+echo "var _DimUser = new Array( {$_ListaUser},-1 );";
+echo '</script>';
+[JSIni]l
+function uActividad(Op, OpTextContent, Obj, OpObj, VarUser){
+switch( Op ){
+case null:
+break;
+case "G":
+top.eSWOpen( window, 'edes.php?E:$a/u/activity_gr.gs&cd_gs_user='+VarUser[1]+'&dia='+VarUser[0], 'GRAFICA DE ACTIVIDAD '+VarUser[0], false );
+break;
+case "S":
+top.eSWOpen( window, 'edes.php?Ll:$a/u/activity_usr.edf&cd_gs_user='+VarUser[1]+'&_dia='+VarUser[0], 'SCRIPT MODIFICADOS '+VarUser[0], false );
+break;
+case "A":
+top.eSWOpen( window, 'edes.php?Ll:$a/d/activity.edf&cd_gs_user='+VarUser[1]+'&_dia='+VarUser[0], 'ACTIVIDAD '+VarUser[0], false );
+break;
+}
+}
+[JSOnClickRow]l
+top.eMenu(window, S.event(window), {'~':'Menú','A':'Actividad','G':'Gráfica','S':'Script'}, uActividad, 1,0, [_Columna[0],_DimUser[ColNumber]]);
+[FormatTotals],M
+[RowsOp],+
+[MaxRec]||uVertical()
+[JSEnd]l
+function uVertical(){
+for(var n=1; n<BROWSE.rows[0].cells.length; n++){
+with( BROWSE.rows[0].cells[n].style ){
+writingMode = 'tb-rl';
+filter = 'flipv fliph';
+textAlign = 'left';
+width = "25px";
+whiteSpace = 'nowrap';
+}
+}
+}

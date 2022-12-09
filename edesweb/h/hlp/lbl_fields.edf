@@ -1,0 +1,12 @@
+[Help]fields.htm
+[Title]Fields
+[Delimiter]Extras|" "
+[Delimiter]Mode|","
+[Fields]
+Nº de columnas|Columnas|+|T|50||M|||
+Modo|Mode|#|T|50||M||||:-Mode; *,*; c,c; b,b; m,m; q,q; s,s, ?,?; -,-; a,a; cR,cR; bR,bR; mR,mR; ?R,?R; -,-; l,l; cl,cl; bl,bl; ml,ml; -,-; else,else
+Extras|Extras|d|T|20||M||||:-Extras; CSV,CSV; PDF,PDF; TXT,TXT; XLS,XLS; XML,XML; -,-; MIX,MIX; TRIM,TRIM; -,-; iSubList,iSubList
+-
+Rem|Rem|#|T|50||M|||
+[JSCheck]
+return true;

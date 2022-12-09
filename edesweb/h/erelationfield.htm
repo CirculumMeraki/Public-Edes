@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>eRelationField
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>eRelationField( window, Matriz )
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>Carga una relación de select con un solo acceso al servidor.
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>&nbsp;window</TD>
+<TD>Constante</TD></TR>
+<TR>
+<TD>&nbsp;Matriz</TD>
+<TD>Una matriz Hash con los siguientes valores:<BR><SPAN style="WIDTH: 25px"></SPAN>RelationFields ':'cd_auto,cd_prov,cd_coma'<BR><SPAN style="WIDTH: 25px"></SPAN>Values = Lista de valores separados por coma<BR><SPAN style="WIDTH: 25px"></SPAN>EXEFUNC = Función a ejecutar al terminar la carga (opcional)<BR><SPAN style="WIDTH: 25px"></SPAN>DB = Nombre del fichero de definición del DDBB alternativo (opcional)<BR><SPAN style="WIDTH: 25px"></SPAN>SCRIPT = Nombre del script que devolverá mediante un "return" una matriz&nbsp; con todas las submatrizes como select hay que rellenar (opcional)</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>top.eRelationField( window, { 'RelationFields':'cd_auto,cd_prov,cd_muni', 'Values':'08,16,004' } );
+<TR>
+<TD id=txt>Cargará los select "cd_prov" y "cd_muni" y pondrá a los tres select los valores indicados.
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>top.eRelationField( window, { 'RelationFields':'cd_auto,cd_prov,cd_muni', 'Values':'08,16,004', 'Script':'cargaselect.php'&nbsp;} );<BR><BR>Script: "cargaselect.php"<BR>&lt;?PHP<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim = array(2);<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[0] = Matriz de dos dimensiones con los datos de la provincias.<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[1] = Matriz de dos dimensiones con los datos de los municipios.<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>return $Dim;<BR>?&gt;</TD></TR>
+<TR>
+<TD id=txt>Los select "cd_prov" y "cd_muni" se rellenan con la matriz "$Dim" devuelta por el script "cargaselect.php"</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBEnd</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBEnd] Mode [ [ | NomEDF/else,... ] | ListaDeCampos ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Operaciones SQL despues de la operación del motor.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>NomEDF</strong>: En los ficheros de definición "LDF" tipo de edición SubSelect "Ss" admiten este segundo parámetro para añadir "options" al select al principio cuando es atacado desde determinado sitio por ejemplo:<br />[DBEnd] * | muni.edf<br />echo '<OPTION VALUE="...">Option al final';<br /><strong>ListaDeCampos:</strong> En el modo "M" se puede poner una lista de campos para cargar la matriz asociativa "$_LastValue" con los valores que tienen antes de la modificación, esto es para poder desencadenar alguna acción por el cambio de algún valor.</td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[DBEnd] M || cd_forma_cobro<br />if( $_LastValue['cd_forma_cobro'] != $_POST['cd_forma_cobro' ){<br />...<br />}</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

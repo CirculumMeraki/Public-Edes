@@ -1,0 +1,16 @@
+#include(*) lng
+[Title]@E-MAIL ADICIONAL/ES@
+[DBTable]gs_mailfrom
+[DBIndex]cd_mailfrom
+[DBOrder]cd_gs_user, mailfrom
+[DBSerial]cd_mailfrom
+¿ eSqlType('mysql,mysqli') ? [FieldBrowser] _cd_gs_user | cd_gs_user | select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1 | 7
+¿ !eSqlType('mysql,mysqli') ? [FieldBrowser] _cd_gs_user | cd_gs_user | select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1 | 7
+¿ eSqlType('mysql,mysqli') ? [ShowFields] ?R | _cd_gs_user | select concat(user_name," ",user_surname) _cd_gs_user from gs_user where cd_gs_user={$_vF[cd_gs_user]}
+¿ !eSqlType('mysql,mysqli') ? [ShowFields] ?R | _cd_gs_user | select user_name&#124;&#124;' '&#124;&#124;user_surname _cd_gs_user from gs_user where cd_gs_user={$_vF[cd_gs_user]}
+[Fields]
+|cd_mailfrom|*|T|9||*Q*|||
+|cd_gs_user|0|T|9||*Q*||#|
+@Usuario@|_cd_gs_user|N|T|80||QAL||#|
+#(l) @Usuario@|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|N|S|60||-|||
+@E-Mail@|mailfrom|@|T|80||QM||#|

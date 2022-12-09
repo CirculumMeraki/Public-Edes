@@ -1,0 +1,100 @@
+#include(*) $lng/activity.edf.lng
+[Title]=LOG DE GRABACIONES
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]1 desc
+[MaxRec]0
+[FormAction]*|edes.php?Ll:$a/u/activity_log_lst.edf
+[ColsOp]C
+[Format.]
+$_vF[2] = '<img src="edes.php?R:$t/g/s/check_n.gif" onclick="AnularFTP()">';
+if( $_vF[1][0]=='$' ) $_CellsStyle[1] = 'color:#ff00ff;font-weight:bold';
+if( $_vF[1]=='/_datos/config/sql.log' ){
+$GLOBALS['_LogDB'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/directory.log' ){
+$GLOBALS['_LogDIR'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/update.log' ){
+$GLOBALS['_LogScript'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( substr($_vF[1],0,23)=='/_bak_/update/_update_.' ){
+$GLOBALS['_LogDB'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+$_CellsStyle[3] = 'background:red;';
+$_vF[3] = '<img src="edes.php?R:$t/g/s/ftp_cp.gif" onclick="CpFTP()" oncontextmenu="TestFTP()" title="@Botón derecho Lista de Ficheros@">';
+}else{
+$_vF[3] = '<img src="edes.php?R:$t/g/s/ftp_cp.gif" onclick="CpFTP()">';
+}
+if( substr_count($_vF[1],'/tree/')>0 ) $_CellsStyle[1] = 'color:green;font-weight:bold';
+if( $_vF[4] > 1 ) $_CellsStyle[4] = 'background:#FFB5B5;font-weight:bold';
+[PDFCol],,0,0
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Actualizar por HTTP@|@Nº Desarrolladores por script@
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # and cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # and cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 1|7
+?
+[AddCode]?|_desdecdi_hours,_hastacdi_hours|I|noConditions
+[AddCode]?|_desdeftp_hours,_hastaftp_hours|I|noConditions
+[DBRange]?|cdi|_desdecdi|_hastacdi
+[DBRange]?|cdi_ftp|_desdeftp|_hastaftp
+[OnChange]?|_paquete|SoloPaquetes()
+[Fields]?
+CDI @Instante Desde@|_desdecdi|F4|T|10||QF|||
+,|_desdecdi_hours|H|T|8||Q|||
+,@Hasta@|_hastacdi|F4|T|10||QF|||
+,|_hastacdi_hours|H|T|8||Q|||
+FTP @Instante Desde@|_desdeftp|F4|T|10||QF|||
+,|_desdeftp_hours|H|T|8||Q|||
+,@Hasta@|_hastaftp|F4|T|10||QF|||
+,|_hastaftp_hours|H|T|8||Q|||
+Paquetes|_paquete|#|C|1||Q|||
+@Script@|script|#|T|70||MQ|||
+#(?) @Usuario@|_cd_gs_user|D|T|68||Q|||
+#(?) @Usuario@|cd_gs_user|+|T|5||*Q|||
+#!(?) @Usuario@|cd_gs_user|+|S|68||-|||
+[Fields]
+@CDI@|cdi|CDI|T|19||-||=|
+FTP|cdi_ftp|CDI|T|19||-||=|
+@Script@|script|#|T|70||-|||
+@Desarrolladores@|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname|N|S|50||-|||
+[JSIni]?
+_Question = false;
+function SoloPaquetes(){
+if( eGF('_paquete')=='S' ){
+ePF('script','');
+eHide('script','tr');
+}else eShow('script','TR');
+}
+[PHPIni]l
+if( $_POST['_paquete']!='' ) $_DBADDFILTER = "edes<>'P'";
+[JSOnClickRow]l
+top.eCallSrv( window, 'SCRIPT='+_ValCol['script']+'&CDI='+_ValCol['cdi'] );
+[CallSrv]SCRIPT
+eTrace( $SCRIPT.' - '. $CDI );
+$tmp = explode('/',str_replace(chr(92),'/',$SCRIPT));
+$SCRIPT = $tmp[count($tmp)-1];
+list( $fecha, $hora ) = explode(' ',$CDI);
+list( $Y, $m, $d ) = explode('-',$fecha);
+list( $H, $i, $s ) = explode(':',$hora);
+$iTime = mktime( $H, $i, $s, $m, $d, $Y );
+eTrace( "../_bak_/_daily/{$SCRIPT}.{$iTime}" );
+if( file_exists( "../_bak_/_daily/{$SCRIPT}.{$iTime}" ) ){
+?>
+<script type="text/javascript">
+top.gsEdit(window, "../_bak_/_daily/<?= $SCRIPT.'.'.$iTime ?>",10);
+</script>
+<?PHP
+}else{
+?>
+<script type="text/javascript">
+top.eInfoError(window,'Script no encontrado');
+</script>
+<?PHP
+}

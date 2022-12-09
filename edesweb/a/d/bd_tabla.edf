@@ -1,0 +1,5 @@
+[Title]CONSULTA TABLA
+[AutoMenu]c|1
+[FormAction]cR,c|edes.php?E:$a/d/bd_tabla.gs
+[Fields]
+Tabla|bd_tabid|0|SX|2||Q-||#|

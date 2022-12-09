@@ -1,0 +1,30 @@
+[PHPStart]*
+$n = 1;
+$nomScript = "";
+foreach($_GET as $nomScript=>$v) if( ++$n>2 ) break;
+$nomScript .= ".edf";
+$ok = false;
+$dim = file(eScript($nomScript));
+for($n=0; $n<count($dim); $n++){
+$dim[$n] = trim($dim[$n]);
+$txt = strtoupper($dim[$n]);
+if( substr($txt,0,8)=="[MYDATA]" ){
+$ok = true;
+list($nomField, $nomVar) = explode("=", trim(explode("/", substr($dim[$n],8))[0]));
+$nomField = trim($nomField);
+$nomVar = trim($nomVar);
+$_POST[$nomField] = $_SESSION[$nomVar];
+break;
+}
+}
+if( !$ok ) eEnd();
+$Fichero = $nomScript;
+$NomFile = $nomScript;
+$OriFichero = $nomScript;
+$Fichero = eScript($nomScript);
+$FicheroD = $Fichero;
+$_SERVER["REQUEST_METHOD"] = 'POST';
+if( $_Mode=="cR" ) $_NOBUTTON = 1;
+$_STOP = 1;
+[]
+#Include(*) {$nomScript}

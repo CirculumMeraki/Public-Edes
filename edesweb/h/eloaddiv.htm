@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eLoadDiv 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eLoadDiv( NomVentana, URL [ , Title, x, y, ColorLapiz, Colorpapel, ColorBorde, NomFuncUsu, Reload, Modal=false&nbsp;&nbsp;] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Carga dentro de un "div" una página html / php. Esta función es mas rapida si va&nbsp;acompañada&nbsp;de la etiqueta [SubWin] 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>Las coordenadas "x" e "y" pueden tomar los siguientes valores especiales:<BR><SPAN style="WIDTH: 25px"></SPAN>-1: Valor por defecto calcula la posición de forma automática.<BR><SPAN style="WIDTH: 25px"></SPAN>-2: Centra la nueva ventana sobre el&nbsp;objeto pulsado.<BR><SPAN style="WIDTH: 25px"></SPAN>-3: Centra la nueva ventana&nbsp;sobre la ventana actual.<BR>&nbsp;<STRONG>Reload</STRONG>: Por defecto es "false" sólo se ejecutará la URL la primera vez, después sólo se visualizará. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[SubWin] cR | NewDiv<BR>[AddCode] cR | campo | A | &lt;img src='icono.gif' onclick='eLoadDiv( "NewDiv", "edes.php?E:prueba.php"&nbsp;)' title='Mas información'&gt; 
+<TR>
+<TD id=txt>Se llama a un script externo</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[SubWin] cR | NewDiv<BR>[AddCode] cR | campo | A | &lt;img src='icono.gif' onclick='eLoadDiv( "NewDiv", "Zona1" )' title='Mas información'&gt; <BR>[CallSrv] Zona1</TD></TR>
+<TR>
+<TD id=txt>Se llama a un script interno</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[SubWin] cR | NewDiv<BR>[AddCode] cR | campo | A | &lt;img src='icono.gif' onclick='eLoadDiv( "NewDiv", "prueba.php" )' title='Mas información'&gt; </TD></TR>
+<TR>
+<TD id=txt>Se llama a un script externo</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

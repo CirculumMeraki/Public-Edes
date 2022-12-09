@@ -1,0 +1,18 @@
+#include(*) lng
+[Title]@CARACTERISTICA DEL NAVEGADOR@
+[DBTable]gs_navegador
+[DBIndex]nm_gs_navegador,resolucion,varios
+[DBSerial]cd_gs_navegador
+[DBLimit]1000
+[WinCloseESC]
+[Cursor]
+[TipTH]||@Ancho,Alto,Color@|@Idioma S.O., Idioma I.E. y Cookies@
+[TipForm]*|resolucion|@Ancho,Alto,Color@
+[TipForm]*|varios|@Idioma S.O., Idioma I.E. y Cookies@
+[Fields]
+@Código@|cd_gs_navegador|*|T|7||*|||
+@Versión@|nm_gs_navegador|#X|T|50||QM|||
+@Resolución@|resolucion|#X|T|12||QM|||
+,@Varios@|varios|#X|T|7||QM|||
+[PHPIni]?R|$a/d/usu_ficha.edf
+$_NOBUTTON = true;

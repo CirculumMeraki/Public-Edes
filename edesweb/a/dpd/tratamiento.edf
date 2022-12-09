@@ -1,0 +1,27 @@
+[Title]DPD TRATAMIENTO
+[DBTable]dpd_tratamiento
+[DBIndex]pk; indice||true
+[DBOrder]indice_ord
+[DBSerial]pk
+[AutoMenu]l
+[SlideCol]
+#(l)[Label] trans_salientes | Transferencias Internacionales de Datos Salientes
+#(l)[Label] trans_entrantes | Transferencias Internacionales de Datos Entrantes
+[ColsWidth]45,200,200, 200,200,200,200,200,200,200,200, 200,0
+[Fields]
+=Indice|indice|D|T|8||QM|||
+=Epígrafe|epigrafe|#|A|1000,90,3||QM|||
+=Descripción|descripcion|#|A|1000,90,3||QM|||
+=Finalidad del Tratamiento|finalidad|#|A|2000,90,5||M|||
+=Plazo de Conservación|plazo|#|A|2000,90,5||M|||
+=Licitudes del Tratamiento|licitudes|#|A|2000,90,5||M|||
+=Categorías de Datos Personales|categorias|#|A|2000,90,7||M|||
+=Orígenes de Datos Personales|origenes|#|A|2000,90,7||M|||
+=Comunicaciones de Datos|comunicaciones|#|A|2000,90,5||M|||
+=Transferencias Internacionales<br>de Datos Salientes|trans_salientes|#|A|2000,90,5||M|||
+=Transferencias Internacionales<br>de Datos Entrantes|trans_entrantes|#|A|2000,90,5||M|||
+=Propietario|propietario|#|A|1000,90,3||M|||
+PK|pk|+|T|3||*|||
+[DBIni]A,M
+list($v1, $v2) = explode(".", $_vF["indice"]);
+$_vF["indice_ord"] = str_pad($v1, 2, "0", STR_PAD_LEFT).'.'.str_pad($v2, 3, "0", STR_PAD_LEFT).'.';

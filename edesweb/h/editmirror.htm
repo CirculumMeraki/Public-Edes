@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>EditMirror 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[EditMirror] FieldsList 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Sólo en fichas que componen grupos de fichas. <BR>Funciona de la misma forma que la etiqueta [Mirror] pero el usuario puede escribir en los campos indicados. <BR>Para poder utilizar un EditMirror, se debe colocar el código adecuado en dos ficheros de definición: <BR>&nbsp;- En el fichero de definición donde tenemos originariamente el campo que queremos calcar, debemos incluir el campo afectado como parámetro de la etiqueta [EditMirror].&nbsp; <BR>&nbsp;- En el fichero de definición donde vamos a calcar nuestro campo, el nombre del campo destino (parámetro 2 de la etiqueta [Fields]) debe ser el mismo que el originario pero comenzando con "_", y en el parámetro 4 de la etiqueta [Fields] se debe colocar el signo de campo calco ([*]), tambien puede ser "[S]" para indicar un select y "[SV]"&nbsp;para indicar Select Virtual.<BR>Si se define un [SV] se ha de poner en esa solapa la definición del select con [AddOption].
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>FieldsList</STRONG>: Serie de campos separados por comas. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>DEFINICION DE&nbsp;LA FICHA cliente.gdf<BR>----------------------------------<BR>[Tab] acm | Personales<SPAN style="WIDTH: 25px"></SPAN>| cl/cliente<BR>[Tab] acm | Gestion<SPAN style="WIDTH: 25px"></SPAN>&nbsp;&nbsp;&nbsp;| cl/gestion<BR>[Tab] acm | Banco&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN>&nbsp;&nbsp;&nbsp;|-cl/banco<BR>[DBTable]&nbsp; cliente<BR>[DBIndex]&nbsp; dni<BR>[DBSerial] numero<BR>[DBLimit]&nbsp; 100<BR><BR>El guión en cl/banco es para ocultar la solapa&nbsp;</P>
+<P>DEFINICION EN LA FICHA&nbsp;DEL CLIENTE&nbsp;CORRESPONDIENTE AL GRUPO DE FICHAS(cliente.edf)<BR>-------------------------------------------------------------------------------------<BR>[DBTable]&nbsp;cliente<BR><BR>&nbsp; Entidad Bancaria&nbsp;| _cd_banco&nbsp;| 0&nbsp; | [*] | 4&nbsp; |36| M |||<BR>&nbsp;,Sucursal&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>| _cd_suc&nbsp;&nbsp; | 0&nbsp; | [*] | 4&nbsp; |36| M |||<BR>&nbsp;,Control&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;| _control&nbsp;&nbsp;| DC | [*] | 2&nbsp; |18| M |||<BR>&nbsp;,Nº Cuenta<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;| _num_cta&nbsp;&nbsp;| 0&nbsp; | [*] |10&nbsp; |&nbsp; | M |||<BR><BR>DEFINICION EN LA FICHA DE&nbsp;DATOS BANCARIOS CORRESPONDIENTE AL GRUPO DE FICHAS(banco.edf)<BR>----------------------------------------------------------------------------------------<BR>[DBTable]&nbsp; banco<BR>[DBIndex] dni<BR>[EditMirror] cd_banco,cd_suc,control,num_cta<BR>[Fields]<BR>&nbsp; Entidad Bancaria&nbsp;| cd_banco&nbsp;| 0&nbsp; | T |&nbsp; 4|| M |||<BR>&nbsp;,Sucursal&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>| cd_suc&nbsp;&nbsp; | 0&nbsp; | T |&nbsp; 4|| M |||<BR>&nbsp;,Control&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;| control&nbsp;&nbsp;| DC | T |&nbsp; 2|| M |||<BR>&nbsp;,Nº Cuenta<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;| num_cta&nbsp;&nbsp;| 0&nbsp; | T | 10|| M |||<BR><BR></P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

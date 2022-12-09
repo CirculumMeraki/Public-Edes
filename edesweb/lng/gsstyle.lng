@@ -1,0 +1,109 @@
+[Language] es,ca,en,fr
+1|Acción no permitida|Acció no permesa|Action not allowed|Acción no permitida
+10|Atributos seleccionados|Atributs seleccionats|Selected atributes|Atributos seleccionados
+100|Ventana: SubVentana sin foco|Finestra: SubFinestra sense focus|Ventana: SubVentana sin foco|Ventana: SubVentana sin foco
+101|Cursor|Cursor|Cursor|Cursor
+102|Totales|Totals|Totales|Totales
+103|Papel pijama|Paper pijama|Papel pijama|Papel pijama
+104|Progress|Progress|Progress|Progress
+11|Poner Color|Posar Color|Colour|Poner Color
+12|Poner BackgroundColor|Posar BackgroundColor|Put BackgroundColor|Poner BackgroundColor
+13|Deshacer cambios|Desfer canvis|Undo|Deshacer cambios
+14|Rehacer cambios|Refer canvis|Redo|Rehacer cambios
+15|Menú|Menú|Menu|Menú
+16|CSS Original|CSS Original|CSS Original|CSS Original
+17|Grabar Estilo|Gravar Estil|Record Style|Grabar Estilo
+18|Color actual|Color actual|Actual Color|Color actual
+19|Color sobre el que está el cursor|Color sobre el qual està el cursor|The colour where the cursor is|Color sobre el que está el cursor
+2|Hoja de Estilo|Fulla d´estil|Form of style|Hoja de Estilo
+20|HOJA DE ESTILO|FULLA D´ESTIL|FORM OF STYLE|HOJA DE ESTILO
+21|UTILIDADES|UTILITATS|UTILITIES|UTILIDADES
+22|Colores|Colors|Colous|Colores
+23|Lee gama de colores|Llegeix gamma de colors|Read colours range|Lee gama de colores
+24|Seleccionar grupo de color|Seleccionar grup de color|Select colour group|Seleccionar grupo de color
+25|Cursores|Cursors|Cursors|Cursores
+26|Contornos|Contorns|Outlines|Contornos
+27|IMAGENES|IMATGES|IMAGES|IMAGENES
+28|Ventana|Finestra|Window|Ventana
+29|Control con CURSOR|Control amb CURSOR|Control with CURSOR|Control con CURSOR
+3|Imagenes|Imatges|Images|Imagenes
+30|Control con ERROR|Control amb ERROR|Control with ERROR|Control con ERROR
+31|Desplegar Select|Desplegar Select|Display Select|Desplegar Select
+32|Activar BOTON|Activar BOTÓ|Activate BUTTON|Activar BOTON
+33|Solapa ON con CURSOR|Solapa ON amb CURSOR|Conceal ON with CURSOR|Solapa ON con CURSOR
+34|Solapa OFF con CURSOR|Solapa OFF amb CURSOR|Conceal OFF with CURSOR|Solapa OFF con CURSOR
+35|Opción menú ON|Opció menú ON|Menu option ON|Opción menú ON
+36|SubMenú Desktop|SubMenú Desktop|Desktop SubMenu|SubMenú Desktop
+37|Ver nombre USUARIO|Veure nom USUARI|View USER Name|Ver nombre USUARIO
+38|Ultimos ficheros|Últims fitxers|Last files|Ultimos ficheros
+39|Loading|Carregant|Loading|Loading
+4|Seleccionar Color|Seleccionar Color|Select Colour|Seleccionar Color
+40|Ficha Deslizante|Fitxa Lliscant|Format|Ficha Deslizante
+41|Ficha Deslizante Loading|Fitxa Lliscant Loading|Loading Format|Ficha Deslizante Loading
+42|Fondo ventana sin foco|Fons finestra sense focus|Window background without focus|Fondo ventana sin foco
+43|CSS Actual|CSS Actual|CSS Actual|CSS Actual
+44|UNIFICAR COLORES EN MEMORIA|UNIFICAR COLORS EN MEMÒRIA|UNIFY COLOURS IN MEMORY|UNIFICAR COLORES EN MEMORIA
+45|CSS Original|CSS Original|CSS Original|CSS Original
+46|Unificación de Colores|Unificació de Colors|Colour Unification|Unificación de Colores
+47|Cada cambio se graba directamente|Cada canvi es grava directament|All changes are directly recorded|Cada cambio se graba directamente
+48|No ha seleccionado ningún fichero|No ha seleccionat cap fitxer|No file selected|No ha seleccionado ningún fichero
+49|No se ha pulsado correctamente|No s´ha premut correctament|Wasn't pressed correctly|No se ha pulsado correctamente
+5|Valor Color actual|Valor Color actual|Actual Colour Value|Valor Color actual
+50|Menú|Menú|Menu|Menú
+51|Mostrar Clase/ID|Mostrar Classe/ID|Show Class/ID|Mostrar Clase/ID
+52|Mostrar Regla|Mostrar Regla|Show Rule|Mostrar Regla
+53|Activar media=PRINT|Activar mitjana=PRINT|Activate media=PRINT|Activar media=PRINT
+54|Activar media=SCREEN|Activar mitjana=SCREEN|Activate media=SCREEN|Activar media=SCREEN
+55|Copiar Screen sobre Print|Copiar Screen sobre Print|Copy Screen about Print|Copiar Screen sobre Print
+56|Copiar CSS como|Copiar CSS com|Copy CSS as|Copiar CSS como
+57|Unificar colores en Memoria|Unificar colors en Memòria|Unify colours in Memory|Unificar colores en Memoria
+58|Unificar colores en Servidor|Unificar colors en Servidor|Unify colours in Server|Unificar colores en Servidor
+59|FILTER: endColor|FILTER: endColor|FILTER: endColour|FILTER: endColor
+6|Ayuda|Ajuda|Help|Ayuda
+60|FILTER: startColor|FILTER: startColor|FILTER: startColour|FILTER: startColor
+61|Imagen no encontrada|Imatge no oposada|Image not found|Imagen no encontrada
+62|ENTRADA DE DATOS|ENTRADA DE DADES|DATA ENTRY|ENTRADA DE DATOS
+63|Nueva Imagen|Nova Imatge|New Image|Nueva Imagen
+64|CSS no encontrado|CSS no oposat|CSS not found|CSS no encontrado
+65|Nuevo Atributo|Nou Atribut|New Atribute|Nuevo Atributo
+66|Modificar Atributo|Modificar Atribut|Modify Atribute|Modificar Atributo
+67|Nuevo Valor|Nou Valor|New Value|Nuevo Valor
+68|ENTRADA DE DATOS|ENTRADA DE DADES|DATA ENTRY|ENTRADA DE DATOS
+69|Fichero|Fitxer|File|Fichero
+7|Zoom menos|Zoom menys|Less Zoom|Zoom menos
+70|Regla|Regla|Rule|Regla
+71|Atributo|Atribut|Atribute|Atributo
+72|Comentario|Comentari|Comment|Comentario
+73|Regla repetida|Regla repetida|Repeated Rule|Regla repetida
+74|Regla desconocida|Regla desconeguda|Unknown Rule|Regla desconocida
+75|Confirmar la opción de GRABAR|Confirmar l´opció de GRAVAR|Confirm RECORD option|Confirmar la opción de GRABAR
+76|No se ha podido modificar|No s´ha pogut modificar|It could not be modified|No se ha podido modificar
+77|Nombre Regla|Nom Regla|Rule Name|Nombre Regla
+78|Nombre Class/ID|Nom Class/ID|Class/ID Name|Nombre Class/ID
+79|Nombre fichero CSS|Nom fitxer CSS|CSS File Name|Nombre fichero CSS
+8|Zoom original|Zoom original|Original Zoom (size)|Zoom original
+80|Regla no encontrada|Regla no oposada|Rule not found|Regla no encontrada
+81|Class/ID no encontrada|Class/ID no oposada|Class/ID not found|Class/ID no encontrada
+82|AYUDA gsStyle|AJUDA gsStyle|gsStyle HELP|AYUDA gsStyle
+83|Seleccionar grupo de color|Seleccionar grup de color|Select colour group|Seleccionar grupo de color
+84|Nombre de campo|Nom de camp|Field Name|Nombre de campo
+85|Ancho|Ample|wide|Ancho
+86|Valor no seleccionado<br>Sólo información de sintaxis|Valor no seleccionat<br>Només informació de sintaxi|Valor no seleccionado<br>Sólo información de sintaxis|Valor no seleccionado<br>Sólo información de sintaxis
+9|Zoom mas|Zoom mes|Zoom closer|Zoom mas
+90|Celda no valida|Cel·la no valida|Non valid cell|Celda no valida
+91|Elementos de distinto tipo|Elements de diferent tipus|Elements of different types|Elementos de distinto tipo
+92|Leer|Llegir|Read|Leer
+93|Paleta|Taujana|Trowell|Paleta
+94|UNIFICAR COLORES EN SERVIDOR (grabación directa)|UNIFICAR COLORS EN SERVIDOR (enregistrament directe)|UNIFY COLOURS IN SERVER (direct record)|UNIFICAR COLORES EN SERVIDOR (grabación directa)
+95|Cerrar|Tancar|Close|Cerrar
+96|FICHEROS CSS|FITXERS CSS|CSS FILES|FICHEROS CSS
+97|Control Desactivado|Control Desactivat|Control Desactivado|Control Desactivado
+98|Ver el Calendario de Fechas|Veure el Calendari de Dates|Ver el Calendario de Fechas|Ver el Calendario de Fechas
+99|Ventana: SubVentana con foco|Finestra: SubFinestra amb focus|Ventana: SubVentana con foco|Ventana: SubVentana con foco
+105|Ver el Calendario de Periodos|Veure el Calendari de Períodes|Ver el Calendario de Periodos|Ver el Calendario de Periodos
+106|Visualizar paleta de colores
+107|Visualizar paleta personalizada
+108|Nota
+109|Mostrar Grupo
+110|Mostrar Notas
+111|Nota no encontrada

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>eLoadTList 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eLoadTList( $Tabla, $Titulo, $where ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Igual que la funcion "eLoadList()" pero pudiendo tabular la información. La tabla tiene que tener los siguientes campos:<BR>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>cd_[Tabla]</TD>
+<TD>Campo a grabar</TD></TR>
+<TR>
+<TD>nm_[Tabla]</TD>
+<TD>Campo a visualizar</TD></TR>
+<TR>
+<TD>nivel</TD>
+<TD>Nivel de tabulación, el nivel 1 no es seleccionable&nbsp;</TD></TR>
+<TR>
+<TD>orden</TD>
+<TD>Orden del listado ( campo numérico&nbsp;)</TD></TR></TBODY></TABLE></P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

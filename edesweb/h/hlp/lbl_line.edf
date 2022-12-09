@@ -1,0 +1,10 @@
+[Help]line.htm
+[Title]Line
+[Fields]
+Condición intérprete|ConditionLine|#|T|50||M|||
+Título|Titulo|#|T|50||M|||
+Opciones|Opciones|#|S|20||M||||,; +,+; -,-; ?,?
+-
+Rem|Rem|#|T|50||M|||
+[JSCheck]
+return true;

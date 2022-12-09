@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>FormCheck 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[FormCheck] <BR>Mode | JSCondition | Message <BR>... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Marca las condiciones entre campos en el formulario.<BR>En el segundo parámetro (Condición_JavaScript):&nbsp;<BR>&nbsp;· Si ponemos {NombreCampo} lo sustituirá por su valor.&nbsp; <BR>&nbsp;· Si se utilizan los operadores lógicos:&nbsp; <BR>&nbsp;· "or" en lugar de "||", siempre en minúsculas.&nbsp; <BR>&nbsp;· "and" en lugar de "&amp;&amp;", siempre en minúsculas.&nbsp; <BR>&nbsp;· No se permiten las comillas dobles en ningún sitio.&nbsp; <BR>&nbsp;· Los valores de texto ponerlos entre comillas simples.&nbsp;<BR>En caso de no cumplirse la condición entre campos, se mostrará el mensaje indicado por el último parámetro (campo).<BR>Existen, otras formas de marcar condiciones, tanto desde el parámetro 9 de la etiqueta [Fields] (condiciones individuales de campos) como utilizando la etiqueta [JSCheck] (condiciones JavaScript libre). </P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD><STRONG>Mode</STRONG>&nbsp;</TD>
+<TD>Sólo se permiten los modos "A" y "M" o "*".&nbsp;&nbsp;</TD></TR>
+<TR>
+<TD><STRONG>JSCondition</STRONG></TD>
+<TD>Condición en JavaScript </TD></TR>
+<TR>
+<TD><STRONG>Message</STRONG></TD>
+<TD>Mensaje de error.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[FormCheck]<BR>&nbsp;M | {clave}=={_clave} | Las claves son distintas 
+<TR>
+<TD id=txt>En caso de introducir valores distintos en los campos clave y _clave (confirmación de clave), se muestra el mensaje de error y marcará el campo "_clave" como erroneo, si la expresión fuera al reves "{_clave}=={clave}" se colocaría en el campo "clave".</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

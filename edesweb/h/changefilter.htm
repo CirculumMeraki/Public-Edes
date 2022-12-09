@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>ChangeFilter 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[ChangeFilter] NmField | Function / Sql / Definici?n Select virtual [ | true ]&nbsp; | memory ] &nbsp;| full ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>En un listado cuando se muestran las condiciones se puede poner que la condici?n se pueda cambiar desde el listado mostrando un men? de valores, si este men? se pulsa con la tecla "control" presionada&nbsp;se ejecutar? en una subventana. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>NmField</TD>
+<TD>Nombre del campo&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;</TD>
+<TD>Se puede definir de 3 posibles formas:<BR><SPAN style="WIDTH: 25px"></SPAN>1.- LLamada a una funci?n de usuario<BR><SPAN style="WIDTH: 25px"></SPAN>2.- Sentencia sql con posibilidad en este caso de indicar si se quiere un valor vacio<BR><SPAN style="WIDTH: 25px"></SPAN>3.- La definici?n de un Select Virtual separando los valores por "," y los registros por ";"</TD></TR>
+<TR>
+<TD>true</TD>
+<TD>Solo en caso de Sql permite tener una entrada vacia.</TD></TR>
+<TR>
+<TD>memory</TD>
+<TD>El campo a filtrar está oculto en el listado y se filtra por uno u otro valor mediante un select.</TD></TR>
+<TR>
+<TD>full</TD>
+<TD>Igual que el parámetro anterior pero en lugar se filtrar por un select se muestran todas las opciones como botones.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[ChangeFilter] periodo | 2012-02,2012-02; 2012-01,2012-01<BR>[ChangeFilter] periodo | select periodo, periodo from dl_transfer group by 1 order by 1 desc [ | true ]<BR><BR>[ChangeFilter] periodo | uGetFilter()<BR>[PHPIni] l<BR>function uGetFilter(){<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim = array();<BR><SPAN style="WIDTH: 25px"></SPAN>qQuery( 'select periodo from dl_transfer group by 1 order by 1 desc' );<BR><SPAN style="WIDTH: 25px"></SPAN>while( $r=qArray() ) $Dim[] = array( $r['periodo'], $r['periodo'] );<BR><SPAN style="WIDTH: 25px"></SPAN>return $Dim;<BR>} 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

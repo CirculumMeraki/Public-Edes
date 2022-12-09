@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<HTML><HEAD>
+<TITLE> Novedades </TITLE>
+<META NAME="Generator" CONTENT="gsEdit">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+<LINK REL='stylesheet' HREF='css/new.css' TYPE='text/css'>
+<LINK REL='off' id=CssOffWindow HREF='css/new_off.css' TYPE='text/css'>
+<style>
+	th:nth-child(1), td:nth-child(1){
+		width:120px;
+	}
+	th:nth-child(2), td:nth-child(2){
+		width:480px;
+	}
+	td {
+		overflow-wrap:break-word;
+		white-space: inherit;
+	}
+	input[type=button] {
+		margin-top: 5px;
+		BORDER: #eeeeee 1px outset;
+		display: table;
+		CURSOR: pointer;
+		PADDING-LEFT: 10px;
+		PADDING-RIGHT: 10px;
+		BACKGROUND-COLOR: #fefefd;
+		COLOR: #23005f;
+	}
+	input[type=button]:hover {
+		BACKGROUND-COLOR: #d8d8d8;
+	}
+</style>
+<style MEDIA="print">
+	BODY {
+		margin-top:30px;
+	}
+</style>
+<SCRIPT type="text/javascript" SRC='edes.php?R:$edes.js'></SCRIPT>
+<script type="text/javascript">
+	function eClearEvent(){}
+	function uLeido(){
+		uLEIDO.style.display = 'none';
+		top.eCallSrv( window, 'edes.php?E:$a/d/gs_novedades.gs' );
+	}
+	function uHRef(){
+		var Obj = S.event(window);
+		if( Obj.tagName=='A' ){
+			try{
+				window.open( Obj.href, "", 'top=0px,left=0px,width='+px(top.document.body.clientWidth)+',height='+px(top.document.body.clientHeight)+',resizable=1' );
+			}catch(e){}
+			try{
+				S.eventClear(window);
+			}catch(e){}
+			return false;
+		}
+	}
+	var _WinCaption = top.eIsWindow(window);
+	if( top.eIsWindow(window) ) top.eSWTools(window,'H','maxi');
+</SCRIPT>
+</HEAD>
+<BODY scroll=yes>
+<center>
+<TABLE width=600px onclick=uHRef()>
+<COL width=120px><COL width=480px>
+
+	<!--{TR}-->
+	<TR><TH id=CDI>{0}</TH><TH align=left style="padding-left:10px">{1}</TH></TR>
+	<TR><TD colspan=2 style='white-space:inherit'>{2}</TD></TR>
+	<!--{/TR}-->
+
+</TABLE>
+</center>
+
+<SCRIPT type="text/javascript">
+//var _swZIndex = top._swZIndex;
+//function uResetZIndex(){
+//	top._swZIndex = _swZIndex;
+//}
+
+function uFin(){
+	top.eToDoRun();
+}
+
+if( !top._SinNovedad ){
+	document.write('<center><INPUT id="uLEIDO" class="Boton" TYPE="button" VALUE="LEIDO" onclick="uLeido()"></center>');
+}
+
+if( top.eIsWindow(window) ){
+	setTimeout(function(){
+		top.eSWView(window);
+		top.eSWIResize(window, document.body.scrollWidth, document.body.scrollHeight);
+		window.frameElement.eExit = uFin;
+	},500);
+}
+</SCRIPT>
+</BODY>
+</HTML>

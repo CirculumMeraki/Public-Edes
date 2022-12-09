@@ -1,0 +1,69 @@
+[Title]=Desbloquear aplicación
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[WinClose]
+[AutoMenu]*|2
+[Stop]
+[Button]*|<img src='g/op_exe.gif'>Entrar
+[FormButtons]
+[Fields]
+Nombre|user_name|X|T|20|user_surname|-|||
+Apellidos|user_surname|X|T|30||-|||
+Clave|_pass|C|P|250|user_surname|ML||'#'.length>=@|La longitud mínima de la "CLAVE" es de @ caracteres
+|cd_gs_user|*|T|5||*|||
+|_window|*|T|10||*|||
+className = "OFF";
+[JSIni]mR
+top.eSWOnClose(window,'top.__eClose(2)');
+top.eSWTools(window,"H","print");
+if( top.DGI('AppLock') ) top.SwapImg( top.DGI('AppLock'), '_0', '_1' );
+[PHPForm]mR
+$uDim = file( "{$_SESSION['_PathCSS']}/login.css" );
+for( $u=0; $u<count($uDim); $u++ ){
+list( $uValor, $uLong ) = explode(':',$uDim[$u] );
+list( $uLong ) = explode(';',$uLong );
+$uLong = trim($uLong);
+switch( trim($uValor) ){
+case 'min_login':
+case 'max_login':
+break;
+case 'min_password':
+$_Form['_pass'][8] = str_replace('@',$uLong,$_Form['_pass'][8]);
+$_Form['_pass'][9] = str_replace('@',$uLong,$_Form['_pass'][9]);
+break;
+}
+}
+eFileGetVar('Login', true);
+switch( $GLOBALS['key_case'] ){
+case '0':
+$_Form['_pass'][2] = 'D';
+break;
+case '1':
+$_Form['_pass'][2] = 'd';
+break;
+case '2':
+$_Form['_pass'][2] = '#D';
+break;
+}
+if( $GLOBALS['min_password'] > 0 ){
+$_Form['_pass'][8] = str_replace( '@', $GLOBALS['min_password'], $_Form['_pass'][8] );
+$_Form['_pass'][9] = str_replace( '@', $GLOBALS['min_password'], $_Form['_pass'][9] );
+}
+[JSCheck]mR
+if( eGF('_pass')!='' ){
+ePF( '_pass', _e_(eGF('_pass')).toUpperCase() );
+}else{
+top.eInfoError(window,'Tiene que introducir la clave');
+return false;
+}
+if( top.DGI('AppLock') ) top.SwapImg( top.DGI('AppLock'), '_1', '_0' );
+top.eSWOnClose( window, '' );
+[JSEnd]mR
+FRM1._window.value = window.name;
+[PHPIni]M
+if( qCount( 'gs_user', "cd_gs_user='{$_User}' and pass='{$_pass}'" )==1 ){
+eMessage( 'ACCESO AUTORIZADO', 'HS' );
+}else{
+eMessage( 'CLAVE ERRONEA', 'HSEC', 5, 'top._eClose(2);' );
+}

@@ -1,0 +1,55 @@
+#include(*) lng
+[Title]@GRUPO/S DE DATOS DE LAS EXTRACCIONES@
+[DBTable]{$_SESSION['ShareDictionary']}gs_grupo
+[DBIndex]cd_gs_grupo
+[DBOrder]B.nm_gs_entidad, A.orden, A.nm_gs_grupo
+[DBSerial]cd_gs_grupo
+[DBAddFilter]cd_gs_grupo > 0
+[FormStatic]
+[SortList]ml|orden
+[PersistentVar]_LngEdit
+[EditList]nm_gs_grupo
+[Fields]
+     @Entidad@                        | cd_gs_entidad | 0  | S | 30 |  | MQd |  | # |
+     @Grupo@                          | cd_gs_grupo   | +  | T | 2  |  | *Q* |  |   |
+     @Nombre@                         | nm_gs_grupo   | D  | T | 30 |  | MQ  |  | # |
+     @Nota@                           | nota          | #X | T | 45 |  | MQ  |  |   |
+     #(a,mR,ml) @Nº de Orden@\@Orden@ | orden         | +  | T | 3  |  | M   |  |   |
+[JSCheck]m
+if( eGF('cd_gs_entidad')=='' ) ePE('cd_gs_entidad','Falta definir "@Entidad@"');
+[PHPIni]m,ml
+global $_Mode, $_SubMode, $_Form;
+if( $_LngEdit!='' && qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+$_Form[2][1] = 'nm_gs_grupo_'.$_LngEdit;
+if( $_SubMode=='ml' ){
+global $_EDITLIST;
+$_EDITLIST[0] = ',nm_gs_grupo_'.$_LngEdit.',';
+}
+}
+[PHPForm]*
+global $_Mode, $_SubMode, $_LngEdit, $_ADDCODE;
+if( $_LngEdit!='' && qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+if( substr_count(',b,bR,c,cR,m,l,', $_Mode)>0 ){
+$_Form['nm_gs_grupo'][1] = 'nm_gs_grupo_'.$_SESSION['_LANGUAGE_'];
+if( $_SubMode=='ml' ){
+global $_EDITLIST;
+$_EDITLIST[0] = ','.$_Form['nm_gs_grupo'][1].',';
+}
+}else if( substr_count(',a,mR,', ",{$_Mode},")>0 ){
+global $_ONCHANGE;
+eAddField('-|@Lenguaje@||||||||');
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_language where tf_translation='S' order by nm_gs_language", $p);
+while( $r=qArray($p) ){
+if( trim($r['cd_gs_language'])=='es' ){
+eAddField('@Nombre@ | nm_gs_grupo_'.$r['cd_gs_language'].' | D | T | 30 || * || # |');
+$_ONCHANGE[] = array('nm_gs_grupo', 'ePF("nm_gs_grupo_es",eGF("nm_gs_grupo"));', '', '');
+}else{
+eAddField('@Nombre@ | nm_gs_grupo_'.$r['cd_gs_language'].' | D | T | 30 || M || # |');
+if( $_Mode=='a' ) $_ONCHANGE[] = array('nm_gs_grupo', 'ePF("nm_gs_grupo_'.trim($r['cd_gs_language']).'",eGF("nm_gs_grupo"));', '', '');
+$_ADDCODE['nm_gs_grupo_'.$r['cd_gs_language']]['E'] = ' '.eUcFirst(trim($r['nm_gs_language']));
+}
+}
+}
+}
+[DBEnd]A,M,B
+eExportSrvTable("{$_SESSION['ShareDictionary']}gs_grupo", false);

@@ -1,0 +1,49 @@
+[TITLE]=Create KeyApp
+[AddButton]*|[copy] Copiar KeyApp||uCapturar()
+[AddButton]*|[&#230;] Crear KEY||uCrearKey()
+[NoButton]*
+[Fields]
+{I} KeyApp: <div id="KEY" style="width:550px;display:block;">...</div>
+[PHPEnd]a
+$dir = "../_datos/config/";
+if( is_dir($dir) ){
+if( $dh = opendir($dir) ){
+while( ($file = readdir($dh))!==false ){
+if( eFileType($dir.$file)=="edes" ){
+$file = substr($file, 0, -5);
+eJS("S('#KEY').text('{$file}');");
+break;
+}
+}
+closedir($dh);
+}
+}
+[JSIni]*
+function uCrearKey(){
+var total=62, txt="", c="",
+cadena = "0123456789abcdefghijklmnopqrstuvwxyz",
+i=0, f=cadena.length;
+while( txt.length<62 ){
+c = S.mid(cadena, Math.round(Math.random()*(f-i)+i), 1);
+txt += c;
+}
+S.callSrv("CreateKey="+txt, window);
+}
+function uCapturar(){
+S.clipboardPut(S("#KEY").text());
+S.info("KeyApp copiado", 1);
+}
+[CallSrv]CreateKey
+$dir = "../_datos/config/";
+if (is_dir($dir)) {
+if ($dh = opendir($dir)) {
+while (($file = readdir($dh))!==false){
+if( eFileType($dir.$file)=="edes" ){
+unlink($dir.$file);
+}
+}
+closedir($dh);
+}
+}
+file_put_contents("../_datos/config/{$CreateKey}.edes", "-");
+eJS("top.S.info('Nueva Key: {$CreateKey}', 1); top.S('#KEY', window.frameElement.WOPENER).text('{$CreateKey}');");

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>FormPosition 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[FormPosition] XCoord, YCoord [, D:E] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Aplicable en los EDF aplicados a las multifichas.<BR>En un grupo de fichas, cada una de las fichas tiene un tamaño diferente, esta etiqueta nos permite igualar los tamaños de todas ellas y posicionarlas en unas coordenadas fijas o centrarlas en la ventana.<BR>En las coordenadas, si introducimos el valor "-1" la ficha será centrada en la ventana bien en X, en Y o en ambas.<BR>En el tercer parámetro indicamos cómo deseamos que generen los recuadros de los formularios; con Different cada ficha tendrá su propio tamaño mientras que con Equal todas las fichas tendrán el mismo tamaño y este será el mayor ancho y alto de cada una de las fichas. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>XCoord, YCoord:</STRONG> Valores enteros positivos o el valor "-1".<BR><STRONG>D:E:</STRONG> Different o Equal. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>#(a,cR,mR) [FormPosition] 10,10,D 
+<TR>
+<TD id=txt>En los modos alta, filtro de consulta, filtro de modificacion coloca el formulario en las cordenadas x=10,&nbsp; y=10</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+</SCRIPT>
+</BODY></HTML>

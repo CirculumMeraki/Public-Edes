@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">
+<p>slSql</p>
+</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">{slSql} Sql [ | CampoSerial [ | CampoFile [ | CampoDondeSeGuardaElFichero [ | AddWhere ] ] ] ] <br />     /<br />{slSql} Sql...<br />     Sql..<br />     ...<br />[ | CampoSerial [ | CampoFile [ | CampoDondeSeGuardaElFichero [ | AddWhere ] ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Orden SQL para la extracción de datos a la Sublista<span style="color: #ff0000;">. En los campos a seleccionar no se puede poner el campo de la tabla padre.</span> <br />La lista de campos se puede sustituir por un símbolo de "#" o "*".</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">{slSql} select codigo,cd_foto,nm_foto,fichero,fichero from foto where codigo='{$codigo}' </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> {slSql}  select # from _redis_old o <br />    left join auto a on o.cd_auto=a.cd_auto <br />    left join prov p on o.cd_prov=p.cd_prov  <br />    left join coma c on (o.cd_prov=c.cd_prov and o.cd_coma=c.cd_coma)   <br />    left join muni m on (o.cd_prov=m.cd_prov and o.cd_muni=m.cd_muni)   <br />    left join distri d on (o.cd_prov=d.cd_prov and o.cd_muni=d.cd_muni and o.cd_distri=d.cd_distri)   <br />   where o.cd_redis_new = '{cd_redis_new}' <br />   order by a.nm_auto,p.nm_prov,c.nm_coma,m.nm_muni<br /> | o.cd_redis_old</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

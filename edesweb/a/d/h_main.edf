@@ -1,0 +1,103 @@
+[Title]CONFIGURACION DE LA PAGINA
+[DBTable]noticias_sector
+[DBIndex]cd_noticias_sector
+[DBOrder]cd_noticias_sector
+[DBSerial]cd_noticias_sector
+[OnChange]*|tipo_letra|DGI("EjFuente").style.fontFamily = eGF('tipo_letra');
+[OnChange]*|color_papel|DGI("EjFuente").style.backgroundColor = eGF('color_papel');
+[OnChange]*|font_size|DGI("EjFuente").style.fontSize = eGF('font_size');
+[AddOption]*|scroll|no,NO; yes,YES; auto,AUTO
+[Button]*|Aplicar cámbios
+[AddTools]*|color_lapiz|eColorSelect|uSelColor(0,eGF('color_lapiz'))|edes.php?R:$t/g/i/colorlapiz.gif
+[AddTools]*|color_papel|eColorSelect|uSelColor(1,eGF('color_papel'))|edes.php?R:$t/g/i/colpapel.gif
+[OnLoad]*|eGO('color_lapiz').style.color = top.eColorContrastBW(eGF('color_lapiz')); eGO('color_papel').style.color = top.eColorContrastBW(eGF('color_papel'));
+[Fields]
+{FS}{ COLOR
+<]Lapiz|color_lapiz|X|T|7||-|||
+,]Papel|color_papel|X|T|7||-|||
+}
+{FS}{ FUENTE
+<]Tipo|tipo_letra|X|SV|40||M|Times New Roman||
+,]Tamaño|font_size|+|T|2||MS|12||
+}
+{FS}{ MARGENES
+<]Izquierdo|margin_left|+|T|2||MS|10||
+,]Derecho|margin_right|+|T|2||MS|10||
+]Superior|margin_top|+|T|2||MS|15||
+,]Inferior|margin_bottom|+|T|2||MS|15||
+}
+{I} <FIELDSET class=CAJA style="height:72px; width:330px; text-align:center; vertical-align:middle;"><LEGEND ALIGN='left'>Ejemplo</LEGEND><table border=0><tr><td id=EjFuente align=center valign=middle style='width:300;height:50;'>abcdABCD 1234</td></tr></table></fieldset>
+{FS}{ VARIOS
+<]Barra descensora|scroll|X|SV|6||M|no||
+}
+[JSIni]*
+function uSelColor(n,sColor){
+if( sColor=="" ) return
+if( n==1 ){
+ePF('color_papel',sColor);
+}else{
+DGI("EjFuente").style.color = sColor;
+ePF('color_lapiz',sColor);
+}
+}
+function LoadFontsName(){
+var Dim = (_DimFont).split(','), i, Obj = DGI("tipo_letra_TABLE"), tr;
+for( i=0; i<Dim.length; i++ ){
+tr = Obj.insertRow();
+tr.insertCell().textContent = Dim[i];
+tr.insertCell().textContent = Dim[i];
+}
+setTimeout("ePF('tipo_letra','Times New Roman');",100);
+}
+[PHPIni]*
+echo '<script type="text/javascript">';
+echo 'var _DimFont = "";';
+if( file_exists( '../../edesweb/t/10_menus.cnf' ) ){
+$Dim = file( '../../edesweb/t/10_menus.cnf' );
+for( $n=0; $n<count($Dim); $n++ ){
+$tmp = explode('|',$Dim[$n]);
+if( $tmp[0]=='FONT-FAMILY' ) echo '_DimFont = "'.rtrim($tmp[1]).'";';
+}
+}
+echo '</script>';
+[JSEnd]*
+eGO('margin_top').parentNode.parentNode.parentNode.parentNode.style.marginLeft = "70px";
+LoadFontsName();
+var Obj = _WOPENER.CONTENIDO.document.body;
+var uScroll = Obj.scroll;
+if( uScroll=='' ) uScroll = 'no';
+with( DGI("EjFuente").style ){
+color = S(Obj).css("color");
+backgroundColor = S(Obj).css("backgroundColor");
+fontSize = S(Obj).css("fontSize");
+fontFamily = S(Obj).css("fontFamily");
+}
+eGO('color_lapiz').style.backgroundColor = S(Obj).css("color");
+eGO('color_papel').style.backgroundColor = S(Obj).css("backgroundColor");
+ePF('color_lapiz'	,S(Obj).css("color").toUpperCase());
+ePF('color_papel'	,S(Obj).css("backgroundColor").toUpperCase());
+ePF('tipo_letra'	,S(Obj).css("fontFamily"));
+ePF('font_size'	 	,parseInt(S(Obj).css("fontSize")));
+ePF('margin_left'	,top.eStyleWidth(S(Obj).css("marginLeft")));
+ePF('margin_right'	,top.eStyleWidth(S(Obj).css("marginRight")));
+ePF('margin_top'	,top.eStyleWidth(S(Obj).css("marginTop")));
+ePF('margin_bottom'	,top.eStyleWidth(S(Obj).css("marginBottom")));
+ePF('scroll'		,uScroll);
+function uVerTipoLetra(){
+DGI("EjFuente").style.fontFamily = eGF('tipo_letra');
+}
+setInterval('uVerTipoLetra()',250);
+[JSCheck]*
+with( _WOPENER.CONTENIDO.document.body.style ){
+color = eGF('color_lapiz');
+backgroundColor = eGF('color_papel');
+fontFamily = eGF('tipo_letra');
+fontSize = px(eGF('font_size'));
+marginLeft = px(eGF('margin_left'));
+marginRight = px(eGF('margin_right'));
+marginTop = px(eGF('margin_top'));
+marginBottom = px(eGF('margin_bottom'));
+}
+_WOPENER.CONTENIDO.document.body.scroll = eGF('scroll');
+top.eSWClose(window);
+return false;

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBLimit</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBLimit] MaxRec [,Number [, MinRec [, Texto ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Modifica la variable de configuración situada en el archivo "sql.ini" , que por defecto marca el límite máximo de filas que se envían al navegador.  Los parámetros "Number" y "MinRec" funcionan como con la etiqueta [MaxRec]. Si el segundo parámetro es negativo indicará que solo mostrará los "n" primeros registros. Esto no tiene ningún efecto si la salida es por PDF o XLS.<br />Si no se pone la etiqueta [DBLimit] ni [MaxRec] paginará con las filas que quepan en la página y si el nº de filas es mayor de $_DBLIMIT mostrará o un mensaje indicando que se pongan mas conduciones o los primeros registros hasta $_DBLIMIT.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td><strong>MaxRec</strong> </td>
+<td> Máximo número de registros a enviar al cliente, admite los números con el "." como separador de miles.</td>
+</tr>
+<tr>
+<td><strong>Number</strong></td>
+<td> Número de registros por página, si el valor es negativo indicará que solo muestrará los "n" primeros registros. Si no se rellena y la variable "<u>$_MaxVisibleRows</u>" está definida (normalmente en el fichero "sql.ini") hará un cáculo automático de las filas que caben en el explorador.</td>
+</tr>
+<tr>
+<td><strong>MinRec</strong></td>
+<td> Mánimo número total de registros a paginar, es decir si menor de MinRec no paginará.</td>
+</tr>
+<tr>
+<td><strong>Texto</strong></td>
+<td> Texto si solo se saca una muestra de registros cuando "MaxRec" es menor de cero, si se deja en blanco pondrá "Muestra de # Registros" sustituyendo "#" por el valor "MaxRec" absoluto.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[DBLimit] 1.000         // Limita el número de registros a enviar en 1000.</code><br /><code>[DBLimit] 500,50,60     // 500 registros como máximo, paginados de 50 en 50 y si hay menos o igual a 60 lo muestra</code><code> de una sola vez.</code><br /><code>[DBLimit] 50.000,-100   // De un máximo de 50.000 registros solo mostrará los primeros 100.</code></td>
+</tr>
+<tr>
+<td id="txt">Limita el número de registros a enviar en 1000.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

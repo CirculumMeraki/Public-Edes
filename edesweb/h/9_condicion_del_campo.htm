@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>9. Condición del campo 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Marca una condición sobre el campo. </P>
+<P>- Si ponemos sólo un<FONT color=#ff0080> "#"</FONT> se obliga a meter el campo.&nbsp; <BR>- Si ponemos sólo un<FONT color=#ff0080> "="</FONT> se obliga a rellenarlo completamente.<BR>- Si ponemos sólo un <FONT color=#ff0080>"%"</FONT> el campo tendrá que estar vacío o completamente relleno.<BR>- Si ponemos una condición, donde encuentre el <FONT color=#ff0080>"#"</FONT> lo sustituirá por el valor actual del campo. Ejemplo: <FONT color=#ff0080>"# &gt; 100"</FONT> ( si queremos poner 'or' no podremos utilizar la forma "<FONT color=#ff0080>||</FONT>" )&nbsp;.<BR>- Por defecto las condiciones actuan sobre los modos "a" y "mR" pero si se quiere que actue sobre los modos "c", "m" o "b" se separaría las condiciones con el carácter "<FONT color=#ff0080></FONT>" quedando la condición normal a la izquierda y a la derecha la condición para los modos&nbsp; "c", "m" o "b".<BR><BR>El tipo de condición <FONT color=#ff0080>"="</FONT> o <FONT color=#ff0080>"%"</FONT> por defecto en los listados centrarán&nbsp;los datos en&nbsp;sus columnas.<BR>&nbsp;<BR>Existen otras formas de marcar condiciones, como son las etiquetas&nbsp;<FONT color=#ff0080>[JSCheck], [FormCkeck].<BR><BR></FONT>El campo tipo "<STRONG>Periodo</STRONG>" se puede condicionar de la siguiente forma:<BR>Con "#" indicamos que es obligatorio pero si a la vez queremos definir un rango de periodos le pondremos el carácter "/" y a continuación el rango de periodos, este se puede definir de la siguiente forma:<BR>[Desde] [,[Hasta] [, [MesesSeleccionables] ] ]<BR>Tanto "Desde" como "Hasta" puede ser:<BR>- "": Cadena vacía para indicar sin límite en este parámetro<BR>- "AAAA": Indica el año<BR>- "AAAA-MM": identifica el periodo<BR>- FunctionUser(): hace la llamada a una función de usuario que deverá devolver uno de los valores anteriores obteniendo el valor en la posición que se encuentra excepto que si solo hay una unción si devuelve una cadena será del parámetro "Desde" y si devuelve un array se obtendrán los tres parámetros.<BR>- El año se puede sustituir por "YEAR" y el mes por "MONTH".<BR>- A la vez podremos sumar o restar numeros de años o meses poniendolo entre parentesis ej: "(YEAR-5)-01", "(YEAR-5)-(MONTH+2)", etc.<BR>- También se puede pasar dos periodos separados por una "/" tomando el valor mayor en caso de "Desde" y el menor en caso de "Hasta" como: "(YEAR-5)/2007".<BR>- El dato "MesesSeleccionables" es una lista de nº de meses seleccionables separados por "," por defecto son todos, ej: "01,04,07,10"<BR><BR><FONT face=Courier>[Fields]<BR>&nbsp;&nbsp; Peiodo | periodo | P4 | T | 7&nbsp;&nbsp;|| MP || #/2010-03, PeriodoHasta(), Meses()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;<BR>&nbsp;&nbsp; Peiodo | periodo | P4 | T | 7&nbsp;&nbsp;|| MP || #/(YEAR-10)-01, PeriodoHasta(), Meses()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;<BR>&nbsp;&nbsp; Peiodo&nbsp;| periodo | P4 | T | 7&nbsp;&nbsp;|| MP || #/Todo()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; |&nbsp;<BR>&nbsp;&nbsp; Peiodo | periodo | P4 | T | 7&nbsp;&nbsp;|| MP || #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;|&nbsp;<BR>&nbsp;&nbsp; Fecha&nbsp;&nbsp;| fecha2&nbsp; | F4 | T | 10&nbsp;|| MF || #/YEAR-MONTH-DAY, (YEAR+3)-MONTH-DAY, 0,1,2,3,4&nbsp;|&nbsp;<BR>&nbsp;&nbsp; Fecha&nbsp; | fecha2&nbsp; | F4 | T | 10&nbsp;|| MF ||&nbsp;YEAR-01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| </FONT></P>
+<P><FONT face=Courier>[PHPIni] ?,a,mR || unique<BR>function PeriodoHasta(){<BR>&nbsp;&nbsp; return '2014-02';<BR>}<BR>function Meses(){<BR>&nbsp; &nbsp;return '1,4,7,10';<BR>}<BR>function Todo(){<BR>&nbsp; &nbsp;return array( 2003, '2015-12', '2,4,6,8,10' );<BR>}<BR></FONT><BR>En campo tipo "<STRONG>Fecha</STRONG>" se define igual que el tipo "Periodo" pero se añade la constante "DAY" y el tercer parámetro es una lista de nº de día de la semana seleccionable, por defecto son todos, del 0 al 6 siendo el 0 el lunes. En el campo fecha hay que definir las fechas completas.</P>
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

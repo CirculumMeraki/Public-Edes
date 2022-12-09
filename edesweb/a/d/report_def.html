@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="es">
+ <head>
+  <meta charset="ISO-8859-1">
+  <meta name="Generator" content="gsEdit">
+  <meta name="Author" content="GeSoft">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+<script type="text/javascript">
+
+var _DragObj = null;
+var _DragIniX;
+var _DragIniY;
+var _DragX;
+var _DragY;
+
+function eGragInRow( TABLA, O ){
+	if( TABLA.rows.length==0 ) return 0;
+	var D = ePosition(TABLA);
+	if( O.x > D.x && O.x < D.x+D.w ){
+		if( O.y > D.y && O.y < D.y+D.h ){
+			for( n=0; n<TABLA.rows.length; n++ ){
+				D = ePosition(TABLA.rows[n].cells[0]);
+				if( O.x > D.x && O.x < D.x+D.w ){
+					if( O.y > D.y && O.y < D.y+D.h ) return n;
+				}
+			}
+		}
+	}
+	return TABLA.rows.length;
+}
+
+
+
+function ePosition(el){
+	var x,y,w,h, r=el.getBoundingClientRect();
+	x = r.left; w = el.clientWidth; y = r.top; h = el.clientHeight;
+	return {x: x, y: y, w: w, h: h};
+}
+
+function noEvents(){
+	S.eventClear(window);
+	return false;
+}
+
+function eDragDown(id){
+	_DragObj = (typeof(id)=='string') ? DGI(id) : id;
+	_DragX = event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft;		//obtengo la posicion del cursor
+	_DragY = event.clientY + document.documentElement.scrollTop  + document.body.scrollTop;
+
+	document.body.onmousemove = eDragMov;
+	document.body.onmouseup = eDragStop;
+
+	_DragIniX = parseInt(_DragObj.style.left);
+	_DragIniY = parseInt(_DragObj.style.top);
+	return noEvents();
+}
+function eDragMov(){
+	var xAhora = event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft;
+	var yAhora = event.clientY + document.documentElement.scrollTop  + document.body.scrollTop;
+	_DragObj.style.left = px(_DragIniX + xAhora - _DragX);
+	_DragObj.style.top  = px(_DragIniY + yAhora - _DragY);
+	return noEvents();
+}
+function eDragStop(){
+	document.body.onmousemove = null;
+	document.body.onmouseup = null;
+}
+
+function eDragCapture(){
+	var Obj = S.event(window);
+	if( Obj.tagName=='TD' && Obj.getAttribute('eBUSY')!=1 ){
+		DGI("CARRITO").textContent = Obj.textContent;
+		DGI("CARRITO").style.display = 'block';
+
+		var p = ePosition(Obj);
+		DGI("CARRITO").style.left = px(p.x + parseInt(S(Obj).css("paddingLeft")));
+		DGI("CARRITO").style.top = px(p.y + parseInt(S(Obj).css("paddingTop")));
+
+		DGI("CARRITO").Obj = Obj;
+
+		Obj.style.color = '#eeeeee';
+		if( Obj.parentNode.parentNode.parentNode.parentNode.getAttribute('eSOURCE')==1 ) Obj.setAttribute('eBUSY',1);
+		eDragDown('CARRITO');
+		return noEvents(event);
+	}
+}
+
+function eDragUp(){
+	var Objs = DGI("eCONTAINER"), Ok = false, i;
+	var Origen = ePosition(DGI("CARRITO")), Destino, n, TABLA, TR, TD;
+
+	//object.contains(pChild)		// true / false
+	//alert( Objs[n].componentFromPoint(Origen.x, Origen.y) );
+	//alert( event.clientX+'\n'+ event.layerX+'\n'+ event.offsetX+'\n'+ event.pageX+'\n'+ event.screenX+'\n'+ event.x );
+
+	Origen.x += event.offsetX;
+	Origen.y += event.offsetY;
+
+	for( n=0; n<Objs.length; n++ ){
+
+		Destino = ePosition(Objs[n]);
+		if( Origen.x > Destino.x && Origen.x < Destino.x+Destino.w ){
+			if( Origen.y > Destino.y && Origen.y < Destino.y+Destino.h ){
+
+				TABLA = Objs[n].children[0];
+
+				// Ya esta el elemento
+				for( i=0; i<TABLA.rows.length; i++ ){
+					if( TABLA.rows[i].cells[0].id==DGI("CARRITO").Obj.id ){
+						TABLA.rows[i].cells[0].style.color = '';
+						// Crea el elemento en destino
+						if( Objs[n].getAttribute('eSOURCE')==1 ){
+							TABLA.rows[i].cells[0].setAttribute('eBUSY',0);
+							if( DGI("CARRITO").Obj.parentNode.parentNode.parentNode.parentNode.getAttribute('eSOURCE')==0 ){
+								Ok = true;
+								TD = DGI("CARRITO").Obj;
+								TR = TD.parentNode;
+								S(TR).nodeRemove();
+							}
+						// Mueve el elemento de posición
+						}else{
+							Ok = false;
+						}
+					}
+				}
+
+				// Si no está el elemento
+				if( !Ok && Objs[n].getAttribute('eSOURCE')==0 ){
+					if( DGI("CARRITO").Obj.parentNode.parentNode.parentNode.parentNode.getAttribute('eSOURCE')==0 ){
+						TD = DGI("CARRITO").Obj;
+						TR = TD.parentNode;
+						S(TR).nodeRemove();
+					}
+					TR = TABLA.insertRow( eGragInRow(TABLA,Origen) );
+					TD = TR.insertCell();
+					TD.textContent = DGI("CARRITO").Obj.textContent;
+					TD.id = DGI("CARRITO").Obj.id;
+				}
+
+				DGI("CARRITO").style.display = 'none';
+				Ok = true;
+				break;
+			}
+		}
+	}
+	if( !Ok ){
+		DGI("CARRITO").Obj.style.color = '';
+		DGI("CARRITO").Obj.setAttribute('eBUSY',0);
+		DGI("CARRITO").style.display = 'none';
+	}
+}
+</script>
+
+
+
+<body>
+<div id=CARRITO style='z-index:10;position:absolute;display:none;cursor:move; border:1px solid red' onmousedown="eDragDown(this)" onmouseup="eDragUp()"></div>
+
+<div style='border:5px solid green; width:100px; height:100%' id=eCONTAINER eSOURCE=1>
+	<table border=1px onmousedown="eDragCapture()" style='cursor:pointer' onselectstart='return false;'>
+		<tr><td id=c1>11111</td></tr>
+		<tr><td id=c2>22222</td></tr>
+		<tr><td id=c3>33333</td></tr>
+	</table>
+</div>
+
+
+<span style='position:absolute; border:1px solid red; left:130px; top:150px; width:100px; height:100px' id=eCONTAINER eSOURCE=0>
+	<table border=1px onmousedown="eDragCapture()" style='cursor:pointer' onselectstart='return false;'>
+	</table>
+</span>
+
+
+<span style='position:absolute; border:1px solid blue; left:130px; top:300px; width:100px; height:100px' id=eCONTAINER eSOURCE=0>
+	<table border=1px onmousedown="eDragCapture()" style='cursor:pointer' onselectstart='return false;'>
+	</table>
+</span>
+
+
+
+<img src="misfotos.jpg/b1.jpg" width="150px" height="150px" style="top:200px; left:300px; position:absolute;"
+onmousedown="eDragDown(this)"
+onmouseover="this.style.cursor='move'"
+>
+
+<img src="misfotos.jpg/b2.jpg" width="150px" height="150px" style="top:250px; left:300px; position:absolute;"
+onmousedown="eDragDown(this)"
+onmouseover="this.style.cursor='move'"
+>
+
+</body>
+</html>

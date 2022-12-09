@@ -1,0 +1,19 @@
+<DIV style="WIDTH: 557px; HEIGHT: 143px" id=CONTENIDO class=AYUDA>
+Configuración para la actualización por HTTP<BR>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>HTTP/S&nbsp;</TD>
+<TD>Tipo de conexión: http / https&nbsp;</TD></TR>
+<TR>
+<TD>IP DESTINO</TD>
+<TD>IP del servidor de destino</TD></TR>
+<TR>
+<TD>ORIGEN</TD>
+<TD>Directorio origen&nbsp;(directorio principal incluido ej: DirAplicacion, DirAplicacion/Tree)</TD></TR>
+<TR>
+<TD>DESTINO</TD>
+<TD>Directorio destino (directorio principal incluido)</TD></TR>
+<TR>
+<TD>DESCRIPCION&nbsp;</TD>
+<TD>Texto a seleccionar al sincronizar&nbsp;</TD></TR></TBODY></TABLE></DIV>

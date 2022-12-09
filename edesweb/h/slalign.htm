@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta><B><FONT size=2>
+<P>slAlign</P></B></FONT>
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{slAlign} AlignType_Col1 [,AlignType_Col2]...[,AlignType_ColN] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>&nbsp;Alinear u ocultar los datos de las columnas de las sublistas 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>&nbsp;AlignType_Col: Tipo de alineación de los datos de la columna. Los tipos de alineación disponibles son:&nbsp;<BR>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>L&nbsp;</TD>
+<TD>&nbsp;Alinear a la izquierda, (o en blanco)</TD></TR>
+<TR>
+<TD>C</TD>
+<TD>&nbsp;Centrar</TD></TR>
+<TR>
+<TD>R</TD>
+<TD>&nbsp;Alinear a la derecha</TD></TR>
+<TR>
+<TD>H</TD>
+<TD>&nbsp;Ocultar columna</TD></TR>
+<TR>
+<TD>T</TD>
+<TD>&nbsp;Oculta la columna y pone el valor como&nbsp;"title" de cada fila</TD></TR></TBODY></TABLE>Si en el "AlignType" está el caracter "\" indicará que el tipo que esté a la izquierda será el typo en los modos "a" y "mR" y el de la derecha en el resto., lo normal será "C\H" en "a" y "mR" se vé una columna y en el resto de modos se oculta.
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P><FONT color=#ff0080><U>-&gt; En "d/vi/v_calidad.edf"</U></FONT><BR><BR>&nbsp; &lt;&nbsp;&nbsp;&nbsp;| [fotos]&nbsp;| o | | | | | | |<BR><BR>[SubList] a,A,mR,cR | fotos |<BR>&nbsp; {slSql} select codigo,cd_foto,nm_foto,fichero,ver,imprimir,fichero from foto where codigo='{codigo}' order by nm_foto<BR>&nbsp; {slTH}&nbsp; codigo,cd_foto,DESCRIPCION,FICHERO,Ver,Imp,&lt;img src='g/album.gif' onclick="VerAlbum()" title='Ver album'&gt;<BR>&nbsp; {slAlign} H,H,L,L,C,C,C<BR>&nbsp; {slFormat} ,,,,,,&lt;img <A href="mailto:src='g/d_@.gif'">src='g/d_@.gif'</A> onclick='VerFoto()' <A href="mailto:title='_@_'">title='_@_'</A>&gt;<BR>&nbsp; {slTipIcon} gif,Ver foto; jpg,Ver foto; png,Ver foto; avi, Ver película<BR>&nbsp; {slWin} ,7<BR>&nbsp; {slMenu} a,mR | Alta:Fa, Modificar:FmR, Baja:FbR | foto | codigo=0, cd_foto=1<BR><BR><U><FONT color=#ff0080>-&gt; Y en&nbsp;"d/fotos.df"<BR></FONT></U><BR>[SubListDF]&nbsp;fotos | d/vi/v_fotos | codigo</P>
+<P><BR>&nbsp;</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

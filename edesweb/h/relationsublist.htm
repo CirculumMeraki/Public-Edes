@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>RelationSubList 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[RelationSubList] SubListPadre, SubListHija, CampoDeRelaci?n 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Relaciona dos sublistas
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[Title]&nbsp;&nbsp;&nbsp;&nbsp;AUTONOMIA/S<BR><BR>[DBTable]&nbsp; auto<BR>[DBIndex]&nbsp; cd_auto<BR>[DBOrder]&nbsp; serial<BR>[DBSerial] serial<BR><BR>[RelationSubList] __prov, __coma, cd_prov<BR><BR>[Fields]<BR>&nbsp;&nbsp;&nbsp; Cd auto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cd_auto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D&nbsp; | T | 4&nbsp;&nbsp; |&nbsp; | AQ |&nbsp; | # | <BR>&nbsp;&nbsp;&nbsp; Nm auto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | nm_auto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D&nbsp; | T | 40&nbsp; |&nbsp; | MQ |&nbsp; | # | <BR>#(a,mR,bR,cR)?<BR>&nbsp;&nbsp; - | SUBFICHA "__prov"<BR>&nbsp;&nbsp;&nbsp; Cd prov XXX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_prov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp; | T | 2&nbsp;&nbsp; |&nbsp; |&nbsp;A&nbsp; |&nbsp; | # | <BR>&nbsp;&nbsp;&nbsp; Nm prov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _nm_prov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D&nbsp; | T | 15&nbsp; |&nbsp; | M&nbsp; |&nbsp; |&nbsp;# | <BR>&nbsp;&nbsp;&nbsp; Texto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _texto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D&nbsp; | T | 10&nbsp; |&nbsp; | M&nbsp; |&nbsp; |&nbsp;&nbsp; | <BR>&nbsp;&nbsp; - | LISTADO "prov"<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [__prov]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | o&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; |&nbsp;&nbsp;&nbsp; |&nbsp; |&nbsp;&nbsp; | <BR>?</P>
+<P>#(a,mR,bR,cR)?<BR>&nbsp;&nbsp; - | SUBFICHA "__coma"<BR>&nbsp;&nbsp;&nbsp; Cd prov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_prov2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp; | T | 15&nbsp; |&nbsp; |&nbsp;*&nbsp; |&nbsp; | # | <BR>&nbsp;&nbsp;&nbsp; Cd coma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_coma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D&nbsp; | T | 2&nbsp;&nbsp; |&nbsp; | MQ |&nbsp; | # | <BR>&nbsp;&nbsp;&nbsp; Nm coma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _nm_coma&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D&nbsp; | T | 45&nbsp; |&nbsp; | M&nbsp; |&nbsp; | # |&nbsp;<BR>&nbsp;&nbsp; - | LISTADO "coma"<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [__coma]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | o&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; |&nbsp;&nbsp;&nbsp; |&nbsp; |&nbsp;&nbsp; | <BR>?</P>
+<P>[SubList] a,mR,bR,cR | __prov<BR>{slGL} Sql | Align | ColsWidth | TypeData | Format | ColsOp | Fields&nbsp;&nbsp; | TH<BR>&nbsp;&nbsp; ''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; L&nbsp;&nbsp; |&nbsp;&nbsp; 4825&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | AMBp() |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | IMG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;IMG SRC='g/l_op_insert.gif' title='' onclick='eSLAction(null,"i")'&gt;<BR>&nbsp;&nbsp; cd_prov |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; D&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_prov | CD<BR>&nbsp;&nbsp; nm_prov |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; D&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _nm_prov | NM PROV<BR>&nbsp;&nbsp; texto&nbsp;&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; D&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _texto&nbsp;&nbsp; | TEXTO<BR>{slSql} select # from prov where cd_auto='{cd_auto}' order by cd_auto,cd_prov<BR>{slMenu}&nbsp; a,mR | Borrar:d, Consultar:v, Insertar:i, Modificar:u | # || FormOnLine | &lt;IMG SRC='g/l_op_delete.gif' title='Borrar' onclick=eSLAction(null,'d')&gt;&lt;IMG SRC='g/l_op_view.gif' title='Consultar' onclick=eSLAction(null,'v')&gt;&lt;IMG SRC='g/l_op_update.gif' title='Modificar' onclick=eSLAction(null,'u')&gt;<BR>{slMenu} cR,bR |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Consultar:v&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | # || FormOnLine |<BR>{slWin} ,10</P>
+<P>[PHPIni] cR,bR<BR>function AMBp(){<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_view.gif" title="Consultar" onclick=eSLAction(null,"v")&gt;';<BR>}</P>
+<P>[PHPIni] a,mR<BR>function AMBp(){<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_delete.gif" title="Borrar" onclick=eSLAction(null,"d")&gt;';<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_view.gif" title="Consultar" onclick=eSLAction(null,"v")&gt;';<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_update.gif" title="Modificar" onclick=eSLAction(null,"u")&gt;';<BR>}</P>
+<P><BR>[SubList] a,mR,bR,cR | __coma<BR>{slGL} Sql&nbsp; | Align | ColsWidth | TypeData | Format | ColsOp | Fields&nbsp;&nbsp;&nbsp; | TH<BR>&nbsp;&nbsp; ''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; L&nbsp;&nbsp; |&nbsp;&nbsp; 4825&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | AMBc() |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | IMG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &lt;IMG SRC='g/l_op_insert.gif' title='' onclick='eSLAction(null,"i")'&gt;<BR>&nbsp;&nbsp; cd_prov&nbsp; |&nbsp;&nbsp; H&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_prov2 | CD PROV<BR>&nbsp;&nbsp; cd_coma&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; D&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_coma&nbsp; | CD COMA<BR>&nbsp;&nbsp; nm_coma&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; D&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _nm_coma&nbsp; | NM COMA<BR>{slSql} select # from coma where cd_auto='{cd_auto}' order by cd_prov,cd_coma,cd_auto | idcoma<BR>{slMenu}&nbsp; a,mR | Borrar:d, Consultar:v, Insertar:i, Modificar:u | # || FormOnLine | &lt;IMG SRC='g/l_op_delete.gif' title='Borrar' onclick=eSLAction(null,'d')&gt;&lt;IMG SRC='g/l_op_view.gif' title='Consultar' onclick=eSLAction(null,'v')&gt;&lt;IMG SRC='g/l_op_update.gif' title='Modificar' onclick=eSLAction(null,'u')&gt;<BR>{slMenu} cR,bR |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Consultar:v&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | # || FormOnLine |<BR>{slWin} ,10</P>
+<P>[PHPIni] cR,bR<BR>function AMBc(){<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_view.gif" title="Consultar" onclick=eSLAction(null,"v")&gt;';<BR>}</P>
+<P>[PHPIni] a,mR<BR>function AMBc(){<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_delete.gif" title="Borrar" onclick=eSLAction(null,"d")&gt;';<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_view.gif" title="Consultar" onclick=eSLAction(null,"v")&gt;';<BR><SPAN style="WIDTH: 25px"></SPAN>echo '&lt;IMG SRC="g/l_op_update.gif" title="Modificar" onclick=eSLAction(null,"u")&gt;';<BR>}<BR></P>
+<TR>
+<TD id=txt>Relaciona la SubListas de Provincias con la de Comarcas por el campo "cd_prov"</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

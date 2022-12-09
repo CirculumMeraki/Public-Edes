@@ -1,0 +1,59 @@
+[Title]ALMACEN
+[DBTable]gs_almacen
+[DBIndex]codigo
+[DBOrder]tipo,descripcion
+[DBSerial]codigo
+[AutoMenu]a,mR,cR,bR|2
+[AddCode]*|contenido|I|style='font-size:14px;font-family:courier'
+[AddOption]*|tipo|,; P,PHP; J,JS; H,HTML; A,ActiveX; E,eDes; T,Tabla
+[AddCode]cR|descripcion|A|&nbsp;&nbsp;&nbsp;<IMG SRC='edes.php?R:$a/g/copy.png' onclick='Copiar()' title='Copiar'>&nbsp;<IMG id='OutTXT' SRC='edes.php?R:$a/g/pegar.gif' onclick='Pegar()' title='Pegar'>&nbsp;<IMG SRC='edes.php?_Accion=I&File=a/g/tabla.gif' onclick='CrearDB()' title='Crear Tabla'>&nbsp;<IMG SRC='edes.php?_Accion=I&File=a/g/an_db_res.gif' onclick='ImporDB()' title='Importar Datos'>
+[Fields]
+Codigo|codigo|+|T|9||*Q|||
+Tipo|tipo|D|SV|1||MQ||#|
+Descripción|descripcion|D|T|80||MQg||#|
+#(a,mR) {I} Iconos
+Contenido|contenido|#|A|4000,80,24||ML||#|
+[H]Iconos
+<img style='margin-left:62px;' src='edes.php?R:$a/g/tab.gif' onclick='PasteTab()' title='Tabulador'>
+[JSHead]a,mR
+function PasteTab(){
+document.FRM1.contenido.focus();
+obj = document.selection.createRange();
+obj.text = String.fromCharCode(9);
+}
+[JSEnd]cR
+var _EnCodigo = new Array();
+document.write( '<SELECT id="_OutEditor" onchange="PasteTxt(this)" style="display:none;position:absolute;top:0px;left:0px"><OPTION>-Selecciona destino-</SELECT>' );
+function PasteTxt( el ){
+var tmp = FRM1.contenido.value.split('#Nota#');
+_EnCodigo[el.selectedIndex].document.FRM1.Doc.focus();
+_EnCodigo[el.selectedIndex].document.selection.createRange().text = tmp[0];
+DGI('_OutEditor').style.display = 'none';
+}
+function Pegar(){
+var x=y=0, el = DGI('OutTXT');
+if( null == el ) return;
+while( el != null ){
+x += el.offsetLeft;
+y += el.offsetTop;
+el = el.offsetParent;
+}
+var Ed = DGI('_OutEditor');
+Ed.style.left = px(x-5);
+Ed.style.top = px(y);
+Ed.style.display = 'block';
+var tOp = Ed.options.length;
+for( var i=1; i<tOp; i++ ) Ed.remove(1);
+var txt='',p=1;
+Ed.options[p-1].seleted = true;
+}
+function Copiar(){
+var tmp = FRM1.contenido.value.split('#Nota#');
+window.clipboardData.setData('Text',tmp[0]);
+}
+function CrearDB(){
+alert('No implantado');
+}
+function ImporDB(){
+alert('No implantado');
+}

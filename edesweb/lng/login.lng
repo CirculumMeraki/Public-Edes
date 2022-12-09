@@ -1,0 +1,17 @@
+[Language] es,ca,en,fr
+1|Acción no permitida|Acció no permesa|Action not allowed|Acción no permitida
+10|Intranet PARADA. Solo personal autorizado|Intranet PARADA. Sol personal autoritzat|Intranet STOPPED. Only staff is allowed|Intanet PARADA. Solo personal autorizado
+11|Aceptar|Aceptar|Accept|Aceptar
+12|Cancelar|Cancel·lar|Cancel|Cancelar
+13|Bloque mayúsculas activo|Bloc majúscules actiu|Caps Lock on|Bloque mayúsculas activo
+2|Falta introducir el USUARIO|Falta introduir l´USUARI|USER not introduced|Falta introducir el USUARIO
+3|La longitud del USUARIO ES INCORRECTA|La longitud de l´USUARI ÉS INCORRECTA|The length for the USER IS WRONG|La longitud del USUARIO ES INCORRECTA
+4|La longitud mínima del USUARIO es de "#" caracteres|La longitud mínima de l´USUARI és de "#" caràcters|The minimum length for the USER is of "#" characters|La longitud mínima del USUARIO es de "#" caracteres
+5|Falta introducir la CLAVE|Falta introduir la CLAU|Key Missing|Falta introducir la CLAVE
+6|La longitud mínima de la CLAVE es de "#" caracteres|La longitud mínima de la CLAU és de "#" caràcters|The minimum length for the KEY is of "#" characters|La longitud mínima de la CLAVE es de "#" caracteres
+7|Login grabado para Install|Login gravat per Install|Login recorded to Install|Login grabado para Install
+8|Graba MainMenu para "Install"|Grava MainMenu per "Install"|Record MainMenu to "Install"|Graba MainMenu para "Install"
+9|Graba Desktop para "Install"|Grava Desktop per "Install"|Record Desktop to "Install"|Graba Desktop para "Install"
+14|Recordar contraseña
+15|Cerrar
+16|Falta introducir la EMPRESA|Falta introduir l´EMPRESA|COMPANY not introduced|L'ENTREPRISE doit être saisie

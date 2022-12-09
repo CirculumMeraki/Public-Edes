@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>eParseError
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>eParseError( [GrabaEnTRON] )
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>El motor por defecto si hay un "parse error" se para y te informa del error, si esta información es genérica y no puedes determinar las lineas del código fuente que han causado el error y necesitas poner testigos utilizaremos esta función. Al final del mensaje de error se mostrará entre parentesis el número de la función "eParseError()" en el que se ha detectado el error. Si no eres desarrollador se mostrará en pantalla el texto "ERROR INTERNO" y una cadena aleatoria de tres caracteres y se grabará en el TRON.
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro>GrabaEnTRON : Indica si el error se graba en el fichero "TRON", por defecto es false.
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

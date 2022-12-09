@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">8. Valor por defecto</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">
+<p>Si introducimos alguna información será la que se mostrará por defecto en el alta de un formulario y dejará el campo visible pero no editable, si se quisiera editar se tendría que activar con la etiqueta [NoEditFilled].<br /><br />Solo funciona en el alta, aunque si ponemos la etiqueta [DefaultVal] funcionará en los modos asignados. Por ejemplo al consultar, modificar o dar de baja un usuario queremos obligar a que sea solo los usuarios de su nodo:</p>
+<p><span style="color: #ff0080;"><span style="font-family: Courier;">[NoEditFilled] c,m,b <br />[Fields]<br /></span><span style="font-family: Courier;">Local | cd_gs_node | 0 | S | 7 || -Q | _Node | # |</span> </span></p>
+<p>Etiquetas asociadas</p>
+<p><span style="color: #ff0080; font-family: Courier;">[Asign]</span> Asignar variables por defecto en un modo distinto de "a". <br /><span style="color: #ff0080; font-family: Courier;">[NoEditFilled]</span> Se puede editar los valores por defecto. <br /><span style="color: #ff0080; font-family: Courier;">[DefaultVal]</span> Valor por defecto solo para los campos indicados.</p>
+<p>Valores por defecto en el lado del servidor: <br /><span style="color: #ff0080;">#today#</span>  fecha del sistema en formato dd-mm-yyyy <br /><span style="color: #ff0080;">#clock#</span> hora del sistema (coge los caracteres indicados en la longitud del campo) <br /><span style="color: #ff0080;">#sy2s#</span> Inicio del día en un campo timestamp (yyyy-mm-dd hh:mm:ss) 'aaaa-mm-dd 00:00:00' <br /><span style="color: #ff0080;">#y2s#</span>  yyyy-mm-dd hh:mm:ss (instante actual)<br /><span style="color: #ff0080;">#y2m#</span>  yyyy-mm</p>
+<p>Si empieza por "_" supone que es una variable de sesión y pone su valor (p. ej. _User). En varios apartados de PHP como en [PHPForm] puedes crear <span style="color: #000080;">variables que luego se pongan como valor por defecto. <br /></span><span style="color: #ff0080;"><span style="color: #0080ff;"><span style="color: #000080;">Si empieza por '>' será una sentencia PHP por ejemplo:</span><br /></span><span style="font-family: Courier;">Año | ano | + | T | 4 || - | >date('Y') ||</span><br /></span><br />Se puede pintar el valor mandado por la url, esta variable empezerá por "$". En el siguiente ejemplo desde el arbol se asigna la variable oculta "Grupo" en la llamada ( #c:script&Grupo=1), en el caso de mandar una o mas variables incrustadas en un texto estas irá, entre corchetes y con el carácter "$".<span style="color: #ff0080;"><br /><span style="font-family: Courier;">Grupo de datos | grupo | + | T | 3 || * | $Grupo ||<br /><br /></span></span>También se puede definir un valor por defecto alternativo que solo tendrá efecto en las consultas y es separar los dos valores por la barra invertida.<br /><span style="color: #ff0080; font-family: Courier;">Local | cd_gs_node | 0 | S | 7 || -Q | _Node\ | # |</span> <br />En este ejemplo el mantenimiento de los locales solo lo puedes hacer si eres de ese local y puedes consultar todos los locales.<br /><br />Valor por defecto modificable solo por el WebMaster, campo en "gs_user.webmaster" si vale "S" (Si) todo valor por defecto que empieze por "@" si no es modificable lo será solo para el Webmaster.<br /><span style="color: #ff0080; font-family: Courier;">Local | cd_gs_node | 0 | S | 7 || -Q | @_Node | # |</span> <br />En este caso todos tendrán por defecto el valor de la variable de sesión "_Node" pero solo el WebMaster podrá cambiar el valor en los modos en los que se pregunta "c,m,b".<br /><br />En el valor por defecto también se puede poner una sentencia sql:<br /><span style="color: #ff0080;">Periodo de Liquidación | periodo  | P4 | SV | 7 |   | Q | select liq_actual from config |   | <br /></span></p>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

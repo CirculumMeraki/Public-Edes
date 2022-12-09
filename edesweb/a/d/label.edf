@@ -1,0 +1,85 @@
+[Title]Inventario de Etiquetas
+[MaxRec]FULL
+[DBLimit]1000
+[ColsOp]#,+
+[Fields]
+ETIQUETA|ext|N|T|15||M|||
+NUMERO|num|+|T|6||M|||
+% EN<br>Aplicación|tpc|+,|T|3,2||M|||
+% POR<br>Fichero|tp|+,|T|3,2||M|||
+[DBSql]l
+$DimFile = array( 'edf','gdf','ldf','fdf','lst' );
+$usuCursor = array();
+$Dim = array();
+$uDebug = !true;
+if( $uDebug ) echo '<table border=1>';
+$TFile = WCFile( '../d', $DimFile, $Dim );
+if( $uDebug ) echo '</table>';
+foreach( $Dim as $key => $value ){
+array_push( $usuCursor, array( $key, $value, 0,0 ) );
+if( $uDebug ) echo '<br>'.$key .'=>'. $value;
+}
+sort( $usuCursor );
+$Total = 0;
+for( $n=0; $n<count($usuCursor); $n++ ) $Total += $usuCursor[$n][1];
+for( $n=0; $n<count($usuCursor); $n++ ){
+$usuCursor[$n][2] = ($usuCursor[$n][1]*100)/$Total;
+$usuCursor[$n][3] = ($usuCursor[$n][1]*100)/$TFile;
+}
+if( $uDebug ) exit;
+function WCFile( $dorg, $DimFile, &$Dim ){
+global $uDebug;
+$TFile = 0;
+$di = opendir( $dorg );
+while( $file = readdir( $di ) ){
+if( ($file != ".") && ($file != "..") ){
+if( is_dir("$dorg/$file") ){
+$TFile += WCFile( "$dorg/$file", $DimFile, $Dim );
+}else{
+$ext = substr($file, strrpos($file,'.')+1);
+if( in_array( $ext, $DimFile ) ){
+$TFile++;
+if( $uDebug ) echo "<TR><TD id=0>"."$dorg/$file";
+$_DimEDF = file("$dorg/$file");
+for( $n=0; $n<count($_DimEDF); $n++ ){
+$buffer = trim($_DimEDF[$n]);
+if( $buffer[0] == '#' ){
+if( substr($buffer,0,2)=='#(' || substr($buffer,0,3)=='#!(' ){
+$tmp = explode(')',$buffer);
+$buffer = trim($tmp[1]);
+}
+}else if( $buffer[0] == '¿' ){
+$tmp = explode('?',$buffer);
+$buffer = trim($tmp[1]);
+}
+if( $buffer[0] == '[' ){
+$i = strpos($buffer,']');
+$Etiqueta = trim(strtoupper( substr( $buffer, 1, $i-1 ) ));
+if( $uDebug ) echo "<TR><TD id=0>".$Etiqueta;
+if( $Etiqueta!='' && $Etiqueta[0]!='.' ){
+if( !isset($Dim[$Etiqueta]) ){
+$Dim[$Etiqueta] = 1;
+}else{
+$Dim[$Etiqueta]++;
+}
+if( $Etiqueta=='NOTE' ) break;
+}
+}else if( $buffer[0] == '{' ){
+$tmp = explode('}',$buffer);
+$Etiqueta = substr(trim($tmp[0]),1);
+if( substr_count( ',FS,FC,FR,F,I,J,P,Z,', ",{$Etiqueta}," ) == 1 ){
+if( !isset($Dim[$Etiqueta]) ){
+$Dim[$Etiqueta] = 1;
+}else{
+$Dim[$Etiqueta]++;
+}
+}
+}
+}
+}
+}
+}
+}
+closedir( $di );
+return $TFile;
+}

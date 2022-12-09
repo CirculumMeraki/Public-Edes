@@ -1,0 +1,107 @@
+#include(*) $lng/activity.edf.lng
+[Title]=LOG DE GRABACIONES
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]1 desc
+[DBAddFilter]edes<>'P'
+[MaxRec]0
+[FormAction]*|edes.php?Ll:
+[ColsOp]C
+[PDFCol],,0,0
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Actualizar por HTTP@|@Nº Desarrolladores por script@
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # and cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # and cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 1|7
+?
+[DBRange]?|cdi|_desdecdi|_hastacdi
+[DBRange]?|cdi_ftp|_desdeftp|_hastaftp
+[AddCode]?|_desdecdi_hours,_hastacdi_hours|I|noConditions
+[AddCode]?|_desdeftp_hours,_hastaftp_hours|I|noConditions
+[OnChange]?|_paquete|SoloPaquetes()
+[Fields]?
+CDI @Instante Desde@|_desdecdi|F4|T|10||QF|10-01-2013||
+,|_desdecdi_hours|H|T|8||Q|||
+,@Hasta@|_hastacdi|F4|T|10||QF|04-02-2013||
+,|_hastacdi_hours|H|T|8||Q|||
+FTP @Instante Desde@|_desdeftp|F4|T|10||QF|||
+,|_desdeftp_hours|H|T|8||Q|||
+,@Hasta@|_hastaftp|F4|T|10||QF|||
+,|_hastaftp_hours|H|T|8||Q|||
+Paquetes|_paquete|#|C|1||Q|||
+@Script@|script|#|T|70||MQ|||
+#(?) @Usuario@|_cd_gs_user|D|T|68||Q|||
+#(?) @Usuario@|cd_gs_user|+|T|5||*Q|||
+#!(?) @Usuario@|cd_gs_user|+|S|68||-|||
+[Fields]
+@CDI@|cdi|CDI|T|19||-||=|
+FTP|cdi_ftp|CDI|T|19||-||=|
+@Script@|script|#|T|70||-|||
+@Desarrolladores@|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname|N|S|50||-|||
+[JSIni]?
+_Question = false;
+function SoloPaquetes(){
+if( eGF('_paquete')=='S' ){
+ePF('script','');
+eHide('script','tr');
+}else eShow('script','TR');
+}
+[PHPIni]l
+[JSIni]l
+var _CargarScript = true;
+var _iSource = 0;
+[JSOnClickRow]l
+if( !_CargarScript ){
+eHideBusy();
+_WOPENER.PonSolapa( 1 );
+top.eInfo(window,'No caben mas solapas');
+return;
+}
+if( _oTR.style.fontStyle=='italic' ) return;
+_WOPENER.document.getElementsByTagName('TABLE')[0].rows[0].style.display = 'block';
+_WOPENER.DGI("MENU").style.display = 'block';
+_WOPENER.document.getElementsByTagName('TABLE')[0].rows[1].style.display = 'block';
+DGI("GROUPTITLE").style.display = 'none';
+var Obj = _WOPENER.DGI("_GRTAB").rows[0], n;
+for( n=1; n<Obj.cells.length-1; n++ ){
+Obj.cells[n].style.borderBottomWidth = "1px";
+Obj.cells[n].className = 'Op';
+}
+var oAncho = _WOPENER.DGI("_GRTAB").offsetWidth;
+var TD = Obj.insertCell(Obj.cells.length-1);
+TD.onclick = _WOPENER.PonSolapa;
+TD.className = 'OpOn';
+TD.style.borderBottomWidth = "0px";
+var tmp = _ValCol['script'].replace(/\\/g,'/').split('/');
+TD.innerHTML = tmp[tmp.length-1]+'<br><span onclick=_WOPENER.PonSolapa>'+_ValCol['cdi']+'</span>';
+TD.title = _ValCol['cdi'];
+TD.pk = _ValCol['script']+_ValCol['cdi'];
+eHideBusy();
+if( oAncho < _WOPENER.DGI("_GRTAB").offsetWidth ){
+S(TD).nodeRemove();
+_CargarScript = false;
+return;
+}
+_oTR.style.fontStyle = 'italic';
+for( var n=0; n<_oTR.cells.length; n++ ) _oTR.cells[n].style.color = "#cccccc";
+var Obj = _WOPENER.document.all._GRPAG.rows[0];
+for( n=0; n<Obj.cells.length; n++ ){
+Obj.cells[n].style.display = 'none';
+}
+var TD = Obj.insertCell();
+TD.style.width = '100%';
+TD.style.height = '100%';
+var ta = document.createElement('IFRAME');
+_iSource++;
+ta.id = 'iSource_'+_iSource;
+ta.frameBorder = 0;
+ta.WOPENER = _WOPENER;
+ta.FSCREEN = 0;
+ta.eDes = window;
+ta.MODAL = 0;
+ta.style.width = '100%';
+ta.style.height = '100%';
+TD.appendChild(ta);
+ta.src = 'edes.php?E:$t/source.gs&SCRIPT='+_ValCol['script']+'&CDI='+_ValCol['cdi'];

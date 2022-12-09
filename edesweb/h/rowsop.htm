@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>RowsOp 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[RowsOp] ColOp1, ColOp2, ..... , ColOpN [ | LongitudCampo ]<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="FONT-WEIGHT: normal">Sintaxis alternativa</SPAN><BR>[RowsOp] Campo Operaci?n Campo&nbsp; | T?tuloTH&nbsp; [ | LongitudCampo ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Operaciones a realizar por cada fila, solo en listados, crea una columna&nbsp;al final con el resultado de las operaciones especificadas, es decir, realiza operaciones aritm?ticas verticalmente. <BR>La columna en la que no deseemos realizar ninguna operaci?n dejaremos su par?metro en blanco y en la posici?n de la nueva columna pondremos el t?tulo de la columna. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>Operaciones permitidas:&nbsp;<BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD><STRONG>ColOp</STRONG></TD>
+<TD>+ Suma&nbsp;<BR>- Restar<BR>* Multiplicar<BR>% Tanto por ciento en la columna, el total ser? 100%<BR>! Al generar gr?ficas omitir? el texto de la celda [Graph]</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[RowsOp]&nbsp;,+,+,+,+,+,+,+,+,+,+,+,+,+,TOTAL&lt;BR&gt;PRODUCTOS 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[RowsOp]&nbsp;,+,+,+,+,+,+,+,+,+,+,+,+,+,TOTAL&lt;BR&gt;PRODUCTOS | 9,2</TD></TR>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[RowsOp] unidades * importe | TOTAL</TD></TR>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[RowsOp] unidades * importe | TOTAL | 9,2</TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

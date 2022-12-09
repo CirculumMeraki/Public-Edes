@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="height: 439px; width: 100%;" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta" style="height: 18px;">AddOptionValue</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tSintaxis" style="height: 18px;">SINTAXIS</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Sintaxis" style="height: 18px;">[AddOptionValue] Field | ListaFields</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tDescripcion" style="height: 18px;">DESCRIPCION</td>
+</tr>
+<tr style="height: 56px;">
+<td id="Descripcion" style="height: 56px;">De los controles tipo select (S) y subselect (Ss) se pueden recuperar mas valores de campos de la tabla añadiéndolos como atributos en el "option". Por ejemplo tienes un select con los tipos de acabado de un objeto y de forma oculta te has traído el valor de incremento para el coste total.<br />En un select se puede visualizar aparte del texto una imagen asociada si el campo a añadir se llama "img_sel"</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro" style="height: 0px;">PARAMETROS</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Parametro" style="height: 18px;"> </td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Ejemplo" style="height: 18px;"><code>[AddOptionValue] cd_tipo | valor,descuento</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;">Al select "cd_tipo" se le añaden dos atributos a cada "" que son los campos "valor" y "descuento" pudiendo obtener el valor mediante la función eGA('NomCampo', 'NomAtributo').</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Ejemplo" style="height: 18px;"><code>[AddOptionValue] cd_gs_language | img_sel</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;">Mostrará al desplegar el select la imagen indicada en "img_sel"</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Ejemplo" style="height: 18px;"><code>[AddOptionValue] cd_gs_language | img_sel | lng_</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;">Mostrará al desplegar el select la imagen que se llamará con el prefijo "lng_" mas el valor del campo "cd_gs_language" mas la extensión de la imagen.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

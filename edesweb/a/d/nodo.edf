@@ -1,0 +1,39 @@
+#include(*) lng
+[Title]@titulo@
+[DBTable]gs_node
+[DBIndex]cd_gs_node
+[DBOrder]nm_gs_node
+[DBSerial]cd_gs_node
+[WinCloseESC]
+[Cursor]
+[AutoMenu]l|1
+[NoButton]cR
+[Stop]
+[Icon]cR|dt_add|user|title='@Usuarios del Nodo@' onclick='vu()'
+[ListCheckBox]H|<img src=g/tf_1.gif>
+[PDFCol],,,,,0,0,0,0,,,0,0,0,0,0,0
+[ColsWidth]notes=350
+[Fields]2
+@Nº de·Local@|cd_gs_node|+|T|7||Q-|||
+,@Fecha·Alta@|dt_add|F4|T|10|<nm_gs_node|-L|#today#|#|
+@Nombre Local@|nm_gs_node|X|T|60|355|MQ||#|
+@Dirección@|address|D|T|36|355|MQ|||
+@CP/Localidad@\@CODIGO·POSTAL@|zip|CP|T|5||M||%|
+,\@Localidad@|nm_loca|N|T|30|+address|M|||
+@Teléfonos@\@TLF-1@|phone|T|T|9||M|||
+,\@TLF-2@|phone2|T|T|9||M|||
+,@Fax@|fax|T|T|9||M|||
+@E-Mail@|email|@|T|65|355|MLE|||
+@Observaciones@|notes|X|A|255,61,4|355|M|||
+-|
+@Permiso@|permission|X|c|1||M|S|%|
+#(l) @Fecha·Alta@|dt_add|F4|T|10||-||#|
++2 @Fecha·Baja@|dt_del|F4|T|10||MF|||
+@Primera IP@\@1ªIP@|ip|X|T|15||M|||
++2 @Segunda IP@\@2ªIP@|ip2|X|T|15||M|||
+@IP Desde@|ip_from|X|T|15||M|||
++2 @IP Hasta@|ip_to|X|T|15||M|||
+[JSIni]cR
+function vu(){
+top.eSWOpen( window, 'Ll:$a/d/usu_ficha.edf&_FILTER='+escape('cd_gs_node='+eGF('cd_gs_node'))+'&_SHOWFILTER=0', '@NODO@ "'+eGF('nm_gs_node')+'"' );
+}

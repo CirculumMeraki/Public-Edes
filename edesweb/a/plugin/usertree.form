@@ -1,0 +1,47 @@
+.[Fields]
+.  Label                                                                    | Field        | TE | TC | Lng | Px        | Mod | Default | Cnd | Msg Error
+{Columns}{ 4
+   @Tipo Perfil@                                                            | cd_type_tree | N  | SV | 15  |           | M   |         |     |
+   , @Nivel Extracción@                                                     | export_level | 0  | SV | 12  |           | ML  | 0       |     |
+   ,2 @Imprimir@\<img src='g/print_1.gif' title='@Imprimir@'>               | print        | X  | C  | 1   |           | M   |         |     |
+   ,3 @Log Usuario@\@LU@                                                    | log_user     | X  | C  | 1   |           | -   |         | %   |
+   ,4 @Log Histórico@\@LH@                                                  | log_history  | X  | C  | 1   |           | -   |         | %   |
+
+   &nbsp;&nbsp;&nbsp;@Como el Perfil@                                       | cd_gs_rol    | +  | S  | 50  |           | M   |         |     |
+   ,2 @Exportar PDF@\<img src='g/l_d_pdf.gif' title='@Exportar PDF@'>       | pdf          | X  | C  | 1   |           | M   |         |     |
+   ,3 @Exportar Excel@\<img src='g/l_d_xls.gif' title='@Exportar Excel@'>   | excel        | X  | C  | 1   |           | M   |         |     |
+   ,4 @Exportar Access@\<img src='g/l_d_mdb.gif' title='@Exportar Access@'> | mdb          | X  | C  | 1   |           | M   |         |     |
+
+   &nbsp;&nbsp;&nbsp;@Como el Usuario@                                      | _cd_gs_user  | N  | T  | 50  | cd_gs_rol | M   |         |     |
+   ,2 @Exportar XML@\<img src='g/l_d_xml.gif' title='@Exportar XML@'>       | xml          | X  | C  | 1   |           | M   |         |     |
+   ,3 @Exportar TXT@\<img src='g/l_d_txt.gif' title='@Exportar TXT@'>       | txt          | X  | C  | 1   |           | M   |         |     |
+   ,4 @Exportar CSV@\<img src='g/l_d_csv.gif' title='@Exportar CSV@'>       | csv          | X  | C  | 1   |           | M   |         |     |
+                                                                            | like_user    | +  | T  | 5   |           | *   |         |     |
+}
+
+
+#(a,?R) {P} UserPermission
+
+.[WhereSelect] a,mR
+
+.[AddOption]* | cd_type_tree | ,; R,@Definido@; U,@De Usuario@; P,@Personal@
+[AddOption] * | cd_type_tree | ,; P,@Personal@
+[AddOption] * | export_level | ,; 1,@Básico@; 2,@Medio@; 3,@Total@; 9,@INFORMATICA@
+
+[WhereSelect] * | cd_gs_rol | cd_gs_node={$_Node}
+
+[AddCode] a,?R | cd_type_tree | A | <img src=g/t_op_menu.gif onclick=uMenu() title='@Menú de opciones@' id="uMenuIMG">
+
+[CC] #MySQL | $GLOBALS['_Sql']=='mysql'
+
+#MySQL ¿ 
+	[FieldBrowser] _cd_gs_user | like_user | select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # and cd_gs_node={$_Node} order by 1 | 7
+?¿
+	[FieldBrowser] _cd_gs_user | like_user | select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # and cd_gs_node={$_Node} order by 1 | 7
+?
+
+
+[ShowFields] ?R | _cd_gs_user | like_user{ gs_user, cd_gs_user, user_name,' ',user_surname }
+
+[OnChange] a,mR | cd_type_tree | uTypeTree()
+[OnChange] a,mR | cd_type_tree,cd_gs_rol,_cd_gs_user | uMenu(1)

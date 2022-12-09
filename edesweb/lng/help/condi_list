@@ -1,0 +1,7 @@
+<DIV id=CONTENIDO class=AYUDA style="HEIGHT: 349px; WIDTH: 562px">
+<P align=center><STRONG>Ventana de selección multiple</P>
+<P></P></STRONG>
+
+Lista de valores, uno por linea y/o separados por coma<br>Esta consulta puede operar de 3 formas distintas:<br>1: Te muestra todos los registros que encuentre de la lista.<br>2: Si en la primera linea pones "&lt;&gt;" te mostrará todos los que hay menos los de la lista.<br>3: Si en la primera linea pones "!=" te mostrará los que no estén en la lista.<br>
+
+</DIV>

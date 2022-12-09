@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>Radio 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Radio] Field |&nbsp;Config &nbsp;| Value1,Text1 [; Value2,Text2]...[; ValueN,TextN] | Title | [Long1] [,Long2] ..... [, LongN] [ | QuitaSelección ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Define el comportamiento de los &lt;imput&gt; tipo 'Radio' 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD><STRONG>&nbsp;Field</STRONG></TD>
+<TD>&nbsp;Campo existente en la etiqueta [Fields].</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Config</STRONG></TD>
+<TD>&nbsp;Número máximo de columnas y una letra para indicar que se pinta primero el label o el fields, "L" para indicar Label o una "F" para indicar Fields.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>ValueAndText</STRONG></TD>
+<TD>&nbsp;Pares de parámetros separados por coma: valor que se enviará al servidor, una coma&nbsp;y el texto a mostrar ( Value1,Text1 ).</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Title</STRONG></TD>
+<TD>&nbsp;Título del FIELDSET.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Long</STRONG></TD>
+<TD>&nbsp;Logitud de la columna de datos a mostrar en cada columna indicada en el parámetro MaxCol.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>QuitaSelección</STRONG></TD>
+<TD>&nbsp;Por defecto es "false", se utiliza para cuando se quiere poder quitar la selección en todos sus valores.</TD></TR></TBODY></TABLE></STRONG>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[Radio] color&nbsp; | 2L | B,Black; Y,Yellow; G,Green | Selecciona un color&nbsp; <BR>[Radio] propio | 4F | C,Ciudadano; L,Ayuntamiento; O,Otra Administración; E,Otra Entidad 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT language=JavaScript>
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>

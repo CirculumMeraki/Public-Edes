@@ -1,0 +1,26 @@
+[Title]=SELECCIONAR ENTIDAD
+[DBTable]{$_SESSION['ShareDictionary']}gs_entidad
+[DBIndex]cd_gs_entidad
+[DBOrder]nm_gs_entidad
+[DBSerial]cd_gs_entidad
+[PersistentVar]_NewMode
+[PHPStart]a,?
+eInit();
+$url = $_SERVER["QUERY_STRING"];
+$url = str_replace("Fc:", "Lcl:", $url);
+$url = str_replace("Fm:", "Lml:", $url);
+$url = str_replace("Fb:", "Lbl:", $url);
+if( substr_count($url, "Fa:")==1 ){
+$url = str_replace("Fa:", "Lcl:", $url);
+$url = str_replace("def_list_which.edf", "def_list_which.edf&_NewMode=a", $url);
+}
+echo '<script type="text/javascript">';
+echo "location.replace('edes.php?{$url}');";
+echo '</script>';
+eEnd();
+[JSSelRow]*
+if( eGO("_NewMode") && eGO("_NewMode").value=="a" ) _SubMode = "a";
+location.replace("edes.php?F"+S.left(_SubMode,1)+":$a/d/def_list.edf&_cd_gs_entidad="+eGF("cd_gs_entidad") );
+[Fields]
+|cd_gs_entidad|+|T|3||*Q*|||
+Entidad|nm_gs_entidad|D|T|30||MQ|||

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>
+<P>slMenu</P>
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{slMenu} Mode | LabelOpcion:Accion, ... | Fichero de Definición | Campo=NºColumna, ... [ | FormStatic/FormOnLine | Img | CoordX,CoordY ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Opciones de mantenimiento del formulario de la SubLista.<BR><FONT color=#ff0000>En el tipo FormOnLine hay que tener en cuenta que el último campo de la subficha no puede estar oculto en una sola linea, puede estar oculto a continuación de otro campo, porque si no, no se vería el boton del submit de la subficha.<BR></FONT>Hay una función para borrar toda una sublista&nbsp;"eSLAction( NmSubLIst, "DA"&nbsp;)" DeleteAll. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>Mode:</STRONG> En que modos aparece el menú.<BR><STRONG>LabelOpcion:Accion:</STRONG> Lista de opciones y el modo de cada una de ellas&nbsp;para ejecutar el EDF, si este parámetro se deja en blanco no saldrá el menú contextual y no se verá el botón de alta al cargar la ficha solo cuando se de a la opción de activar el alta de la subficha, las opciones pueden ser:<BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;i.-&nbsp;Insert ( si ponemos "-i" anulará la opción de insertar ).<BR><SPAN style="WIDTH: 25px"></SPAN>u.- Update.<BR><SPAN style="WIDTH: 25px"></SPAN>d.- Delete.<BR><STRONG>Fichero de Definición:</STRONG> El nombre del EDF para ejecutar estas opciones a partir del directorio 'd/'.<BR><STRONG>Campo=NºColumna:</STRONG>&nbsp;En que columna están los campos índices:&nbsp; codigo=0, cd_aviso=1 <BR>&nbsp;&nbsp; El campo de relación con la tabla padre 'codigo' esta en la columna '0'<BR>&nbsp;&nbsp; El campo clave de la tabla hija (avisostel.cd_aviso) en la columna '1' <BR><STRONG>FormStatic:</STRONG> Si se pone esta constante indicará que el EDF al que apunta se comportará como un formulario estático, en este EDF habrá que declarar la etiqueta [FormStatic] con todos sus parámetros.<BR><STRONG>IMG:</STRONG> Iconos a añadir en el alta de registros de la sublista en modo FormOnLine<BR><STRONG>CoordX,CoordY:</STRONG> Coordenadas para posicionar la subventana, por defecto se muestra centrada ( FormStatic ). 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[FIELDS]<BR>...<BR>&nbsp; &lt;&nbsp;| [fotos]&nbsp;| o&nbsp;|||||||<BR>...</P>
+<P>[SubList] a,A,mR,cR | fotos |<BR>&nbsp; {slSql}&nbsp;&nbsp; select codigo,cd_foto,nm_foto,fichero,ver,imprimir,'' from foto where codigo='{codigo}' order by nm_foto<BR>&nbsp; {slTH}&nbsp;&nbsp;&nbsp;&nbsp;codigo,cd_foto,DESCRIPCION,FICHERO,Ver,Imp,&lt;img src='g/album.gif' onclick="VerAlbum()" title='Ver album'&gt;<BR>&nbsp; {slAlign}&nbsp; o,o,I,I,C,C,C<BR>&nbsp; {slFormat} ,,,,,,&lt;img <A href="mailto:src='g/d_@.gif'">src='g/d_@.gif'</A> onclick='VerFoto()' <A href="mailto:title='_@_'">title='_@_'</A>&gt;<BR>&nbsp; {slTipIcon} gif,Ver foto; jpg,Ver foto; png,Ver foto; avi, Ver película<BR>&nbsp; {slWin}&nbsp;&nbsp;&nbsp; ,7<BR>&nbsp; {slMenu}&nbsp;&nbsp; a,mR | Modificar:u, Insertar:i, Borrar:d | foto.edf | codigo=0, cd_foto=1</P>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>{slMenu} a,mR | Modificar:u, Insertar:i, Borrar:d | ''=IMG, a.cd_gs_node=_cd_gs_node,n.nm_gs_node=*_cd_gs_node,nm_articulo=_nm_articulo,a.cd_marca=_cd_marca,m.nm_marca=*_cd_marca,a.cd_familia=_cd_familia,f.nm_familia=*_cd_familia, a.cd_subfamilia=_cd_subfamilia, s.nm_subfamilia=*_cd_subfamilia,ano=_ano,pvd=_pvd,pvp=_pvp | | FormOnLine | &lt;IMG SRC="g/l_op_update.gif" title="Modificar Articulo" onclick="eSLAction( '_art','u' )"&gt;&lt;IMG SRC="g/l_op_delete.gif" title="Borrar Articulo" onclick="eSLAction( '_art','d' )"&gt; 
+<TR>
+<TD id=txt>FormOnLine</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>{slMenu} a,mR | Modificar:u, Insertar:i, Borrar:d | ''=IMG, activo=_activo, tipo=_tipo, tipo as t=*_tipo, telefono=_telefono | | FormOnLine | &lt;IMG SRC="g/l_op_update.gif" title="Modificar Clausula" onclick="eSLAction( '_tlf','u' )"&gt;&lt;IMG SRC="g/l_op_delete.gif" title="Borrar Clausula" onclick="eSLAction( '_tlf','d' )"&gt; 
+<TR>
+<TD id=txt>FormOnLine</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>{slMenu} a,mR | Modificar:u, Insertar:i, Borrar:d | telefono_formstatic.edf | | FormStatic | | 300,100 
+<TR>
+<TD id=txt>FormStatic</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

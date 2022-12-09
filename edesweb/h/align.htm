@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%" border=0>
+<TBODY>
+<TR>
+<TD id=Etiqueta>Align 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Align] AlignType_Col1 [,AlignType_Col2]...[,AlignType_ColN]&nbsp;<BR>&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="FONT-WEIGHT: normal">Sintaxis alternativa</SPAN><BR>[Align] NomCampo=AlignType, ... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Alinea y&nbsp;oculta las columnas del listado. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<P dir=ltr style="MARGIN-RIGHT: 0px"><STRONG>AlignType_Col:</STRONG> Tipo de alineación de los datos de la columna. Los tipos de alineación disponibles son:&nbsp;<BR>&nbsp; L : Alinear a la izquierda, (o en blanco). <BR>&nbsp;&nbsp;C : Centrar. <BR>&nbsp;&nbsp;R : Alinear a la derecha<BR>&nbsp; H : Columna oculta</P></TD></TR></TBODY>
+<TBODY>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

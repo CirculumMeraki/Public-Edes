@@ -1,0 +1,108 @@
+[Title]LOG DE DESCARGAS
+[DBTable]gs_log_file
+[DBIndex]cd_gs_log_file
+[DBOrder]cdi
+[DBSerial]cd_gs_log_file
+[DBLimit]1000
+[FormAction]*|Ll:
+[ColsOp]cdi=#, records=+
+[ColsWidth]script=, cd_gs_node=, cd_gs_user=, title=, nm_table=, user_surname=
+[FootTitle]echo "<div width=100% align=left>Las filas de color rojo son ficheros descargados desde esta opción.</div>";
+[PDFWrap]3
+[PDFCol]title=40, cd_gs_node=40, user_surname=40, script=0
+[Format]
+if( $_vF[9]>0 ) $_RowStyle = "color:red";
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]
+|cd_gs_log_file|+|T|9||*||#|
+#(?) Instante Desde|_desde|F4|T|10||QF|||
+#(?) ,|_desde_hours|H|T|8||Q|||
+#(?) ,Hasta|_hasta|F4|T|10||QF|||
+#(?) ,|_hasta_hours|H|T|8||Q|||
+#!(?) Instante|cdi|CDI|T|19||M||=|
+Registros|records|+|T|9||MQ||#|
+Título|title|#|T|256||M|||
+#(?)¿
+Usuario|_cd_gs_user|D|T|68||Q|||
+Usuario|cd_gs_user|+|T|5||*Q|||
+?¿
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|+|S|68||-|||
+?
+Nodo|cd_gs_node|0|S|40||M||#|
+Script|script|#|T|100||M||#|
+Tabla|nm_table|D|T|25||*|||
+Tipo|type_file|D|I|4||M||=|
+#(l)|pk_file|+|T|9||*|||
+#include(*) /_datos/config/log_file.edf|true
+[JSEnd]l
+var _trPulsado;
+function eVD(){
+var tr = S.toTag(S.event(window), "TR"),
+pk = tr.cells[0].innerText;
+_trPulsado = tr;
+if( tr.cells[9].innerText*1>0 ) pk = tr.cells[9].innerText;
+S.callSrv("SerialDOC="+pk, window);
+return eClearEvent();
+}
+function uDescargado(){
+_trPulsado.style.color = "#aaaaaa";
+}
+[CallSrv]SerialDOC
+eFileGetVar("LogFile", true);
+global $Password, $Path;
+qQuery("select * from gs_log_file where cd_gs_log_file='{$SerialDOC}'");
+$r = qArray();
+if( trim($r["type_file"])=="" ){
+eInit();
+echo '<script type="text/javascript">top.S.error(top, "Documento no encontrado");</script>';
+eEnd();
+}
+eInclude("message");
+if( substr($Path,-1)!='/' ) $Path .= '/';
+$Dir = "../_tmp/pdf/";
+$pass = "";
+if( $Password<>"" ){
+$pass = " -P ".gzuncompress(base64_decode(substr($Password,3)));
+}
+if( strtoupper(substr(PHP_OS,0,3))!='WIN' ){
+$ExeZip = "unzip";
+}else{
+$ExeZip = eScript('$win/unzip.exe');
+}
+$ExeZip .= "{$pass} -d {$Dir} ".eScript($Path).$SerialDOC.".zip";
+$Dim = array();
+exec($ExeZip, $Dim);
+if( $r["type_file"]=="csv" || $r["type_file"]=="txt" ){
+$NomFile = 'lst_'.$_SESSION['_User'];
+$Dir = "../_tmp/pdf/";
+$pass = "";
+if( strtoupper(substr(PHP_OS,0,3))!='WIN' ){
+$ExeZip = "zip";
+}else{
+$ExeZip = eScript('$win/zip.exe');
+}
+$ExeZip .= "{$pass} -9 -j -b {$Dir} {$Dir}{$NomFile} {$Dir}{$NomFile}.".$r["type_file"]." {$Dir}{$NomFile}.def";
+$Dim = array();
+exec($ExeZip, $Dim);
+@unlink($Dir.$NomFile.'.'.$r["type_file"]);
+@unlink($Dir.$NomFile.'.def');
+$NomFile = $Dir.$NomFile.'.zip';
+}else{
+$NomFile = "/_tmp/pdf/lst_".$r["cd_gs_user"].".".$r["type_file"];
+}
+if( !$_HndDBSystem ) qConnectSystem();
+$_HndDBSystem->qQuery("insert into gs_log_file (cdi,type_file, script, records, cd_gs_node, cd_gs_user, title, nm_table, pk_file) values('".date('Y-m-d H:i:s')."', '".$r['type_file']."', '".$r['script']."', '".$r['records']."', '{$_Node}', '{$_User}', '".$r['title']."', '".$r['nm_table']."', '".$r['cd_gs_log_file']."')");
+$SerialDOC = $_HndDBSystem->qId();
+$_HndDBSystem->qFree();
+$TypeFile = strtoupper(substr($NomFile,-3));
+$ConRemoto = (isset($_REMOTE_)) ? "R":"";
+eContextFile("edes.php?{$ConRemoto}D:{$NomFile}");
+eMessage('~'.$TypeFile,'HS','','_WOPENER.uDescargado();try{_WOPENER.eHideBusy();}catch(e){};location.href = "edes.php?'.$ConRemoto.'D:'.$NomFile.'&_CONTEXT='.$_SESSION['_eDes_'].'&_NoLog_=1"');
+eEnd();

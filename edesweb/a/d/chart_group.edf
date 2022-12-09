@@ -1,0 +1,722 @@
+[Title]=GESTION GRUPO DE GRAFICAS
+[AddCode]a|height|B|&nbsp;x&nbsp;&nbsp;
+[AddOption]a|chart|ColumnChart,[; BarChart,\; LineChart,];  AreaChart,^; PieChart,_; GeoChart,`
+[AddOption]a|pieSliceText|,%; value,Valor; label,Etiqueta
+[CSSAdd]a
+#chart_TABLE TD {
+font-family: eDes;
+font-size:20px;
+}
+[AddCode]a|chart|I|style="font-family:eDes; font-size:20px; width:50px"
+[OnChange]a|informe|_uRecargaCampo()
+[AddButton]a|<I class='ICONINPUT ICONDELETE'>D</i> Borrar|Borrar gráfica|borrarGrafica()
+[AddButton]a|<I class='ICONINPUT ICONVIEW'>V</i> Visualizar|Visualizar gráfica|verGrafica()
+[Button]a|<I class='ICONINPUT ICONUPDATE'>U</i> Modificar|Graba los cambios
+[FormAction]*|insertarChart()
+[Fields]
+{P} ListaChart|NoTD
+Tipo|chart|#|SV|2||M|ColumnChart||
+,Tamaño|width|+|T|4|35|M|||
+,|height|+|T|4|35|M|||
+,Ancho igual listado|list_width|X|C|1||M|||
+Informe|informe|#|SV|60||M|||
+Título Gráfica|title|#|T|60||M|||
+Título eje X|hAxis|#|T|60||M|||
+Título eje Y|vAxis|#|T|60||M|||
+{P} ListCampos
+[P]ListaChart
+?>
+<TD class='TABGroupOuter' id='ListaDeGraficas' colspan=2 style="text-align:left;vertical-align:top;">
+<TABLE id="TABMenu" border=0px cellspacing=0px cellpadding=0px onclick="_ChartSel()" style="width:100%;border-collapse:collapse;"><tr>
+<TD class="TABMenuSeparator">&nbsp;</TD>
+<TD class='TABMenuOn' nowrap nOp=1 Func='' style='white-space:nowrap;'>1</TD>
+<TD class="TABMenuSeparator">&nbsp;</TD>
+<TD class='TABMenuOff' nowrap nOp=2 Func='' style='white-space:nowrap;' title="Nueva Gráfica">+</TD>
+<?PHP for($n=3; $n<=15; $n++){ ?>
+<TD class="TABMenuSeparator" style="display:none">&nbsp;</TD>
+<TD class='TABMenuOff' nowrap nOp=<?=$n?> Func='' style='white-space:nowrap;display:none;'>+</TD>
+<?PHP } ?>
+<TD class="TABMenuSeparator" style="width:100%">&nbsp;</TD>
+</TR></TABLE>
+</TD>
+<?PHP
+[JSIni]a
+var _CHARTCLASS = "CHART_SYSTEM",
+_TotalTab = 15;
+function _ChartSel(){
+var o = S.event(window),
+nOp = S(o).attr("nOp"), td, otd, res;
+if( nOp ){
+if( S(o).class()=="TABMenuOn" ) return;
+res = verGrafica(true);
+if( res==undefined ) return;
+S(".TABMenuOn").attr("Definition",res);
+S(".TABMenuOn").class("TABMenuOff");
+S(o).class("TABMenuOn");
+if( S(o).text()=="+" ){
+vaciaFormulario();
+S(":chart").val("ColumnChart");
+S(o).text(nOp);
+S(o).attr("title","");
+if( nOp<_TotalTab ){
+S(S.toTag(o,"TABLE").rows[0].cells[o.cellIndex+1]).block("table-cell");
+otd = S(S.toTag(o,"TABLE").rows[0].cells[o.cellIndex+2]);
+otd.block("table-cell");
+otd.text("+");
+otd.attr("title","Nueva Gráfica");
+}
+S("#LSTCOLORES TD").each(function(p, o){;
+S(o).css("backgroundColor", "#"+S(o).attr("bakColor"));
+});
+}else{
+restauraFormulario(S(o).attr("Definition"), S.mid(o.id,11,0));
+}
+}
+}
+function vaciaFormulario(){
+var dim = document.forms[0].elements, n, i;
+for(n=0; n<dim.length; n++){
+if( S.mid(dim[n].name,7)!="_INPUT_" ){
+if( dim[n]=="fields" ){
+for(i=0; i<5; i++){
+S(":campo"+i).val("");
+S(":texto"+i).val("");
+}
+}else{
+S(dim[n]).val("");
+}
+}
+}
+for(i=0; i<15; i++){
+eClearSelect("campo"+i);
+}
+S(":chart").val("ColumnChart");
+}
+function restauraFormulario( txt, id ){
+vaciaFormulario();
+if( txt=="" || txt==null ) return;
+var dim = txt.split("|"),n,i,tmp,o;
+S("#LSTCOLORES TD").each(function(p, o){;
+S(o).css("backgroundColor", "#"+S(o).attr("bakColor"));
+});
+for(n=0; n<dim.length; n+=2){
+if( dim[n]=="fields" ){
+tmp = dim[n+1].split(",");
+for(i=0; i<tmp.length; i++){
+S(":campo"+i).val(tmp[i]);
+}
+for(i=tmp.length; i<5; i++){
+S(":campo"+i).val("");
+}
+}else if( dim[n]=="_colores" ){
+tmp = dim[n+1].split(",");
+S("#LSTCOLORES TD").each(function(p, o){;
+S(o).css("backgroundColor",tmp[p]);
+});
+}else if( dim[n]=="_id" ){
+}else if( dim[n]=="informe" ){
+for(i=0; i<5; i++){
+eClearSelect("campo"+i);
+eAddOption("campo"+i, uSelect[dim[n+1]]);
+}
+S(":informe").val(dim[n+1]);
+}else{
+o = S(":"+dim[n]);
+if( dim[n+1]=="true" ){
+o.val("S");
+}else if( dim[n+1]=="false" ){
+o.val("");
+}else{
+dim[n+1] = S.replace(dim[n+1], "#124#", "|");
+o.val(dim[n+1]);
+}
+}
+}
+}
+function CambiaColor(){
+var o = S.event(window);
+if( o.tagName!="TD" ) return;
+eColorSelect(function(c){
+S(o).css("backgroundColor",c);
+S(o).attr("eChange",1);
+});
+}
+S.loadJS(window, "$itm/selecttone.js");
+function RestauraColor(){
+var o = S.event(window);
+if( o.tagName!="TD" ) return;
+S(o).css("backgroundColor", "#"+S(o).attr("bakColor"));
+return S.eventClear(window);
+}
+var _DesdeCampo = 0;
+function verCampos(dir){
+var dim = S("INPUT", S("#LISTACAMPOS")).dim, n, tr;
+for(n=0; n<15; n++){
+tr = S.toTag(S(":_INPUT_campo"+n).obj, "TR");
+S(tr).none();
+}
+if( dir==1 ){
+_DesdeCampo += 5;
+if(_DesdeCampo>=15) _DesdeCampo = 15-5;
+}else{
+_DesdeCampo -= 5;
+if(_DesdeCampo<=0) _DesdeCampo = 0;
+}
+S("#NUMPAGFIELDS").text("Página "+((_DesdeCampo+5)/5)+"/3");
+if( _DesdeCampo==0 ){
+S("#OtrosDatos").visibility(true);
+}else{
+S("#OtrosDatos").hidden();
+}
+for(n=_DesdeCampo; n<_DesdeCampo+5; n++){
+tr = S.toTag(S(":_INPUT_campo"+n).obj, "TR");
+S(tr).display("table-row");
+}
+}
+[P]ListCampos
+echo '<table id=LISTACAMPOS style="margin-left:15px;line-height:10px;border-collapse:collapse;">';
+echo '<tr><th align=center>Columna</th><th align=center>Texto alternativo</th><th align=center id=OtrosDatos>Otros datos</th></tr>';
+for($n=0; $n<15; $n++){
+if( $n>4 ){
+echo "<tr style='display:none'><td>";
+}else{
+echo "<tr><td>";
+}
+echo "<span style='font-family:monospace'>".str_pad($n+1,2,"0",STR_PAD_LEFT)."</span>";
+eAddField("| campo{$n} | # | SV | 20 || M |||");
+echo '</td><td>';
+eAddField("| texto{$n} | # | T  | 20 || M |||");
+if($n==0){
+echo '</td><td rowspan=5 style="vertical-align:top">';
+echo '<table>';
+echo "<tr><td align=right style='pa-dding-left:10px'>Columnas apiladas</td><td>";
+eAddField("| isStacked | # | C | 1 || M |||");
+echo '</td><tr>';
+echo "<tr><td align=right>Curvas</td><td>";
+eAddField("| curveType | # | C | 1 || M |||");
+echo '</td><tr>';
+echo "<tr><td align=right>Tarta 3D</td><td>";
+eAddField("| is3D | # | C | 1 || M |||");
+echo '</td><tr>';
+echo "<tr><td align=right>Donuts</td><td>";
+eAddField("| pieHole | # | C | 1 || M |||");
+echo '</td><tr>';
+echo "<tr><td a-lign=right style='padding-left:10px' colspan=2>Interior Tarta ";
+eAddField("| pieSliceText | # | SV | 8 |60| M |||");
+echo '</td><tr>';
+echo '</table>';
+}
+echo '</td></tr>';
+}
+echo "<tr><td align=center>";
+echo "<table><tr>";
+echo "<td valign=middle><i class='ICONWINDOW' style='font-size:63%;margin-right:5px;' onclick=verCampos(-1)>¡</i></td>";
+echo "<td id=NUMPAGFIELDS>Página 1/3</td>";
+echo "<td valign=middle><i class='ICONWINDOW' style='font-size:63%;margin-left:5px;' onclick=verCampos(1)>!</i></td>";
+echo "</tr></table>";
+echo "</td></tr>";
+echo "<tr><td colspan=3>";
+$colores = explode(",","3366CC,DC3912,FF9900,109618,990099,3B3EAC,0099C6,DD4477,66AA00,B82E2E,316395,994499,22AA99,AAAA11,6633CC,E673008B0707,329262,5574A6,3B3EAC");
+echo '<table id=LSTCOLORES width="100%" style="margin-left:4px;padding-right:15px;cursor:pointer" cellspacing=1px cellpadding=1px onclick=CambiaColor() oncontextmenu=RestauraColor()><tr>';
+for($n=0; $n<15; $n++){
+$color = $colores[$n];
+echo "<td style='height:18px;background-color:#{$color};cursor:pointer' bakColor='{$color}'>&nbsp;</td>";
+}
+echo '</tr></table>';
+echo '</td><tr>';
+echo '</table>';
+[JSEnd]a
+S(":height").css("width:35");
+var uDimChart = [["",""]],
+uSelect = [];
+S("TABLE",_WOPENER).each(function(pk, obj){
+var id = obj.id;
+if( id!="" ){
+uDimChart.push([id, obj.title]);
+uSelect[id] = [["",""]];
+S("TH",obj).each(function(pk, obj){
+var txt = S(obj).html(),
+txt2 = S(obj).text(),
+campo = S.nsp(S(obj).attr("ocampo"));
+if(S(obj).attr("nc")!=undefined && txt2!=""){
+txt = S.replace(txt, [["<br>"," "],["<BR>"," "]]);
+uSelect[id].push([campo, S.stripTags(txt)]);
+}
+});
+}
+});
+eAddOption("informe", uDimChart);
+S("#AddButton2").css("margin-left:160px");
+function _uRecargaCampo(){
+for(n=0; n<15; n++){
+eClearSelect("campo"+n);
+if( eGF("informe")!="" ){
+eAddOption("campo"+n, uSelect[eGF("informe")]);
+}
+}
+}
+function verGrafica(SoloCheck){
+var dim = document.forms[0].elements, n, txt="", chart="",
+aID = getID(S(".TABMenuOn").attr("Definition"));
+for(n=0; n<dim.length; n++){
+if( S.mid(dim[n].name,7)!="_INPUT_" ){
+if( dim[n].name=="chart" || dim[n].type=="fieldset" ){
+}else if( S.mid(dim[n].name,5)=="campo" ){
+if( dim[n].value!="" ){
+if( chart!="" ) chart += ",";
+chart += dim[n].value;
+}
+}else if( S.mid(dim[n].name,5)=="texto" ){
+}else{
+if( dim[n].type=="checkbox" ){
+if( txt!="" ) txt += "|";
+txt += dim[n].name+"|"+(dim[n].checked+"");
+}else if( dim[n].type=="radio" ){
+}else{
+if( dim[n].value!="" ){
+if( txt!="" ) txt += "|";
+txt += dim[n].name+"|"+S.replace(S(dim[n]).val()+"", "|", "#124#");
+}
+}
+}
+}
+}
+txt = "chart|"+S(":chart").val()+"|"+txt+"|fields|"+chart;
+var colores=[], newColor=-1;
+S("#LSTCOLORES TD").each(function(p, o){;
+var n = eval("S."+S(o).css("backgroundColor")),
+c = "#"+S.lower(S(o).attr("bakColor"));
+if( n!=c ) newColor = p;
+colores.push(n);
+});
+if( newColor>-1 ) txt += "|_colores|"+colores.join(",");
+if( aID!="" ) txt += "|_id|"+aID;
+if( chart!="" ){
+if( SoloCheck ) return txt;
+_ChartDraw(txt);
+}else{
+S.info("Faltan definir las columnas", 3);
+return;
+}
+}
+S("#OtrosDatos").css("width:"+S("#OtrosDatos").css("width"));
+S("#LISTACAMPOS").css("width:"+S("#LISTACAMPOS").css("width")+";height:"+S("#LISTACAMPOS").css("height"));
+[HTMIni]a
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart"]});
+</script>
+[JSIni]a
+function _ChartDraw(datos, check){
+if( eGF("informe")=="" ) return;
+if( check==undefined ) check = true;
+var tmp = datos.split("|"),n,dt=[], pt=[], colNum=0, v, vMax=null,vMin, fields, xCol="",
+region = (_WOPENER._ChartRegion ? _WOPENER._ChartRegion:""),
+resolution = (_WOPENER._ChartResolution ? _WOPENER._ChartResolution:"");
+for(n=0; n<tmp.length; n+=2){
+tmp[n+1] = S.replace(tmp[n+1], "#124#", "|");
+dt[tmp[n]] = tmp[n+1];
+}
+fields = S.nsp(dt["fields"]);
+if( S.is("{",fields) ){
+var divide=true, parte="";
+for(n=0; n<fields.length; n++){
+if( fields[n]=="{" ){
+divide = false;
+}else if( fields[n]=="}" ){
+divide = true;
+}else if( fields[n]=="," ){
+if( divide ){
+cmp.push(parte);
+parte = "";
+continue;
+}
+}
+parte += fields[n];
+}
+if( divide ){
+cmp.push(parte);
+}
+}else{
+cmp = fields.split(",");
+}
+var dim=[], tipo=[], tmp=[], col=[], repe=[], n, aCol, maxLabel=0,
+display = S("#"+dt["informe"],_WOPENER).css("display");
+S("#"+dt["informe"],_WOPENER).block();
+S("#"+dt["informe"]+" THEAD TH", _WOPENER).each(function(pk, obj){
+var o = S(obj), label, campo, i;
+if( o.css("display")!="none" ){
+label = o.text();
+campo = S.nsp(o.attr("oCampo"));
+tipo[campo] = [o.attr("nc"), o.attr("td"), label, o.attr("nd"), o.css("width"), o.obj];
+}
+});
+S("#"+dt["informe"],_WOPENER).css("display",display);
+for(n=0; n<cmp.length; n++){
+col[n] = [ tipo[cmp[n]][1], tipo[cmp[n]][0] ];
+if( tmp.length==0 ){
+if( tipo[cmp[n]][1][0]=="+" || tipo[cmp[n]][1][0]=="-" ){
+if(check) S.info("La primera columna no puede ser numérica", 3);
+return false;
+}
+}
+if( tipo[cmp[n]][1][0]=="+" || tipo[cmp[n]][1][0]=="-" ) colNum++;
+tmp.push( tipo[cmp[n]][2] );
+pt.push( tipo[cmp[n]][0] );
+if( repe[cmp[n]] ){
+if(check) S.info('Columna "'+tipo[cmp[n]][2]+'" repetida', 3);
+return false;
+}
+repe[cmp[n]] = 1;
+}
+dim.push(tmp);
+if( colNum==0 ){
+if(check) S.info("Falta alguna columna numérica", 3);
+return false;
+}
+if( dim[0].length<2 ){
+if(check) S.info("Faltan definir mas columnas", 3);
+return false;
+}
+var maxRec = 40;
+if( dt["chart"]=="BarChart" ){
+maxRec = 60;
+}else if( dt["chart"]=="PieChart" ){
+maxRec = 10;
+}else if( dt["chart"]=="GeoChart" ){
+maxRec = 500;
+}
+S("#"+dt["informe"]+" TBODY TR", _WOPENER).each(function(pk, tr){
+if( pk>=maxRec || tr.className=="PieLista" ) return;
+var tmp=[];
+for(n=0; n<col.length; n++){
+switch( col[n][0][0] ){
+case '+': case '-':
+v = S.thousandsClear( S(tr.cells[col[n][1]]).text() )*1;
+tmp.push( v );
+if( vMax==null ){
+vMin = v;
+vMax = v;
+}
+vMin = Math.min(vMin, v);
+vMax = Math.max(vMax, v);
+break;
+default:
+if(n==0) xCol+=S(tr.cells[col[n][1]]).text()+"<br>";
+tmp.push( S(tr.cells[col[n][1]]).text() );
+if( pk<2 ){
+maxLabel = Math.max(maxLabel, S(tr.cells[col[n][1]]).widthText());
+}
+}
+}
+dim.push(tmp)
+});
+tipo[cmp[0]][4] = Math.min(maxLabel, tipo[cmp[0]][4]);
+if( !dt["width"] ) dt["width"] = 400;
+if( !dt["height"] ) dt["height"] = 300;
+var xc,yc,wc,hc,al, minVer="", minHor="", ayadir=0;
+if( dt["chart"]=="PieChart" ){
+if( vMin<0 ){
+if(check) S.info("Las gráficas de este tipo no admiten valores negativos", 3);
+return false;
+}
+xc = 15;
+yc = 15+(dt["title"] ? 15:0);
+hc = dt["height"]-(15*2);
+wc = hc+30+tipo[cmp[0]][4];
+dt["width"] = Math.max(wc+30, dt["width"]);
+}else{
+if( dt["chart"]=="BarChart" ){
+al = tipo[cmp[0]][4];
+if( S("#"+dt["informe"],_WOPENER).attr("widthFixed")==1 ){
+al = S(tipo[cmp[0]][5]).widthText(xCol);
+}
+xc = al+10+(dt["vAxis"] ? 20:5);
+al = 25;
+aCol = 15;
+}else{
+al = tipo[cmp[0]][4]*0.7071;
+for(n=1; n<cmp.length; n++){
+if( tipo[cmp[n]][4]>al ) al = tipo[cmp[n]][4];
+}
+xc = al+10;
+aCol = 25;
+}
+yc = (dt["title"] ? 40:20);
+wc = dt["width"]-xc-15-15-AnchoLeyenda(col, tipo, cmp)-15;
+hc = dt["height"]-yc-al-(dt["hAxis"] ? 20:0);
+if( dt["chart"]=="BarChart" ){
+if( (dim.length-1)*aCol > hc ){
+var inc = ((dim.length-1)*aCol)-hc;
+dt["height"] = dt["height"]*1+inc;
+hc += inc;
+}
+if( wc<150 ){
+dt["width"] = dt["width"]*1+(150-wc);
+wc = 150;
+}
+minHor = vMin>=0 ? 0:vMin;
+}else{
+if( (dim.length-1)*aCol > wc ){
+var inc = ((dim.length-1)*aCol)-wc;
+dt["width"] = dt["width"]*1+inc;
+wc += inc;
+}
+if( hc<150 ){
+dt["height"] = dt["height"]*1+(150-hc);
+hc = 150;
+}
+minVer = vMin>=0 ? 0:vMin;
+}
+}
+if( dt["list_width"]=="true" ){
+n = S("#BROWSE",_WOPENER).css("width");
+ayadir = n-dt["width"];
+if( ayadir>0 ){
+dt["width"] = n;
+wc += ayadir;
+}
+}
+var data = google.visualization.arrayToDataTable(dim),
+options = {
+fontSize: 10,
+width: dt["width"],
+height: dt["height"],
+pieSliceText: dt["pieSliceText"] || "",
+chartArea:{
+left: xc,
+top: yc,
+width: wc,
+height: hc
+},
+title: dt["title"],
+hAxis: {
+minValue: minHor,
+title: dt["hAxis"]
+},
+vAxis: {
+minValue: minVer,
+title: dt["vAxis"]
+},
+legend: {
+labeledValueText: 'both',
+textStyle: {
+fontSize: 10,
+}
+},
+bar: { groupWidth: '75%' },
+is3D: dt["is3D"],
+pieHole: (dt["pieHole"]=="true" ? 0.4:0),
+isStacked: dt["isStacked"],
+curveType: (dt["curveType"]=="true" ? "function":""),
+region: region,
+resolution: resolution
+};
+if( dt["_colores"] ){
+var tmp = dt["_colores"].split(","),
+attr = (dt["chart"]=="PieChart") ? "slices":"series";
+options[attr]={};
+for(n=0; n<15; n++){
+options[attr][n]={};
+options[attr][n]["color"] = tmp[n];
+}
+}
+if(check){
+var win = S.window("",{title:"Vista previa", print:false, w:dt["width"], h:dt["height"]});
+S(win).windowWrite('<div id="_Chart_1" style="float:left;"></div>');
+new google.visualization[dt["chart"]]( S('#_Chart_1',win).obj ).draw(data, options);
+return true;
+S(win).windowWrite('<div id="dashboard"><div id="numnber_range_filter_div" style="border:1px solid red"></div></div>');
+var dashboard = new google.visualization.Dashboard(document.querySelector('#dashboard'));
+var numberRangeFilter1 = new google.visualization.ControlWrapper({
+controlType: 'NumberRangeFilter',
+containerId: 'numnber_range_filter_div',
+options: {
+filterColumnIndex: 5,
+minValue: 0,
+maxValue: 100,
+ui: {
+label: 'Overall Rating'
+}
+}
+});
+dashboard.bind([numberRangeFilter1]);
+return true;
+}else{
+return[dt["chart"], data, options];
+}
+}
+function AnchoLeyenda(col, tipo, cmp){
+var n,a=0;
+for(n=1; n<col.length; n++){
+a = Math.max(a, S(tipo[cmp[n]][5]).widthText());
+}
+return a;
+}
+function insertarChart(){
+var o = S(".TABMenuOn"),
+res = verGrafica(true), dimDef=[], todoOk=true;
+if( res==undefined ) return;
+o.attr("Definition",res);
+var padre=S(".CHART_STORE",_WOPENER), oPadre=padre.obj,
+back=(_CHARTCLASS!="CHART_USER");
+padre.block();
+S("."+_CHARTCLASS, oPadre).nodeRemove();
+S("TD", S("#TABMenu")).each(function(pk, o){
+var op = S(o).attr("nOp"), def, obj, dim;
+if( op>0 ){
+def = S(o).attr("Definition");
+if( def!="" && def!=null ){
+if( def.indexOf("|_id|")==-1 ){
+var pk = S.date("u");
+S(o).attr("_id", pk);
+def+="|_id|"+pk;
+}
+if( _CHARTCLASS=="CHART_USER" ){
+obj = S('<div class="'+_CHARTCLASS+'"></div>',_WOPENER).nodeEnd(oPadre);
+}else{
+obj = S('<div class="'+_CHARTCLASS+'"></div>',_WOPENER).nodeBegin(oPadre);
+}
+dim = _ChartDraw(def, false);
+if( S.type(dim)=="boolean" ){
+if( !dim ){
+S("."+_CHARTCLASS, oPadre).nodeRemove();
+_ChartDraw(def);
+todoOk = false;
+return null;
+}
+}else if( S.type(dim)=="array" ){
+S(obj).attr("Definition", def);
+var tmp = def.split("|"),n;
+for(n=0; n<tmp.length; n+=2){
+if( tmp[n]=="informe" ){
+def = tmp[n+1]+"|"+def;
+break;
+}
+}
+dimDef.push(def);
+new google.visualization[dim[0]]( obj.obj ).draw(dim[1], dim[2]);
+}
+}
+}
+}, back);
+if( todoOk ){
+_WOPENER.Recalcula();
+<? eContextFile('Grabar='); ?>
+S.call("E:CallSrv="+_Source+"&Grabar=1&_CONTEXT="+_CONTEXT, {type:_CHARTCLASS, script:_WOPENER._Source, definition:dimDef.join("~")}, {eval:true} );
+}
+}
+function borrarGrafica(){
+var TD = S(".TABMenuOn"), n,a,
+tds = S.toTag(TD.obj,"TR").cells,
+nOp = TD.attr("nOp"),
+a = TD.obj.cellIndex;
+vaciaFormulario();
+S(".TABMenuOn").class("TABMenuOff");
+S("TD", S("#TABMenu")).each(function(pk, o){
+var op = S(o).attr("nOp"), def, sid;
+if( op>=nOp ){
+S(o).attr("Definition","");
+}
+if( op>=nOp && op<_TotalTab ){
+if( S(tds[pk+2]).text()=="+" && op>1 ){
+S(o).text("+");
+S(o).attr("title","Nueva Gráfica");
+S(tds[pk+1]).none();
+S(tds[pk+2]).none();
+}
+def = S(tds[pk+2]).attr("Definition");
+S(o).attr("Definition",(def ? def : ""));
+sid = S(tds[pk+2]).attr("_id");
+S(o).attr("_id", sid);
+if( TD.obj.cellIndex==pk && def ){
+restauraFormulario(def);
+}
+}else if( nOp==_TotalTab && op==_TotalTab ){
+S(o).text("+");
+S(o).attr("title","Nueva Gráfica");
+}
+});
+if( TD.text()=="+" || nOp==_TotalTab ){
+a-=2;
+}
+S(tds[a]).class("TABMenuOn");
+restauraFormulario(S(tds[a]).attr("Definition"));
+var conMas = false;
+S("TD", S("#TABMenu")).each(function(pk, o){
+var op = S(o).attr("nOp"), def;
+if( op>0 ){
+def = S(o).attr("Definition");
+if( !conMas ){
+if( def=="" || def==null ){
+conMas = true;
+S(o).text("+");
+S(o).attr("title","Nueva Gráfica");
+}
+}else{
+S(tds[pk-1]).none();
+S(tds[pk]).none();
+}
+}
+});
+}
+[JSEnd]a
+function getID(def){
+if( def=="" || def==undefined) def = S.date("u")+"";
+var tmp = def.split("|"),n;
+for(n=0; n<tmp.length; n+=2){
+if( tmp[n]=="_id" ){
+return tmp[n+1];
+}
+}
+return "";
+}
+function cargaDefiniciones(){
+var padre = S(".CHART_STORE",_WOPENER),
+oPadre=padre.obj, op, ver=true,
+oTab = [];
+S("TD", S("#TABMenu")).each(function(pk, o){
+op = S(o).attr("nOp");
+if( op>0 ){
+oTab.push(o);
+}
+});
+S("."+_CHARTCLASS, oPadre).each(function(pk, o){
+var def = S(o).attr("Definition"),
+id = getID(def);
+S(oTab[pk]).attr("Definition", def);
+S(oTab[pk]).attr("_id", id);
+S(oTab[pk]).text(pk+1);
+S(oTab[pk]).block("table-cell");
+var tds = S.toTag(oTab[pk],"TR").cells;
+S(tds[oTab[pk].cellIndex-1]).block("table-cell");
+if( pk<_TotalTab-1 ){
+S(tds[oTab[pk].cellIndex+1]).block("table-cell");
+S(tds[oTab[pk].cellIndex+2]).block("table-cell");
+S(tds[oTab[pk].cellIndex+2]).text("+");
+}
+if( ver ){
+restauraFormulario(def, S.mid(o.id,11,0));
+ver = false;
+}
+});
+}
+cargaDefiniciones();
+[CallSrv]Grabar
+eInit();
+$script = $_POST['script'];
+if( substr_count($script,".php")==0 ){
+$fileDef = $script.".chart";
+$script .= ".php";
+}else{
+list($p1, $p2) = explode(".",$script);
+$fileDef = $p1.".chart";
+}
+if( file_exists(eScript($fileDef)) ){
+copy( eScript($fileDef), eScript($fileDef).".bak" );
+}
+file_put_contents( eScript($fileDef), str_replace( "~", "\n", $_POST['definition']));
+?>
+S.info("Ok",3);
+<?PHP
+eEnd();

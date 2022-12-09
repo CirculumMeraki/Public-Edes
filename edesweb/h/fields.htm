@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="height: 1327px; width: 100%;" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta" style="height: 17px;">Fields</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tSintaxis" style="height: 17px;">SINTAXIS</td>
+</tr>
+<tr style="height: 17px;">
+<td id="Sintaxis" style="height: 17px;">[Fields]  [ TCol / ISubList / Condition ]  [ | Mode ]  [ [ | XLS / XML / PDF / MDB / TXT / CSV / iSubList  / MIX / TRIM ]</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tDescripcion" style="height: 17px;">DESCRIPCIÓN</td>
+</tr>
+<tr>
+<td id="Descripcion">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> 1 </td>
+<td> Etiqueta</td>
+</tr>
+<tr>
+<td> 2</td>
+<td> Nombre del campo</td>
+</tr>
+<tr>
+<td> 3</td>
+<td> Tipo de edición</td>
+</tr>
+<tr>
+<td> 4</td>
+<td> Tipo de control</td>
+</tr>
+<tr>
+<td> 5</td>
+<td> Longitud</td>
+</tr>
+<tr>
+<td> 6</td>
+<td> Ancho en pixels</td>
+</tr>
+<tr>
+<td> 7</td>
+<td> Modo</td>
+</tr>
+<tr>
+<td> 8</td>
+<td> Valor por defecto</td>
+</tr>
+<tr>
+<td> 9</td>
+<td> Condición del campo</td>
+</tr>
+<tr>
+<td> 10</td>
+<td> Mensaje en caso de errror en la condición del campo</td>
+</tr>
+</tbody>
+</table>
+ATENCIÓN: cada campo ha de estar en una sola línea, el hecho de separar cada parámetro del campo en una línea diferente es simplemente por claridad visual en este manual. Los parámetros pueden ir en cualquier orden y los dos son opcionales.<br />Dada la importancia de esta etiqueta, dispone de una ayuda por cada columna.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Mode:</strong> Puede contener cualquier modo mas el modo particular "else" para cuando se definen varias etiquetas [Fields] en el mismo DF y la última asume cualquier modo no representado anteriormente, si se omite el parámetro entrará en todos los modos.<br />También soporta condicíones.<br />Mediante la condición definida en [CC] como en:<br /><code>[CC] #Etiqueta | Condición php</code><br /><code>[Fileds] #Etiqueta</code><br /><br />Y mediante una condición php<br /><code>[Fields] $_TipoListado=="n"</code><br /><br />Si el parámetro es "ISubList" será la definición cuando se ejecute una "ISubList" y las columnas cambirán de sentido:<br />5: definirá el ancho en px<br />7: color de la columna<br />8: operadores de la etiqueta [ColsOp]<br /><br /><strong>TCol</strong>: Total de columnas en el que se divide el formulario, teniendo en cuenta que se entiende por columna la combinación "Label" y "Control", si se omite se considerar? como una columna.<br /><strong>El tercer parámetro:</strong> <br />XLS, PDF, MDB, etc: Define el listado a extraer seg?n el tipo de dato a extraer.<br />iSubList: Este Fields solo se tendr? en cuenta si se est? ejecutando una SubList<br />MIX: El comportamiento de las columnas de Fields cambia en 3 columnas<br />TRIM: Los campos de longitud variable tendr?n el menor ancho posible, si se quiere poner de foma global poner la variable "$_ColsTrim = true;" en el fichero "sql.ini".<br />(este parámetro si es el único puede estar en la primera posición y opcionalmente en la segunda posición el campo por el que se ordena)</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 17px;">
+<td id="Ejemplo" style="height: 17px;">[Fields] 2</td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;">Formulario con dos columnas.</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 17px;">
+<td id="Ejemplo" style="height: 17px;">[Fields] else</td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;">En cualquier otro caso mostrará este formato, esta definición tiene que estar la última.</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 72px;">
+<td id="Ejemplo" style="height: 72px;"><code>$_Variable['#GPForm'] = true;// Se puede dar el valor que se quiera a una variable [CC]</code><br /><br /><code>[Fields] #GPForm</code><br /><code>...</code></td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;"> </td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 72px;">
+<td id="Ejemplo" style="height: 72px;"><code>#( $_TipoListado=='n' ) [DBOrder] ...</code><br /><br /><code>[Fields] $_TipoListado=='n'</code><br /><code>...</code></td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;">Las etiquetas [Fields] y [DBOrder] se ejecutan solo cuando la expresi?n es verdadera</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 54px;">
+<td id="Ejemplo" style="height: 54px;"><code>[Fields] l || mix</code><br /><code>.        | | | | | ColsWidth | | ColsColor | ColsOp | </code><br /><code>...</code></td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;">Si el modo es "l" y el 3? par?metro es "mix" hay 3 columnas de la definici?n de [Fields] que cambia su significado</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 54px;">
+<td id="Ejemplo" style="height: 54px;"><code>[Fields] ISubList</code><br /><code>.        | | | | | ColsWidth | | ColsColor | ColsOp | </code><br /><code>...</code></td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;">Solo aplicable a las ISubList</td>
+</tr>
+<tr style="height: 17px;">
+<td id="tEjemplo" style="height: 17px;">EJEMPLO</td>
+</tr>
+<tr style="height: 54px;">
+<td id="Ejemplo" style="height: 54px;"><code>[Fields] PDF | email</code><br /><code>     DNI / NIE | dni   | D | T | 9  | | - | | |</code><br /><code>     E-Mail    | email | @ | T | 65 | | - | | |</code></td>
+</tr>
+<tr style="height: 17px;">
+<td id="txt" style="height: 17px;">Define los campos a extraer en formato PDF y su ordenación por "email", si no se define tomará la ordenación de [DBorder]</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

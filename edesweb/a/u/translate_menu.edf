@@ -1,0 +1,196 @@
+[Title]=TRADUCIR MENÚ
+[DBTable]{$_SESSION['ShareDictionary']}gs_language
+[DBIndex]cd_gs_language
+[DBOrder]nm_gs_language
+[DBLimit]10000
+[MaxRec]full
+[FormAction]*|Lml:
+[Button]a|<img src='g/op_buscar.gif'> Buscar
+[AddOption]a|caption_tip|C,Caption; T,Tip
+[Fields]a
+Lenguaje|cd_gs_language|N|S|40||A||#|
+Caption/Tip|caption_tip|N|SV|10||A|C||
+,Lo que ha cambiado|tf_changed|N|C|1||A|||
+[JSCheck]a-
+if( eGF('cd_gs_language')=='<?=$_SESSION['_LanguageDefault']?>' ){
+_Action = _Action.replace('.edf','_df.edf');
+ePF('cd_gs_language,caption_tip,tf_changed','');
+}
+#(ml) [DBTable] {$_SESSION['ShareDictionary']}gs_op_lng
+#(ml) [DBIndex] cd_gs_language,md5
+#(ml) [DBOrder] caption
+[JSIni]l
+var _ActualizarDB = false;
+[JSEnd]l
+function uSalir(){
+if( _ActualizarDB ) top.eCallSrv( window, 'Actualizar=1&LENGUAJE=<?=$_POST['cd_gs_language']?>' );
+return eClearEvent();
+}
+document.body.onunload = uSalir;
+[CallSrv]Actualizar
+eTron('Generando TXT ...');
+$txt = '';
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_op_lng");
+while( $r=qRow() ){
+if( $txt!='' ) $txt .= "\n";
+for( $n=0; $n<count($r); $n++ ){
+if( $n>0 ) $txt .= '|';
+$txt .= trim($r[$n]);
+}
+}
+eTron('Grabando TXT ...');
+file_put_contents( '../tree/gs_op_lng.unl', $txt );
+eTron("Insertando en {$_SESSION['ShareDictionary']}GS_ACTIVITY ...");
+qQuery("insert into {$_SESSION['ShareDictionary']}gs_activity (cd_gs_user, cdi, script, edes, email) values (".$_SESSION['_User'].", '". date('Y-m-d H:i:s')."', '/tree/gs_op_lng.unl', 'C', '{$_SESSION['_UserEMail']}')");
+if( $_SESSION['_LanguageDefault'] == $_GET['LENGUAJE'] ){
+eTron('Actualizar gs_op ...');
+$TCopias = 30;
+$nCopia  = 0;
+$dir = '../_bak_/tree/';
+$DimFile = array();
+$uDir = opendir( $dir );
+while( $uFile = readdir( $uDir ) ){
+if( ($uFile=='.') || ($uFile=='..') || (substr($uFile,0,6)!='gs_op.') || (is_dir( $dir.'/'.$uFile )) ) continue;
+$file = gmdate( "YmdHis", filemtime( $dir .'/'. $uFile ) );
+$DimFile[] = $file.'|'.$uFile;
+}
+closedir( $uDir );
+$ArbolTxt = '';
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_op order by seq");
+while( $r=qRow() ){
+for( $n=0; $n<count($r); $n++ ) $ArbolTxt .= $r[$n].'|';
+$ArbolTxt .= "\n";
+}
+if( count($DimFile)>0 ){
+sort($DimFile);
+list( ,$nCopia ) = explode( '.', $DimFile[count($DimFile)-1] );
+$nCopia = $nCopia*1;
+}
+$nCopia++;
+if( $nCopia > $TCopias ) $nCopia = 1;
+$nCopia = str_pad( $nCopia, 2, '0', STR_PAD_LEFT );
+file_put_contents( $dir.'gs_op.'.$nCopia, $ArbolTxt );
+file_put_contents( '../tree/gs_op.unl'	 , $ArbolTxt );
+qQuery("insert into {$_SESSION['ShareDictionary']}gs_activity (cd_gs_user, cdi, script, edes, email) values ({$_User}, '". date('Y-m-d H:i:s')."', '/tree/gs_op.unl', 'C', '{$_SESSION['_UserEMail']}')");
+eTron('Actualizado gs_op');
+}
+eTrace('FIN');
+eEnd();
+[NoTools]S,a
+[CSSAdd]l
+TABLE {
+font-size:150%;
+}
+#BROWSE TD {
+font-family: Courier;
+}
+#P {
+background:#FFFFFF;
+}
+[GreenBar]
+[EditList]caption|uMasDatos()|||uEntrar|$a/u/translate_menu.gs
+[JSIni]l
+function uMasDatos( NomField, Row, OldValue, NewValue, Valor, NCol ){
+Row.ADDVALUE = "caption_tip='<?=$_POST['caption_tip']?>'";
+return "";
+}
+[PDFCol]caption=100
+[Fields]l
+|cd_gs_language|N|T|22||*|||
+|md5|D|T|32||*|||
+Caption|caption|#X|T|255||M|||
+[PHPStart]a,l
+$IdiomaDefault = eFileGetVar('/_datos/config/desktop.ini->$_Language');
+if( $IdiomaDefault=='' ) $IdiomaDefault = 'es';
+[OnChange]a|cd_gs_language|_LoQueCambio()
+[JSIni]a
+function _LoQueCambio(){
+if( eGF('cd_gs_language')=='<?=$IdiomaDefault?>' ){
+ePF('tf_changed','');
+eEF('tf_changed',false);
+eHide('tf_changed','L',false);
+}else{
+eEF('tf_changed',true);
+eShow('tf_changed','L',false);
+}
+}
+[DBSql]l
+if( $IdiomaDefault==$_POST['cd_gs_language'] ) $_POST['tf_changed'] = '';
+if( qCount("{$_SESSION['ShareDictionary']}gs_op_lng", "cd_gs_language='{$IdiomaDefault}'")==0 ){
+qQuery( "insert into {$_SESSION['ShareDictionary']}gs_op_lng ( select cd_gs_op,'{$IdiomaDefault}','C', caption,'','' from {$_SESSION['ShareDictionary']}gs_op where caption<>'' and caption is not null )" );
+qQuery( "insert into {$_SESSION['ShareDictionary']}gs_op_lng ( select cd_gs_op,'{$IdiomaDefault}','T', caption,'','' from {$_SESSION['ShareDictionary']}gs_op where tip<>''     and tip     is not null )" );
+qQuery( 'select cd_gs_op,caption,caption_tip from {$_SESSION['ShareDictionary']}gs_op_lng', $p );
+while( $r=qRow($p) ){
+if( trim($r[1])!='' ){
+qQuery( "update {$_SESSION['ShareDictionary']}gs_op_lng set md5='".md5(trim($r[1]))."' where cd_gs_op='".$r[0]."' and caption_tip='".$r[2]."' and cd_gs_language='{$IdiomaDefault}'" );
+}
+}
+}else{
+if( qCount("{$_SESSION['ShareDictionary']}gs_op", "caption<>'' and caption is not null and cd_gs_op not in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='C')" ) > 0 ){
+qQuery( "insert into {$_SESSION['ShareDictionary']}gs_op_lng ( select cd_gs_op,'{$IdiomaDefault}','C',caption,'','' from {$_SESSION['ShareDictionary']}gs_op where caption<>'' and caption is not null and cd_gs_op not in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='C') )" );
+}
+if( qCount("{$_SESSION['ShareDictionary']}gs_op", "tip<>'' and tip is not null and cd_gs_op not in (select cd_gs_op from gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='T')" ) > 0 ){
+qQuery( "insert into {$_SESSION['ShareDictionary']}gs_op_lng ( select cd_gs_op,'{$IdiomaDefault}','T',tip    ,'','' from {$_SESSION['ShareDictionary']}gs_op where tip<>''     and tip is not null     and cd_gs_op not in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='T') )" );
+}
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op_lng where md5='' or md5 is null and cd_gs_language='{$IdiomaDefault}'" );
+while( $r=qArray() ){
+$md5 = md5(trim($r['caption']));
+qQuery( "update {$_SESSION['ShareDictionary']}gs_op_lng set md5='".$md5."' where cd_gs_op='{$r['cd_gs_op']}' and caption_tip='{$r['caption_tip']}' and cd_gs_language='{$IdiomaDefault}'" );
+}
+if( qCount("{$_SESSION['ShareDictionary']}gs_op O", "O.cd_gs_op in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='C' and caption<>O.caption) and O.caption<>''" )>0 ){
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op O where O.cd_gs_op in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='C' and caption<>O.caption) and O.caption<>''", $p );
+while( $r=qArray($p) ){
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_op={$r['cd_gs_op']} and caption_tip='C' and cd_gs_language='{$IdiomaDefault}'", $p2 );
+$r2=qArray($p2);
+$md5 = md5(trim($r['caption']));
+qQuery( "update {$_SESSION['ShareDictionary']}gs_op_lng set caption='".trim($r['caption'])."', md5='".$md5."', tf_changed=''  where md5='".$r2['md5']."' and caption_tip='C' and cd_gs_language='{$IdiomaDefault}'" );
+qQuery( "update {$_SESSION['ShareDictionary']}gs_op_lng set caption='".trim($r['caption'])."', md5='".$md5."', tf_changed='S' where md5='".$r2['md5']."' and caption_tip='C' and cd_gs_language<>'{$IdiomaDefault}'" );
+}
+}
+if( qCount("{$_SESSION['ShareDictionary']}gs_op O", "O.cd_gs_op in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='T' and caption<>O.tip) and O.tip<>''" )>0 ){
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op O where O.cd_gs_op in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption_tip='T' and caption<>O.tip) and O.tip<>''", $p );
+while( $r=qArray($p) ){
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_op={$r['cd_gs_op']} and caption_tip='T' and cd_gs_language='{$IdiomaDefault}'", $p2 );
+$r2=qArray($p2);
+$md5 = md5(trim($r['tip']));
+qQuery( "update {$_SESSION['ShareDictionary']}gs_op_lng set caption='".trim($r['tip'])."'                    , tf_changed=''  where md5='".$r2['md5']."' and caption_tip='T' and cd_gs_language='{$IdiomaDefault}'" );
+qQuery( "update {$_SESSION['ShareDictionary']}gs_op_lng set caption='".trim($r['tip'])."'                    , tf_changed='S' where md5='".$r2['md5']."' and caption_tip='T' and cd_gs_language<>'{$IdiomaDefault}'" );
+}
+}
+qQuery( "delete from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_op not in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op) and caption_tip='C'" );
+qQuery( "delete from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_op not in (select cd_gs_op from {$_SESSION['ShareDictionary']}gs_op where tip<>'' and tip is not null) and caption_tip='T'" );
+}
+$caption_tip = $_POST['caption_tip'];
+$_TITLE .= ': '.(($caption_tip=='C')?'CAPTION':'TIP').' "'.$_POST['cd_gs_language'].'"';
+$tf_changed = (($_POST['tf_changed']=='S') ? " and tf_changed='S'":'');
+$DimTraducir = array();
+qQuery( "select md5, caption, tf_changed, cd_gs_op from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$_POST['cd_gs_language']}' and caption_tip='{$caption_tip}' and caption<>'' group by md5, caption order by caption" );
+while( $r=qRow() ) $DimTraducir[trim($r[0])] = array( trim($r[1]), $r[2], $r[3] );
+qQuery( "select md5,caption from {$_SESSION['ShareDictionary']}gs_op_lng where cd_gs_language='{$IdiomaDefault}' and caption<>'' and caption_tip='{$caption_tip}' and caption is not null group by md5, caption order by caption" );
+while( $r=qRow() ){
+$md5 = trim($r[0]);
+if( $tf_changed=='' || ($tf_changed!='' && ($DimTraducir[$md5][1]=='S' || $DimTraducir[$md5][2]=='') ) ){
+$usuCursor[] = array( $IdiomaDefault, $r[0], $r[1] );
+if( $r[0]!='' && $DimTraducir[$md5][0]!='' ){
+$usuCursor[] = array( $_POST['cd_gs_language'], $r[0], $DimTraducir[$md5][0] );
+}else{
+$usuCursor[] = array( $_POST['cd_gs_language'], $r[0], '&nbsp;' );
+}
+}
+}
+[JSIni]l
+function uEntrar( Row ){
+if( Row.id!='P' ){
+if( S.eventCode(event)==38 ){
+if( Row.rowIndex > 2 ) _CellSelect = BROWSE.rows[Row.rowIndex-2].cells[2];
+}else{
+_CellSelect = Row.cells[2];
+}
+setTimeout('eNextField();',100);
+return false;
+}
+return true;
+}
+[JSSelRow]l
+if( _oTD.cellIndex==2 ) setTimeout( 'S(_oTD).eventFire("contextmenu")', 1 );
+return false;

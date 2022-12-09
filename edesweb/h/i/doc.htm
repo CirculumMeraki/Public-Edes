@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-DOCUMENTACION </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/doc.css" TYPE="text/css">
+<META HTTP-EQUIV='imagetoolbar' CONTENT='no'>
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+TABLA.cellSpacing = 0;
+function HRef(){
+	var Obj = event.srcElement;
+	while( Obj.tagName!='A' ) Obj = Obj.parentElement;
+	window.open(Obj.href);
+	return false;
+}
+var Obj = document.all.tags('A');
+for( var i=0; i<Obj.length; i++ ) Obj[i].onclick = HRef;
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+document.focus();
+</SCRIPT>
+</BODY></HTML>

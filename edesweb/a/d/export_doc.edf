@@ -1,0 +1,119 @@
+[Title]=PETICIÓN DE DATOS
+¿ $_GET['TIPO'][0]!="P" ? [Button]    * | [DOWNLOAD] Exportar
+¿ $_GET['TIPO'][0]=="P" ? [AddButton] * | [DOWNLOAD] Exportar PDF	| | _VerDown="&_DOWN=1"; uSubmit();
+¿ $_GET['TIPO'][0]=="P" ? [AddButton] * | [v] Ver PDF				| | _VerDown=""; uSubmit();
+¿ $_GET['TIPO'][0]=="P" ? [NoButton]  *
+[WinCloseESC]
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]__doc_to_int_|_doc_to_int_,_doc_password_user_,_email_to_int_|select concat(user_name," ",user_surname),cd_gs_user,pass_doc,email from gs_user where concat(user_name," ",user_surname) like # and permission='S' order by 1|7
+?¿
+[FieldBrowser]__doc_to_int_|_doc_to_int_,_doc_password_user_,_email_to_int_|select user_name||' '||user_surname,cd_gs_user,pass_doc,email from gs_user where (user_name||' '||user_surname) like # and permission='S' order by 1|7
+?
+[Fields]
+De|_doc_from_|X|T|68||-|_UserName||
+Informe Resumido|_Summary|X|C|1||M|||
+{I} <br>
+-|Persona interna
+Para|__doc_to_int_|D|T|68||A|||
+|_doc_to_int_|+|T|5||*|||
+|_doc_password_user_|#|T|68||*|||
+E-mail|_email_to_int_|#|T|68||-|||
+{I} <br>
+-|Persona externa
+Para|_doc_to_ext_|D|T|68||A|||
+E-mail|_email_to_ext_|@|T|68||A|||
+{I} <br>
+-|Clave
+Clave|_doc_password_|#|P|68||A|||
+[FormAction]a|uSubmit()
+[JSIni]a
+var _VerDown = "<?=(($_GET['_DOWN']==1)? "&_DOWN=1" : "")?>";
+function uSubmit(){
+_ErrMensaje = "";
+if( eGF('__doc_to_int_')!='' && eGF('_doc_to_ext_')!='' ) ePE('__doc_to_int_','Solo puede definir una persona');
+if( eGF('_email_to_int_')!='' && eGF('_email_to_ext_')!='' ) ePE('_email_to_int_','Solo puede definir un "E-mail"');
+if( eGF('__doc_to_int_')!='' && eGF('_email_to_ext_')!='' ) ePE('__doc_to_int_','Solo puede rellenar la Persona Interna o Externa');
+if( eGF('_email_to_int_')!='' && eGF('_doc_to_ext_')!='' ) ePE('_email_to_int_','Solo puede rellenar la Persona Interna o Externa');
+if( eGF('__doc_to_int_')!='' && eGF('_email_to_int_')=='' ) ePE('__doc_to_int_','Falta el dato "E-mail" del usuario');
+if( _KeyRequired && eGF("_doc_password_")=="" ) ePE("_doc_password_", 'Falta el dato "Clave"');
+if( _ErrMensaje!='' ){
+var Campo = _ErrCampo.split(',');
+top.eAlert(eLng(43), _ErrMensaje, 'A','W', eGO(Campo));
+return;
+}
+if( Config.indexOf('M')==-1 ) ePF('_email_to_int_,_email_to_ext_','');
+var fo = document.forms[0].elements,c,i,
+fd = _WOPENER.document.forms['FieldCondi'];
+for(c=0; c<fo.length; c++){
+i = _WOPENER.document.createElement('INPUT');
+i.name = i.id = '_E_X_P_'+fo[c].name;
+i.value = fo[c].value;
+i.style.display = 'none';
+fd.appendChild(i);
+}
+_WOPENER.gsExpor('<?=$_GET['TIPO'].'&BW='.$_GET['BW'].'&VIEW='.$_GET['VIEW']?>'+_VerDown);
+top.eSWClose(window);
+}
+[PHPStart]a
+if( substr_count($_GET['TIPO'], "&_DOWN=1")==1 ){
+$_GET['TIPO'] = str_replace("&_DOWN=1","",$_GET['TIPO']);
+$_GET['_DOWN'] = 1;
+}
+[OnChange]a|__doc_to_int_|_Relleno()
+[JSIni]a
+var Config = '<? $_GET['CONFIG'] ?>';
+top.eSWTools(window,"H","P");
+function _Relleno2(){
+if( Config.indexOf('K')==-1 ) return;
+if( eGF('_doc_password_user_')!='' ){
+ePF('_doc_password_user_','P',false);
+eHide('_doc_password_','-');
+setTimeout("top.eSWIResize(window,10,10);",50);
+}else{
+ePF('_doc_password_user_','',false);
+eShow('_doc_password_','-');
+}
+_ConClave();
+setTimeout("top.eSWIResize(window,0,0);",100);
+}
+function _Relleno(){
+setTimeout('_Relleno2()',100);
+eClearEvent();
+}
+function _ConClave(){
+if( _KeyRequired ){
+eShow('_doc_password_');
+}else if( eGF('_email_to_int_')!='' || eGF('_email_to_ext_')!='' ){
+ePF('_doc_password_','');
+eHide('_doc_password_','-');
+}else if( Config.indexOf('P')>-1 ){
+eShow('_doc_password_');
+}
+}
+[PHPEnd]a
+if( $_GET['CONFIG']<>'' ){
+echo '<script type="text/javascript">';
+$_GET['CONFIG'] = strtoupper($_GET['CONFIG']);
+echo 'var _KeyRequired = '.(($_KeyRequired) ? "true;":"false;");
+if( substr_count($_GET['CONFIG'],'M')==0 ){
+echo 'eHide("_email_to_int_,_email_to_ext_","TR");';
+}else{
+if( substr_count($_GET['CONFIG'],'I')==0 ) echo 'eHide("_email_to_int_","TR");';
+if( substr_count($_GET['CONFIG'],'E')==0 ) echo 'eHide("_email_to_ext_","TR");';
+}
+if( substr_count($_GET['CONFIG'],'R')==0 ){
+echo 'eHide("__doc_to_int_,_doc_to_ext_","TR");';
+}else{
+if( substr_count($_GET['CONFIG'],'E')==0 ) echo 'eHide("_doc_to_ext_","TR");';
+if( substr_count($_GET['CONFIG'],'I')==0 ) echo 'eHide("__doc_to_int_","TR");';
+}
+if( !$_KeyRequired  && (substr_count($_GET['CONFIG'],'P')==0 || substr_count($_GET['CONFIG'],'M')>0) ) echo 'eHide("_doc_password_","-");';
+?>
+if( eGO('_email_to_int_').offsetWidth==0 && eGO('__doc_to_int_').offsetWidth==0 ) eHide("_email_to_int_","-");
+if( eGO('_email_to_ext_').offsetWidth==0 && eGO('_doc_to_ext_').offsetWidth==0 ) eHide("_email_to_ext_","-");
+<?PHP
+echo '</script>';
+}
+[JSEnd]a
+if( "<?=$_GET['TIPO']?>"!="P" || !S("#GC1", _WOPENER).length ) eHide("_Summary", "TR");

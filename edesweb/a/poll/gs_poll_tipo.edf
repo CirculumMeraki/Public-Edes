@@ -1,0 +1,12 @@
+[Title]=TIPO DE ENCUESTA
+[DBTable]gs_poll_tipo
+[DBIndex]cd_gs_poll_tipo
+[DBOrder]nm_gs_poll_tipo
+[DBSerial]cd_gs_poll_tipo
+[FormStatic]
+[OptionsInList]fabcm||||cd_gs_node={$_Node}
+[AddCode]a,mR|nm_gs_poll_tipo|I|eAccent=1
+[Fields]
+|cd_gs_poll_tipo|+|T|9||*|||
+Tipo|nm_gs_poll_tipo|D|T|25||MQ||#|
+|cd_gs_node|+|T|6||*Q*|_Node||

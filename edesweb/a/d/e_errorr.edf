@@ -1,0 +1,52 @@
+#include(*) lng
+[Title]=@INFORME DE ERRORES@|l
+[DBTable]{$_SESSION['ShareDictionary']}gs_error
+[DBLimit]1000,200
+[DBAddFilter]is_solved is null
+[FormAction]*|edes.php?Ll:
+[AutoMenu]l|1
+[AddOption]*|tipo|,; J,JS; P,PHP; S,SQL
+[PDFVar]PDF_Grid = true
+[ColsOp]C,,+
+[Format]
+switch( $_vF[0] ){
+case "J":
+$_vF[0] = 'JS';
+break;
+case "P":
+$_vF[0] = 'PHP';
+break;
+case "S":
+$_vF[0] = 'SQL';
+break;
+}
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[Fields]
+@Instante desde@|_desde|F4|T|10||QF|#today#||
+,|_desde_hours|H|T|8||Q|||
+,@Hasta@|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+@Tipo·Error@|tipo|N|SV|1||Q-||%|
+@Script@|fichero|#X|T|40||-|||
+@Nº@|tipo|+|T|6||-|||
+@Instante@|cdi|CDI|T|19||*|||
+[ChartCol]2|100|Gráfica
+[DBSql]l
+$xWhere = qGetWhere();
+if( $xWhere!='' ) $xWhere = ' where '.qGetWhere();
+qQuery("select tipo,fichero,count(*) from {$_SESSION['ShareDictionary']}gs_error {$xWhere} group by 1,2 order by 1,2");
+$_TReg = 1;
+[PHPIni]l
+echo '<script type="text/javascript">';
+$xCDI = ($_POST["cdi"]=='') ? '' : str_replace( '>=',">='",str_replace('"',"'",$_POST["cdi"]));
+echo "var xCDI = '".eQuote($xCDI)."';";
+echo '</script>';
+[JSOnClickRow]*
+var Hoy = top._ToDay.substr(6,4)+top._ToDay.substr(2,4)+top._ToDay.substr(0,2);
+var txt = _Columna[1];
+if( xCDI=='' ){
+top.eSWOpen( window, 'edes.php?Ll:$a/d/e_error.edf&_FILTER='+escape("tipo='"+_Columna[0].substr(0,1)+"' and fichero='"+txt+"'"), '' );
+}else{
+top.eSWOpen( window, 'edes.php?Ll:$a/d/e_error.edf&_FILTER='+escape("cdi"+xCDI+"' and tipo='"+_Columna[0].substr(0,1)+"' and fichero='"+txt+"'"), '' );
+}

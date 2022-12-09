@@ -1,0 +1,293 @@
+#include(*) $lng/e_error.edf.lng
+[Title]@ERRORES EN FICHERO PLANO@
+[DBTable]{$_SESSION['ShareDictionary']}gs_error
+[DBIndex]codigo
+[DBOrder]cdi desc
+[DBLimit]1000,200
+[WinCloseESC]
+[AutoMenu]l|1
+[OnLoad]l|if( top.eIsWindow(window) ) top.eSWResize(window);
+[AddCode]cR|cd_gs_user|A|&nbsp;<img src='edes.php?R:$a/g/usuario.gif' style='margin-bottom:5;' title='@Consultar Usuario@' onclick='top.eSWOpen( window,"edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user="+eGF("cd_gs_user")+"&_NOBUTTON","USUARIO",false)'>
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]
+@Instante Desde@|_desde|F4|T|10||QF|#today#||
+,@Hasta@|_hasta|F4|T|10||QF|||
+#(?) @Usuario@|_cd_gs_user|D|T|68||Q|||
+#(?) @Usuario@|cd_gs_user|+|T|5||*Q|||
+-||||||Q|||
+@Script@|fichero|#X|T|68||Q|||
+[JSCheck]c
+if( eGF('_desde')=='' ) ePE('_desde','El campo "@Instante Desde@" es obligatorio');
+[PHPStart]c
+if( !file_exists('../_tmp/err/_log.err') ){
+eInclude('message');
+eMessage('Ho hay fichero de errores','HS');
+}
+[PHPStart]cR
+$Dia = $_POST['_desde'];
+$Hasta = '';
+if( $_POST['_hasta']!='' ) $Hasta = $_POST['_hasta'];
+$Ver = false;
+eInit();
+?>
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<TITLE>  </TITLE>
+<META NAME='Generator' CONTENT='gsEdit'>
+<META NAME='Author' CONTENT=''>
+<META NAME='Keywords' CONTENT=''>
+<META NAME='Description' CONTENT=''>
+<?=_FileNoCache('edes.js')?>
+<STYLE>
+BODY {
+margin-top:0px;
+margin-bottom:0px;
+margin-left:0px;
+margin-right:0px;
+cursor:default;
+}
+B {
+width:100%;
+background:#eeeeee;
+}
+</STYLE>
+<SCRIPT type='text/javascript'>
+var nBusqueda = 0, UltimaBusqueda = '';
+function Buscar( str ){
+var txt, i, found;
+if( str=="" ) return false;
+txt = document.body.createTextRange();
+if( txt.findText(str) == false ){
+nBusqueda = 0;
+top.eInfo(window,'Cadena "'+str+'" no encontrada');
+return;
+}
+if( event!=null && S.eventCode(event)==37 ){
+nBusqueda-=2;
+if( nBusqueda<0 ){
+var i = 0;
+while( (found = txt.findText(str)) != false ){
+i++;
+txt.moveStart("character", 1);
+txt.moveEnd("textedit");
+}
+txt = document.body.createTextRange();
+nBusqueda = i-1;
+top.eClearEvent(window);
+if( nBusqueda<0 ) return;
+}
+}
+for( i = 0; i <= nBusqueda && (found = txt.findText(str)) != false; i++ ){
+txt.moveStart("character", 1);
+txt.moveEnd("textedit");
+}
+if( found ){
+txt.moveStart("character", -1);
+txt.findText(str);
+txt.select();
+txt.scrollIntoView();
+nBusqueda++;
+UltimaBusqueda = str;
+}else{				        // Vuelve al inicio
+if( nBusqueda > 0 ){
+nBusqueda = 0;
+Buscar(str);
+}else{
+top.eInfo(window,'Cadena "'+str+'" no encontrada');
+}
+}
+}
+function TextoABuscar( Op, DimValores, DatosAdicionales, DimObj ){
+if( Op!=2 ) return;
+if( DimValores=='' ){
+TRange = null;
+return;
+}
+Buscar( DimValores );
+}
+var NIncidencia = 1, TIncidencia = 0, Recalcular = false;
+function NextIncidencia(Mas){
+var ay = document.body.scrollTop, n;
+for( n=1; n<=TIncidencia; n++ ){
+if( DGI(n).offsetTop > ay ){
+NIncidencia = n+Mas;
+return;
+}
+}
+}
+function Saltar(){
+var Num = String.fromCharCode(S.eventCode(event))*1;
+if( Num>=1 && Num<=9 ){
+NIncidencia = Num;
+Recalcular = false;
+cy = DGI(Num).offsetTop;
+document.body.scrollTop = cy;
+top.eClearEvent(window);
+return false;
+}
+switch( S.eventCode(event) ){
+case 38:
+Recalcular = true;
+document.body.scrollTop = document.body.scrollTop - document.body.scrollHeight/TLineas;
+break;
+case 40:
+Recalcular = true;
+document.body.scrollTop = document.body.scrollTop + document.body.scrollHeight/TLineas;
+break;
+case 37:
+case 39:
+Buscar( UltimaBusqueda );
+break;
+case 33:
+if( Recalcular ) NextIncidencia(0);
+NIncidencia--;
+if( NIncidencia<1 ){
+NIncidencia = TIncidencia;
+top.eInfo(top,'Final',1);
+}
+cy = DGI(NIncidencia).offsetTop;
+document.body.scrollTop = cy;
+Recalcular = false;
+break;
+case 13:
+case 34:
+case 9:
+if( Recalcular ) NextIncidencia(-1);
+NIncidencia++;
+if( NIncidencia>TIncidencia ){
+NIncidencia = 1;
+top.eInfo(top,'Inicio',1);
+}
+cy = DGI(NIncidencia).offsetTop;
+document.body.scrollTop = cy;
+Recalcular = false;
+break;
+case 36:
+document.body.scrollTop = 0;
+NIncidencia = 1;
+Recalcular = false;
+break;
+case 35:
+document.body.scrollTop = document.body.scrollHeight;
+NIncidencia = TIncidencia;
+Recalcular = false;
+break;
+case 70:
+case 66:
+TRange = null;
+top.eAlert( "ENTRADA DE DATOS", "", "accept,cancel", null, TextoABuscar, Array(
+Array('Buscar', -60, '^[a-zA-Z0-9 áéíóúñÑüÜçÇºª_\\-/()<>{}¡!\¿\?;\.:,\%\@\'"\s]*$', null, UltimaBusqueda )
+) );
+break;
+}
+top.eClearEvent(window);
+return false;
+}
+function Marcar(){
+var o = S.event(window);
+if( o.tagName=='B' ) o = document.children[o.sourceIndex+1];
+if( o.tagName=='DIV' ){
+if( o.style.backgroundColor=='' ){
+var Color = S(o).css("backgroundColor");
+if( Color == 'transparent' ) Color = S(document.body).css("backgroundColor");
+var rgb = top.eHexToRGB(Color);
+var nColor = top.eColorTone( rgb[0],rgb[1],rgb[2], 4 );
+o.style.backgroundColor = nColor;
+o = document.children[o.sourceIndex-1];
+var Color = S(o).css("backgroundColor");
+if( Color == 'transparent' ) Color = S(document.body).css("backgroundColor");
+var rgb = top.eHexToRGB(Color);
+var nColor = top.eColorTone( rgb[0].toString(16),rgb[1].toString(16),rgb[2].toString(16), 4 );
+o.style.backgroundColor = nColor;
+}else{
+o.style.backgroundColor = '';
+o = document.children[o.sourceIndex-1];
+o.style.backgroundColor = '';
+}
+}
+top.eClearEvent(window);
+return false;
+}
+function Ini(){
+document.onkeydown = Saltar;
+document.onclick = Marcar;
+document.body.focus();
+}
+function CopiarContenido(){
+var e = document.selection.createRange();
+if( e['text']!='' ){
+window.clipboardData.setData( 'text', e['text'] );
+top.eInfo(top,eLng(37),0.5);
+}
+return(( top._M_=='~' && e['text']=='' ) ? true : top.eClearEvent(window));
+}
+</SCRIPT>
+</HEAD>
+<BODY onload="Ini()" onhelp="return false" oncontextmenu="CopiarContenido()">
+<?PHP
+echo '<pre>';
+$nl = 0;
+$tl = 0;
+$MemorizarLinea = 0;
+$ValorLinea = array('','','');
+$xUser = '';
+$xFile = '';
+if( $_POST['cd_gs_user']!='' ) $xUser = 'Usuario: '.$_POST['cd_gs_user'];
+if( $_POST['fichero']!='' ) $xFile = $_POST['fichero'];
+$fd = fopen( '../_tmp/err/_log.err', 'rb' );
+if(!$fd) eMessage('ERROR al abrir el log. '.$fd,'HSE');
+while( !feof($fd) && $nl<500 ){
+$Linea = rtrim(fgets($fd));
+if( $MemorizarLinea<3 ) $ValorLinea[$MemorizarLinea] = $Linea;
+$MemorizarLinea++;
+if( $Linea=='' ){
+}else if( ord($Linea[0])==9 ){
+if( $Ver ){
+$tl++;
+echo htmlentities($Linea)."\n";
+}
+}else{
+$MemorizarLinea = 0;
+$ValorLinea[$MemorizarLinea] = trim($Linea);
+$MemorizarLinea++;
+}
+if( $MemorizarLinea==2 ){
+if( $Hasta!='' ){
+$Ver = ( $Dia<=substr($ValorLinea[0],0,10) && $Hasta>=substr($ValorLinea[0],0,10));
+}else{
+$Ver = ( $Dia==substr($ValorLinea[0],0,10) );
+}
+if( $Ver ){
+if( $xUser!='' && trim($ValorLinea[1])!=$xUser ){
+$Ver = false;
+continue;
+}
+if( $xFile!='' && substr_count($ValorLinea[2],$xFile)==0 ){
+$Ver = false;
+continue;
+}
+$tl++;
+$nl++;
+echo "<b id='{$nl}'>&nbsp;".str_pad($nl,3,'0', STR_PAD_LEFT).': '.substr($ValorLinea[0],0,80)."</b>\n";
+if( $nl>1 ) echo '</div>';
+echo '<div>';
+echo htmlentities($ValorLinea[1])."\n";
+}
+}
+}
+fclose($fd);
+if( $tl==0 ) eMessage('No hay errores','HS');
+echo '</div><hr>';
+echo '</pre>';
+echo "<SCRIPT type='text/javascript'>var TIncidencia={$nl}, TLineas={$tl};</script>";
+echo '</BODY></HTML>';
+eEnd();

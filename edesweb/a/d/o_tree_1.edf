@@ -1,0 +1,24 @@
+[Title]=ARBOLES x USUARIOS
+[DBTable]{$_SESSION['ShareDictionary']}gs_tree
+[DBIndex]cd_gs_tree
+[DBOrder]nm_gs_tree
+[TipTH]permission=Permiso de entrada
+[ColsOp]nm_gs_tree=C, n_usu=+, permission=#
+[Format]n_usu=b
+[Fields]
+|cd_gs_tree|+|T|9||*|||
+Arbol|nm_gs_tree|D|T|60||-|||
+Usuarios|n_usu|+|T|5||-|||
+P|permission|D|C|1||-||=|
+[CSSAdd]l
+IMG { cursor:default; }
+[PHPIni]l
+if( file_exists('../_datos/config/manager_op_filter.php') ) include('../_datos/config/manager_op_filter.php');
+$FilterUser = str_replace('#.','',$FilterUser);
+if( $FilterUser<>'' ) $FilterUser = ' and '.$FilterUser;
+$_CountExecute = "select count(*) from {$_SESSION['ShareDictionary']}gs_tree";
+$_SQLExecute = "select cd_gs_tree, nm_gs_tree, (select count(*) from gs_user_tree t, gs_user u where t.cd_gs_tree={$_SESSION['ShareDictionary']}gs_tree.cd_gs_tree and t.cd_gs_user=u.cd_gs_user and u.permission='S' {$FilterUser} ), permission from {$_SESSION['ShareDictionary']}gs_tree order by nm_gs_tree";
+[JSOnClickRow]l
+if( _Columna[2] > 0 ){
+top.eSWOpen( window, 'Ll:$a/d/o_user_mode.edf&_FILTER='+escape('cd_gs_tree='+_Columna[0]));
+}

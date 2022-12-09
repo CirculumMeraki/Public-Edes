@@ -1,0 +1,37 @@
+[Title]PERFIL DE OPCIONES
+[DBTable]gs_rol
+[DBIndex]cd_gs_rol;nm_gs_rol
+[DBOrder]nm_gs_rol
+[DBSerial]cd_gs_rol
+[ColsWidth]description=400
+[PDFWrap]5
+[PDFTh]=,=,=,ON,IMP, LU,LH, PDF,XLS,MDB, NE
+[PDFVar]PDF_Grid = true
+[AddOption]a,?R|export_level|,; 1,Básico; 2,Medio; 3,Total; 9,INFORMATICA
+[AddOption]l|export_level|,; 1,B; 2,M; 3,T; 9,I
+[JSEnd]l
+DGI('ImgExtraer').title = 'Nivel de Extracción\n   Básico\n   Medio\n   Total\n   INFORMATICA';
+[Fields]3
+|cd_gs_rol|+|T|9||*|||
+Perfil|nm_gs_rol|D|T|60||MQ||#|
+,Permiso|permission|N|C|1||ML|S||
+Descripción|description|#|A|255,78,3||M|||
+#(l) Permiso|permission|#D|C|1||M|||
+-
+Imprimir\<img src='g/print_1.gif' title='Imprimir'>|print|X|C|1||M|||
+,2 Log Usuario\LU|log_user|X|c|1||-||%|
+,3 Log Histórico\LH|log_history|X|C|1||-||%|
+Exportar PDF\<img src='g/l_d_pdf.gif' title='Exportar a PDF'>|pdf|X|C|1||M|||
+,2 Exportar Excel\<img src='g/l_d_xls.gif' title='Exportar a Excel'>|excel|X|C|1||M|||
+,3 Exportar Access\<img src='g/l_d_mdb.gif' title='Exportar a Access'>|mdb|X|C|1||M|||
+#(a,?R) ,Nivel Extracción|export_level|+|SV|12||M|||
+#(l) ,\<img src='g/extraer_1.gif' id=ImgExtraer>|export_level|+|SV|1||M||%|
+,|cd_gs_node|+|T|4||*|_Node||
+#(a,?R) {P} UserPermission
+[PHPStart]a,?R,A,M||unique
+$_OpTreeTYPE = 'rol';
+$_PLUGIN['usertree.form'][0] = 10;
+$_PLUGIN['usertree.form'][1] = 10;
+$_PLUGIN['usertree.form'][2] = 'C';
+$_PLUGIN['usertree.form'][3] = 500;
+#include(*) $a/plugin/usertree.zdf

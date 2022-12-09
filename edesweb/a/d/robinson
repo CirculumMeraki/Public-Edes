@@ -1,0 +1,17 @@
+[Title]   GS_ROBINSON
+
+[DBTable] gs_robinson
+[DBIndex] email
+[DBOrder] email
+
+
+[Fields]
+.   Label      | Field      | TE  | TC | Lng     | Px | Mod | Default | Cnd | Msg Error
+    Email      | email      | #   | A  | 95,80,1 |    | MQL |         |     | 
+    Note       | note       | #   | A  | 95,80,1 |    | ML  |         |     | 
+    Cd gs user | cd_gs_user | 0   | S  | 4       |    | M   |         |     | 
+    Cdi        | cdi        | CDI | T  | 19      |    | M   |         |     | 
+
+
+
+[Note]

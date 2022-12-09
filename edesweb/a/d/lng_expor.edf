@@ -1,0 +1,68 @@
+#include(*) lng
+[Title]=@MENSAJE AL EXPORTAR@
+[Button]a|[u] @Grabar Mensaje@
+[FormButtons]-
+[Fields]
+|_no_|#|H|500,80,4||*|||
+[PHPIni]a
+$uDimMSG = array();
+if( qCount( "{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'" )==0 ){
+eAddField( "=@Mensaje@<br><i class='ICONINPUT' onclick=VerText('es') title='@Ver mensaje@'>V</i> | msg_es | # | H | 500,80,10 || M || # |" );
+$uDimMSG['es'] = file_get_contents( '../_datos/config/msg_export.es' );
+}else{
+qQuery( "select cd_gs_language,nm_gs_language from {$_SESSION['ShareDictionary']}gs_language where cd_gs_language='{$_SESSION['_LanguageDefault']}' and tf_translation='S' order by nm_gs_language" );
+list( $Cod, $Nom ) = qRow();
+$Nom = eUcFirst(trim($Nom));
+$Cod = trim($Cod);
+eAddField( "=".$Nom."<br><i class='ICONINPUT' onclick=VerText('{$Cod}') title='@Ver mensaje@'>V</i> | msg_{$Cod} | # | H | 500,80,10 || M || # |" );
+$uDimMSG[$_LANGUAGE_] = file_get_contents('../_datos/config/msg_export.'.$_LANGUAGE_);
+qQuery( "select cd_gs_language,nm_gs_language from {$_SESSION['ShareDictionary']}gs_language where cd_gs_language<>'{$_SESSION['_LanguageDefault']}' and tf_translation='S' order by nm_gs_language" );
+while( $r=qRow() ){
+list( $Cod, $Nom ) = $r;
+$Nom = eUcFirst(trim($Nom));
+$Cod = trim($Cod);
+eAddField( "=".$Nom."<br><i class='ICONINPUT' onclick=VerText('{$Cod}') title='@Ver mensaje@'>V</i> | msg_{$Cod} | # | H | 500,80,10 || M |||" );
+$uDimMSG[$Cod] = file_get_contents('../_datos/config/msg_export.'.strtolower($Cod));
+}
+}
+[PHPEnd]a
+echo '<script type="text/javascript">';
+foreach( $uDimMSG as $k=>$v ){
+$v = str_replace(chr(13),'',$v);
+$v = str_replace(chr(10),'&#13;',$v);
+$v = str_replace('"','&#34;',$v);
+?>
+ePF('msg_<?=$k?>', "<?= $v ?>".replace(/&#13;/g,"\n").replace(/&#34;/g,'"'));
+<?PHP
+}
+echo '</script>';
+[PHPStart]A
+foreach( $_POST as $k=>$v ){
+if( $k=='_no_' ) continue;
+if( $k[0]=="_" ) continue;
+if( $v=='' ){
+if( file_exists('../_datos/config/msg_export.'.substr($k,-2)) ){
+error_log( date('Y-m-d H:i:s').': rm ../_datos/config/msg_export.'.substr($k,-2)."\n", 3, '../_datos/config/directory.log' );
+gsActivity('/_datos/config/directory.log');
+}
+@unlink('../_datos/config/msg_export.'.substr($k,-2));
+}else{
+$v = stripslashes( $v );
+eTron("_".$k);
+file_put_contents('../_datos/config/msg_export.'.substr($k,-2), $v);
+gsActivity('/_datos/config/msg_export.'.substr($k,-2));
+}
+}
+eMessage('@MENSAJES GRABADOS@', 'HS');
+[JSIni]a
+function VerText( Sufi ){
+var Company = "<?=eFileGetVar("Setup.Company")?>";
+S.alert({
+icon:'DI',
+button:"A,C",
+title:S.lng(210),
+text:S.replace(S(":msg_"+Sufi).obj.parentNode.children[1].innerHTML, "{COMPANY}", Company),
+style:"text-align:justify;",
+width:450
+});
+}

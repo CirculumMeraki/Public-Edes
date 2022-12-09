@@ -1,0 +1,77 @@
+[Title]=INFORME DE PERMISOS DELEGADOS|l
+[DBTable]gs_user
+[DBIndex]cd_gs_user; login
+[DBOrder]user_name,user_surname
+[DBSerial]cd_gs_user
+[DBLimit]5000,750,750
+[DBLog]cd_gs_user
+[AddOption]?|permission|,; S,@Si@; N,@No@; C,@Caducado@; )'S'(,@Sin permiso@
+[AddOption]?|_action|A,Asignar; D,Delegar
+[OnChange]c,n|dni|ePadLeft(this,8)
+[FormAction]*|Ll:
+[Fields]?|2
+DNI|dni|DNI|T|8||Qcp|||
+,2 Usuario|cd_gs_user|+|T|5||Q|||
+Nombre|user_name|X|T|20||Q|||
+,2 Apellidos|user_surname|X|T|30||Q|||
+Local|cd_gs_node|+|S|60|+user_surname|Q|||
+Cargo|cd_gs_position|+|S|30|+user_surname|Q|||
+E-Mail|email|@|T|65|+user_surname|QE|||
+Tipo Permiso|_action|N|SV|10|+user_name|Q|A||
+#Include(?) /_datos/config/admin_per.idf|true
+[ColsOp]S
+[Fields]l
+Usuario|usuario|X|T|45||-|||
+Arbol de Opciones|arbol|X|T|45||-|||
+[DBSql]l
+$AddWhere = '';
+$FitrarUser = false;
+foreach( $_POST as $k=>$v ){
+if( trim($v)<>'' && $k[0]<>'_' ){
+if( $FitrarUser ){
+if( $AddWhere<>'' ) $AddWhere .= ' and ';
+$AddWhere .= "{$k}='{$v}'";
+unset($_POST[$k],${$k});
+}
+}
+if( $k=='_action' ) $FitrarUser = true;
+}
+$_POST['action'] = $_POST['_action'];
+$_POST['_INPUT_action'] = $_POST['_INPUT__action'];
+if( $_POST['action']=='D' ){
+$_TITLE = 'INFORME DE PERMISOS DELEGADOS';
+}else{
+$_TITLE = 'INFORME DE PERMISOS ASIGNADOS';
+}
+$ListaArboles = '';
+qQuery( "select cd_gs_tree from gs_tree_admin where cd_gs_user={$_User} and action='{$_POST['action']}'" );
+while( $r=qRow() ){
+if( $ListaArboles<>'' ) $ListaArboles .= ',';
+$ListaArboles .= $r[0];
+}
+$Where = qGetWhere();
+if( $_SESSION['_SystemUser']!='S' ){
+if( $Where<>'' ) $Where .= " and ";
+$Where .= " cd_gs_user in ( select cd_gs_user from gs_user where cd_gs_user=gs_tree_admin.cd_gs_user and (system_user!='S' or system_user is null or system_user='') )";
+}
+if( $AddWhere<>'' ){
+if( $Where<>'' ) $Where .= " and ";
+$Where .= " cd_gs_user in ( select cd_gs_user from gs_user where {$AddWhere} )";
+}
+if( $Where<>'' ) $Where .= " and ";
+$Where .= " cd_gs_tree in (select cd_gs_tree from gs_tree where permission='S') && cd_gs_tree in ({$ListaArboles})";
+if( $Where<>'' ) $Where = ' where '.$Where;
+if( eSqlType('mysql,mysqli') ){
+$Sql = "select
+(select concat(user_name,' ',user_surname) from gs_user where cd_gs_user=gs_tree_admin.cd_gs_user),
+(select nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where cd_gs_tree=gs_tree_admin.cd_gs_tree)
+from gs_tree_admin {$Where} order by 1,2";
+}else{
+$Sql = "select
+(select user_name||' '||user_surname from gs_user where cd_gs_user=gs_tree_admin.cd_gs_user),
+(select nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where cd_gs_tree=gs_tree_admin.cd_gs_tree)
+from gs_tree_admin {$Where} order by 1,2";
+}
+qQuery( $Sql );
+$usuCursor = array();
+while( $r=qRow() ) $usuCursor[] = $r;

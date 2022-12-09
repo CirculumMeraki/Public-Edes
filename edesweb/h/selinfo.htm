@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="height: 900px; width: 100%;" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta" style="height: 18px;">SelInfo</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tSintaxis" style="height: 18px;">SINTAXIS</td>
+</tr>
+<tr style="height: 108px;">
+<td id="Sintaxis" style="height: 108px;">[SelInfo] Mode | Field |  SourceFile [ | TAB / T / LIST / L / NOEVENT ]<br />     TargetField = SourceField<br />     ...<br />[SelInfo] Mode | Field |  TargetField = SourceField [, TargetField = SourceField ]  | SourceFile [ | TAB / T / LIST / L / NOEVENT ]<br />...<br />[SelInfo] Mode | Field |  TargetField = SourceField [, TargetField = SourceField ]  : SourceFile<br />...<br />[SelInfo] Mode | Field |  NomFuncion()  : SourceFile<br />...</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tDescripcion" style="height: 18px;">DESCRIPCION</td>
+</tr>
+<tr style="height: 180px;">
+<td id="Descripcion" style="height: 180px;">Ayuda a seleccionar un dato en una ficha auxiliar o de listados mediante el código "B" en la columna modo de los campos, se buscará el registro metiendo condiciones en una ficha y seleccionándolo desde la lista.  Esta etiqueta puede ser multilinea pudiendo el tercer parametro ponerse en varias lineas incluida si se quiere en la linea de la etiqueta, con la siguiente sintaxis:<br /><br /><code>[SelInfo] Mode | Field |  TargetField = SourceField,...</code><br /><code>TargetField = SourceTarget,...</code><br /><code>[TargetField = SourceTarget ] : SourceFile </code><br /><br /><code>[SelInfo] Mode | Field |</code><br /><code>TargetField = SourceTarget,...</code><br /><code>[TargetField = SourceTarget ] : SourceFile</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="tParametro" style="height: 18px;">PARAMETROS</td>
+</tr>
+<tr style="height: 90px;">
+<td id="Parametro" style="height: 90px;">TargetField: Campo del formulario destino, si algún campo de la lista se encuntra en una solapa distinta de la actual se tendrá que preceder el nombre del campo con el nombre del formulario punto campo ( ej: FRM1.campo ).<br />SourceField: Campo del formulario origen, este puede ser el nombre de un campo, el comando "onchange" o una función de usuario.<br />SourceFile: Fichero "fdf para generar la ficha o el formulario de selección, si se pone tiene que ir sin extensión.<br />El tercer parámetro, la lista de "TargetField = SourceField " puede sustituirse por una llamada a una función sin parámetros y los paréntesis sin espacio entre ellos, si este parámetro está en blanco buscará como fichero el nombre del campo con extensión "fdf".</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 54px;">
+<td id="Ejemplo" style="height: 54px;"><code>[SelInfo] a,mR | _nm_empre | | cd_emp.fdf | TAB</code><br /><code>     cd_empre = cd_empre </code><br /><code>     _nm_empre = nm_empre </code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 72px;">
+<td id="Ejemplo" style="height: 72px;"><span style="font-family: sans-serif;"><code>[SelInfo] a | cd_emp | cd_emp=cd_emp, _v_numero=numero, _v_dt_alta=dt_alta, _v_r_social=r_social : cd__emp </code><br /><br /><code>[Fields]</code><br /><code>    Empresa | cd_emp | CIF | T | 9 | | AB |||</code></span></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;"> </td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 234px;">
+<td id="Ejemplo" style="height: 234px;"><span style="font-family: sans-serif;"><code>[SelInfo] a | cd_emp | uSelEmpresa()</code><br /><br /><code>[Fields]</code><br /><code>     Empresa | cd_emp | CIF | T | 9 | | AB ||| </code><br /><br /><code>//-- En el fichero "cd_emp.fdf" se mete la función indicada en la etiqueta [SelInfo]</code><br /><code>[DBEnd] cR</code><br /><code>function uSelEmpresa(){</code><br /><code>     global $_vF;</code><br /><code>     echo "ePPF('cd_emp','{$_vF['cd_emp']}');";</code><br /><code>     echo "ePPF('nm_emp','{$_vF['nm_emp']}');";</code><br /><code>     //...</code><br /><code>}</code></span></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

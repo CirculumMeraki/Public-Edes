@@ -1,0 +1,16 @@
+[Help]uploadfile.htm
+[Title]UploadFile
+[Fields]
+Field|Field|d|T|20||M||#||fields
+Folder|Folder|#|T|50||M||||paths
+Filename|Filename|#|T|30||M||#|
+Bytes|Bytes|+|T|10||M||#|
+-
+Title|Title|#|T|80||M|||
+Extensiones|Extensiones|#|T|80||M||||typefile
+Prefijo|Prefijo|#|T|80||M|||
+Tamaños|Tamayos|#|T|80||M|||
+Prefijos|Prefijos|#|T|80||M|||
+PathDeCopia|PathDeCopia|#|T|80||M|||
+[JSCheck]
+return true;

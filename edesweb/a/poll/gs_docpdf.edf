@@ -1,0 +1,31 @@
+[Title]DIPLOMA
+[DBTable]gs_docpdf
+[DBIndex]cd_gs_docpdf
+[DBOrder]nm_gs_docpdf
+[DBSerial]cd_gs_docpdf
+[FormStatic]
+[OptionsInList]abcm,o					 		_
+| ==&#281; | EditarPDF		| Editar PDF	_
+| pdf      | >DescargarPDF	| Descargar PDF
+[JSIni]l
+function EditarPDF(oRow, pk){
+S.window("edes.php?E:$form.php&cd_gs_docpdf="+pk, {title:"EDITOR DE DIPLOMAS", fullscreen:true});
+}
+function DescargarPDF(){
+var win = S.window("edes.php?E:$a/poll/pdf_doc_down.php", {title:"DESCARGAR PDF", fullscreen:true});
+S.windowView(win);
+}
+[Fields]a
+pk|cd_gs_docpdf|+|T|9||*|||
+Documento|nm_gs_docpdf|D|T|60||MQ|||
+Json|json|#|A|1920,80||ML|||
+Descripción|description|#|A|1920,80||M|||
+Fecha alta|dt_add|F4|T|10||-|#today#||
+,Fecha última·Modificación|dt_update|F4|T|10||-|#today#||
+[Fields]
+pk|cd_gs_docpdf|+|T|9||*||#|
+Documento|nm_gs_docpdf|D|T|60||MQ||#|
+Json|json|#|A|1920,80||ML|||
+Descripción|description|#|A|1920,80||M||#|
+Fecha alta|dt_add|F4|T|10||-|#today#|#|
+,Fecha última·Modificación|dt_update|F4|T|10||-|#today#|#|

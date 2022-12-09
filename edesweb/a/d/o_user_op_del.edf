@@ -1,0 +1,131 @@
+[Title]=USUARIOS OPCION ASIGNADA/ELIMINADA
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]user_name,user_surname
+[DBSerial]cd_gs_user
+[DBLimit]20000,500
+[WinCloseESC]
+[TipTH]permission=Permiso
+[ListCheckBox]H|<img src='g/tf_1.gif'>
+[ColsOp],c
+[PDFCol],,,,0
+¿ $_GET['_MODE']=='V' ? [Align] ,,,,h
+[Fields]
+Usuario|cd_gs_user|+|T|5||*|||
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|0|S|50||-|||
+Local|cd_gs_node|+|S|60||-|||
+Permiso\P|permission|N|C|1||-||=|
+#(l) Quitar·Poner|cd_gs_node estado|N|T|1||-||=|
+#Include(l) o_user_op_del.edf|true
+[DBSql]l
+if( file_exists('../_datos/config/manager_op_filter.php') ) include('../_datos/config/manager_op_filter.php');
+$FilterUser = str_replace('#.','A.',$FilterUser);
+if( $FilterUser<>'' ) $FilterUser = ' and '.$FilterUser;
+$txt = '';
+for( $n=4; $n<count($_Form); $n++ ){
+if( $txt!='' ) $txt .= ',';
+$txt .= 'A.'.$_Form[$n][1];
+}
+if( $txt!='' ) $txt = ','.$txt;
+$xUserWhereIn = '';
+if( $_GET['_UserWhereIn'] ) $xUserWhereIn = ' and A.cd_gs_user in (select cd_gs_user from gs_user_in where user_op='.$_SESSION['_User'].')';
+$xPermission = ( $xUserWhereIn!='' ) ? '' : " and A.permission='S'";
+if( eSqlType('mysql,mysqli') ){
+qQuery( "select A.cd_gs_user,concat(A.user_name,' ',A.user_surname) nameSurName,N.nm_gs_node,A.permission {$txt}
+from gs_user A left join gs_node N on N.cd_gs_node=A.cd_gs_node
+where A.cd_gs_user in ( select cd_gs_user from gs_user_op where cd_gs_op={$cd_gs_op} and action='{$action}' )
+{$xUserWhereIn}
+{$FilterUser}
+{$xPermission} and A.cd_type_tree='P'
+order by nameSurName" );
+}else{
+qQuery( "select A.cd_gs_user,A.user_name||' '||A.user_surname nameSurName,N.nm_gs_node,A.permission {$txt}
+from gs_user A left join gs_node N on N.cd_gs_node=A.cd_gs_node
+where A.cd_gs_user in ( select cd_gs_user from gs_user_op where cd_gs_op={$cd_gs_op} and action='{$action}' )
+{$xUserWhereIn}
+{$FilterUser}
+{$xPermission} and A.cd_type_tree='P'
+order by nameSurName" );
+}
+$_TReg = 1;
+[Format]
+$_vF[4] = '<img src="g/tf_1.gif">';
+[PHPStart]l
+$_DeleteWhereFields = array( 'cd_gs_op', 'action' );
+if( $action=='I' ){
+$_TITLE = 'USUARIOS OPCION ASIGNADA:';
+}else{
+$_TITLE = 'USUARIOS OPCION ELIMINADA:';
+}
+[CSSAdd]l
+.Celda { cursor:pointer; }
+[JSEnd]l
+var _uIMG;
+function uSetOnOffPermission( Quitar, Bak ){
+if( Quitar ){
+_uIMG.src = _uIMG.src.replace('_1.','_0.');
+_uIMG.Bak = Bak;
+var n = eClearThousands( _WOPENER._oTD.textContent )-1;
+_WOPENER._oTD.textContent = eShowThousands( n, 0 );
+}else{
+_uIMG.src = _uIMG.src.replace('_0.','_1.');
+var n = eClearThousands( _WOPENER._oTD.textContent )*1+1;
+_WOPENER._oTD.textContent = eShowThousands( n, 0 );
+}
+}
+function uOnOffPermission(){
+var Obj = S.event(window);
+if( Obj.tagName=='IMG' ) Obj = Obj.parentNode;
+var TR = S.toTag(Obj,'TR');
+if( TR.className=='PieLista' ) return eClearEvent();
+if( Obj.tagName=='TH' ){
+SeleccionaLinea();
+}else if( Obj.tagName=='TD' ){
+if( Obj.cellIndex==4 ){
+_uIMG = Obj.children[0];
+var Bak = ( _uIMG.src.indexOf('_0.') > -1 ) ? _uIMG.Bak : '';
+top.eCallSrv( window, 'PonQuitaPermission='+_uIMG.src.indexOf('_0.')+'&cd_gs_user='+eGF('cd_gs_user')+'&cd_gs_op=<?= $cd_gs_op ?>&action=<?= $action ?>&Bak='+Bak );
+}else{
+if( '<?=$_GET['_MODE']?>'=='V' ){
+top.eSWOpen( window, 'FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user')+'&_STOP=1&_NOBUTTON' );
+}else{
+top.eSWOpen( window, 'FmR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user')+'&_STOP=1' );
+}
+}
+}
+}
+if( DGI('GROUPTITLE')!=null ){
+GROUPTITLE.title = _WOPENER.document.all.BROWSE.rows[_WOPENER._RowNumber].cells[4].textContent;
+GROUPTITLE.style.width = BROWSE.offsetWidth;
+var TR = GROUPTITLE.insertRow();
+var TD = TR.insertCell();
+TD.style.fontSize = '90%';
+TD.innerHTML = '<SPAN style="overflow-x:hidden; float:left; white-space:nowrap; text-overflow:ellipsis; margin-top:10px;width:'+(BROWSE.offsetWidth)+'px;">Opción: '+GROUPTITLE.title+'</span>';
+}else if( top.eIsWindow(window) ){
+top.eSWSetCaption( window,  top.eSWGetCaption(window)+' '+_WOPENER.document.all.BROWSE.rows[_WOPENER._RowNumber].cells[4].textContent );
+}
+[OnLoad]l|document.all.BROWSE.onclick = uOnOffPermission;
+[CallSrv]PonQuitaPermission
+$cd_gs_user = str_replace('.','',$cd_gs_user);
+$txt = '';
+if( $PonQuitaPermission > -1 ){
+$Accion = 0;
+$Dim = explode( '|', $Bak );
+for( $n=0; $n<count($Dim)-1; $n++ ){
+$tmp = explode(',',$Dim[$n]);
+qQuery( "insert into gs_user_op values ( {$tmp[0]}, {$tmp[1]}, '{$tmp[2]}', {$tmp[3]} )" );
+}
+}else{
+$Accion = 1;
+$txt = '';
+qQuery( "select * from gs_user_op where cd_gs_op={$cd_gs_op} and cd_gs_user={$cd_gs_user} and action='{$action}'" );
+while( $r=qRow() ){
+for( $n=0; $n<count($r); $n++ ) $txt .= $r[$n].',';
+$txt .= '|';
+}
+qQuery( "delete from gs_user_op where cd_gs_op={$cd_gs_op} and cd_gs_user={$cd_gs_user} and action='{$action}'" );
+}
+echo '<script type="text/javascript">';
+echo "window.frameElement.WOPENER.uSetOnOffPermission( {$Accion}, '{$txt}' );";
+echo '</script>';
+eEnd();

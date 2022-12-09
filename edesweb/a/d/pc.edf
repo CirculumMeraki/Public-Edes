@@ -1,0 +1,22 @@
+#include(*) lng
+[Title]@PC/S@
+[DBTable]gs_pc
+[DBIndex]cd_gs_pc
+[DBOrder]dt_alta
+[DBSerial]cd_gs_pc
+[Align],,,,,,,,,D
+[ListCheckBox]H|<img src=g/tf_1.gif>
+[AddCode]cR|cd_gs_user|A|&nbsp;<img src='edes.php?R:$a/g/usuario.gif' style='margin-bottom:5;' title='@Consultar Usuario@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user="+eGF("cd_gs_user"))'>
+[AddCode]cR|alta_usu|A|&nbsp;<img src='edes.php?R:$a/g/usuario.gif' style='margin-bottom:5;' title='@Consultar Usuario@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user="+eGF("alta_usu"))'>
+[AddCode]cR|cd_gs_node|A|&nbsp;<img src='edes.php?R:$a/g/local.gif' style='margin-bottom:5;' title='@Consultar Local@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/nodo.edf&_SEEK&cd_gs_node="+eGF("cd_gs_node"))'>
+[Fields]2
+@Código@|cd_gs_pc|+|T|4||l=*; *=-|||
+,@Permiso@|permission|N|c|1||M||%|
++2 @Activa WEB@|activar_web|N|c|1||M||%|
+@Usuario PC@|cd_gs_user|+|T|5||MQ|||
++2 @Usuario Alta@|alta_usu|+|T|4||MQ|||
+@Fecha alta@|dt_alta|F4|T|10||Q-F|||
++2 @Fecha baja@|dt_del|F4|T|10||MF|||
+@Nodo@|cd_gs_node|+|S|60||MQ|||
+@Nota@|nota|X|T|20||M|||
+@Número serie@|num_serie|0|T|16||-|||

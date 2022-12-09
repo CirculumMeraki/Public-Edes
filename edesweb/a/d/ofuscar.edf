@@ -1,0 +1,14 @@
+[Title]=OFUSCAR PASSWORD DE DDBB
+[Button]*|<img src='edes.php?R:$a/g/clave.gif'> Ofuscar
+[Fields]
+Clave a ofuscar|ofuscar|#|T|40||M||#|
+[PHPStart]A
+$Clave = $_POST['ofuscar'];
+$Clave = base64_encode(gzcompress($Clave));
+$Clave = dechex(crc32($Clave)).$Clave;
+eInit();
+?>
+La clave ofuscada es <input value="<?=$Clave?>" size=60 id="ofuscado" onclick="window.clipboardData.setData('Text',this.value);top.eSound('A')">
+<script type="text/javascript">top.eLoading(false,window);</script>
+<?PHP
+eEnd();

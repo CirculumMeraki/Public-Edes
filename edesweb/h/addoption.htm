@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">AddOption</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[AddOption] Mode | Field [,Field,Field,,] | Options_List [ | Color [,BackgroundColor [,fontWeight ]]; Color [,BackgroundColor [,fontWeight ]] ; ... ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En un control "SELECT" añade más opciones "option" al principio de la lista.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">Field: Nombre de un campo que aparezca en la etiqueta [Fields] cuyo tipo de control (par?metro 4) sea "SV" (Virtual Select).<br />Options_List: Pares de datos compuestos de un valor y un texto en la siguiente forma: <br />Valor1, Texto1; Valor2, Texto2; ......; ValorN, TextoN<br />Si el "Valor" es igual a "~" pondrá una linea divisoria.<br /><br />Si en "Options_List" se encuentra el nombre de una función, sin parámetros la ejecutará, teniendo que devolver esta una matriz bidimensional con el valor interno y el externo del select respectivamente.<br />Otras opciones son:<br />- Poner una sentencia sql, con uno o dos campos y en este caso el siguiente parámetro puede tener el valor "BLANK" para que genere un option vacío.<br />- Poner un ">" seguido del nombre de un fichero plano, este fichero tendrá la definición del select virtual en la linea cero, pudiendo poner comentarios en las siguientes lineas.<br />- Poner el parámetro de la función "eFileGetVar()":<br /><br /><code>     [AddOption] * | entidad | dpd.entites</code><br /><code>     [AddOption] * | entidad | /_datos/config/virtual.sv->dpd.entites</code><br /><code>     [AddOption] * | entidad | /_datos/config/sql.ini->$entites</code><br /><br /><code>     [AddOption] c | cd_pais  | )'011'.''(, [ Extranjero ]</code><br /><code>     [AddOption] c | cd_cobro | ('DT'.'DS'.'DA'),DOMICILIADA *; ('MT'.'MS'.'MA'),MANO *</code><br /><code>     [AddOption] c | estado   | [ABC],A*; [DEF],B*</code><br /><code>     [AddOption] ? | cd_auto  | select cd_auto, nm_auto from auto order by nm_auto</code><br /><code>     [AddOption] ? | dt_std   | select dt_std from estadistica order by dt_std  |  blank</code><br /><code>     [AddOption] ? | dt_std   | rellevaSelect()</code><br /><code>     [AddOption] ? | salida   | ,; H,HTML; P,PDF; X,XLS</code><br /><code>     [AddOption] ? | dt_std   | >/_datos/config/select.sv</code><br /><code>     [AddOption]</code><br /><code>          c | _PDFBREAKPAGE | ,; cd_auto,Autonomía; cd_auto+cd_prov,Provincia</code><br /><code>         c | _ORDEN_       | nombre,Nombre; P.cd_auto+P.nombre,Autonomía y Nombre</code></td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddOption] c | _gs_formato_ | H,HTML; P,PDF; X,XLS</code><br /><code>[Fields]</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FORMATO&nbsp;| _gs_formato_ | X | SV | 1 | | Q | H | |</code>&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td id="tEjemplo"&gt;EJEMPLO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td id="Ejemplo"&gt;<code>[AddOption] c | _gs_formato_ | Prueba()</code><br /><code>[PHPIni] *</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function Prueba(){</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;$p = array();</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;$p[0] = array('H','HTML');</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;$p[1] = array('P','PDF');</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;$p[2] = array('X','XLS');</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;return $p;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddOption] c | _gs_formato_ | &gt;/_datos/config/select.php</code><br /><br /><code>Fichero: /_datos/config/select.php</code><br /><code>&lt; ?PHP</code><br /><code>&lt;!--?PHP&lt;br /--&gt;&nbsp; &nbsp;$p = array();</code><br /><code>&nbsp; &nbsp;$p[0] = array('H','HTML');</code><br /><code>&nbsp; &nbsp;$p[1] = array('P','PDF');</code><br /><code>&nbsp; &nbsp;$p[2] = array('X','XLS');</code><br /><code>&nbsp; &nbsp;return $p;</code><br /><code>? &gt;</code></td>
+</tr>
+<tr>
+<td id="txt">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddOption] * | estado</code><br /><code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,</code><br /><code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P,Pendiente</code><br /><code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F,Facturado</code><br /><code> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A,Anulado</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E,Enviado</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table>
+ <br /><br /><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

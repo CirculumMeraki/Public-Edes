@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eGraphGet 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eGraphGet( ... ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Esta función&nbsp;devuelve:<BR>- Si no lo puede ejecutar = false<BR>- Si lo puede ejecutar, un array con los siguientes valores:<BR>&nbsp;&nbsp;&nbsp;- 0.- La imagen<BR>&nbsp; &nbsp;- 1.- Ancho<BR>&nbsp; &nbsp;- 2.- Alto<BR>&nbsp; &nbsp;- 3.- Nombre completo del fichero temporal en el servidor 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Tipo de gráfica&nbsp;</TD>
+<TD>&nbsp;&nbsp;&nbsp; - R:&nbsp;Solo muestra por cada ROW una columna<BR>&nbsp;&nbsp;&nbsp; - C:&nbsp;Muestra la sumas por las COL indicadas <BR>&nbsp; &nbsp; - P:&nbsp;Muestra la sumas por las COL indicadas<BR>&nbsp; &nbsp; - G:&nbsp;Muestra todos los valores, en Regilla </TD></TR>
+<TR>
+<TD>&nbsp;Un array con todos los valores a representar</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;Un array con los datos de los campos</TD>
+<TD>&nbsp;&nbsp;&nbsp; - Lable<BR>&nbsp;&nbsp;&nbsp; - Nº de decimales<BR>&nbsp; &nbsp; - Un "+" ( si es cadena vacia no se tiene encuenta el dato)</TD></TR>
+<TR>
+<TD>&nbsp;TITULO GRAFICA</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;TITULO COL</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;TITULO ROW</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;TITULO LEYENDA</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp; Opcional un array para cambiar la comfiguración</TD>
+<TD>&nbsp;</TD></TR></TBODY></TABLE>
+<DIV style="WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; COLOR: rgb(34,34,34); FONT: 12px arial, sans-serif; WIDOWS: 1; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; -webkit-text-stroke-width: 0px">&nbsp;</DIV>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[PHPEnd] l</P>
+<P>$gra = eGraphGet( &nbsp;&nbsp;&nbsp;&nbsp;// Muestra todos los valores<BR><SPAN style="WIDTH: 25px"></SPAN>'G', <BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array(1000,500,700,20),&nbsp;// Se puede poner una sola fila con la suma<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array(1500,200,900,50),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array( 500, 50,200,75),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array( 500, 50,200,10)<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_11',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_22',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_33',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_44',2,'+')<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO GRAFICA',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO COL',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO ROW',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO LEYENDA'<BR>);<BR>if( $gra ) echo $gra[0];</P>
+<P>$gra = eGraphGet( &nbsp;&nbsp;&nbsp;&nbsp;// Muestra la sumas por las COL indicadas<BR><SPAN style="WIDTH: 25px"></SPAN>'P', <BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array(1000,500,700,20),&nbsp;// Se puede poner una sola fila con la suma<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array(1500,200,900,50),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array( 500, 50,200,75),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array( 500, 50,200,10)<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_11',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_22',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_33',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_44',2,'+')<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO GRAFICA',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO COL',<BR><SPAN style="WIDTH: 25px"></SPAN>'',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO LEYENDA'<BR>);<BR>if( $gra ) echo $gra[0];</P>
+<P><BR>$gra = eGraphGet( &nbsp;// Muestra la sumas por las COL indicadas<BR><SPAN style="WIDTH: 25px"></SPAN>'C', <BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array(1000,500,700),&nbsp;// Se puede poner una sola fila con la suma<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array(1500,350,900),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array( 500, 50,200)<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_11',2,'+'),&nbsp;&nbsp;// El "+" indica columna a representar<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_22',2,'+'),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_33',2,'+')<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO GRAFICA',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO COL',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO ROW'<BR>);<BR>if( $gra ) echo $gra[0];</P>
+<P><BR>$gra = eGraphGet( &nbsp;// Solo muestra por cada ROW una columna<BR><SPAN style="WIDTH: 25px"></SPAN>'R', <BR><SPAN style="WIDTH: 25px"></SPAN>array(&nbsp;&nbsp;&nbsp;// Valor<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_1',1000),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_2',1500),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('Label_3', 500)<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>array(<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('',2,''),<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>array('',2,'+')&nbsp;&nbsp;// Columna a representar<BR><SPAN style="WIDTH: 25px"></SPAN>),<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO GRAFICA',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO COL',<BR><SPAN style="WIDTH: 25px"></SPAN>'TITULO ROW'<BR>);<BR>if( $gra ) echo $gra[0];</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

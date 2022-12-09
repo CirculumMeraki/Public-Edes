@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>uTools 
+<TR>
+<TD id=Descripcion>
+<P><STRONG>LINEA SUPERIOR DE ICONOS&nbsp;EN EL DESKTOP</STRONG><BR>- Al pulsar "Control+Click-Izq" en una opción de la página principal la opción se abrirá en una nueva ventana.<BR>- Al poner el cursor en la esquina inferior izquierda se verá un 'TIP' con el tiempo de carga, si se está desarrollando tambien el nº de conexión y el tiempo de carga de la última página en la segunda linea.<BR>- Si en el icono del "Paste" (Copy/Paste) pulsas con el botón derecho del ratón se mostrará una ventana de selección con las ultimas diez entradas que se hallan copiado.<BR>- Estando en un&nbsp;control que tenga Copy/Paste si pulsas F9 será como hacer click en la imagen de "Copy", y si el campo está vacio es como hacer click en el icono "Paste".<BR>- Formato de las Fechas: 1d, 2.dd, 4.ddmm, 5.dd-mm, 6.ddmmaa, 8.ddmmaaaa, 8.dd-mm-aa, 10.dd-mm-aaaa, 8.dd/mm/aa, 10.dd/mm/aaaa y la fecha actual pulsando "T" de ToDay o "H" de Hoy . Si se utiliza la layuda de "Fechas" con el botón izquierdo entramos en el calendario y si lo pulsamos con el botón derecho nos pondrá el día actual ( es un acceso rapido al dia actual ).<BR>- Formato de los Periodos: 1m, 2.mm, 4.aamm, 6.aaaamm, 5.aa-mm, 7.aaaa-mm, 5.aa/mm, 7.aaaa/mm y el periodo actual pulsando "T" de ToDay o "H" de Hoy.<BR>- En los select se puede buscar dinamicamente y hacer filtros mediante el carácter "*", también está activo la rueda del ratón a sí como en el campo del valor interno del select.<BR>- Para pasar al siguiente campo pulsaremos enter/tab y para saltar al campo anterior Shift+Enter/Shift+Tab.<BR>- En los TEXTAREA<BR><SPAN style="WIDTH: 25px"></SPAN>- Si pulsamos "Control+Enter" pasaremos al siguiente&nbsp;campo.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si pulsas "Control+Tab" se desplazará al siguiente punto de tabulación dentro del textarea.<BR>- Si se pulsa en la columna de la izquierda se ocultará/mostrará el menú.<BR>- Si se pulsa en la fila superior se conmutará la página central de tamaño normal a maximizada.<BR>- En los grupos de ficha se puede cambiar de solapa con AvPág y RePág<BR>- En las Fichas y Grupo de Fichas se acepta con F10.<BR>- En las SubFichas al pulsar F10 aceptará la SubFicha.<BR>- En los listados están activas las teclas: AvPág, RePág, Inicio y Fin.<BR>- En las listas deslizantes si te pones encima del icono de avance o de retroceso con la rueda del ratón puedes ir hacia alante y hacia atras.<BR>- Iconos flotantes: Para&nbsp;activar los icono flotantes se pulsará el icono con el botón derecho esto lo activará y desactivará, y para moverlo le capturaremos dejando pulsado el botón derecho sobre él y moviendo el ratón para desplazarlo.<BR>- En el mensaje de "Grabado", etc se puede evitar la tecla con: Enter, AvPag, F10 y con un click del ratón.<BR>- Al pulsar en el icono de extraer el listado a DPF, pulsando normal saldrá en color y al pulsar con control+click en blanco y negro, esta funcionalidad tambien la tiene el icono de extraer al excel el listado que está en pantalla ubicado en el desktop.<BR>- Si está activo la generación de "Task", con Control-F12 se entrará a editar la solicitud de tarea con la grabación de la pantalla en la que se estaba.<BR>- Si está activo el "Visor de Escritorio Remoto" el usuario podrá enviar la patalla actual pulsando con el botón derecho en cualquier icono de cerrar ventana o pulsando "Shift+F12".<BR><BR><STRONG>PARA DESARROLLADORES</STRONG><BR>- Con Shift+Click en el icono de Imprimir añadirá la pantalla a un documento word local.</P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Link
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>[Link] Field, Field, Field, ...
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>Relaciona que los campos sean editables si su predecesor está relleno.
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro>Lista de campos separados por coma, si se quiere afectar a mas de un campo a la vez con relación a su predecesor se separarán por el símbolo mas. Si uno de los campos lo vacias no solo pondrá al campo que depende de él como no editable si no que también lo vaciará.
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>[Link] banco, sucursal, digitoControl, numeroCuenta
+<TR>
+<TD id=txt>Obliga a rellenar los campos en orden.
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[Link] field1, field2+field3, field4</TD></TR>
+<TR>
+<TD id=txt>Si el campo "field1" está relleno los campos "field2" y "field3" serán editables y si cualquiera de los campos&nbsp; "field2" y "field3" está relleno el campo "field4" será editable.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,207 @@
+[Title]=DUPLICAR PERMISOS
+[DBTable]gs_user
+[Button]a|Duplicar Permisos
+[OnChange]a|_tipo_de_copia|uTituloBoton()
+[JSIni]a
+function uTituloBoton(){
+var td = DGI("OpExe").rows[0].cells[1];
+if( eGF("_tipo_de_copia")=="I" ){
+td.innerText = "Duplicar Permisos";
+}else{
+td.innerText = "Añadir Permisos";
+}
+}
+[OnChange]a|dni1|_eCallSrv(window, 'campo=dni&valor='+this.value+'&origen=1')
+[OnChange]a|email1|_eCallSrv(window, 'campo=email&valor='+this.value+'&origen=1')
+[OnChange]a|dni2|_eCallSrv(window, 'campo=dni&valor='+this.value+'&origen=2')
+[OnChange]a|email2|_eCallSrv(window, 'campo=email&valor='+this.value+'&origen=2')
+[CallSrv]campo
+if( $campo!="dni" && $campo!="email" ) eEnd();
+echo '<script>';
+qQuery("select dni,email, user_name,user_surname from gs_user where {$campo}='{$valor}'");
+$r = qRow();
+echo 'var WO = window.frameElement.WOPENER;';
+echo "WO.ePF('dni{$origen},email{$origen},_nom{$origen},_ape{$origen}','',false);";
+if( $r[0]=="" ){
+echo 'top.eInfoError(WO,"El usuario NO existe");';
+}else{
+echo "WO.ePF('dni{$origen}',  '{$r[0]}', false);";
+echo "WO.ePF('email{$origen}','{$r[1]}', false);";
+echo "WO.ePF('_nom{$origen}', '{$r[2]}');";
+echo "WO.ePF('_ape{$origen}', '{$r[3]}');";
+}
+echo '</script>';
+[AddOption]*|_tipo_de_copia|I,Poner los mismo permisos; S,Añadir permisos que no tiene
+[Fields]
+<Forma de generar los permisos|_tipo_de_copia|N|SV|40|+email1|M|||
+-|Usuario Origen de los permisos
+DNI|dni1|D|T|9||Md|||
+EMail|email1|@|T|57|+_ape1|M|||
+Nombre|_nom1|N|T|20|150|-|||
+,Apellidos|_ape1|N|T|30|250|-|||
+-|Usuario Destino de los permisos
+DNI|dni2|D|T|9||M|||
+EMail|email2|@|T|57|+_ape2|M|||
+Nombre|_nom2|N|T|20|150|-|||
+,Apellidos|_ape2|N|T|30|250|-|||
+{P} uInformar
+[P]uInformar
+if( $_SESSION["_D_"]<>"" ){
+?>
+<hr style="background-color:red">
+<center style="color:red"><b>INFORMACIÓN PARA EL DESARROLLADOR</b></center>
+<hr style="background-color:red">
+Para modificar mas datos del usuario hay que crear el fichero "/_datos/config/permission_add.php"<br>
+<u>Condiciones de entrada:</u><br>
+- $userFrom = cd_gs_user del usuario Origen<br>
+- $userTo =  cd_gs_user del usuario Destino<br>
+<u>Condiciones de salida:</u><br>
+- Generar la matriz hash "$fieldsUpdate" (fields=>value) con los datos a actualizar.
+<?PHP
+}
+[OnLoad]a|eFocus("dni1");
+[JSCheck]a
+if( eGF("dni1")=="" && eGF("email1")=="" ) ePE("dni1", "Falta el usuario Origen");
+if( eGF("dni2")=="" && eGF("email2")=="" ) ePE("dni2", "Falta el usuario Destino");
+if( eGF("dni1")!="" && eGF("dni1")==eGF("dni2") ) ePE("dni2", "No pueden ser el mismo usuario");
+if( eGF("email1")!="" && eGF("email1")==eGF("email2") ) ePE("email2", "No pueden ser el mismo usuario");
+[PHPIni]A
+if( $dni1!="" ){
+qQuery("select cd_gs_user from gs_user where dni='{$dni1}'");
+list($ori) = qRow();
+if( $ori==0 ) eMessage("Usuario origen no encontrado", "HSE");
+}elseif( $email1!="" ){
+qQuery("select cd_gs_user from gs_user where email='{$email1}'");
+list($ori) = qRow();
+if( $ori==0 ) eMessage("Usuario origen no encontrado", "HSE");
+}
+if( $dni2!="" ){
+qQuery("select cd_gs_user from gs_user where dni='{$dni2}'");
+list($des) = qRow();
+if( $des==0 ) eMessage("Usuario destino no encontrado", "HSE");
+}elseif( $email2!="" ){
+qQuery("select cd_gs_user from gs_user where email='{$email2}'");
+list($des) = qRow();
+if( $des==0 ) eMessage("Usuario destino no encontrado", "HSE");
+}
+$DatosParticulares = "";
+if( file_exists("../_datos/config/permission_add.php") ){
+$userFrom = $ori;
+$userTo = $des;
+include("../_datos/config/permission_add.php");
+if( isset($fieldsUpdate) ){
+foreach($fieldsUpdate as $k=>$v){
+$DatosParticulares .= ",{$k}='{$v}'";
+}
+}
+}
+if( $_POST["_tipo_de_copia"]=="I" ){
+qQuery("delete from gs_user_tree  where cd_gs_user='{$des}'");
+qQuery("delete from gs_user_op    where cd_gs_user='{$des}'");
+qQuery("delete from gs_permission where cd_gs_user='{$des}'");
+qQuery("select cd_gs_tree, mode from gs_user_tree where cd_gs_user='{$ori}'", $ptOri);
+while( $r=qRow($ptOri) ){
+qQuery("insert into gs_user_tree (cd_gs_user, cd_gs_tree, mode) values ('{$des}', '{$r[0]}', '{$r[1]}')", $ptDes);
+}
+qQuery("select cd_gs_tree, action, cd_gs_op from gs_user_op where cd_gs_user='{$ori}'", $ptOri);
+while( $r=qRow($ptOri) ){
+qQuery("insert into gs_user_op (cd_gs_user, cd_gs_tree, action, cd_gs_op) values ('{$des}', '{$r[0]}', '{$r[1]}', '{$r[2]}')", $ptDes);
+}
+qQuery("select cd_gs_tpermission from gs_permission where cd_gs_user='{$ori}'", $ptOri);
+while( $r=qRow($ptOri) ){
+qQuery("insert into gs_permission (cd_gs_user, cd_gs_tpermission) values ('{$des}', '{$r[0]}')", $ptDes);
+}
+qQuery("select * from gs_user where cd_gs_user='{$ori}'");
+$o = qArray();
+$sql = "update gs_user set
+permission='{$o['permission']}',
+webmaster='{$o['webmaster']}',
+log_user='{$o['log_user']}',
+log_history='{$o['log_history']}',
+export_level='{$o['export_level']}',
+cd_type_tree='{$o['cd_type_tree']}',
+cd_gs_rol='{$o['cd_gs_rol']}',
+like_user='{$o['like_user']}',
+print='{$o['print']}',
+pdf='{$o['pdf']}',
+excel='{$o['excel']}',
+xml='{$o['xml']}',
+txt='{$o['txt']}',
+csv='{$o['csv']}',
+mdb='{$o['mdb']}'".$DatosParticulares." where cd_gs_user='{$des}'";
+qQuery($sql);
+eMessage("Permisos Duplicados", "HS");
+}else{
+include("../_datos/config/manager_op.ini");
+qQuery("select cd_gs_tree, mode from gs_user_tree where cd_gs_user='{$ori}'", $ptOri);
+while( $r=qRow($ptOri) ){
+qQuery("select cd_gs_tree, mode from gs_user_tree where cd_gs_user='{$des}' and cd_gs_tree='{$r[0]}'", $pa);
+$actual=qRow($pa);
+if( $actual[0]>0 ){
+foreach($_Mode as $k=>$v) $_Mode[$k] = 0;
+$origen = $r[1];
+$destino = $actual[1];
+$dim = explode(",",$origen);
+for($n=0; $n<count($dim); $n++) $_Mode[$dim[$n]]++;
+$dim = explode(",",$destino);
+for($n=0; $n<count($dim); $n++) $_Mode[$dim[$n]]++;
+$newModo = "";
+foreach($_Mode as $k=>$v){
+if( $_Mode[$k]<>"" ){
+if( $newModo<>"" ) $newModo .= ",";
+$newModo .= $k;
+}
+}
+qQuery("update gs_user_tree set mode='{$newModo}' where cd_gs_user='{$des}' and cd_gs_tree='{$r[0]}'", $ptDes);
+}else{
+qQuery("insert into gs_user_tree (cd_gs_user, cd_gs_tree, mode) values ('{$des}', '{$r[0]}', '{$r[1]}')", $ptDes);
+}
+}
+qQuery("select cd_gs_tree, action, cd_gs_op from gs_user_op where cd_gs_user='{$ori}'", $ptOri);
+while( $r=qRow($ptOri) ){
+if( qCount("gs_user_op", "cd_gs_user='{$des}' and cd_gs_tree='{$r[0]}' and action='{$r[1]}' and cd_gs_op='{$r[2]}'", $ptDes)==0 ){
+qQuery("insert into gs_user_op (cd_gs_user, cd_gs_tree, action, cd_gs_op) values ('{$des}', '{$r[0]}', '{$r[1]}', '{$r[2]}')", $ptDes);
+}
+}
+qQuery("select cd_gs_tpermission from gs_permission where cd_gs_user='{$ori}'", $ptOri);
+while( $r=qRow($ptOri) ){
+if( qCount("gs_permission", "cd_gs_user='{$des}' and cd_gs_tpermission='{$r[0]}'", $ptDes)==0 ){
+qQuery("insert into gs_permission (cd_gs_user, cd_gs_tpermission) values ('{$des}', '{$r[0]}')", $ptDes);
+}
+}
+qQuery("select * from gs_user where cd_gs_user='{$ori}'");
+$o = qArray();
+qQuery("select * from gs_user where cd_gs_user='{$des}'");
+$d = qArray();
+$o['permission'] = (($d['permission']=="S" || $o['permission']=="S") ? "S":$o['permission']);
+$o['webmaster'] = (($d['webmaster']=="S" || $o['webmaster']=="S") ? "S":"");
+$o['log_user'] = (($d['log_user']=="S" || $o['log_user']=="S") ? "S":"");
+$o['log_history'] = (($d['log_history']=="S" || $o['log_history']=="S") ? "S":"");
+$o['print'] = (($d['print']=="S" || $o['print']=="S") ? "S":"");
+$o['pdf'] = (($d['pdf']=="S" || $o['pdf']=="S") ? "S":"");
+$o['excel'] = (($d['excel']=="S" || $o['excel']=="S") ? "S":"");
+$o['xml'] = (($d['xml']=="S" || $o['xml']=="S") ? "S":"");
+$o['txt'] = (($d['txt']=="S" || $o['txt']=="S") ? "S":"");
+$o['csv'] = (($d['csv']=="S" || $o['csv']=="S") ? "S":"");
+$o['mdb'] = (($d['mdb']=="S" || $o['mdb']=="S") ? "S":"");
+$o['export_level'] = max($o['export_level'], $d['export_level']);
+$sql = "update gs_user set
+permission='{$o['permission']}',
+webmaster='{$o['webmaster']}',
+log_user='{$o['log_user']}',
+log_history='{$o['log_history']}',
+export_level='{$o['export_level']}',
+cd_type_tree='{$o['cd_type_tree']}',
+cd_gs_rol='{$o['cd_gs_rol']}',
+like_user='{$o['like_user']}',
+print='{$o['print']}',
+pdf='{$o['pdf']}',
+excel='{$o['excel']}',
+xml='{$o['xml']}',
+txt='{$o['txt']}',
+csv='{$o['csv']}',
+mdb='{$o['mdb']}'".$DatosParticulares." where cd_gs_user='{$des}'";
+qQuery($sql);
+eMessage("Permisos Añadidos", "HS");
+}
+eEnd();

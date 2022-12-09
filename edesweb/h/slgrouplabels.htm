@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>slGroupLabels 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{slGroupLabels} LabelSubLista | LabelSubLista | ... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Funciona igual que la etiqueta [LabelSubLista] pero para las sublistas, la peculiaridad es que las etiquetas {slSql} y {slMenu} ponemos una "#" con los datos a sustituir. <BR>Tambi?n se puede poner de forma abreviada <STRONG>{slGL}</STRONG>.&nbsp;<FONT color=#ff0000> En la columna de datos "slSql" no se puede poner el campo de la tabla padre.</FONT> <BR>En la columna de "slTH" se puede poner la barra "" para indicar lo que hay que mostrar seg?n el modo&nbsp;"a /mR  cR/bR" ModoModificaci?nModoConsultas.<BR>Las etiquetas contenidas en esta puede llevar o no el prefijo "sl" ej: "slAlign" o "Align"
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[SubList] a,?R | _descom</P>
+<P>{slGroupLabels} slSql | slAlign | slColsWidth | slFormat | slColsOp | slMenu | slTH<BR><SPAN style="WIDTH: 25px"></SPAN>'' | CH | 27 | AMB() | |IMG |&lt;IMG SRC="g/l_op_insert.gif" title="Selecciona Descompuesto" onclick="eSLAction('_descom','i')"&gt;<BR><SPAN style="WIDTH: 25px"></SPAN>a.cd_albadet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | H |&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; &nbsp;| &nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<BR><SPAN style="WIDTH: 25px"></SPAN>a.cd_partida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | I | 80 |&nbsp;&nbsp; &nbsp;| &nbsp; | _cd_partida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | PARTIDA<BR><SPAN style="WIDTH: 25px"></SPAN>b.cd_partida2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | H |&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; &nbsp;| &nbsp; | _cd_partida2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<BR><SPAN style="WIDTH: 25px"></SPAN>b.nm_partida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | H |&nbsp;&nbsp; &nbsp;|&nbsp; &nbsp; |&nbsp;&nbsp;&nbsp;| _nm_partida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<BR><SPAN style="WIDTH: 25px"></SPAN>a.cd_matobra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | H |&nbsp;&nbsp; &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp; &nbsp;| _cd_matobra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<BR><SPAN style="WIDTH: 25px"></SPAN>a.cantidad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D | 80 | M2 |&nbsp; &nbsp;| _cantidad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | CANTIDAD<BR><SPAN style="WIDTH: 25px"></SPAN>a.precio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D | 80 | M2 |&nbsp; &nbsp;| _precio&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | PRECIO<BR><SPAN style="WIDTH: 25px"></SPAN>a.dias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| D |&nbsp;&nbsp;&nbsp; | M&nbsp; |&nbsp; &nbsp;| _dias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| DIAS<BR><SPAN style="WIDTH: 25px"></SPAN>a.importe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | D | 80 | M2 | + | _importe&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | IMPORTE<BR><SPAN style="WIDTH: 25px"></SPAN>a.alquiler&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | C | 80 |&nbsp;&nbsp;&nbsp; |&nbsp; &nbsp;| _alquiler&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ALQUILER<BR><SPAN style="WIDTH: 25px"></SPAN>a.dt_facturacion&nbsp;&nbsp; | C |&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; |&nbsp; &nbsp;| _dt_facturacion&nbsp;&nbsp; | F.FACTURACION<BR><SPAN style="WIDTH: 25px"></SPAN>a.dt_recogida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | C |&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; |&nbsp; &nbsp;| _dt_recogida&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | F.RECOGIDA<BR><SPAN style="WIDTH: 25px"></SPAN>a.dias_facturacion | H |&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; |&nbsp; &nbsp;| _dias_facturacion |<BR><SPAN style="WIDTH: 25px"></SPAN>a.obs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| H |&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; |&nbsp; &nbsp;| _obs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;|</P>
+<P>{slSql} select # from albadet as a, partida as b where cd_albacab='{cd_albacab}' and a.cd_partida=b.cd_partida | a.cd_albadet</P>
+<P>{slMenu} a,mR | Alta:i, Modificar:u, Borrar:d | # | | FormOnLine | &lt;IMG SRC="g/l_op_update.gif" title="Modificar Descompuesto" onclick="eSLAction( '_descom','u' )"&gt;&lt;IMG SRC="g/l_op_delete.gif" title="Borrar Descompuesto" onclick="eSLAction( '_descom','d' )"&gt;</P>
+<P>{slWin} ,7</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,11 @@
+[Title]PROPIETARIO DE CONTENIDO
+[DBTable]gs_created_by
+[DBIndex]cd_gs_created_by;nm_gs_created_by||true
+[DBOrder]nm_gs_created_by
+[DBSerial]cd_gs_created_by
+#include(*) /_datos/config/file_manager.ini | true
+[FormStatic]
+[Fields]
+|cd_gs_created_by|+|T|9||*|||
+Nombre|nm_gs_created_by|D|T|60||MQ||#|
+|cdi_insert|CDI|T|19||*|#today#||

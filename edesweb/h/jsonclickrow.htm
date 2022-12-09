@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">JSOnClickRow</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[JSOnClickRow] Mode [ [ | NomDF/else,... ] | NumCol/NomCol, NumCol/NomCol,... ] <br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">
+Código JavaScript a ejecutar al pulsar en un listado, la intención es hacer algún proceso sin que el listado se valla, no es seleccionar una fila (JSSelRow) sino ejecutar algún proceso relacionado con la fila, por ejemplo un listado de artículos y quieres mas información de uno en una nueva ventana sin quitar el listado. El tercer parámetro indica las columnas que son afectadas, por defecto son todas, las columnas indicadas en este parámetro tendrán el css "class=JSOnClickRow", dentro de la etiqueta esta disponible la variable "ColNumber" que indica el numero de la columna que se ha pulsado y "RowNumber" el numero de la fila. <br />Esta etiqueta se anula si utilizamos la etiqueta [JSSelRow]<br /><br />Se pasan las siguientes variables de la fila pulsada.<br />     _vF = Matriz asociativa con el valor de las celdas.<br />     _oF = Matriz asociativa con los objetos (TD).<br />     _oTR = Objeto TR.<br />     _oTD = Objeto TD.<br />     $+NombreVariable = obtienes el valor o le asignas otro valor.<br /><br />Variables/funciones obsoletas:<br />      _Celda  = La celda pulsada.<br />      _Fila  = La fila pulsada.<br />     _ValCol  = Matriz asociativa con el valor de las celdas de la fila pulsada.<br />     _Columna = Matriz ordinal con el valor de las celdas de la fila pulsada.<br />     eGF() = Con esta función podemos cojer el valor de cualquier campo de la fila pulsada.<br />                  También estan activas las siguientes matrices:<br /><br />
+ _aTR[ nCol ] = Valor de la celda<br /><br />
+_ColName = Nombre del campo<br /><br />
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">&nbsp;</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

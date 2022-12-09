@@ -1,0 +1,63 @@
+[Title] =ASIGNACION MASIVA DE ARBOL POR EMAIL
+
+[Expire] 600
+
+[Fields] a
+   ]Arbol                      | cd_gs_tree      | + | S | 40          | 450 | A  |  | # | 
+   ]Lista de EMails            | emails          | # | A | 60000,60,20 | 450 | Ak |  | # | 
+   <Activar Permiso            | activar_permiso | N | C | 1           |     | A  |  |   | 
+   ,Arbol solo a estos EMails  | usuarios_unicos | N | C | 1           |     | A  |  |   | 
+
+	
+[PHPIni] A
+eInit();
+
+$ArbolNew = $_POST['cd_gs_tree'];
+$Dim = explode( "\n", $_POST['emails'] );
+
+$Modo = '';
+if( $ArbolNew<1 ) die('Error en el n? del ?rbol');
+qQuery( "select distinct(select mode from gs_op where mode is not null and mode<>'' and cd_gs_op=gs_tree_op.cd_gs_op) from gs_tree_op where cd_gs_tree={$ArbolNew}" );
+while( $r=qRow() ){
+	if( trim($r[0])!='' ){
+		if( $Modo!='' ) $Modo .= ',';
+		$Modo .= trim($r[0]);
+	}
+}
+if( $Modo=='' ) eMessage('El árbol no tiene ninguna opción','HSE');
+
+//ePrintR($Modo, $ArbolNew, $Dim );
+$DimEMailError = array();
+
+if( $_POST['usuarios_unicos']=='S' ){
+	qQuery( "delete from gs_user_tree where cd_gs_tree={$ArbolNew}" );
+}
+
+$ConPermiso = ($_POST['activar_permiso']=='S');
+$tReg = 0;
+$tRegAlta = 0;
+$tRegMod = 0;
+for( $n=0; $n<count($Dim); $n++ ){
+	$Dim[$n] = trim($Dim[$n]);
+	qQuery( "select cd_gs_user from gs_user where email='{$Dim[$n]}'", $p9 );
+	list( $User ) = qRow($p9);
+	if( $User == 0 ){
+		$DimEMailError[] = $Dim[$n];
+	}else{
+		$tReg++;
+		if( qCount( 'gs_user_tree', "cd_gs_user={$User} and cd_gs_tree={$ArbolNew}" ) > 0 ){
+			$tRegMod++;
+			qQuery( "update gs_user_tree set mode='{$Modo}' where cd_gs_user={$User} and cd_gs_tree={$ArbolNew}" );
+		}else{
+			$tRegAlta++;
+			qQuery( "insert into gs_user_tree ( cd_gs_user, cd_gs_tree, mode ) values ( {$User}, {$ArbolNew}, '{$Modo}' )" );
+		}
+		if( $ConPermiso ) qQuery( "update gs_user set cd_type_tree='P', permission='S' where cd_gs_user={$User}" );
+	}		
+}
+$xError = implode('<br>',$DimEMailError);
+if( $xError<>'' ){
+	$xError = '<br><br><u>'.count($DimEMailError).' ERRORES</u><br>'.$xError;
+}
+
+eMessage( $tReg.' ('.$tRegAlta.'/'.$tRegMod.') Usuarios asignados al árbol "'.$_POST['_INPUT_cd_gs_tree'].'"'.$xError, 'HS' );

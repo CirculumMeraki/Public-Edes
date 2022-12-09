@@ -1,0 +1,93 @@
+[help] edes.gs?R:$h/{key}.htm
+[edit] edes.gs?AE:$h/{key}.htm&T=A&PLANTILLA=doc&TRACE=Documentación eDes
+[width] 250
+[prefix] doc_
+
+DOCUMENTACION E-DES
+	Guía de Usuario
+		Introducción
+			Bienvenida{1}
+			¿Qué es E-DES?{2}
+			¿Para quién esta diseñado E-DES?{3}
+			¿Cómo funciona E-DES?{4}
+			Ventajas del Producto{5}
+			Requisitos previos{6}
+			Soporte{7}
+			Terminos y definiciones{8}
+			Licencia de Uso{9}
+			Para mas información{10}
+		Introducción a la programación en Web
+			Descripción{11}
+			Internet{12}
+			Conectando a Internet{13}
+			Usando cortafuegos{14}
+			Servidores Web{15}
+			Ejecutando programas en un servidor Web{16}
+			Obteniendo un Servidor Web permanente{17}
+			Nombres de Dominio{18}
+			Creando paginas Web{19}
+			Publicando paginas Web{20}
+			Tipos de sitios web{21}
+			Beneficios el usar tecnología Web{22}
+			Desafios encontrados al utilizar tecnología Web{23}
+			Arquitectura de aplicaciones Web{24}
+			Selecionando tecnología Web{25}
+		Iniciando E-DES
+			Bajarse E-DES{26}
+			Instalar E-DES{27}
+			Actualizar, reparar o desistalar E-DES{28}
+			Iniciar E-DES{29}
+			¿Qué necesitas para comenzar con E-DES?{30}
+			Configurar el entorno{31}
+		Lanzador de Aplicaciones (gsMain)
+			Descripción{32}
+			Crear un proyecto{33}
+			Configurar proyecto{34}
+			Generar maqueta{35}
+			Generar proyecto{36}
+			Aplicar parches y versiones{37}
+		Entorno de trabajo (gsEdit)
+			Descripción{38}
+			Area de Control{39}
+			Explorador del proyecto{40}
+			Propiedades{41}
+			Mensajes{42}
+			Herramientas{43}
+			Trabajar con documentos{44}
+			Configurando el entorno de trabajo{45}
+			Accesibilidad{46}
+			Idioma{47}
+		Trabajando con el proyecto
+			Descripción{48}
+			Crear un nuevo proyecto{49}
+			Añadir nuevas páginas{50}
+			Grabar el proyecto{51}
+			Especificaciones del proyecto{52}
+			Conectar a Bases de datos{53}
+			Implementar la seguridad{54}
+			Directorios{55}
+			Usando Includes{56}
+			Usando Templates{57}
+			Trabajar en modo de diseño{58}
+			Editar código HTML{59}
+			Editar código JAVASCRIPT{60}
+			Editar PHP{61}
+			Editar CSS{62}
+			Busquedas{63}
+			Usando diagramas del Sitio{64}
+			Usando Editores externos{65}
+	Guia de Inicio (Tutorial)
+		Proyecto Monopuesto{67}
+		Proyecto Red Local{68}
+		Proyecto Intranet{69}
+	Ejemplos practicos
+		Ejemplo 1{70}
+		Ejemplo 2{71}
+		Ejemplo 3{72}
+	Varios
+		Gestión de Errores
+			Mensajes de error{73}
+			Problemas mas comunes{74}
+		Versiones
+			Tipos{75}
+			Componentes{76}

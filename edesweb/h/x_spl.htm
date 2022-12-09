@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+<META HTTP-EQUIV='imagetoolbar' CONTENT='no'>
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Manual SPL 
+<TR>
+<TD id=Descripcion>CALL<BR><IMG src="edes.php?R:$/h/spl/call.gif"><BR>CONTINUE<BR><IMG src="edes.php?R:$/h/spl/continue.gif"><BR>DEFINE<BR><IMG src="edes.php?R:$/h/spl/define.gif"><BR>EXIT<BR><IMG src="edes.php?R:$/h/spl/exit.gif"><BR>FOR<BR><IMG src="edes.php?R:$/h/spl/for.gif"><BR>FOREACH<BR><IMG src="edes.php?R:$/h/spl/foreach.gif"><BR>IF<BR><IMG src="edes.php?R:$/h/spl/if.gif"><BR>LET<BR><IMG src="edes.php?R:$/h/spl/let.gif"><BR>ON EXCEPTION<BR><IMG src="edes.php?R:$/h/spl/on_exception.gif"><BR>RAISE EXCEPTION<BR><IMG src="edes.php?R:$/h/spl/raise_exception.gif"><BR>RETURN<BR><IMG src="edes.php?R:$/h/spl/return.gif"><BR>SYSTEM<BR><IMG src="edes.php?R:$/h/spl/system.gif"><BR>TRACE<BR><IMG src="edes.php?R:$/h/spl/trace.gif"><BR>WHILE<BR><IMG src="edes.php?R:$/h/spl/while.gif"></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

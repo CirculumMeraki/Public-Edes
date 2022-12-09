@@ -1,0 +1,1517 @@
+[Title]=PREGUNTA
+[PHPStart]l
+$_POST["cd_gs_poll"] = $_GET["_cd_gs_poll"];
+$cd_gs_poll = $_GET["_cd_gs_poll"];
+[DBTable]gs_question
+[DBIndex]cd_gs_question
+[DBOrder]cd_gs_poll, orden
+[DBSerial]cd_gs_question
+[PersistentVar]_cd_gs_poll, _INPUT_cd_gs_poll, _cd_gs_question, _color_ini, _color_end, _image, tf_movil
+[FormAction]a,mR|uSubmit()
+[Icon]a,mR|pregunta|==&#198;|onclick="uImporPregunta()"  title="Importar pregunta" id="idImportarPregunta"
+[Icon]a,mR|respuesta_type|==&#200;|onclick="uImporRespuesta()" title="Importar respuestas" id="ImporRespuesta"
+[AddCode]a,mR|mapa_img, pregunta_img, respuesta_1_img, unir_1_img, hueco_1_img, pagina_img, ranking_img|I|onclick="uSelectImagen(this)"
+[Icon]a,mR|mapa_img, pregunta_img, respuesta_1_img, unir_1_img, hueco_1_img, pagina_img, ranking_img|==&#118;|onclick="uSelectImagen(this)" oncontextmenu="uVerImagen(this)" title="Click IZQ: Seleccionar imagen del servidor\nClick DCH: Ver imagen"
+[Icon]a,mR|mapa_img, pregunta_img, respuesta_1_img, unir_1_img, hueco_1_img, pagina_img, ranking_img|D|onclick="uDeleteImagen(this)" title="Quita la imagen seleccionada"
+[Icon]a,mR|mapa_img, pregunta_img, respuesta_1_img, unir_1_img, hueco_1_img, pagina_img, ranking_img|M|onclick="Imagenes(this)" title="Gestión de imagenes"
+[AddOption]*|mapa_img, pregunta_img, respuesta_1_img, unir_1_img, hueco_1_img, pagina_img, ranking_img|uNombreImage()
+[PHPIni]*
+function uNombreImage($nmCampo=""){
+global $_vF;
+$p = array();
+if( $_vF[$nmCampo]!="" ){
+qQuery("select * from gs_poll_img where cd_gs_poll_img='".$_vF[$nmCampo]."'");
+$r = qArray();
+if( $r["cd_gs_poll_img"]!="" ) $p[0] = array($r["cd_gs_poll_img"].".".$r["extension"], $r["nm_gs_poll_img"]);
+}
+return $p;
+}
+[JSIni]*
+function uSelectImagen(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+S.window("edes.php?Lcl:$a/poll/gs_poll_img_sel.edf&_FILTER="+escape("tipo='"+((campo=="mapa_img") ? "M":"I")+"'")+"&CAMPO="+campo);
+}
+function uDeleteImagen(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+ePF(campo, "");
+S("#mapa_span").html("");
+}
+function uVerImagen(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+if( eGF(campo)!="" ){
+campo = eGF(campo).split(".")[0];
+top.eCallSrv(window,"edes.php?E:$/a/poll/poll_img.php&IMG="+campo);
+}
+return S.eventClear(window);
+}
+function Imagenes(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+S.window("edes.php?Lml:$a/poll/gs_poll_img.edf&_FILTER="+escape("tipo='"+((campo=="mapa_img") ? "M":"I")+"'"), {fullscreen:true});
+}
+function uImporPregunta(){
+}
+var _Import=[], _ImportRelation=[], _ImportHidden=[], _ImportMultipleMenu=[];
+function uImporRespuesta(){
+var dim=[]
+switch(S(":respuesta_type").val()){
+case "MM":
+dim = _ImportMultipleMenu;
+break;
+case "M":
+case "R":
+case "C":
+case "K":
+dim = _Import;
+break;
+case "X":
+dim = _ImportRelation;
+break;
+case "O":
+dim = _ImportHidden;
+break;
+}
+if( dim.length==0 ) return;
+if( S(":respuesta_type").val()=="" ){
+S.info('Falta definir el dato "Tipo de Respuesta"');
+return;
+}
+S("body").tree(dim, {function:function(op, tr, para, label){
+top.S(this).nodeRemove();
+if( op!="" ){
+S.callSrv("REPLY="+op, window);
+}
+}}).modal({close:true});
+}
+function REPLY(txt){
+S.info("Calculando...");
+setTimeout(function(){
+var dim = txt.split("|"), tmp, n;
+switch(S(":respuesta_type").val()){
+case "MM":
+if( dim.length>1 ){
+S(":menu_extendido").val(dim.join("\n"));
+}else{
+S(":menu_extendido").val(S.replace(txt, "<br>", "\n"));
+}
+break;
+case "M":
+case "R":
+case "C":
+case "K":
+while( S(":respuesta_1_fld").val()!="" ) S(":respuesta_1_fld").val("");
+for(n=0; n<dim.length; n++){
+S(":respuesta_"+(n+1)+"_fld").val(S.trim(dim[n]));
+}
+break;
+case "X":
+while( S(":unir_pregunta_1").val()!="" ) S(":unir_pregunta_1").val("");
+for(n=0; n<dim.length; n++){
+tmp = dim[n].split("~");
+S(":unir_pregunta_"+(n+1)).val(S.trim(tmp[0]));
+S(":unir_respuesta_"+(n+1)).val(S.trim(tmp[1]));
+}
+break;
+case "O":
+while( S(":hueco_pregunta_1").val()!="" ) S(":hueco_pregunta_1").val("");
+for(n=0; n<dim.length; n++){
+S(":hueco_pregunta_"+(n+1)).val(S.trim(dim[n]));
+}
+break;
+}
+S.info();
+}, 500);
+}
+#Include(*) /_datos/config/poll.edf | true
+[AddButton]
+a,?R | [v] Visor | Ver la pregunta en ejecución.\nSe puede dejar visible y cambiar datos. | _uVerPregunta()
+a,?R | [&#67;] Duplicar Pregunta || _uDuplicar(event) | display:none
+[JSIni]a,?R
+function PreguntaChequeoPrevio(){
+if( $respuesta_type=="" ){
+S.error('Falta definir "Tipo de respuesta"');
+return false;
+}
+if( $respuesta_type=="MM" && $menu_extendido.split("\n").length<3 ){
+S.error('Falta rellenar el "Menú Multiple"');
+return false;
+}
+if( $respuesta_type=="K" && typeof($respuesta_2_fld)=="undefined" ){
+S.error('Falta rellenar mas "Respuestas"');
+return false;
+}
+if( $respuesta_type=="V" && $ranking_forma=="" ){
+S.error('Falta rellenar el campo "Forma"');
+return false;
+}
+if( $respuesta_type=="X" && ($unir_pregunta_1=="" || $unir_respuesta_1=="") ){
+S.error('Falta rellenar los campo "Origen" y "Destino"');
+return false;
+}
+if( $respuesta_type=="S" && $slide_min!="" && $slide_max>$slide_min ){
+S.error('Falta rellenar el "Rango"');
+return false;
+}
+if( $respuesta_type=="U" ){
+var ok = 0;
+S("INPUT[name^='user_']").each(function(k,o){
+if( S(o).val()!="" ) ok++;
+});
+if( ok==0 ){
+S.error('Falta indicar algún "Dato de Contacto"');
+return false;
+}
+}
+if( $respuesta_type=="Z" ){
+if( $mapa_img=="" ){
+S.error('Falta indicar el "Mapa"');
+return false;
+}
+var ok = 0;
+S("INPUT[name^='area_']").each(function(k,o){
+if( S(o).val()!="" ) ok++;
+});
+if( ok==0 ){
+S.error('Falta indicar algún elemento del mapa');
+return false;
+}
+}
+if( $respuesta_type=="J" && $rejilla_contenido=="" ){
+S.error('Falta definir la rejilla');
+return false;
+}
+return true;
+}
+var _winVisor = null;
+function _uVerPregunta(){
+if( !PreguntaChequeoPrevio() ) return;
+if( DGI('edMENUS')!=null && DGI('edMENUS').style.display=='block' ) edSave();
+if( _winVisor==null || !_winVisor.location.href ){
+_winVisor = S.window("edes.php?E:$a/poll/poll_test.php&cd_gs_poll="+S(":cd_gs_poll").val()+"&_QUESTIONMEM=1", {title:"VISOR PREGUNTA", width:600, height:700, modal:false, maximize:false});
+}else{
+_winVisor.location.replace("edes.php?E:$a/poll/poll_test.php&cd_gs_poll="+S(":cd_gs_poll").val()+"&_QUESTIONMEM=1");
+}
+}
+function _uDuplicar(ev){
+S(S.toTag(S.event(ev),"TABLE")).none();
+mode = "a";
+_Accion = "A";
+_Mode = "a";
+S(":cd_gs_question").val("");
+var botonIcon = S.upper(mode),
+botonLabel = {A:"Insertar", B:"Borrar", C:"Cerrar ventana", M:"Modificar"}[botonIcon];
+botonIcon = {A:"I", B:"D", C:"V", M:"U"}[botonIcon];
+var oBoton = S("#OpExe TD");
+S(oBoton).dim[0].children[0].innerText = botonIcon;
+S(oBoton).dim[1].innerText = botonLabel;
+}
+[JSEnd]a,?R
+S(window).windowIcon("CLOSE", function(){
+if( _winVisor!=null && _winVisor.location.href ) S(_winVisor).window();
+return true;
+});
+[JSCheck]a,mR
+if( _winVisor!=null && _winVisor.location.href ) S(_winVisor).window();
+[PHPIni]l
+eAddButton("U", "Grabar Encuesta", "GrabarPoll()");
+[JSEnd]l
+S(".AddButton").css("margin-top:5px; margin-bottom: 5px;");
+[PHPStart]l
+eInclude($_Sql);
+qQuery("select nm_gs_poll from gs_poll where cd_gs_poll=".$_GET["_cd_gs_poll"]);
+list($_TITLE) = qRow();
+$_TITLE = "Encuesta: ".$_TITLE;
+qQuery("select max(cd_gs_question) from gs_question where cd_gs_poll=".$_GET["_cd_gs_poll"]);
+list($n) = qRow();
+$n += 1;
+$_GET["_cd_gs_question"] = $n;
+[PHPEnd]l
+qQuery("select * from gs_poll where cd_gs_poll=".$_GET["_cd_gs_poll"]);
+$r = qArray();
+echo '<div style="display:none">';
+echo '<input name="_INPUT_cd_gs_poll" value="'.$r["nm_gs_poll"].'">';
+echo '<input name="_color_ini" value="'.$r["color_ini"].'">';
+echo '<input name="_color_end" value="'.$r["color_end"].'">';
+echo '<input name="_image" value="'.$r["image"].'">';
+echo '<input name="_tf_retroceder" value="'.$r["tf_retroceder"].'">';
+echo '<input name="_tf_save_answer" value="'.$r["tf_save_answer"].'">';
+echo '<input name="_tf_jump_auto" value="'.$r["tf_jump_auto"].'">';
+echo '<input name="_tf_movil" value="'.$r["tf_movil"].'">';
+echo '</div>';
+[JSIni]l
+function GrabarPoll(){
+var pPoll = S("#BROWSE TH[campo='cd_gs_poll']").attr("nc"),
+pQuestion = S("#BROWSE TH[campo='cd_gs_question']").attr("nc"),
+pJson = S("#BROWSE TH[campo='json']").attr("nc");
+if( S("#BROWSE TR").length>1 ){
+var dim=[], dimDelete=[], cd_gs_poll=-1; txt;
+S("#BROWSE TR").each(function(pk, o){
+if( o["eDELETE"] ){
+dimDelete.push(o.cells[pQuestion].innerText);
+}else if( pk>0 ){
+dim.push(S.replace(o.cells[pJson].innerHTML, '"', "&#34;"));
+if( cd_gs_poll==-1 ) cd_gs_poll = o.cells[pPoll].innerText;
+}
+});
+var txt = JSON.stringify(dim);
+S.call("edes.php?E:$a/poll/question_save.php", {POLL:cd_gs_poll, DATOS:txt, DELETE:dimDelete.join(",")}, {info:true});
+S(".AddButton").css("color:");
+}
+}
+[JSIni]a,mR
+function uSubmit(){
+var error=[];
+if( /^(FE|L|)$/.test($respuesta_type) && $pregunta=="" ){
+error.push('Falta rellenar la "Pregunta".');
+}
+if( $respuesta_type=="" ){
+error.push('Falta rellenar el "Tipo de Respuesta".');
+}
+if( error!="" ){
+S.error(error.join("<br>"));
+return;
+}
+if( !PreguntaChequeoPrevio() ) return;
+var pJson = S("#BROWSE TH[campo='json']", _WOPENER).attr("nc"),
+pIcon = S("#BROWSE TH[campo='icon']", _WOPENER).attr("nc"),
+_pRespuestaType = S("#BROWSE TH[campo='type']", _WOPENER).attr("nc"), n;
+if( $respuesta_type=="O" ){
+for(n=1; n<99; n++){
+if( S(":hueco_pregunta_"+n).length ){
+if( S(":hueco_pregunta_"+n).val()!="" && S(":hueco_respuesta_"+n).val()=="" ){
+S.error("Falta definir la palabra oculta, definida entre {..}");
+return;
+}
+}else{
+break;
+}
+}
+}
+S(":respuesta_con_salto").val("");
+if( /^(R|C|M|K)$/.test($respuesta_type) ){
+for(n=1; n<99; n++){
+if( S(":respuesta_"+n+"_fld").length && S(":respuesta_"+n+"_fld").val()!="" ){
+if( S(":respuesta_"+n+"_jump").val()!="" ){
+S(":respuesta_con_salto").val("S");
+break;
+}
+}else{
+break;
+}
+}
+}
+if( /^(V)$/.test($respuesta_type) ){
+for(n=1; n<99; n++){
+if( S(":ranking_"+n).length ){
+if( S(":ranking_"+n+"_jump").val()!="" ){
+S(":respuesta_con_salto").val("S");
+break;
+}
+}else{
+break;
+}
+}
+}
+if( /^(P)$/.test($respuesta_type) ){
+if( S(":valoracion_1_jump").val()!="" || S(":valoracion_2_jump").val()!="" ){
+S(":respuesta_con_salto").val("S");
+}
+}
+if( /^(S)$/.test($respuesta_type) ){
+S([":slide_1_jump", ":slide_2_jump", ":slide_3_jump"]).each(function(k,o){
+if( o.value!="" ){
+S(":respuesta_con_salto").val("S");
+return null;
+}
+});
+}
+if( DGI('edMENUS')!=null && DGI('edMENUS').style.display=='block' ) edSave();
+var txt = "";
+S("#mapa_span TD").each(function(k,o){
+if( o.children.length ){
+if( txt!="" ) txt += "~";
+txt += (o.children[0].checked)?"S":"";
+}else{
+txt += "|"+o.innerText;
+}
+});
+S(":mapa_json").val(txt);
+if( _Accion=="A" ){
+var n = S(":_cd_gs_question", _WOPENER).val()*1;
+S(":_cd_gs_question", _WOPENER).val(n+1);
+S(":cd_gs_question").val(n);
+S(":orden").val(S(".BROWSE TBODY TR", _WOPENER).length+1);
+}
+if( /^(A|M)$/.test(_Accion) ){
+_ModList();
+}
+var dim = S.values(),
+json = S.json(dim, true), k, n;
+if( _Accion=="A" ){
+_WOPENER._FilaLastInsert.cells[pJson].innerHTML = json;
+_WOPENER._FilaLastInsert.cells[_pRespuestaType].innerText = dim["respuesta_type"];
+if( S(":marcar_tr").val()=="S" ){
+_WOPENER._FilaLastInsert.style.color = "red";
+_WOPENER._FilaLastInsert.cells[pIcon].innerHTML = '<i class="ICONINPUT" onclick="MovCampo()" style="color:red">&#294;</i>';
+}else{
+_WOPENER._FilaLastInsert.style.color = "";
+_WOPENER._FilaLastInsert.cells[pIcon].innerHTML = '<i class="ICONINPUT" onclick="MovCampo()">&#294;</i>';
+}
+S(".AddButton", _WOPENER).css("color:red");
+}else if( _Accion=="B" ){
+_WOPENER._Fila["eDELETE"] = 1;
+_WOPENER._Fila.style.display = "none";
+S(".AddButton", _WOPENER).css("color:red");
+}else if( _Accion=="M" ){
+if( _WOPENER._Fila.cells[pJson].innerHTML!=json ){
+S(".AddButton", _WOPENER).css("color:red");
+}
+_WOPENER._Fila.cells[pJson].innerHTML = json;
+_WOPENER._Fila.cells[_pRespuestaType].innerText = dim["respuesta_type"];
+if( S(":marcar_tr").val()=="S" ){
+_WOPENER._Fila.style.color = "red";
+_WOPENER._Fila.cells[0].children[0].style.color = "red";
+}else{
+_WOPENER._Fila.style.color = "";
+_WOPENER._Fila.cells[0].children[0].style.color = "";
+}
+}
+var campo=[];
+for(k in dim) campo.push(k);
+for(n=campo.length-1; n>=0; n--){
+k = campo[n];
+if( k=="ranking" ){
+S(":ranking").val(5);
+}else{
+S(":"+k).val('');
+}
+}
+S(":ranking").eventFire("change");
+S(":cd_gs_poll").val(S(":_cd_gs_poll", _WOPENER).val());
+if( _Accion!="A" ){
+S(_WOPENER._HidenSPAN["Parent"]).none();
+S(_WOPENER._HidenSPAN).none();
+}
+}
+function uSaltar(o){
+if( !/^(V|P|S)$/.test(S(":respuesta_type").val()) ){
+if( S.toTag(o,"TD").children[0].tagName=="NOBR" ){
+if( S(S.toTag(o,"TD").children[0].children[0]).val()=="" ){
+S.info("Tiene que rellenar la respuesta antes de indicar a donde saltar");
+return;
+}
+}else if( S(S.toTag(o,"TD").children[0]).val()=="" ){
+S.info("Tiene que rellenar la respuesta antes de indicar a donde saltar");
+return;
+}
+}
+var pPregunta = S("#BROWSE TH[campo='pregunta']", _WOPENER).attr("nc"),
+pQuestion = S("#BROWSE TH[campo='cd_gs_question']", _WOPENER).attr("nc"),
+pType = S("#BROWSE TH[campo='type']", _WOPENER).attr("nc"),
+dim=[["-¿Saltar a la Pregunta?"],["> Siguiente pregunta","",""],["> Fin de encuesta","","-1"],["-"]],
+salta = S("INPUT", S.toTag(o, "TR")).dim[1].value,
+siguientePregunta=null, pk, pagina;
+S("#BROWSE TBODY TR", _WOPENER).each(function(k,o){
+pagina = S.replace(S.trim(o.cells[pPregunta].innerText), "-", "&#45;");
+pk = S.trim(o.cells[pQuestion].innerText);
+if( siguientePregunta!=null && siguientePregunta==o.rowIndex ){
+dim.push([pagina, "", null]);
+}else if( pk!=$cd_gs_question ){
+if( pagina.length>80 ) pagina = S.left(pagina,80)+"...";
+if( pagina=="" && S.trim(o.cells[pType].innerText)=="L" ){
+pagina = "Página limpia";
+}else if( salta==pk ) pagina = "<b>"+pagina+"</b>";
+dim.push([pagina, "", pk]);
+}else{
+siguientePregunta = o.rowIndex+1;
+dim.push([pagina, "", null]);
+}
+});
+S("body").tree(dim, {function:function(op, tr, para, label){
+S("INPUT[name$='_jump']", S.toTag(o, "TR")).obj.value = op;
+top.S(this).nodeRemove();
+if( op=="" ){
+S(o).color("");
+o.title = "";
+}else{
+S(o).color("red");
+o.title = label;
+}
+}}).modal({close:true});
+}
+[JSIni]l
+var _HidenWIN = S.window("edes.php?Fa:$a/poll/gs_question.edf", {title:"PREGUNTA", _w:610, modal:true, h:"100%", hidden:true}),
+_HidenSPAN = S.toTag(_HidenWIN.frameElement,"SPAN","*");
+S(window).windowIcon("CLOSE", function(spanWIN){
+S(_HidenWIN).nodeRemove();
+S(_HidenSPAN).nodeRemove();
+S(spanWIN).nodeRemove();
+});
+[JSEnd]l
+S.info();
+[JSEnd]a
+S(window).windowIcon("CLOSE", function(spanWIN){
+var dim = S.values(), k;
+for(k in dim){
+S(":"+k).val('');
+}
+S(":cd_gs_poll").val(S(":_cd_gs_poll", _WOPENER).val());
+S(_WOPENER._HidenSPAN["Parent"]).none();
+S(_WOPENER._HidenSPAN).none();
+if( S("#BROWSE", _WOPENER).obj.offsetWidth==0 ){
+setTimeout(function(){
+S(_WOPENER).window();
+}, 100);
+}
+});
+S("#idImportarPregunta").class("+OFF");
+[OptionsInList]abcm,o				_
+| &#198; | >uEncuestaMenu | Encuesta
+[JSIni]l
+function _OptionsInListFunction(oTR, pk, mode){
+if( oTR=="ini" ) return;
+if( _HidenWIN.document.body==null || _HidenWIN.S==undefined ) return;
+eHideBusy();
+var campo=[], dim=_HidenWIN.S.values(), k;
+for(k in dim) campo.push(k);
+for(n=campo.length-1; n>=0; n--){
+k = campo[n];
+if( /^(_INPUT_cd_gs_poll|cd_gs_poll)$/.test(k) ){
+}else if( k=="ranking" ){
+S(":ranking", _HidenWIN).val(5);
+}else{
+S(":"+k, _HidenWIN).val('');
+}
+}
+S(":ranking", _HidenWIN).eventFire("change");
+S("I[id='JUMP']", _HidenWIN).each(function(k,o){
+S(o).color("");
+o.title = "";
+});
+S(_HidenSPAN["Parent"]).block();
+S(_HidenSPAN).block();
+S("#AddButton2", _HidenWIN).none();
+_HidenWIN.eEF("*", 1);
+if( oTR!="a" ){
+var pJson = S("#BROWSE TH[campo='json']").attr("nc"),
+pPK = S("#BROWSE TH[campo='cd_gs_question']").attr("nc"),
+pPregunta = S("#BROWSE TH[campo='pregunta']").attr("nc"),
+pOrden = S("#BROWSE TH[campo='orden']").attr("nc"),
+txt = oTR.cells[pJson].innerHTML,
+json = S.json(txt), k;
+_HidenWIN._Fila = oTR;
+for(k in json){
+S(":"+k, _HidenWIN).val(json[k]);
+if( /_jump$/.test(k) && json[k]!="" && json[k]!="0" ){
+var jump = S("I[id='JUMP']", S.toTag(S(":"+k, _HidenWIN).obj, "TR")).obj;
+S(jump).color("red");
+if( json[k]=="-1" ) jump.title = "> Fin de encuesta";
+S("#BROWSE TBODY TR").each(function(n,o){
+if( o.cells[pPK].innerText*1==json[k] ){
+var label = o.cells[pPregunta].innerText;
+if( label.length>80 ) label = S.left(label,80)+"...";
+jump.title = "Nº "+o.cells[pOrden].innerText+" "+label;
+return null;
+}
+});
+}
+}
+for(k in json){
+if( /^_INPUT_/.test(k) ){
+S(":"+k, _HidenWIN).val(json[k]);
+}
+}
+if( S(":mapa_json", _HidenWIN).val()!="" ){
+var txt = "<table>", n, tmp = S(":mapa_json", _HidenWIN).val().split("~"), tmp2;
+for(n=0; n<tmp.length; n++){
+tmp2 = tmp[n].split("|");
+txt += "<tr><td><input name='area_"+tmp2[1]+"' type=checkbox"+((tmp2[0]=="S")?" checked":"")+"><td>"+tmp2[1]+"<td>"+tmp2[2];
+}
+txt += "</table>";
+S("#mapa_span", _HidenWIN).html(txt);
+}
+if( mode=="b" || mode=="c" ){
+setTimeout(function(){ _HidenWIN.eEF("*",false); }, 1);
+}else{
+setTimeout(function(){ _HidenWIN.eEF("*",true); }, 1);
+S("#AddButton2", _HidenWIN).block();
+}
+S(":orden", _HidenWIN).val(oTR.cells[pOrden].innerText);
+S(_HidenWIN).windowCaption("PREGUNTA Nº"+oTR.cells[pOrden].innerText, true);
+_HidenWIN._Accion = S.upper(mode);
+_HidenWIN._Mode = mode+"R";
+}else{
+mode = "a";
+_HidenWIN._Accion = "A";
+_HidenWIN._Mode = "a";
+S(_HidenWIN).windowCaption("NUEVA PREGUNTA", true);
+setTimeout(function(){ _HidenWIN.eEF("*",2); }, 1);
+}
+S(":cd_gs_poll", _HidenWIN).val(S(":cd_gs_poll").val());
+S(":_INPUT_cd_gs_poll", _HidenWIN).val(S(":_INPUT_cd_gs_poll").val());
+var botonIcon = S.upper(mode),
+botonLabel = {A:"Insertar", B:"Borrar", C:"Cerrar ventana", M:"Modificar"}[botonIcon];
+botonIcon = {A:"I", B:"D", C:"R", M:"U"}[botonIcon];
+var oBoton = S("#OpExe TD", _HidenWIN);
+S(oBoton).dim[0].children[0].innerText = botonIcon;
+S(oBoton).dim[1].innerText = botonLabel;
+_Seleccionado = false;
+_HidenWIN._OkChange = null;
+_HidenWIN.OkChange();
+_HidenWIN.PlantillaRespuestaType();
+}
+function uEncuestaMenu(obj){
+var dim = [
+["-Menú Encuesta"],
+["Análisis", "","A"],
+["Estadística", "","T"],
+["-"],
+["Encuestar", "","E"],
+["Vista previa", "","P"],
+["-"],
+["Borrar resultados", "","D"]
+];
+S(obj).menu(dim, {function:function(op){
+switch(op){
+case "E":
+uEncuesta();
+break;
+case "P":
+uSimular();
+break;
+case "D":
+S.alert({
+icon:'DH',
+button:"Y,N",
+text:"Confirmar borrar las respuestas de esta encuesta",
+function: function(op){
+if(op==1){
+S.callSrv("BORRAR=1&cd_gs_poll="+S(":_cd_gs_poll").val()+"&cd_gs_campaign=0", window);
+}
+}
+});
+break;
+case "T":
+if( S.rgb2hex(S(".AddButton").css("color"))=="#ff0000" ){
+S.alert({
+icon:'DH',
+button:"Y,N",
+text:"No se han grabado las preguntas.<br>¿Continuar?",
+function: function(op){
+if(op==1){
+window.open("edes.php?E:$a/poll/poll_resultado.php&cd_gs_poll="+S(":_cd_gs_poll").val()+"&cd_gs_campaign=0");
+}
+}
+});
+}else{
+window.open("edes.php?E:$a/poll/poll_resultado.php&cd_gs_poll="+S(":_cd_gs_poll").val()+"&cd_gs_campaign=0");
+}
+break;
+case "A":
+if( S.rgb2hex(S(".AddButton").css("color"))=="#ff0000" ){
+S.alert({
+icon:'DH',
+button:"Y,N",
+text:"No se han grabado las preguntas.<br>¿Continuar?",
+function: function(op){
+if(op==1){
+window.open("edes.php?E:$a/poll/poll_analisis.php&cd_gs_poll="+S(":_cd_gs_poll").val()+"&cd_gs_campaign=0");
+}
+}
+});
+}else{
+window.open("edes.php?E:$a/poll/poll_analisis.php&cd_gs_poll="+S(":_cd_gs_poll").val()+"&cd_gs_campaign=0");
+}
+break;
+}
+}}, {type:"11,12,1"});
+}
+function uEncuesta(){
+S.window("edes.php?E:$a/poll/poll_test.php&cd_gs_poll="+S(":_cd_gs_poll").val(), {title:"PROBAR ENCUESTA", width:600, height:650, modal:true, maximize:false});
+}
+function uSimular(){
+S.window("edes.php?E:$a/poll/poll_test.php&cd_gs_poll="+S(":_cd_gs_poll").val()+"&_VISTAPREVIA=1", {title:"VISTA PREVIA", width:600, height:650, modal:true, maximize:false});
+}
+[CallSrv]BORRAR
+$n = qCount("gs_reply", "cd_gs_poll={$cd_gs_poll} and cd_gs_campaign={$cd_gs_campaign}");
+qQuery("delete from gs_reply		 where cd_gs_poll={$cd_gs_poll} and cd_gs_campaign={$cd_gs_campaign}");
+qQuery("delete from gs_poll_dct		 where cd_gs_poll={$cd_gs_poll} and cd_gs_campaign={$cd_gs_campaign}");
+qQuery("delete from gs_campaign_user where cd_gs_poll={$cd_gs_poll} and cd_gs_campaign={$cd_gs_campaign}");
+eJSAnswer("top.S.info('Se han borrado {$n} respuestas', 5);");
+[CSSAdd]a,?R
+.Circle {
+position: relative;
+top: -19px;
+left:-2px;
+font-size: 100%;
+background-color:red;
+color:#ffffff;
+font-family: Arial, sans-serif;
+width: 12px;
+height: 12px;
+box-sizing: initial;
+display: inline-block;
+cursor:pointer;
+border-radius: 50%;
+box-sizing: content-box;
+padding:5px;
+margin:0px auto;
+display: inline-flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+-webkit-box-shadow: 2px 2px 1px 0px rgba(50, 50, 50, 0.65);
+-moz-box-shadow:    2px 2px 1px 0px rgba(50, 50, 50, 0.65);
+box-shadow:         2px 2px 1px 0px rgba(50, 50, 50, 0.65);
+}
+.MargenCIR { padding-right: 4px; }
+.MargenIMG { padding-left: 30px; }
+.MargenValCIR span { top:0px; }
+.MargenLeftCIR { padding-left: 28px; }
+[AddCode]*|pregunta, respuesta_1_fld|I|eFitHeight eMaxRows=5
+[AddCode]*|ranking, rejilla_col, rejilla_row|I|eFrom="2" eTo="10"
+[AddCode]*|respuesta_1_fld, ranking_1_jump, ranking_2_jump, ranking_3_jump, ranking_4_jump, ranking_5_jump, valoracion_1_jump, valoracion_2_jump, slide_1_jump, slide_2_jump, slide_3_jump|E|<i class="ICONINPUT" id="JUMP" onclick="uSaltar(this)" title="Para saltar a otra pregunta">|</i>
+[AddCode]*|rejilla_row|E|<span style="margin-left:60px">Editar rejilla</span> <i class="ICONINPUT" onclick="EditRejilla()">&#184;</i>
+[AddCode]*|pagina_texto|E|<span id="xFinEncuesta">Palabras clave: {puntos}, {10,0%}, {10%}, {100%}, {email}, {nombre}, {apellidos}, {diploma}</span>
+[AddOption]*|respuesta_type|_
+,;				_
+C,Checkbox;			_
+A,Comentario;			_
+FE,Fin Encuesta;		_
+T,Linea de texto;		_
+M,Menú;				_
+MM,Menú Multiple;		_
+B,Multiples lineas de texto;	_
+P,Puntuación;			_
+R,Radio;			_
+K,Ranking;			_
+V,Valoración
+[AddOption]*|pagina_img_type|_
+LF,Izquierda fluir;	_
+RF,Derecha fluir;	_
+U,Arriba;		_
+D,Abajo;		_
+L,Izquierda;		_
+R,Derecha
+[AddOption]*|ranking_forma|_
+,;			_
+E,Estrellas;		_
+C,Círculos
+[AddTools]*|ranking_color_ini, ranking_color_end|eToneSelect||B
+[AddOption]*|respuestas_libre|,; L,Linea; M,Multilinea
+[AddOption]*|rejilla_tipo|_
+,;			_
+CC,Check por Columna;	_
+CF,Check por Fila;	_
+CR,Check por Rejilla;	_
+MC,Menú por Columna;	_
+MF,Menú por Fila;	_
+MR,Menú por Rejilla;	_
+RC,Radio por Columna;	_
+RF,Radio por Fila;	_
+RR,Radio por Rejilla
+[OnChange]
+* | rejilla_tipo     | RejillaRespuestas()
+* | respuesta_1_fld  | _AyadirOtraRespuesta(this)
+* | respuesta_type   | PlantillaRespuestaType()
+* | respuesta_conimg | _RespuestaConImagen()
+* | respuesta_conpnt | _RespuestaConPuntos()
+* | ranking          | _TextosRanking()
+* | unir_pregunta_1  | _AyadirOtraUnir(this)
+* | hueco_pregunta_1 | _AyadirOtraHueco(this)
+* | pregunta_1       | _AyadirOtroImput(this)
+[CSSAdd]*
+#winREJILLA {
+display:table;
+position:absolute;
+left:0px;
+top:0px;
+}
+#REJILLA {
+background-color:#dddddd;
+border: 1px;
+}
+#REJILLA TH {
+background-color:#f8f8f8;
+width:200px;
+margin:0px;
+padding:0px;
+vertical-align:top;
+}
+#REJILLA>TBODY>TR>TD {
+background-color:#ffffff;
+width:200px;
+margin:0px;
+padding:0px;
+vertical-align:top;
+text-align:center;
+}
+#REJILLA TEXTAREA {
+width:100%;
+height:100%;
+border-width: 0px;
+background-color: transparent;
+margin:0px;
+padding:0px;
+border-radius:0px;
+}
+[JSEnd]*
+function RejillaRespuestas(){
+eHide("rejilla_row_min,rejilla_row_max,rejilla_col_min,rejilla_col_max,rejilla_min,rejilla_max", "TR");
+switch(S.mid(S(":rejilla_tipo").val(),1,1)){
+case "C":
+eShow("rejilla_col_min,rejilla_col_max", "TR");
+break;
+case "F":
+eShow("rejilla_row_min,rejilla_row_max", "TR");
+break;
+case "R":
+eShow("rejilla_min,rejilla_max", "TR");
+break;
+}
+}
+function EditRejilla(){
+var tipo = S(":rejilla_tipo").val(),
+col = S(":rejilla_col").val(),
+row = S(":rejilla_row").val(),
+tmp = S(":rejilla_contenido").val(), txt="", f,c,o,valor="",
+cBak = S.ruleGet(window, "#TABHeader", "background-color"),
+cColor = S.ruleGet(window, "#TABHeader", "color");
+if( tipo=="" ){
+S.info("Debe especificar el interior de la Rejilla");
+return;
+}else if( (col*row)<2 ){
+S.info("Debe especificar el nº de columnas y filas");
+return;
+}
+if( tmp!="" ){
+var filas = tmp.split("~R~"), cols=[];
+for(f=0; f<=row; f++){
+cols[f] = filas[f].split("~C~");
+}
+}
+txt = "<span id='winREJILLA'>";
+txt += '<table width=100% style="background-color:'+cBak+';color:'+cColor+'"><tr><td width=100% align=center>RESPUESTA DE REJILLA</td><td><i class="ICONWINDOW" op="C" onclick="AnularRejilla()" style="color:#ffffff">5</i></td></tr></table>';
+txt += "<form name='NoSubmit' eFunction='GrabarRejilla'>";
+txt += "<table id='REJILLA'>";
+for(f=0; f<=row; f++){
+txt += "<tr>";
+for(c=0; c<=col; c++){
+if( f==0 && c==0 ){
+txt += '<td style="background-color:'+S.ruleGet(window, "#REJILLA", "background-color")+'"></td>';
+}else if( f==0 || c==0 ){
+if( tmp!="" ) valor = S.replace(cols[f][c],"<br>","\n");
+txt += '<th>';
+txt += '<textarea name="td_'+c+"_"+f+'" cols="30" rows="1" maxlength="900" class="EDITABLE" ewe="1" wrap="VIRTUAL" onfocus="S.key(\'#\',900,0)" pp="1" eFitHeight="1" eMaxRows="5" style="width:200px;" epadding="10" ehelpno="1">'+valor+'</textarea>';
+txt += '</th>';
+}else{
+switch(tipo[0]){
+case "R":
+txt += '<td style="vertical-align:middle">';
+txt += '<input name="_no" type="radio" class="READONLY" disabled>';
+break;
+case "C":
+txt += '<td style="vertical-align:middle">';
+txt += '<input name="_no" type="checkbox" value="" class="READONLY" disabled>';
+break;
+case "M":
+valor = "";
+if( tmp!="" && cols[f][c]!=undefined ) valor = S.replace(cols[f][c],"<br>","\n");
+txt += '<td>';
+txt += '<textarea name="td_'+c+"_"+f+'" cols="30" rows="1" maxlength="900" class="EDITABLE" ewe="1" wrap="VIRTUAL" onfocus="S.key(\'#\',900,0)" pp="1" eFitHeight="1" eMaxRows="5" style="width:200px;" epadding="10" ehelpno="1">'+valor+'</textarea>';
+txt += '</td>';
+break;
+}
+}
+}
+txt += "</tr>";
+}
+txt += "</table>";
+txt += "</form>";
+txt += "<center>";
+txt += "<table onclick='GrabarRejilla()' class=AddButton border='0px' cellspacing='0px' cellpadding='1px' style='display:table;margin-top:5px;'><tr><td><i style='color:green'>U</i><td>Grabar</tr></table>";
+txt += "</center></span>";
+o = S(txt).nodeEnd("body").center().css("top:6px");
+o.modal();
+S("#REJILLA TEXTAREA").each(function(k,o){
+S.fitHeight(window, o.name);
+});
+S(["#REJILLA td, #REJILLA th"]).each(function(k,o){
+o.addEventListener("click", function(ev){
+var o = S.event(ev);
+if( /^(TD|TH)$/.test(o.tagName) ) if( o.children.length ) o.children[0].focus();
+});
+});
+}
+function AnularRejilla(){
+S("#winREJILLA").nodeRemove();
+S.modalDelete(window);
+}
+function GrabarRejilla(){
+var o = S("#winREJILLA").obj,
+oTR = S("TABLE", o).dim[1].rows,
+tipo = S(":rejilla_tipo").val(),
+col = S(":rejilla_col").val(),
+row = S(":rejilla_row").val(),
+txt="", f,c;
+for(f=0; f<=row; f++){
+for(c=0; c<=col; c++){
+if( f==0 && c==0 ){
+}else if( f==0 || c==0 ){
+txt += S(oTR[f].cells[c].children[0]).val().split("\n").join("<br>");
+}else{
+if( tipo[0]=="M" ){
+txt += S(oTR[f].cells[c].children[0]).val().split("\n").join("<br>");
+}else{
+}
+}
+txt += "~C~";
+}
+txt += "~R~";
+}
+S(":rejilla_contenido").val(txt);
+S(o).nodeRemove();
+S.modalDelete(window);
+}
+[Format]
+$_vF[4] = str_replace(
+array("<br>", "{#34#}", "{#34#}", "{#61#}", "{#60#}", "{#62#}", "{#92#}", "{#43#}"),
+array("\n"  , '"'     , "&quot;", '='     , "<"     , ">"     , "\\"    , "+"     ),
+$_vF[4]
+);
+$_vF[7] = str_replace(
+array("\n"  , '"'     , "&quot;", '='     , "<"     , ">"     , "\\"    , "+"     ),
+array("<br>", "{#34#}", "{#34#}", "{#61#}", "{#60#}", "{#62#}", "{#92#}", "{#43#}"),
+$_vF[7]
+);
+if( $_vF[10]=="S" ){
+$_RowStyle = "color:red";
+$_vF[0] = '<i class="ICONINPUT" onclick="MovCampo()" style="color:red">&#294;</i>';
+}else{
+$_vF[0] = '<i class="ICONINPUT" onclick="MovCampo()">&#294;</i>';
+}
+[JSIni]l
+var _smFila = 0;
+function MovCampo(){
+var Obj = S.event(window);
+if( Obj.tagName=='IMG' || Obj.tagName=='I' ) Obj = Obj.parentNode;
+if( Obj.tagName!='TD' ) return eClearEvent();
+Obj = Obj.parentNode;
+if( Obj.className=='PieLista' ) return eClearEvent();
+if( _Mover ){
+if( Obj.className=='SelectON' ){
+S.info(234,.7, "warning");
+_Mover = false;
+Obj.className = '';
+return eClearEvent();
+}
+S(".AddButton").css("color:red");
+S.info(235,.7);
+BROWSE.rows[_smFila].className = '';
+if( Obj.rowIndex > _smFila ){
+if( S("#TablaTV TR").length ){
+var row = TablaTV.children[0].insertRow( Obj.rowIndex+1-1-S("#BROWSE.AltoTH") );
+row.outerHTML = BROWSE.rows[_smFila-1-S("#BROWSE.AltoTH")].outerHTML;
+TablaTV.children[0].deleteRow( Obj.rowIndex+1-1-S("#BROWSE.AltoTH") );
+TablaTV.children[0].rows[_smFila-1-S("#BROWSE.AltoTH")].className = '';
+}
+var row = BROWSE.insertRow( Obj.rowIndex+1 );
+row.outerHTML = BROWSE.rows[_smFila].outerHTML;
+BROWSE.deleteRow( _smFila );
+}else{
+if( S("#TablaTV TR").length ){
+var row = TablaTV.children[0].insertRow( Obj.rowIndex-1-S("#BROWSE.AltoTH") );
+row.outerHTML = BROWSE.rows[_smFila+1-1-S("#BROWSE.AltoTH")].outerHTML;
+TablaTV.children[0].deleteRow( _smFila+1-1-S("#BROWSE.AltoTH") );
+TablaTV.children[0].rows[Obj.rowIndex-1-S("#BROWSE.AltoTH")].className = '';
+}
+var row = BROWSE.insertRow( Obj.rowIndex );
+row.outerHTML = BROWSE.rows[_smFila+1].outerHTML;
+BROWSE.deleteRow( _smFila+1 );
+}
+row.className = '';
+Obj.className = '';
+_SortListSave = true;
+S(".BROWSE TBODY TR").each(function(k,o){
+o.cells[3].innerText = k+1;
+});
+}else{
+S.info(233, .7, "ok");
+Obj.className = 'SelectON';
+_smFila = Obj.rowIndex;
+if( S("#TablaTV TR").length ){
+TablaTV.children[0].rows[_smFila-1-S("#BROWSE.AltoTH")].className = 'SelectON';
+}
+}
+_Mover = !_Mover;
+return  eClearEvent();
+}
+[PDFCol]icon=0, cd_gs_poll=0, cd_gs_question=0, orden=0, pregunta=90
+[PDFWrap]-1
+[Width]pregunta|500
+[Fields]l
+Mover preguntas\Or.|orden as icon|#|T|2||-|||
+POLL|cd_gs_poll|0|T|5||*|||
+cd_gs_question|cd_gs_question|+|T|9||*|||
+Nº Pregunta\Pre.|orden|+|T|2||-|||
+Pregunta|pregunta|#|A|1920,80||-|||
+Tipo·Respuesta|respuesta_type|D|SV|15||-|||
+Respuesta·con salto|respuesta_con_salto|D|C|1||-|||
+json|json|#|A|1920,80||*|||
+dt_update|dt_update|CDI|T|19||*|||
+|respuesta_type as type|D|T|2||*|||
+|marcar_tr|D|C|1||*|||
+[Fields]
+Encuesta|cd_gs_poll|0|S|60||-||#|
+,|cd_gs_question|+|T|9||*||#|
+Nº Pregunta|orden|+|T|2||*|||
+Pregunta|pregunta|#|A|2000,60,1||M|||
+,Marcar listado|marcar_tr|D|C|1||M|||
+Imagen|pregunta_img|#|SV|60|pregunta|-|||
+-
+Tipo de Respuesta|respuesta_type|D|SV|1,,30|pregunta|M|C|#|
+,Orden aleatorio|respuesta_aleatoria|D|C|1||M|||
+Respuesta con imagen|respuesta_conimg|D|C|1||M|||
+,Respuesta con puntos|respuesta_conpnt|D|C|1||M|||
+,Nº de respuestas: de|respuestas_min|+|T|1||MS|1||
+,a|respuestas_max|+|T|1||MS|||
+,Respuesta obligatoria|respuesta_obligatoria|D|C|1||M|||
+,Texto libre|respuestas_libre|D|SV|10|65|M|||
+,|respuesta_con_salto|D|T|1||*|||
+-
+{I} <tr eBloque="RespuestaIni" style="display:none"><td></td></tr>
+<span class="MargenCIR"><span class="Circle">1</span></span> Respuesta|respuesta_1_fld|#|A|900,60,1||M|||
+,Puntos|respuesta_1_pnt|+,|T|2,2||MS|||
+,Jump|respuesta_1_jump|-|T|6||*|||
+<span class="MargenIMG">Imagen</span>|respuesta_1_img|#|SV|60|pregunta|-|||
+{I} <tr eBloque="RespuestaEnd" style="display:none"><td></td></tr>
+-
+{I} <tr eBloque="iniVal" style="display:none"><td></td></tr>
+Máxima valoración|ranking|+|T|2||MS|5||
+,Forma|ranking_forma|n|SV|16||M|||
+,Color inicial|ranking_color_ini|HEX|T|7||M|||
+,final|ranking_color_end|HEX|T|7||M|||
+Imagen|ranking_img|#|SV|60|pregunta|-|||
+-
+{I} <tr eBloque="endVal" style="display:none"><td></td></tr>
+<span class="MargenValCIR"><span class="Circle">1</span></span> Etiqueta|ranking_1|#|A|900,60,1||M|||
+,Jump|ranking_1_jump|-|T|6||*|||
+,Puntos|ranking_1_pnt|+,|T|2,2||MS|||
+<span class="MargenValCIR"><span class="Circle">2</span></span> Etiqueta|ranking_2|#|A|900,60,1||M|||
+,Jump|ranking_2_jump|-|T|6||*|||
+,Puntos|ranking_2_pnt|+,|T|2,2||MS|||
+<span class="MargenValCIR"><span class="Circle">3</span></span> Etiqueta|ranking_3|#|A|900,60,1||M|||
+,Jump|ranking_3_jump|-|T|6||*|||
+,Puntos|ranking_3_pnt|+,|T|2,2||MS|||
+<span class="MargenValCIR"><span class="Circle">4</span></span> Etiqueta|ranking_4|#|A|900,60,1||M|||
+,Jump|ranking_4_jump|-|T|6||*|||
+,Puntos|ranking_4_pnt|+,|T|2,2||MS|||
+<span class="MargenValCIR"><span class="Circle">5</span></span> Etiqueta|ranking_5|#|A|900,60,1||M|||
+,Jump|ranking_5_jump|-|T|6||*|||
+,Puntos|ranking_5_pnt|+,|T|2,2||MS|||
+{I} <tr eBloque="aquiVal" style="display:none"><td></td></tr>
+Etiqueta valor "0"|valoracion_1|#|T|60|pregunta|M|||
+,Jump|valoracion_1_jump|-|T|6||*|||
+Etiqueta valor "10"|valoracion_2|#|T|60|pregunta|M|||
+,Jump|valoracion_2_jump|-|T|6||*|||
+Menú Multiple|menu_extendido|#|A|4000,80,20|cd_gs_poll|M|||
+{I} <tr id="HelpMENUEXTENDIDO" style="display:none"><td></td><td style="line-height:17px; padding-left:6px;">Lista de opciones con una opción por linea.<br>Si queremos un multimenú los seperaremos por una coma, si el menú<br>es múltiple la primera linea es el título de cada menú</td></tr>
+Texto de la página|pagina_texto|#|H|2000,80,20|cd_gs_poll|M|||
+Posición Imagen|pagina_img_type|D|SV|60|cd_gs_poll|M|||
+Imagen|pagina_img|#|SV|60|cd_gs_poll|-|||
+Interior Rejilla|rejilla_tipo|D|SV|15||M|M||
+,Nº de columnas|rejilla_col|+|T|1||MS|2||
+,Nº de filas|rejilla_row|+|T|1||MS|2||
+<Respuestas por Fila: de|rejilla_row_min|+|T|1||MS|||
+,a|rejilla_row_max|+|T|1||MS|||
+<Respuestas por Columna: de|rejilla_col_min|+|T|1||MS|||
+,a|rejilla_col_max|+|T|1||MS|||
+<Respuestas por Rejilla: de|rejilla_min|+|T|1||MS|||
+,a|rejilla_max|+|T|1||MS|||
+,|rejilla_contenido|#|A|2000,80,10||*|||
+<span class="UnirCIR"><span class="Circle">1</span></span> Origen|unir_pregunta_1|#|T|30|pregunta|M|||
+<span class="MargenLeftCIR"></span> Destino|unir_respuesta_1|#|T|30|pregunta|M|||
+,Puntos|unir_1_pnt|+,|T|2,2||MS|||
+<span class="MargenLeftCIR"></span> Imagen|unir_1_img|#|SV|60|pregunta|-|||
+{I} <tr eBloque="UnirEnd" style="display:none"><td></td></tr>
+<span class="HuecoCIR"><span class="Circle">1</span></span> Frase (palabras ocultas entre "{}")|hueco_pregunta_1|#|A|1000,80,5|pregunta|M|||
+,Puntos|hueco_1_pnt|+,|T|2,2||MS|||
+<span class="MargenLeftCIR"></span> Palabras ocultas|hueco_respuesta_1|#|T|30|pregunta|*|||
+<span class="MargenLeftCIR"></span> Imagen|hueco_1_img|#|SV|60|pregunta|-|||
+{I} <tr eBloque="HuecoEnd" style="display:none"><td></td></tr>
+<span class="PreguntaCIR"><span class="Circle">1</span></span> Pregunta|pregunta_1|#|T|30|pregunta|M|||
+{I} <tr eBloque="PreguntaEnd" style="display:none"><td></td></tr>
+Mapa|mapa_img|#|SV|60|300|-|||
+,|mapa_json|#|T|256|100|*|||
+{I} <span id="mapa_span" style="border:1px solid #c3c3c3; width:100%;height:200px;overflow-y:auto;display:table;"></span>
+Lado izquierdo|slide_1|#|T|30|pregunta|M|||
+,Jump|slide_1_jump|-|T|6||*|||
+Centro|slide_2|#|T|30|pregunta|M|||
+,Jump|slide_2_jump|-|T|6||*|||
+Lado derecho|slide_3|#|T|30|pregunta|M|||
+,Jump|slide_3_jump|-|T|6||*|||
+Rango de|slide_min|-|T|5||M|||
+,a|slide_max|-|T|5||M|||
+,Tamaño del paso|slide_step|-|T|5||M|||
+,con entrada|slide_type|N|C|1||M|||
+{Columns}{ 4
+=Nombre|user_nombre|D|C|1||M|S||
+,2 =Sexo|user_sexo|D|C|1||M|S||
+,3 =Edad|user_edad|D|C|1||M|S||
+,4 =Fecha de nacimiento|user_nacimiento|D|C|1||M|S||
+=Empresa|user_empresa|D|C|1||M|S||
+,2 =Dirección|user_direccion|D|C|1||M|S||
+,3 =Localidad|user_localidad|D|C|1||M|S||
+,4 =Provincia|user_provincia|D|C|1||M|S||
+=Código postal|user_cpostal|D|C|1||M|S||
+,2 =País|user_pais|D|C|1||M|S||
+,3 =EMail|user_email|D|C|1||M|S||
+,4 =Teléfono|user_telefono|D|C|1||M|S||
+}
+[JSIni]*
+function _AyadirOtraHueco(o){
+var aqui = S("tr[eBloque='HuecoEnd']").obj.rowIndex,
+t = S("TEXTAREA[name^='hueco_pregunta_']").length,
+txt, n, i=0, borrar;
+if( S.trim(S(o).val())=="" ){
+borrar = S.right(o.name, "_")*1;
+S(S.toTag(S(":hueco_pregunta_"+borrar).obj, "TR")).nodeRemove();
+S(S.toTag(S(":hueco_respuesta_"+borrar).obj, "TR")).nodeRemove();
+S(S.toTag(S(":hueco_"+borrar+"_img").obj, "TR")).nodeRemove();
+for(n=borrar+1; n<=t; n++){
+i = n-1;
+S(":hueco_pregunta_"+n).obj.name = "hueco_pregunta_"+i;
+S(":hueco_respuesta_"+n).obj.name = "hueco_respuesta_"+i;
+S(":hueco_"+n+"_pnt").obj.name = "hueco_"+i+"_pnt";
+S(":hueco_"+n+"_img").obj.name = "hueco_"+i+"_img";
+S(":_INPUT_hueco_"+n+"_img").obj.name = "_INPUT_hueco_"+i+"_img";
+}
+}else{
+var xRes = S(o).val();
+if(  S.count("{", xRes)!=S.count("}", xRes) || S.count("{", xRes)==0 ){
+xRes = "";
+S.error("Palabras ocultas mal construidas");
+return;
+}
+var txt = S(o).val(), i, f, p=0, xOculto="";
+while( true ){
+i = txt.indexOf("{",p);
+f = txt.indexOf("}",Math.max(i,p));
+if( i>-1 && f>i ){
+xRes = S.mid(txt,i+1,f-i-1);
+S(o).val(S.replace(S(o).val(), "{"+xRes+"}", "{"+ S.lower(xRes)+"}"));
+xRes = S.lower(xRes);
+if( xRes!="" && xOculto!="" ) xOculto += ";";
+if( xRes=="}" ){
+S.error("Palabras ocultas mal construidas");
+return;
+}
+xOculto += xRes;
+p = f+1;
+}else{
+if( (i==-1 && f>-1) || i>-1 && f==-1 ){
+S.error("Palabras ocultas mal construidas");
+return;
+}
+break;
+}
+}
+if( xOculto=="" || xOculto=="}" ){
+S.error("Falta definir la palabra oculta");
+return;
+}
+S(":"+S.replace(o.name, "_pregunta_", "_respuesta_")).val(xOculto);
+t = S("TEXTAREA[name^='hueco_pregunta_']").length;
+if( S(S("TEXTAREA[name^='hueco_pregunta_']").dim[t-1]).val()=="" ) return;
+t++;
+var o = S("#TABNumber1").tr("R", S.toTag(S(":hueco_pregunta_1").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "hueco_pregunta_1", "hueco_pregunta_"+t, "hueco_1_pnt", "hueco_"+t+"_pnt");
+S("#TABNumber1").tr("O", aqui+i, txt);
+var o = S("#TABNumber1").tr("R", S.toTag(S(":hueco_respuesta_1").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "hueco_respuesta_1", "hueco_respuesta_"+t, "hueco_1_", "hueco_"+t+"_");
+S("#TABNumber1").tr("O", aqui+i+1, txt);
+var o = S("#TABNumber1").tr("R", S.toTag(S(":hueco_1_img").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "hueco_1_", "hueco_"+t+"_");
+S("#TABNumber1").tr("O", aqui+i+2, txt);
+}
+S("SPAN.HuecoCIR SPAN").each(function(k,o){
+S(o).text(k+1);
+});
+_RespuestaConImagen();
+_RespuestaConPuntos();
+}
+function _AyadirOtraUnir(o){
+var aqui = S("tr[eBloque='UnirEnd']").obj.rowIndex,
+t = S("INPUT[name^='unir_pregunta_']").length,
+txt, n, i=0, borrar;
+if( S.trim(S(o).val())=="" ){
+borrar = S.right(o.name, "_")*1;
+S(S.toTag(S(":unir_pregunta_"+borrar).obj, "TR")).nodeRemove();
+S(S.toTag(S(":unir_respuesta_"+borrar).obj, "TR")).nodeRemove();
+S(S.toTag(S(":unir_"+borrar+"_img").obj, "TR")).nodeRemove();
+for(n=borrar+1; n<=t; n++){
+i = n-1;
+S(":unir_pregunta_"+n).obj.name = "unir_pregunta_"+i;
+S(":unir_respuesta_"+n).obj.name = "unir_respuesta_"+i;
+S(":unir_"+n+"_pnt").obj.name = "unir_"+i+"_pnt";
+S(":unir_"+n+"_img").obj.name = "unir_"+i+"_img";
+S(":_INPUT_unir_"+n+"_img").obj.name = "_INPUT_unir_"+i+"_img";
+}
+}else{
+if( S(S("INPUT[name^='unir_pregunta_']").dim[t-1]).val()=="" ) return;
+t++;
+var o = S("#TABNumber1").tr("R", S.toTag(S(":unir_pregunta_1").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "unir_pregunta_1", "unir_pregunta_"+t);
+S("#TABNumber1").tr("O", aqui+i, txt);
+var o = S("#TABNumber1").tr("R", S.toTag(S(":unir_respuesta_1").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "unir_respuesta_1", "unir_respuesta_"+t, "unir_1_", "unir_"+t+"_");
+S("#TABNumber1").tr("O", aqui+i+1, txt);
+var o = S("#TABNumber1").tr("R", S.toTag(S(":unir_1_img").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "unir_1_", "unir_"+t+"_");
+S("#TABNumber1").tr("O", aqui+i+2, txt);
+}
+S("SPAN.UnirCIR SPAN").each(function(k,o){
+S(o).text(k+1);
+});
+_RespuestaConImagen();
+_RespuestaConPuntos();
+}
+function _AyadirOtroImput(o){
+var aqui = S("tr[eBloque='PreguntaEnd']").obj.rowIndex,
+txt, n, i=0, borrar, uObj,
+t = S("INPUT[name^='pregunta_']").length-1;
+if( S.trim(S(o).val())=="" ){
+borrar = S.right(o.name, "_")*1;
+S(S.toTag(S(":pregunta_"+borrar).obj, "TR")).nodeRemove();
+for(n=borrar+1; n<=t; n++){
+i = n-1;
+S(":pregunta_"+n).obj.name = "pregunta_"+i;
+}
+}else{
+if( S(S("INPUT[name^='pregunta_']").dim[t-0]).val()=="" ) return;
+t++;
+var o = S("#TABNumber1").tr("R", S.toTag(S(":pregunta_1").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "pregunta_1", "pregunta_"+t);
+S("#TABNumber1").tr("O", aqui+i, txt);
+}
+S("SPAN.PreguntaCIR SPAN").each(function(k,o){
+S(o).text(k+1);
+});
+_RespuestaConImagen();
+_RespuestaConPuntos();
+}
+function _AyadirOtraRespuesta(o){
+var aqui = S("tr[eBloque='RespuestaEnd']").obj.rowIndex,
+txt, n, i=0, borrar, uObj,
+t = S("TEXTAREA[name^='respuesta_']").length;
+if( S.trim(S(o).val())=="" ){
+borrar = S.mid(o.name, "_", "_")*1;
+S(S.toTag(S(":respuesta_"+borrar+"_fld").obj, "TR")).nodeRemove();
+S(S.toTag(S(":respuesta_"+borrar+"_img").obj, "TR")).nodeRemove();
+for(n=borrar+1; n<=t; n++){
+i = n-1;
+S(":respuesta_"+n+"_fld").obj.name = "respuesta_"+i+"_fld";
+S(":respuesta_"+n+"_pnt").obj.name = "respuesta_"+i+"_pnt";
+S(":respuesta_"+n+"_jump").obj.name = "respuesta_"+i+"_jump";
+S(":respuesta_"+n+"_img").obj.name = "respuesta_"+i+"_img";
+S(":_INPUT_respuesta_"+n+"_img").obj.name = "_INPUT_respuesta_"+i+"_img";
+}
+}else{
+if( S(S("TEXTAREA[name^='respuesta_']").dim[t-1]).val()=="" ) return;
+t++;
+var o = S("#TABNumber1").tr("R", S.toTag(S(":respuesta_1_fld").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "respuesta_1_", "respuesta_"+t+"_", "_INPUT_respuesta_1_", "_INPUT_respuesta_"+t+"_");
+S("#TABNumber1").tr("O", aqui+i, txt);
+S("I[id='JUMP']", S("#TABNumber1").tr("R", aqui+i)).color("");
+S(":respuesta_"+t+"_fld").css("height", S(":_INPUT_respuesta_type").css("height"));
+var o = S("#TABNumber1").tr("R", S.toTag(S(":respuesta_1_img").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "respuesta_1_", "respuesta_"+t+"_");
+S("#TABNumber1").tr("O", aqui+i+1, txt);
+}
+S("SPAN.MargenCIR SPAN").each(function(k,o){
+S(o).text(k+1);
+});
+_RespuestaConImagen();
+_RespuestaConPuntos();
+}
+function _RespuestaConImagen(){
+S("INPUT[name$='_img']").each(function(k,o){
+if( o.name!="pregunta_img" ) eHide(o.name, "TR");
+});
+eShow("pregunta_img", "TR");
+if( $respuesta_conimg=="S" ){
+if( $respuesta_type=="L" || $respuesta_type=="FE" ){
+if( $respuesta_type=="L" ) S("#xFinEncuesta").none();
+if( $respuesta_type=="FE" ) S("#xFinEncuesta").block();
+eShow("pagina_img", "TR");
+}else if( $respuesta_type=="X" ){
+S("INPUT[name$='_img']").each(function(k,o){
+if( /^unir_/.test(o.name) ) eShow(o.name, "TR");
+});
+}else if( $respuesta_type=="O" ){
+S("INPUT[name$='_img']").each(function(k,o){
+if( /^hueco_/.test(o.name) ) eShow(o.name, "TR");
+});
+}else if( $respuesta_type=="Z" ){
+eShow("mapa_img", "TR");
+}else if( $respuesta_type=="V" ){
+eShow("ranking_img", "TR");
+}else if( /^(R|C|K)$/.test($respuesta_type) ){
+S("INPUT[name$='_img']").each(function(k,o){
+if( /^respuesta_/.test(o.name) ) eShow(o.name, "TR");
+});
+}else if( /^(M|P|T|A|F|D|DH|H|U|J)$/.test($respuesta_type) ){
+}
+}else{
+if( $respuesta_type=="L" || $respuesta_type=="FE" ){
+if( $respuesta_type=="L" ) S("#xFinEncuesta").none();
+if( $respuesta_type=="FE" ) S("#xFinEncuesta").block();
+S("INPUT[name$='_img']").each(function(k,o){
+if( /^pagina_/.test(o.name) ) eShow(o.name, "TR");
+});
+eShow("pagina_img", "TR");
+}else if( $respuesta_type=="Z" ){
+eShow("mapa_img", "TR");
+}
+}
+S("INPUT[name$='_img']").each(function(k,o){
+if( /^pregunta_/.test(o.name) ) eShow(o.name, "TR");
+});
+}
+function _RespuestaConPuntos(){
+if( S(":respuesta_conpnt").val()=="S" ){
+S("INPUT[name$='_pnt']").each(function(k,o){ eShow(o.name, "L"); })
+}else{
+S("INPUT[name$='_pnt']").each(function(k,o){ eHide(o.name, "L"); })
+}
+}
+function _TextosRanking(){
+var hay = ((S("INPUT[name^='ranking']").length-5)/2);
+if( hay<$ranking ){
+var txt = S("#TABNumber1").tr("R", S.toTag(S(":ranking_1").obj,"TR").rowIndex).outerHTML,
+lastTR = 0, n;
+S("INPUT[name^='ranking_']").each(function(k,o){
+if( /_pnt$/.test(o.name) ){
+lastTR = S.toTag(o,"TR").rowIndex;
+}
+});
+var nNum = hay+1, newTxt;
+for(n=0; n<($ranking-hay); n++){
+newTxt = txt;
+newTxt = S.replace(txt, "ranking_1", "ranking_"+nNum);
+var otr = S("#TABNumber1").tr("O", ++lastTR, newTxt);
+nNum++;
+}
+S("SPAN.MargenValCIR SPAN").each(function(k,o){
+S(o).text(k+1);
+});
+}else if( hay>$ranking ){
+var quitar = hay-$ranking;
+S("INPUT[name^='ranking_']").each(function(k,o){
+if( /_pnt$/.test(o.name) && !/^ranking_1_/.test(o.name) ){
+S("#TABNumber1").tr("D", S.toTag(o,"TR").rowIndex);
+quitar--;
+}
+if( /^ranking_1_/.test(o.name) ) return null;
+if( quitar<=0 ) return null;
+}, {bak:true});
+}
+}
+function ResetRespuestas(){
+var tr = S("#TABNumber1").obj.rows,
+desde = S("tr[eBloque='RespuestaIni']").obj.rowIndex, n;
+for(n=desde; n<tr.length; n++) tr[n].style.display = "none";
+}
+function PlantillaRespuestaType(){
+ResetRespuestas();
+eHide("respuesta_aleatoria,respuestas_libre,respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_obligatoria,menu_extendido", "TR");
+S("#HelpMENUEXTENDIDO").none();
+eShow("respuestas_min,respuestas_max", "L");
+eShow("respuesta_conimg,respuesta_conpnt,respuestas_max", "L");
+S("#mapa_span").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "none";
+});
+S("#ImporRespuesta").hidden();
+switch(S(":respuesta_type").val()){
+case "B":
+S("INPUT[name^='pregunta_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+eShow("respuesta_obligatoria", "TR");
+eShow("respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_conpnt,respuestas_min,respuestas_max", "L");
+break;
+case "M":
+eHide("respuesta_conimg", "L");
+case "R":
+eHide("respuestas_min,respuestas_max", "L");
+eShow("respuesta_obligatoria", "L");
+case "C":
+case "K":
+var tr = S("#TABNumber1").obj.rows,
+desde = S("tr[eBloque='RespuestaIni']").obj.rowIndex+1,
+hasta = S("tr[eBloque='RespuestaEnd']").obj.rowIndex, n;
+for(n=desde; n<hasta; n++) tr[n].style.display = "";
+eShow("respuesta_aleatoria,respuestas_libre", "L");
+eShow("respuesta_conimg", "TR");
+if( $respuesta_type=="K" ){
+S("INPUT[name$='_jump']").each(function(k,o){
+});
+}else{
+S("INPUT[name$='_jump']").each(function(k,o){
+eShow(o.name, "L");
+});
+}
+if( _Import.length>0 ) S("#ImporRespuesta").visible();
+break;
+case "V":
+S("INPUT[name^='ranking_'], TEXTAREA[name^='ranking_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+S(o).css("display:");
+});
+eShow("respuesta_aleatoria,respuestas_libre", "L");
+eShow("respuesta_conimg,ranking_img", "TR");
+eHide("respuesta_conimg,respuesta_aleatoria", "L");
+eHide("respuestas_min,respuestas_max", "L");
+eShow("respuesta_obligatoria", "L");
+break;
+case "P":
+S("INPUT[name^='valoracion_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+eShow("respuesta_conimg", "TR");
+eShow("valoracion_1,valoracion_2", "TR");
+eShow("valoracion_1,valoracion_2", "L");
+eShow("respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_conpnt,respuestas_min,respuestas_max", "L");
+break;
+case "L":
+case "FE":
+if( $respuesta_type=="L" ) S("#xFinEncuesta").none();
+if( $respuesta_type=="FE" ) S("#xFinEncuesta").block();
+S("INPUT[name^='pagina_'], TEXTAREA[name^='pagina_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+eEF("pagina_texto", true);
+eShow("pagina_img", "TR");
+break;
+case "T":
+case "A":
+case "F":
+case "D":
+case "H":
+eShow("respuesta_obligatoria", "TR");
+eShow("respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_conpnt,respuestas_min,respuestas_max", "L");
+break;
+case "DH":
+eShow("respuesta_obligatoria", "TR");
+eHide("respuesta_conimg,respuesta_conpnt", "L");
+break;
+case "U":
+S(S(".Columns").obj.parentNode.parentNode).css("display:")
+break;
+case "J":
+S("INPUT[name^='rejilla_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+RejillaRespuestas();
+break;
+case "X":
+eShow("respuesta_conimg", "TR");
+eShow("respuesta_aleatoria,respuestas_libre", "L");
+S("*[name^='unir_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+if( _ImportRelation.length>0 ) S("#ImporRespuesta").visible();
+break;
+case "O":
+eShow("respuesta_conimg", "TR");
+eShow("respuesta_aleatoria,respuestas_libre", "L");
+S("*[name^='hueco_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+if( _ImportHidden.length>0 ) S("#ImporRespuesta").visible();
+break;
+case "S":
+S("*[name^='slide_']").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+S(o).obj.style.display = "";
+});
+eShow("respuesta_obligatoria", "TR");
+eShow("respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_conpnt,respuestas_min,respuestas_max", "L");
+break;
+case "Z":
+S("*[name^='mapa_'], #mapa_span").each(function(k,o){
+S(S.toTag(o, "TR")).obj.style.display = "";
+});
+S("#mapa_span").css("display:inline-block");
+eShow("mapa_img", "TR");
+eShow("respuesta_aleatoria", "L");
+eShow("respuesta_obligatoria", "TR");
+eShow("respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_conpnt,respuestas_min,respuestas_max", "L");
+break;
+case "MM":
+eShow("menu_extendido", "TR");
+S("#HelpMENUEXTENDIDO").block("table-row");
+eShow("respuesta_obligatoria", "TR");
+eShow("respuesta_obligatoria", "L");
+eHide("respuesta_conimg,respuesta_conpnt,respuestas_min,respuestas_max", "L");
+S("#ImporRespuesta").visible();
+break;
+}
+_RespuestaConImagen();
+_RespuestaConPuntos();
+if( S(":respuestas_libre").obj.offsetWidth==0 ){
+S(":respuestas_libre").val("");
+}
+}
+[JSEnd]a,?R
+S("#Papel").css("verticalAlign:top;padding-top:5px;");
+_RespuestaConImagen();
+_RespuestaConPuntos();
+ResetRespuestas();
+#(d)¿
+eAddOption('respuesta_type', [
+["~",""],
+["X","Asociación"],
+["S","Control Deslizante"],
+["U","Datos de Contacto"],
+["D","Fecha"],
+["DH","Fecha y hora"],
+["H","Hora"],
+["G","* Login"],
+["Z","Mapa de calor"],
+["O","Palabras ocultas"],
+["L","Página libre"],
+["I","* Registro"],
+["J","Rejilla"],
+["F","Subir fichero"],
+]);
+?
+[OnLoad]a,mR|S(window).goto(null,0);
+[JSEnd]a
+if( _WOPENER!=top ){
+$cd_gs_poll = S(":_cd_gs_poll", _WOPENER).val();
+$cd_gs_question = S(":_cd_gs_question", _WOPENER).val();
+document.body.style.overflowX = "scroll";
+document.body.style.width = (document.body.scrollWidth+25)+"px";
+if( $cd_gs_question>1 ){
+setTimeout(function(){
+S(_WOPENER._HidenSPAN["Parent"]).obj.removeAttribute("eHidden");
+S(_WOPENER._HidenSPAN).none();
+S(_WOPENER._HidenSPAN).visible();
+S(S(_WOPENER._HidenSPAN).obj["Parent"]).none();
+S(S(_WOPENER._HidenSPAN).obj["Parent"]).visible();
+}, 1000);
+}else{
+S.windowView(window);
+}
+if( S(":_tf_movil", _WOPENER).val()=="S" ){
+eDelOption("respuesta_type", "D,DH,F,G,H,I,J,K,L,O,S,U,X,Z".split(","));
+}
+}
+[JSEnd]l
+_HidenSPAN.children[0].rows[1].cells[0].style.height = _HidenSPAN.children[0].rows[1].cells[0].offsetHeight+"px";

@@ -1,0 +1,122 @@
+#include(*) lng
+[Title]=@ICONO DESKTOP@
+[DBTable]{$_SESSION['ShareDictionary']}gs_op_ico
+[DBIndex]cd_gs_op_ico
+[DBOrder]position
+[DBSerial]cd_gs_op_ico
+[FormStatic]
+[SortList]ml|position
+[AddOption]*|mode|RellenaMode()
+[AddOption]*|show_type|RellenaShow()
+[AddCode]a,mR|icon,add_html|I|style='font-family:monospace'
+¿ eSqlType('oracle')	   ? [FieldBrowser] _cd_gs_user | cd_gs_user | select user_name||' '||user_surname,cd_gs_user from gs_user where user_name||' '||user_surname like # order by 1 | 7
+¿ eSqlType('mysql,mysqli') ? [FieldBrowser] _cd_gs_user | cd_gs_user | select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1 | 7
+[Format]
+if( trim($_vF[1])!='' ) $_vF[1] = '<img src='.$_vF[1].'>';
+[Fields]l
+|cd_gs_op_ico|+|T|2||*|||
+@Icono@|icon|#D|T|30||M||=|
+Caption|nm_gs_op_ico|#D|T|45||M|||
+@Title@|title|#|A|100,60,2||M||#|
+@Show@|show_type|D|SV|15||M|||
+@Mode@|mode|D|SV|15||M|||
+@ClassName@|classname|#|T|20||M|||
+@Separador@|separator_group|N|C|1||M|||
+@Global@|global|N|C|1||M||=|
+@On@|activo|N|C|1||M||=|
+@Posición@|position|+|T|2||M|||
+[Fields]else|2
+|cd_gs_op_ico|+|T|2||*|||
+Caption|nm_gs_op_ico|#D|T|45|note|QM||#|
+@Title@|title|#|A|100,60,2|note|QM||#|
+@Show@|show_type|D|SV|15||M|||
+,@Activo@|activo|N|C|1||M|||
+,@Global@|global|N|C|1||M|||
++2 @Posición@|position|+|T|2||M|||
+@Mode@|mode|D|SV|15||M|||
+,@Alias@|alias|#|T|20|<note|M|||
+@Icono@|icon|#|T|30|note|M|||
+@Add. Html@|add_html|#|T|100|note|M|||
+@ClassName@|classname|#|T|20||M|||
+,@Separador de Grupo@|separator_group|N|C|1||M|||
+@Nota@|note|#|A|255,80,3||MQL|||
+[JSCheck]a,mR
+if( eGF('icon')=='' && eGF('title')!='-' ) ePE( 'icon', '@Falta introducir el dato "ICONO"@' );
+[PHPIni]a,?R,?
+$_opMode = array();
+$_opModeLabel = array();
+$_opShow = array();
+$_opShowLabel = array();
+IniManagerOp();
+function IniManagerOp(){
+global $_opMode, $_opModeLabel;
+global $_opShow, $_opShowLabel;
+include( '../_datos/config/manager_op.ini' );
+$_opMode = $_Mode;
+$_opModeLabel = $_ModeLabel;
+$_opShow = $_Show;
+$_opShowLabel = $_ShowLabel;
+}
+function RellenaMode(){
+global $_opModeLabel;
+$p = array();
+$p[] = array('','');
+foreach( $_opModeLabel as $k=>$v ) $p[] = array( $k, $v );
+return $p;
+}
+function RellenaShow(){
+global $_opShowLabel;
+$p = array();
+$p[] = array('','');
+foreach( $_opShowLabel as $k=>$v ){
+if( $k=='*' ) $k = ' ';
+$p[] = array( $k, $v );
+}
+return $p;
+}
+[DBEnd]A,M,B
+$ZIP = false;
+$file = "gs_op_ico";
+$sTABLA = "{$_SESSION['ShareDictionary']}gs_op_ico";
+$pnt = '';
+qQuery( "select * from {$sTABLA}", $pnt );
+if( $ZIP ){
+$fd = gzopen( "../tree/{$file}.unl", "w9" );
+}else{
+$fd = fopen( "../tree/{$file}.unl", 'w' );
+}
+$TReg = 0;
+$Pipa = false;
+while( $linea = qRow( $pnt ) ){
+$txt = '';
+if( $Pipa ) $txt .= "\n";
+$Pipa = false;
+foreach( $linea as $valor ){
+if( $Pipa ){
+$txt .= '|';
+}else{
+$Pipa = true;
+}
+$valor = str_replace(chr(10),'{&#10;}',$valor);
+$valor = str_replace(chr(13),'{&#13;}',$valor);
+$valor = str_replace('"','{&#34;}',$valor);
+$valor = str_replace('|','{&#124;}',$valor);
+$txt .= trim((string)$valor);
+}
+if( $ZIP ){
+gzwrite($fd, $txt );
+}else{
+fputs( $fd, $txt );
+}
+$TReg++;
+}
+if( $ZIP ){
+gzclose($fd);
+}else{
+fclose($fd);
+}
+if( $TReg==0 ){
+@unlink( "../tree/{$file}.unl" );
+}else{
+qQuery("insert into {$_SESSION['ShareDictionary']}gs_activity (cd_gs_user, cdi, script, edes, email) values ({$_User}, '".date('Y-m-d H:i:s')."', '/tree/{$file}.unl', 'C', '{$_SESSION['_UserEMail']}')");
+}

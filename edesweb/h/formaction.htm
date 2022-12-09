@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">FormAction</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[FormAction] Mode | Action [ | AnAction ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Modifica el valor por defecto de la acción del formulario  <br />En el "Action" del formulario, se trata de la URL o función a ejecutar en vez de la que tiene por defecto. <br />Podemos poner una variable sin "$" encerrada entre llaves, es una variable php, esta variable puede estar dentro de una cadena. <br />Esta etiqueta por defecto desactiva la etiqueta [FormButtons]. <br />Si el parámetro "Action" es una función desde esta no se podrá llamar a "eOkTab()", si hiciera falta en lugar de usar la etiqueta [FormAction] habría que usar la etiqueta [MsgSubmit].<br />Esta etiqueta es anulada por [OptionsInList].</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Mode:</strong> Modo en la que se va a ejecutar la etiqueta.<br /><strong>Action:</strong> Orden a ejecutar, puede contener tres valores:<br />1.- Script a ejecutar<br />2.- Función a ejecutar<br />3.- Una variable JavaScript que contendrá el valor a ejecutar. <br />Si el parámetro "Action" termina en ":" se le añadirá automáticamente en nombre del script y si no tuviera "edes.php?" también. <br />4.- La palabra clave "<strong>SubList</strong>" será como pulsar con el botón derecho, dividiendote la pantalla en dos partes con la ficha de busqueda en la parte superior y el listado en la inferior, teniendo las opciones de mantenimiento de fichas en el listado (alta, baja, consulta y modificación). <br />5.- La palabra clave "<strong>NoSubList</strong>" desactiva la ejecución de la sublista con el botón derecho.<br /><strong>AnAction:</strong> Por defecto el botón de submit puede tener varias acciones, la palabra clave "AnAction" deja solo la acción principal.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[FormAction] c&nbsp; | {_ExeExtract}</code><br /><code>[FormAction] cR | edes.php?E:facura/recuento.php</code><br /><code>[FormAction] a&nbsp; | FunctionJS()</code><br /><code>[FormAction] c&nbsp; | edes.php?Fc:auto.edf</code><br /><code>[FormAction] c&nbsp; | edes.php?Ll:</code><br /><code>[FormAction] c&nbsp; | Ll:</code><br /><code>[FormAction] c&nbsp; | Fc:auto.edf</code><br /><code>[FormAction]&nbsp;c &nbsp;| SubList</code><br /><code>[FormAction] c &nbsp;| DOWNLOAD</code><br /><code>[FormAction] *&nbsp; |&nbsp; | AnAction</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[FormAction] mR | MostrarConfirmacion()</code><br /><code>[JSIni] mR</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function MostrarConfirmacion(){</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top.eAlert("MENSAJE", "Confirmar Submit", "accept,cancel", "sys_info.gif", uSubmit);</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function uSubmit( Op ){</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( Op==2 ) eSubmit('edes.php?FM:[script].edf');</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

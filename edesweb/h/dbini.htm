@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBIni</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBIni] Mode [ | NomEDF, ... / else [ | UNIQUE/Condition ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Este código se ejecutará justo antes de atacar a la base de datos, una vez hecho el submit. <br />Es importante a la hora de manipular datos antes de que sean grabados, para modificar el valor de un campo se ha de utilizar la variable asociativa "$_vF". <br />Esta etiqueta no se ejecuta en los modos "c", "b" ni "m".<br /><br />Si en el modo "B" está definida la variable "$_CHECKDELETE" se hará un chequeo antes de borrar el registro.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>NomEDF</strong>: En los ficheros de definición "LDF" tipo de edición SubSelect "Ss" admiten este segundo parámetro para añadir "options" al select al principio cuando es atacado desde determinado sitio por ejemplo:<br />[DBIni] * | muni.edf<br />echo 'eAddOption( "NomCampo", Array( Array( 12, "InnerText" ) ) );';</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[DBIni] A<br />$_vF['campo'] = 'NuevoValor';<br />...<br />Otras inserciones o modificaciones<br />...</p>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[DBIni] B<br />$_CHECKDELETE = ' La persona "'.$nm_persona.'" no se puede dar de baja por estar activa en:
+<p> </p>
+<p> obra | cd_arq, cd_regional, cd_delegado, cd_jfo, cd_jfg, cd_enc<br />  Obra/s <br />  Código | cd_obra2 | T<br />  Obra   | nm_obra | T</p>
+<p>  per | cd_perso, cd_obra->obra.cd_obra<br />   Dirección facultativa de la Obra/s<br />   Código | cd_obra2 | T<br />   Obra   | nm_obra | T<br /> <br /> prove | pcontacto, r_cd_per1, r_cd_per2, r_cd_per3, r_cd_per4<br />  Proveedor/es<br />  CIF       | cif      | T<br />  Proveedor | nm_prove | T<br /> <br /> propi | pcontacto<br />  Propiedad/es<br />  Código    | cd_propi  | T<br />  Propiedad | nm_propi  | T<br /> <br /> contra | cd_contratista<br />  Contrato/s<br />  Nº Contrato  | n_contrato | T<br />  Código       | cd_obra{obra,cd_obra,cd_obra2} | S<br />  Obra         | cd_obra    | S<br />  Descripción  | cd_anexo   | S<br />  Proveedor    | cd_prove   | S<br />';</p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

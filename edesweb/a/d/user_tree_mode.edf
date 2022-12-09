@@ -1,0 +1,96 @@
+[Language] es,ca | 1
+	BusE | Busqueda por Estado | Cerca per Estat
+	BusA | Busqueda por Ámbito | Cerca per Àmbit	
+	
+[Title]	 =LISTA DE USUARIOS x ÁRBOLES y MODOS | l
+
+[DBTable] gs_user
+[DBIndex] cd_gs_user
+[DBOrder] user_surname, user_name
+[DBLimit] 20.000
+
+	 [DBAddFilter] permission='S'
+#(l) [DBAddFilter] U.permission='S' and U.cd_gs_user=T.cd_gs_user
+
+[LoadIni] ../_datos/config/custom.ini, ../_datos/config/manager_op.ini
+
+[ColsOp] ,c
+
+[FormAction] * | Ll:
+[RelationFields] cd_auto,cd_prov,cd_coma,cd_muni,cd_distri | cd_coma
+[NoEditFilled] c,m,b | session
+
+[AddCode] ? | cd_prov   | I | ADDOPTION='00,Provincial'
+[AddCode] ? | cd_coma   | I | ADDOPTION='00,Comarcal'
+[AddCode] ? | cd_muni   | I | ADDOPTION='000,Municipal,00'
+[AddCode] ? | cd_distri | I | ADDOPTION='00,@Dist@'
+
+#(?) [Width] L | * | =
+
+
+[Fields] ?
+{FS}{ @BusA@
+{FC}{
+  <  @_Auto@   | cd_auto     | 0 | S  | 2 | 28,200   | QI | _Auto_ |  |
+     @_Prov@   | cd_prov     | 0 | Ss | 2 | 28,200   | QI | _Prov_ |  |
+     @_Coma@   | cd_coma     | 0 | Ss | 2 | 28,200   | QI | _Coma_ |  |
+     @_Muni@   | cd_muni     | 0 | Ss | 3 | 28,200   | QI | _Muni_ |  |
+     @_Distri@ | cd_distri   | 0 | Ss | 2 | 28,200   | QI | _Dist_ |  |
+     @_CodAsa@ | cd_asamblea | + | T  | 5 |          | Q  |        |  |
+}
+}
+  <  Árbol     | cd_gs_tree  | + | S  | 2 | +cd_auto | Q  |        |  |
+
+[JSCheck] ?
+	if( $cd_gs_tree=="" ) ePE("cd_gs_tree", "Falta definir el árbol");
+
+[PHPIni] l
+	include("../_datos/config/manager_op.ini");
+	$_ModeTree = $_Mode;
+	$_Custom = parse_ini_file("../_datos/config/custom.ini");
+	if( empty($_Custom['url_user_view']) ){
+		$_Custom['url_user_view'] = 'FcR:$a/d/usu_ficha.edf';
+	}
+	$_CustomUrlUser = $_Custom['url_user_view'];				// da error al obtener el valor directamente desde la matrid en [JSOnClickRow]
+
+
+[THColSpan] I,S,Modos
+
+[Fields]
+                 | cd_gs_user                  | + | T | 5  |  | * |  |  |
+
+     Usuario     | user_surname,", ",user_name | N | T | 50 |  | - |  |  |
+ .   Apellidos   | user_surname                | N | T | 30 |  | - |  |  |
+ .   Nombre      | user_name                   | N | T | 20 |  | - |  |  |
+
+                 | mode                        | N | T | 9  |  | * |  |  |
+
+     Alta\A      | I                           | N | T | 1  |  | - |  |  |			//toDo: generar los modos dinámicamente
+     Baja\B      | D                           | N | T | 1  |  | - |  |  |
+     Consultar\C | V                           | N | T | 1  |  | - |  |  |
+     Modificar\M | U                           | N | T | 1  |  | - |  |  |
+     Especial\E  | S                           | N | T | 1  |  | - |  |  |
+
+[DBSql] l
+	$where = qGetWhere("U");
+	$where = str_replace("U.cd_gs_tree", "T.cd_gs_tree", $where);
+
+	//qQuery("select U.cd_gs_user, U.user_surname, U.user_name, T.mode from gs_user U, gs_user_tree T where {$where} order by U.user_surname, U.user_name");
+	qQuery("select U.cd_gs_user, concat(U.user_surname, ', ', U.user_name), T.mode from gs_user U, gs_user_tree T where {$where} order by U.user_surname, U.user_name");
+	while($r=qRow()){
+		$usuCursor[] = $r;
+	}
+
+[Format]
+	foreach($GLOBALS["_ModeTree"] as $k=>$v){
+		if( strpos($_vF["mode"], $k)!==false ){
+			$_vF[$k] = "S";
+		}
+	}
+
+[JSOnClickRow] l
+	S.window("edes.php?{$_CustomUrlUser}&_SEEK=c&cd_gs_user="+_vF["cd_gs_user"]);
+
+
+[Note]
+.#Include(l) o_user_mode.edf|true

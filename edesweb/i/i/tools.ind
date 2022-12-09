@@ -1,0 +1,17 @@
+[help] edes.gs?R:$t/u/{key}.htm
+[key] {key} = {key}.replace(/\s/g, '').toLowerCase()
+
+Tools
+	Char
+	Tabla ascii
+	Colores
+		Color circulo
+		Color esquema
+		Color tabla
+		ScrollBar
+	Cursores
+	Estructura IE
+	Filter Alpha
+	MD5
+	Mime
+	Teclado

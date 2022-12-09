@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eSWOpen 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eSWOpen( window, URL [, Titulo, Modal=true, Ancho, Alto, x, y, Minimizar=true, Maximizar=true, PrefijoClass ] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Abre una nueva ventana&nbsp;devolviendo el puntero a esta.<BR>Se puede dar el tamaño a la ventana de 4 formas:<BR><SPAN style="WIDTH: 25px"></SPAN>- Si no ponemos ni Ancho ni Alto calculará la forma automáticamente.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si ponemos valores positivos en ancho y alto tendrá ese tamaño<BR><SPAN style="WIDTH: 25px"></SPAN>- Si en ancho y alto ponemos valores negativos dejará esos márgenes al contenido de la ventana<BR><SPAN style="WIDTH: 25px"></SPAN>- Si en el ancho ponemos "0"será fullscreen. <BR><SPAN style="WIDTH: 25px"></SPAN>- Si en ancho y en alto&nbsp;ponemos -1 será casi fullscreen pués dejará un margen para la sombra.<BR>Hay que tener en cuenta que si se ejecuta una pagina que no la generé el motor, como un PHP o HTM habrá que ejecutar después de la carga la función "eSWResize( )" o la función eSWIResize( )" para que la ventana se haga visible, excepto si es fullscreen. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>Los parámetros "Ancho", "Alto", "x" e "y" no son necesarios pues se calculan de forma automática cuando se ejecuta una página del motor, si se quiere indicar unas determinadas coordenadas "x" e "y" los parámetros "Ancho" y "Alto" pasarlos como "null", si se quiere dejar los parámetros x e y por defecto se les pasará el valor null. <BR>En el parámetro URL si se ataca a un edf es opcional poner "edes.php?", si se pone cadena vacia&nbsp; creará una página vacia y si se pone null ejecutará lo grabado con eSWWrite().<BR>El parámetro "Titulo" si va precedido del caracter "~" sólo se verá en el menú de ventanas minimizadas. <BR>Si la url empieza por "http" el símbolo de cargando no aparecerá. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>top.eSWOpen( window, 'Fa:factura.edf', 'FACTURA' ); 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

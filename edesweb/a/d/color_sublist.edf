@@ -1,0 +1,19 @@
+[Title]=Tab with SubList
+[Fields]
+Código|cd_empre|*|T|9||*|||
+NIF/CIF|cif|cif|T|9||McpL||#|
+Empresa|nm_empre|#D|T|60|300|ML||#|
+#(a,?R)¿
+-|SubTab "Nm SubList"
+Nombre|_nm_auto|D|T|20||M|||
+-|SubList "Nm SubList"
+|[__auto]|o|||||||
+?
+[SubList]a,?R|__auto
+{slGL} Sql   | TypeData | Align | ColsWidth | Format    | ColsOp | Menu     | TH
+''        |          | I     |           | [v][d][u] |        | IMG      | [i]\
+Nombre    | T        | I     |           |           |        | _nm_auto | Nombre
+{slSql} select # from auto where ='{}' order by cd_auto
+{slMenu}  a,mR | Insertar:i, Borrar:d, Modificar:u, Consultar:v | # || FormOnLine | [u][d]
+{slMenu} cR,bR |                                    Consultar:v | # || FormOnLine |
+{slWin} ,5

@@ -1,0 +1,138 @@
+#(?) [Title] ¿ QUE COMPARATIVA ?
+#(l) [Title] COMPARATIVA DESARROLLADORES
+[DBRange]c|fecha|_desde|_hasta
+[FormAction]c|edes.php?Ll:
+[Fields]?
+Rango de fechas|_desde|F4|T|10||AFQ|||
+,|_hasta|F4|T|10||AFQ|||
+[ChartCol]4|100|Eficacia
+[ColsOp]c,+,+,+,+,+,%,+,+,+,+,+
+[Format],b,b,b,b,b,b,b,b,b,b,b
+[THColSpan]ns,ng,NUMERO|bt,bg,BYTS|bxm,gxm,POR MINUTO
+[Fields]
+Usuario|nu|#D|T|20||-|||
+Nº\Script|ns|+|T|5||-|||
+Nº\accesos|na|-|T|5||-|||
+Nº\graba·ciones|ng|-|T|5||-|||
+Byts\tecleados|bt|-|T|5||-|||
+Byts\grabados|bg|-|T|5||-|||
+%·Grabado|tpbg|-,|T|5,2||-|||
+Tiempo|t|H|T|5||-|||
+Minutos|tm|-|T|5||-|||
+por minuto\Byts|bxm|-,|T|5,2||-|||
+por minuto\Accesos|axm|-,|T|5,2||-|||
+por minuto\Graba·ciones|gxm|-,|T|5,2||-|||
+[DBSql]l
+function NomUsuarios(){
+$p = array();
+$t = array();
+$di = opendir( '../_d_/log/' );
+while( $file = readdir( $di ) ){
+if( ($file != '.') && ($file != '..') ){
+if( !is_dir('../_d_/log/'.$file) ){
+if( substr($file,0,9)=='opstatus.' ){
+list( ,$nUser ) = explode('.',$file);
+qQuery( "select user_name from gs_user where cd_gs_user='{$nUser}'");
+list( $Nombre ) = qRow();
+$t[] = "{$Nombre}|{$nUser}";
+}
+}
+}
+}
+closedir( $di );
+sort($t);
+for( $n=0; $n<count($t); $n++ ){
+$tmp = explode( '|', $t[$n] );
+$p[] = array( $tmp[1], $tmp[0] );
+}
+return $p;
+}
+if( $_desde=='' ){
+$_desde = date('Y-m-d');
+}else{
+}
+if( !isset($_hasta) ) $_hasta = '';
+if( $_hasta=='' ){
+$_hasta = $_desde;
+}else{
+}
+$NomUsuario = NomUsuarios();
+$usuCursor = array();
+for( $n=0; $n<count($NomUsuario); $n++ ){
+$usuCursor[] = ResumenUsuario( $NomUsuario[$n][1], $_desde, $_hasta, $NomUsuario[$n][0] );
+}
+$_TITLE .= ' '.eYmd2Dmy($_desde);
+if( $_desde!=$_hasta ) $_TITLE .= ' HASTA '.eYmd2Dmy($_hasta);
+function CalculaTiempo( $Inicio, $Final ){
+list( $h, $m ) = explode(':',$Inicio);
+$MinDesde = $h*60+$m;
+list( $h, $m ) = explode(':',$Final);
+return ( ($h*60+$m)-$MinDesde );
+}
+function  ResumenUsuario( $Nombre, $_desde, $_hasta, $nUser ){
+$Dim = array();
+$zp = gzopen( "../_d_/log/activity.{$nUser}", "r" );
+while( !gzeof($zp) ){
+$Dim[] = gzgets( $zp, 1000 );
+}
+gzclose($zp);
+$Inicio = '';
+$Final = '';
+$TCaracteres = 0;
+$TGrabaciones = 0;
+$TTecleados = 0;
+$TAccesos = 0;
+$DimTmp = array();
+$TMinutos = 0;
+$uFecha = '';
+for( $n=0; $n<count($Dim); $n++ ){
+$Dim[$n] = str_replace( '  ', ' ', $Dim[$n] );
+$tmp = explode( ' ',$Dim[$n] );
+if( $tmp[0]>=$_desde && $tmp[0]<=$_hasta ){
+if( $uFecha != '' && $uFecha != $tmp[0] ){
+$TMinutos += CalculaTiempo( $Inicio, $Final );
+$Inicio = '';
+}
+if( $Inicio == '' ) $Inicio = $tmp[1];
+$Final = $tmp[1];
+$uFecha = $tmp[0];
+$TAccesos++;
+if( count($tmp)>5 ){
+if( ($tmp[2]=='ED' || $tmp[2]=='E+') && $tmp[3]=='W' ){
+if( substr_count( $tmp[5], '/' ) == 1 and substr_count($tmp[4],'/edesweb/t/__')==0 ){
+list(,$byts) = explode( '/',$tmp[5] );
+if( substr($tmp[4],0,3)=='../' ) $tmp[4] = substr($tmp[4],2);
+$DimTmp[] = str_pad( $tmp[4], 60 ).str_pad( $byts, 6 );
+$TCaracteres += (int)$byts;
+$TTecleados += (int)abs($byts);
+$TGrabaciones++;
+}
+}
+}
+}
+}
+$TMinutos += CalculaTiempo( $Inicio, $Final );
+sort( $DimTmp );
+$ResumenScript = array();
+$ResumenVeces = array();
+for( $n=0; $n<count($DimTmp); $n++ ){
+$s = trim(substr($DimTmp[$n],0,60));
+if( !isset($ResumenScript[ $s ]) ) $ResumenScript[ $s ] = 0;
+$ResumenScript[ $s ] += (int)trim(substr($DimTmp[$n],60));
+if( !isset($ResumenVeces[ $s ]) ) $ResumenVeces[ $s ] = 0;
+$ResumenVeces[ $s ]++;
+}
+$TScript = 0;
+foreach( $ResumenScript as $k=>$v ) $TScript++;
+$TH = 0;
+if( $TMinutos > 60 ){
+$TH = floor($TMinutos/60);
+$TM = $TMinutos - ($TH*60);
+}
+$RangTiempo = $TH.':'.str_pad( $TM, 2, '0', STR_PAD_LEFT);
+if( $RangTiempo=='0:00' ) $RangTiempo = '';
+$ChrPorMinuto = ($TCaracteres/$TMinutos);
+$GrabarPorMinuto = ($TGrabaciones/$TMinutos);
+$AccesosPorMinuto = ($TAccesos/$TMinutos);
+return array( strtoupper($Nombre), $TScript, $TAccesos, $TGrabaciones, $TTecleados, $TCaracteres, $TCaracteres, $RangTiempo, $TMinutos, $ChrPorMinuto, $AccesosPorMinuto, $GrabarPorMinuto );
+}

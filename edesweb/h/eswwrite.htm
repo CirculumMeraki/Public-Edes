@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>eSWWrite
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>eSWWrite( html )
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>Graba codigo HTML en la proxima ventana que se cree al abrirla con src igual a null.
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>top.eSWWrite( "&lt;form action='edes.php?FA:script.edf' METHOD='POST'&gt;" );<BR><SPAN style="WIDTH: 25px"></SPAN>top.eSWWrite( "&lt;input name='campo1' value='99'&gt;" );<BR><SPAN style="WIDTH: 25px"></SPAN>top.eSWWrite( "&lt;input name='campo2' value='XXX'&gt;" );<BR>top.eSWWrite( "&lt;/form&gt;" );<BR>top.eSWOpen( window, null, 'Alta', 1, 500,500 );
+<TR>
+<TD id=txt></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

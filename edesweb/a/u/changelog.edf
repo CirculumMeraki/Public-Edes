@@ -1,0 +1,43 @@
+[Title]=ChangeLog
+[DBTable]gs_changelog
+[DBIndex]pk
+[DBOrder]version,cdi
+[DBSerial]pk
+[AddOption]*|tipo
+,
+C,Contenido
+D,Directorio
+E,Ejecutar CSS
+U,Descardar eDes
+F,Fichero
+[AddOption]*|accion
+,
+A,Añadir
+B,Borrar
+C,Crear
+E,Eliminar
+M,Modificar
+N,Nuevo
+R,Renombrar
+S,Sustituir
+[AddOption]*|lugar
+,
+A,Antes de
+D,Despues de
+F,Al Final
+I,En el Inicio
+[Fields]?
+Versión|version|CDI|T|19||Q|||
+,  Cdi|cdi|CDI|T|19||Q|||
+[Fields]else||trim
+Pk|pk|+|T|9||*|||
+Versión|version|CDI|T|19||-||#|
+,  Cdi|cdi|CDI|T|19||-|#y2s#|#|
+Tipo|tipo|D|SV|1,10||M||#|
+Acción|accion|D|SV|1,10||M|||
+Lugar|lugar|D|SV|1,10||M|||
+,  Referencia|referencia|#|T|80|+contenido|M|||
+Contenido|contenido|#|A|1920,80,10||ML|||
+Fichero|fichero|#|T|80|contenido|M|||
+[PHPEnd]a
+eJS('S(":version").val("'.file_get_contents("../../edesweb/web/aplication/_datos/config/version_edes.cdi").'");');

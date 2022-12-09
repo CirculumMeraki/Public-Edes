@@ -1,0 +1,447 @@
+#include(*) task.edf | true
+[Title]=GESTOR DE TAREAS
+¿  isset($_GET['_cF12']) ? [Title] NoTitle
+¿  isset($_GET['_cF12']) ? [WinTitle] Incidencia
+¿ !isset($_GET['_cF12']) ? [WinTitle] GESTOR DE TAREAS
+¿  isset($_GET['_cF12']) ? [Stop] a
+[DBTable]gs_task
+[DBIndex]cd_gs_task
+[DBOrder]ds_create
+[DBSerial]cd_gs_task
+[DBMemo]description, answer, url_iframe
+[Cursor]
+[AutoMenu]l
+[PHPStart]*||UNIQUE
+eInclude( $_Sql );
+qQuery( "select task_status from gs_user where cd_gs_user={$_User}", $p );
+list( $_TaskStatus ) = qRow($p);
+$_TaskStatus = $_TaskStatus*1;
+$_TaskStatus = 2;
+if( $_TaskStatus<1 || $_TaskStatus>4 ) exit;
+[SetVar]_MaxImageSize = 565,-1
+[SetVar]_MaxImageLength = 500000
+[SetVar]_EdCheckbox = true
+[AddOption]*|cd_gs_ttask|,; E,Error; I,Mejora; N,Nueva opción; T,Tarea; Q,Consulta
+[AddOption]*|cd_status|,; 0,Creada; 1,Enviada; 2,Asignada; 3,Desarrollandose; 4,Solicitando Información; 5,Terminada Desarrollo; 6,Terminada Soporte; 7,Sin Terminar; 8,Histórica; 9,Anulada
+[AddOption]a|cd_priority|0,Baja; 1,Normal; 2,Alta; 9,Urgente
+[AddOption]?,?R,l|cd_priority|,; 0,Baja; 1,Normal; 2,Alta; 9,Urgente
+[UploadFile]attachment|/_datos/tsk|cd_gs_task|5.000.000|Seleccionar fichero|*|doc_
+¿ isset($_GET['_cF12']) ? [AddCode] a  | attachment | E | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Editar pantalla <img src='g/win_edit.gif' onclick='WE.eScreenTask()'>
+[AddCode]mR|attachment|E|<span id=VerImgSrv style='margin-left:59px'>Editar pantalla <img src='g/win_edit.gif' onclick='WE.eScreenTask("task_"+eGF("cd_gs_task"))'></span>
+[AddCode]cR,bR|attachment|E|<span id=VerImgSrv style='margin-left:59px'>Ver pantalla <img src='g/win_view.gif' onclick='VerImg()'></span>
+[AddCode]a,mR|attachment|E|<span id=GrupoSRC>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grupo de pantallas <img src='g/win_edit.gif' onclick='uMenuSRC()'></span>
+[AddCode]cR,bR|attachment|E|<span id=GrupoSRC>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grupo de pantallas <img src='g/win_view.gif' onclick='uMenuSRC()'></span>
+¿ !isset($_GET['_cF12']) ? [OnChange] a | cd_gs_ttask | uTTaskChange(this)
+[Button]a|Crear Incidencia
+[Fields]a
+Tipo|cd_gs_ttask|N|SV|12||MQ|E|#|
+,Prioridad|cd_priority|+|SV|7||MQ|1||
+,Fecha tope|ds_deadline|F4|T|10||MQF|||
+,Estado|cd_status|+|S|20||-|0||
+Resumen|nm_gs_task|X|T|50|600|M||#|
+Descripción|description|#|H|1000000,100,20|600,300|M|||
+Archivo adjunto|attachment|X|F|40||AD|||
+|options|#|H|2000||*|||
+|url_iframes|#|A|2000||*|||
+|ds_create|X|T|19||*|#y2s#||
+|cd_gs_user|+|T|5||*|_User||
+|tf_scr_desktop|N|T|1||*|||
+|n_scr_sequence|+|T|1||*|||
+|cd_gs_project|D|T|15||*|||
+|task_log|D|T|100||*|||
+|tf_canceled|N|T|1||*|||
+[PHPForm]a
+include('../_datos/config/install.ini');
+$_Form['cd_gs_project'][_DEFAULT] = $PCDirApp;
+if( $_GET['_cF12'] ){
+}else{
+$_Form['cd_gs_ttask'][_DEFAULT] = 'I';
+}
+[PHPIni]a
+echo '<script type="text/javascript">var _cF12 = '.(($_GET['_cF12']==1) ? 'true':'false').';';
+if( !$_GET['_cF12'] ){
+?>
+try{
+if( eFileExists('{dir}tmp/task.png') ) eFileDelete('{dir}tmp/task.png');
+}catch(e){}
+<?PHP
+}
+echo '</script>';
+[JSEnd]a
+if( _cF12 ){
+ePF("cd_gs_ttask","E");
+ePF('url_iframes',top._xGetAllHref); top._xGetAllHref = '';
+switch( '<?= $_TaskStatus ?>' ){
+case "1":
+ePF('cd_status','0');
+eHide('cd_status,ds_deadline','L');
+eDelOption('cd_gs_ttask',Array("N","T"));
+eDelOption('cd_priority',Array("2","9"));
+break;
+case "2":
+ePF('cd_status','5');
+break;
+case "3":
+ePF('cd_status','5');
+break;
+case "4":
+ePF('cd_status','5');
+break;
+default:
+}
+if( top._Desktop > 1 ){
+ePF('options', top.WinLocation.innerHTML.replace('_RepiteURL()','top._RepiteURL(window)') );
+}else{
+ePF('options', top._oTraceOpcion );
+}
+}
+var Ocultar = true;
+for( var n=0; n<20; n++ ){
+if( top.eFileExists('{dir}tmp/screen_'+n+'.png') ){
+Ocultar = false;
+break;
+}
+}
+if( Ocultar ) DGI('GrupoSRC').style.display = 'none';
+[JSIni]a
+function _uMenuSRC( Op, OpTextContent, Obj, OpObj ){
+if( Op==null ) return;
+WE.eScreenTask('screen_'+(Op.replace(/_/g,'')));
+}
+function uMenuSRC(){
+var xDim = new Array();
+for( var n=0; n<20; n++ ){
+if( top.eFileExists('{dir}tmp/screen_'+n+'.png') ) xDim['_'+n+'_'] = 'Pantalla '+n;
+}
+top.eMenu( window, S.event(window), xDim, _uMenuSRC );
+}
+function uTTaskChange( Obj ){
+if( eGF('cd_gs_ttask')=='E' ) top.eAlert("MENSAJE", "Siempre que se pueda se tiene que informar de los errores<br>mientras se está viendo el error, pulsando \"Control+F12\"", "a", "DI" );
+}
+[JSCheck]a
+if( top.eFileExists( "{dir}/tmp/task.png" ) ){
+top.eFilePut( "{dir}/tmp/task.png", '/_datos/tsk/task__'+_User+'.png' );
+top.eFileDelete( "{dir}/tmp/task.png" );
+ePF('tf_scr_desktop','S');
+}
+var np = 0;
+for( var n=0; n<20; n++ ){
+if( top.eFileExists('{dir}tmp/screen_'+n+'.png') ){
+top.eFilePut( '{dir}/tmp/screen_'+n+'.png', '/_datos/tsk/screen__'+(++np)+'_'+_User+'.png' );
+top.eFileDelete( '{dir}/tmp/screen_'+n+'.png' );
+}
+}
+ePF('n_scr_sequence',np);
+top.__MScreen = 0;
+top._xMScreen = new Array();
+ePF('task_log',eGF('cd_status'));
+[DBIni]A
+qQuery( "select max(pk_task) from gs_task where cd_gs_project='{$_vF['cd_gs_project']}'", $p1 );
+list( $uPk ) = qRow($p1);
+$_vF['pk_task'] = ($uPk*1)+1;
+if( $_POST['cd_status'] == 2 ){
+eFileGetVar('Task', true);
+if( $EMailProjectManager && $ProjectManager!=$_User ){
+qQuery( "select email from gs_user where cd_gs_user='{$_User}'", $p1 );
+list( $EMailFrom ) = qRow($p1);
+qQuery( "select email from gs_user where cd_gs_user='{$ProjectManager}'", $p1 );
+list( $EMailTo ) = qRow($p1);
+$EMailTo = trim($EMailTo);
+if( $EMailTo!='' ){
+$Contenido = '<html><head></head><body>'.$ProjectHeader."<br>".
+'Resumen: '."<br>". $_POST['nm_gs_task'].'</body></html>';
+$Res = eMail( $EMailTo, 'INCIDENCIA: '.$_POST['nm_incidencia'], $Contenido, $EMailFrom );
+}
+}
+}
+[DBEnd]A
+if( file_exists( '../_datos/tsk/task__'.$_User.'.png' ) ){
+rename( '../_datos/tsk/task__'.$_User.'.png', '../_datos/tsk/task_'.$_vF['cd_gs_task'].'.png' );
+}
+if( $_vF['n_scr_sequence'] > 0 ){
+for( $n=1; $n<=$_vF['n_scr_sequence']; $n++ ){
+rename( '../_datos/tsk/screen__'.$n.'_'.$_User.'.png', '../_datos/tsk/screen_'.$n.'_'.$_vF['cd_gs_task'].'.png' );
+}
+}
+[PHPIni]a
+echo '<script type="text/javascript">';
+echo '_Origen = "'._IDSRV().'";';
+echo '_ID = "'.str_pad( DecHex( (eGetMicrotime()-1308069417)*100 ), 8, '0', STR_PAD_LEFT ).'";';
+echo '</script>';
+[PHPStart]a
+$_aErrHTTP = '';
+$_aErrID = '';
+$_aErrMsg = '';
+$_aErrAplicacion = '';
+$_HttpConfigLoad = true;
+$Dim = include( eScript('$a/u/_http_error.gs') );
+if( count($Dim)==4 ){
+$_aErrHTTP = $Dim[0];
+$_aErrID = $Dim[1];
+$_aErrMsg = $Dim[2];
+$_aErrAplicacion = $Dim[3];
+}
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+[FieldBrowser]_cd_gs_developer|cd_gs_developer|select concat(user_name," ",user_surname),cd_gs_user from gs_user where task_status>0 and concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+[FieldBrowser]_cd_gs_developer|cd_gs_developer|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where task_status>0 and (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]?
+|cd_gs_project|D|T|15||*Q|||
+Tipo|cd_gs_ttask|N|SV|12||Q|||
+,Prioridad|cd_priority|+|SV|7||Q|||
+,Estado|cd_status|+|SV|15||Q|||
+Resumen|nm_gs_task|X|T|50|450|Q|||
+|cd_gs_user|+|T|5||*Q|||
+Creador|_cd_gs_user|D|T|60||Q|||
+|cd_gs_developer|+|T|5||*Q|||
+Desarrollador|_cd_gs_developer|D|T|60||Q|||
+[PHPForm]?
+global $_User;
+include('../_datos/config/install.ini');
+$_Form['cd_gs_project'][_DEFAULT] = $PCDirApp;
+switch( $GLOBALS['_TaskStatus'] ){
+case 1:
+$_Form['cd_gs_user'][_DEFAULT] = $_User;
+$_Form['_cd_gs_user'][_MODE] = "*Q";
+break;
+case 2:
+$_Form['cd_gs_user'][_MODE] = '*';
+$_Form['cd_gs_developer'][_MODE] = '*';
+$_Form['cd_gs_developer'][_DEFAULT] = '';
+break;
+case 3:
+break;
+case 4:
+$_Form['_cd_gs_user'][_MODE] = "*Q";
+$_Form['_cd_gs_developer'][_MODE] = "*Q";
+break;
+default:
+eInit(); die('');
+}
+[PHPIni]?R
+global $_TaskStatus, $_DBADDFILTER, $_User;
+switch( $_TaskStatus ){
+case 1:
+case 2:
+$_DBADDFILTER = "tf_canceled<>'S' and (cd_gs_user='{$_User}' or cd_gs_developer='{$_User}')";
+break;
+case 3:
+$_DBADDFILTER = "tf_canceled<>'S'";
+break;
+case 4:
+$_DBADDFILTER = "tf_canceled<>'S' and (cd_gs_user='{$_User}' or cd_gs_developer='{$_User}')";
+break;
+default:
+eInit(); die('');
+}
+[THColSpan]ds_create,ds_deadline,Fecha
+[PDFCol]ds_create=10, ds_assigned=10, ds_ini=10, ds_end=10, ds_ok=10
+#(l) [DefAux] cd_gs_user		| gs_user, cd_gs_user, user_name," ",user_surname cd_gs_user
+#(l) [DefAux] cd_gs_developer	| gs_user, cd_gs_user, user_name," ",user_surname cd_gs_developer
+[Fields]l
+Cód.|cd_gs_task|+|T|5||*|||
+Proyecto|cd_gs_project|D|T|15||*|||
+Cód.|pk_task|+|T|5||-|||
+Creación|ds_create|X|CDI|19||-|||
+Asignación|ds_assigned|CDI|T|19||-|||
+Inicio|ds_ini|CDI|T|19||-|||
+Fin|ds_end|CDI|T|19||-|||
+Ok|ds_ok|CDI|T|19||-|||
+Tope|ds_deadline|F4|T|10||-|||
+%|progress|+|T|3||-|||
+Tipo|cd_gs_ttask|N|SV|12||-|||
+Prioridad|cd_priority|+|SV|7||-|||
+Estado|cd_status|+|SV|15||-|||
+Resumen|nm_gs_task|X|T|50||-|||
+Creada por|cd_gs_user|+|S|45||-|||
+Desarrollador|cd_gs_developer|+|S|45||-|||
+[PHPForm]l
+switch( $GLOBALS['_TaskStatus'] ){
+case 1:
+$_Form['cd_gs_user'][_MODE] = '*';
+$_Form['cd_gs_developer'][_MODE] = '*';
+$_Form['ds_ini'][_MODE] = '*';
+$_Form['ds_end'][_MODE] = '*';
+break;
+case 2:
+$_Form['cd_gs_user'][_MODE] = '*';
+$_Form['cd_gs_developer'][_MODE] = '*';
+$_Form['ds_ini'][_MODE] = '*';
+$_Form['ds_end'][_MODE] = '*';
+break;
+case 3:
+break;
+case 4:
+break;
+default:
+eInit(); die('');
+}
+if( !eFileGetVar( 'Task.ProjectManager') ){
+$_Form['cd_gs_task'][_MODE] = '-';
+$_Form['cd_gs_project'][_MODE] = '*';
+$_Form['pk_task'][_MODE] = '*';
+}
+[RowColor]ColorFila($_vF)
+[PHPIni]l
+function ColorFila( $r ){
+if( $r[6]=='I'  ) return 'style="background:#cccccc"';
+if( $r[16]=='E' ) return 'style="color:green"';
+if( $r[16]=='F' ) return 'style="color:blue"';
+if( $r[16]=='D' ) return 'style="color:#FF00FF"';
+if( $r[16]=='P' ) return 'style="color:red"';
+if( $r[16]=='I' ) return 'style="color:#af884c"';
+}
+[AddCode]?R|progress|A|%
+[Fields]else|2
+Código|cd_gs_task|+|T|5||-|||
+,Proyecto|cd_gs_project|D|T|15||*|||
+,Código|pk_task|+|T|5||*|||
+,Creada por|cd_gs_user{gs_user, cd_gs_user, user_name," ",user_surname}|+|S|45||-|||
+,Fecha|ds_create|CDI|T|19||-|||
+Tipo|cd_gs_ttask|N|SV|12||M||#|
+,Prioridad|cd_priority|+|SV|7||M|||
+,Fecha tope|ds_deadline|F4|T|10||A|||
+,Estado|cd_status|+|SV|15||-||#|
+,|progress|+|T|3||-|||
+Resumen|nm_gs_task|X|T|50|600|M||#|
+Descripción|description|#|H|1000000,100,20|600,300|M|||
+Archivo adjunto|attachment|X|F|40||AD|||
+-
+|options|#|A|256||*|||
+{P} PintaLineaEstado|NoTD
+|url_iframes|#|A|2000||*|||
+|tf_scr_desktop|N|T|1||*|||
+|n_scr_sequence|+|T|1||*|||
+-
+Respuesta|answer|#|A|2000,100,5|600|M|||
+Desarrollador|cd_gs_developer|+|S|45||-|||
+Asignada|ds_assigned|CDI|T|19||-|||
+,2 Inicio desarrollo|ds_ini|CDI|T|19||-|||
+Pasada al histórico|ds_ok|CDI|T|19||-|||
+,2 Final desarrollo|ds_end|CDI|T|19||-|||
+[P]PintaLineaEstado
+echo '<td align=right>Opción de menú: <td style="padding-left:5px">';
+$_vF['options'] = str_replace( '&quot;', '"', $_vF['options'] );
+$_vF['options'] = str_replace( '<TABLE ', '<TABLE id=uOpPulsada style="border:1px solid red"', $_vF['options'] );
+$_vF['options'] = str_replace( 'onclick=', 'on_click=', $_vF['options'] );
+echo $_vF['options'];
+[JSIni]?R
+function _uMenuSRC( Op, OpTextContent, Obj, OpObj ){
+if( Op==null ) return;
+if( _Mode=='mR' ){
+WE.eScreenTask('screen_'+(Op.replace(/_/g,''))+"_"+eGF("cd_gs_task"));
+}else{
+VerGImg( Op.replace(/_/g,'') );
+}
+}
+function uMenuSRC(){
+var xDim = new Array();
+for( var n=1; n<=eGF('n_scr_sequence'); n++ ) xDim['_'+n+'_'] = 'Pantalla '+n;
+top.eMenu( window, S.event(window), xDim, _uMenuSRC );
+}
+[PHPForm]?R
+switch( $GLOBALS['_TaskStatus'] ){
+case 1:
+case 2:
+$_Form['cd_gs_user'][_MODE] = '*';
+$_Form['cd_gs_user'][_FIELD] = 'cd_gs_user';
+$_Form['cd_gs_user'][_CONTROL] = 'T';
+break;
+case 3:
+break;
+case 4:
+break;
+default:
+eInit(); die('');
+}
+[PHPIni]?R
+switch( $_TaskStatus ){
+case 1:
+$_ADDBUTTON[] = array( '<IMG src=g/print_1.gif> Sin terminar', 'La incidencia sigue fallando', 'PonEstado(7)', "color:red;background:blue" );
+$_ADDBUTTON[] = array( 'Conforme', 'Incidencia terminada', 'PonEstado()' );
+break;
+case 2:
+$_ADDBUTTON[] = array( 'Sin terminar', 'La incidencia sigue fallando', 'PonEstado()' );
+$_ADDBUTTON[] = array( 'Conforme', 'Incidencia terminada', 'PonEstado()' );
+$_ADDBUTTON[] = array( 'Anular', 'Anula la incidencia', 'PonEstado()' );
+break;
+case 3:
+$_ADDBUTTON[] = array( 'Asignar', 'Asigna la incidencia a un Desarrollador', 'PonEstado()' );
+$_ADDBUTTON[] = array( 'Terminada Soporte', 'Terminada por soporte', 'PonEstado()' );
+$_ADDBUTTON[] = array( 'Sin terminar', 'La incidencia sigue fallando', 'PonEstado()' );
+$_ADDBUTTON[] = array( 'Conforme', 'Incidencia terminada', 'PonEstado()' );
+$_ADDBUTTON[] = array( 'Anular', 'Anula la incidencia', 'PonEstado()' );
+break;
+case 4:
+$_ADDBUTTON[] = array( 'Terminada Desarrollo', 'Terminada por Desarrollo', 'PonEstado()' );
+break;
+}
+[PHPEnd]bR
+if( !file_exists('../_datos/tsk/task_'.$_vF['cd_gs_task'].'.png') ){
+echo '<script type="text/javascript">VerImgSrv.style.display="none";</script>';
+}
+[PHPEnd]cR,mR
+if( !file_exists('../_datos/tsk/task_'.$_vF['cd_gs_task'].'.png') ){
+echo '<script type="text/javascript">VerImgSrv.style.display="none";</script>';
+}
+switch( $_TaskStatus ){
+case 1:
+$EsMio = 0;
+break;
+case 2:
+$EsMio = 1;
+break;
+case 3:
+$EsMio = 0;
+break;
+case 4:
+$EsMio = 0;
+break;
+}
+if( $_vF['cd_gs_user']==$_User && $_vF['cd_status']==$EsMio ){
+?>
+<script type="text/javascript">
+eHide('answer,cd_gs_developer,ds_assigned,ds_ok','TR');
+</script>
+<?PHP
+}
+[JSIni]?R
+var _DimDate = new Array();
+function VerImg(){
+top.eSWOpen( window,'edes.php?IMG:/_datos/tsk/task_'+eGF('cd_gs_task')+'.png&MAXIMIZE=1', "CAPTURA DE PANTALLA: "+eGF('nm_gs_task'), true, 0 );
+}
+function VerGImg(n){
+top.eSWOpen( window,'edes.php?IMG:/_datos/tsk/screen_'+n+'_'+eGF('cd_gs_task')+'.png&MAXIMIZE=1', "PANTALLA: "+n, true, 0 );
+}
+[JSEnd]?R
+top.eFileGet( "/_datos/tsk/task_"+eGF("cd_gs_task")+".png", "{dir}tmp/task_"+eGF("cd_gs_task")+".png" );
+_DimDate[0] = WE.eFileGetDateTime("{dir}tmp/task_"+eGF("cd_gs_task")+".png");
+if( eGF('n_scr_sequence') > 0 ){
+for( var n=1; n<=eGF('n_scr_sequence'); n++ ){
+top.eFileGet( "/_datos/tsk/screen_"+n+"_"+eGF("cd_gs_task")+".png", "{dir}tmp/screen_"+n+"_"+eGF("cd_gs_task")+".png" );
+_DimDate[n] = WE.eFileGetDateTime("{dir}tmp/screen_"+n+"_"+eGF("cd_gs_task")+".png");
+}
+}
+var _CdStatus = eGF('cd_status');
+[JSCheck]mR
+if( _DimDate[0] != WE.eFileGetDateTime("{dir}tmp/task_"+eGF("cd_gs_task")+".png") ){
+top.eFilePut( "{dir}tmp/task_"+eGF("cd_gs_task")+".png", "/_datos/tsk/task_"+eGF("cd_gs_task")+".png" );
+}
+for( var n=1; n<=eGF('n_scr_sequence'); n++ ){
+if( _DimDate[n] != WE.eFileGetDateTime("{dir}tmp/screen_"+n+"_"+eGF("cd_gs_task")+".png") ){
+top.eFilePut( "{dir}tmp/screen_"+n+"_"+eGF("cd_gs_task")+".png", "/_datos/tsk/screen_"+n+"_"+eGF("cd_gs_task")+".png" );
+}
+}
+if( _CdStatus!=eGF('cd_status') ) ePF('task_log',','+eGF('cd_status'));
+[DBEnd]B
+if( file_exists('../_datos/tsk/screen_'.$_vF['cd_gs_task'].'.png') ) @unlink( '../_datos/tsk/screen_'.$_vF['cd_gs_task'].'.png' );
+if( file_exists('../_datos/tsk/task_'.$_vF['cd_gs_task'].'.png'  ) ) @unlink( '../_datos/tsk/task_'.$_vF['cd_gs_task'].'.png'   );
+if( $_vF['n_scr_sequence'] > 0 ){
+for( $n=1; $n<=$_vF['n_scr_sequence']; $n++ ){
+@unlink( '../_datos/tsk/screen_'.$n.'_'.$_vF['cd_gs_task'].'.png' );
+}
+}

@@ -1,0 +1,10 @@
+[Title]SELECCIONA ENTIDAD PARA EL FORMATO
+[DBTable]{$_SESSION['ShareDictionary']}gs_entidad
+[DBIndex]cd_gs_entidad
+[DBOrder]nm_gs_entidad
+[Fields]
+Código|cd_gs_entidad|C|T|3||*||#|
+Nombre|nm_gs_entidad|C|T|30||-||#|
+Tabla principal|tabla|#X|T|20||*||#|
+[JSSelRow]l
+window.location.href = 'edes.php?E:$a/d/listados_def.gs&MODO=a&ENTIDAD='+eGF('cd_gs_entidad');

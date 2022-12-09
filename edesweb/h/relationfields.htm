@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><p> </p>
+<table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">RelationFields</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[RelationFields] FieldList [ [ [ | CampoASaltarse ]  | Saltar=true ]  [ | FieldListInMemory  ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Forma dependencias entre campos para utilizarlos en los "SELECT's" anidados. A parte de esta etiqueta en la etiqueta [Fields] hay que definir la lista de campos del tipo "Ss" SubSelect, el primer campo puede ser del tipo que se quiera, normalmente será un "S" Select o un "T" Texto. <br />Cuando se cargan los subselect se puede ir a una fucnión de usuario para por ejemplo eliminar algún option, ver ejemplo en la etiqueta [OnChange].</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> <strong>FieldList</strong></td>
+<td>Lista de campos separados por comas, en orden de dependencia.</td>
+</tr>
+<tr>
+<td> <strong>CampoASaltarse</strong></td>
+<td>En caso de querer saltarse un select intermedio pondremos el nombre del campo a saltarse de forma opcional.<br />Si uno de los campos es el primero, el segundo campo del RelationField cuando el primero está vacio a pulsar en el se mostrará completo.</td>
+</tr>
+<tr>
+<td> <strong>Saltar</strong></td>
+<td>Si el parámetro CampoASaltar esté relleno este campo por defecto está a true para que el campo se salte, si lo ponemos a false por defecto no se saltará pero tendrá el icono para activar y desactivar</td>
+</tr>
+<tr>
+<td><strong> FieldListInMemory</strong></td>
+<td>Lista de campos que se calculan en memoria, se admite el caracter "*"</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[RelationFields] cd_prov, cd_muni</td>
+</tr>
+<tr>
+<td id="txt">Define una dependencia del campo cd_muni respecto del campo cd_prov, la selección del subselect se define en un fichero "LDF" con el mismo nombre del campo quitando '"cd_" y acabado en "LDF" quedando en este ejemplo como " muni.ldf  ".</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[RelationFields] cd_auto, cd_prov, cd_muni</td>
+</tr>
+<tr>
+<td id="txt">Define una dependencia del campo cd_prov respecto del campo cd_auto, del campo cd_muni respecto del conjunto anterior, es decir del campo cd_prov que ya dependía del cd_auto. Por último forma una dependencia del campo cd_muni respecto de todos los anteriores en conjunto.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[RelationFields] sexo, cd_profe</p>
+<p>[AddCode] a,A,?R | cd_profe | I | DynamicSQL=SqlProfesion<br /><br />[PHPIni] a,A,?R// en multifichas va en el GDF<br />function SqlProfesion(){<br />global $_vF;<br />if( $_vF['sexo']<>'' ){<br />qQuery( 'select cd_profe,nm_profe_'.strtolower($_vF['sexo']).' from profe_sexo order by 2' );<br />}else{<br />qQuery( 'select cd_profe,nm_profe_h from profe_sexo order by 2' );<br />}<br />}<br /><br />[JSIni] a,A,?R// en multifichas va en el GDF<br />function SqlProfesion(){<br />var Valor = '';<br />if( eGO('cd_profe').oValue!=undefined ) Valor = eGO('cd_profe').oValue;<br />if( eGF('sexo')!='' ){<br />return Array( 'select cd_profe,nm_profe_'+eGF('sexo').toLowerCase()+' from profe_sexo order by 2', Valor );<br />}else{<br />return Array( 'select cd_profe,nm_profe_h from profe_sexo order by 2', Valor );<br />}<br />}<br /><br />[Fields]<br />   ...<br />   Sexo      | sexo                                     | 0 | SV |  6 || M |||<br />  ,Profesión | cd_profe{profe_sexo,cd_profe,nm_profe_h} | 0 | Ss | 30 || M |||<br />   ...</p>
+</td>
+</tr>
+<tr>
+<td id="txt">Ejemplo para tener un select "cd_profe" que visualmente mostramos un campo dependiendo de otro, el nombre de las profesiones dependen del sexo de la persona pudiendo ver en el select el campo "nm_prefe_h" (hombre) o el campo "nm_profe_m" (mujer)</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[RelationFields] cd_auto, cd_prov, cd_coma, cd_muni | cd_coma</td>
+</tr>
+<tr>
+<td id="txt">Hay cuatro select relacionados pero si no sabemos la comarca pulsaremos en el icono para anular el select y nos saldrán todos los municipio de la provincia.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,10 @@
+[Title]TIPO DE IMPRESO
+[DBTable]gs_form_type
+[DBIndex]cd_gs_form_type; nm_gs_form_type
+[DBOrder]nm_gs_form_type
+[DBSerial]cd_gs_form_type
+[FormStatic]
+[OptionsInList]abcm
+[Fields]
+|cd_gs_form_type|+|T|4||*|||
+Tipo de Impreso|nm_gs_form_type|D|T|40||MQ||#|

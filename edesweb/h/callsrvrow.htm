@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td id="Etiqueta">CallSrvRow</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[CallSrvRow] url | NmFunction | TextProgress [ | TextEnd ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Genera una llamada a la función "NmFunction" por cada fila del listado con la "url", generando un proceso masivo</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" style="width: 1296px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td style="width: 94px;"><strong>url</strong></td>
+<td style="width: 1191px;">url a ejecutar para obtener la información, a esta url se añadirá de forma automática el nombre del campo serial y su valor en cada fila. Si el listado es paginado hará el proceso para todos no solo para los registros visibles.</td>
+</tr>
+<tr>
+<td style="width: 94px;"><strong>NmFunction</strong></td>
+<td style="width: 1191px;">Nombre de la función a llamar cuando se quiera desencadenar el proceso, normalmente será el onclick de un icono.</td>
+</tr>
+<tr>
+<td style="width: 94px;"><strong>TextProgress</strong></td>
+<td style="width: 1191px;">Texto al mostrar mientras se va ejecutando cada linea.</td>
+</tr>
+<tr>
+<td style="width: 94px;"><strong>TextEnd</strong></td>
+<td style="width: 1191px;">Si se indica este texto será el mensaje al descargar un zip con todos los documento, sino está no generará ningún zip y solo informará que el proceso ha terminado.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[CallSrvRow] edes.php?E:factura_pdf.php | uFuncion | Descargando factura | Grupo de facturas</code><br /><code>[SubTitle] eAddButton("pdf", "Descargar todas las facturas", "uFuncion()");</code> <br /><br /><br />// Fichero: <code>factura_pdf.php</code><br />...<br /><code>if( $_GET["_CALLSRVROW"]<>"" ){</code><br /><code>     eCallSrvRow("../_tmp/php/{$cod_factu}.pdf");     // sele pasa el nombre del fichero a descargar</code><br /><code>}</code></td>
+</tr>
+<tr>
+<td id="txt">Descargará un zip con todos los ficheros indicados</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[CallSrvRow] edes.php?E:email.php | uFuncion | Enviando email</code><br /><code>[SubTitle] eAddButton("email", "Enviar todos los email", "uFuncion()");<br /><br /><br />// Fichero: email.php<br />...<br />if( $_GET["_CALLSRVROW"]<>"" ){<br />     eCallSrvRow();                                   // no se le pasa ningún parámetro al no tener que descargar nigún fichero<br />}</code></td>
+</tr>
+<tr>
+<td id="txt">Irá mandado los email (no descargará nada)</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

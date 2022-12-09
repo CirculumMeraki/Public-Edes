@@ -1,0 +1,20 @@
+[Title]CLIENTES
+[AddOption]*|select|; 1,Opción 1; ~,; 2,Opción 2; 3,Selected; 4,Opción 4; 5,Opción 5; 6,Opción 6; 7,Opción 7
+[radio]radio|2L|B,Black; W,White|Color
+[Fields]
+{Z}
+Editable sin foco|editable|#|T|20||Md|xxxx||
+Editable con foco|editable_con_foco|#|T|20||MF|xxxx||
+,Fecha|fecha|F4|T|10||MF|||
+Solo lectura|solo_lectura|#|T|20||-|xxxx||
+,Periodo|periodo|P4|T|7||MP|||
+Error sin foco|con_error|#|T|20||M|xxxx||
+,Check|check|#|C|1||M|||
+,Radio|radio|#|R|1||M|||
+Error con foco|error_con_foco|#|T|20||M|xxxx||
+,Select|select|0|SV|1,20|150|M|3||
+-|Tab delimitador - SelectBOX|||||M|||
+Editable|share_group|X|SV|50||M|01||
+Solo lectura|share_group2|X|SV|50||-|01||
+[SelectMultiple]*|share_group|30 BOX|select cd_auto,nm_auto from auto order by nm_auto
+[SelectMultiple]*|share_group2|30 BOX|select cd_auto,nm_auto from auto order by nm_auto

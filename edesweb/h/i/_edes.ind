@@ -1,0 +1,14 @@
+[help] edes.gs?R:$h/{key}.htm
+[edit] edes.gs?AE:$h/{key}.htm&T=A&PLANTILLA=_edes&TRACE=Sistema eDes
+[prefix] _
+
+eDes - Sistema
+	Definición
+	Características
+	Prestaciones
+	Funcionalidad
+	Herramientas
+		Para el Usuario
+		Para el Desarrollador
+		De Terceros
+	Requisitos

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>SubWin 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[SubWin] Mode | WindowName 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Genera pseudo ventanas dentro de la página. Para desde una función controlar la ventana que se ha generado se localizará por su nombre con una barra baja delante "_WindowName", la ventana es invocada mediante la función&nbsp; eLoadDiv()&nbsp; 
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[SubWin] cR | NomVentana<BR><BR>[AddCode] cR | campo | A | &lt;img id='verApu' src='g/icono.gif' onclick='eLoadDiv( "NomVentana","edes.php?E:script.php?"+FRM1.dni.value, "xyDiv" )' title='Pseudo ventana'&gt;<BR><BR>//Prototipo: eLoadDiv( NomVentana, URL, NomFunc )<BR><BR>function xyDiv(){&nbsp;&nbsp;//.Posiciona la ventana<BR>//----------------<BR>&nbsp;var Obj2 = document.getElementById('xyCuoRec');<BR>&nbsp;var sx = sy = 0;<BR>&nbsp;while( Obj2.tagName != 'BODY' ){<BR><SPAN style="WIDTH: 25px"></SPAN>if( Obj2.tagName != 'TBODY' &amp;&amp; Obj2.tagName != 'TD' &amp;&amp; Obj2.tagName != 'CENTER' )<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>sy += Obj2.offsetTop;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>sx += Obj2.offsetLeft;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>Obj2 = Obj2.parentElement;<BR><SPAN style="WIDTH: 25px"></SPAN>}<BR><SPAN style="WIDTH: 25px"></SPAN>_Cuotas.style.top = sy;<BR><SPAN style="WIDTH: 25px"></SPAN>_Cuotas.style.left = sx;</P>
+<P><SPAN style="WIDTH: 25px"></SPAN>DivDefCuotas.style.top = _Cuotas.offsetHeight-2;<BR><SPAN style="WIDTH: 25px"></SPAN>DivDefCuotas.style.left = -2;</P>
+<P><SPAN style="WIDTH: 25px"></SPAN>DivDefCuotas.style.display = 'block';<BR><SPAN style="WIDTH: 25px"></SPAN>IMGtbDefCuotas.style.left = DivDefCuotas.offsetWidth-15;<BR><SPAN style="WIDTH: 25px"></SPAN>IMGtbDefCuotas.style.display = 'block';<BR><SPAN style="WIDTH: 25px"></SPAN>DivDefCuotas.style.display = 'none';<BR>}</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

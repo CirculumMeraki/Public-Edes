@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>JPCheck 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[JPCheck] Mode [ | ListaVarSession ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Esta etiqueta se ejecuta inmediatamente despues de [JSCheck] y tiene la particularidad que se ejecuta tanto en el cliente como en el servidor y sirve para hacer el mismo chequeo en los dos entornos.<BR>Esta etiqueta solo est? activa al dar alta, modoficar o borrar siendo por tanto los pares de Modos equivalentes "a" y "A", "mR" y "M", "bR" y "B", pues un modo se ejecuta en el cliente y el otro en el servidor.<BR>El lenguage a utilizar en esta etiqueta es javascript sin llamadas a funciones de usuario.<BR>Se tienen acceso a todos los campos del formulario mediante el s?mbolo "$" mas el nombre del campo, si a esta variable la cambiamos su valor se entender? como un mensaje de error mostrando ese texto como tal, equivale a la funci?n "ePE()", se puede cambiar el valor de los campos con ePF() sin que por eso se genere un error.<BR><BR>Funciones permitidas:<BR><SPAN style="WIDTH: 25px"></SPAN>eAddYearsToDate<BR><SPAN style="WIDTH: 25px"></SPAN>eConcat<BR><SPAN style="WIDTH: 25px"></SPAN>eDTS<BR><SPAN style="WIDTH: 25px"></SPAN>eGF<BR><SPAN style="WIDTH: 25px"></SPAN>eGO<BR><SPAN style="WIDTH: 25px"></SPAN>eIndexOf<BR><SPAN style="WIDTH: 25px"></SPAN>eLength<BR><SPAN style="WIDTH: 25px"></SPAN>ePE<BR><SPAN style="WIDTH: 25px"></SPAN>ePF<BR><SPAN style="WIDTH: 25px"></SPAN>eSTD<BR><SPAN style="WIDTH: 25px"></SPAN>eSubstr<BR><SPAN style="WIDTH: 25px"></SPAN>eSubstring<BR><SPAN style="WIDTH: 25px"></SPAN>parseFloat<BR><SPAN style="WIDTH: 25px"></SPAN>parseInt<BR><BR>Constantes:<BR><SPAN style="WIDTH: 25px"></SPAN>_Hoy<BR><SPAN style="WIDTH: 25px"></SPAN>_D2S<BR><SPAN style="WIDTH: 25px"></SPAN>_ymd<BR><SPAN style="WIDTH: 25px"></SPAN>_Time<BR><SPAN style="WIDTH: 25px"></SPAN>_User<BR><SPAN style="WIDTH: 25px"></SPAN>_Node<BR><SPAN style="WIDTH: 25px"></SPAN>_Mode<BR><BR>En javascript se puede usuar las sentencias de control, operadores y expresiones de javascript.<BR><BR>Metodos:<BR>&nbsp;&nbsp;&nbsp;indexOf<BR>&nbsp;&nbsp;&nbsp;substr<BR>&nbsp;&nbsp;&nbsp;substring<BR><BR>Propiedades:<BR>&nbsp;&nbsp;&nbsp;length<BR><BR>C?digo condicional del pre-procesador como son "#(...)", "?...?", etc.<BR>Acceder a&nbsp;valores de php con "&lt;?..?&gt;" o "&lt;?=... ?&gt;"<BR>
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Mode&nbsp;</TD>
+<TD>Solo pueden ser "A" o "a" y "m" o "M", en Alta y Modificación&nbsp;</TD></TR>
+<TR>
+<TD>ListaVarSession</TD>
+<TD>Lista de variables de sessión que si están rellenas&nbsp;no se permitirá modificarlas por $_POST ni por $_GET&nbsp;</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR style="DISPLAY: none">
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

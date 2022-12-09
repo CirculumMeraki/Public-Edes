@@ -1,0 +1,169 @@
+[Title]ESTRUCTURA TABLA
+[MaxRec]FULL
+[Fields]||trim
+Tipo|tipo_uso|D|T|2||-||=|
+Field|df_field|#|T|20||-|||
+Type|df_type|#|T|20||-|||
+Null|df_null|#|T|20||-|||
+Key|df_key|#|T|20||-|||
+Default|df_default|#|T|20||-|||
+Extra|df_extra|#|T|20||-|||
+Condition|frm_condition|#|T|20||-|||
+[DBSql]l
+$table = $_GET["_DBTABLE"];
+qQuery('show tables');
+$OkTabla = array();
+$HayTablas = false;
+while( $row = qRow() ){
+$OkTabla[trim($row[0])] = true;
+if( strtoupper($table)==strtoupper(trim($row[0])) ) $HayTablas = true;
+}
+if( !$HayTablas ) eMessage('ERROR: Tabla "'.$table.'" no encontrada "SHOW TABLES"', "HSE");
+global $_Sql;
+$Tipo['mysqli'] = '
+TINYINT		2			-		T
+SMALLINT	4			-		T
+MEDIUMINT	6			-		T
+INT			9			-		T
+INTEGER		9			-		T
+BIGINT		18			-		T
+FLOAT		9,5			-,		T
+DOUBLE		18,7		-,		T
+DECIMAL		#			-,		T
+DATE		10			F4		T
+DATETIME	19			CDI		T
+TIMESTAMP	14			0		T
+TIME		8			H		T
+YEAR		#			0		T
+CHAR		#			D		T
+VARCHAR		#			D		T
+TINYBLOB	255,80,4	D		A
+TINYTEXT	255,80,4	D		A
+TEXT		2000,80,4	#		A
+BLOB		2000,80,4	#		A
+MEDIUMBLOB	2000,80,4	#		A
+MEDIUMTEXT	2000,80,4	#		A
+LONGBLOB	2000,80,4	#		A
+LONGTEXT	2000,80,4	#		A
+ENUM		2			0		S
+SET			10			D		M
+';
+$txt = '';
+$TIPO = array();
+$Tipo = explode(chr(10), $Tipo[$_Sql]);
+for($i=0;$i<count($Tipo);$i++){
+if( trim($Tipo[$i])!='' ){
+$Tipo[$i] = str_replace(' ', '', trim($Tipo[$i]));
+while( substr_count($Tipo[$i], chr(9).chr(9))>0 ){
+$Tipo[$i] = str_replace(chr(9).chr(9), chr(9), $Tipo[$i]);
+}
+if( substr_count($Tipo[$i], chr(9))==3 ) $TIPO[] = explode(chr(9), $Tipo[$i]);
+}
+}
+for($i=0;$i<count($TIPO);$i++){
+$TIPO[$i][0] = strtolower( $TIPO[$i][0] );
+for($n=0;$n<count($TIPO[$i]);$n++){
+$TIPO[$i][$n] = trim( $TIPO[$i][$n] );
+}
+}
+$dimIndice = array();
+qQuery('SHOW KEYS FROM '.$table);
+while( $row=qArray() ){
+$dimIndice[$row['Column_name']] = 1;
+}
+qQuery("SHOW FIELDS FROM {$table}");
+while( $row=qArray() ){
+$usuCursor[] = array($dimIndice[$row['Field']]?"NO":"", $row['Field'], $row['Type'], $row['Null'], $row['Key'], $row['Default'], $row['Extra'], "");
+}
+[PHPIni]l||UNIQUE
+function LongitudDelCampoMySql($NomCampo, $Long){
+$NomCampo = 'nm_'.substr($NomCampo, 3);
+$table = substr($NomCampo, 3);
+qQuery("SHOW FIELDS FROM {$table}", $p);
+while( $row=qArray($p) ){
+if( $NomCampo==trim($row['Field']) ){
+$Type = str_replace(')','',$row['Type']);
+$tmp = explode('(',$Type);
+$tmp[0] = trim(strtolower(trim($tmp[0])));
+return $tmp[1]*1;
+}
+}
+return $Long;
+}
+[JSEnd]l
+S(window).windowIcon("", "m");
+var win = window.frameElement["e-Parent"],
+_cForm = win._cForm, i, o;
+for(i in _cForm){
+console.log(_cForm[i].Nombre+', '+_cForm[i].Condicion);
+if( _cForm[i].Condicion!="" ){
+o = S("#BROWSE TR TD:nth-child(2)").search(_cForm[i].Nombre);
+if( o!=null ){
+o.style.color = "red";
+o.parentNode.cells[0].innerText = "IND";
+}
+}
+}
+[JSOnClickRow]l||3
+var win = window.frameElement["e-Parent"],
+td = _oTR.cells;
+S(window).callSrvPost('edes.php?E:CallSrv='+_Source+'&modify=1', {
+Table: win._DBTABLE,
+Field: S(td[1]).text(),
+Type: S(td[2]).text(),
+Null: S(td[3]).text(),
+Key: S(td[4]).text(),
+Default: S(td[5]).text(),
+Extra: S(td[6]).text(),
+RowIndex: _oTR.rowIndex
+});
+[CallSrv]modify
+if( $_POST['Null']=="YES" ){
+$_POST['Null'] = "not null";
+$total = qCount($_POST['Table'], "{$_POST['Field']} is null");
+if( $total>0 ){
+?>
+<script>
+top.S.error("El campo <?=$_POST['Field']?> tiene <?=$total?> de registros nulos");
+</script>
+<?PHP
+eEnd();
+}
+}else{
+$_POST['Null'] = "null";
+}
+$res = ($_POST['Null']=="null" ? "YES":"NO");
+if( $_POST['Default']=="NULL" ){
+$default = " NULL";
+}else if( $_POST['Default']=="CURRENT_TIMESTAMP" ){
+$default = " CURRENT_TIMESTAMP";
+}else if( $_POST['Default']!="" ){
+$default = " DEFAULT '".$_POST['Default']."'";
+}
+$sql = "alter table {$_POST['Table']} modify {$_POST['Field']} {$_POST['Type']} {$_POST['Null']}{$default}";
+qQuery($sql);
+$ok = false;
+qQuery("SHOW FIELDS FROM {$_POST['Table']}");
+while( $row=qArray() ){
+if( $row['Field']==$_POST['Field'] ){
+$ok = $row['Null']!=$_POST['Null'];
+break;
+}
+}
+if( $ok ){
+?>
+<script>
+console.log("<?=$sql?>");
+var oTR = top.S("#BROWSE TR", window.frameElement.WOPENER).dim[<?=$_POST['RowIndex']?>];
+oTR.cells[3].innerText = "<?=$res?>";
+</script>
+<?PHP
+}else{
+?>
+<script>
+console.log("<?=$sql?>");
+top.S.error("No se ha podido hacer el cambio");
+</script>
+<?PHP
+}
+eEnd();

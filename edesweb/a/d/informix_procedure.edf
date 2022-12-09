@@ -1,0 +1,20 @@
+[Title]PROCEDURES
+[DBTable]sysprocedures
+[DBIndex]procid
+[DBOrder]procname
+[DBSerial]procid
+[DBAddFilter]mode='R' or mode='O'
+[Fields]
+procname|procname|#|A|128,80,1||MQ|||
+args|numargs|-|T|9||MQ|||
+codesize|codesize|-|T|9||M|||
+datasize|datasize|-|T|9||M|||
+Propietario|owner|#D|T|32||MQ|||
+[JSOnClickRow]l
+var n = eGF("procname").replace(/\s/g,'');
+if( event.ctrlKey ){
+window.open( 'edes.php?E:$t/30.gs&HR='+escape('PROCEDURE-'+n)+'&E=9&U='+_User, 'EdPROC', '', true );
+}else{
+top.eCallSrv( window, 'edes.php?V:&TITLE=PROCEDURE: '+eGF("procname")+'&PROCNAME='+eGF("procname")+'&WIDTH=100%&HEIGHT=100%&SCRIPT=$t/sql_script.gs&STYLE='+escape('font-family:monospace') );
+}
+return false;

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">FC</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">{FC}{ [ ParametroOpcional ]<br />...<br />}</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Esta sub-etiqueta sólo se puede utilizar en el interior de la etiqueta [Fields]. <br />Ubica los campos indicados en la misma celda y en columna.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>ParametroOpcional: </strong>Es un texto a incluir en la definición de "<TABLE>" pudiendose por ejemplo:<br />border=1<br />style='border: 1 solid blue;'<br />etc.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>{FC}{ </code><br /><code>  M2.Construidos\M2<br>Construidos | mconstruido  | -,| T | 6|42 | M ||#| </code><br /><code>  M2.Utiles                        | vutil        | + | T | 6|42 | ML|| | </code><br /><code>  M2.Registrados\M2<br>Reg.        | vregistrad   | + | T | 6|42 | M || | </code><br /><code>  M2.Parcela\M2<br>Parcela         | mparcela     | + | T | 6|42 | M || | </code><br /><code>  Dormitorios                      | _dormitorios | + |[*]| 4|28 | ML|| | </code><br /><code>}</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>auxiliar.ini
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Este fichero es para cargar select en formato de tabla o en formato select en el momento de la carga de la aplicacion y el resto de veces que se tenga que usar viajara vacio y al llegar lo copiara ( Ubicación: _datos/config/auxiliar.usu ).</P>
+<P><STRONG>Tabla auxiliar</STRONG><BR>eLoadList( $Tabla, $Titulo, $Where );<BR>Ej: eLoadList( 'gs_node', 'Local', '' );</P>
+<P><STRONG>Tabla con niveles<BR></STRONG>eLoadTList( $Tabla, $Titulo, $Where );<BR>Lista de campos: cd_[Tabla], nm_[Tabla], nivel, orden<BR>Ej: eLoadTList( 'cnae', 'C.N.A.E', '' );</P>
+<P><STRONG>Select auxiliar<BR></STRONG>eLoadSelect( $NomSelect, $Tabla, $Campos, $Condicion, $Orden );<BR>Ej: gsAuxSelect( 'autonomias', 'auto', 'cd_auto,nm_auto', '', 'nm_auto' );</P>
+<P><STRONG>Añade indices al select</STRONG><BR>MasSelect( $Campo, $Contenido );<BR>Ej: MasSelect( 'nivel', '1,Básico; 2,Medio; 3,Total' );</P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

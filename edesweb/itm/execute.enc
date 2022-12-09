@@ -1,0 +1,80 @@
+//	https://hotexamples.com/examples/-/-/stream_context_create/php-stream_context_create-function-examples.html
+
+function _eExecute($url, $post=array(), $get=array()){
+	$target_url = $_SERVER["HTTP_REFERER"].'edes.php?~EXE~';								//'http://localhost/i_clientescloud/http/edes.php?Fa:crm/origen.edf';
+	$headers = array("~SERVER~QUERY_STRING:".$_SERVER["HTTP_REFERER"].'edes.php?'.$url);	// $headers = ["Cookie: PHPSESSID=".$_COOKIE["PHPSESSID"]];		//$cookies = 'CookieName1=Value;CookieName2=Value';
+
+	foreach($_SESSION as $k=>$v){
+		if( $v!="Array" && $k!="_D_" ){
+			$headers[count($headers)] = "~SESSION~".$k.':'.$v;
+		}
+	}
+	foreach($get as $k=>$v) $headers[count($headers)] = "~GET~".trim($k).':'.$v;
+	foreach($post as $k=>$v) $headers[count($headers)] = "~POST~".trim($k).':'.$v;
+
+	file_put_contents("../_tmp/php/curl_".session_id(), "ok");
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_URL, $target_url);
+	curl_setopt($ch, CURLOPT_GET, true);					//curl_setopt($ch, CURLOPT_POST, true); curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	$result = curl_exec($ch);
+	$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+	if( $httpCode!=200 ){				// ko
+		return "ERROR: ".$httpCode;
+	}
+	return $result;
+}
+
+/*
+$txt = eExecute('Ll:crm/origen.edf', array("_EXPORTLIST"=>"PDFBW"));
+//$txt = eExecute('Ll:crm/origen.edf', null , array("_gs_formato_"=>"P&BW"));
+
+//rename("../_tmp/pdf/lst_6.pdf","../_tmp/pdf/lst_62.pdf");
+//$txt2 = eExecute('Ll:crm/confianza.edf', array("_gs_formato_"=>"P"));
+
+//[*]No existe el fichero...[*]
+//eTron("[*]".$txt."[*]");
+ePrintR($txt);
+eInit();
+//echo $txt;
+echo $txt2;
+eTron( $txt.":::".$txt2);
+//echo $txt.":::".$txt2;
+eEnd();
+//ePrintR(":::",$txt);
+
+--------
+
+// Crear un flujo
+$opciones = array(
+  'http'=>array(
+    'method'=>"GET",
+    'header'=>"Accept-language: en\r\n" .
+              "Cookie: foo=bar\r\n"
+  )
+);
+$contexto = stream_context_create($opciones);
+
+$fichero = file_get_contents('http://www.example.com/', false, $contexto);		// Abre el fichero usando las cabeceras HTTP establecidas arriba
+
+-------
+
+Este código tiene que estar en /../http/edes.php
+
+if( $_SERVER["QUERY_STRING"]=="~EXE~" ){
+	$dim = getallheaders();
+	foreach($dim as $k=>$v){
+		list(,$kk,$nom) = explode("~",$k);
+		if( $k=="" ) continue;
+		$GLOBALS["_".$kk][$nom] = $v;
+		if( $kk=="SERVER" ) list(,$_SERVER[$nom]) = explode("?",$v);
+	}
+	unset($_GET["~EXE~"]);
+	if( !file_exists("../_tmp/php/curl_".$_SESSION["_sesion_"]) ) exit;
+	@unlink("../_tmp/php/curl_".$_SESSION["_sesion_"]);
+}
+
+*/

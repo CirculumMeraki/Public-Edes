@@ -1,0 +1,23 @@
+[Title]Script PHP
+[DBOrder]file
+[Fields]||TRIM
+Fichero|file|#|T|30||M|||
+CDI|cdi|CDI|T|19||M|||
+Byts|size|+|T|10||M|||
+[DBSql]l
+$misFiles = "_php.".$_SESSION["_User"];
+$long = strlen($misFiles)*-1;
+$df = opendir("../_d_/usr/");
+while( $file=readdir($df) ){
+if( $file!="." && $file!=".." && !is_dir($file) && substr($file,$long)==$misFiles ){
+$usuCursor[] = [str_replace("_"," ",substr($file,0,$long)), date("Y-m-d H:i:s", filectime("../_d_/usr/".$file)), filesize("../_d_/usr/".$file)];
+}
+}
+closedir($df);
+[JSEnd]l
+S("#BROWSE").on("click", function(ev){
+var o = S.event(ev);
+if( o.tagName=="TD" ) o = o.parentNode;
+if( o.tagName!="TR" ) return;
+_WOPENER.loadExt("/_d_/usr/"+S.trim(o.cells[0].innerText)+"_php."+top._User);
+});

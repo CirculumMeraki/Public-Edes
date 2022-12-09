@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">SelectColLabel</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[SelectColLabel] CampoPadre, CampoHijo | AddField | Valor</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Define la columna del select a visualizar en función de una condición, tienes un select con dos columnas de texto mostrando una u otra en función del valor del CampoPadre. El uso habitual es poner los textos de un select en función del campo "sexo".<br />Es un [RelationFields] entre dos campos condicionando la columna del select hijo a visualizar</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>CampoPadre</td>
+<td>Campo Padre</td>
+</tr>
+<tr>
+<td>CampoHijo</td>
+<td>Campo Hijo</td>
+</tr>
+<tr>
+<td>AddField</td>
+<td>Camos a añadir en la tabla del Campo Hijo</td>
+</tr>
+<tr>
+<td>Valor</td>
+<td>Valor del Campo Padre para mostrar el campo AddField</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[AddOption] * | sexo | ,; H,Hombre; M,Mujer</code></p>
+<p><code>[SelectColLabel] sexo,cd_profe | nm_profe_m | M</code></p>
+<p><code>[Fields]</code><br /><code>     Sexo      | sexo                                     | 0 | SV |  6 || M |||</code><br /><code>     Profesión | cd_profe{profe_sexo,cd_profe,nm_profe_h} | 0 | S  | 30 || M |||</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">El campo "cd_profe" tiene dos columnas de texto que son "nm_profe_h" y "nm_profe_m" y cuando el campo "sexo" tiene el valor "M" se mostrará la columna del campo "nm_profe_m", en cualquier otro caso se mostrará la columna "nm_profe_h".</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

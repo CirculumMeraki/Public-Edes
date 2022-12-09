@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">OnChange</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[OnChange] Mode | Field [,Field,..] | JavaScript [[ | FuncUsuario() | SeEjecutaEnLaCarga ]]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Cada vez que cambie el valor del campo se ejecutara el código JavaScript asociado. <br />En el tercer parámetro podemos indicar código JavaScript. Se puede repetir la etiqueta con el mismo campo sumandose todos los script.<br />Hay una función muy utilizada en esta etiqueta que es "eCallSrv()" que si se quiere que no se ejecute en la carga de la página la llamaremos con barra baja delante de la función "_eCallSrv()".</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Mode</td>
+<td> </td>
+</tr>
+<tr>
+<td>Field</td>
+<td> Campo o lista de campos sobre el qué deseamos crear el evento.</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td> Código JavaScript, si la función a ejecutar empieza por "_" no se ejecutará en la carga de la página</td>
+</tr>
+<tr>
+<td>FuncUsuario()</td>
+<td> Es una función de usuario que se llamará cuando se recarge un subselect, esta función puede llevar parámetros y variables php entre llaves.</td>
+</tr>
+<tr>
+<td>SeEjecutaEnLaCarga</td>
+<td> Por defecto es true, si ponemos false no se ejecutará en la carga, en este caso no haría falta que la función de javascript empiece por "_"</td>
+</tr>
+</tbody>
+</table>
+<u>Parametro "<strong>JavaScript</strong>"</u> : Puede ser o código javascript o una llamada a un fichero "SDF" que es un fichero de definición para la selección de datos de otras tablas, por ejemplo si lo pones en un campo de CIF de empresa al rellenar el CIF irá a este fichero a recuperar por ejemplo en nombre de la empresa.<br />La forma de definirlo sería la siguiente: <strong><span style="color: #0000ff; font-size: small;">[OnChange]</span></strong><span style="color: #000000; font-size: small;"> a,mR </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="color: #000000; font-size: small;"> cif </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"><span style="color: #000000;"> "cif.sdf?CIF="+this.value<br /></span></span>donde "cif.sdf" sería el fichero de definición que busca el nombre de la empresa y se le pasaría el parámetro "CIF=this.value".<br />Y el fichero de definición "cif.sdf":<br /><br />select nm_empresa from empresa where cif='{$CIF}'<br />Count = 1<br />Put: nm_empresa<br />Count = 0<br />Clear: cif, nm_empresa<br />Menssage: La empresa no existe<br /><br /><u>Comandos de los ficheros SDF:<br /></u>- Variables pasadas por url se utilizan de la siguiente forma:  '{$...NombreVariable...}'<br />- Variables sin nombre tomado los valores de la linea de argumentos:  '{$argv[0]}'<br />- Todos las sentencias "select" se guarda su resultado en la matriz asociativa "$_vF", utilizandola de la siguiente forma:  '{$_vF['cd_prov']}'<br /><br />FuncionDeUsuario().- En la primera linea que devolverá el nº de registros encontrados o un nº negativo, este valor se utiliza para saber que lineas de código se ha de ejecutar, lineas "Count ...".<br /><br />select ...<br />[select...]<br /><br /><span style="font-size: small;">Source: ...<br />Source: $NmVar=Valor<br />ElseSource:</span><br /><br />Empty:<br />Count  "=", ">", "<", ">=", etc..<br />Put:<br />Clear:<br />Show<br />Hide<br />ShowTR<br />HideTH<br />ShowGrpTR<br />HideGrpTR<br /><span style="font-size: small;">ShowTab:<br />HideTab:<br /></span><span style="font-size: small;">EditField:<br />NoEditField:<br />Focus:<br />OnChange:<br />Tab:postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal<br />List:postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal<br /><br />Tab:postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_user=cd_user,nombre=nombre+" "+<br />apellidos,nombre=onchange,FuncionDeUsuario()<br /><br />List:postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_user=cd_user,nombre=nombre+" "+<br />apellidos,nombre=onchange,FuncionDeUsuario()<br /><br />Menssage:<br />Help:<br />Function:<br />Php:<br /></span>.<br /><span style="font-size: small;">//<br />/* */<br /></span>[Note] <br /><br />Tron    Solo en linea 0 ( con o sin terminar en ":" )<br />Trace Solo en linea 0 ( con o sin terminar en ":" )<br />Debug:Solo en linea 0 ( con o sin terminar en ":" )<br />SaveSql:<br />SaveSqlH:<br /><br />DB: [SqlFileDefinition]<br /><br />- Tambien se puede utilizar la función "substr()" así como concatenar cadenas y poner un or en el put (ej. put: campoDestino = campoOrigen1 || campoOrigen2).</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[OnChange] a | cif | _eCallSrv( window, 'existe_cif.php&'+this.value )</td>
+</tr>
+<tr>
+<td id="txt">Cuando cambie el valor ded "cif" ejecutará el script "existe_cif".</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[RelationFields] cd_auto,cd_prov<br /><br />[OnChange] * | cd_prov | | FuncUsuario()<br /><br />[JSIni] * <br />function FuncUsuario(){<br />eDelOption('cd_prov','11');<br />}</td>
+</tr>
+<tr>
+<td id="txt">Cuando se carga el subselect "cd_prov" se ejecuta la fucnión "FuncUsuario()" para eliminar una entrada del subselect.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><u>- Fichero.edf</u><br />[OnChange] a,mR | cd_postal | "cp.sdf?CPOSTAL="+this.value<br /><br /><u>- Fichero: cd.sdf</u><br />select * from postal where cd_postal='{$CPOSTAL}'<br /><br />empty:<br /> clear: cd_postal, nm_postalCount = 0<br /><br />Count = 0<br /> clear: cd_postal, nm_postal<br /> help: Código postal DESCONOCIDO<br /> focus: cd_postal<br /><br />Count = 1<br /> put: nm_postal<br /><br />Count < 50   // Elegir en un listado de entre los 50<br /> list: postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal<br />Count >= 50// Ampliar condiciones de busqueda desde una ficha<br /> tab: postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal</td>
+</tr>
+<tr>
+<td id="txt">Este ejemplo es de un uso normal, la secuencia es:<br />- Busca un registro y en función del número de registros encontrados podrá hacer:<br />- Si ha quitado el valor del campo:<br />Vaciará los campos<br />- Si no encuantra ningún registro:<br />Vaciará los campos, mostrará un mensaje y se colocará en el campo que no ha encontrado el valor.<br />- Si encuentra sólo uno:<br />Rellenera el resto de campos.<br />- Si encuentra menos de 50 y mas de 1<br />Mostrarña un listado con los encontrados para seleccionar uno.<br />- Y si encuentra 50 o mas:<br />Mostrará una ficha de búsqueda, con los datos de busqueda asignados por defecto, para que se metan mas condiciones y buscar para elegirlo.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code><u>- Fichero.edf</u></code><br /><code>[OnChange] a,mR | cd_postal | "cp.sdf?CPOSTAL="+this.value</code><br /><br /><code><u>- Fichero: cd.sdf</u></code><br /><code>select * from postal where cd_postal='{$CPOSTAL}'</code><br /><code>select * from prov where cd_prov='{$_vF['cd_prov']}'</code><br /><code>empty:</code><br /><code> clear: cd_postal, nm_postal, cd_prov, _nm_prov</code><br /><code>Count = 0</code><br /><code> clear: cd_postal, nm_postal, cd_prov, _nm_prov</code><br /><code> help: Código postal DESCONOCIDO</code><br /><code> focus: cd_postal</code><br /><code>Count = 1</code><br /><code> put: nm_postal, cd_prov, _nm_prov='{$_vF['nm_prov']}'</code><br /><code>Count < 50  // Elegir en un listado de entre los 50</code><br /><code> list: postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal,_nm_prov=nm_prov</code><br />
+<p><code>Count >= 50  // Ampliar condiciones de busqueda desde una ficha</code><br /><code> tab: postal.edf&_FILTER=cd_postal='{$CPOSTAL}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal,_nm_prov=nm_prov</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">En este caso se hace un select adicional, si encuentra sólo uno,  para buscar  mas datos todos los datos de busqueda se encuentran en la variable $_vF.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>FuncionDeUsuario();</code><br /><code>select * from postal where cd_postal='{$CPOSTAL}'</code><br /><code>empty:</code><br /><code> clear: cd_postal, nm_postal</code><br /><code>Count = -1</code><br /><code> ...</code><br /><code>Count = -2</code><br /><code> ...</code><br /><code>Count = 0</code><br /><code> clear: cd_postal, nm_postal</code><br /><code> help: Código postal DESCONOCIDO</code><br /><code> focus: cd_postal</code><br /><code>Count = 1</code><br /><code> put: cd_postal, nm_postal</code><br /><code>Count <= 50  // Elegir de entre los 50</code><br /><code> list: ver_postal.edf&_FILTER=cd_postal='{$CP}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal</code><br /><code>Count > 50  // Ampliar condiciones de busqueda</code><br /><code> tab: ver_postal.edf&_FILTER=cd_postal='{$CP}'&_ASSIGN=cd_postal=cd_postal,nm_postal=nm_postal</code><br /><code>PHP</code><br /><code> FuncionDeUsuario(){</code><br /><code>  ...</code><br /><code>  if( ... ) return -1</code><br /><code>  if( ... ) return -2</code><br /><code>  return TotalReg;</code><br /><code> }</code></td>
+</tr>
+<tr>
+<td id="txt">Con función de usuario, esta podrá discriminar que bloque de instrucciones se van a ejecutar.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>Source: cen/unificar.edf</code><br /><code> chkPersona()</code><br /><code> select dni as dni1, cd_persona as cd_persona1, nombre as _nom1, concat(apel1,' ',apel2) as _ape1 from persona where dni like '{$DNI}%'</code><br /><code> Empty:</code><br /><code>  clear: dni1,_nom1,_ape1,cd_persona1</code><br /><code> </code><br /><code> Count = 0</code><br /><code>  clear: dni1,_nom1,_ape1,cd_persona1</code><br /><code>  help: DNI no encontrado </code><br /><code>  </code><br /><code> Count = 1</code><br /><code>  put: dni1</code><br /><code>  put: _nom1</code><br /><code>  put: _ape1</code><br /><code>  put: cd_persona1</code><br /><code> Count < 10</code><br /><code>  clear: dni1,_nom1,_ape1,cd_persona1</code><br /><code>  list: cen/a_personas.edf&_FILTER=dni='{$DNI}'&_ASSIGN=dni1=dni,_nom1=nombre,_ape1=apel1+' '+apel2,cd_persona1=cd_persona</code><br /><code> Count >= 10</code><br /><code>  clear: dni1,_nom1,_ape1,cd_persona1</code><br /><code>  tab: cen/a_personas.edf&_FILTER=dni='{$DNI}'&_ASSIGN=dni1=dni,_nom1=nombre,_ape1=apel1+' '+apel2,cd_persona1=cd_persona</code></td>
+</tr>
+<tr>
+<td id="txt">Ejemplo uniendo dos campos.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[OnChange] a,c | dni1 | 'cd_persona.sdf?DNI='+eGF('dni1');</code><br /><code>[AddCode]  a,c | dni1 | A |</code> <img title="Seleccionar persona" src="g/buscar.gif" /></td>
+</tr>
+<tr>
+<td id="txt">Ejemplo de como a traves de un icono llamar a un fichero de SDF.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

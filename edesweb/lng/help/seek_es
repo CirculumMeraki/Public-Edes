@@ -1,0 +1,18 @@
+<div style="width: 100%; text-align: center;"><strong>Opciones de búsqueda</strong></div>
+<hr />
+<table style="b-order-collapse: collapse;" border="1px" cellpadding="1px">
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>[Enter] / [Tab]</strong></td>
+<td style="text-align: left;">Inicia la búsqueda</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>[Cursor abajo] / [Cursor derecho]</strong></td>
+<td style="text-align: left;">Siguiente cadena</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>[Cursor arriba] / [Cursor izquierdo]</strong></td>
+<td style="text-align: left;">Cadena anterior</td>
+</tr>
+</tbody>
+</table>

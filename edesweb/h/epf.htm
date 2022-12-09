@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>ePF 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>ePF( NomCampo/Matriz, Valor, ConChange ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Abreviatura de putField.<BR>Le asigna un valor al campo especificado, si el campo es num?rico lo formatear? con eShowThousands() 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>NomCampo&nbsp;</TD>
+<TD>&nbsp;Puede ser un textos con el nombre de un campo o de un grupo de ellos separados por comas, a los cuales les asignar? el mismo valor,&nbsp;una matriz indexada o una matriz hash, los dos tipos de matrices&nbsp;soportan en los subindices&nbsp;con dos posibilidades:<BR><SPAN style="WIDTH: 25px"></SPAN>1) campo: valor<BR><SPAN style="WIDTH: 25px"></SPAN>2)&nbsp;campo: [valor, NoOnchange=true]</TD></TR>
+<TR>
+<TD>&nbsp;Valor</TD>
+<TD>&nbsp;Valor a asignar&nbsp;cuando no es una matriz.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>ePF('cd_pais', '011');<BR>ePF('campo1,campo2,campo3,campo4,....', ''); 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>ePF({<BR>&nbsp;&nbsp;&nbsp;cd_auto: "01",<BR>&nbsp;&nbsp;&nbsp;cd_prov: "04",<BR>&nbsp;&nbsp;&nbsp;cd_muni: "001"<BR>});&nbsp;<BR><BR>ePF({<BR><SPAN style="WIDTH: 25px"></SPAN>cd_auto: ["01",false],<BR><SPAN style="WIDTH: 25px"></SPAN>cd_prov: "04",<BR><SPAN style="WIDTH: 25px"></SPAN>cd_muni: "001"<BR>});&nbsp;<BR><BR>ePF([["cd_auto","02"],["cd_prov","44"],["cd_muni","012"]]);&nbsp;<BR><BR>ePF([["cd_auto",["02",1]],["cd_prov","44"],["cd_muni","012"]]);&nbsp;</TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

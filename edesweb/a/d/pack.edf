@@ -1,0 +1,35 @@
+#include(*) $lng/activity.edf.lng
+[Title]=CARACTERISTICAS DEL PAQUETE
+[DBTable]{$_SESSION['ShareDictionary']}gs_pack
+[DBIndex]cd_gs_pack
+[DBOrder]cdi
+[DBSerial]cd_gs_pack
+[DBMemo]description
+[NoButton]a
+[AddOption]a|cd_type|,; O,Nueva Opción; M,Mejora; E,Error; ~,~; A,Arreglo Datos; I,Importación; C,Proceso Cron; X,Proceso Interno; V,Varios
+[Fields]
+Cd gs pack|cd_gs_pack|+|T|9||*|||
+Cd gs activity|cd_gs_activity|0|S|9||*|||
+Cdi|cdi|CDI|T|19||*|||
+Tipo|cd_type|D|SV|15||M||#|
+Descripción|description|#|H|2000,80,15||M||#|
+|cd_gs_user|+|T|5||*|_User||
+#Include(a) $a/d/optree.zdf
+[JSIni]a
+window.frameElement.style.height = px(_WOPENER.document.body.clientHeight-120);
+var _FolderSelect = true;
+[JSEnd]a
+DGI('TABContainer').parentNode.style.verticalAlign = 'top';
+[DBEnd]A
+eInit();
+?>
+<script type="text/javascript">
+top.eInfo( window.frameElement.WOPENER, '@CREADO PAQUETE DE ACTUALIZACION@' );
+window.frameElement.WOPENER.location.href = 'edes.php?R:/_datos/config/empty_page.htm';
+</script>
+<?PHP
+eEnd();
+[CSSAdd]a
+BODY {
+background-image: none;
+}

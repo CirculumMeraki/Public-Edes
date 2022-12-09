@@ -1,0 +1,9 @@
+[key] {key} = {key}.replace(/\s/g,'');
+[help] http://msdn.microsoft.com/workshop/author/dhtml/reference/{key}.asp
+
+DHTML Constants
+	Color Table{colors/colors}
+	Command Identifiers{commandids}
+	Dialog Helper Character Sets{constants/dlgsafehelper_charset}
+	HTTP Response Headers{constants/response_headers}
+	Language Codes{language_codes}

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Title</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Title] Text [ [ | ModeCondicion / FuncionDeUsuario ]   | NoTitle ] <br />[Title] Text Tab | Text List  [ [ | ModeCondicion / FuncionDeUsuario ]  | NoTitle ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Pone título a una ficha, grupo de fichas o listado. Se puede poner etiquetas HTML. Si se quiere poner el "title" desde [HTMIni] para cojer el mismo tipo de letra, color y fondo se referenciará con el "ID=TITULO" ej: <span style="font-size: small;"><span id="TITULO">LIQUIDACION</span></span> <br />Hay una función especial "eChangeListCondition()" que si existe cambiará los textos de las condiciones a mostrar, pudiendo modificar las que hay y/o metiendo nuevas condiciones, esta función recibe la matriz de condiciones actual y devuelve la nueva matriz a mostrar de un solo subindice.<br />Si se encuentra una cedena entre llaves lo sustituirá por un icono.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td><strong>Text</strong>  </td>
+<td>El signo "=" (si se pone al pricipio del texto) indicará que el título es constante, no se añadirá nada. Si se pone la constante "NoTitle" en las subventanas no tendrá titulo las fichas y se ajustará el ancho a la subventana.</td>
+</tr>
+<tr>
+<td> <strong>ModeCondicion</strong></td>
+<td>Modo en el que se mostrarán las condiciones que han generado el listado, la visualización de estas condiciones se pueden modificar mediante la función "eChangeListCondition( $DimCondicion )" que debe crear el suario si quiere modificar la lista de condiciones. Para cambiar el label de una condición se usa la variable $_LABELCONDITION[ Field ] = Label. En las subventanas por defecto no se ven las condiciones, para visualizarlas poner la variable $_WinNoTitle = false;</td>
+</tr>
+<tr>
+<td> <strong>FuncionDeUsuario</strong></td>
+<td>En el modo listado se puede definir una función de usuario que devolverá una matriz doble con el label de la condición y con su contenido, el primer subindice de la matriz es de un solo elemento se considerará el titulo genaral de la condición, si todos los indices son de 2 dimensiones el titulo general lo pondrá el sistema. Esta función solo es ejecutada en modo listado.</td>
+</tr>
+<tr>
+<td> <strong>NoTitle</strong></td>
+<td>En subventana el titulo de la ficha se oculta y se muestra en la subventana.</td>
+</tr>
+</tbody>
+</table>
+<br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<th>MODO</th>
+<th>TITULO FICHA</th>
+<th>BOTÓN</th>
+</tr>
+<tr>
+<td>
+<p align="center">b,c,m<br /><br />
+</td>
+<td>SELECCIONAR [title]</td>
+<td>Buscar</td>
+</tr>
+<tr>
+<td>
+<p align="center">a<br /><br />
+</td>
+<td>FICHA DE [Title]</td>
+<td>Insertar</td>
+</tr>
+<tr>
+<td>
+<p align="center">bR<br /><br />
+</td>
+<td>FICHA DE [Title]</td>
+<td>Borrar</td>
+</tr>
+<tr>
+<td>
+<p align="center">cR<br /><br />
+</td>
+<td>FICHA DE [Title]</td>
+<td>Nueva Consulta </td>
+</tr>
+<tr>
+<td>
+<p align="center">mR<br /><br />
+</td>
+<td>FICHA DE [Title]</td>
+<td>Modificar</td>
+</tr>
+<tr>
+<td>
+<p align="center">l<br /><br />
+</td>
+<td>LISTA DE [Title]</td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<br />Si ponemos "/", en las operaciones en singular se mostrará el texto que haya a la izquierda del signo "/", mientras que en las operaciones en plural se mostrará el texto quitando el signo "/". <br />Si queremos mostrar el símbolo "/" deberemos poner "<span style="font-size: small;">/" o escapar con ""</span>. <br />El parámetro "Texto" puede ser una función definida con paréntesis la cual será llamada con el parámetro del modo de ejecución.<br />Si "Text" empieza por "$" pintará el contenido de la variable, si hay mas de una variable tendremos que poner las variables entre llaves y la variable con el signo "$".<br />Cuando no se quiere mostrar ningún título y se quiere separar los campos de la parte superior pondremos en la etiqueta el valor negativo en pixeles con el sufijo "px" ej "[Title] -10px". <br />Cuando en un listado se muestran las condiciones se puede cambiar el label mediante la variable $_LABELCONDITION[ NmFiedl ] = "Label";</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Title]&nbsp;PERSONA/S <br />[Title]&nbsp;PERSONA/S | ?l<br />[Title] =PREOC-OBRA | userFiltro()<br />[PHPIni] l<br />function userFiltro(){<br />$Dim[] = 'CONDICIONES ESPECIALES';// Opcional<br />$Dim[] = array( 'Label1', 'Contenido condici&oacute;n 1' );<br />$Dim[] = array( 'Label2', 'Contenido condici&oacute;n 2' );<br />return $Dim;<br />}</td>
+</tr>
+<tr>
+<td id="txt">
+En este ejemplo, el texto a mostrar en una operación de consulta será: "CONSULTA DE PERSONA", en singular. <br />Y el texto del encabezado en un listado: "LISTA DE PERSONAS", en plural. <br />En una ventana de "Qúe entidad ..." pondrá "¿ QUE PERSONA ?".<br />En un listado de selección "¿ SELECCIONA PERSONA ?".<br /><br />En el segundo ejemplo se pintarán las condiciones que se han introducido en la ventana de consulta para sacar el listado en los modos "cl", "ml" y "bl".<br /><br />En el tercer ejemplo el título es constante y el usuario devolverá una matriz con los datos de la condición.<br /><br />
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[PHPIni] l<br />function eChangeListCondition( $DimCondicion ){// Modifica la lista de condiciones del listado<br />$Dim = array();<br />for( $n=0; $n&lt;count($dimcondicion); $n++="" ){&lt;br=""&gt;$DimCondicion[$n] = trim( str_replace( 'y &lt;&gt; 00-00-0000', '', $DimCondicion[$n] ));<br />$DimCondicion[$n] = trim( str_replace( 'FECHA DE BAJA &lt;&gt; 00-00-0000', '', $DimCondicion[$n] ));<br />if( $DimCondicion[$n]!='' ) $Dim[] = $DimCondicion[$n];<br />}<br />return $Dim;<br />}&lt;/count($dimcondicion);&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td id="tEjemplo"&gt;EJEMPLO&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td id="Ejemplo"&gt;[Title]&nbsp;noTitle</td>
+</tr>
+<tr>
+<td id="txt">[Title] {v} Icono de consultar<br />[Title] {g/buscar.png} Icono de buscar</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

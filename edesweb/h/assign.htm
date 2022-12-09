@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">Assign</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Assign] Mode [ | ListaDeCampos ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Esta etiqueta está ligada a la posición 8 de la etiqueta [Fields] el "valor por defecto". <br />En el modo señalado, asignará los valores por defecto a las variables indicadas en el octavo apartado de la etiqueta [Fields]. <br />De forma predeterminada, el motor sólo asigna los valores por defecto en el modo Altas (a).<br />Al valor del campo se le quitan los siguientes cuatro carácteres " :-0" y si el campo despues de eliminar estos carácteres está vacio se sustituirá el dato.<br />Existe una forma abreviada de asignar valores por defecto en el modo "mR" poniendo en la columna "modo" de la etiqueta [Fields] el atributo "a" de ASSIGN.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td><strong>Mode </strong></td>
+<td>mR / bR </td>
+</tr>
+<tr>
+<td><strong>ListaDeCampos</strong></td>
+<td>Lista de campos a poner el valor por defecto, aunque el campo tenga ya un valor </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Assign] mR<br />[Fields]<br />Fecha | fecha | F4 | T | 10 | | - | #hoy# | |</td>
+</tr>
+<tr>
+<td id="txt">Por defecto solo en el alta pondrá el valor de la fecha actual, pero al poner "[Assign] mR" si al modificar el campo está vacio y solo si está vacio lo rellenará.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Fields]<br />Fecha | fecha | F4 | T | 10 | | -a | #hoy# | |</td>
+</tr>
+<tr>
+<td id="txt">En el modo "mR" también actualizará el campo "fecha".</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

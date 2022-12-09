@@ -1,0 +1,9 @@
+colDelimiter=|
+rowDelimiter=~
+replace=|::{&#124;}
+replace=~::{&#126;}
+cmd=open
+tableName=test
+createTable=CREATE TABLE test ( numero decimal(1), texto char(6));
+[EOP]
+1|TEST 1~2|TEST 2

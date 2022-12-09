@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eHide 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eHide( Campo [ [ , Nivel/TagName ] , OcultaElEspacio=true ] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Oculta el "Campo" o el "parentElement" de nivel "Nivel" si es un valor num?rico o hasta que encuentre el "TagName" de sus "parentElement" sucesivos, el parametro Nivel puede tener un valor especial "GROUP" para ocultar un grupo de campos, los comprendidos entre varias lineas divisorias y el valor "FIELDSET" que ocultar? la linea donde se encuentra el "FIELDSET", tambi?n si ponemos "-" ocultar? hasta el &lt;HR&gt; y si ponemos "L" ocultar? su label asociado. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD><STRONG>&nbsp;Campo</STRONG>&nbsp;&nbsp;</TD>
+<TD>&nbsp;Nombre del campo o lista de campos separados por comas&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Nivel/TagName</STRONG> </TD>
+<TD>&nbsp;Nivel del elemento padre que se quiere&nbsp;ocultar o el TagName del padre que se quiere ocultar (opcional, por defecto es "0")<BR>- Un N?: asciende n? parentNode y lo oculta<BR>- TAG:&nbsp;asciende hasta el tag indicado y lo oculta.<BR>- "GROUP":<BR>- "FIELDSET":<BR>- "-": oculta hasta el &lt;HR&gt;<BR>- "L": oculta el label asociado.<BR>- "submit": Bot?n de submit<BR>- "slSubmit": bot?n de submit de SubList</TD></TR>
+<TR>
+<TD><STRONG>&nbsp;OcultaElEspacio</STRONG></TD>
+<TD>&nbsp;La opci?n por defecto es ocultar eliminando el espacio, pero si lo ponemos a false ocultar? el elemento dejando intacto el espacio que ocupa&nbsp;</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>eHide( 'ccc' );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Oculta el campo "ccc"<BR>eHide( 'ccc', 2 );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Oculta "ccc.parentElement.parentElement";<BR>eHide( 'ccc', 'TR' );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Oculta el elemento padre "TR" del campo "ccc"<BR>eHide( 'banco,sucur,dc,ccc' );&nbsp; // Oculta los cuatro campos<BR>eHide( 'ccc', '-' );<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;// Oculta hasta la linea<BR>eHide( 'ccc', 'L' );<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;// Oculta el campo y su label <BR>eHide( 'submit' );&nbsp; <SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>&nbsp;// Oculta el bot?n del submit<BR>eHide( 'submit', 'tr' );<SPAN style="WIDTH: 25px"></SPAN>&nbsp; <SPAN style="WIDTH: 25px"></SPAN>// Oculta el TR donde est? el submit<BR>eHide( '_NmSubList', "slSubmit');<SPAN style="WIDTH: 25px"></SPAN>// Oculta el bot?n de submit de la SubList<BR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

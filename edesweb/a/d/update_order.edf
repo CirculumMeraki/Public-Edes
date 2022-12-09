@@ -1,0 +1,202 @@
+[PHPStart]a
+if( $_GET["_UPDATE"]=="" ){
+eMessage('Falta definir la variable "_UPDATE"', "HSE");
+}else if( !file_exists(eScript($_GET["_UPDATE"])) ){
+eMessage('El fichero "'.$_GET["_UPDATE"].'" no existe', "HSE");
+}
+[PHPStart]A
+$checkVar = explode(",", "_update_type_,_update_log_,_table_update_,_seek_field_,_seek_xls_,_fields_add_,__update__");
+for($n=0; $n<count($checkVar); $n++){
+if( !isset($_POST[$checkVar[$n]]) ){
+eMessage('Falta definir la variable "'.$checkVar[$n].'"', "HSE");
+}
+}
+[Title]=MODIFICACION MASIVA
+[PersistentVar]_UPDATE
+[NoEditFilled]*
+[Button]*|[u] Modificación masiva
+[UploadFile]_fichero_|/_tmp/php|_fichero_|2.000.000||csv
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]
+Petición de|_cd_gs_user|D|T|68|+_fichero_|A||#|
+|cd_gs_user|+|T|5||*|||
+Fichero|_fichero_|D|F|60||M||#|
+|_pos_pk_|+|T|2||*|||
+{H} Info
+#include(*) {$_UPDATE}
+[H]Info
+<span id='MensajeXLS' style='width:100px;color:blue;margin-top=5px'>
+Seleccione fichero Excel con alguna columna con título "#" para indicar los registros a modificar.
+</span><br><br>
+[PHPEnd]a
+echo "<script type='text/javascript'>DGI('MensajeXLS').innerHTML = DGI('MensajeXLS').innerHTML.replace('#','{$_pField['_seek_xls_'][7]}');</script>";
+[JSCheck]a-NO-
+if( eGF('_fichero_')!='' ){
+top.eInfo(window,'Procesando...',-1);
+var FileCSV = '{dir}tmp/import.csv';
+top.eFileDelete(FileCSV,1);
+top.eExcel("O|"+eGetFileName('_fichero_'));
+var Col = top.eExcel("USEDRANGE").split(','), n, ok=false; Col = Col[0];
+for( n=1; n<30; n++ ){
+if( eTrim(top.eExcel("G|1,"+n)).toUpperCase()==eGF('_seek_xls_') ){
+ePF('_pos_pk_',n-1);
+ok = true;
+}
+}
+top.eExcel("SAVEASCSV|"+FileCSV);
+top.eExcel("EXIT");
+top.eExcel("FREE");
+if( !ok ){
+top.eInfoError(window,'No se ha encontrado ninguna columna con el título "'+eGF('_seek_xls_')+'"',7);
+return false;
+}
+top.eFilePut(FileCSV,'/_tmp/php/import_'+_User+'.csv');
+}
+[PHPIni]A
+eInit();
+$NumUpdate = 0;
+$dir = eScript('//update/');
+if( is_dir($dir) ){
+if( $dh = opendir($dir) ){
+while( ($file = readdir($dh))!==false ){
+if( (int)substr($file,0,4)>$NumUpdate ){
+$NumUpdate = (int)substr($file,0,4);
+}
+}
+closedir($dh);
+}
+}else{
+eInclude('message');
+eMessage('Directorio "//update/" no encontrado', 'HSE');
+}
+$NumUpdate = str_pad($NumUpdate+1, 4, "0", STR_PAD_LEFT);
+$File = "{$dir}{$NumUpdate}.csv";
+$Ext = strtolower(substr($_fichero_, strrpos($_fichero_,'.')));
+$p = $_POST['_pos_pk_']*1;
+$FuncBefore = function_exists('functionBefore');
+$FuncAfter = function_exists('functionAfter');
+rename("../_tmp/php/import_{$_User}.csv", "{$dir}{$NumUpdate}.csv");
+copy($_FILES['_fichero_']['tmp_name'], "{$dir}{$NumUpdate}{$Ext}");
+$FormLabel = array(); $LongLabel = 0;
+for($n=0; $n<count($_Form); $n++){
+$FormLabel[$_Form[$n][1]] = $_Form[$n][0];
+$LongLabel = max($LongLabel, strlen($_Form[$n][0]));
+}
+$MemUpdateField = false;
+$DimUpdateField = array();
+$MemCheckField = false;
+$DimCheckField = array();
+$CamposSelect = $_seek_field_;
+$_fields_add_ = str_replace(' ', '', $_fields_add_);
+if( $_fields_add_<>'' ) $CamposSelect .= ','.$_fields_add_;
+$cdi = date('Y-m-d H:i:s');
+$Peticion = 'Usuario: '.$_User.' '.$_SESSION['_UserName']."\nFecha..: ".$cdi."\n\n";
+foreach($_POST as $k=>$v){
+if( $k[0]=='_' ){
+if( $k=='__check__' ){
+$MemUpdateField = false;
+$MemCheckField = true;
+continue;
+}else if( $k=='__update__' ){
+$MemUpdateField = true;
+$MemCheckField = false;
+continue;
+}else if( $k=='_update_log_' && $_update_log_<>'' ){
+$CamposSelect .= ','.$_update_log_;
+}else if( $k=='_FIELDSWITHFILES' ) continue;
+}else if(  $v<>'' ){
+if( $MemUpdateField ){
+$DimUpdateField[$k] = $v;
+$CamposSelect .= ','.$k;
+}else if( $MemCheckField ){
+$DimCheckField[$k] = $v;
+$CamposSelect .= ','.$k;
+}
+}
+$Peticion .= str_pad($FormLabel[$k], $LongLabel, ".", STR_PAD_RIGHT).': '.$k.' = '.$v."\n";
+}
+file_put_contents("{$dir}{$NumUpdate}.txt", $Peticion);
+$usuCursor = array();
+$TotalOk = 0;
+$TotalA = 0;
+$TotalI = 0;
+$TotalN = 0;
+if( ($pnt = fopen($File,"r"))!==FALSE ){
+fgetcsv($pnt,1000,";");
+while( ($Dim = fgetcsv($pnt,1000,";"))!==FALSE ){
+$PK = trim($Dim[$p]);
+if( $PK<>'' ){
+qQuery("select {$CamposSelect} from {$_table_update_} where {$_seek_field_}='{$PK}'");
+$r=qArray();
+if( $r[$_seek_field_]==$PK ){
+foreach($DimCheckField as $k=>$v){
+if( $v<>$r[$k] ){
+$usuCursor[] = array($PK, 'Fuera de Ambito');
+$TotalA++;
+continue 2;
+}
+}
+$Set = '';
+$Distinto = false;
+foreach($DimUpdateField as $k=>$v){
+if( $v<>$r[$k] )$Distinto = true;
+if( $Set<>'' ) $Set .= ',';
+$Set .= "{$k}='$v'";
+}
+if( !$Distinto ){
+$usuCursor[] = array($PK, 'Sin Cambios');
+$TotalI++;
+continue;
+}
+$usuCursor[] = array($PK, 'OK');
+$TotalOk++;
+if( $FuncBefore ) functionBefore($r, $PK, $Set);
+$Sql = "update {$_table_update_} set {$Set} where {$_seek_field_}='{$PK}'";
+if( $_update_log_<>'' ){
+qQueryLog($Sql, $_table_update_, "{$_seek_field_}='{$PK}'", $r[$_update_log_], $cd_gs_user);
+}else{
+qQuery($Sql);
+}
+if( $FuncAfter ) functionAfter($r, $PK, $Set);
+}else{
+$usuCursor[] = array($PK, 'No Encontrado');
+$TotalN++;
+}
+}
+}
+fclose($pnt);
+}
+$_TITLE = 'FICHERO ACTUALIZADO "'.$_fichero_.'" CON FECHA '.$cdi;
+$_Form = array();
+$_Form[] = explode( '|', $_seek_xls_.' | pk    | N | T | 10 || - |||' );
+$_Form[] = explode( '|', 'ERROR        | error | N | T | 20 || - |||' );
+for( $n=0; $n<count($_Form); $n++ ){
+for( $i=0; $i<count($_Form[$n]); $i++ ) $_Form[$n][$i] = trim($_Form[$n][$i]);
+}
+$_SystemCopyTo = "{$dir}{$NumUpdate}r.xls";
+include('../../edesweb/xls_lista.gs');
+function PintaCondiciones(){
+global $TotalOk, $TotalA, $TotalI, $TotalN, $__Lng;
+$__Lng[43] = 'RESUMEN DE LA ACTUALIZACIÓN';
+$Total = $TotalOk + $TotalA + $TotalI + $TotalN;
+$Total   = eNumberFormat($Total);
+$Long = strlen($Total);
+$TotalOk = str_pad(eNumberFormat($TotalOk), $Long, " ", STR_PAD_LEFT);
+$TotalA  = str_pad(eNumberFormat($TotalA ), $Long, " ", STR_PAD_LEFT);
+$TotalI  = str_pad(eNumberFormat($TotalI ), $Long, " ", STR_PAD_LEFT);
+$TotalN  = str_pad(eNumberFormat($TotalN ), $Long, " ", STR_PAD_LEFT);
+$Res = array(
+$Total  .' Registros tratados',
+$TotalOk.' Registros Modificados "OK"',
+$TotalA .' Registros "Fuera de Ambito"',
+$TotalI .' Registros "Sin cámbios"',
+$TotalN .' Registros "NO Encontrados"'
+);
+return $Res;
+}
+eEnd();

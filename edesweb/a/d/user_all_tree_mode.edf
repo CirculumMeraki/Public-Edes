@@ -1,0 +1,180 @@
+[Language] es,ca | 1
+	BusE | Busqueda por Estado | Cerca per Estat
+	BusA | Busqueda por Ámbito | Cerca per Àmbit	
+	
+[Title]	 =LISTA DE USUARIOS x ÁRBOLES y MODOS | l
+
+[DBTable] gs_user
+[DBIndex] cd_gs_user
+[DBOrder] user_surname, user_name
+[DBLimit] 20.000
+
+	 [DBAddFilter] permission='S'
+#(l) [DBAddFilter] P.permission='S' and P.cd_gs_user=U.cd_gs_user
+
+[LoadIni] ../_datos/config/custom.ini, ../_datos/config/manager_op.ini
+
+[ColsOp] c
+
+[FormAction] * | Ll:
+[RelationFields] cd_auto,cd_prov,cd_coma,cd_muni,cd_distri | cd_coma
+[NoEditFilled] c,m,b | session
+
+[AddCode] ? | cd_prov   | I | ADDOPTION='00,Provincial'
+[AddCode] ? | cd_coma   | I | ADDOPTION='00,Comarcal'
+[AddCode] ? | cd_muni   | I | ADDOPTION='000,Municipal,00'
+[AddCode] ? | cd_distri | I | ADDOPTION='00,@Dist@'
+
+#(?) [Width] L | * | =
+
+
+[Fields] ?
+{FS}{ @BusA@
+{FC}{
+  <  @_Auto@   | cd_auto     | 0 | S  | 2 | 28,200   | QI | _Auto_ |  |
+     @_Prov@   | cd_prov     | 0 | Ss | 2 | 28,200   | QI | _Prov_ |  |
+     @_Coma@   | cd_coma     | 0 | Ss | 2 | 28,200   | QI | _Coma_ |  |
+     @_Muni@   | cd_muni     | 0 | Ss | 3 | 28,200   | QI | _Muni_ |  |
+     @_Distri@ | cd_distri   | 0 | Ss | 2 | 28,200   | QI | _Dist_ |  |
+     @_CodAsa@ | cd_asamblea | + | T  | 5 |          | Q  |        |  |
+}
+}
+  <  Árbol     | cd_gs_tree  | + | S  | 2 | +cd_auto | Q  |        |  |
+
+.[JSCheck] ?
+.	if( $cd_gs_tree=="" ) ePE("cd_gs_tree", "Falta definir el árbol");
+
+[PHPIni] l
+	include("../_datos/config/manager_op.ini");
+	$_ModeTree = $_Mode;
+	$_Custom = parse_ini_file("../_datos/config/custom.ini");
+	if( empty($_Custom['url_user_view']) ){
+		$_Custom['url_user_view'] = 'FcR:$a/d/usu_ficha.edf';
+	}
+	$_CustomUrlUser = $_Custom['url_user_view'];				// da error al obtener el valor directamente desde la matrid en [JSOnClickRow]
+
+
+[THColSpan] cd_auto,cd_muni,Territorio | A,E,Modos
+[ColsNoRepeat] 1
+.[GreenBar] 7		//cd_gs_user
+
+[Fields]
+     Usuario      | user_surname,", ",user_name | N | T  | 50 |  | - |  |  |
+ .   Apellid      | user_surname                | N | T  | 30 |  | - |  |  |
+ .   Nombre       | user_name                   | N | T  | 20 |  | - |  |  |
+
+     Autonomía\Au | cd_auto                     | 0 | S  | 2  |  | - |  |  |
+     Provincia\Pr | cd_prov                     | 0 | Ss | 2  |  | - |  |  |
+     Comarca\Co   | cd_coma                     | 0 | Ss | 2  |  | - |  |  |
+     Municipio\Mu | cd_muni                     | 0 | Ss | 3  |  | - |  |  |
+
+     Árbol        | cd_gs_user tree             | N | T  | 50 |  | - |  |  |
+                  | cd_gs_user mode             | N | T  | 9  |  | * |  |  |
+                  | cd_gs_user                  | + | T  | 5  |  | * |  |  |
+
+     Alta\A       | A                           | N | T  | 1  |  | - |  |  |			//toDo: generar los modos dinámicamente
+     Baja\B       | B                           | N | T  | 1  |  | - |  |  |
+     Consultar\C  | C                           | N | T  | 1  |  | - |  |  |
+     Modificar\M  | M                           | N | T  | 1  |  | - |  |  |
+     Especial\E   | E                           | N | T  | 1  |  | - |  |  |
+
+[PHPForm] l
+	if( !empty($_POST["cd_gs_tree"]) ){
+		$_Form['tree'][_MODE] = "*";
+	}
+	
+[RowColor] ColorFila($row)
+[PHPIni] l
+	global $_LastUser;
+	$_LastUser = "";
+	$_FilaClass = "";
+	function ColorFila($row){
+		global $_LastUser, $_FilaClass;
+		if( $row[7]!=$_LastUser ){
+			$_LastUser = $row[7];
+			if( $_FilaClass=="" ){
+				$_FilaClass = 'class=" PieLista"';
+			}else{
+				$_FilaClass = "";
+			}
+		}
+		return $_FilaClass;
+     }
+
+.[PDFWrap] 2
+.[PDFSaveVar] PDF_LineRows
+[PDFVar] PDF_Grid = true
+
+[DBSql] l
+	$where = qGetWhere("P");
+	$where = str_replace("P.cd_gs_tree", "T.cd_gs_tree", $where);
+	qQuery("
+		select
+			concat(P.user_surname, ', ', P.user_name) user,
+			P.cd_auto, P.cd_prov, P.cd_coma, P.cd_muni,
+			T.nm_gs_tree, U.mode, P.cd_gs_user
+		from 
+			gs_user P, gs_user_tree U, gs_tree T
+		where 
+				P.cd_gs_user=U.cd_gs_user
+			and U.cd_gs_tree=T.cd_gs_tree
+			and {$where}
+		order by user, T.nm_gs_tree
+	");
+
+	/*
+	global $PDF_ShadowRows, $PDF_ColorRows;
+	$lastUser = "";
+	$n = 0;
+	$dim = array();
+	*/
+
+	while($r=qRow()){
+		$r[6] = str_replace(
+			array("I","D","V","U","L","S"),
+			array("A","B","C","M","L","E"),
+			$r[6]
+		);
+		$usuCursor[] = $r;
+		/*
+		if( $r[7]!=$lastUser ){
+			$lastUser = $r[7];
+			$dim[] = $n;
+			$color[] = "#0055ff";
+		}
+		*/
+	}
+
+	//$PDF_ShadowRows = implode(",", $dim);
+	//$PDF_ColorRows = implode(",", $color);
+
+[FootTitle] FuncPintaPie()
+
+[PHPIni] l
+	function FuncPintaPie(){
+		if( eIsPDF() ){
+			return "<br>Leyenda:<br>A: Alta<br>B: Baja<br>C: Consultar<br>M: Modificar<br>E: Especial";
+		}
+		/*
+		}else if( eIsXML() || eIsXLS() ){
+			return "";							//"col 1tcol 2tCol3<br>col 1tcol 2";
+		}else if( eIsHTM() ){
+			echo "...";
+		}
+		*/
+	}
+
+
+[Format]
+	$tmp = explode(",", $_vF["mode"]);
+	for($n=0; $n<count($tmp); $n++){
+		$_vF[$tmp[$n]] = "S";
+	}
+
+
+[JSOnClickRow] l
+	S.window("edes.php?{$_CustomUrlUser}&_SEEK=c&cd_gs_user="+_vF["cd_gs_user"]);
+
+
+[Note]
+.#Include(l) o_user_mode.edf|true

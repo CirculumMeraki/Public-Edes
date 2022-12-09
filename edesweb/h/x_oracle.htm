@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Manual Oracle
+<TR>
+<TD id=Descripcion>
+
+<H2><CODE>TIPOS DE DATOS EN ORACLE<BR></CODE></H2>
+<table border="0" cellspacing=1 cellpadding=2> 
+<colgroup> 
+<col> 
+<col> 
+<col> 
+</colgroup> 
+  <tr>
+    <td width="95"><strong>TIPO</strong></td>
+    <td width="150"><strong>CARACTERISTICAS</strong></td>
+    <td width="295"><strong>OBSERVACIONES</strong></td>
+  </tr>
+  <tr>
+    <td>CHAR</td>
+    <td>Cadena de caracteres (alfanum&eacute;ricos) de longitud fija </td>
+    <td>Entre 1 y  2000 bytes como m&aacute;ximo. Aunque se introduzca un valor m&aacute;s corto que el indicado en el tama&ntilde;o, se rellenar&aacute; al tama&ntilde;o indicado. Es de longitud fija, siempre ocupar&aacute; lo mismo, independientemente del valor que contenga </td>
+  </tr>
+  <tr>
+    <td>VARCHAR2</td>
+    <td>Cadena de caracteres de longitud variable </td>
+    <td>Entre 1 y 4000 bytes como m&aacute;ximo. El tama&ntilde;o del campo depender&aacute; del valor que contenga, es de longitud variable. </td>
+  </tr>
+  <tr>
+    <td>VARCHAR</td>
+    <td>Cadena de caracteres de longitud variable </td>
+    <td>En desuso, se utiliza VARCHAR2 en su lugar </td>
+  </tr>
+  <tr>
+    <td>NCHAR</td>
+    <td>Cadena de caracteres de longitud fija que s&oacute;lo almacena caracteres Unicode</td>
+    <td><DIV id=result_box dir=ltr>Entre 1 y 2000 bytes como m&aacute;ximo. El juego de caracteres del tipo de datos (datatype) NCHAR s&oacute;lo puede  ser AL16UTF16 &oacute; UTF8. El juego de caracteres se especifica cuando se crea la base de datos Oracle</DIV></td>
+  </tr>
+  <tr>
+    <td>NVARCHAR2</td>
+    <td>Cadena de caracteres de longitud variable que s&oacute;lo almacena caracteres Unicode</td>
+    <td><DIV id=result_box dir=ltr>Entre 1 y 4000 bytes como m&aacute;ximo. El juego de caracteres del tipo de datos (datatype) NCHAR s&oacute;lo puede ser AL16UTF16 &oacute; UTF8. El juego de caracteres se especifica cuando se crea la base de datos Oracle</DIV></td>
+  </tr>
+  <tr>
+    <td>LONG</td>
+    <td>Cadena de caracteres de longitud variable</td>
+    <td><p>Como m&aacute;ximo admite hasta 2 GB (2000 MB). Los datos LONG deber&aacute;n  ser convertidos 
+  apropiadamente al moverse entre diversos sistemas.</p>
+    <p>Este tipo de datos est&aacute; obsoleto (en desuso), en su lugar se utilizan los datos de tipo LOB (<CODE>CLOB</CODE>, <CODE>NCLOB</CODE>). Oracle recomienda que se convierta el tipo de datos LONG a alguno LOB si a&uacute;n se est&aacute; utilizando.</p>
+    <p>No se puede utilizar en cla&uacute;sulas WHERE, GROUP BY, ORDER BY, CONNECT BY ni DISTINCT</p>
+    <p>Una tabla s&oacute;lo puede contener una columna de tipo LONG.</p>
+    <p>S&oacute;lo soporta acceso secuencial.</p></td>
+  </tr>
+  <tr>
+    <td>LONG RAW</td>
+    <td>Almacenan cadenas binarias de ancho variable</td>
+    <td><p>Hasta 2 GB. </p>
+    <p>En desuso, se sustituye por los tipos LOB. </p></td>
+  </tr>
+  <tr>
+    <td>RAW</td>
+    <td>Almacenan cadenas binarias de ancho variable</td>
+    <td><p>Hasta 32767 bytes. </p>
+    <p>En desuso, se sustituye por los tipos LOB.</p></td>
+  </tr>
+  <tr>
+    <td>LOB (BLOG, CLOB, NCLOB, BFILE)</td>
+    <td>Permiten almacenar y manipular  bloques grandes de datos no estructurados (tales como texto, im&aacute;genes, videos,  sonidos, etc) en formato binario o del car&aacute;cter</td>
+    <td><p>Admiten hasta 8 terabytes (8000 GB).</p>
+    <p>Una tabla puede contener varias columnas de tipo LOB.</p>
+    <p>Soportan acceso aleatorio.</p>
+    <p>Las tablas con columnas de tipo LOB no pueden ser replicadas.   </p></td>
+  </tr>
+  <tr>
+    <td>BLOB</td>
+    <td>Permite almacenar datos binarios no estructurados</td>
+    <td>Admiten hasta 8 terabytes</td>
+  </tr>
+  <tr>
+    <td>CLOB</td>
+    <td>Almacena datos de tipo car&aacute;cter</td>
+    <td>Admiten hasta 8 terabytes</td>
+  </tr>
+  <tr>
+    <td>NCLOB</td>
+    <td>Almacena datos de tipo car&aacute;cter</td>
+    <td><p>Admiten hasta 8 terabytes. </p>
+      <DIV id=result_box dir=ltr>Guarda los datos seg&uacute;n el juego de caracteres Unicode nacional. </DIV>      
+    </td>
+  </tr>
+  <tr>
+    <td>BFILE</td>
+    <td><DIV id=result_box dir=ltr>Almacena datos binarios no estructurados en archivos del sistema operativo, fuera de la base de datos. Una columna BFILE almacena un localizador del archivo a uno externo que contiene los datos </DIV></td>
+    <td><p>Admiten hasta 8 terabytes. </p>
+      <DIV id=result_box dir=ltr>El administrador de la base de datos debe asegurarse de que exista el archivo en disco y de que los procesos de Oracle tengan permisos de lectura para el archivo . </DIV>      
+    <p>&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td>ROWID</td>
+    <td>Almacenar la direcci&oacute;n &uacute;nica de cada fila de la tabla de la base de datos</td>
+    <td><DIV id=result_box dir=ltr>
+      <p>ROWID f&iacute;sico almacena la direcci&oacute;n de fila en las tablas, las tablas en cl&uacute;ster, los &iacute;ndices, excepto en las &iacute;ndices-organizados (IOT).</p>
+      <p> ROWID l&oacute;gico almacena la direcci&oacute;n de fila en tablas de &iacute;ndice-organizado (IOT). </p>
+      <p>Un ejemplo del valor de un campo ROWID podr&iacute;a ser: &quot;AAAIugAAJAAC4AhAAI&quot;. El formato es el siguiente:</p>
+      <p>Para &quot;OOOOOOFFFBBBBBBRRR&quot;, donde:</p>
+      <p>OOOOOO: segmento de la base de datos (AAAIug en el ejemplo). Todos los objetos que est&eacute;n en el mismo esquema y en el mismo segmento tendr&aacute;n el mismo valor.</p>
+      <p>FFF: el n&uacute;mero de fichero del tablespace relativo que contiene la fila (fichero AAJ en el ejemplo).</p>
+      <p>BBBBBB: el bloque de datos que contiene a la fila (bloque AAC4Ah en el ejemplo). El n&uacute;mero de bloque es relativo a su fichero de datos, no al tablespace. Por lo tanto, dos filas con n&uacute;meros de bloque iguales podr&iacute;an residir en diferentes datafiles del mismo tablespace.</p>
+      <p>RRR: el n&uacute;mero de fila en el bloque (fila AAI en el ejemplo). <br>
+      </p>
+      <p>Este tipo de campo no aparece en los SELECT ni se puede modificar en los UPDATE, ni en los INSERT. Tampoco se puede utilizar en los CREATE. Es un tipo de datos utilizado exclusivamente por Oracle. S&oacute;lo se puede ver su valor utilizando la palabra reservada ROWID, por ejemplo:</p>
+      <p><em>select rowid, nombre, apellidos from clientes</em></p>
+      <p>Ejemplo 2:</p>
+      <p><em>SELECT ROWID, SUBSTR(ROWID,15,4) &quot;Fichero&quot;, 
+SUBSTR(ROWID,1,8) &quot;Bloque&quot;, <br>
+SUBSTR(ROWID,10,4) &quot;Fila&quot; FROM proveedores </em></p>
+      <p>Ejemplo 3: una forma de saber en cu&aacute;ntos ficheros de datos est&aacute; alojada una tabla:</p>
+      <p>SELECT COUNT(DISTINCT(SUBSTR(ROWID,7,3))) "Numero ficheros " FROM <SPAN class=italic>facturacion</SPAN> </p>
+    </DIV></td>
+  </tr>
+  <tr>
+    <td>UROWID</td>
+    <td>ROWID universal </td>
+    <td>Admite ROWID a tablas que no sean de Oracle, tablas externas. Admite tanto ROWID l&oacute;gicos como f&iacute;sicos. </td>
+  </tr>
+  <tr>
+    <td>NUMBER</td>
+    <td>Almacena n&uacute;meros fijos y en punto flotante</td>
+    <td><p>Se admiten hasta 38 d&iacute;gitos de precisi&oacute;n y son portables a cualquier entre los diversos sistemas en que funcione Oracle.</p>
+    <p>Para declarar un tipo de datos NUMBER en un CREATE &oacute; UPDATE es suficiente con:</p>
+    <p>nombre_columna NUMBER</p>
+    <p>opcionalmente se le puede indicar la precisi&oacute;n (n&uacute;mero total de d&iacute;gitos) y la escala (n&uacute;mero de d&iacute;gitos a la derecha de la coma, decimales, los coger&aacute; de la precisi&oacute;n indicada):</p>
+    <p>nombre_columna NUMBER (precision, escala)</p>
+    <p>Si no se indica la precisi&oacute;n se tomar&aacute; en funci&oacute;n del n&uacute;mero a guardar, si no se indica la escala se tomar&aacute; escala cero.</p>
+    <p>Para no indicar la precisi&oacute;n y s&iacute; la escala podemos utilizar:</p>
+    <p>nombre_columna NUMBER (*, escala)</p>
+    <p>Para introducir n&uacute;meros que no est&eacute;n el el formato est&aacute;ndar de Oracle se puede utilizar la funci&oacute;n TO_NUMBER.</p></td>
+  </tr>
+  <tr>
+    <td>FLOAT</td>
+    <td>Almacena tipos de datos num&eacute;ricos en punto flotante </td>
+    <td>Es un tipo NUMBER que s&oacute;lo almacena n&uacute;meros en punto flotante </td>
+  </tr>
+  <tr>
+    <td>DATE</td>
+    <td>Almacena un punto en el tiempo (fecha y hora) </td>
+    <td><DIV id=result_box dir=ltr>
+      <p>El tipo de datos DATE almacena el a&ntilde;o (incluyendo el siglo), el mes, el d&iacute;a, las horas, los minutos y los segundos (despu&eacute;s de medianoche).</p>
+      <DIV id=result_box dir=ltr>
+        <p>Oracle utiliza su propio formato interno para almacenar fechas. </p>
+        <DIV id=result_box dir=ltr>
+          <p>Los tipos de datos DATE se almacenan en  campos de longitud fija de siete octetos cada uno, correspondiendo al siglo, a&ntilde;o, mes, d&iacute;a, hora, minuto, y al segundo.</p>
+          <DIV id=result_box dir=ltr>
+            <p>Para entrada/salida de fechas, Oracle utiliza por defecto el formato <em><CODE>DD-MMM-AA</CODE></em>. Para cambiar este formato de fecha por defecto se utiliza el par&aacute;metro <em>NLS_DATE_FORMAT</em>. </p>
+            <p> Para insertar fechas que no est&eacute;n en el mismo formato de fecha est&aacute;ndar de Oracle, se puede utilizar la funci&oacute;n <em> TO_DATE</em> con una m&aacute;scara del formato: TO_DATE (el &ldquo;13 de noviembre de 1992&rdquo;, &ldquo;DD del MES, YYYY&rdquo;) </p>
+          </DIV>
+          <p>&nbsp;</p>
+        </DIV>
+        <p>&nbsp;</p>
+      </DIV>
+      <p>&nbsp;</p>
+    </DIV></td>
+  </tr>
+  <tr>
+    <td>TIMESTAMP</td>
+    <td>Almacena datos de tipo hora, fraccionando los segundos </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>TIMESTAMP WITH TIME ZONE</td>
+    <td>Almacena datos de tipo hora incluyendo la zona horaria (expl&iacute;cita), fraccionando los segundos </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>TIMESTAMP WITH LOCAL TIME ZONE</td>
+    <td>Almacena datos de tipo hora incluyendo la zona horaria local (relativa), franccionando los segundos </td>
+    <td>Cuando se usa un SELECT para mostrar los datos de este tipo, el valor de la hora ser&aacute; ajustado a la zona horaria de la sesi&oacute;n actual</td>
+  </tr>
+  <tr>
+    <td>XMLType</td>
+    <td>Tipo de datos abstracto. En realidad se trata de un CLOB. </td>
+    <td>Se asocia a un esquema XML para la definici&oacute;n de su estructura.</td>
+  </tr>
+</table>
+<p align="justify">
+	De los tipos anteriores, los comunmente utilizados son: <BR>
+		VARCHAR2 (cadenas de texto no muy grandes), <BR>
+		DATE (fechas, horas), NUMBER (n&uacute;meros), <BR>
+		BLOB (ficheros de tipo word, excel, access, video, sonido, im&aacute;genes, etc) y <BR>
+		CLOB (cadenas de texto muy grandes).
+</p>
+
+
+</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<HTML><HEAD>
+<TITLE></TITLE>
+<META NAME="Generator" CONTENT="gsEdit">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+<script type="text/javascript">
+	var _Notification = window.Notification || window.mozNotification || window.webkitNotification;
+	if( _Notification && _Notification.permission!=="granted" ){
+		_Notification.requestPermission();
+	}
+
+	var title = unescape(location.href).split("&")[1].substring(1);
+	document.title = title.substring(0, title.length-1);
+	try{ history.pushState({foo:'bar'}, '-*-', unescape(location.href).split("?")[0]); }catch(e){}
+</script>
+</HEAD>
+<BODY scroll=yes>
+
+	<img src="g/notification.png"> 
+	<span style="display: inline-block;">Para entrar en la intranet tiene que <br>Permitir mostrar las Notificaciones</span>
+
+</BODY>
+</HTML>

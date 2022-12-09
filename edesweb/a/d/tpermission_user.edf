@@ -1,0 +1,75 @@
+[Title]=USUARIOS CON PERMISO ESPECIAL:
+[DBTable]gs_user
+[DBIndex]cd_gs_user; login||true|user_name,user_surname|USUARIO YA EXISTE
+[DBOrder]user_surname,user_surname
+[DBSerial]cd_gs_user
+[DBAddFilter]A.cd_gs_user in (select cd_gs_user from gs_permission where cd_gs_tpermission={$_cd_gs_tpermission})
+[TipTH]permission=Permiso en la Intranet
+[ListCheckBox]H|<img src='g/tf_1.gif'>
+[ListCheckBox]P|Si|
+[ColsOp],c
+[PDFCol]estado=0
+[PDFTh]permission=PERMISO
+[Fields]
+Usuario|cd_gs_user|+|T|5||*|||
+Nombre|user_name|X|T|20||-|||
+Apellidos|user_surname|X|T|30||-|||
+Local|cd_gs_node|+|S|60||-|||
+Permiso\P|permission|N|C|1||-||=|
+#(ml) Quitar·Poner|cd_gs_node estado|N|T|1||-||=|
+#!(ml) Quitar·Poner|cd_gs_node estado|N|T|1||*|||
+#Include(l) add_tpermission_user.edf|true
+[Format]
+$_vF[5] = '<img src="g/tf_1.gif">';
+[JSEnd]l
+var _uTD, _uIMG;
+function uSetOnOffPermission( Quitar, Modo ){
+if( Quitar ){
+_uIMG.src = _uIMG.src.replace('_1.','_0.');
+}else{
+_uIMG.src = _uIMG.src.replace('_0.','_1.');
+}
+}
+function uOnOffPermission(){
+var Obj = S.event(window);
+var TR = S.toTag(Obj,'TR');
+if( Obj.tagName=='TH' ){
+SeleccionaLinea();
+}else if( Obj.tagName=='TD' ){
+top.eSWOpen( window, 'FmR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user') );
+}else if( Obj.tagName=='IMG' ){
+if( Obj.parentNode.cellIndex!=5 ){
+Obj = Obj.parentNode;
+top.eSWOpen( window, 'FmR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eClearThousands(TR.cells[0].textContent) );
+}else{
+_uIMG = Obj;
+_uTD = TR.cells[2];
+top.eCallSrv( window, 'PonQuitaPermission='+Obj.src.indexOf('_0.')+'&cd_gs_user='+eClearThousands(TR.cells[0].textContent)+'&cd_gs_tpermission='+_WOPENER.eGF('cd_gs_tpermission') );
+}
+}
+}
+[OnLoad]ml|document.all.BROWSE.onclick = uOnOffPermission;
+[CallSrv]PonQuitaPermission
+$cd_gs_user = str_replace('.','',$cd_gs_user);
+if( $PonQuitaPermission > -1 ){
+$Accion = 0;
+qQuery( "insert into gs_permission values ( {$cd_gs_user}, {$cd_gs_tpermission} )" );
+}else{
+$Accion = 1;
+qQuery( "delete from gs_permission where cd_gs_tpermission={$cd_gs_tpermission} and cd_gs_user={$cd_gs_user}" );
+}
+echo '<script type="text/javascript">';
+echo "window.frameElement.WOPENER.uSetOnOffPermission( {$Accion} );";
+echo '</script>';
+eEnd();
+[PHPIni]l
+qQuery( "select note from {$_SESSION['ShareDictionary']}gs_tpermission where cd_gs_tpermission={$_cd_gs_tpermission}" );
+list( $xNote ) = qRow();
+eAddShowFilter( 'Descripción: '.$xNote );
+[JSEnd]*-
+GROUPTITLE.title = ePGF('note');
+GROUPTITLE.style.width = BROWSE.offsetWidth;
+var TR = GROUPTITLE.insertRow();
+var TD = TR.insertCell();
+TD.style.fontSize = '90%';
+TD.innerHTML = '<br><SPAN style="overflow-x:hidden; float:left; white-space:nowrap; text-overflow:ellipsis; width:'+(BROWSE.offsetWidth)+';">Descipción: '+ePGF('note')+'</span>';

@@ -1,0 +1,48 @@
+[Title]=MODIFICACIONES DEL SCRIPT|l
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]cdi desc
+¿ $_PSOURCE!='$a/d/script_user.edf'  ? [DBAddFilter] cdi_ftp is null
+¿ $_PSOURCE=='$a/u/activity_ftp.edf' ? [DBAddFilter] cdi_ftp is not null
+[DBLimit]5000,100
+[AddLTools][U] Editar script|uEditor()
+[ColsOp]C
+[NoTools]*
+[Format]
+$_vF[2] = '<img src="edes.php?R:$t/g/s/check_n.gif" onclick="AnularFTP()">';
+[OnLoad]l|document.ondblclick=null;
+[Fields]
+CDI|cdi|CDI|T|19||MQ|||
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|0|S|50||MQ|||
+Script|script|||||c|||
+Anular|'' as ico|x|T|1||-||=|
+[CSSAdd]l
+#CONDICIONES LI {
+list-style-type: none;
+b-ackground: url(g/t_op_update.gif) no-repeat;
+padding-top: 4px;
+padding-left: 17px;
+}
+[JSEnd]l
+function uEditor(){
+var Script = DGI('CONDICIONES').rows[1].textContent.split(':');
+Script = S.trim(Script[1]);
+top.gsEdit(window, Script);
+}
+[PHPEnd]l
+list(,$Script) = explode('=',$_GET['_FILTER']);
+$Script = trim(str_replace('"','',str_replace("'",'',str_replace(chr(92),'',$Script))));
+echo "<script type='text/javascript'>var _uScript = '{$Script}';</script>";
+[JSIni]l
+function AnularFTP(){
+var _FilaCp = S.event(window).parentNode.parentNode.rowIndex;
+var CDI = S.event(window).parentNode.parentNode.cells[0].textContent;
+top.eCallSrv( window, 'NoFTP="'+_uScript+'"&FILA='+_FilaCp+'&CDI="'+CDI+'"', window );
+S.event(window).parentNode.parentNode.style.display = 'none';
+MovTitulos();
+eClearEvent();
+}
+[CallSrv]NoFTP
+qQuery("update {$_SESSION['ShareDictionary']}gs_activity set cdi_ftp='".date('Y-m-d H:i:s')."' where cdi_ftp is null and cdi='{$CDI}' and script='{$NoFTP}'");
+echo 'Ok';
+eEnd();

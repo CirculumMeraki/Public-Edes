@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>Button 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Button] Mode | [ButtonText] [ [ | Tip] | ModoDelIcono ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Configura el texto y/o icono del botón del submit.<BR>Si la variable del sistema "$_IconsSubmit" del fichero de configuración "sql.ini" está declarado los botones con icono y en un botón determinado no se quiere se pondrá "&lt;/&gt;" delante del label. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>ButtonText:</STRONG> Es el texto que contiene el interior del botón, este puede ser solo texto o una imagen con/sin texto, también puede ser un icono si está definido entre corchetes, el keyIcon es el definido en la etiqueta [Icon].<BR><STRONG>Tip:</STRONG> Es el mensaje (TITLE en HTML) que se muestra al pasar el cursor del ratón por encima del botón.<BR><STRONG>ModoDelIcono</STRONG>: Modo del icono a mostrar, si se quiere usar uno de los iconos por defecto. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[Button] a | Duplicar factura | Generar duplicación de factura 
+<TR>
+<TD id=txt>Muestra un botón en la parte inferior central de la ficha, con el texto "Duplicar factura". <BR>Al pasar por encima con el ratón se visualizará el mensaje "Generar duplicacion de factura". </TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[Button] a | [DOWNLOAD] Exportar</TD></TR>
+<TR>
+<TD id=txt>Muestra el icono de "DOWNLOAD" y el texto "Exportar"</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

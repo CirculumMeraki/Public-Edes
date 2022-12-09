@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">AddTools</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[AddToos] Mode | Field[,...] | NombreUtilidad [ | FuncionAEjecutar [ | IconoAlternativo ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Mode</td>
+<td>Modo, normalmente "a,mR"</td>
+</tr>
+<tr>
+<td>Field</td>
+<td>Nombre del campo</td>
+</tr>
+<tr>
+<td>NombreUtilidad</td>
+<td>Uno de los Objetos disponibles (lista en el siguiente cuadro)</td>
+</tr>
+<tr>
+<td>FuncionAEjecutar</td>
+<td>Función del usuario a ejecutar, con paréntesis.</td>
+</tr>
+<tr>
+<td>IconoAlternativo</td>
+<td>En caso del objeto "eColorSelect" o "eToneSelect":<br />- Sin parámetro pone un icono genérico de color<br />- Con una "C" de "color", el color del lapicero<br />- Con una "B" de "background-color", el color del papel<br />- Con una "P" de "palette" o dejar en blanco<br />- Url del icono definido por el usuario</td>
+</tr>
+</tbody>
+</table>
+<br />Los objetos disponibles son:<br />
+<table id="Opciones" style="height: 226px;" border="0" width="1534" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 93px; height: 18px;">eColorSelect</td>
+<td style="width: 1430px; height: 18px;">Para la selección de colore</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 93px; height: 18px;">eToneSelect</td>
+<td style="width: 1430px; height: 18px;">Para la selección de colore y tono </td>
+</tr>
+<tr style="height: 37px;">
+<td style="width: 93px; height: 37px;">eLabelSelect</td>
+<td style="width: 1430px; height: 37px;">Para la selecci?n de la primera etiqueta a  imprimir, en este caso el campo "Field" puede tener el valor "button" para colocar el gr?fico a la derecha del bot?n "submit".<br />Esta prestaci?n solo est? disponible en fichas y necesita la etiqueta "[PDFLabel]".</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 93px; height: 18px;">InsertAux</td>
+<td style="width: 1430px; height: 18px;">Inserta un registro en la tabla auxiliar y en el select asociado.</td>
+</tr>
+<tr style="height: 114px;">
+<td style="width: 93px; height: 99px;">eDefaults</td>
+<td style="width: 1430px; height: 99px;">Muestra un icono en la zona del título en los modos "a" y "?" para poner todos los valores rellenos y editables como valor por defecto. Por defecto lo memorizado se recupera en cualquier modo de consulta a no ser que pongamos el par?metro 6 a "true".<br />Si el par?metro "FieldsApp" se rellena solo tendr? encuenta la lista de campos en todos los script que tenga la etiqueta con la misma lista de campos, luego puedes tener varias listas que serán independientes.<br />[AddTools] * | [FieldsApp,...] | eDefaults | [title] | [sin uso] | true</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 93px; height: 18px;">eLabelSelect</td>
+<td style="width: 1430px; height: 18px;">Hay que definir el nombre del campo como "Button". para que tenga ejecto tienen que definirse tambi?n la etiqueta "[PDFLabel]"</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 93px; height: 18px;">3CX</td>
+<td style="width: 1430px; height: 18px;">Define los campos que tienen la 3CX cuando la configuración es por script no global<br />[AddTools] * | tlf,movil | 3cx | filled/empty (que salga el icono solo si el campo tiene valor o o siempre)<br />[AddTools] * | NO/OFF | 3cx          // desactiva la 3cx en este modo de esta página</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddTools] * | color_lapiz | eColorSelect | | B&nbsp; &nbsp; &nbsp;//[B]ackground / [C]olor</code><br /><code>[AddTools] * | color_lapiz | eColorSelect | | edes.php?R:$t/g/i/colorlapiz.gif&nbsp;</code><br /><code>[AddTools] * | color_papel | eColorSelect | | edes.php?R:$t/g/i/colpapel.gif&nbsp; </code><br /><code>[AddTools] * | cd_aux&nbsp; &nbsp; &nbsp; | InsertAux&nbsp; [ | Insertar dato en tabla auxiliar/title del bot&oacute;n</code><br /><br /><code>[Fields]</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Color Lapiz | color_lapiz&nbsp;| X | T | 7 | | M |&nbsp;| |</code> <br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Color Papel | color_papel&nbsp;| X | T | 7 | | M |&nbsp;| | </code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code></td>
+</tr>
+<tr>
+<td id="txt">Ayuda para seleccionar un color.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddTools] a | Button | eLabelSelect</code><br /><br /><code>[PDFLabel] NomFile | 10,5 | 40,6 | 2,2 | 4,9</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campo1 | 3 | 3 || # | " "</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campo2 |&nbsp;&nbsp; |&nbsp;&nbsp; || # | " "</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Campo3 |&nbsp;&nbsp; |&nbsp;&nbsp; || # |</code></td>
+</tr>
+<tr>
+<td id="txt">Se generan etiquetas en pdf y se podrá seleccionar cual será la primera etiqueta a imprimir.<br />Si no est?n definidos los campos "_PDFLabelCol" y "_PDFLabelRow" los genera para guardar los valores.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddTools] a || eDefaults</code></td>
+</tr>
+<tr>
+<td id="txt">Define en el modo de Alta la utilidad de dejar cualquier n?mero de valores por defecto.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddTools] a | cd_auto,cd_prov | eDefaults</code></td>
+</tr>
+<tr>
+<td id="txt">Solo se memorizan y se restauran los campos "cd_auto" y "cd_prov" en todos los script donde esté definida la etiqueta con sus campos.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddTools] * | tlf | 3cx | filled/empty (que salga el icono solo si el campo tiene valor o siempre)</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table>
+ <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

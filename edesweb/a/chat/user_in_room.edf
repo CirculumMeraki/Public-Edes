@@ -1,0 +1,24 @@
+[Title]USUARIOS EN SALAS
+[DBTable]gs_chat_user
+[DBIndex]cd_gs_user,cd_gs_chat_room,cdi_ini
+[DBOrder]cd_gs_user,cd_gs_chat_room,cdi_ini
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]||trim
+#(?) Usuario|_cd_gs_user|D|T|60||Q|||
+#(?) Usuario|cd_gs_user|+|T|6||*Q|||
+#!(?) Usuario|cd_gs_user|+|S|60||A|_User||
+Cd gs chat room|cd_gs_chat_room|+|S|60||MQ||#|
+Cdi ini|cdi_ini|CDI|T|19||Q-|||
+Cdi end|cdi_end|CDI|T|19||MQ|||
+Msg send|msg_send|D|C|1||M|||
+,Msg receive|msg_receive|D|C|1||M|||
+Chat create|chat_create|D|C|1||M|||
+,Chat silence|chat_silence|D|C|1||M|||
+,Chat export|chat_export|D|C|1||M|||
+,Chat exit|chat_exit|D|C|1||M|||

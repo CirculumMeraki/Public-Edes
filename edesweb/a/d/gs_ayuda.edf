@@ -1,0 +1,30 @@
+[DB]mysql,...
+[Title]AYUDA/S
+[DBTable]gs_ayuda
+[DBIndex]codigo;nombre
+[DBOrder]nombre
+[DBSerial]codigo
+[SaveTrace]0
+[AddOption]*|grupo|,; F,Ficha; G,GFicha; L,Listado;  O,Objeto; T,Tabla; C,Campos;  W,Ventana;  PF,PDF Ficha; Va,Variable; FJ,Función JS; FP,Función PHP;  FU,Fichero USU; FC,Fichero CSS;  Ex,Extensión;  A,Aplicación; V,Varios
+[AddCode]*|descripcion|I|style='font-size:14px;font-family:courier'
+[AutoMenu]a,mR,cR,bR|2
+[Fields]2
+|codigo|+|T|15||*|||
+Nombre|nombre|#D|T|15||MQ||#|
++2 Grupo|grupo|D|SV|2||MQ||#|
+Sintaxis|sintaxis|#X|T|60||ML|||
++2 Creado|dt_creado|F4|T|10||-L|#today#|#|
+Resumen|resumen|D|T|60||MQ|||
++2 Modificado|dt_modificado|F4|T|10||-L|#today#||
+#(a,mR) >|[H] Iconos
+Descripción|descripcion|#|A|15000,80,26||ML|||
+[H]Iconos
+<img style='margin-left:62px;' src='edes.php?R:$a/g/tab.gif' onclick='PasteTab()' title='Tabulador'>
+[JSHead]a,mR
+function PasteTab(){
+document.FRM1.descripcion.focus();
+obj = document.selection.createRange();
+obj.text = String.fromCharCode(9);
+}
+[JSEnd]mR
+FRM1.dt_modificado.value = _D2S.substring(6,8)+'-'+_D2S.substring(4,6)+'-'+_D2S.substring(0,4);

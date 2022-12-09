@@ -1,0 +1,260 @@
+[Title]=INFORME PDF CON 4 NIVELES|l
+[NoTools]*
+[CSS]*|pdf
+¿ isset($_SESSION["VAR_TMP"]) && isset($_SESSION["VAR_TMP"]["pdf.css"]) ?	[CSS] * | pdf_tmp
+[CSSAdd]*
+@font-face {
+font-family: 'Roboto_regular';
+font-style: normal;
+font-weight: 400;
+src: url('fonts/roboto-v15-latin-regular.eot');
+src: local('Roboto'), local('Roboto-Regular'),
+url('fonts/roboto-v15-latin-regular.eot?#iefix') format('embedded-opentype'),
+url('fonts/roboto-v15-latin-regular.woff') format('woff'),
+url('fonts/roboto-v15-latin-regular.ttf') format('truetype'),
+url('fonts/roboto-v15-latin-regular.svg#Roboto') format('svg');
+}
+@font-face {
+font-family: 'Roboto_700';
+font-style: normal;
+font-weight: 700;
+src: url('fonts/roboto-v15-latin-700.eot');
+src: local('Roboto Bold'), local('Roboto-Bold'),
+url('fonts/roboto-v15-latin-700.eot?#iefix') format('embedded-opentype'),
+url('fonts/roboto-v15-latin-700.woff') format('woff'),
+url('fonts/roboto-v15-latin-700.ttf') format('truetype'),
+url('fonts/roboto-v15-latin-700.svg#Roboto') format('svg');
+}
+@font-face {
+font-family:eDes;
+font-weight:normal;
+font-style:normal;
+text-transform:none;
+src:url('fonts/edes.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+url('fonts/edes.woff?v=4.7.0') format('woff'),
+url('fonts/edes.ttf?v=4.7.0') format('truetype'),
+url('fonts/edes.svg?v=4.7.0#fontawesomeregular') format('svg');
+}
+table, th, td {
+border:0px;
+border-spacing:1px;
+}
+td,th {
+padding:2px 2px;
+}
+body, html {
+height:100%;
+width:100%;
+BACKGROUND-COLOR:#F8F8F8;
+font-family:'Roboto_regular';
+}
+TH, TD {
+font-family:'Roboto_regular';
+}
+* {
+font-size:14px;
+font-family:'Roboto_regular';
+box-sizing:content-box;
+}
+I {
+font-family:eDes;
+font-weight:normal;
+font-style:normal;
+text-transform:none;
+vertical-align:text-bottom !important;
+}
+.AddButton2 {
+BORDER:#C3C3C3 1px outset;
+BACKGROUND-COLOR:#ffffff;
+COLOR:#4C4B4B;
+DISPLAY:table;
+CURSOR:pointer;
+MARGIN-LEFT:10px;
+PADDING-LEFT:10px;
+PADDING-RIGHT:10px;
+PADDING-TOP:0px;
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-radius:5px;
+}
+.AddButton2:hover *, .AddButton2:hover {
+background-color:#C3C3C3 !important;
+}
+.AddButton2 TD {
+font-size:130%;
+font-weight:normal;
+}
+.AddButton2 td:nth-child(1) {
+padding-bottom:3px;
+}
+.ROUNDED {
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-radius:5px;
+padding:5px 10px 5px 10px;
+}
+.ICONINPUT {
+font-size:13px;
+color:#1B6B8D;
+cursor:pointer;
+vertical-align:middle;
+margin-left:2px;
+}
+.ICONLOADING {
+display:none;
+}
+#CONDICIONESPDF {
+border-spacing:0px;
+}
+#CONDICIONESPDF TD {
+padding-top:0px;
+padding-bottom:0px;
+}
+.col_1r th:nth-child(2), .col_1r td:nth-child(2){text-align:right;}
+#ToolsPaginate TD {
+background-color: transparent;
+}
+#GC1 {PADDING-LEFT:2px;}
+#GC2 {PADDING-LEFT:15px;}
+#GC3 {PADDING-LEFT:25px;}
+#GC4 {PADDING-LEFT:35px;}
+#GRTD1 {PADDING-LEFT:2px;}
+#GRCOL1 {PADDING-LEFT:15px;}
+#GRTD2 {PADDING-LEFT:15px;}
+#GRCOL2 {PADDING-LEFT:25px;}
+#GRTD3 {PADDING-LEFT:25px;}
+#GRCOL3 {PADDING-LEFT:35px;}
+#GRTD4 {PADDING-LEFT:35px;}
+#GRCOL4 {PADDING-LEFT:45px;}
+[DBOrder]grupo, concepto
+[Fields]
+Grupo 1|grupo_1|D|T|20||-|||
+Grupo 2|grupo_2|D|T|40||-|||
+Grupo 3|grupo_3|D|T|40||-|||
+Grupo 4|grupo_4|D|T|40||-|||
+Concepto|concepto|D|T|40||-|||
+Importe|importe|+|T|5||-|||
+[ColsOp]S,S,S,S,#,+
+[DBSql]l
+for($g1=1; $g1<3; $g1++){
+for($g2=1; $g2<3; $g2++){
+for($g3=1; $g3<3; $g3++){
+for($g4=1; $g4<3; $g4++){
+for($l=0; $l<5; $l++){
+$usuCursor[] = array("Grupo {$g1}", "Grupo {$g2}", "Grupo {$g3}", "Grupo {$g4}", "Concepto {$l}", $l*10);
+}
+}
+}
+}
+}
+eAddButton("pdf", "PDF"        		, "gsExpor('P&BW=&VIEW=0')", "", "id='BOTONPDF' style='color:red'");
+eAddButton("off", "GreenBar"        , "uGreenBar()", "", "id='BOTONGreenBar'");
+eAddButton("off", "Informe Resumido", "uResumen()" , "", "id='BOTONResumen'" );
+eAddShowFilter(array("AAA = 111","BBB = 222"));
+$PDF_Ordenacion = "CONCEPTO";
+[JSEnd]l
+S(".AddButton").css(S.ruleGet(top, ".AddButton"));
+S(".AddButton I").css(S.ruleGet(top, ".AddButton I"));
+S("#BOTONPDF").fixed(5, -80);
+S("#BOTONGreenBar").fixed(5, -40);
+S("#BOTONResumen" ).fixed(5, -1);
+for(n=1; n<5; n++) S("TD[id='GC"+n+"']").class("+GroupHeader_"+n);
+for(n=1; n<5; n++) S("TR[id='GR"+n+"'] TD").class("+GroupSubTotal_"+n);
+S(".PieLista TD").class("=Totals")
+S("#GROUPTITLE").none();
+var cab = S("#TxtCabecera").obj.offsetWidth,
+sep = S("#SeparaDatos"),
+long = S("#LineaSeparacion").obj.offsetWidth,
+fileCss = "<?= ((isset($_SESSION["VAR_TMP"]) && isset($_SESSION["VAR_TMP"]["pdf.css"]))? "pdf_tmp.css":"pdf.css")?>";
+sep.css("width", long-cab);
+var color = S.ruleGet(window, "HR", "color", fileCss);
+S("#LineaSeparacion").css("backgroundColor", color);
+S("#FootTitle TD").class("FootTitle");
+S("#CONDICIONES").none();
+S("#CONDICIONESPDF TD").css("background:transparent");
+var _GreenBar = S.ruleGet(window, ".GreenBar", null, fileCss);
+setTimeout(function(){
+var sep = S("#SeparaDatos");
+sep.css("width", 0);
+var cab = S("#TxtCabecera").obj.offsetWidth,
+long = S("#LineaSeparacion").obj.offsetWidth;
+sep.css("width", long-cab);
+var xy = S("#LineaSeparacion").xy();
+S(".CDSCRIPT").css({
+left: xy.x+xy.w-S(".CDSCRIPT").obj.offsetWidth,
+top: xy.y+1,
+color:""
+});
+xy = S(".PagNumber").xy();
+S(".SHOWRECIPIENT").css({
+left: 1,
+top: xy.y,
+color:""
+});
+},1000);
+S(".AddButton").css("zIndex",9);
+[JSIni]l
+function uGreenBar(){
+if( S(".BROWSE").class("?SetGreenBar") ){
+S(".BROWSE").class("-SetGreenBar");
+S(".BROWSE TR[eDetail='2']").each(function(k,o){
+S("TD", o).css("background:;color:");
+});
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "i";
+}else{
+S(".BROWSE").class("+SetGreenBar");
+S(".BROWSE TR[eDetail='2']").each(function(k,o){
+if( k%2!=0 ){
+S("TD", o).css(_GreenBar);
+}
+});
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "j";
+}
+}
+function uResumen(){
+S("TR[eDetail='1']").display("table-row");
+var o = S("TR[eDetail='2']");
+if( o.length ){
+if( o.dim[0].offsetHeight>0 ){
+o.none();
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "j";
+}else{
+o.display("table-row");
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "i";
+}
+}
+}
+[FootTitle]echo "Linea del FootTitle";
+[PHPIni]l
+include("../_datos/config/pdf.ini");
+$PDF_SubTitulo = "SUBTITULO DEL PDF";
+?>
+<span id="TxtCabecera">
+<span class="Company" style="width:100%;"><?=$PDF_TxtCabecera?></span>
+<div id="SeparaDatos" style="display:inline-block;"></div>
+<span class="Date">Fecha: <?=date("d-m-Y H:i:s")?></span>
+</span>
+<div id="LineaSeparacion" style="height:2px;"> </div>
+<br>
+<div style="width:100%;text-align:left;">
+<TABLE id="CONDICIONESPDF" border=0px cellspacing=0px cellpadding=0px style="display:table; background:transparent;">
+<tbody>
+<TR><TD style="text-align:right" class="Title_text"><?=$PDF_TxtTitulo    	 ?></TD><TD><span style="vertical-align:super"><i class="Circle" style="font-size:4px">*</i></span></TD><TD class="Title_value">INFORME PDF CON 4 NIVELES</TD></TR>
+<TR><TD>																	   </TD><TD><span style="vertical-align:super"><i class="Circle" style="font-size:4px">*</i></span></TD><TD class="Title_value">SUBTITULO DEL PDF</TD></TR>
+<TR><TD style="text-align:right" class="Order_text"><?=$PDF_TxtOrdenacion	 ?></TD><TD><span style="vertical-align:super"><i class="Circle" style="font-size:4px">*</i></span></TD><TD class="Order_value">CONCEPTO</TD></TR>
+<TR><TD style="text-align:right" class="Condition_text"><?=$PDF_TxtCondicion ?></TD><TD><span style="vertical-align:super"><i class="Circle" style="font-size:4px">*</i></span></TD><TD class="Condition_value">AAA = 111</TD></TR>
+<TR><TD>																	   </TD><TD><span style="vertical-align:super"><i class="Circle" style="font-size:4px">*</i></span></TD><TD class="Condition_value">BBB = 222</TD></TR>
+</tbody>
+</TABLE>
+</div>
+<br>
+<?PHP
+[HTMEnd]l
+<br><br>
+<div class="PagNumber" style="text-align:right">Pág 1</div>
+<br><br><br><br><br><br>
+<span class="SHOWRECIPIENT" style="position:absolute;left:0px;bottom:0px;color:transparent;">Recipient</span>
+<span class="CDSCRIPT" style="position:absolute;left:0px;top:0px;color:transparent;">script</span>
+[JSIni]*
+function poneClases(){
+}

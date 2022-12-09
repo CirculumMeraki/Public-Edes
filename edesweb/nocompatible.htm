@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<HTML><HEAD>
+<TITLE></TITLE>
+<META NAME="Generator" CONTENT="gsEdit">
+<META NAME="Author" CONTENT="">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+<script type="text/javascript">
+	var title = unescape(location.href).split("&")[1].substring(1);
+	document.title = title.substring(0, title.length-1);
+	try{ history.pushState({foo:'bar'}, '-*-', unescape(location.href).split("?")[0]); }catch(e){}
+</script>
+</HEAD>
+<BODY scroll=yes>
+
+	Explorador no compatible<br>
+	Algunos de los navegadores compatibles son:
+	<ul>
+	  <li>Chrome</li>
+	  <li>Opera</li>
+	  <li>Vivaldi</li>
+	</ul>
+
+	<br>
+
+	<script type="text/javascript">
+		document.write("Cadena de identificación: <b>"+navigator.userAgent+"</b>");
+	</script>
+
+</BODY>
+</HTML>

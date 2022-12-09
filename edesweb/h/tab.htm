@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Tab</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Tab] Mode | [{srcIcon}] TabText | [-]EDF [ | TitleOpMenu [ | FuncUser ] ]  [-NoZone]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Se utiliza en la definición de los grupos de fichas (GDF). <br />Con esta etiqueta se le indica al sistema cuales son las fichas (.EDF) que van a componer el grupo de fichas.<br />En cada solapa se accede solo a una tabla, pudiendo varias solapas apuntar a la misma tabla. Si se quiere tener campos en una ficha de varias tablas se pondr?n campos espejo [Mirror] y campos calcos ( espejo editable ) [EditMirror]<br />Si incluimos delante del nombre de la ficha un guión "-", la ficha se enviar? al cliente pero estar? oculta, pudiendo visualizarla con la funci?n eTabShow(). <br />En los grupos de ficha las etiquetas de lenguaje [JS...], [HTM...] y [PHP...] van en el script de definici?n de grupo de fichas (GDF). <br />Si queremos alinear el borde superior del Men? de la multificha con el interrior de la ficha deberemos declarar la variables: <br />sql.ini->$_TABGroupEmpty = 'TABHeader';<br />Se recomienda que el fichero GDF se llame igual que la primera solapa con extensi?n EDF.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" style="height: 184px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 99.6591px; height: 18px;"><strong>Mode</strong></td>
+<td style="width: 1329.66px; height: 18px;">Modo en el que se ejecuta, los modos pueden ser: i, d, v, u</td>
+</tr>
+<tr style="height: 94px;">
+<td style="width: 99.6591px; height: 94px;"><strong>TabText</strong> </td>
+<td style="width: 1329.66px; height: 94px;">El texto que se ubicará dentro de la solapa, si se quiere que la opción la preceda un icono se pondrá entre llaves su src, también se puede poner un icono del sistema con el parámetro de la función eIcon() encerrada entre corchetes, ejemplo:<br /><code>   [Tab] iu | [setup] Label | ...edf<br />   [Tab] iu | [g/buscar.gif] Label | ...edf<br />   [Tab] iu | [Ä&rdquo;] Setab | ...edf<br />   [Tab] iu | Label | ...edf</code><br />Si se quiere que vaya un icono por defecto en todas las opciones se definirá en el fichero "sql.ini" mediante la variable "$_IconMenu" por ejemplo:<br /><code>   $_IconMenu = 'g/buscar.gif';</code><br /><code>   $_IconMenu = 'v';</code><br /><code>   $_IconMenu = 'Ä&rdquo;'; </code></td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 99.6591px; height: 18px;"><strong>EDF</strong></td>
+<td style="width: 1329.66px; height: 18px;">Nombre de un archivo EDF, si esta solapa se quiere que vaya oculta se precederá por el signo "-". </td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 99.6591px; height: 18px;"><strong>TitleOpMenu </strong></td>
+<td style="width: 1329.66px; height: 18px;">Title de la opción de la solapa.</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 99.6591px; height: 18px;"><strong>FuncUser </strong></td>
+<td style="width: 1329.66px; height: 18px;">Nombre de función a ejecutar al mostrar la solapa</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 99.6591px; height: 18px;"><strong>-NoZone</strong></td>
+<td style="width: 1329.66px; height: 18px;"> Parámetro al final de la linea  para ocultar la zona fija en las solapas en las que se encuentre, siempre que se halla definido la etiqueta [FixZone]</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Tab] ivu | Comunicado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aqs/queja.edf </code><br /><code>[Tab] ivu | Ciudadano&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aqs/ciudadano.edf </code><br /><code>[Tab] ivu | Ayuntamiento&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aqs/ayuntamiento.edf </code><br /><code>[Tab] ivu | Otra Administraci&oacute;n | aqs/administracion.edf </code><br /><code>[Tab] ivu | Otra Entidad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aqs/entidad.edf </code><br /><code>[Tab]&nbsp; vu | Respuesta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |-aqs/respuesta.edf &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Solapa Oculta</code><br /><code>...</code></td>
+</tr>
+<tr>
+<td id="txt">Ejemplo sin iconos y con la última solapa oculta. El fichero "aqs/queja.gdf" es donde pondremos la</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Tab]</code><br /><code>&nbsp; &nbsp; &nbsp;ivu | [g/mail.gif] Comunicado&nbsp; | aqs/queja.edf </code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ivu | [g/ciudad.gif] Ciudadano | aqs/ciudadano.edf </code><br /><code>...</code></td>
+</tr>
+<tr>
+<td id="txt">Ejemplo con iconos en el menú</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

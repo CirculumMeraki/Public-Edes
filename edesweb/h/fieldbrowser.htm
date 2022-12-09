@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>FieldBrowser 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[FieldBrowser] Field | ListFieldsAsign | SQL/Function [&nbsp;| NRowsVisible ] | NColsVisible ]&nbsp;| NmFieldsToSend ] ] ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Selecci?n de uno o mas datos mediante un browser interactivo, si la etiqueta se quisiera utilizar en los modos "?R" habr?a que acompa?arla de la etiqueta [ShowFields] para poder ver el dato al cargar la ficha. <BR>Si el campo "Field" se le ha asignado la variable "Include" con un nombre de fichero ( mediante [AddCode] * | Field | I | Include=NombreFichero )&nbsp; al buscar en el lado del servidor se har? un include de este fichero. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp;<STRONG>Field</STRONG> </TD>
+<TD>Nombre del campo a obtener la prestaci?n. Siempre tipo "T" Texto, normalmente es un campo virtual</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>ListFieldsAsign</STRONG> </TD>
+<TD>Lista de campos a asignar valores o funci?n de usuario, se puede dejar un campo en blanco&nbsp;(se le pasar? una matriz con todos los valores de la selecci?n)</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>SQL / Funcion</STRONG>&nbsp;</TD>
+<TD>Sentencia SQL para buscar los datos poniendo "#" sin comillas donde est? la cadena a buscar. o funci?n de usuario ( con sus par?ntesis ) que devolver? la sentencia&nbsp;&nbsp;SQL a ejecutar.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>NRowsVisible</STRONG> </TD>
+<TD>Altura del browser en n?mero de lineas.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>NColsVisible</STRONG> </TD>
+<TD>N? de columnas visible, por defecto es una</TD></TR>
+<TR>
+<TD><STRONG>&nbsp;NmFieldsToSend</STRONG> </TD>
+<TD>Valores de campos a enviar, cada valor lo sustituir? en #1, #2, etc</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG><FONT color=#ff0000>FilterDinamyc</FONT></STRONG></TD>
+<TD>Futura prestaci?n&nbsp;</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[FieldBrowser] _nombre | nombre,apel1,apel2 | select concat(nombre," ",apel1," ",apel2),nombre,apel1,apel2 from persona where concat(nombre," ",apel1," ",apel2) like # order by 1 | 7</P>
+<P>[FieldBrowser] _nombre | nombre,apel1,apel2 | select nombre||' '||apel1||' '||apel2,nombre,apel1,apel2 from persona where nombre||' '||apel1||' '||apel2 like # order by 1 | 7</P>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[FieldBrowser] _cd_gs_user | cd_gs_user | select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1 | 7<BR><BR>[Fields]<BR>&nbsp;&nbsp;&nbsp; cd_gs_user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cd_gs_user&nbsp;&nbsp; | 0 | T&nbsp; | 9&nbsp; |&nbsp; | *Q* |&nbsp; |&nbsp;&nbsp; | <BR>&nbsp;&nbsp;&nbsp; Usuario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_gs_user&nbsp; | N | T&nbsp; | 50 |&nbsp; | QM&nbsp; |&nbsp; |&nbsp;&nbsp; | <BR>&nbsp;&nbsp;&nbsp; Tipo?permiso&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | license_type | N | SV | 9&nbsp; |&nbsp; | QM&nbsp; |&nbsp; | # | <BR>&nbsp;&nbsp; ,Permisos activos&nbsp; | solo_activos | N | C&nbsp; | 1&nbsp; |&nbsp; | QM&nbsp; |&nbsp; |&nbsp;&nbsp; |</P></TD></TR>
+<TR>
+<TD id=txt>En este caso en la lista de campos a asignar el primero se ha dejado en blanco, el literal del nombre no se asigna a ning?n campo, solo el c?digo de usuario</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[PHPIni] *<BR>function SqlUser(){<BR><SPAN style="WIDTH: 25px"></SPAN>return 'select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1';<BR>}</P>
+<P>[FieldBrowser] _cd_gs_user | cd_gs_user | SqlUser() | 7</P>
+<P>[Fields]<BR>&nbsp;&nbsp;&nbsp; cd_gs_user&nbsp;| cd_gs_user&nbsp;&nbsp;| 0&nbsp;| T&nbsp;|&nbsp; 9&nbsp;| | *Q* |&nbsp;| | <BR>&nbsp;&nbsp;&nbsp; Usuario&nbsp;&nbsp;&nbsp;&nbsp;| _cd_gs_user&nbsp;| N&nbsp;| T&nbsp;| 50&nbsp;| | QM&nbsp; |&nbsp;| | <BR></P></TD></TR>
+<TR>
+<TD id=txt>En la funci?n de usuario se puede cambiar dinamicamente tanto las condiciones como los campos a extraer.</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[PHPIni] *<BR>function SqlUser(){<BR><SPAN style="WIDTH: 25px"></SPAN>return 'select concat(user_name," ",user_surname),cd_gs_user from gs_user where cd_departamento="#1" and concat(user_name," ",user_surname) like # order by 1';<BR>}</P>
+<P>[FieldBrowser] _cd_gs_user | cd_gs_user | SqlUser() | 7 || cd_departamento</P>
+<P>[Fields]<BR>&nbsp;&nbsp;&nbsp; Departamento&nbsp;| cd_departamento&nbsp;| 0&nbsp;| S&nbsp;|&nbsp;20&nbsp;| | Q&nbsp; &nbsp;|&nbsp;| |&nbsp;<BR>&nbsp;&nbsp;&nbsp; cd_gs_user&nbsp;&nbsp; | cd_gs_user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0&nbsp;| T&nbsp;|&nbsp; 9&nbsp;| | *Q* |&nbsp;| | <BR>&nbsp;&nbsp;&nbsp; Usuario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_gs_user&nbsp;&nbsp;&nbsp;&nbsp; | N&nbsp;| T&nbsp;| 50&nbsp;| | QM&nbsp; |&nbsp;| | <BR></P></TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

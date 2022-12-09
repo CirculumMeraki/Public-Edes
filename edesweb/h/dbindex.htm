@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBIndex</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBIndex] FieldsList [[; FieldsList [; FieldsList [ | Edit [ | CheckIndex [ | ShowFields [ | Message [ |  FuncUser [ | DDBB ] ] ] ] ] ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Sirve para seleccionar los índices únicos de la tabla elegida en <strong>[DBTable]</strong><br />El primer FieldsList es el índice único principal de actualización y los siguientes opcionales son los indices únicos secundarios.<br />Si no se define y la tabla tiene un solo registro se podrá modificar y consultar directamente con "#mR:script" o "#cR:script"</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>FieldsList </td>
+<td>Lista de campos separados por comas, si ponemos ";" podremos poner una lista de campos (indice único) que no se puede repetir, este segundo indice si solo tiene un campo no hará el chequeo si el campo está vacio.</td>
+</tr>
+<tr>
+<td>Edit</td>
+<td>Esta constante es para poder editar el campo indice cuando tiene un solo campo el indice y solo en fichas.</td>
+</tr>
+<!--<TR-->
+<tr>
+<td>CheckIndex</td>
+<td>Constante "true" o "t" para indicar que se chequeen los campos del indice despues de introducir los valores, antes de rellenar toda la ficha. Con este flag activado si vamos a meter un dato que ya existe nos mostrará el mensaje "El registro yá existe."<br />Solo está activo con un indice con uno o mas segmentos y si tiene dos indices y uno es un serial.</td>
+</tr>
+<!--<TR-->
+<tr>
+<td>ShowFields</td>
+<td>Lista de campos a mostrar cuando el registro que se quiere dar de alta ya existe (opcional).</td>
+</tr>
+<!--<TR-->
+<tr>
+<td>Message</td>
+<td>Mensaje a mostrar si el registro ya existe (opcional), el Mensaje al ponerse como título normalmente va acompañado de una lista de campos a mostrar definidos en ShowFields.<br />En este parámetro se puede definir a la vez el Título y SubTítulo de la ventana separando los textos por una barra invertida.<br />Puede llevar etiquetas html.</td>
+</tr>
+<!--<TR-->
+<tr>
+<td>FuncUser</td>
+<td>Nombre de función de usuario a llamar si el registro ya existe.</td>
+</tr>
+<!--<TR-->
+<tr>
+<td>DDBB</td>
+<td>Nombre del fichero de definición de DDBB para base de datos alternativas.</td>
+</tr>
+<!--<TR--></tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[DBIndex]  cd_obra; cd_obra2 || True | cd_obra2, nm_obra | LA OBRA YA ESTA DADA DE ALTA</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

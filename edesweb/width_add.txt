@@ -1,0 +1,21 @@
+	$_WidthField = array();
+	$_WidthField[0] = array(
+		'P4'=>$_DefaultSize['TT']['P4'],	// 52, 
+		'F4'=>$_DefaultSize['TT']['F4'],	// 70, 		'DNI'=>62, 'CIF'=>69, 'NSS'=>82, 
+		'T'=>$_DefaultSize['TT']['T'],		// 69, 
+		'CP'=>$_DefaultSize['TT']['CP'],	// 42, 
+		'H8'=>$_DefaultSize['TT']['H8'],	// 54, 
+		'H5'=>$_DefaultSize['TT']['H5'],	// 37, 
+		'H2'=>$_DefaultSize['TT']['H2'],	// 21, 
+		'CDI'=>$_DefaultSize['TT']['CDI']	// 121
+	);								// Ancho en px según tipo de dato (Tipo de dato => Ancho)
+
+	$_WidthField[1] = array(
+		10,							// MaxLong
+		$_DefaultSize['TC']['U'],				// AnchoChar
+		$_DefaultSize['TC']['N'],				// AnchoNumero
+		6,							// ValorIni, 
+		9,							// ValorIniConDecimal
+		0.9							// Factor de corrección
+	);
+	//$_WidthField[2] = 2;						//Separacion del select cuando se ve su interior

@@ -1,0 +1,18 @@
+[Title]=UTILIDADES
+[Fields]
+Chr a generar|chr_aleatorio|#|T|128|800|A|ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijmnopqrstuvwxyz123456789||
+Nº de caracteres|num_long|+|T|2||A|32||
+Valor aleatorio|aleatorio|#|T|128|800|A|||
+[AddButton]*|[U] Aleatorio||uGenerarCadena()
+[AddButton]*|[U] Chequea versión eDes||uCheckVerEDes()
+[JSIni]*
+function uGenerarCadena(){
+var txt="", t=$chr_aleatorio.length, n;
+for(n=0; n<$num_long; n++){
+txt += S.mid($chr_aleatorio, Math.floor(Math.random() * t), 1);
+}
+console.log(txt.length+" : "+txt);
+$aleatorio = txt;
+}
+function uCheckVerEDes(){
+}

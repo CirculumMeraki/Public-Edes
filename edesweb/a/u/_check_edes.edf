@@ -1,0 +1,164 @@
+[Title]=VERSIONES eDes
+[DBTable]gs_version
+[DBOrder]estado desc,nombre,tipo
+[DBIndex]pk
+[DBSerial]pk
+[AddOption]*|tipo|,; D,Desarrollo; P,Procesos; B,Base
+[AddOption]*|estado|,; N,ON; F,OFF
+[EditList]estado
+[Fields]||trim
+Nombre|nombre|#|T|40||QM|||
+Tipo|tipo|N|SV|20||QM|||
+Url|url|#|T|65||M|||
+Multinancy|multitenancy|#|T|20||M|||
+PK Server|pk_server|#|T|62||Mk|||
+Versión|version|CDI|T|19||-|||
+PK DDBB|pk_ddbb|#|T|32||Mk|||
+Estado|estado|N|SV|1,3||QM||=|
+Pk|pk|*|T|3||*|||
+#(l) Acción|pk accion|#|T|2||-||=|
+[PHPEnd]l
+eJS('S("#TITULO").text("VERSIONES eDes ('.$_SESSION["_DIRWEB"].')");');
+[PHPIni]l
+$_VersionActual = file_get_contents("../../edesweb/web/aplication/_datos/config/version_edes.cdi");
+[SlideCol]2
+[RowColor]ColorFila($row)
+[PHPIni]l
+function ColorFila($row){
+if( $row[0][0]=='[' ) return 'style="color:green; background-color:#e7fee7; font-weight:bold;"';
+if( $row[7]=='F' ) return 'style="background-color:#eeeeee"';
+else if( $row[1]=='P' ) return 'style="color:#ed143d;background-color:#fff1ef;font-weight:bold;"';
+}
+[Format]
+$_vF["accion"] = '<i class="ICONWINDOW" pp="1" onclick="CheckUnaIntranet(this)">&#230;</i> <i class="ICONWINDOW" pp="1" onclick="Entrar(this)">&#251;</i>'.
+' <i class="ICONWINDOW" pp="1" onclick="testDDBB(this)" style="color:red">&#258;</i>';
+if( substr_count($_SESSION["_DIRWEB"], $_vF["url"]) ){
+if( $_vF["version"]!=$GLOBALS["_VersionActual"] ){
+$_vF["version"] = $GLOBALS["_VersionActual"];
+qQuery("update gs_version set version='{$GLOBALS["_VersionActual"]}' where pk='{$_vF['pk']}'", $p);
+}
+}
+[PHPIni]l
+$_ENV["."]["button.bar"][] = [
+type=>"function",
+icon=>"&#230;",
+label=>"Chequear todas",
+onclick=>"CheckTodasLasIntranet()"
+];
+[JSIni]l
+function CheckPendiente(){
+var oTR = S("#BROWSE TR[tmpCheck]").obj;
+if( oTR!=null ){
+window["$url"] = oTR.cells[2].innerText;
+window["$pk_server"] = oTR.cells[4].innerText;
+window["$pk"] = oTR.cells[8].innerText;
+CheckUnaIntranet(oTR);
+}
+}
+function CheckTodasLasIntranet(){
+S("#BROWSE TR").each(function(k,o){
+if( S.trim(o.cells[4].innerText)!="" && o.cells[7].innerText=="ON" ){
+S(o).attr("tmpCheck", 1);
+}
+});
+CheckPendiente();
+}
+function CheckUnaIntranet(o){
+var oTR = S.toTag(o, "TR");
+if( S(oTR.cells[7]).text()!="ON" ) return;
+S(oTR).background("yellow");
+if( $url.indexOf("edes.php")==-1 ) $url += "edes.php";
+console.log("CheckSrv="+$url+"?~"+$pk_server+"~&pk="+$pk);
+S(oTR.cells[5]).text("");
+S.call("edes.php?E:CallSrv="+_Source+"&CheckSrv="+$url+"?~"+$pk_server+"~&pk="+$pk, null, {function:function(res){
+S(oTR.cells[5]).text(res);
+S(oTR).attr("tmpCheck", null);
+CheckPendiente();
+}});
+}
+function Entrar(o){
+if( $estado!="ON" ) return;
+$exe = $url;
+if( $multitenancy!="" ) $exe += $multitenancy;
+window.open($exe, $nombre);
+}
+function testDDBB(){
+if( $estado!="ON" ) return;
+top.eCallSrv(window, 'TESTCURL=1&TO="'+$url+'"&PKDDBB="'+$pk_ddbb+'"&PKSERVER="'+$pk_server+'"');
+}
+[CallSrv]CheckSrv
+eInit();
+$res = eCurl($CheckSrv, array());
+$res = trim(substr($res,0,19));
+list($fecha, $hora) = explode(" ", $res);
+if( strlen($res)==19 && preg_match('/^([1-2]{1}[0-9]{3})\-([0-1]{1}[0-9]{1})\-([0-3]{1}[0-9]{1})$/', $fecha) && preg_match('/^([0-2]{1}[0-9]{1})\:([0-5]{1}[0-9]{1})\:([0-5]{1}[0-9]{1})$/', $hora) ){
+qQuery("update gs_version set version='{$res}' where pk={$pk}");
+}else{
+eTron("ERROR CheckSRV:\nURL: ".$CheckSrv."\nRespuesta[".$res."]");
+qQuery("update gs_version set version=null where pk={$pk}");
+$res = "ERROR";
+}
+die($res);
+[CallSrv]TESTCURL
+if( !function_exists("curl_init") ){
+eJS('alert("La función no existe");');
+}
+$COPY = eScript("/_tmp/curl_test.edes");
+$time = time();
+file_put_contents($COPY, $time);
+function loginSSO($user, $pass, $ssohost){
+include_once('../../lib/sso/new.openam.class.php');
+$sso = new OpenSSO($ssohost);
+try{
+$token = $sso->authenticate($user, $pass);
+}catch( Exception $msg ){
+ePrintR("Error de autenticación en SSO");
+}
+return $token;
+}
+eFileGetVar("SSOUpdate", true);
+if( $sso_url<>"" ){
+$token = loginSSO($sso_user, $sso_password, $sso_url);
+$headers = [
+"Cookie: {$sso_dir}={$token}"
+];
+}
+if( substr($TO,-8)=="edes.php" ) $TO = substr($TO, 0, -8);
+if( substr($TO,-1)=="/" ){
+$target_url = $TO.'edes.php?UPLOAD&FILE=';
+}else{
+$target_url = $TO.'/edes.php?UPLOAD&FILE=';
+}
+$target_url .= "&PKSERVER=".$PKSERVER;
+if( class_exists('cURLFile') ){
+$post = array(
+'TO_UPDATE' => 'test',
+'IDSRV' => $PKDDBB,
+'SS' => $_SESSION["_sesion_"],
+'file' => new cURLFile($file, '', $file),
+'file_name' => $COPY
+);
+}else{
+$post = array(
+'TO_UPDATE' => 'test',
+'IDSRV' => $PKDDBB,
+'SS' => $_SESSION["_sesion_"],
+'file' =>'@'.realpath($file),
+'file_name' => $COPY
+);
+}
+$result = eCurl($target_url, $post, 123);
+list($res1, $res2) = explode("|", $result);
+if( $res1=="Test OK" ){
+eJS('window.frameElement.WOPENER.S.info("Respuesta: test curl[ OkDB ]", 5)');
+}else{
+eJS('window.frameElement.WOPENER.S.info("Respuesta: test curl['.$result.'|'.$httpCode."|".curl_errno($ch).']", 5)');
+}
+eEnd();
+if( $result!=$time ){
+eTron("[Error de actualización] ".$result);
+eJS('window.frameElement.WOPENER.S.error("ERROR al ejecutar el test")');
+}else{
+eJS('window.frameElement.WOPENER.S.ok("Test curl OK")');
+}
+eEnd();

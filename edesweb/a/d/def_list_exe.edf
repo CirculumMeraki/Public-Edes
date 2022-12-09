@@ -1,0 +1,43 @@
+[Title]=EXTRACCION DE DATOS
+¿ !isset($_GET['_BACKGROUND']) ? [FormAction] c | edes.php?E:$extraer.gs
+¿  isset($_GET['_BACKGROUND']) ? [FormAction] c | DOWNLOAD
+[MsgSubmit]c|>/_datos/config/msg_export.LNG||450|justify
+[AddOption]c|def__cd_gs_destino|,; DBF,DBase; XLS,Excel; HTM,HTML; REC,Recuento; TXT,Texto
+[CC]#SinEntidad|$_GET["_ENTIDAD"]==""
+#SinEntidad ¿
+[WhereSelect]c|def__cd_gs_formato|cd_gs_user={$_User} and (informe<>'S' or informe is null)
+[RelationFields]cd_gs_entidad,def__cd_gs_formato
+[OnLoad]?|S.selectClear("def__cd_gs_formato", 0, window);
+?¿
+[WhereSelect]c|def__cd_gs_formato|cd_gs_user={$_User} and (informe<>'S' or informe is null) and cd_gs_entidad={$_GET["_ENTIDAD"]}
+?
+[NoEditFilled]c|session
+[Button]c|<i class="ICONINPUT">v</i>Extraer
+[Fields]
+{I} <input type="password" style="display:none">
+¿ $_GET["_ENTIDAD"]=="" ? Entidad|cd_gs_entidad|N|S|20|160|Q|||
+Tipo extracción|def__cd_gs_destino|N|SV|10|160|Q|||
+#(d) ,SqlToTron|_SqlToTron_|X|C|1|<def__descripcion|Q|||
+Nombre Formato|def__cd_gs_formato:cd_gs_formato|+|Ss|60||Q|||
+Título extracción|def__descripcion|X|T|60||Q|||
+Clave|_doc_password_|#|P|68||Q|||
+|def__gs_usuario|0|T|4||*Q|_User||
+|def__online|N|T|1||*Q|D||
+|def__include|N|T|60||*Q|||// php a incluir
+|def__dbrange|X|T|60||*Q|||// Campo, _desde, _hasta, Inclusive; ...
+#Include(c) /_datos/config/list_cnd_{$_ENTIDAD}.edf|true // Campos a filtrar
+[JSCheck]c
+if( eGF('def__cd_gs_destino')=="" ) ePE('def__cd_gs_destino', 'Falta introducir "Tipo extracción"');
+if( eGF('def__cd_gs_formato')=="" && eGF('def__cd_gs_destino')!='REC' ) ePE('def__cd_gs_formato', 'Falta introducir "Nombre Formato"');
+if( eGF('def__descripcion')=="" ) ePE('def__descripcion', 'Falta introducir "Título extracción"');
+if( _KeyRequired && eGF("_doc_password_")=="" ) ePE("_doc_password_", 'Falta el dato "Clave"');
+[PHPIni]?
+if( $_GET["_ENTIDAD"]<>"" ){
+qQuery("select nm_gs_entidad from {$_SESSION['ShareDictionary']}gs_entidad where cd_gs_entidad=".$_GET["_ENTIDAD"]);
+$_TITLE = "=EXTRACCION DE ".qArray()["nm_gs_entidad"];
+}
+[PHPEnd]c
+echo '<script type="text/javascript">';
+echo 'var _KeyRequired = '.(($_KeyRequired) ? "true;":"false;");
+if( !$_KeyRequired ) echo 'eHide("_doc_password_","L");';
+echo '</script>';

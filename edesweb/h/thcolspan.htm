@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>THColSpan 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[THColSpan]&nbsp; FieldBegin, FieldEnd, Title [ | FieldBegin, FieldEnd, Title |...] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Genera una fila de TH uniendo varias columnas, unirá desde "FieldBegin" hasta "FiledEnd" poniendole "Title" como nombre del grupo de columnas, si el nombre del campo se define con llaves "cd_prove{prove,cd_prove,cif}" el nombre del campo será "cif" en este caso. El literal del "Label" del colspan no puede repetirse en los "Label" de la segunda linea de TH.<BR>Se desactiva&nbsp;[THColSpan] si se ha puesto [MaxRec]&nbsp; FULL 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><BR>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>FieldBegin&nbsp;</TD>
+<TD>&nbsp;Campo inicial o posición del campo.</TD></TR>
+<TR>
+<TD>FieldEnd</TD>
+<TD>&nbsp;Campo final o posición del campo.</TD></TR>
+<TR>
+<TD>Title</TD>
+<TD>&nbsp;Título del grupo de columnas.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[THColSpan] nombre, apellidos, CLIENTE | telefono1, fax, TELEFONOS<BR><BR>[AddCode] * | fax | B | &amp;nbsp;&amp;nbsp;&amp;nbsp;Fax</P>
+<P>[Fields]<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| cd_cliente | 0&nbsp;&nbsp; | T |&nbsp; 8 || *&nbsp;&nbsp;&nbsp; ||&nbsp;&nbsp; |<BR>&nbsp;&nbsp;&nbsp; DNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| dni&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| DNI | T |&nbsp; 8 || AQcp || = |<BR>&nbsp;&nbsp; ,N&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | nif&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| NIF | T |&nbsp; 1 || AL&nbsp;&nbsp; ||&nbsp;&nbsp; |<BR>&nbsp;&nbsp; ,Nombre&nbsp;&nbsp;&nbsp;&nbsp;| nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| X&nbsp;&nbsp; | T |&nbsp;20 || MQ&nbsp;&nbsp; || # |<BR>&nbsp;&nbsp; ,Apellidos&nbsp;| apellidos&nbsp;&nbsp;| X&nbsp;&nbsp; | T |&nbsp;30 || MQ&nbsp;&nbsp; || # |</P>
+<P>{FS}{ Teléfonos<BR>&nbsp; &nbsp;&lt;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| telefono1&nbsp;&nbsp;| T&nbsp;&nbsp; | T |&nbsp; 9 || M&nbsp;&nbsp;&nbsp; || % |<BR>&nbsp;&nbsp; ,]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| telefono2&nbsp;&nbsp;| T&nbsp;&nbsp; | T |&nbsp; 9 || M&nbsp;&nbsp;&nbsp; || % |<BR>&nbsp;&nbsp; ,]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| telefono3&nbsp;&nbsp;| T&nbsp;&nbsp; | T |&nbsp; 9 || M&nbsp;&nbsp;&nbsp; || % |<BR>&nbsp;&nbsp; ,]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| fax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| T&nbsp;&nbsp; | T |&nbsp; 9 || M&nbsp;&nbsp;&nbsp; || % |<BR>}</P>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P></P>
+<P>[THColSpan] cif, nm_prove, PROVEEDOR</P>
+<P>[Fields] l<BR><SPAN style="WIDTH: 25px"></SPAN>cd_prove&nbsp;&nbsp; | cd_prove&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| 0&nbsp;&nbsp; | T |&nbsp; &nbsp;9 |&nbsp; &nbsp; &nbsp;| *&nbsp;&nbsp; | | &nbsp;&nbsp;|<BR><SPAN style="WIDTH: 25px"></SPAN>cd_factu&nbsp;&nbsp; | cd_factu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | *&nbsp;&nbsp; | T |&nbsp; &nbsp;9 |&nbsp;&nbsp; &nbsp; | *&nbsp;&nbsp; | | &nbsp;&nbsp;|<BR><SPAN style="WIDTH: 25px"></SPAN>Nºorden&nbsp;&nbsp;&nbsp; | norden&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| #D&nbsp; | T |&nbsp; 20 |&nbsp; &nbsp; &nbsp;| MQ&nbsp; | | &nbsp;&nbsp;|<BR><SPAN style="WIDTH: 25px"></SPAN>Fecha alta | dt_entrada&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | F4&nbsp; | T |&nbsp; 10 |&nbsp; &nbsp; &nbsp;| MQF | | &nbsp;&nbsp;|<BR><SPAN style="WIDTH: 25px"></SPAN>Obra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cd_obra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp;&nbsp; | S |&nbsp;&nbsp; 4 |&nbsp; &nbsp; &nbsp;| MQ&nbsp; | | # |<BR><SPAN style="WIDTH: 25px"></SPAN>CIF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cd_prove{prove,cd_prove,cif}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | CIF | S |&nbsp;&nbsp; 9 | 100 | MBQ | | # |<BR><SPAN style="WIDTH: 25px"></SPAN>Nombre&nbsp;&nbsp;&nbsp;&nbsp; | cd_prove{prove,cd_prove,nm_prove} | #&nbsp;&nbsp; | S | 255 | 300 | -MQ | |&nbsp;&nbsp; |&nbsp;</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

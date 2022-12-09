@@ -1,0 +1,82 @@
+[Title]EVENTO/S|l
+[DBTable]gs_event|gs_event_user
+[DBOrder]cd_gs_user, dt_date_ev, hour_ev
+[DBIndex]cd_gs_event
+[DBSerial]cd_gs_event
+[DBAddFilter]( status_ev='S' or status_ev='' )
+[Cursor]
+[AddOption]*|frequency_ev|1,Una sola vez; Y,Una vez al Año; M,Una vez al Mes; W,Una vez a la Semana; L,En dias Laborables; D,Todos los Dias; ~,; T,Cada cierto tiempo; E,Al final de mes
+1,Una sola vez;
+Y,Una vez al Año;
+M,Una vez al Mes;
+W,Una vez a la Semana;
+L,En dias Laborables;
+D,Todos los Dias;
+Cada
+Dias		nº
+Semanas		nº
+Meses		nº
+Años		nº
+Antes del final del mes: nº dias
+[DefAux]_cd_gs_user|gs_user,cd_gs_user,user_name,' ',user_surname
+[WhereSelect]?,a,mR|_cd_gs_user|cd_gs_user<>{$_User}
+[TipForm]*|old_delete_ev|Borrar el evento finalizada la vigencia
+[THColSpan]nm_gs_event,hour_ev,Evento|dt_alert_date_ev,alert_hour_ev,Aviso|dt_start_ev,dt_end_ev,Fecha Vigencia
+[PDFCol]nt_note=0
+[Fields]
+|cd_gs_event|*|T|7||*|||
+<]Asunto|nm_gs_event|X|T|60|[_asistente]|QM||#|
+{FS}{ EVENTO
+<]Fecha|dt_date_ev|F4|T|10||QMF||#|
+]Hora|hour_ev|H|T|5||QM|||
+]Frecuencia|frequency_ev|D|SV|20||M|1||
+]Tipo|cd_gs_event_type|D|S|20||M|||
+}
+{FS}{ AVISAR
+<]Fecha|dt_alert_date_ev|F4|T|10||QMF||#|
+]Hora|alert_hour_ev|H|T|5||QM||#|
+}
+{FS}{ VIGENCIA
+<]Fecha desde\Desde|dt_start_ev|F4|T|10||QMF|||
+]Fecha hasta\Hasta|dt_end_ev|F4|T|10||QMF|||
+]Activo|status_ev|N|C|1||QM|S||
+]Borrar|old_delete_ev|N|C|1||M|S||
+}
+<]Observaciones|nt_note|#X|A|2000,80,6|[_asistente]|M|||
+|cd_gs_user|+|T|50||*Q*|_User||
+|dt_new_date_ev|F4|T|10||*|||
+|new_hour_ev|H|T|5||*|||
+#!(cR,bR,cR)¿
+-|ASISTENTE &#47; INVITADO
+&nbsp;&nbsp;Usuario|_cd_gs_user|+|S|55||M||#|
+?
+-|LISTADO DE ASISTENTES &#47; INVITADOS (notificar a)
+|[_asistente]|o||||-|||
+[SubList]a,?R|_asistente
+{slGroupLabels} slSql  	|slTypeData	|slAlign|slColsWidth|slFormat|slColsOp|slMenu        | slTH
+''				   	|			|  C\H	|	   13	|uBUser()|		  |IMG           | <IMG SRC="g/l_op_insert.gif" title="Insertar Asistente" onclick="eSLAction('_asistente','i')">\
+e.cd_gs_user		|	     	|	C	|	 	 	|		 |		  | _cd_gs_user  | 2
+e.dt_new_date_ev   	|			|	H	|	   		|		 |		  |              | 3
+e.new_hour_ev      	|			|	H	|	  		|		 |		  |              | 4
+e.status_ev        	|	    	|	H	|	 		|		 |		  |              | 5
+u.user_surname 		|			|	I	|	  400	|		 |		  | *_cd_gs_user | ASISTENTE / INVITADO
+{slSql}  select # from gs_event_user e left join gs_user u on e.cd_gs_user=u.cd_gs_user where e.cd_gs_event='{cd_gs_event}' | e.cd_gs_event_user
+{slMenu}  a,mR | Borrar:d, Insertar:i | # || FormOnLine | <IMG SRC="g/l_op_delete.gif" title="Borrar Asistente" onclick="eSLAction( '_asistente','d' )">
+{slMenu} cR,bR |          			  | # || FormOnLine |
+{slWin} ,6
+{slUnique} e.cd_gs_user
+[JSCheck]a,mR
+ePF( 'dt_new_date_ev', eGF('dt_alert_date_ev') );
+ePF( 'new_hour_ev'   , eGF('alert_hour_ev')    );
+var uObj = DGI('[_asistente]').rows;
+for( var n=1; n<uObj.length; n++ ){
+if( uObj[n].LIBRE==undefined && uObj[n].id!='PieLista' ){
+uObj[n].cells[2].textContent = eGF('dt_new_date_ev');
+uObj[n].cells[3].textContent = eGF('new_hour_ev');
+uObj[n].cells[4].textContent = eGF('status_ev');
+}
+}
+[PHPIni]a,?R
+function uBUser(){
+echo '<IMG SRC="g/l_op_delete.gif" title="Borrar Assistente" onclick="eSLAction(\'_asistente\',\'d\')">';
+}

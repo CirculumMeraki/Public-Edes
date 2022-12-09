@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>MaxRec 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[MaxRec] Number/FULL [ [&nbsp;[,MinRec] | FunctionUltimaPag [ | FunctionEnCadaPag | Increment ]&nbsp;]&nbsp;] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>En un listado indica el número máximo de filas por página a mostrar. Si ponemos&nbsp;"0" tomará el valor de <STRONG>DBLimit</STRONG><BR>En el fichero de configuración "sql.ini" esta la variable "$_MaxVisibleRows" que indica el numero de filas que se envian a los listados paginados para saber cuantas filas son visibles.</P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD><STRONG>Number/FULL</STRONG></TD>
+<TD>Número de registros por página.<BR>Si ponemos el parámetro FULL hará la paginación en el lado del cliente.</TD></TR>
+<TR>
+<TD><STRONG>MinRec</STRONG></TD>
+<TD>Mínimo número total de registros a paginar, es decir si menor de "MinRec" no paginará, si este parámetro se omite será el resultado de "Number" por dos.</TD></TR>
+<TR>
+<TD><STRONG>FunctionUltimaPag</STRONG> </TD>
+<TD>Nombre de la función a ejecutar en la última página o en la primera si sólo tiene una.</TD></TR>
+<TR>
+<TD><STRONG>FunctionEnCadaPag</STRONG> </TD>
+<TD>Nombre de la función a ejecutar cada vez que se pagine.</TD></TR>
+<TR>
+<TD><STRONG>Increment</STRONG>&nbsp;</TD>
+<TD>Constante para indicar que la paginación se puede conmutar&nbsp;entre la paginación normal o de sustitucion por la paginación incremental, que las páginas se van sumando. Este tipo de paginación es maslenta en la carga de cada página</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>&nbsp;$_FunctionNextPage = $tmp[2];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Ejecuta función en cada página<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( $_FunctionNextPage!='' &amp;&amp; substr($_FunctionNextPage,-1)!=')' ) $_FunctionNextPage .= '()';<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( $tmp[1]!='' ){<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$_FunctionLastPage = $tmp[1];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Ejecuta función en la última página 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

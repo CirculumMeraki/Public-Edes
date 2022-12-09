@@ -1,0 +1,24 @@
+[Title]DOCUMENTO
+[DBTable]{$_SESSION['ShareDictionary']}gs_store
+[DBIndex]cd_gs_store
+[DBOrder]nm_gs_store
+[DBSerial]cd_gs_store
+[UploadFile]fichero|/_doc_/str|cd_gs_store|5.000.000.000|Seleccionar...|gif,jpg,png,bmp,avi,wav,mp3,mp4,txt,doc,docx,xls,xlsx,xml,pdf,htm,html,pps,ppt,js,css,zip|pre_
+[FileLog]{$_SESSION['ShareDictionary']}gs_store, fichero, cdi, cd_gs_user, 3
+[Assign]mR|cdi, cd_gs_user
+[Fields]
+|cd_gs_store|+|T|3||*Q*|||
+Descripción|nm_gs_store|#|T|80||MQ||#|
+Fichero|fichero|f|F|60||MDU|||
+#(l) Tipo2|fichero tipo|X|I|||-|||
+caption|caption|#|T|60||-L|||
+tamaño|tamayo|+|T|10||-L|||
+extension|extension|#|T|60||-L|||
+fecha|fecha|F4|T|60||-L|||
+hora|hora|#|T|60||-L|||
+cdi|cdi|CDI|T|60||-L|#y2s#||
+Usuario|cd_gs_user|+|T|5||-L|_User||
+[PHPIni]*
+$_DefaultPathType = 'G';
+[JSIni]a,mR
+var _FileTrimName = true;

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>FileLog
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>[FileLog] tabla, fichero, cdi, user, maxNumCopias
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>Guarda un número determinado de modificaciones de un fichero, pudiendo consultar este log mediante un icono de acceso al lado del campo y en una sublista donde los iconos de gestión.
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>tabla&nbsp;</TD>
+<TD>Nombre de la tabla&nbsp;donde se guarda el nombre del fichero</TD></TR>
+<TR>
+<TD>fichero</TD>
+<TD>Campo donde se guarda el nombre del fichero</TD></TR>
+<TR>
+<TD>cdi</TD>
+<TD>Instante de la grabación</TD></TR>
+<TR>
+<TD>user</TD>
+<TD>Usuario que hace la modificación</TD></TR>
+<TR>
+<TD>maxNumCopias</TD>
+<TD>Máximo número de modificaciones a guardar, si se pone "-1" se guardarán todas</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>
+<P>[UploadFile] fichero | /_doc_/str | cd_gs_store | 5.000.000.000 | Seleccionar... | gif,jpg,png,bmp,avi,wav,mp3,mp4,txt,doc,docx,xls,xlsx,xml,pdf,htm,html,pps,ppt,js,css,zip | pre_</P>
+<P>[FileLog] gs_store, fichero, cdi, cd_gs_user, 3<BR>&nbsp;<BR>[Fields]<BR>&nbsp;&nbsp; Descripción | nm_gs_store&nbsp; | #D | T | 80 |&nbsp; | MQ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | # |<BR>&nbsp;&nbsp; Fichero&nbsp;&nbsp;&nbsp;&nbsp; | fichero&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | f&nbsp; | F | 60 |&nbsp; | MD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | # |<BR>&nbsp;&nbsp; cdi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cdi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | #&nbsp; | T | 60 |&nbsp; | -L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | #y2s# |&nbsp;&nbsp; |<BR>&nbsp;&nbsp; Usuario&nbsp;&nbsp;&nbsp;&nbsp; | cd_gs_user&nbsp;&nbsp; | +&nbsp; | T | 5&nbsp; |&nbsp; | -L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _User |&nbsp;&nbsp; |</P>
+<TR>
+<TD id=txt>Se guardarán las 3 últimas modificaciones mas la actual</TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

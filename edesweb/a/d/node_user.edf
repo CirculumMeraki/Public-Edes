@@ -1,0 +1,25 @@
+[Title]=USUARIOS POR LOCAL
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]1,2
+[DBSerial]cd_gs_user
+[DBLimit]2000
+[AddOption]?|permission|,; S,Si; N,No; C,Caducado; )'S'(,Sin permiso
+[NoEditFilled]?|Session
+[FormAction]*|Ll:
+[ColsOp]S,#
+[Fields]l
+Nodo|cd_gs_node|0|S|60||-|||
+Usuario|concat(A.user_name,' ',A.user_surname)|D|T|60||-|||
+E-Mail|email|@|T|65||-|||
+#Include(?) /_datos/config/node_user.idf.l|true
+[Fields]?
+{FS}{ Datos varios
+{FR}{
+<Permiso|permission|X|SV|11||Q|||
+,Fecha·Alta|dt_add|F4|T|10||QF|||
+,Fecha·Baja|dt_del|F4|T|10||QF|||
+}
+}
+#Include(?) /_datos/config/node_user.idf.c|true
+#Include(?) /_datos/config/node_user.idf|true

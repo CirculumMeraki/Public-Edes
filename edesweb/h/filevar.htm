@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>FileVar 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[FileVar] NomFile 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Consulta o Modifica mediante un formulario un fichero plano con variables de configuración, solo está activo en los modos 'cR' y 'mR'.<BR>Identifica dos etiquetas [Title] y [Help].<BR>Mostrará en la ficha:<BR><SPAN style="WIDTH: 25px"></SPAN>- Si al principio de linea encuentra un comentario "//" hará un "HR".<BR><SPAN style="WIDTH: 25px"></SPAN>- Si al principio encuentra "//[Title/Help]" interpretará estas etiquetas.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si encuentra un comentario multilinea lo pasa.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si empieza por "$" editará la variable y le pondrá como label el comentario que halla al final despues de "//".<BR><SPAN style="WIDTH: 25px"></SPAN>- Informará de los comandos PHP: if, else, switch, case, default.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si al principio del label encuentra un corchete "[" entenderá que es un select virtual.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si al principio del label encuentra&nbsp;"[*]" el tipo de edición será entrada tipo "Clave".<BR><SPAN style="WIDTH: 25px"></SPAN>- Si al principio del label encuentra un "-" la variable será solo de lectura<BR><SPAN style="WIDTH: 25px"></SPAN>- Si se utilizan comentarios multilinea tanto "/*" como "*/" tienen que estar al principio de la linea.<BR><SPAN style="WIDTH: 25px"></SPAN>- Cualquier resto de instrucciones las omitirá.<BR><SPAN style="WIDTH: 25px"></SPAN>- Al grabar solo grabará en la parte de la asignación de las variables que el "$" esté al principio de la linea. <BR><SPAN style="WIDTH: 25px"></SPAN>- Si el valor del dato es un color del formato "#000000" tendrá una ayuda para la selección del color.
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>$Usuario = 'NomUsuario';&nbsp;&nbsp; // Usuario<BR>$ColorBase = 'A';&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // [A,Azul;V,Verde] Color base<BR>$DataBase = 'mysql';<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// [M,MySql;I;Informix] Base de datos<BR>$ClaveDB = '';&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // [*] Clave para recuperar la DB<BR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

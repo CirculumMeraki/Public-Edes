@@ -1,0 +1,66 @@
+[Title]=Icono/Fuente
+[DBTable]gs_icon
+[DBIndex]cd_gs_icon||true
+[DBOrder]cd_gs_icon
+[DBLimit]1.000, 1.000, 1.000
+[FormStatic]
+[JSIni]a
+function FUNCTION_FormStatic(){
+S("#IconoMuestra").html("");
+}
+[CSSAdd]l
+.col_2l td:nth-child(3){
+font-family:eDes;
+}
+[AddCode]a,?R|hexa|I|style="margin-left:5px"
+[AddCode]a,?R|hexa|E|<i id="IconoMuestra" style="margin-left:5px"></i>
+[OnChange]a|cd_gs_icon|if($cd_gs_icon!=""){$hexa="&#"+$cd_gs_icon+";"; S("#IconoMuestra").html("&#"+$cd_gs_icon+";");}
+[OnChange]?R|cd_gs_icon|if($cd_gs_icon!=""){S("#IconoMuestra").html("&#"+$cd_gs_icon+";");}
+[JSEnd]?R
+S("#IconoMuestra").html($hexa);
+[JSEnd]l
+eShowLTools("w");
+[AddOption]?|sin_uso|,; S,Sin uso; =,Activos
+[SelectMultiple]*|contexto|15 BOX|_
+,;					_
+C,Chat;				_
+D,Desktop;			_
+I,Editor Informes;	_
+W,Editor Wysiwyg;	_
+E,Encuestas;		_
+F,Fichas;			_
+G,General;			_
+L,Listados;			_
+P,Programador;		_
+S,Submenú;			_
+T,Tipo Fichero;		_
+V,Ventanas
+[cc]#todo|$_GET["_SoloView"]!=3
+[PHPIni]l
+if( $_GET["_SoloView"]==3 ){
+$_DBADDFILTER = "(sin_uso is null or sin_uso='')";
+echo "<script>_WideListing = 0;</script>";
+}
+$_WideListing = 0;
+[Fields]
+Código|cd_gs_icon|+|T|6||AQ||#|
+,|hexa|#|T|6||M||#|
+#(a,?R) ,Sin uso|sin_uso|#|C|1||M|||
+#(?) ,Sin uso|sin_uso|#|SV|10||MQ|||
+#!(l) ,verificado|verificado|#|C|1||M|||
+#(l)Icono|hexa as icono|#|T|6||-|||
+Acción|nm_gs_icon|#|T|60||MQ||#|
+Contexto|contexto|#|SV|15|nm_gs_icon|MQ|||
+Descripción|description|#|A|255,80,3|nm_gs_icon|M|||
+CDI|cdi|CDI|T|19||*|#y2s#||
+#todo ¿
+#(l) Sin uso|sin_uso|#|C|1||M|||
+#(l) Verificado|verificado|#|C|1||M|||
+Tipo|tipo|#|SV|8||MQ|||
+,Origen|origen|#|T|25||MQ|||
+?
+[AddOption]*|tipo|,; L,Light; R,Regular; S,Solido
+[Format]
+$_vF[1] = str_replace("&", "&#38;", $_vF[1]);
+[PHPEnd]?R
+if( strlen($_vF["hexa"])!=1 ) echo "<script>ePF('hexa','{$_vF["hexa"]}');</script>";

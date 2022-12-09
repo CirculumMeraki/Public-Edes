@@ -1,0 +1,5 @@
+[PHPStart] a,?R,A,M || unique
+$_OpTreeTYPE = 'user';
+
+
+#include(*) $a/plugin/usertree.zdf

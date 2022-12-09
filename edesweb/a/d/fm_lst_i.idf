@@ -1,0 +1,36 @@
+[Title]ICONO|l
+[Format]
+if( eIsPDF() ){
+$_vF[1] = substr($_vF[1],0,strrpos($_vF[1],'.'));
+}else{
+$_vF[1] = '<img src="edes.php?R:/'.'/img/'.$_vF[0].'.'.$_vF[11].'">';
+}
+$_vF[12] = "<img src='g/l_d_".$_vF[11].".gif' onclick='VD()' t='{$_vF[11]}'>";
+[THColSpan]copyrighted,img,Características
+[ColsWidth]description=400
+[PDFCol]quality=0, img=0
+[Fields]l
+|cd_gs_img|+|T|9||*|||
+Icono|nm_gs_img|#D|F|27||-||=|
+Categoría|cd_gs_img_class|+|S|20||-|||
+SubCategoría|cd_gs_img_sclass|+|Ss|20||-|||
+Descripción|description|#|A|70||-|||
+Copyright\©|copyrighted|N|C|1||-||=|
+Calidad|quality|N|SV|5||-|||
+Puntos Por Pulgada\PPI|ppi|+|T|5||-|||
+Tamaño|bytes|+|T|7||-|||
+Ancho px\Ancho|width_px|+|T|4||-|||
+Alto px\Alto|height_px|+|T|4||-|||
+Tipo|extension|#D|T|4||-||=|
+|extension as img|#D|T|4||-||=|
+[PDFWrap]3,,true|description
+[PHPIni]l
+$_PDFLABELHIDDEN['type_file'] = 'NOTTOSHOW';
+$_AddShowFilter = array( 'CLASE: Iconos' );
+if( eIsPDF() ) $_ALIGN[1] = 'i';
+[JSIni]l
+function VD(){
+var TR = S.toTag(S.event(window),'TR');
+top.eCallSrv( window, 'edes.php?D://img/'+eTrim(TR.cells[0].textContent)+'.'+S.event(window).t+'&FILE='+eTrim(TR.cells[1].textContent) );
+return eClearEvent();
+}

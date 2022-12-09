@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>slColsOp 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{slColsOp} ColOp1, ColOp2, ..... , ColOpN 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Operaciones a realizar&nbsp; en las columnas de los listados. Lista de operaciones aritméticas separadas por comas. Cada operación indicada corresponde a la columna de su posición en el listado. <BR>En los listados, crea una fila&nbsp;mas&nbsp;con el resultado de las operaciones, es decir, las operaciones se efectúan en las columnas&nbsp;especificadas. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<P>Operaciones permitidas por columna&nbsp;&nbsp;(en blanco sin operación):<BR>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;<STRONG>ColOp</STRONG>&nbsp;</TD>
+<TD>"+" &nbsp;Suma.&nbsp;<BR>"C" Cuenta registros.<BR>"#" &nbsp;Cuenta si no está vacio ni es cero.<BR><BR>Si se quiere pintar una cadena se pondrá entre comillas dobles o sencillas y si esta cadena se quiere justificar la precederá el carácter "&lt;" para justificación izquierda, "=" para centrar y "&gt;" para la justificación derecha.</TD></TR></TBODY></TABLE></P>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>{slColsOp} ,,+ 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT language=JavaScript>
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>

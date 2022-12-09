@@ -1,0 +1,285 @@
+[Title]=MODIFICAR "SHOW TYPE" DE UNA OPCION AL ACTUALIZAR
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBIndex]cd_gs_op
+[DBOrder]seq
+[DBAddFilter]show_type in ('D','T')
+[Stop]*
+[Button]*|Se modificará al actualizar
+[MsgAnswer]*|Al actualizar se ejecutará la modificación
+[AddCode]mR|script_url|E|<img src=g/t_op_seek.gif onclick='uSelOpcion()' id=SinURL>
+[AddOption]*|mode|RellenaMode()
+[AddOption]*|show_type|RellenaShow()
+[AddOption]*|type|F,Folder; O,Option; L,Separator
+[Fields]
+cd_gs_op|cd_gs_op|+|T|2||*|||
+Type|type|N|SV|9||-|||
+,F.Alta|dt_add|F4|T|10||-|||
+Caption|caption|#D|T|255|400|-|||
+Script|script_url|#D|T|255|400|-|||
+Show|show_type|D|SV|15||M|||
+|seq|+|T|4||*|||
+[JSCheck]?R
+if( eGF('show_type')==eGO('show_type').OldValue ) ePE( 'show_type', 'No ha habido cámbios' );
+if( eGF('script_url')=='' ) ePE( 'script_url', 'Ha de seleccionar un Script' );
+[JSEnd]?R
+eGO('show_type').OldValue = eGF('show_type');
+[PHPIni]a,?R,?
+$_opMode = array();
+$_opModeLabel = array();
+$_opShow = array();
+$_opShowLabel = array();
+IniManagerOp();
+function IniManagerOp(){
+global $_opMode, $_opModeLabel;
+global $_opShow, $_opShowLabel;
+include( '../_datos/config/manager_op.ini' );
+$_opMode = $_Mode;
+$_opModeLabel = $_ModeLabel;
+$_opShow = $_Show;
+$_opShowLabel = $_ShowLabel;
+}
+function RellenaMode(){
+global $_opModeLabel;
+$p = array();
+$p[] = array('','');
+foreach( $_opModeLabel as $k=>$v ) $p[] = array( $k, $v );
+return $p;
+}
+function RellenaShow(){
+global $_opShowLabel;
+$p = array();
+$p[] = array('','');
+foreach( $_opShowLabel as $k=>$v ){
+if( $k=='*' ) $k = ' ';
+$p[] = array( $k, $v );
+}
+return $p;
+}
+[HTMIni]mR
+<style>
+#n0 { PADDING-LEFT: 5px; }
+#n1 { PADDING-LEFT: 22px; }
+#n2 { PADDING-LEFT: 39px; }
+#n3 { PADDING-LEFT: 56px; }
+#n4 { PADDING-LEFT: 73px; }
+#n5 { PADDING-LEFT: 90px; }
+#n6 { PADDING-LEFT: 107px; }
+#n7 { PADDING-LEFT: 124px; }
+#n8 { PADDING-LEFT: 141px; }
+#n9 { PADDING-LEFT: 158px; }
+</style>
+[PHPIni]M
+qQuery("insert into {$_SESSION['ShareDictionary']}gs_activity (cd_gs_user, cdi, script, edes, email) values ({$_User}, '". date('Y-m-d H:i:s')."', '[OP]{$_POST['script_url']}~{$_POST['cd_gs_op']}~{$_POST['show_type']}', 'C', '{$_SESSION['_UserEMail']}')");
+eMessage($_MSGANSWER[0], 'HS');
+[JSIni]mR
+function uSelOpcion(){
+var xy = eXY(S.event(window));
+top.eCallSrv( window, "edes.php?E:CallSrv="+_Source+"&IniSeq="+eGF('seq')+'&xCoord='+xy[0]+'&yCoord='+xy[1] );
+}
+function uPutOpcion(){
+var Obj = S.event(window);
+if( Obj.tagName=='IMG' ) Obj = Obj.parentNode;
+if( Obj.tagName=='TH' ) return;
+if( Obj.tagName=='TD' ) Obj = Obj.parentNode;
+if( Obj.cells[2].tp!='O' ) return;
+if( Obj.Script=='' ){
+top.eInfo(window,'La opción no tiene ningún script asociado');
+return;
+}
+ePF('script_url',Obj.Script);
+S.modalDelete(window);
+DGI("_TreeListOp").style.display = "none";
+}
+[JSEnd]mR
+if( eGF('script_url')!='' ) DGI('SinURL').style.display = 'none';
+document.write( "<span id=_TreeListOp class=SubLista onkeydown='_TreeListCheck()' style='overflow:auto;padding:0px;vertical-align:top;display:none;position:absolute;' onscroll='top.eScrollTH(this)'></span>" );
+[CallSrv]IniSeq
+$IniSeq = $_GET['IniSeq'];
+include_once('../_datos/config/manager_op.ini' );
+?>
+<script type="text/javascript">
+function eResize(){}
+function _TreeSelect(){}
+</script>
+<table id=BROWSE onclick="uPutOpcion()">
+<col style='width:15px;text-align:center;cursor:default'>
+<col style='width:15px;text-align:center;font-family:<?= $_FontFamily; ?>;cursor:pointer;'>
+<col style='cursor:pointer' class=Option>
+<TR>
+<TH style='font-size:10px'>Icon
+<TH style='font-size:10px;font-family:Arial'>Sel
+<TH>
+<table border=0 width=100% cellspacing=0 cellpadding=0><tr>
+<th nowrap style="white-space:nowrap">&nbsp;Caption&nbsp;
+<th width=100%>
+<th><img src='g/tree_close.gif' onclick='S.modalDelete(window);DGI("_TreeListOp").style.display="none"' title='Cerrar ventana'>
+</table>
+<?PHP
+qQuery( "select cd_gs_op,indent,icon,type, caption, mode, seq, script_url
+from {$_SESSION['ShareDictionary']}gs_op
+where seq>{$IniSeq}-10 and seq<$IniSeq+10
+order by seq" );
+$tmp = array();
+$OpReales = 0;
+while( $r=qArray() ){
+$tmp[] = $r;
+if( $r['type']=='O' ) $OpReales++;
+}
+if( $OpReales==0 ) NoHayReg();
+while( count($tmp)> 0 && $tmp[count($tmp)-1]['type']<>'O' ) unset( $tmp[count($tmp)-1] );
+$TOpciones = count($tmp);
+$MinId = 99;
+$Dim = array();
+$Actual = $TOpciones-1;
+$Dim[] = $tmp[$Actual];
+for( $n=$TOpciones-1; $n>0; $n-- ){
+$Anterior = $n-1;
+if( $tmp[$Actual]['type']=='F' ){
+if( $tmp[$Anterior]['type']=='O' && $tmp[$Anterior]['indent'] < $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='F' && $tmp[$Anterior]['indent'] >= $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='L' && $tmp[$Anterior]['indent'] > $tmp[$Actual]['indent'] ){
+continue;
+}
+}else if( $tmp[$Actual]['type']=='O' ){
+if( $tmp[$Anterior]['type']=='O' && $tmp[$Anterior]['indent'] < $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='F' && $tmp[$Anterior]['indent']+1 <> $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='L' && $tmp[$Anterior]['indent'] <> $tmp[$Actual]['indent'] ){
+continue;
+}
+}else if( $tmp[$Actual]['type']=='L' ){
+if( $tmp[$Anterior]['type']=='O' && $tmp[$Anterior]['indent'] < $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='F' ){
+unset($Dim[count($Dim)-1]);
+}
+if( $tmp[$Anterior]['type']=='F' && $tmp[$Anterior]['indent']+1 <> $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='L' ){
+continue;
+}
+}
+$Dim[] = $tmp[$Anterior];
+$MinId = Min( $MinId, $tmp[$Anterior]['indent'] );
+$Actual = $Anterior;
+}
+$Dim = array_reverse( $Dim );
+unset($tmp);
+$TOpciones = count($Dim);
+if( $TOpciones==0 ) NoHayReg();
+$MinId += 1;
+if( $TOpciones < 26 ) $MinId += 99;
+$OpVisible = 0;
+$OpOculta = 0;
+$MinIndent = 99;
+for( $n=0; $n<$TOpciones; $n++ ){
+$r = $Dim[$n];
+$MinIndent = min( $MinIndent, $r['indent'] );
+}
+$Quitar = chunk_split( '.?wW23?mMF>', 1);
+for( $n=0; $n<$TOpciones; $n++ ){
+$r = $Dim[$n];
+echo '<tr n='.$r['cd_gs_op'];
+if( $r['indent'] > $MinId ){
+echo ' id=o';
+$OpOculta++;
+}else{
+$OpVisible++;
+}
+$Script = $r['script_url'];
+if( substr_count(substr($Script,0,4),':') > 0 ){
+if( substr($Script,-1)==':' ){
+for( $i=$n-1; $i>=0; $i-- ){
+if( $Dim[$i]['indent']==$r['indent']-1 ){
+$Script = $Script.substr($Dim[$i]['script_url'],1);
+break;
+}
+}
+}
+list(,$Script) = explode(':',$Script);
+list($Script) = explode('?',$Script);
+list($Script) = explode('&',$Script);
+if( substr_count($Script,'.') == 0 ){
+$Ori = $r['script_url'];
+for( $i=0; $i<count($Quitar); $i++ ) if( substr($Ori,0,1)==$Quitar[$i] ) $Ori = substr($Ori,1);
+if( $Ori[0]=='¿' ){}
+switch( $Ori[0] ){
+case '#':
+case '=':
+$Script .= '.edf';
+break;
+case '@':
+$Script .= '.gdf';
+break;
+}
+}
+}
+echo ' Script="'.str_replace('"','&quot;',$Script).'"';
+echo '>';
+echo '<td Icon="'.$r['icon'].'">'.(( $r['icon']!='' ) ? '<img style="cursor:default" src="'.str_replace('$','edes.php?R:$a/g/',$r['icon']).'">' : '&nbsp;');
+echo '<td>'. ( ( isset($DimMarca[$r['cd_gs_op']]) ) ? chr($_ChrON) : chr($_ChrOFF) );
+echo "<td tp={$r['type']} id=n".($r['indent']-$MinIndent);
+if( $r['seq']==$IniSeq ) echo ' style="font-weight:bold;color:red;"';
+echo '>';
+$txt = trim($r['caption']);
+if( $r['type']=='L' ){
+if( $txt=='' ){
+echo "<img src=g/linea.gif width=100% height=2px style='cursor:default;margin-top:3px'>";
+}else{
+echo "<img src=g/linea.gif width=30px height=2px style='cursor:default'>".trim(substr($txt,1))."<img src=g/linea.gif width=30px height=2px style='cursor:default'>";
+}
+}else{
+if( $r['type']=='F' ){
+if( $r['indent'] >= $MinId ){
+echo '<img src=g/tree_1.gif>';
+}else{
+echo '<img src=g/tree_0.gif>';
+}
+}
+echo str_replace('"','&quot;',$txt);
+}
+}
+?>
+</table>
+<?PHP
+?>
+<script type="text/javascript">
+var Obj = window.frameElement.WOPENER;
+var el = Obj.DGI("_TreeListOp");
+el.innerHTML = document.all.BROWSE.outerHTML;
+with( el.style ){
+display = 'block';
+left = px(<?= $xCoord ?>);
+top = px(<?= $yCoord ?>);
+height = '';
+width = '';
+}
+el.style.top = parseInt(el.style.top) - (el.offsetHeight/2);
+S.modal(el);
+top.eScrollSet(Obj,'_TreeListOp',0);
+Obj.document.all._TreeListOp.focus();
+</script>
+<?PHP
+function NoHayReg(){
+global $_Lng;
+eInit();
+?>
+<script type="text/javascript">
+window.frameElement.WOPENER.document.all._TreeListOp.style.display = 'none';
+try{
+window.frameElement.WOPENER.Procesando(0);
+}catch(e){}
+top.eInfo(window,'<?=$_Lng['No hay registros']?>');
+</script>
+<?PHP
+eEnd();
+}

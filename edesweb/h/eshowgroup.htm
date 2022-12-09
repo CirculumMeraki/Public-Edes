@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eShowGroup 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eShowGroup( Obj/ID [ &nbsp;[ , LineaIncluida=false [ , OnOff&nbsp; ]&nbsp; ] , OcultaElEspacio=true ] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Oculta/Muestra los TR siguientes hasta el proximo "&lt;HR&gt;", dentro de la etiqueta [FIELDS] en las fichas se pueden poner "&lt;HR&gt;" con la propiedad de que se oculten/visualizen los datos hasta el siguiente "&lt;HR&gt;" mediante esta función simulamos el click sobre este elemento. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD><STRONG>&nbsp;Obj / ID</STRONG></TD>
+<TD>&nbsp;El el objeto de la linea de separación o su ID</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>LineaIncluida&nbsp; </STRONG></TD>
+<TD>&nbsp;Por defecto&nbsp;no se oculta la linea de separación&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>On/Off</STRONG></TD>
+<TD>&nbsp;Por defecto es lo contrario al estado actual&nbsp;(true/false)</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>OcultaElEspacio&nbsp; </STRONG></TD>
+<TD>&nbsp;La opción por defecto es ocultar eliminando el espacio, pero si lo ponemos a false ocultará el elemento dejando intacto el espacio que ocupa</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT language=JavaScript>
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>

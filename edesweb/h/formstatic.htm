@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">FormStatic</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[FormStatic] <br />[FormStatic] NomSubLista | CampoDestino=CampoOrigen, ... |  Operaciones en Fila | Operaciones en Columna | NomFuncUsu | CódigoHTML</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Esta etiqueta tiene dos comportamientos dependiendo de si tiene parámetros o no:<br /><strong>Sin parámetros:</strong> Solo en modo alta te permite dar altas sin enviar la ficha al servidor, mediante este sistema solo viajan los datos obteniendo mas velocidad, actualmente no soportado en el grupo de fichas.<br />Si existe la función de usuario con el nombre "FUNCTION_FormStatic()" será ejecutada, que servirá para ejecutar alguna acción no automática.<br /> Cada vez que se dá un alta todos los campos se limpian y los que tubieran algún valor por defecto se refrescan, si quisieramos que algún campo no se limpie deberemos indicarlo mediante la etiqueta:<br />[AddCode] a | ...NomCampo... | i | NoClear<br /><strong>Con parámetros:</strong> Identifica que este EDF realiza el mantenimiento de una SubLista sin ir al servidor en ninguna de sus operaciones, será el formulario donde esté la SubLista quién mandará los datos al servidor, el [DBIndex] de este EDF tiene que ser el campo de relación con la tabla padre donde esta la [SubList]. No se permiten campos del tipo "file". <br />Las etiquetas [JSEnd], [HTMEnd], [PHPEnd] y [MsgAnswer] no está disponibles en [FormStatic]</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> <strong>NomSubLista</strong></td>
+<td>El nombre de la SubLista tiene que ir encerrado entre corchetes</td>
+</tr>
+<tr>
+<td> <strong>Igualdad</strong></td>
+<td>Igualdad ( <strong>CampoDestino=CampoOrigen) </strong>Nombre del campo de la SubLista = Nombre del campo de la ficha, si los dos campos se llaman igual solo se pondrá uno y si se quiere coger el innerText de un campo select pondremos un "*" delante del nombre del campo de origen.</td>
+</tr>
+<tr>
+<td><strong> OperacionesEnFila</strong></td>
+<td>Parámetro no implementado.</td>
+</tr>
+<tr>
+<td> <strong>OperacionesEnColumna</strong></td>
+<td>Las operaciones son: (+) para sumar, (c) para contar las filas y (#) para contar las filas que estén rellenas.<br />La sintaxis es:  NomCampoDestipo=[+/c/#], ....</td>
+</tr>
+<tr>
+<td> <strong>NomFuncUsu</strong></td>
+<td>Nombre de la función de usuario, sin parámetros, se pasa el objeto TR que se ha modificado o insertado, si se ha borrado el TR se pasará NULL.</td>
+</tr>
+<tr>
+<td> <strong>CódigoHTML</strong></td>
+<td>Código HTML a insertar en la columna marcada como "IMG" se utiliza para una columna del listado meter iconos con las opciones de Alta, Baja y Modificación. </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[FormStatic] [_clau] | ''=IMG, cd_tclausula, nm_contra_clau | | ,c | CalculaValores | ...<br /><IMG SRC="g/l_op_update.gif" title="" onclick="eSLAction( 'fotos', 'u' )"><br /><IMG SRC="g/l_op_view.gif" title="" onclick='eSLAction( "fotos", "v" )'><br /><IMG SRC="g/l_op_delete.gif" title="" onclick="eSLAction( 'fotos', 'd' )"></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[FormStatic] [_clau] | ''=IMG, cd_tclausula, nm_contra_clau | | ,c | CalculaValores | [u][v][d]</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

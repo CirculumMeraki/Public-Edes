@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>MsgAnswer 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[MsgAnswer] Mode | MessageOK [&nbsp;[ | MessageERROR [ | JSOnClick | sgEjecutaJS ] ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>En los modos especificados, mensaje a mostrar al realizar alguna operaci?n de disco. <BR>Si no existe la etiqueta pondr? el valor por defecto. <BR>Si el primer car?cter del mensaje es "&gt;" se har? un include del archivo especificado a continuaci?n, dejando la p?gina vac?a antes de la llamada, en este fichero est? activa la variable "$_MessageType" que indica el tipo de mensaje, con los siguientes valores:<BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>OK</TD>
+<TD>Proceso correcto&nbsp;</TD></TR>
+<TR>
+<TD>NR</TD>
+<TD>No se han encontrado&nbsp;registros&nbsp;</TD></TR>
+<TR>
+<TD>LE</TD>
+<TD>Se ha excedido el l?mite de registros a extraer</TD></TR>
+<TR>
+<TD>DR</TD>
+<TD>Registro duplicado</TD></TR>
+<TR>
+<TD>FNS</TD>
+<TD>Fichero no grabado</TD></TR>
+<TR>
+<TD>FND</TD>
+<TD>Fichero&nbsp;no borrado&nbsp;</TD></TR>
+<TR>
+<TD>F1</TD>
+<TD>El fichero excede el m?ximo tama?o permitido&nbsp;</TD></TR>
+<TR>
+<TD>F2&nbsp;</TD>
+<TD>Fichero demasiado grande&nbsp;</TD></TR>
+<TR>
+<TD>F3</TD>
+<TD>Fichero incompleto&nbsp;</TD></TR></TBODY></TABLE>El mensaje puede contener c?digo HTML. <BR>En el mensaje, se puede introducir una variable PHP, para ello la insertaremos entre llaves "{$variable}", si la tabla tiene un campo serial se grabar? en la variable global "<FONT size=2>$_nSerial</FONT>". <BR>El argumento Mensaje puede contener c?digo HTML y Javascript.<BR>Si es una funci?n de PHP, sin par?metros,&nbsp;mostrando el resultado de esta, se considera funci?n si hay dos par?ntesis juntos "()" sin espacios. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><B>MessageERROR:</B> Se da cuando: No hay registros, El n?mero de registros sobrepasa el l?mite o se intenta duplicar un registro. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[MsgAnswer] A | Solicitud cursada <BR>[MsgAnswer] A | Solicitud n?mero {$mivariable} cursada. <BR>[MsgAnswer] A | Solicitud &lt;B&gt;de alta&lt;/B&gt; cursada. <BR>[MsgAnswer] A | &gt;myconfirmation.htm <BR>[MsgAnswer] A | &gt;myconfirmation.php<BR>[MsgAnswer] A | IdSession: {$_IdRegistro['areas_s']}<BR><BR>[MsgAnswer] M | MyFunction()<BR><BR>
+<P>[PHPIni] M<BR>function MyFunction(){<BR><SPAN style="WIDTH: 25px"></SPAN>return 'Mensaje en HTML&lt;script&gt;alert("alert() en JavaScript");&lt;/script&gt;';<BR>}</P>
+<TR>
+<TD id=txt>El primer ejemplo mostrar? el mensaje "Solicitud cursada" tras un alta (es decir, en modo A).<BR>En el ?ltimo ejemplo como se ve se puede combinar HTML con JavaScript.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

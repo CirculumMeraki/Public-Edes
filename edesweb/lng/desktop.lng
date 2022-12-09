@@ -1,0 +1,126 @@
+[Language] es,ca,en,fr
+1|Acción no permitida|Acció no permesa|Action not allowed|Acción no permitida
+10|Miércoles|Dimecres|Wednesday|Miércoles
+107|Tamaño fuente|Grandària font|Font size|Tamaño fuente
+100|Tamaño fuente extragrande|Grandària font extragran|Extra large font size|Tamaño fuente extragrande
+101|Tamaño fuente grande|Grandària font gran|Large font size|Tamaño fuente grande
+102|Tamaño fuente normal|Grandària font normal|Normal font size|Tamaño fuente normal
+103|El acceso se bloqueará durante # minutos|L´accés es bloquejarà durant # minuts|The access will be blocked for # minutes|El acceso se bloqueará durante # minutos
+104|Quedan # minutos de inactibidad<br>por acumulación de intentos erróneos|Queden # minuts d´inactivitat<br>per acumulació d\'intents erronis|It remains # minutes of inactivity<br>due to the accumulaction of failed attemps|Quedan # minutos de inactibidad<br>por acumulación de intentos erróneos
+105|Bloquear Windows|Bloquejar Windows|Block Windows|Bloquear Windows
+11|Jueves|Dijous|Thursday|Jueves
+12|Viernes|Divendres|Friday|Viernes
+13|Sábado|Dissabte|Saturday|Sábado
+14|ERROR: Alias no encontrado|ERROR: Àlies no definit|ERROR: Nickname not found|ERROR: Alias no encontrado
+15|No existe el fichero "#"|No existeix el fitxer "#"|Data file "#" does not exist|No existe el fichero "#"
+16|No se puede leer el fichero "#"|No es pot llegir el fitxer "#"|Data File "#" can not be read|No se puede leer el fichero "#"
+17|Mostrar Menú|Mostrar Menú|Show Menu|Mostrar Menú
+18|Ultimas opciones|Ultimes opcions|Last options|Ultimas opciones
+19|Ocultar Menú|Ocultar Menú|Hide Menu|Ocultar Menú
+2|ULTIMOS FICHEROS DESCARGADOS|ÚLTIMS FITXERS DESCARREGATS|LAST DATA FILE DOWNLOADED|ULTIMOS FICHEROS DESCARGADOS
+20|MENSAJE|MISSATGE|MESSAGE|MENSAJE
+21|CONFIRMAR|CONFIRMAR|CONFIRM|CONFIRMAR
+22|Confirmar gsStore de "#"|Confirmar gsStore de "#"|Confirm gsStore of "#"|Confirmar gsStore de "#"
+23|Ejecutar la opción de "#"|Executar l´opció de "#"|Execute "#" option|Ejecutar la opción de "#"
+24|Sistema ocupado|Sistema ocupat|System in use|Sistema ocupado
+25|AVISO|AVÍS|ADVICE|AVISO
+26|Opción no implementada|Opció no implementada|Option not implemented|Opción no implementada
+27|Esta opción no se puede ejecutar en una subventana|Aquesta opció no es pot executar en una subventana|This option can not be executed in a subwindow|Esta opción no se puede ejecutar en una subventana
+28|Novedades|Novetats|News|Novedades
+29|Ver Fuente|Veure Font|View Source|Ver Fuente
+3|OPCIONES MEMORIZADAS|OPCIONS MEMORITZADES|OPTIONS MEMORIZED|OPCIONES MEMORIZADAS
+30|Fijar visor|Fixar visor|Fix Viewer|Fijar visor
+31|Zoom Screen|Zoom Screen|Zoom Screen|Zoom Screen
+32|Editar preguntando fuente|Editar preguntant font|Edit asking source|Editar preguntando fuente
+33|Borra ficheros temporales|Esborra fitxers temporals|Delete temporal files|Borra ficheros temporales
+34|Editar|Editar|Edit|Editar
+35|DF Privado|DF Privat|DF Private|DF Privado
+36|Get/Put Objetos|Get/Put Objectes|Get/Put Objets|Get/Put Objetos
+37|Campos del Formulario/Listado\neTron|Camps del Formulari/LListat\neTron|Formulary Fields/Listed\neTron|Campos del Formulario/Listado\neTron
+38|Ver eCallSrv()|Veure eCallSrv()|View eCallSrv()|Ver eCallSrv()
+39|RunScript\nEditar script|RunScript\nEditar script|RunScript\nEdit script|RunScript\nEditar script
+4|Cerrar|Tancar|Close|Cerrar
+40|Ejecuta formulario memorizado|Executa formulari memoritzat|Execute the memorized formulary|Ejecuta formulario memorizado
+41|ERROR EN LA ENTRADA|ERROR EN L´ENTRADA|ERROR IN THE ENTRY|ERROR EN LA ENTRADA
+42|ERROR DE CONFIGURACION|ERROR DE CONFIGURACIÓ|CONFIGURATION ERROR|ERROR DE CONFIGURACION
+43|SIN CONEXSION LDAP|SENSE CONNEXIÓ LDAP|NO LDAP CONECTION|SIN CONEXSION LDAP
+44|USUARIO DESCONOCIDO|USUARI DESCONEGUT|UNKNOWN USER|USUARIO DESCONOCIDO
+45|USUARIO SIN PERMISO|USUARI SENSE PERMIS|USER WITHOUT PERMISSION|USUARIO SIN PERMISO
+46|LOGIN DESCONOCIDO|LOGIN DESCONEGUT|UNKNOWN LOGIN|LOGIN DESCONOCIDO
+47|CLAVE DESCONOCIDA|CLAU DESCONEGUDA|UNKNOWN KEY|CLAVE DESCONOCIDA
+48|PERMISO CADUCADO|PERMÍS CADUCAT|PERMISSION EXPIRED|PERMISO CADUCADO
+49|USUARIO NO AUTORIZADO|USUARI NO AUTORITZAT|UNAUTHORIZED USER|USUARIO NO AUTORIZADO
+5|Confirmar la opción de CERRAR|Confirmar l´opció de TANCAR|Confirm the CLOSE option|Confirmar la opción de CERRAR
+50|ERROR: PERMISOS HEREDADOS|ERROR: PERMISOS HERETATS|ERROR: PERMITS INHERITED|ERROR: PERMISOS HEREDADOS
+51|ERROR: ROL SIN PERMISO|ERROR: ROL SENSE PERMISO|ERROR: ROLE WITHOUT PERMISSION|ERROR: ROL SIN PERMISO
+52|ERROR: PERMISOS NO DEFINIDOS|ERROR: PERMISOS NO DEFINITS|ERROR: PERMITS NOT DEFINED|ERROR: PERMISOS NO DEFINIDOS
+53|ERROR: ARBOL DE OPCIONES NO AUTORIZADO|ERROR: ARBRE DE OPCIONS NO AUTORITZAT|ERROR: OPTION TREE NOT AUTHORIZED|ERROR: ARBOL DE OPCIONES NO AUTORIZADO
+54|ERROR: ARBOL DE OPCIONES NO ENCONTRADO|ERROR: ARBRE DE OPCIONS NO OPOSAT|ERROR: OPTIONS TREE NOT FOUND|ERROR: ARBOL DE OPCIONES NO ENCONTRADO
+55|ERROR: SIN PERMISOS PARA EL NUEVO ARBOL DE OPCIONES|ERROR: SENSE PERMISOS PER AL NOU ARBRE D´OPCIONS|ERROR: WITHOUT PERMISSION FOR THE NEW OPTIONS TREE|ERROR: SIN PERMISOS PARA EL NUEVO ARBOL DE OPCIONES
+56|ERROR: EXPLORADOR SIN CONFIGURAR|ERROR: EXPLORADOR SENSE CONFIGURAR|ERROR: BROWSER NOT CONFIGURATED|ERROR: EXPLORADOR SIN CONFIGURAR
+57|configurar|configurar|config|configurar
+58|MENSAJE: INTRANET FUERA DE HORARIO|MISSATGE: INTRANET FOS D´HORARI|MESSAGE: INTRANET OUT OF TIMETABLE|MENSAJE: INTRANET FUERA DE HORARIO
+59|ERROR: NODO NO AUTORIZADO|ERROR: NODE NO AUTORITZAT|ERROR: UNAUTHORIZED NODE|ERROR: NODO NO AUTORIZADO
+6|Cargando...|Carregant...|Loading...|Cargando...
+60|ERROR: NODO CON PERMISO CADUCADO|ERROR: NODE AMB PERMÍS CADUCAT|ERROR: NODE PERMISSION EXPIRED|ERROR: NODO CON PERMISO CADUCADO
+61|ERROR: NAVEGADOR DESCONOCIDO|ERROR: NAVEGADOR DESCONEGUT|ERROR: UNKNOWN NAVIGATOR|ERROR: NAVEGADOR DESCONOCIDO
+62|ERROR: NAVEGADOR NO SOPORTADO|ERROR: NAVEGADOR NO SUPORTAT|ERROR: NAVEGATOR NOT SUPPORTED|ERROR: NAVEGADOR NO SOPORTADO
+63|ERROR: RESOLUCION DEMASIADO BAJA|ERROR: RESOLUCIÓ MASSA BAIXA|ERROR: TOO LOW RESOLUTION|ERROR: RESOLUCION DEMASIADO BAJA
+64|ERROR DESCONOCIDO|ERROR DESCONEGUT|UNKNOWN ERROR|ERROR DESCONOCIDO
+65|MENSAJE<br>VERSION DEL NAVEGADOR NO SOPORTADA<BR>Versión mínima: #|MISSATGE<br>VERSIÓ DEL NAVEGADOR NO SUPORTADA<BR>Versió mínima: #|MESSAGE<br>THE NAVIGATOR VERSION IS NOT SUPPORTED<BR>Minimum Version: #|MENSAJE<br>VERSION DEL NAVEGADOR NO SOPORTADA<BR>Versión mínima: #
+66|ACCESO RESTRINGIDO|ACCÉS RESTRINGIT|RESTRICTED ACCESS|ACCESO RESTRINGIDO
+67|INTRANET REACTIVADA|INTRANET REACTIVADA|INTRANET REACTIVATED|INTRANET REACTIVADA
+68|ERROR: SIN PERMISO PARA REACTIVAR INTRANET|ERROR: SENSE PERMÍS PER REACTIVAR INTRANET|ERROR: WITHOUT PERMISSION TO REACTIVATE INTRANET|ERROR: SIN PERMISO PARA REACTIVAR INTRANET
+69|Click IZQ: Copia el contenido del formulario\nClick DCH: Copia dejando los valores por defecto|Click ESQ: Còpia el contingut del formulari\nClick DRET: Còpia deixant els valors per defecte|Click IZQ: Copy the content of the formulary\nClick DCH: Copia dejando los valores por defecto|Click IZQ: Copia el contenido del formulario\nClick DCH: Copia dejando los valores por defecto
+7|Domingo|Diumenge|Sunday|Domingo
+70|Click IZQ: Rellena el formulario con los campos copiados\nClick DCH: Elimina la copia|Click IZQ: Emplena el formulari amb els camps copiats\nClick DCH: Elimina la copia|Click IZQ: Fill the form with the copied fields\nClick DCH: Elimina la copia|Click IZQ: Rellena el formulario con los campos copiados\nClick DCH: Elimina la copia
+71|Oculta Escritorio y SubVentana siempre visible|Oculta Escriptori i SubVentana sempre visible|Hide Desk and SubWindow always visible|Oculta Escritorio y SubVentana siempre visible
+72|Memoriza formulario|Memoritza formulari|Memorize Formulary|Memoriza formulario
+73|Ejecuta formulario memorizado|Executa formulari memoritzat|Execute the memorized formulary|Ejecuta formulario memorizado
+74|VENTANAS MINIMIZADAS|FINESTRES MINIMITZADES|MINIMIZED WINDOWS|VENTANAS MINIMIZADAS
+75|Aceptar|Aceptar|Accept|Aceptar
+76|Si|Si|Yes|Si
+77|No|No|No|No
+78|Cancelar|Cancel·lar|Cancel|Cancelar
+79|Confirmar la opción de imprimir|Confirmar l´opció d´imprimir|Confirm the print option|Confirmar la opción de imprimir
+8|Lunes|Dilluns|Monday|Lunes
+80|ERROR|ERROR|ERROR|ERROR
+81|Visor Escritorio Remoto|Visor Escriptori Remot|Remote desktop viewer|Visor Escritorio Remoto
+82|Click IZQ: Ventanas minimizadas\nClick DCH: Menú de SubVentanas|Click IZQ: Finestres minimitzades\nClick DCH: Menú de SubFinestres|Click IZQ: Minimized windows\nClick DCH: Menú de SubVentanas|Click IZQ: Ventanas minimizadas\nClick DCH: Menú de SubVentanas
+83|Click IZQ: Ultimos ficheros y páginas memorizadas\nClick DCH: Memorizar página|Click ESQ: Últims fitxers i pàgines memoritzades\nClick DRET: Memoritzar pàgina|Click IZQ: Last Memorized Data files and pages\nClick DCH: Memorize page|Click IZQ: Ultimos ficheros y páginas memorizadas\nClick DCH: Memorizar página
+84|Mapa de opciones|Mapa d´opcions|Options Map|Mapa de opciones
+85|Chat|Chat|Chat|Chat
+86|Ayuda general|Ajuda general|General help|Ayuda general
+87|AYUDA DE TECLADO|AJUDA DE TECLAT|KEYBOARD HELP|AYUDA DE TECLADO
+88|Ayuda de teclado|Ajuda de teclat|Keyboard help|Ayuda de teclado
+89|Avisos|Avisos|Advices|Avisos
+9|Martes|Dimarts|Tuesday|Martes
+90|Novedades|Novetats|News|Novedades
+91|Listado a Excel|Llistat a Excel|Listed to Excel|Listado a Excel
+92|Extracciones|Extraccions|Extractions|Extracciones
+93|Click IZQ: Imprimir Ficha/Listado\nClick DCH: Imprimir Grupo de Fichas\nControl Click: Imprimir Desktop|Click ESQ: Imprimir Fitxa/LListat\nClick DRET: Imprimir Grup de Fitxes\nControl Click: Imprimir Desktop|Click IZQ: Print Record/Listed\nClick DCH: Print Records group\nControl Click: Print Desktop|Click IZQ: Imprimir Ficha/Listado\nClick DCH: Imprimir Grupo de Fichas\nControl Click: Imprimir Desktop
+94|Bloquear aplicación|Bloquejar aplicació|Block aplication|Bloquear aplicación
+95|Minimizar|Minimitzar|Minimize|Minimizar
+96|Cerrar|Tancar|Close|Cerrar
+97|Confirmar la opción de CERRAR|Confirmar l´opció de TANCAR|Confirm the CLOSE option|Confirmar la opción de CERRAR
+98|Maximizar|Maximitzar|Maximize|Maximizar
+99|Nombre del Nodo\nNombre del Usuario|Nom del Node\nNom de l´Usuari|Name of the Node\nUser Name|Nombre del Nodo\nNombre del Usuario
+106|Hacer Click para ocultar|Fer Clic per ocultar
+108|Enviando fichero...|Enviant fitxer...|Enviando fichero...|Enviando fichero...
+109|Grabado
+110|Seleccionar solapa
+
+111|CLAVE DE USUARIO RESETEADA
+112|Clave reseteada enviada por email
+113|Clave reseteada con valor por defecto
+114|CLAVE TEMPORAL ENVIADA POR EMAIL<br>La clave caducará en 12 horas.
+115|Clave temporal caducada
+116|Se ha solicitado una clave temporal
+
+117|Calculando...
+118|Imprimir
+119|Filtrar...
+120|Comprimir menú
+121|Expandir menú
+
+122|Click IZQ: Imprime pantalla\nClick DCH: Configurar impresora

@@ -1,0 +1,111 @@
+[Title]TEST DE CONFIGURACIÓN
+[NoButton]*
+[AddButton]*|[U] Realizar Test||uTest()
+[Fields]||trim
+Test a realizar|texto|#|SV|40||M|||
+[AddOption]*|texto
+AS,Actualizar script
+EM,Enviar EMail
+[JSIni]*
+function uTest(){
+switch($texto){
+case "AS":
+top.eCallSrv(window, 'TESTCURL=1&TO="'+_Server[0][0]+'"');
+break;
+case "EM":
+top.eCallSrv(window, 'TESTEMAIL=1');
+break;
+case "":
+break;
+}
+}
+[PHPEnd]a
+$_HttpConfigLoad = true;
+$Dim = include(eScript('$a/u/_http.gs'));
+$IdSrv = _IDSRV();
+echo '<script type="text/javascript">';
+echo '_Origen = "'.$IdSrv.'";';
+echo 'var _Server = new Array();';
+$_SESSION["_ServerTarget"] = array();
+$_SESSION["_ServerTarget"]["ORIGEN"] = $IdSrv;
+$i = 0;
+for($n=0; $n<count($Dim); $n++) if( $IdSrv<>$Dim[$n][1] ){
+if( count($Dim[$n])==3 ){
+$_SESSION["_ServerTarget"][$Dim[$n][0]] = $Dim[$n][1];
+echo "_Server[{$i}] = Array('{$Dim[$n][0]}','{$Dim[$n][1]}','{$Dim[$n][2]}');";
+$i++;
+}
+}
+echo '</script>';
+[CallSrv]TESTCURL
+if( !function_exists("curl_init") ){
+die('<script type="text/javascript">alert("La función no existe");</script>');
+}
+$file = eScript("/_tmp/curl_test.edes");
+$time = time();
+file_put_contents($file, $time);
+function loginSSO($user, $pass, $ssohost){
+include_once('../../lib/sso/new.openam.class.php');
+$sso = new OpenSSO($ssohost);
+try{
+$token = $sso->authenticate($user, $pass);
+}catch( Exception $msg ){
+ePrintR("Error de autenticación en SSO");
+}
+return $token;
+}
+eFileGetVar("SSOUpdate", true);
+if( $sso_url<>"" ){
+$token = loginSSO($sso_user, $sso_password, $sso_url);
+$headers = [
+"Cookie: {$sso_dir}={$token}"
+];
+}
+if( substr($TO,-1)=="/" ){
+$target_url = $TO.'edes.php?UPLOAD&FILE=';
+}else{
+$target_url = $TO.'/edes.php?UPLOAD&FILE=';
+}
+if( class_exists('cURLFile') ){
+$post = array(
+'TO_UPDATE' => 'test',
+'IDSRV' => $_SESSION["_ServerTarget"][$TO],
+'SS' => $_SESSION["_sesion_"],
+'file' => new cURLFile($file,'', $file),
+'file_name' => $COPY
+);
+}else{
+$post = array(
+'TO_UPDATE' => 'test',
+'IDSRV' => $_SESSION["_ServerTarget"][$TO],
+'SS' => $_SESSION["_sesion_"],
+'file' =>'@'.realpath($file),
+'file_name' => $COPY
+);
+}
+$ch = curl_init();
+if( $ch===false ) die('<script type="text/javascript">alert("ERROR al iniciar CURL");</script>');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_URL, $target_url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+$result = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+eJS('window.frameElement.WOPENER.S.info("Respuesta: test curl['.$result.']")');
+exit;
+if( $result!=$time ){
+eTron("[Error de actualización] ".$result);
+eJS('window.frameElement.WOPENER.S.error("ERROR al ejecutar el test")');
+}else{
+eJS('window.frameElement.WOPENER.S.ok("Test curl OK")');
+}
+eEnd();
+[CallSrv]TESTEMAIL
+if( eMail($_SESSION[_UserEMail], "EMail de prueba", "Cuerpo test de prueba", eFileGetVar("Setup.EMailSystem")) ){
+eJS('window.frameElement.WOPENER.S.ok("EMail de test enviado")');
+}else{
+eJS('window.frameElement.WOPENER.S.error("ERROR al enviar el test de EMail")');
+}

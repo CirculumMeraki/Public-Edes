@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Datos sin documentar 
+<TR>
+<TD id=Descripcion>
+<P><STRONG>VARIABLES POR LA URL</STRONG>:<BR>_UNIQUE_<BR>_FORMA_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no se usa de momento<BR>_CLOSE_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cierra ventana en fichas deslizantes<BR><BR><STRONG>DESKTOP.INI</STRONG><BR>$_IWorkBefore<BR>$_IWorkAfter<BR><BR><STRONG>gsTree</STRONG>:<BR>Editor del Arbol de opciones <BR>Estando editando campos si pulsamos "Ctr+Enter" generará una fila inmediatamente debajo. <BR>Estando en un campo de texto en los campos con las teclas del cursor se puede cambiar de fila. <BR>Al introducir el valor de la longitud del campo si el valor anterior está vacio lo grabará como longitud del campo en edición.<BR><BR>-&nbsp;&nbsp;$_SQL_&nbsp;&nbsp;($_SelectLast)&nbsp;&nbsp;//.Ultima sentencia select de busqueda de datos<BR>-&nbsp;&nbsp;$_SQLExecute<BR><BR>- <STRONG>$_eDesLogo</STRONG>: Variable con el nombre, sin extensión, del icono ·"edes" para identificar un tercer servidor.<BR><BR><FONT color=#ff0000>- Probar las funciones de SQL.<BR><BR></FONT></P><FONT color=#ff0080>NO-Un solo parametro en la URL sin variables </FONT>
+<TABLE id=Opciones style="WIDTH: 208px; HEIGHT: 101px" cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>av&nbsp; </TD>
+<TD>Calcula avisos&nbsp;</TD></TR>
+<TR>
+<TD>d</TD>
+<TD>Descarga directa de un fichero&nbsp;</TD></TR>
+<TR>
+<TD>l</TD>
+<TD>Listado para Descargas&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;</TD>
+<TD>Si termina en ".pdf" lo descarga</TD></TR>
+<TR>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR></TBODY></TABLE><BR><U>Otras acciones:<BR></U>S SubSelect interno&nbsp; - INTERNO - <BR>X Ejecuta "gsExcel" - INTERNO - <BR>A Cargará "gsHTM" la ayuda - INTERNO - <BR>U Login - INTERNO -</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">PDFVar</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[PDFVar] PDFVar = Value<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Nos permite modificar variables de configurac?on del PDF, es opcional el "$" delante de la variable as? como el ";".<br />Existe una variable del sistema "$_PDFLABELHIDDEN" para poder poner el label a campos que no la tengan o a campos de las condiciones que pueden no generarse en el listado ej: $_PDFLABELHIDDEN['NomCampo'] = 'label';<br />Si este 'label' tiene el valor especial "NotToShow" si el campo est? condicionado no se mostrará en la lista de las condiciones. <br />La variable $_PDFVALUELHIDDEN['Valor'] = Etiqueta te muestra un valor diferente en la información de condiciones.<br />El prefijo "PDF_" es opcional en la definición de la etiqueta, es obligatorio si se define la variable dentro de otra etiqueta.<br /><br />$PDF_Condition: Texto a mostrar en la condición del PDF, esta variable puede ser una cadena o una matriz.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[PDFVar] PDF_FontSize = 10 </code><br /><code>[PDFVar] PDF_Grid = true</code><br /><code>[PDFVar] PDF_GREENBAR = true</code><br /><code>[PDFVar] PDF_ShadowRows = '1,5,10,15,20'</code><br /><code>[PDFVar] PDF_ColorRows = '#0055ff,,#229911,#8912ad'  // Cuando se pone "PDF_ShadowRows" se puede dar color a cada linea</code><br /><code>[PDFVar] PDF_LineRows = '0,1,4,5,10,15,20' </code><br /><code>[PDFVar] PDF_TxtCabecera = 'Nueva cabecera'</code><br /><code>[PDFVar] PDF_Horientacion = 'V'                      // [V]ertical / [H]orizontal Papel A4</code><br /><code>[PDFVar] PDF_TxtOrderBy = 'Texto de la ordenación' </code><br /><code>[PDFVar] PDF_ShowHeader = false                      // Mostrar la cabecera en todas las páginas, Empresa y Fecha </code><br /><code>[PDFVar] PDF_LetterHead = true;                      // En cada salto de p?gina vuelve a mostrar el título, ordenación y condiciones</code><br /><code>[PDFVar] PDF_LastAfterMarginBottom = 60              // Margen libre en la ?ltima p?gina </code><br /><code>[PDFVar] PDF_ShowFilter = false                      // Mostrar el filtro en todas las páginas, solo si PDF_ShowHeader está activado</code><br /><code>[PDFVar] PDF_Width = 190                             // Ancho de la página</code><br /><code>[PDFVar] PDF_Height = 80                             // Alto de la página</code><br /><code>[PDFVar] PDF_FillCols = '2,3'                        // Columnas a ajustar el ancho a su contenido mas desfavorables en campos de texto</code><br /><code>[PDFVar] PDF_FullPermissions = true                  // Activa la modificaci?n, copia texto, etc.</code><br /><code>[PDFVar] PDF_MarginBottom = 200                      // margen entre el final del listado y el nº de página. </code><br /><code>[PDFVar] PDF_DataHeight = 40                         // Altura de las filas de datos</code><br /><code>[PDFVar] PDF_ImgMarginRight = 110                    // Margen derecho libre cuando se pone una imagen</code><br /><code>[PDFVar] PDF_MarginLetterHead = 110                  // Margen mínimo desde el top a la cabecera</code><br /><code>[PDFVar] PDF_NoCondition = 1                         // Desactiva el visualizar las condiciones<br />[PDFVar] PDF_ChartCol = true                         // Imprimirá en el pdf el chart [ChartCol]</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[PDFVar]</code><br /><code>     FontSize = 10</code><br /><code>     Grid = true</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,13 @@
+[Title]SYSCOLUMNS
+[DBTable]syscolumns
+[DBIndex]tabid,colno
+[DBOrder]tabid,colno
+[DBLimit]1000
+[Fields]
+tabid|tabid|x|T|10||AQ|||
+colname|colname|x|T|18||AQ|||
+colno|colno|x|T|10||A|||
+coltype|coltype|x|T|10||A|||
+collength|collength|X|T|10||A|||
+colmin|colmin|X|T|10||A|||
+colmax|colmax|X|T|10||A|||

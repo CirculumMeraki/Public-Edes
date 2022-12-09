@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>GPFields 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[GPFields] Fields | Caracteres 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Es una etiqueta para agilizar la prueba de formularios. Si tienes que probar el alta de un formulario de muchos campos en cada prueba tienes que introducir cada vez todos los datos, pues si pulsas el botón derecho en la página principal para sacar el menú de desarrollo tienes dos iconos uno de 'Copy' y otro de 'Paste' para copiar y reproducir los datos del formulario y para que puedas dar altas seguidas y los datos puedan variar para eso es esta etiqueta, si pones una lista de caracteres los generará de forma aleatoria en el campo y si pones un '+' pondrá un número secuencial, es decir primero defines mediante la etiqueta [GPFields] los campos que tienen que cambiar su valor al ser campos únicos ( ej el DNI, el CIF, etc ), despues rellenas un alta y antes de dar a submit haces "copy" con el menú del desktop o el de la pagina actual, haces submit y la proxima vez que salga la ficha de alta si pulsas a "Paste" se copiaran todos los valores de los campos del alta actual variando los valores de los campos indicados en las etiquetas [GPFields].. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>Caracteres</STRONG>: Es una lista de caráctes que acepta el campo o un '+' para indicar campo autoincremental 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[GPFields]&nbsp;codigo | +<BR>[GPFields] nombre | A BCDEFGHIJKLMNOPQRSTUVWXYZ //Genera un nombre aleatorio</P>
+<TR>
+<TD id=txt>El primer ejemplo hará que cada vez que des a "paste" en el campo 'codigo' se ponga un número secuencial y en el segundo ejemplo pondrá de forma aleatoria los caracteres de la 'A' a la 'Z', fijaros que si queremos generar aleatoriamente caracteres en blanco este caracter le tendremos que poner dentro de la secuencia.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

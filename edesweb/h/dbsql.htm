@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBSql</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBSql] Mode [ | NomDF/else,... [ UNIQUE/Condition ] ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En los listados no deja que el motor genere la sentencia SQL sino la indicada por nosotros. Con esta etiqueta se para la sentencia sql del formulario y se envía al motor de Base de datos la creada posteriormente por el usuario.  Ya que el motor no genera el cursor habrá que asignar el número total de registros a extraer a la variable "<strong>$_TReg</strong>", a no ser que se genere la variable "<strong>$usuCursor</strong>". <br />Hay que tener en cuenta en los listados paginados solo se entra en esta etiqueta en la primera página y si modificamos desde aquí alguna variable del sistema no se tendrá en cuenta en las siguientes paginaciones.<br />hay que tener encuenta que el motor muestra las condiciones con las que se ha creado un listado de la última sentencia sql que se halla ejecutado en esta etiqueta, si esa sentencia no fuera la que indicase la condición se rellenaria la variable "<strong>$_SQL_</strong>" que es donde se guarda la última sentencia sql.<br />Si se quiere que el sistema ejecute un sql se le asignará a la variable "<strong>$_SQLExecute</strong>",de esta variable se deducirá el "count" para saber los registros afectados, si se quiere hacer el "count" será mediante la variable "<strong>$_CountExecute</strong>", esta dos variables contendrán el sql a ejecutar. <br />Si se quiere sacar un listado sin registros hay que definir la variable "<strong>$EmptyList = true</strong>;".</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

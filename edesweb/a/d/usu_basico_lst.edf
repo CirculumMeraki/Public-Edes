@@ -1,0 +1,11 @@
+[Title]=LISTADO SIMULADO
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[Fields]
+DNI|dni|X|T|8||-|||
+Nombre|user_name|X|T|20||-|||
+Apellidos|user_surname|X|T|30||-|||
+[DBSql]l
+$usuCursor = array();
+for( $n=0; $n<30; $n++ ) $usuCursor[] = array( 'DDDDDDDD','NNNNNNNNNNNNNNNNNNNN','AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' );

@@ -1,0 +1,24 @@
+<DIV style="WIDTH: 430px; HEIGHT: 176px" id=CONTENIDO class=AYUDA>Configuración FTP 
+<TABLE style="FONT-FAMILY: ARIAL; BACKGROUND: #7b8083" id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">NOM.ORIGEN</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">Nombre del servidor origen&nbsp;</TD></TR>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">ORIGEN</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">IP del servidor origen&nbsp;</TD></TR>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">NOM.DESTINO</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">Nombre del servidor destino&nbsp;</TD></TR>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">FTP DESTINO&nbsp;</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">IP del FTP de destino</TD></TR>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">LOGIN</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">Login del FTP&nbsp;</TD></TR>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">USUARIO</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">Clave del FTP</TD></TR>
+<TR>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">DIRECTORIO</TD>
+<TD style="BACKGROUND: #fffff3; FONT-SIZE: 12px">Trayectoria completa del directorio de la aplicación&nbsp;</TD></TR></TBODY></TABLE></DIV>

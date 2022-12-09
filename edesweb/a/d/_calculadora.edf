@@ -1,0 +1,115 @@
+[Title]=CALCULADORA HIPOTECARIA
+[NoButton]a
+[AddCode]a|prestamo|A|&nbsp;<IMG SRC="edes.php?R:$a/g/desa.gif" onclick="cPrestamo()" title="Calcular prestamo">
+[AddCode]a|ratio|A|&nbsp;<IMG SRC="edes.php?R:$a/g/desa.gif" onclick="cRatio()" title="Calcular interes">
+[AddCode]a|num|A|&nbsp;<IMG SRC="edes.php?R:$a/g/desa.gif" onclick="cNum()" title="Calcular nº de pagos">
+[AddCode]a|cuota|A|&nbsp;<IMG SRC="edes.php?R:$a/g/desa.gif" onclick="cCuota()" title="Calcular cuota">
+[AddOption]*|num_anos|12,Meses; 1,Años
+[Fields]
+Importe del Préstamo|prestamo|+|T|9|60|A|||Monto del Préstamo
+Pagos por|num_anos|0|SV|1|60|-|12||Forma de pago
+Tipo de Interés (%)|ratio|+,|T|2,2|60|A|||Tasa de Interés (%)
+Número de Pagos|num|+|T|3|60|A|||
+Cuota a Pagar|cuota|+|T|9|60|A|||Monto de los Pagos
+[JSHead]*
+var _prestamo = _num_anos = _ratio = _num = _cuota = 0;
+function aNumero(){
+_prestamo = S.thousandsClear(FRM1.prestamo.value);
+_num_anos = FRM1.num_anos.value * 1;
+_ratio	 = S.thousandsClear(FRM1.ratio.value) / 100.0;
+_num	  = FRM1.num.value * 1;
+_cuota	 = FRM1.cuota.value * 1;
+}
+function binomial(a, n){
+if( n<0 ) return 1.0 / binomial(a,-n);
+var i, sum, pow, term, cof;
+sum = cof = 1.0;
+pow = n;
+term = 1;
+for( i = 1; i < 10; i++ ){
+cof = cof * pow / i;
+pow = pow - 1.0;
+term = term * a;
+sum = sum + cof * term;
+}
+return sum;
+}
+function ConError( P, I, N, Y, M ){
+return( P - M * (1.0 - binomial(I / Y, -N)) / (I / Y) );
+}
+function cPrestamo(){
+aNumero();
+if( _cuota == 0 || _ratio == 0 || _num == 0 || _num_anos == 0 ){
+FRM1.prestamo.value = "0";
+return;
+}
+var P = _cuota * (1.0 - binomial(_ratio / _num_anos, -_num)) / (_ratio / _num_anos);
+P = Math.round(P*100)
+P = P / 100;
+ePF( 'prestamo', "" + P.toFixed(0) );
+}
+function cRatio(){
+aNumero();
+if( _prestamo == 0 || _cuota == 0 || _num == 0 || _num_anos == 0 ){
+FRM1.ratio.value = "0,00";
+return;
+}
+var low, high, mid, err_mid, count, I;
+low  = 0.001;
+high = 10.0;
+count = 0;
+while( count < 30 ){
+count++;
+mid = (high + low) / 2.0;
+err_mid = ConError( _prestamo, mid, _num, _num_anos, _cuota );
+if( err_mid == 0.0 ) break;
+if( err_mid < 0.0 ){
+low = mid;
+continue;
+}
+if( 0.0 < err_mid ){
+high = mid;
+continue;
+}
+}
+mid = Math.round(mid*1000);
+mid = mid / 1000;
+I = mid * 100.0;
+ePF( 'ratio', "" + I.toFixed(2) );
+}
+function cNum(){
+aNumero();
+if( _prestamo == 0 || _ratio == 0 || _cuota == 0 || _num_anos == 0 ){
+FRM1.num.value = "0";
+return;
+}
+var low, high, mid, err_mid, count;
+high = 1024;
+low = count = 0;
+while( count < 10 ){
+count++;
+mid = (high + low) / 2.0;
+err_mid = ConError( _prestamo, _ratio, mid, _num_anos, _cuota );
+if( err_mid == 0.0 ) break;
+if( 0.0 < err_mid ){
+low = mid;
+continue;
+}
+if( err_mid < 0.0 ){
+high = mid;
+continue;
+}
+}
+ePF( 'num', "" + mid.toFixed(0) );
+}
+function cCuota(){
+aNumero();
+if( _prestamo == 0 || _ratio == 0 || _num == 0 || _num_anos == 0 ){
+FRM1.cuota.value = "0";
+return;
+}
+var M = _prestamo * _ratio / _num_anos / (1.0 - binomial( _ratio / _num_anos, -_num ));
+M = Math.round(M*100);
+M = M / 100;
+ePF( 'cuota', "" + M.toFixed(0) );
+}

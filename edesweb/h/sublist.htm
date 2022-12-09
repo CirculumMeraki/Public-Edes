@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">SubList</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[SubList] Mode | Id [ | TituloSuperior [ | TituloVentana [ | NOBR ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Crea un listado, con posibilidad de mantenimiento, dentro de una ficha o grupo de fichas.<br />Esta etiqueta tiene subetiquetas, las subetiquetas se delimitan por llaves '{}' .<br />El orden de los campos de la subficha tiene que ser el mismo que el de la sublista.<br />En el último campo visible se pondrá el botón de gestión.<br /><span style="color: #ff0080;">IMPORTANTE el campo que va en el "where" no va en la SubFicha ni en la SubLista, en el ejemplo siguiente como se ve el campo "cd_w_oferta" no está.</span> <br />Si se quiere obtener los datos de la sublista se ha de crear la siguiente variable:<br />[PHPIni] A,M<br />$_SubListGetRecords = array();<br />[DBIni] A,M<br />// Se obtiene la variable "$_SubListGetRecords" rellena con la siguioente información<br />Cabecera<br />[0][0] Total registros<br />[0][1] Nombre de la tabla<br />[0][2] Indice de principal<br />[0][3] Lista de Campos<br />Registros<br />[1][...] Una matriz con los valores de los campos<br />Cabecera<br />Registros<br />... <br />Los campos que tengan alias no será recogidos por el array, si se quiere recibirlos se definirá la siguiente variable:<br />[JSIni]  a,mR<br />_SubListGetRecords = true;<br /><br />Sublistas del tipo FormStatic<br /> - Se puede evitar que solo se de un alta y se cierre la ventana con el siguiente código:<br />[JSCheck] a<br />top._eSWMini( window.frameElement.id.substring(4) );<br />- Para saber en que modo estas está la variable "_ModeSubList" <br /><br />Sublistas del tipo FormOnLine en la cual se define una subficha de mantenimiento para la sublista es obligatorio que la subficha empiece con una linea con texto como delimitador superior.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<p><strong>Id</strong>: Es el nombre del identificador, en la etiqueta [FIELDS] se pondrá entre corchetes. <br /><strong>NOBR</strong>: Pone el botón de submit de las subficha a continuación.<br /><br />Si existe la función opcional llamada "FUNCTION_[Id]" la llamará al principio y final de cada proceso.<br /><br /><u>"'L" Listado</u><br /><br />- Start<br />FUNCTION_[NomSubList]( 'L', 'S', MODO, rowIndex, ObjTR, window, slCol);Return: [] / true / false</p>
+<p>- End<br />FUNCTION_[NomSubList]( 'L', 'E', MODO, rowIndex, ObjTR, window, slCol );</p>
+<p>- Start (Ver documento)<br />FUNCTION_[NomSubList]( 'L', 'S', 'F', -1, ObjTR, window, slCol );Return: [] / true / false<br /><br /><u>"F" Ficha</u><br /><br />- Start<br />FUNCTION_[NomSubList]( 'F', 'S', MODO, -1, ObjTR, window, slCol );Return: [] / true / false</p>
+<p>- End<br />FUNCTION_[NomSubList]( 'F', 'E', MODO, rowIndex , ObjTR, window, slCol );</p>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code><span style="color: #000080; font-size: small;">[Fields]<br /> ...<br /> - | SUPLEMENTO<br /></span><span style="font-size: small;"> Nombre  </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> _nombre        </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> #X </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> T </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> 50 </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> 350 </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> M </span><strong><span style="color: #800000; font-size: small;">|</span></strong> <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> # </span><strong><span style="color: #800000; font-size: small;">|<br /></span></strong><span style="font-size: small;">,Importe </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> _importe       </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> +  </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> T </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> 3  </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">     </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> M </span><strong><span style="color: #800000; font-size: small;">|</span></strong> <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> # </span><strong><span style="color: #800000; font-size: small;">|<br /></span></strong><span style="color: #000080; font-size: small;">-|LISTA DE SUPLEMENTOS<br /></span><strong><span style="color: #800000; font-size: small;">         |</span></strong> <strong><span style="color: #0000ff; font-size: small;">[</span></strong><span style="font-size: small;">_suplementos</span><strong><span style="color: #0000ff; font-size: small;">]</span></strong> <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> o  </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">   </span><strong><span style="color: #800000; font-size: small;">|   </span></strong><span style="font-size: small;"> </span><strong><span style="color: #800000; font-size: small;">|    </span></strong><span style="font-size: small;"> </span><strong><span style="color: #800000; font-size: small;">|  </span></strong><span style="font-size: small;"> </span><strong><span style="color: #800000; font-size: small;">|</span></strong> <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">   </span><strong><span style="color: #800000; font-size: small;">|</span></strong></code></p>
+<p><code><span style="color: #0000ff; font-size: small;"><strong>[SubList]</strong></span><span style="color: #000000; font-size: small;"> a,?R </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"><span style="color: #000000;"> _suplementos<br /></span>{slGroupLabels} slSql</span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">slAlign</span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">slColsWidth</span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">slFormat</span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">slMenu  </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">slTH<br />.    ''              <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">  C</span><span style="font-size: small;">H   </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">    27     </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">  AMB() </span><strong><span style="color: #800000; font-size: small;">| </span></strong><span style="font-size: small;">IMG    </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"><img title="Alta suplemento" src="g/l_op_insert.gif" />    <br /></span><span style="font-size: small;">.    ''              <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">  C</span><span style="font-size: small;">H   </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">    27     </span><strong><span style="color: #800000; font-size: small;">| [u][d]</span></strong> <strong><span style="color: #800000; font-size: small;">| </span></strong><span style="font-size: small;">IMG    </span><strong><span style="color: #800000; font-size: small;">|[i,</span></strong><span style="font-size: small;">Alta suplemento]<br /></span>     ''              <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">  C</span><span style="font-size: small;">H   </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">    27     </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">  AMB() </span><strong><span style="color: #800000; font-size: small;">| </span></strong><span style="font-size: small;">IMG    </span><strong><span style="color: #800000; font-size: small;">|[i,</span></strong><span style="font-size: small;">Alta suplemento]<br /></span></span><span style="color: #800000; font-size: small;">     nombre          <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> </span><span style="font-size: small;">  I   </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">   400     </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">        </span><strong>|</strong></span><span style="font-size: small;">_nombre </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">NOMBRE<br />     importe         </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> </span><span style="font-size: small;">  D   </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">           </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">   M    </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">_importe</span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;">IMPORTE</span></span></code></p>
+<p><code><span style="font-size: small;">{slSql} select # from w_suplemento_od where cd_w_oferta='{cd_w_oferta}'<br />.{slMenu} a,mR </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> Alta:i, Modificar:u, Borrar:d </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> # </span><strong><span style="color: #800000; font-size: small;">|</span></strong> <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> FormOnLine </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> <img title="Modificar suplemento" src="g/l_op_update.gif" /><img title="Borrar suplemento" src="g/l_op_delete.gif" /><br />{slMenu} a,mR <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> Alta:i, Modificar:u, Borrar:d </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> # </span><strong><span style="color: #800000; font-size: small;">|</span></strong> <strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> FormOnLine </span><strong><span style="color: #800000; font-size: small;">|</span></strong><span style="font-size: small;"> [u][d]<br /></span>{slWin} ,4</span></code></p>
+<p><code><span style="color: #0000ff; font-size: small;"><strong>[PHPIni]</strong></span><span style="font-size: small;"><span style="color: #000000;"> cR,bR<br /></span></span><span style="color: #0000ff; font-size: small;">function AMB(){</span><span style="font-size: small;"><span style="color: #000000;">}</span></span></code></p>
+<p><code><span style="color: #0000ff; font-size: small;"><strong>[PHPIni]</strong></span><span style="font-size: small;"><span style="color: #000000;"> a,mR<br /></span></span><span style="color: #0000ff; font-size: small;">function AMB(){<br />     .</span><span style="font-size: small;">echo '<img title="" src="g/l_op_update.gif" />'_suplementos</span><span style="font-size: small;">', </span><span style="font-size: small;">'u</span><span style="font-size: small;">' )">';<br />     .echo '<img title="" src="g/l_op_delete.gif" />'_suplementos</span><span style="font-size: small;">', </span><span style="font-size: small;">'d</span><span style="font-size: small;">' )">';<br />     return "[u][d]";<br /></span><strong><span style="color: #808000; font-size: small;">}</span></strong></code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">Este tipo de definición en columna es el estandar. También se pueden definir las etiquetas en fila como en los ejemplos siguientes.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>{FS}{ Fotografías</code><br /><code>  < | [fotos] | o | | | | || |</code><br /><code>}</code></p>
+<p><code>[SubList] a,A,mR,cR | fotos</code><br /><code>  {slSql} select codigo,cd_foto,nm_foto,fichero,ver,imprimir,fichero from foto where codigo='{codigo}' order by nm_foto</code><br /><code>  {slTH} codigo,cd_foto,DESCRIPCION,FICHERO,Ver,Imp,<img title="Ver album" src="g/album.gif" /></code><br /><code>  {slAlign} o,o,I,I,C,C,C</code><br /><code>  {slFormat} ,,,,,,<img title="_@_" src="g/d_@.gif" /></code><br /><code>  {slTipIcon} gif,Ver foto; jpg,Ver foto; png,Ver foto; avi, Ver película</code><br /><code>  {slWin} ,7</code><br /><code>  {slMenu} a,mR | Alta:Fa, Modificar:FmR, Baja:FbR | foto | codigo=0, cd_foto=1</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Fields]</code><br /><code>...</code><br /><code>#!(cR,bR)¿</code><br /><code>-| TELEFONOS</code><br /><code>    Activo          | _activo   | T  | C  |  1 | | M | | |</code><br /><code>   ,Tipo            | _tipo     | 0  | SV | 10 | | M | | |</code><br /><code>   ,Teléfono        | _telefono | T  | T  |  9 | | M | | |</code><br /><code>?</code><br /><code>-|LISTADO DE TELEFONOS</code><br /><code>                    | [_tlf]    | o  |    |    | |   | | |</code>
+<p><code>[AddOption] * | _tipo | ,; T,Teléfono; M,Movil; F,Fax</code></p>
+<p><code>[SubList] a,?R | _tlf</code><br /><code> {slSql}    select '',activo,tipo,tipo as t,telefono from telefono where cd_persona='{cd_persona}'</code><br /><code> {slFormat}   MBTelefono(),,,TipoInner('#')</code><br /><code> {slTH}    <img title="Alta TLF" src="g/l_op_insert.gif" />,ACTIVO,CODIGO,TIPO,TELEFONO</code><br /><code> {slColsWidth}    , ,50,530</code><br /><code>#(cR,bR) {slAlign} o,C,C , C ,I</code><br /><code>#!(cR,bR){slAlign} C,C,C , C ,I</code><br /><code> {slWin}    ,7</code><br /><code> {slMenu}   a,mR | Alta:i, Modificar:u, Borrar:d | ''=IMG, activo=_activo, tipo=_tipo, tipo as t=*_tipo, telefono=_telefono | | FormOnLine | <img title="Modificar Clausula" src="g/l_op_update.gif" /><img title="Borrar Clausula" src="g/l_op_delete.gif" /></code><br /><code> {slJSCheck}</code></p>
+<p><br /><code>[PHPIni] a,?R</code><br /><code>function MBTelefono(){</code><br /><code>echo '<img title="" src="g/l_op_update.gif" /><img title="Selecciona Clausula" src="g/l_op_delete.gif" />';</code><br /><code>}</code><br /><code>function TipoInner($v){</code><br /><code>global $row;</code><br /><code>$Tipo = array( 'T'=>'Teléfono', 'M'=>'Movil', 'F'=>'Fax' );</code><br /><code>return $Tipo[$v];</code><br /><code>}</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">Sublista tipo FormOnLine</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[Fields]</code><br /><code>...</code><br /><code>-|LISTADO DE TELEFONOS</code><br /><code>    | [_tlf] | o | | | | | | |</code></p>
+<p><br /><code>[SubList] a,?R | _tlf</code><br /><code> {slSql}    select '',activo,tipo,tipo as t,telefono from telefono where cd_persona='{cd_persona}'</code><br /><code> {slFormat}   MBTelefono(),,,TipoInner('#')</code><br /><code> {slTH}    <img title="Alta TLF" src="g/l_op_insert.gif" />,ACTIVO,CODIGO,TIPO,TELEFONO</code><br /><code> {slColsWidth}    , ,50,530</code><br /><code>#(cR,bR) {slAlign} o,C,C , C ,I</code><br /><code>#!(cR,bR){slAlign} C,C,C , C ,I</code><br /><code> {slWin}    ,7</code><br /><code> {slMenu}   a,mR | Alta:i, Modificar:u, Borrar:d | telefono_formstatic.edf | | FormStatic</code><br /><code> {slJSCheck}</code></p>
+<p><br /><code>[PHPIni] a,?R</code><br /><code>function MBTelefono(){</code><br /><code>echo '<img title="" src="g/l_op_update.gif" /><img title="Selecciona Clausula" src="g/l_op_delete.gif" />';</code><br /><code>}</code><br /><code>function TipoInner($v){</code><br /><code>global $row;</code><br /><code>$Tipo = array( 'T'=>'Teléfono', 'M'=>'Movil', 'F'=>'Fax' );</code><br /><code>return $Tipo[$v];</code><br /><code>}</code></p>
+<p><code>>>> Fichero: telefono_formstatic.edf </code><br /><br /><code>[Title]   TELEFONO</code></p>
+<p><code>[DBTable] telefono</code><br /><code>[DBIndex] cd_persona</code><br /><code>[DBOrder] cd_persona</code></p>
+<p><code>[AddOption] * | _tipo | ,; T,Teléfono; M,Movil; F,Fax</code></p>
+<p><code>[FormStatic] [_tlf] | ''=IMG, activo=_activo, tipo=_tipo, tipo as t=*_tipo, telefono=_telefono | | | | <img title="Modificar Clausula" src="g/l_op_update.gif" /><img title="Borrar Clausula" src="g/l_op_delete.gif" /></code></p>
+<p><code>[Fields]</code><br /><code>    cd_persona | cd_persona | 0 | S  |  9 || * |||</code><br /><code>    Activo     | _activo    | T | C  |  1 || M |||</code><br /><code>   ,Tipo       | _tipo      | 0 | SV | 10 || M |||</code><br /><code>   ,Teléfono   | _telefono  | T | T  |  9 || M |||</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">SubLista tipo FormStatic</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>#!(cR,bR)¿</code><br /><code>    -           | MARCA</code><br /><code>    Código      | _cd_marca  | +  | T | 10 | | M | |   |</code><br /><code>   ,Nombre      | _nm_marca  | D  | T | 50 | | M | | # |</code><br /><code>?</code><br /><code>-|LISTADO DE MARCAS DEL PROVEEDOR</code><br /><code>                | [_mar]     | o  |   |    | | - | |   |</code></p>
+<p><code>[SubList] a,?R | _mar</code><br /><code>{slSql}       select '', cd_marca, nm_marca from marca where cd_prove='{cd_prove}' | cd_marca</code><br /><code>{slFormat}    MBmarca()</code><br /><code>{slTH}        <img title="Alta de Marca" src="g/l_op_insert.gif" />,CODIGO,NOMBRE DE LA MARCA COMERCIAL</code><br /><code> {slColsWidth}  , ,500</code><br /><code>#(cR,bR)¿</code><br /><code>{slAlign}     o,R, I</code><br /><code>?¿</code><br /><code>{slAlign}     C,R, I</code><br /><code>?</code><br /><code>{slWin}     ,7</code><br /><code>{slMenu}      a,mR | Alta:i, Modificar:u, Borrar:d | ''=IMG, cd_marca=_cd_marca, nm_marca=_nm_marca | | FormOnLine | <img title="Modificar Marca" src="g/l_op_update.gif" /><img title="Borrar Marca" src="g/l_op_delete.gif" /></code></p>
+<p><code>[PHPIni] a,?R</code><br /><code>function MBmarca(){</code><br /><code>echo '<img title="Modifica Marca" src="g/l_op_update.gif" /></code><br /><code>   <img title="Borrar Marca" src="g/l_op_delete.gif" />';</code><br /><code>}</code></p>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>-  | DESCOMPUESTO</code><br /><code>    Cód.Sup.                   | _cod_sup  | F  | T  | 13   || *    ||   |</code><br /><code>    Cód.Inf.                   | _cod_inf  | F  | T  | 13   || M    || # |</code><br /><code>    Resumen                    | _resumen  | #D | T  | 64   || -    ||   |</code><br /><code>    Can.Pres                   | _can_pres | +, | T  |  4,4 || M    || # |</code></p>
+<p><code>    Listado de<br />descompuesto | [_descom] | o  |    |      ||      ||   |</code></p>
+<p><code>[SubList] a,?R | _descom</code><br /><code>{slGroupLabels} slSql|slAlign |slColsWidth|slFormat|slMenu  |slTH</code><br /><code> ''      | CH |  27  | AMB() |IMG   |<img title="Alta Descompuesto" src="g/l_op_insert.gif" /></code><br /><code> r.cod_sup   | H  |     |    | _cod_sup  |</code><br /><code> r.cd_precio | H  |     |    |           |</code><br /><code> r.cod_inf   | I  |  50 |    | _cod_inf  | Código</code><br /><code> c.resumen   | I  | 230 |    | _resumen  | Resumen</code><br /><code> r.can_pres  | D  |     | M4 | _can_pres | Can.Pres</code></p>
+<p><code>{slSql} select # from preoc_relacion r left join preoc_concepto c on c.cod_sup=r.cod_inf where r.cod_sup='{cod_sup}' | cd_precio</code><br /><code>{slMenu} a,mR | Alta:i, Modificar:u, Borrar:d | # | | FormOnLine | <img title="Modificar Descompuesto" src="g/l_op_update.gif" /><img title="Borrar Descompuesto" src="g/l_op_delete.gif" /></code><br /><code>{slWin} ,7</code><br /><code>{slJSCheck}</code><br /><code>if( slMODE=='I' ){</code><br /><code>if( document.all.cod_sup.value!='' ){</code><br /><code>document.all._cod_sup.value = document.all.cod_sup.value;</code><br /><code>}else{</code><br /><code>top.eAlert( 'MENSAJE', 'Necesita introducir el dato "Código"', 'A', 'W' );</code><br /><code>return false;</code><br /><code>}</code><br /><code>}</code></p>
+<p><code>[PHPIni] cR,bR</code><br /><code>function AMB(){}</code></p>
+<p><code>[PHPIni] a,mR</code><br /><code>function AMB(){</code><br /><code>echo '<img title="" src="g/l_op_update.gif" />';</code><br /><code>echo '<img title="" src="g/l_op_delete.gif" />';</code><br /><code>}</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">EditLis con datos de varias tablas.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[RelationFields] _cd_auto,_cd_prov</code><br /><br /><code>[PHPIni] a,?R</code><br /><code>function AMB(){</code><br /><code>echo '<img title="Modificar" src="g/l_op_update.gif" />';</code><br /><code>echo '<img title="Borrar" src="g/l_op_delete.gif" />';</code><br /><code>echo '<img title="Ver" src="g/l_op_doc.gif" />';</code><br /><code>}</code></p>
+<p><code>[Fields]</code><br /><code>    cd_cli      | cd_cli                 | *   | T  | 9  |     | *   | | | </code><br /><code>...</code><br /><code>-|Direcciones de Entrega </code><br /><code>   ,            | _cd_clidir             | +   | T  | 5  |     | *   | | | </code><br /><code>    Tipo·vía    | _cd_tipovia:cd_tipovia | +   | S  | 4  | 110 | ML  | | | </code><br /><code>   ,Dirección   | _direccion             | D   | T  | 50 | 400 | M   | | | </code><br /><code>   ,num         | _num                   | 0   | T  | 8  | 50  | M   | | | </code><br /><code>                | _cd_postal             | 0   | T  | 5  |     | *   | | | </code><br /><code>    C.Postal    | _postal                | D   | T  | 79 | 200 | M   | | | </code><br /><code>    Autonomía   | _cd_auto:cd_auto       | 0   | S  | 2  | 150 | M   | | | </code><br /><code>   ,Provincia   | _cd_prov:cd_prov       | 0   | Ss | 2  | 130 | M   | | | </code><br /><code>  -|</code><br /><code>                | [_muestra]             | 0   |    |    |     | M   | | |</code></p>
+<p><code>[SubList] a,?R | _muestra</code><br /><code>{slGroupLabels} slSql | slAlign | slColsWidth | slFormat | slMenu      | slTH</code><br /><code>    ''                |   CH    |    40       |  AMB()   | IMG         | <img title="Alta dirección" src="g/l_op_insert.gif" /></code><br /><code>    c.cd_clidir       |   H     |    10       |          | _cd_clidir  |</code><br /><code>    c.cd_tipovia      |   I     |    15       |          | _cd_tipovia | Tipo Vía</code><br /><code>    c.direccion       |   I     |   200       |          | _direccion  | Dirección</code><br /><code>    c.num             |   I     |    50       |          | _num        | Núm</code><br /><code>    c.cd_postal       |   I     |     5       |          | _cd_postal  | C.Postal</code><br /><code>    c.cd_auto         |   H     |     0       |          | _cd_auto    | CdAutonomía </code><br /><code>    a.nm_auto         |   I     |   100       |          | *_cd_auto   | NmAutonomía </code><br /><code>    c.cd_prov         |   H     |     0       |          | _cd_prov    | Provincia</code><br /><code>    p.nm_prov         |   I     |   150       |          | *_cd_prov   | NmProvincia</code><br /><code>   </code><br /><code>{slSql}  select # from clidir c left join auto a on c.cd_auto=a.cd_auto left join prov p on c.cd_prov=p.cd_prov where cd_cli='{cd_cli}' | a.cd_clidir</code><br /><code>{slMenu} a,?R | Alta:i, Modificar:u, Borrar:d, Consultar:v | # | cd_clidir=1, cd_cli=0 | FormOnLine | <img title="Modificar Dir" src="g/l_op_update.gif" /><img title="Borrar dir" src="g/l_op_delete.gif" /><img title="Consultar Dir" src="g/l_op_view.gif" /></code><br /><code>{slWin}  ,4</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">SubLista con Select</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[Title]    DOCUMENTOS</code><br /><code>[DBTable]  persona</code><br /><code>[DBIndex]  cd_persona</code><br /><code>[DBSerial] cd_persona</code></p>
+<p><code>[UploadFile] _fichero | //doc_afi | cd_afi_doc | 6.000.000 | Seleccionar documento | *</code></p>
+<p><code>[Fields]</code><br /><code>- | Documento</code><br /><code>    AfiDoc     | _cd_afi_doc                                    | +   | T  | 3  |  | *     |       |   | </code><br /><code>    Fichero    | _fichero                                       | f   | F  | 45 |  | MDCUP |       | # | </code><br /><code>    Nota       | _nota                                          | #D  | T  | 45 |  | M     |       | # | </code><br /><code>    Tipo       | _cd_tipo_doc{tipo_doc,cd_tipo_doc,nm_tipo_doc} | N   | S  | 15 |  | M     |       | # | </code><br /><code>    CDI        | _cdi                                           | CDI | T  | 19 |  | -     | #y2s# | # | </code><br /><code>-|LISTA DE DOCUMENTOS</code><br /><code>               | [_documentos]                                  | o   |    |    |  |       |       |   |</code></p>
+<p><code>[SubList] a,?R | _documentos</code><br /><code>{slGroupLabels} slSql|slAlign|slTypeData |slColsWidth|slFormat|slMenu       |slTH</code><br /><code>     ''              |   C   |           |   3710    |  AMB() | IMG         |<img title="Alta documento" src="g/l_op_insert.gif" /></code><br /><code>     a.cd_afi_doc    |   H   |           |     30    |        |_cd_afi_doc  |</code><br /><code>     a.fichero       |   I   |           |    200    |        |_fichero     |FICHERO</code><br /><code>     a.nota          |   I   |           |    400    |        |_nota        |DESCRIPCION</code><br /><code>     a.cd_tipo_doc   |   H   |           |     70    |        |_cd_tipo_doc |</code><br /><code>     d.nm_tipo_doc   |   I   |           |     12    |        |*_cd_tipo_doc|TIPO</code><br /><code>     a.cdi           |   I   |           |     70    |        |_cdi         |CDI</code></p>
+<p><code>{slSql}  select # from afi_doc a left join tipo_doc d on a.cd_tipo_doc=d.cd_tipo_doc where a.cd_persona='{cd_persona}' | cd_afi_doc | fichero</code><br /><code>{slMenu} a,mR | Alta:i, Modificar:u, Borrar:d | # | | FormOnLine | <img title="Modificar documento" src="g/l_op_update.gif" /><img title="Borrar documento" src="g/l_op_delete.gif" /></code><br /><code>{slWin}  ,4</code><br /><br /><br /><code>[PHPIni] cR,bR</code><br /><code>function AMB(){</code><br /><code>echo '<img style="cursor: url('g/right.cur');" title="Ver Documento" src="g/l_op_doc.gif" />';</code><br /><code>}</code></p>
+<p><code>[PHPIni] a,mR</code><br /><code>function AMB(){</code><br /><code>echo '<img title="" src="g/l_op_update.gif" />';</code><br /><code>echo '<img title="" src="g/l_op_delete.gif" />';</code><br /><code>echo '<img style="cursor: url('g/right.cur');" title="Ver Documento'." src="g/l_op_doc.gif" />';</code><br /><code>}</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">SubLista con fichero</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO CON SUBVENTANA</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[Fields]</code><br /><code>  ...</code><br /><code>  -|Listado de conceptos a facturar</code><br /><code>   DETALLE  | [_deta]      | o  |    |           |    | -   |         |   | </code><br /><code>  ...</code><br /><br /><code>[SubList] a,?R | _deta | | DETALLE</code><br /><code>{slGroupLabels} slSql |slTypeData|slAlign|slColsWidth|slFormat |slColsOp|slTH</code><br /><code>        ''            |          |  CH   |    40     |reserva()|   c    |<img title="Alta" src="g/l_op_insert.gif" /></code><br /><code>        a.cd_fadet    |          |   H   |           |         |        |CODIGO</code><br /><code>        a.secuencia   |          |   H   |    50     |         |        |SEC.</code><br /><code>        a.tipo        |          |   H   |    60     |         |        |CD TIPO</code><br /><code>        t.nm_tipo     |          |   L   |    60     |         |        |NM TIPO</code><br /><code>        a.nm_concdeta |          |   L   |   300     |         |        |CONCEPTO</code><br /><code>        a.importe     |          |   R   |    40     |    M2   |   +    |SUPLIDOS</code><br /><code>        a.importea    |          |   R   |    40     |    M2   |   +    |APLICABLES</code><br /><code> </code><br /><code> {slSql}  select # from fadet a, tipo t where a.tipo=t.cd_tipo and a.cd_facab='{cd_facab}' order by a.secuencia | a.cd_fadet</code><br /><code> </code><br /><code> {slMenu} a,mR | Modificar:u, Insertar:i, Borrar:d | detalle.edf | | FormStatic | | 300,100 </code><br /><code> </code><br /><code> {slWin}  ,9</code><br /><code> {slJSCheck}</code><br /><code> for( var n=1; n<slrows.length-1; n++="" ){<="" code=""><br /><code> if( eTrim(slROWS[n].cells[3].innerText)!='' ) slROWS[n].cells[2].innerText = n;</code><br /><code> }</code><br /><code> ePF('suplidos',total);</code><br /><code> return;</code><br /><br /><code>Fichero: "detalle.edf"</code><br /><code>======================</code><br /><code>[Title]    NOTITLE</code></slrows.length-1;></code></p>
+<code><code></code></code>
+<p><code>[DBTable]  fadet</code><br /><code>[DBIndex]  cd_fadet</code><br /><code>[DBOrder]  cd_facab</code><br /><code>[DBSerial] cd_fadet</code></p>
+<code><code></code></code>
+<p><code>[FormStatic] [_deta] | ''=IMG, nm_concdeta, tipo,cd_tipo, nm_tipo=*tipo, importe, importea | | c,,,,,,+,+ | | <img title="" src="g/l_op_update.gif" /><img title="" src="g/l_op_delete.gif" /><img title="" src="g/l_op_view.gif" /></code><br /><code> </code><br /><code>[DelOption]  * | tipo || NoEmpty</code><br /><code> </code><br /><code>[Fields]</code><br /><code>    Concepto    | nm_concdeta  | #  | A | 255,80,3 |  | M |   | # | </code><br /><code>    Tipo        | tipo:cd_tipo | #D | S | 10       |  | M | A | # | </code><br /><code>   ,Suplidos    | importe      | -, | T | 8,2      |  | M |   |   | </code><br /><code>   ,Honorarios  | importea     | -, | T | 8,2      |  | M |   |   |</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

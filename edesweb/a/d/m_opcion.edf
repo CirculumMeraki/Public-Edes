@@ -1,0 +1,37 @@
+#include(*) lng
+[Title]@OPCION/ES DEL ARBOL@
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBIndex]cd_gs_op
+[DBOrder]caption
+[DBLimit]2000,200
+[AddCode]cR|cd_gs_op|A|<i class="ICONINPUT" title='@Ejecutar opción@' onclick='ExeOp()'>&#230;</i>
+[AddOption]cR,mR|type|O,@Option@; F,@Folder@; L,@Line@
+[Fields]
+@Código·Opción@|cd_gs_op|+|T|4||Q-|||
+#!(l) ,@Tipo@|type|0|SV|6||-||#|
+#(l) ,@Tipo@|type|0|SV|6||-||=|
+@Nombre Opción@|caption|#D|T|80||QM||#|
+@Opción padre@|_padre|D|T|30|caption|-|||
+|indent|+|T|5||*|||
+|seq|+|T|5||*|||
+@Acción@|script_url|#X|A|255,80,3|caption|QM|||
+@Icon@|icon|#|T|25|caption|M|||
+[PHPForm]cR,mR
+global $_Fila;
+if( $_Fila['indent'] > 0 ){
+qQuery("select caption from {$_SESSION['ShareDictionary']}gs_op where seq<{$_Fila['seq']} and indent=".($_Fila['indent']-1).' order by seq desc' );
+$row = qRow();
+$_Fila['_padre'] = trim($row[0]);
+}
+[JSIni]cR
+function ExeOp(){
+var txt = S(":script_url").val(),
+SeekPadre = (txt.substr(txt.length-1,1)==':');
+if( SeekPadre ){
+top.S.eventFire(S("tr[op='"+txt+"']",top).obj, "onclick");
+}else{
+var tr = S("tr[op='"+txt+"']",top).obj,
+trs = S.toTag(tr,"table").rows;
+top.S.eventFire(trs[tr.rowIndex+1], "click");
+}
+}

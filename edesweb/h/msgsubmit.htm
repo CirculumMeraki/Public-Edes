@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>MsgSubmit 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[MsgSubmit] Mode | Message/FunctionJS [ [ [ | CondicionJS ]&nbsp; | AnchoPx [ | TextAlign ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Con esta etiqueta podemos mostrar al usuario un mensaje de confirmación antes de hacer el submit. En el lado del cliente se puede modificar el contenido del mensaje mediante la variable javascript "_MsgSubmit". En caso de que el mensaje de confirmación se muestre en función de unas condiciones se especificará con el tercer parámetro "CondicionJS". 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;Mode </TD>
+<TD>Modo en el que se muestra el mensaje</TD></TR>
+<TR>
+<TD>&nbsp;Message/FunctionJS</TD>
+<TD>Mensage a mostrar en la confirmación,&nbsp; si DefinitionFile empieza por "&gt;" será el nombre de un fichero externo y si la extensión de este fichero es "LNG" lo sustituirá por las siglas del lenguaje del usuario.</TD></TR>
+<TR>
+<TD>&nbsp;CondicionJS </TD>
+<TD>Condición javascript&nbsp;para mostrar el mensaje</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[MsgSubmit] a,mR | ¿ Confirmar .... ?<BR>[MsgSubmit] a,mR | ¿ Confirmar .... ? | | 450 | justify<BR>[MsgSubmit] a,mR | ¿ Confirmar .... ? | uBorrar==true <BR>[MsgSubmit] a,mR | ¿ Confirmar .... ? | MostrarConfirmacion()<BR>[MsgSubmit] a,mR | uConfirmacion()<BR><BR>function MostrarConfirmacion(){<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>return true;<BR>} <BR><BR>function uConfirmacion(){<BR><SPAN style="WIDTH: 25px"></SPAN>return 'Texto a mostrar';<BR>}
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

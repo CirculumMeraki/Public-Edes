@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBInsert</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBInsert] Mode [ | NomDF, ... / else [ | UNIQUE/Condition ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Código PHP a ejecutar después de dar un alta desde una ventana auxiliar y antes de cerrarla, lo que se genere está dentro de una zona javascript.<br />Es útil para asignar datos del registro que se acaba de dar de alta a la ventana padre. <br />Esta etiqueta está asociada a [WinClose] ya que sólo  se ejecuta cuando está esta etiqueta presente.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[WinClose]<br />[DBInsert] A<br />global $ValorDB,$nCod_ct;<br />echo 'if( window.name == "Pag" ) return;';</p>
+<p>for( $n=0; $n<count($valordb); $n++="" )="" $valordb[$n][0]="$ValorDB[$n][1];</p"> </count($valordb);></p>
+<p>echo "var uO = window.frameElement.WOPENER.FRM3;";<br />echo "var u2 = window.frameElement.WOPENER.FRM2;";</p>
+<p>echo "uO.cd_emp.value = '{$cd_emp}';";<br />echo 'uO._nm_emp.value = "'.$nm_emp.'";';<br />echo 'uO._rsocial.value = "'.$r_social.'";';<br />echo "uO.num_ss.value = '{$_nss}';";<br />echo "uO.cd_ct.value =   '{$nCod_ct}';";<br />echo 'uO._new_nm_ct.value = "'.$nm_emp.'";';<br />echo 'uO._new_nm_loca_ct.value = "'.$nm_loca.'";';<br />echo "uO._new_cp_ct.value = '{$cd_post}';";<br />echo "uO._new_tele_ct.value = '{$tlf}';";<br />echo 'uO._new_domi_ct.value = "'.$direccion.'";';<br />echo "uO.cd_auto.value = '{$cd_auto}';";<br />echo "uO.cd_prov.value = '{$cd_prov}';";<br />echo "uO.cd_muni.value = '{$cd_muni}';";</p>
+<p>qSelect('grupo','*',"cd_grupo='{$cd_grupo}'" ); $row = qArray();<br />echo 'uO._nm_grupo.value = "'.trim($row[nm_grupo]).'";';</p>
+<p>qSelect('muni','*',"cd_prov='{$cd_prov}' and cd_muni='{$cd_muni}'" ); <br />$row = qArray();<br />echo 'uO._nm_muni.value = "'.$row[nm_muni].'";'; </p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">eSWTools</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">eSWTools( window, Option, Comando [,FuncionDeUsuario] )</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Varias opciones relativas a la cabecera de las SubVentanas.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>window </td>
+<td> Constante</td>
+</tr>
+<tr>
+<td>Option</td>
+<td>Indicador de la acción a ejecutar:<br /> "I": Insertar objeto/icono<br />"H": Ocultar objeto/icono<br />"S": Mostar un objeto/icono<br />"M": Minimizar la ventana<br />"C": Captión de la ventana<br />"E": Sustituye el evento onClick por uno del usuario<br />"O": Devuelve el Objeto<br />"F": Asigna una función a un icono</td>
+</tr>
+<tr>
+<td>Comando</td>
+<td> Las opciones "H" y "S" se indica el icono con un valor positivo y negativo si se empieza a contar por la derecha o con las iniciales [P]rint, [M]aximizar, [m]inimizar o [C]lose, si es una imagen  pondríamos su nombre.</td>
+</tr>
+<tr>
+<td>FuncionDeUsuario</td>
+<td> Funcion del usuario para sustituir la actual</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">top.eSWTools(window,'H',3);<br />top.eSWTools(window,'C','LISTADO DE USUARIOS');<br />top.eSWTools(window,'I','<img src="g/buscar.gif" />');<br />top.eSWTools(window,'E',2,FunctionOnClick);</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

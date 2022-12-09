@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>ListCompare
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>[ListCompare] ListaDeCampos | RanfoDeFechasIni, RanfoDeFechasFin[&nbsp;| Lista de Nº de columnas [| nb,nb ] ]
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>Listado comparando los datos entre un rango de fechas
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro><STRONG>ListaDeCampos:</STRONG> Nombres de campos separados por "," que se van a comparar.<BR><STRONG>RanfoDeFechasIni:</STRONG> Nombre del campo de fecha para el primer rango de fechas.<BR><STRONG>RanfoDeFechasFin:</STRONG> Nombre del campo de fecha para el segundo rango de fechas.<BR><STRONG>Lista de Nº de columnas:</STRONG> Lista de números de campos a mostrar, la primera columna es la posición cero, la primera vez que se utilice un número de columna será del primer rango de fechas y la siguiente vez que se use será del segundo rango de fechas.<BR><STRONG>nb,nb:</STRONG> Por defecto si en uno de los dos rangos no aparece ninguna entrada se pintará en la comparativa, si se quisiera que si no hay registro no aparezca se le pondrá "nb" ( NoBlanck ), el primer parámetro es para el rango inicial y el segundo para el final.
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

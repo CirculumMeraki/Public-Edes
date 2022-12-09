@@ -1,0 +1,275 @@
+::HTML
+
+:css
+<STYLE TYPE="text/css">
+</STYLE>
+
+
+:CSS
+#1:
+#E:.css
+<LINK REL="stylesheet" HREF="#1#E" TYPE="text/css">
+
+
+:frameset
+#1:..
+#2:..
+<FRAMESET ROWS="#1" COLS="#2">
+	<FRAME SRC="" NAME="">
+	<FRAME SRC="" NAME="">
+</FRAMESET>
+
+
+:html
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<TITLE>  </TITLE>
+		<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<META NAME="Generator" CONTENT="">
+		<META NAME="Author" CONTENT="">
+		<META NAME="Keywords" CONTENT="">
+		<META NAME="Description" CONTENT="">
+		<SCRIPT type="text/javascript">
+			document.title = "TAB/LIST";
+			top.S.init(window, "all,tab,list");
+		</SCRIPT>
+		<STYLE>
+		</STYLE>
+	</HEAD>
+	<BODY>
+	</BODY>
+</HTML>
+
+
+:select :option
+#1:..
+<SELECT NAME="#1">
+	<OPTION VALUE="">
+	<OPTION VALUE="">
+	<OPTION VALUE="">
+</SELECT>
+
+
+:script
+<SCRIPT type="text/javascript">
+</SCRIPT>
+
+
+:SCRIPT
+#1:.js
+<SCRIPT type="text/javascript" SRC="#1"></SCRIPT>
+
+
+:table
+<TABLE border=0px cellspacing=1px cellpadding=0px style="display:table">
+	<thead>
+		<TR><TH></TH><TH></TH></TR>
+	</thead>
+	<tbody>
+		<TR><TD></TD><TD></TD></TR>
+		<TR><TD></TD><TD></TD></TR>
+		<TR><TD></TD><TD></TD></TR>
+	</tbody>
+	<tfoot>
+		<TR><TD></TD><TD></TD></TR>
+	</tfoot>
+</TABLE>
+
+
+::JavaScript
+
+
+:do
+#1:
+do{
+}while( #1 );
+
+
+:edes
+document.title = "TAB/LIST";
+top.S.init(window, "all,tab,list");
+
+
+:for/js
+#1:n
+#2:dim
+for(#1=0; #1<#2.length; #1++){
+}
+
+
+:if
+#1:
+if( #1 ){
+{R}}else if( ## ){
+}else{
+}
+
+
+:js
+<SCRIPT type="text/javascript">
+</SCRIPT>
+
+
+:JS
+#1:..
+<SCRIPT type="text/javascript" src="#1">
+
+
+:case :switch
+#1:
+#R:5
+switch( #1 ){
+	{R}case "##":
+	{R}	break;
+	default:
+}
+
+
+:try
+#1:e
+try{
+}catch(#1){
+}
+
+
+:while
+#1:
+while( #1 ){
+}
+
+
+::PHP
+
+
+:for/php
+#1:$n
+#2:$dim
+for(#1=0; #1<count(#2); #1++){
+}
+
+:foreach :each
+#1:$dim
+#2:$k
+#3:$v
+foreach(#1 as #2=>#3){
+}
+
+:opendir
+#1:$hd
+#2:$dir
+#3:$file
+#1 = opendir(#2);
+while( #3=readdir(#1) ){
+	if( #3=="." || #3==".." ) continue;
+	if( is_dir(#3) ){
+	}else{
+	}
+}
+closedir(#1);
+
+
+::eDes
+
+
+:fields
+  |  |  |  |  |  |  |  |  |
+
+
+:iframe
+<iframe frameborder=0px src="#1" name="#2" eNORESIZE=true style="width:100%;height:100%;"></iframe>
+
+
+:iframedown
+// IFrame Down
+[HTMIni] a,?R
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table;">
+<tr>
+	<td valign=middle align=center height=1px>
+		<!-- IWORK -->
+[HTMEnd] a,?R
+	</td>
+</tr>
+<tr>
+	<td valign=middle align=center height=100% id=cIFrame>
+		<SCRIPT type="text/javascript">
+			top.eNewIFrame(window, "cIFrame", "uIFRAME", "about:blank");
+		</SCRIPT>
+	</td>
+</tr>
+</table>
+
+
+:iframeleft
+// IFrame Left
+[HTMIni] a,?R
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table;">
+<tr>
+	<td valign=middle align=center width=100% id=cIFrame>
+		<SCRIPT type="text/javascript">
+			top.eNewIFrame(window, "cIFrame", "uIFRAME", "about:blank");
+		</SCRIPT>
+	</td>
+	<td>&nbsp;&nbsp;
+		<!-- Separator -->
+	</td>	
+	<td valign=middle align=center>
+		<!-- IWORK -->
+[HTMEnd] a,?R
+	</td>
+</tr>
+</table>
+
+
+:iframeright
+// IFrame Right
+[HTMIni] a,?R
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table;">
+<tr>
+	<td valign=middle align=center>
+		<!-- IWORK -->
+[HTMEnd] a,?R
+	</td>
+	<td>&nbsp;&nbsp;
+		<!-- Separator -->
+	</td>	
+	<td valign=middle align=center width=100% id=cIFrame>
+		<SCRIPT type="text/javascript">
+			top.eNewIFrame(window, "cIFrame", "uIFRAME", "about:blank");
+		</SCRIPT>
+	</td>
+</tr>
+</table>
+
+
+:iframeup
+// IFrame Up
+[HTMIni] a,?R
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table;">
+<tr>
+	<td valign=middle align=center height=100% id=cIFrame>
+		<SCRIPT type="text/javascript">
+			top.eNewIFrame(window, "cIFrame", "uIFRAME", "about:blank");
+		</SCRIPT>
+	</td>
+</tr>
+<tr>
+	<td height=5px>
+		<!-- Separator -->
+	</td>
+</tr>
+<tr>
+	<td valign=middle align=center height=1>
+		<!-- IWORK -->
+[HTMEnd] a,?R
+	</td>
+</tr>
+</table>
+
+
+:remList
+.  Label | Field | TE | TC | Px | Mod | Color | ColsOp | Align |
+
+
+:remTab
+.  Label | Field | TE | TC | Lng | Px | Mod | Default | Cnd | Msg Error

@@ -1,0 +1,32 @@
+[Language] es,ca,en,fr
+Apellidos|Apellidos|Cognoms|Apellidos|Apellidos
+boton|Grabar solo "Caracter desencadenante"|Gravar sol " Caràcter desencadenant"|Grabar solo "Caracter desencadenante"|Grabar solo "Caracter desencadenante"
+caducado|SU CLAVE HA CADUCADO<br>CAMBIAR CLAVE|LA SEVA CLAU HA CADUCAT<br>CANVIAR CLAU|SU CLAVE HA CADUCADO<br>CAMBIAR CLAVE|SU CLAVE HA CADUCADO<br>CAMBIAR CLAVE
+CAMBIAR CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS|CAMBIAR CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS|CANVIAR CLAU PER DEFECTE<br>PER ALS NOUS USUARIS|CAMBIAR CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS|CAMBIAR CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS
+Caracter desencadenante|Caracter desencadenante|Caràcter desencadenant|Caracter desencadenante|Caracter desencadenante
+CARACTER DESENCADENATE MODIFICADO|CARACTER DESENCADENATE MODIFICADO|CARÀCTER DESENCADENANT MODIFICAT|CARACTER DESENCADENATE MODIFICADO|CARACTER DESENCADENATE MODIFICADO
+Clave|Clave|Clau|Clave|Clave
+Repetir Clave|Repetir Clave|Repetir Clau|Repetir Clave|Repetir Clave
+ClaveDoc|Clave Documento
+Repetir ClaveDoc|Repetir Clave Documento
+Clave para documentos|Clave para documentos
+Clave de Acceso|Clave de Acceso|Clau  d´Accés|Clave de Acceso|Clave de Acceso
+CLAVE MODIFICADA|CLAVE MODIFICADA|CLAU MODIFICADA|CLAVE MODIFICADA|CLAVE MODIFICADA
+ClavesDistintas|Las claves son distintas|Les claus són diferents|Las claves son distintas|Las claves son distintas
+ClavesDistintasDoc|Las claves de los documentos son distintas|Les claus dels documents són diferents|Key documents are different|Les documents clés sont différents
+Complejidad|Complejidad|Complexitat|Complejidad|Complejidad
+DNI|DNI|DNI|DNI|DNI
+ERROR AL GRABAR|ERROR AL GRABAR|ERROR AL GRAVAR|ERROR AL GRABAR|ERROR AL GRABAR
+ErrorPass|El "Caracter desencadenante" no está permitido en la clave|El "Caràcter desencadenant" no està permès en la clau|El "Caracter desencadenante" no está permitido en la clave|El "Caracter desencadenante" no está permitido en la clave
+Es aconsejable una frase como clave|Se aconseja una frase con mayúsculas, minúsculas<br>y números para la clave.|Se aconseja una frase con mayúsculas, minúsculas<br>y números para la clave.|S'aconsella una frase amb majúscules, iminúscules<br>i números per a la clau.|Se aconseja una frase con mayúsculas, minúsculas<br>y números para la clave.|Se aconseja una frase con mayúsculas, minúsculas<br>y mas números para la clave.
+Fortaleza|Fortaleza|Fortalesa|Fortaleza|Fortaleza
+LongitudMinima|La longitud mínima de la "CLAVE" es de # caracteres|La longitud mínima de la "CLAU" és de # caràcters|La longitud mínima de la "CLAVE" es de # caracteres|La longitud mínima de la "CLAVE" es de # caracteres
+MODIFICADA CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS|MODIFICADA CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS|MODIFICADA CLAU PER DEFECTE<br>PER ALS NOUS USUARIS|MODIFICADA CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS|MODIFICADA CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS
+Modificar|Modificar|Modificar|Modificar|Modificar
+No puede poner la clave actual|No puede poner la clave actual|No pot posar la clau actual|No puede poner la clave actual|No puede poner la clave actual
+NO PUEDE PONER LA CLAVE POR DEFECTO|NO PUEDE PONER LA CLAVE POR DEFECTO|NO POT POSAR LA CLAU PER DEFECTE|NO PUEDE PONER LA CLAVE POR DEFECTO|NO PUEDE PONER LA CLAVE POR DEFECTO
+NO PUEDE PONER LA MISMA CLAVE|NO PUEDE PONER LA MISMA CLAVE|NO POT POSAR LA MATEIXA CLAU|NO PUEDE PONER LA MISMA CLAVE|NO PUEDE PONER LA MISMA CLAVE
+Nombre|Nombre|Nom|Nombre|Nombre
+sTrigger|no permitido dentro de la clave|no permès dins de la clau|no permitido dentro de la clave|no permitido dentro de la clave
+titulo|MODIFICAR CLAVE|MODIFICAR CLAU|MODIFICAR CLAVE|MODIFICAR CLAVE
+tTrigger|- Si no se pulsa el caracter la clave será lo introducido\n- Si se pulsa una vez será a partir de haberla pulsado\n- Y si se pulsa mas de una vez la clave estará entre las dos primeras pulsaciones|- Si no es prem el caràcter la clau serà l´introduït\n- Si es prem una vegada serà a partir d´haver-la premut\n-I si es prem mes d´una vegada la clau estarà entre les dues primeres pulsacions|- Si no se pulsa el caracter la clave será lo introducido\n- Si se pulsa una vez será a partir de haberla pulsado\n- Y si se pulsa mas de una vez la clave estará entre las dos primeras pulsaciones|- Si no se pulsa el caracter la clave será lo introducido\n- Si se pulsa una vez será a partir de haberla pulsado\n- Y si se pulsa mas de una vez la clave estará entre las dos primeras pulsaciones

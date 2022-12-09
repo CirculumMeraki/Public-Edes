@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Mirror 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Mirror] FieldsToReflect 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Sólo en fichas que componen grupos de fichas. <BR>Refleja campos de otras solapas (Tabs) para ser visualizados en la ficha actual. <BR>Estos campos serán sólo de visualización, el usuario NO podrá introducir datos, para ello utilizar la etiqueta [EditMirror]. <BR>Para poder utilizar un campo tipo Mirror, se debe colocar el código adecuado en dos ficheros de definición: <BR>&nbsp;- En el fichero de definición donde tenemos originariamente el campo que queremos reflejar, debemos incluir el campo afectado como parámetro de la etiqueta [Mirror].&nbsp; <BR>&nbsp;- En el fichero de definición donde vamos a reflejar nuestro campo, el nombre del campo destino (parámetro 2 de la etiqueta [Fields]) debe ser el mismo que el originario pero comenzando con "_", y en el parámetro 4 de la etiqueta [Fields] se debe colocar el signo de campo espejo "[ ]".&nbsp; 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>FieldsToReflect</STRONG>: Serie de campos separados por comas. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P><U>FICHA A REFLEJAR</U><BR><BR>[Title]&nbsp;&nbsp; EMPRESA<BR>[DBTable]&nbsp;emp<BR>[DBIndex] cd_emp<BR>[DBOrder]&nbsp;cd_emp<BR><BR>[Mirror] cd_emp,nm_emp<BR><BR>[Fields]<BR>&nbsp;&nbsp;Empresa\Codigo&nbsp;&nbsp;| cd_emp&nbsp;| 0 | T |&nbsp; 8 || AQ |||<BR>&nbsp;,\Nombre Empresa&nbsp;| nm_emp&nbsp;| N | T | 50 || MQ |||<BR>-||color=#c8c8c8<BR>&nbsp; Teléfonos&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN>&nbsp; |&nbsp;tlf&nbsp;&nbsp;&nbsp;| X | T | &nbsp;9 || M &nbsp;|||<BR><BR><BR><U>FICHA REFLEJADA</U><BR><BR>[Title]&nbsp;&nbsp; INFORMACION<BR>[DBTable]&nbsp;emp<BR>[DBIndex] cd_emp<BR><BR>[Fields]<BR>&nbsp; Empresa\Codigo&nbsp;&nbsp;&nbsp;&nbsp; | _cd_emp&nbsp;| 0 | [] |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;8 |&nbsp; | - |||<BR>&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _nm_emp&nbsp;|&nbsp;N |&nbsp;[] |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;50 |&nbsp; | - |||<BR>-||color=#6A4325<BR>&nbsp; Notas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | notas&nbsp;&nbsp; | X&nbsp; | A | 255,65,4 |&nbsp; | M |||&nbsp;</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,16 @@
+[Title]CONFIGURACION
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[MyData]_User
+[OnChange]?|dni|ePadLeft(this,8)
+[AddOption]*|desktop_type|-1,Valor por defecto; 0,Solapas; 1,Menus verticales; 2,Menus horizontales
+[Stop]
+[MsgAnswer]*|Los efectos tendrán lugar la próxima vez que entre en la aplicación
+[Fields]
+DNI|dni|DNI|T|8||-|||
+Nombre|user_name|X|T|20|user_surname|-|||
+Apellidos|user_surname|X|T|30||-|||
+-||size=1
+Tipo desktop|desktop_type|-1|SV|1||*|||
+|cd_gs_user|*|T|5||*|||

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>TypeForm 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[TypeForm] NombreTipoGifSinExtensión | BordeFormulario [|EstiloDeLaFicha] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Define aspectos gráficos de un formulario.<BR>El parámetro "NombreTipoGifSinExtensión" define los gráficos de las esquinas y los círculos de las pestañas. Los archivos se buscarán por defecto en el subdirectorio "/g" y con la extensión. Son, en total, 6 gráficos correspondientes a: <BR>&nbsp;- "NombreTipoGif_1.gif" Esquina superior izquierda.&nbsp;&nbsp;<BR>&nbsp;- "NombreTipoGif_2.gif" Esquina superior derecha.&nbsp;&nbsp;<BR>&nbsp;- "NombreTipoGif_3.gif" Esquina inferior izquierda.&nbsp;&nbsp;<BR>&nbsp;- "NombreTipoGif_4.gif" Esquina superior derecha.&nbsp;&nbsp;<BR>&nbsp;- "NombreTipoGif_5.gif" Botón pestaña activa.&nbsp;&nbsp;<BR>&nbsp;- "NombreTipoGif_6.gif" Botón pestaña inactiva.&nbsp;<BR><BR>En el parámetro "BordeFormulario" se definen el grosor y el color del contorno del formulario. Los valores estarán separados por un espacio en blanco y en el orden: GrosorContorno - ColorContorno.<BR>El último parámetro opcional "EstiloDeLaFicha" define código css para la ficha, aunque si el código a incluir es muy grande, se recomienda utilizar la etiqueta [Css]. </P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[TFormulario] f1 | 1 #AC2D47 
+<TR>
+<TD id=txt>
+<P>Según las órdenes anteriores, se cargarán en las esquinas los gráficos: <BR>&nbsp;- "f1_1.gif" (esquina superior izquierda)&nbsp;<BR>&nbsp;- "f1_2.gif" (esquina superior derecha)&nbsp;<BR>&nbsp;- "f1_3.gif" (esquina inferior izquierda)&nbsp;<BR>&nbsp;&nbsp;- "f1_4.gif" (esquina inferior derecha)<BR>y se cargarán en las pestañas los botones: <BR>&nbsp;- "f1_5.gif" (pestaña activa)<BR>&nbsp;- "f1_6.gif" (pestaña inactiva).<BR>Además, se dibujará un contorno al formulario con un grosor de 1 píxel y color #AC2D47 (aquí también se puede especificar el literal de un color, por ejemplo "red").</P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+</SCRIPT>
+</BODY></HTML>

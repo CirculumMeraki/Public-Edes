@@ -1,0 +1,213 @@
+[Tab]a|Tab ON|$a/d/view_color.edf
+[Tab]a|Tab oculta|$a/d/view_color.edf
+[Button]*|[i] Insertar
+[AddButton]*|[@] EMail
+[FormAction]*|noExe();
+[FixZone]*|1
+[JSIni]a
+function noExe(){
+return S.eventClear(window);
+}
+function poneClases(){
+var aColor = S.ruleGet(top   , ".WINDOW", "background-color", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW", "background-color", "all.css");
+S(top).rule("+.WINDOW {background-color: "+nColor+";}");
+var aColor = S.ruleGet(top   , ".WINDOW", "border", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW", "border", "all.css");
+S(top).rule("+.WINDOW {border: "+nColor+";}");
+var aColor = S.ruleGet(top   , ".WINDOW .CAPTION", "background-color", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW .CAPTION", "background-color", "all.css");
+S(top).rule("+.WINDOW .CAPTION {background-color: "+nColor+";}");
+var aColor = S.ruleGet(top   , ".WINDOW .CAPTION", "border-bottom", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW .CAPTION", "border-bottom", "all.css");
+S(top).rule("+.WINDOW .CAPTION {border-bottom: "+nColor+";}");
+var aColor = S.ruleGet(top   , ".WINDOW .CAPTION", "color", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW .CAPTION", "color", "all.css");
+S(top).rule("+.WINDOW .CAPTION {color: "+nColor+";}");
+var aColor = S.ruleGet(top   , ".WINDOW .CAPTION I", "color", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW .CAPTION I", "color", "all.css");
+S(top).rule("+.WINDOW .CAPTION I {color: "+nColor+";}");
+var aColor = S.ruleGet(top   , ".WINDOW .CONTAINER", "border", "all.css");
+var nColor = S.ruleGet(window, ".WINDOW .CONTAINER", "border", "all.css");
+S(top).rule("+.WINDOW .CONTAINER {border: "+nColor+";}");
+S.focusOff();
+S(":editable").class("EDITABLE");
+S(":editable_con_foco").class("EDITABLE_focus");
+S(":con_error").class("ERROR");
+S(":error_con_foco").class("ERROR_focus");
+S(".CALENDAR").css({right:5, top:5});
+S("#_Muestra_select").css({left:270, top:5, display:"block"});
+var dim = top.S.ruleGet(window, ".SELECT TR > :hover").split(";"), n;
+for(n=0; n<dim.length; n++){
+S(".CursorSelect").css(dim[n]);
+}
+}
+[JSEnd]a
+var o = S(window.document.body).menu([ ["-Menú"], ["Alta","I",3], ["Baja","D",1], ["Consulta","V",11], ["-"], ["Modificación","U", 10] ], {drop:false});
+o.css("left:70;top:200");
+setTimeout(function(){ poneClases(); }, 3000);
+[JSIni]a
+var _oTree = null;
+function uBotton(op){
+if( op=="a" ){
+S.alert({
+icon:'<i class="ICONDESKTOP">?</i>',
+button:"Y,N",
+title:"TITULO",
+text:"Prueba de color con S.alert()"
+});
+}else if( op=="i" ){
+S.info("Ventana S.info(..)");
+}else if( op=="e" ){
+S.error("Ventana S.error(..)");
+}else if( op=="w" ){
+S.warning('Ventana S.warning("..")');
+}else if( op=="ok" ){
+S.ok('Ventana S.ok("..")');
+}else if( op=="win" ){
+S.window("edes.php?E:$a/d/wincolor.html", {width:300, height:200, title:"Prueba de Color"});
+}else if( op=="tree" ){
+S("body").tree([["-Árbol de Opciones"],["Carpeta 1","",[["Opción 1,1", "@", "1"],["Opción 1,2", "g/buscar.gif", "2"]]],["Carpeta 2","",[["Opción 2,1", "@", "3"],["Opción 2,2", "g/buscar.gif", "4"]]],["Opción 2", "", "5"],["Opción 3", "", "6"]], {
+expanded:true,
+icon:"system",
+modal:true,
+function:function(op, tr, para, label){
+console.log(op+": "+label);
+S(this).nodeRemove();
+}
+});
+}
+}
+[PHPIni]a
+eAddButton("", "alert()", "uBotton('a')", "", "id=BOTONAlert");
+eAddButton("", "error()", "uBotton('e')", "", "id=BOTONError");
+eAddButton("", "window()", "uBotton('win')", "", "id=BOTONWin");
+eAddButton("", "tree()", "uBotton('tree')", "", "id=BOTONTree");
+eAddButton("", "info()" , "uBotton('i')", "", "id=BOTONInfo");
+eAddButton("", "warning()", "uBotton('w')", "", "id=BOTONWarning");
+eAddButton("", "ok()", "uBotton('ok')", "", "id=BOTONOk");
+[JSEnd]a
+S("#BOTONAlert").css("position:absolute;left:0;top:350");
+S("#BOTONError").css("position:absolute;left:83;top:350");
+S("#BOTONWin").css("position:absolute;left:170;top:350");
+S("#BOTONTree").css("position:absolute;left:270;top:350");
+S("#BOTONInfo").css("position:absolute;left:0;top:390");
+S("#BOTONOk").css("position:absolute;left:78;top:390");
+S("#BOTONWarning").css("position:absolute;left:176;top:390");
+S('#GetCondition').css("position:absolute;left:1000;top:5");
+setTimeout(function(){
+var c = S("#TABBorder").xy();
+S('#GetCondition').css("left:"+(c.x+c.w+20));
+}, 100);
+[PHPIni]a
+?>
+<div class="CALENDAR" id="DivCALEN" style="z-index:3; right:5px; top:5px; position:absolute; display:table; width:1px;"><table width="100%" style="display:table"><tbody><tr><th title="Lunes">L</th><th title="Martes">M</th><th title="Miércoles">X</th><th title="Jueves">J</th><th title="Viernes">V</th><th title="Sábado">S</th><th title="Domingo">D</th></tr><tr><td class="" title="">1</td><td class="" title="">2</td><td class="" title="">3</td><td class="" title="">4</td><td class="" title="">5</td><td class="WEEKEND" title="">6</td><td class="WEEKEND" title="">7</td></tr><tr><td class="" title="">8</td><td class="" title="">9</td><td class="" title="">10</td><td class="" title="">11</td><td class="" title="">12</td><td class="WEEKEND" title="">13</td><td class="WEEKEND" title="">14</td></tr><tr><td class="" title="">15</td><td class="TODAY" title="Mes actual">16</td><td class="" title="">17</td><td class="" title="">18</td><td class="" title="">19</td><td class="WEEKEND" title="">20</td><td class="WEEKEND" title="">21</td></tr><tr><td class="" title="">22</td><td class="" title="">23</td><td class="" title="">24</td><td class="" title="">25</td><td class="" title="">26</td><td class="WEEKEND" title="">27</td><td class="WEEKEND" title="">28</td></tr><tr><td class="" title="">29</td><td class="" title="">30</td><td class="" title="">31</td><td>&nbsp;</td><td>&nbsp;</td><td class="WEEKEND">&nbsp;</td><td class="WEEKEND">&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="WEEKEND">&nbsp;</td><td class="WEEKEND">&nbsp;</td></tr><tr><td colspan="7" align="center" style="padding:0px"><table cellspacing="0px" cellpadding="0px" border="0px" style="border-spacing:0px;"><tbody><tr><td title="Mes actual"><i class="ICONINPUT">,</i></td><td title="Año anterior"><i class="ICONINPUT">#</i></td><td title="Mes anterior"><i class="ICONINPUT">&lt;</i></td><td><input type="text" size="7" value="2019-07" eonchangealways="1" style="width: 52px;" title="Julio"></td><td title="Siguiente mes"><i class="ICONINPUT">&gt;</i></td><td title="Siguiente año"><i class="ICONINPUT">$</i></td><td title="Cerrar Calendario"><i class="ICONINPUT">.</i></td></tr></tbody></table></td></tr></tbody></table></div>
+<div class="SELECT EDITABLE SCROLLBAR" id="_Muestra_select" style="display:block; left:190px; top:0px; z-index:3; overflow:hidden; position:absolute;" xoffset="0" yoffset="0">
+<table cols="2"><colgroup><col><col></colgroup><tbody>
+<tr v=""  r="0" class=""><td></td><td>&nbsp;</td></tr>
+<tr v="1" r="1" class=""><td>1</td><td>Opción 1</td></tr>
+<tr v=""  r="2" class="Line"><td></td><td></td></tr>
+<tr v="2" r="2" class=""><td>2</td><td>Opción 2</td></tr>
+<tr v="3" r="3" class="SELECTED"><td>3</td><td>Selected</td></tr>
+<tr v="4" r="4" class=""><td>4</td><td>Opción 4</td></tr>
+<tr v="5" r="5" class=""><td>5</td><td>Opción 5</td></tr>
+<tr v="6" r="6" class="CursorSelect"><td>6</td><td>Cursor</td></tr>
+<tr v="7" r="7" class=""><td>7</td><td>Opción 7</td></tr>
+</tbody></table>
+</div>
+<table id="GetCondition" border="0px" cellspacing="0px" cellpadding="0px" class="TOOLBAR" no="SubLista" style="padding-left: 5px; padding-right: 5px; padding-bottom: 2px; text-align: center; left: 507.443px; top: 352.585px; position: absolute; z-index: 3; display: block;" xoffset="507.44317626953125" yoffset="352.585205078125">
+<tbody><tr><td style="background-color:transparent">
+<table border="0px" cellspacing="0px" cellpadding="0px" style="width:100%;background:transparent;"><tbody><tr>
+<th style="width:100%;background:transparent;white-space:nowrap;cursor:default">Condición múltiple</th>
+<th style="width:1px; background:transparent" class="ICONTAB">
+<i class="ICONWINDOW" onclick="S('#GetCondition').none()" title="Cerrar ventana">5</i>
+</th></tr>
+</tbody></table>
+</td></tr>
+<tr><td>
+<form name="GETCONDITION" autocomplete="new-password">
+<table class="BROWSE NO_SHADOW" style="border-collapse:separate;">
+<tbody><tr style="cursor:default"><th style="cursor:default">Condición</th><th style="cursor:default">Valor</th></tr>
+<tr><td align="center" style="background-color:transparent">
+<input name="_cnd_type_1" id="_cnd_type_1" type="HIDDEN" onfocus="S.key('CN')" value=">" ebak=">">
+<span class="SELECTINPUT" onclick="S.key('S')">
+<input name="_INPUT__cnd_type_1" id="_INPUT__cnd_type_1" size="2" maxlength="2" class="EDITABLE" onfocus="S.key('S')" ebak=">" ehelpno="1">
+</span>
+<div class="SELECT EDITABLE SCROLLBAR" style="display: none;">
+<table init="0" id="_cnd_type_1_TABLE" width="1px" cols="2"><colgroup><col id="o"><col>
+</colgroup><tbody><tr v="" r="0"><td></td><td>&nbsp;
+</td></tr><tr v=">" r="1"><td>&gt;</td><td>&gt;
+</td></tr><tr v=">=" r="2"><td>&gt;=</td><td>&gt;=
+</td></tr><tr v="<" r="3"><td>&lt;</td><td>&lt;
+</td></tr><tr v="<=" r="4"><td>&lt;=</td><td>&lt;=
+</td></tr><tr v="<>" r="5"><td>&lt;&gt;</td><td>&lt;&gt;
+</td></tr><tr v="=" r="6"><td>=</td><td>=
+</td></tr></tbody></table>
+</div>
+</td><td style="width:100px;height:1px;text-align:center;background-color:transparent"><nobr><input name="_cnd_value_1" onclick="_CheckCondition()" value="" class="EDITABLE FondoSelect" ewe="1" leng="9" maxlength="9" size="9" onfocus="S.key('CIF',33,0)" tc="CIF" style="width:79px;" ehelpno="1" id="_cnd_value_1" copyof="cif"><i class="ICONINPUT" style="visibility: hidden;">,</i></nobr></td></tr>
+<tr><td align="center" style="background-color:transparent">						<input name="_cnd_type_2" id="_cnd_type_2" type="HIDDEN" onfocus="S.key('CN')" value="">
+<span class="SELECTINPUT" onclick="S.key('S')">
+<input name="_INPUT__cnd_type_2" id="_INPUT__cnd_type_2" size="2" maxlength="2" class="EDITABLE" onfocus="S.key('S')">
+</span>
+<div class="SELECT EDITABLE SCROLLBAR" style="display: none;">
+<table init="0" id="_cnd_type_2_TABLE" width="1px" cols="2"><colgroup><col id="o"><col>
+</colgroup><tbody><tr v="" r="0"><td></td><td>&nbsp;
+</td></tr><tr v=">" r="1"><td>&gt;</td><td>&gt;
+</td></tr><tr v=">=" r="2"><td>&gt;=</td><td>&gt;=
+</td></tr><tr v="<" r="3"><td>&lt;</td><td>&lt;
+</td></tr><tr v="<=" r="4"><td>&lt;=</td><td>&lt;=
+</td></tr><tr v="<>" r="5"><td>&lt;&gt;</td><td>&lt;&gt;
+</td></tr><tr v="=" r="6"><td>=</td><td>=
+</td></tr></tbody></table>
+</div>
+</td><td style="width:100px;height:1px;text-align:center;background-color:transparent"><nobr><input name="_cnd_value_2" onclick="_CheckCondition()" value="" class="EDITABLE FondoSelect" ewe="1" leng="9" maxlength="9" size="9" onfocus="S.key('CIF',33,0)" tc="CIF" style="width:79px;" ehelpno="1" id="_cnd_value_2" copyof="cif"><i class="ICONINPUT" style="visibility: hidden;">,</i></nobr></td></tr>
+<tr><td align="center" style="background-color:transparent">						<input name="_cnd_type_3" id="_cnd_type_3" type="HIDDEN" onfocus="S.key('CN')" value="">
+<span class="SELECTINPUT" onclick="S.key('S')">
+<input name="_INPUT__cnd_type_3" id="_INPUT__cnd_type_3" size="2" maxlength="2" class="EDITABLE" onfocus="S.key('S')">
+</span>
+<div class="SELECT EDITABLE SCROLLBAR" style="display: none;">
+<table init="0" id="_cnd_type_3_TABLE" width="1px" cols="2"><colgroup><col id="o"><col>
+</colgroup><tbody><tr v="" r="0"><td></td><td>&nbsp;
+</td></tr><tr v=">" r="1"><td>&gt;</td><td>&gt;
+</td></tr><tr v=">=" r="2"><td>&gt;=</td><td>&gt;=
+</td></tr><tr v="<" r="3"><td>&lt;</td><td>&lt;
+</td></tr><tr v="<=" r="4"><td>&lt;=</td><td>&lt;=
+</td></tr><tr v="<>" r="5"><td>&lt;&gt;</td><td>&lt;&gt;
+</td></tr><tr v="=" r="6"><td>=</td><td>=
+</td></tr></tbody></table>
+</div>
+</td><td style="width:100px;height:1px;text-align:center;background-color:transparent"><nobr><input name="_cnd_value_3" onclick="_CheckCondition()" value="" class="EDITABLE FondoSelect" ewe="1" leng="9" maxlength="9" size="9" onfocus="S.key('CIF',33,0)" tc="CIF" style="width:79px;" ehelpno="1" id="_cnd_value_3" copyof="cif"><i class="ICONINPUT" style="visibility: hidden;">,</i></nobr></td></tr>		</tbody></table>
+</form>
+</td></tr>
+<tr><td align="center" style="background-color:transparent">
+<?=eAddButton("U", "Modificar", "_EditConditionOk()", "Aceptar las condiciones", '', "ZOOM90");?>
+</td></tr>
+</tbody></table>
+<?PHP
+[JSIni]a-
+function uFunction(){
+}
+[Options]a-
+TITULO SUBMENU
+Nueva ventana   	  | uFunction()
+{u} LoadDiv    		  | uFunction()
+-
+{g/aviso.gif} Función | uFunction()
+[CC]#condi|!$_GET["_soloFicha"]
+[HTMIni]a||!$_GET["_soloFicha"]
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table">
+<tr>
+<td valign=middle align=center height=1px>
+[HTMEnd]a||#condi
+</td>
+</tr>
+<tr>
+<td valign=top align=center height='100%' id=cIFrame2 style="vertical-align:top">
+<SCRIPT type="text/javascript">
+top.eNewIFrame(window, "cIFrame2", "uIFRAME2", "edes.php?Ll:$a/d/color_list.edf");
+</SCRIPT>
+</td>
+</tr>
+</table>
+[JSEnd]a
+S("#TABContainer").css("display:contents");

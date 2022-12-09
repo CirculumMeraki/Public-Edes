@@ -1,0 +1,26 @@
+Linea divisoria
+&quot;***&quot;, &quot;---&quot;, &quot;___&quot;, &quot;* * *&quot;, &quot;- - -&quot;, &quot;_ _ _&quot;
+
+*** negrita &#43; icursiva
+
+&quot;**&quot; negrita
+
+&quot;*&quot; cursiva
+
+&quot;~~~&quot; trozo de código
+
+&quot;`&quot; linea de código
+
+lista desordenada: &quot;-&quot;, &quot;*&quot;, &quot;&#43;&quot; (4 espacios por cada tabulador)
+
+lista ordenada: &quot;1.&quot;, &quot;2.&quot;, ... (4 espacios por cada tabulador)
+
+Encabezados h1, .. h6: &quot;#&quot;, &quot;##&quot;, &quot;###&quot;, &quot;####&quot;, &quot;#####&quot;, &quot;######&quot;
+
+tablas: |xx|xx|
+		| :------------ |:---------------:| -----:|
+ |xx|xx|
+
+imagen:	![Texto alternativo](/ruta/a/la/imagen.jpg)
+
+link:	[Texto alternativo](/ruta/a/la/imagen.jpg)

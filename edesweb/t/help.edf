@@ -1,0 +1,12 @@
+[WinTools]*|mMPR
+[Button]*|[u] Modificar
+[UploadFile]fichero|||5.000.000.000|Seleccionar...|mp4,pdf,chm
+[Fields]
+|fichero|f|F|60||MU||#|
+|nombre|#|T|60||*||#|
+[JSEnd]a
+S(":nombre").val(S.url(window,"_HELP"));
+S(":fichero").attr("eExt", S.splitLast(".",S.url(window,"_HELP"))[1]);
+[PHPIni]A
+copy("../tmp/".$_FILES["fichero"]["tmp_name"], "../help/doc/".$_POST["nombre"]);
+eMessage("Ayuda actualizada", "HS");

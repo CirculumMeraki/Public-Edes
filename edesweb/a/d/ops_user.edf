@@ -1,0 +1,149 @@
+#!(l) [CSSAdd] * | fch_{$_GRUPOMENU}
+#(l)  [CSSAdd] * | lst_{$_GRUPOMENU}
+[Title]=Listado de opciones individuales por usuario
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[OnChange]?|dni|ePadLeft(this,8);
+[AddOption]?|permission|,;S,Activado; N,Desactivado; C,Caducado
+[SelectMultiple]?|_cd_gs_tree|11
+[NoEditFilled]*|Session
+[FormAction]*|Ll:
+[Fields]?
+DNI|dni|DNI|T|8||Qcpq|||
+,Usuario|cd_gs_user|+|T|8|<user_name|Q|||
+Apellidos|user_surname|X|T|30|user_name|Q|||
+Nombre|user_name|X|T|20|294|Q|||
+Local|cd_gs_node|X|S|7|user_name|Q|||
+E-Mail|email|@|T|65|user_name|QEq|||
+-||||||Q|||
+Arbol|_cd_gs_tree{{$_SESSION['ShareDictionary']}gs_tree,cd_gs_tree,nm_gs_tree}|X|S|2|+user_name|Q|||
+Permiso de Acceso|permission|X|SV|10|100|Q|S||
+,Repetir carpetas|_repetir_carpeta|X|C|1||Q|||
+#include(?) /_datos/config/report_usr_1.idf|true
+#(l) [Expire] 0
+[PHPIni]l||UNIQUE
+eInit();
+if( $_POST["_FILTER_dni"]<>"" ){
+$_POST["dni"] = "";
+$txtDNI = "'".str_replace(chr(13), "','", str_replace(array(","," ",chr(10)), array(chr(13),"",""), trim($_POST["_FILTER_dni"])))."'";
+$txtDNI = str_replace(",''", "", $txtDNI);
+}
+if( $_POST["_FILTER_email"]<>"" ){
+$_POST["email"] = "";
+$txtEMAIL = "'".str_replace(chr(13), "','", str_replace(array(","," ",chr(10)), array(chr(13),"",""), trim($_POST["_FILTER_email"])))."'";
+$txtEMAIL = str_replace(",''", "", $txtEMAIL);
+}
+$where = qGetWhere();
+if( $where<>"" ) $where .= " and ";
+if( $txtDNI<>"" ) $where .= " dni in ({$txtDNI}) and ";
+if( $txtEMAIL<>"" ) $where .= " email in ({$txtEMAIL}) and ";
+$arboles = "";
+if( $_POST["_cd_gs_tree"]<>"" ) $arboles = " cd_gs_tree in (".str_replace("||", ",", $_POST["_cd_gs_tree"]).") and ";
+eInclude("message");
+include("../_datos/config/sql.ini");
+eInclude($_Sql);
+$dimOpcion = array();
+$dimPuntero = array();
+$i=0;
+qQuery("select cd_gs_op,caption,indent,type from {$_SESSION['ShareDictionary']}gs_op order by seq");
+while($r=qRow()){
+$dimOpcion[] = array(0, $r[0], $r[1], $r[2], $r[3]);
+$dimPuntero[$r[0]] = $i++;
+}
+$totalOps = count($dimOpcion);
+$tmptablename = "_tree_user_{$_SESSION['_User']}";
+if( eSqlType('mysql,mysqli') ){
+qQuery("create temporary table {$tmptablename} (cd_gs_user integer, nombre varchar(60))");
+}else{
+qQuery("create temp table {$tmptablename} (cd_gs_user integer, nombre varchar(60))");
+}
+qQuery("insert into {$tmptablename} select distinct cd_gs_user, '' from gs_user_op where {$arboles} action='I' and exists (select cd_gs_user from gs_user where {$where} gs_user_op.cd_gs_user=cd_gs_user)");
+qQuery("update {$tmptablename} set nombre=(select user_name||' '||user_surname from gs_user where cd_gs_user={$tmptablename}.cd_gs_user)");
+$tmptablename2 = "_tree_op_{$_SESSION['_User']}";
+if( eSqlType('mysql,mysqli') ){
+qQuery("create temporary table {$tmptablename2} (cd_gs_user integer, cd_gs_op integer, seq integer)");
+}else{
+qQuery("create temp table {$tmptablename2} (cd_gs_user integer, cd_gs_op integer, seq integer)");
+}
+qQuery("insert into {$tmptablename2} select distinct cd_gs_user,cd_gs_op,0 from gs_user_op where {$arboles} action='I' and exists (select cd_gs_user from gs_user where {$where} gs_user_op.cd_gs_user=cd_gs_user)");
+qQuery("update {$tmptablename2} set seq=(select seq from {$_SESSION['ShareDictionary']}gs_op where cd_gs_op={$tmptablename2}.cd_gs_op)");
+qQuery("select count(*) from {$tmptablename}");
+list($totalUsuarios) = qRow();
+$UsuarioActual = 0;
+echo "<!DOCTYPE HTML><HTML><HEAD><TITLE></TITLE><META http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'></HEAD><BODY>";
+echo "<TABLE>\n";
+echo "<tr><td colspan=5><b><u>LISTADO DE OPCIONES INDIVIDUALES POR USUARIO</u></b></td></tr>\n";
+echo "<tr><td colspan=5></td></tr>\n";
+qQuery("select * from {$tmptablename} order by nombre", $p1);
+while($r=qArray($p1)){
+ImprimirArbolPorUser($r["cd_gs_user"], $r["nombre"]);
+}
+echo "</TABLE></BODY></HTML>";
+file_put_contents("../_tmp/php/ops_user_{$_SESSION['_User']}.xls", ob_get_contents());
+eMessage("Descargando Excel...", "HS", 3, "location.href='edes.php?D:/_tmp/php/ops_user_{$_SESSION['_User']}.xls'");
+function ImprimirArbolPorUser($user, $nombre){
+global $dimOpcion, $dimPuntero, $tmptablename2, $totalOps;
+global $totalUsuarios, $UsuarioActual;
+for($n=0; $n<$totalOps; $n++) $dimOpcion[$n][0] = 0;
+qQuery("select * from {$tmptablename2} where cd_gs_user={$user}");
+while($r=qArray()){
+if( $dimOpcion[$dimPuntero[$r["cd_gs_op"]]][4]=="O" ){
+$dimOpcion[$dimPuntero[$r["cd_gs_op"]]][0] = 1;
+}
+}
+$tmp = array();
+$opsEnLinea = array();
+$anchos = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+for($n=$totalOps-1; $n>=0; $n--){
+if( $dimOpcion[$n][0]==1 && $dimOpcion[$n][4]=="O" ){
+$tmp[] = trim($dimOpcion[$n][2]);
+$nivel = $dimOpcion[$n][3];
+$anchos[$nivel] = max($anchos[$nivel], strlen(trim($dimOpcion[$n][2])));
+if( $nivel>0 ){
+for($i=$n-1; $i>=0; $i--){
+if( $nivel>$dimOpcion[$i][3] ){
+$tmp[] = trim($dimOpcion[$i][2]);
+$dimOpcion[$i][0] = 1;
+$nivel = $dimOpcion[$i][3];
+$anchos[$nivel] = max($anchos[$nivel], strlen(trim($dimOpcion[$i][2])));
+if( $nivel==0 ){
+$tmp = array_reverse($tmp);
+$linea = implode("|",$tmp);
+$opsEnLinea[] = $linea;
+$tmp = array();
+break;
+}
+}
+}
+}
+}
+}
+$UsuarioActual++;
+if( $UsuarioActual>1 ) echo "<tr><td></td></tr>";
+echo "<tr><td colspan=6><b>{$nombre}</b></td></tr>";
+$ultima = array("","","","","","","","","","","","","","");
+$opsEnLinea = array_reverse($opsEnLinea);
+for($n=0; $n<count($opsEnLinea); $n++){
+$tmp = explode("|", $opsEnLinea[$n]);
+$t = count($tmp);
+echo '<tr><td></td>';
+for($i=0; $i<$t; $i++){
+echo '<td>';
+if( $i+1==$t ){
+echo '<b>'.$tmp[$i].'</b>';
+}else{
+if( $ultima[$i]==$tmp[$i] ){
+if( $_POST["_repetir_carpeta"]=="S" ){
+echo $tmp[$i];
+}
+}else{
+echo $tmp[$i];
+}
+}
+echo '</td>';
+$ultima[$i] = $tmp[$i];
+}
+echo "</tr>\n";
+}
+}

@@ -1,0 +1,199 @@
+#include(*) lng
+[Title]=@IMPORTAR OPCIONES@
+[FormButtons]-
+[AddCode]a|tipo|A|<span id=LabelOp st-yle='margin-left:250px'>Selecciona la opción de inserción</span> <img id=iMenu src=g/tree_op.gif onclick=uMenu() title='@Seleccionar opciones@'>
+[AddOption]a|tipo|C,Hijo; B,Hermano; E,Al final
+[Fields]
+Tipo|tipo|X|SV|10||M||#|
+Arbo a<br>Importar|resumen|#|A|1000,90,8|800,350|Mk||#|
+#Include( a ) $a/d/optree.zdf
+[JSCheck]a
+if( eGF('options')=='' && eGF("tipo")!="E" ) ePE('resumen','Falta definir la opción desde donde se importa',1);
+if( eGF('options').indexOf(',')>-1 ) ePE('resumen','Solo puede elegir una opción',1);
+[JSEnd]a
+TABNumber1.rows[3].cells[0].all[0].cells[1].innerHTML = '&nbsp; Opción desde donde se importa &nbsp;';
+var o = DGI("LabelOp").getBoundingClientRect().right;
+var d = DGI("resumen").getBoundingClientRect().right;
+DGI("LabelOp").style.marginLeft = d-o;
+[JSIni]a
+var _ImportOp = true;
+function ExeOp( Op, OpInnerText, Obj ){
+switch( Op ){
+case "T":
+_TreeOpLoad(0,document.all.iMenu);
+break;
+case "M":
+_TreeOpLoad(1,document.all.iMenu);
+break;
+}
+}
+function uMenu(){
+DGI('ViewOpTree').innerHTML = '';
+ePF('options','');
+_TreeOpLoad(0,document.all.iMenu);
+}
+[PHPIni]a
+eInclude('lib');
+$cPapel = $cLapiz = '';
+echo '<style>';
+$Dim = file( "{$_SESSION['_PathCSS']}/lista.css" );
+for( $n=0; $n<count($Dim); $n++ ){
+$tmp = explode('{',$Dim[$n]);
+if( trim($tmp[0])=='.Celda' ){
+echo '.edOUT{';
+for( $i=$n+1; $i<count($Dim); $i++ ){
+$tmp = explode(';',$Dim[$i]);
+$tmp = explode(':',$tmp[0]);
+if( strToUpper(trim($tmp[0]))=='BACKGROUND' ){
+echo 'BACKGROUND:'.$tmp[1].';';
+$cPapel = trim($tmp[1]);
+}else if( strToUpper(trim($tmp[0]))=='COLOR' ){
+echo 'COLOR:'.$tmp[1].';';
+$cLapiz = trim($tmp[1]);
+}else if( trim($tmp[0])=='}' ){
+break;
+}
+}
+echo '}';
+break;
+}
+}
+$r = new eColor();
+echo '.edOVER{';
+echo 'BACKGROUND:'.$r->Tone($cPapel,2).';';
+echo 'COLOR:'.$cLapiz.';';
+echo '}';
+echo '#edMENUS {';
+echo 'BACKGROUND:'.$r->Tone($cPapel,2).';';
+echo '}';
+echo '</style>';
+[PHPIni]A
+eInit();
+$Dim = array();
+$tmp = explode("\n",$_POST['resumen']);
+for( $n=0; $n<count($tmp); $n++ ) if( trim($tmp[$n])!='' ) $Dim[] = $tmp[$n];
+unset($tmp);
+$TOpAImportar = count($Dim);
+if( $_POST['tipo']<>'E' ){
+qQuery( "select seq,indent from {$_SESSION['ShareDictionary']}gs_op where cd_gs_op={$_POST['options']}" );
+list( $Seq, $Indent ) = qRow();
+qQuery( 'update {$_SESSION['ShareDictionary']}gs_op set seq=seq+'.$TOpAImportar.' where seq>'.$Seq );
+if( $_POST['tipo']=='C' ) $Indent++;
+}else{
+$Indent = 0;
+qQuery( "select seq from {$_SESSION['ShareDictionary']}gs_op order by seq desc" );
+list( $Seq ) = qRow();
+}
+$xFecha = date('d-m-Y');
+if( eSqlType('pdo.informix') ){
+}else{
+if( !eSqlType('oracle') ){
+$xFecha = date('Y-m-d');
+}
+}
+$carbol=0;
+$nactual=0;
+$padre[0]=0;
+$padre[1]=1;
+$MaxId = 1;
+$nReg = qCount("{$_SESSION['ShareDictionary']}gs_op");
+if( $nReg > 0 ){
+qQuery("select max(cd_gs_op) from {$_SESSION['ShareDictionary']}gs_op order by 1 desc");
+list($MaxId) = qRow();
+}
+for($nop=0; $nop<$TOpAImportar; $nop++){
+$MaxId++;
+$buff = $Dim[$nop];
+list($buff,) = explode('~',$buff);
+if( trim($buff) == '' ) continue;
+$long = strlen( $buff ) - 1;
+$tmp = ltrim($buff);
+$snivel = substr_count(substr( $buff, 0, strpos($buff,$tmp[0])), chr(9) );
+for( $i=0; !strcmp(chr(9), substr($buff,$i,1)); $i++ );
+$sType = 'O';
+if( $long > $i && $long > 0 ){
+if( $i > $nactual ){
+$nactual = $i;
+$padre[$nactual] = $carbol-1;
+}else{
+$nactual = $i;
+$padre[$nactual+1] = $carbol;
+}
+$buff = trim($buff);
+$xx = explode('|',$buff);
+if( trim($xx[1])!='' ){
+$narbol = trim($xx[0]);
+$opcion = trim($xx[1]);
+if( $opcion[0] == ':' ){
+$sType = 'F';
+$niv = 1;
+}else{
+$niv = 2;
+}
+}else{
+$sType = 'F';
+$narbol = trim($xx[0]);
+$opcion = '';
+if( $i == 0 ){
+$niv = 0;
+}else{
+$niv = 1;
+}
+}
+$niv = $snivel;
+$opcion = str_replace("'","\'",$opcion);
+$xMode = '';
+if( $narbol=='-' ){
+$narbol = '';
+$sType = 'L';
+}
+$xIcon = '';
+if( $narbol[0]=='{' ){
+list($xIcon,$narbol) = explode('}',$narbol);
+$narbol = trim($narbol);
+$xIcon = trim(substr($xIcon,1));
+}else if( $narbol[0]=='[' ){
+list($tmp) = explode(']',$narbol);
+$tmp = strtoupper($tmp);
+if( substr_count($tmp,'.GIF')==1 || substr_count($tmp,'.JPG')==1 || substr_count($tmp,'.PNG')==1 ){
+list($xIcon,$narbol) = explode(']',$narbol);
+$narbol = trim($narbol);
+$xIcon = trim(substr($xIcon,1));
+}
+}
+if(  $opcion[0]=='¿' ){
+list( ,$Accion ) = explode('?',$opcion);
+list( $Accion ) = explode(':',trim($Accion));
+}else{
+list( $Accion ) = explode(':',$opcion);
+}
+if( strlen($Accion)<4 ){
+switch( strtoupper(substr($Accion,1,1)) ){
+case 'C': case 'L':
+$xMode = 'V';
+break;
+case 'B':
+$xMode = 'D';
+break;
+case 'M':
+$xMode = 'U';
+break;
+case 'A':
+$xMode = 'I';
+break;
+default:
+}
+}else if( substr($Accion,0,2)=='>$' || substr($Accion,0,3)=='m>$' || substr($Accion,0,16)=='window.external.' ) $xMode = 'S';
+$xNivel = $niv + $Indent;
+$xSeq = $Seq + $nop + 1;
+$q = "insert into {$_SESSION['ShareDictionary']}gs_op ( cd_gs_op, mode, seq, caption, indent, type, script_url, dt_add, icon, show_type ) values ( {$MaxId}, '{$xMode}', {$xSeq}, '{$narbol}', {$xNivel}, '{$sType}', '{$opcion}', '{$xFecha}', '{$xIcon}', 'D' )";
+if( $DEBUG_TREE ) saveLog($q);
+qQuery($q);
+if( $DEBUG_TREE ) saveLog(' -- OK');
+qFree();
+$carbol++;
+}
+}
+$carbol--;
+eMessage( 'Arbol importado', 'HS', 2000, 'top.eSWOpen(window,"edes.php?E:$a/u/op.gs","",true,0,0);CngSOMBRA.style.display=RESPUESTA.style.display="none";' );
+eEnd();

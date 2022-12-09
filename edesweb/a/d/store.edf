@@ -1,0 +1,19 @@
+[Title]ALMACEN
+[.DBTable]gs_conexion
+[.DBIndex]id
+[.DBOrder]cdi
+[.DBLimit]2000
+[.MaxRec]250
+[.Cursor]
+[.AutoMenu]l|1
+[AddOption]*|_db|,; mysql,MySql; informix,Informix
+[AddOption]*|_lenguaje|,; spanish,Español
+[Fields]
+Fichero|_fichero|f|T|30||QM|||
+DB|_db|N|SV|12||QM|||
+Lenguaje|_lenguaje|N|SV|12||QM|||
+Nombre|_Nombre|D|T|80||QM|||
+Descripcion|_descripcion|X|A|2000,80,10||QM|||
+[PHPIni]cR
+phpInfo();
+die('PEPE');

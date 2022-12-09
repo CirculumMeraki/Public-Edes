@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>qGetWhere 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>qGetWhere( [&nbsp;$Alias="",&nbsp; [ $Transforma=true/Array, [ $Dim ] ] ]&nbsp;) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Devuelve la condici?n "where" de la sentencia SQL que se va ha ejecutar. Solo en listados. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>$Alias&nbsp;</TD>
+<TD>&nbsp;Alias principal 'A' cuando se recuperan campos de mas de una tala</TD></TR>
+<TR>
+<TD>$Transforma&nbsp;</TD>
+<TD>&nbsp;Transformar los campos de tipo fecha, solo para el controlador&nbsp; de MySql&nbsp;<BR>&nbsp;Si se pasa una matriz hash calcular? el where enfunci?n de esos datos.</TD></TR>
+<TR>
+<TD>$Dim&nbsp;</TD>
+<TD>&nbsp;matriz con las condiciones por&nbsp;campo</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>$where = qGetWhere("A", array("a"=&gt;"a*a","b"=&gt;"&gt;bb&lt;cc"));<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>//&nbsp;<STRONG><FONT color=#00009c>&nbsp;A.a like 'a%a' and A.b&gt;'bb' and A.b&lt;'cc'&nbsp;&nbsp;</FONT></STRONG>
+<TR>
+<TD id=txt>Te calcula el where con el alias "A." y la condici?n seg?n la matriz</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

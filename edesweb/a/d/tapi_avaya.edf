@@ -1,0 +1,15 @@
+[Title]LOG TAPI AVAYA
+[DBTable]gs_logtapi
+[DBIndex]cd_gs_logtapi
+[DBOrder]ds_log desc
+[DBSerial]cd_gs_logtapi
+[AddOption]*|event|,; E,ACCEPTED; 7,BUSY; I,CONFERENCED; 4,CONNECTED; A,DIALING; 9,DIALTONE; 5,DISCONNECTED; 6,IDLE; 3,OFFERING; C,ONCALLEDID; D,ONCALLERID; 8,ONHOLD; J,ONHOLDPENDCONF; K,ONHOLDPENDTRANSFER; H,PROCEEDING; 2,RINGBACK; G,SPECIALINFO; 1,SYSOFF; 0,SYSON; B,TRANSFER; F,UNKNOWN
+[DefAux]cd_gs_user|gs_user,cd_gs_user,user_surname,', ',user_name
+[Fields]
+Código|cd_gs_logtapi|*|T|9||-||#|
+Instante|ds_log|CDI|T|19||MQ|#sy2s#|#|
+Usuario|cd_gs_user|+|S|5||MQ||#|
+Extensión|userext|0|T|9||MQ||#|
+Evento|event|#D|SV|1||MQ||#|
+Remoto|remoteext|0|T|9||MQ|||
+Linea|line|+|T|1||MQS|||

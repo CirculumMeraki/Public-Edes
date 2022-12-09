@@ -1,0 +1,63 @@
+[Title]=EXPORTAR &#47; IMPORTAR TABLAS
+[FormButtons]
+[Radio]IE|1C|E,Exportar; I,Importar
+[Radio]ADD_DELETE|1C|B,Borrar; A,Añadir
+[Radio]UPPER_LOWER|3C|U,Upper; L,Lower; X,Mixto
+[Button]a|Ejecutar
+[FormAction]a|Ejecutar()
+[TipForm]a|TABLA|Tabla[,Tabla,,,] / *
+[Chr]FILE|||0-9a-zA-Z\s_,*|[a-zA-Z\s_,*]
+[AddCode]a|ZIP|b|<span id=uZIP style='margin-left:8px'>Exportar comprimido</span>
+[AddCode]a|UNZIP|b|<span style='margin-left:8px;width:100%'>Importar comprimido</span>
+[AddTools]a||eDefaults
+[Fields]3
+Nombre tabla/s|TABLA|FILE|T|255|600|A||#|
+Filtro tabla|FILTRO|#|T|255|600|A|||
+Acción|IE|#D|r|1||A|E|#|
++2 Al importar·registros|ADD_DELETE|#D|r|1||A|||
+{FS}{
+{FC}{
++3 ZIP|ZIP|X|c|1||A|||
+|UNZIP|X|c|1||A|||
+}
+}
+Ver estructura|ESTRUCTURA|X|c|1||*|||
+Generar estructura|GEN_ESTRUCTURA|X|c|1||*|||
+-|Transformar campo
+|UPPER_LOWER|X|r|1||A|||
+,Campo a trasformar|CAMPO|FILE|T|30||A|||
+[HTMIni]a
+<div style='width:100%;height:100%;'><br>
+[HTMEnd]a
+<br><br><IFRAME name=EXE_IE eNORESIZE=true WOPENER='javascript:{window}' src='edes.php?r:/_datos/config/empty_page.htm' width='100%' height='100%' FRAMEBORDER=0 SCROLLING='auto'></IFRAME>
+</div>
+[JSEnd]a
+EXE_IE.frameElement.height = document.body.clientHeight - EXE_IE.frameElement.offsetTop;
+EXE_IE.frameElement.WOPENER = window;
+function _Ejecutar(ULX){
+window.EXE_IE.frameElement.WOPENER = window;
+window.EXE_IE.location.href = 'edes.php?E:$ie.gs&TABLA='+eGF('TABLA') +'&IE='+eGF('IE') +'&ZIP='+eGF('ZIP') +'&ESTRUCTURA='+eGF('ESTRUCTURA') +'&ADD_DELETE='+eGF('ADD_DELETE') +'&UPPER_LOWER='+eGF('UPPER_LOWER') +'&CAMPO='+eGF('CAMPO') +'&FILTRO='+escape(eGF('FILTRO'));
+}
+function Ejecutar(){
+if( eGF('FILTRO')!='' ){
+if( eGF('TABLA').indexOf(',')>-1 ){
+ePE('FILTRO','El filtro es sólo para una tabla');
+eShowError();
+return;
+}
+if( eGF('ADD_DELETE')=='B' ){
+if( eGF('FILTRO')!='' && (eGF('FILTRO')*1)==eGF('FILTRO') && eGF('FILTRO') > 0 ){
+}else{
+ePE('FILTRO','Es incompatible el campo "Filtro" y la opción de borrar la base de datos');
+eShowError();
+return;
+}
+}
+}
+DGI("TABLA").value = DGI("TABLA").value.replace(/\s/g,'');
+if( DGI("TABLA").value!='' ){
+eDisableButton(0);
+setTimeout('_Ejecutar("'+eGF('UPPER_LOWER')+'")',1);
+}
+eClearEvent();
+}

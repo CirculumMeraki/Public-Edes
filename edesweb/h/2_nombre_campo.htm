@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">2. Nombre del campo</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">
+Es el nombre real del campo en la tabla.<br /><br />
+Si empieza por un "_" (subrayado) el valor del campo no será grabado en el servidor, aunque se enviará en el caso de las fichas pero no en las multifichas que para mandar al servidor un campo virtual que luego no se grabe tendrá que empezar su nombre por 3 guiones bajos "___", esto nos permite crear campos de uso local en el lado del cliente, luego eDes no tratará nombres de campos de tablas que empiezen o acaben por guión "_".<br /><br />
+Si el tipo del control del campo es un select de una tabla de la BBDD, en este mismo parámetro podemos definir cómo se relacionan las dos tablas (la que trata la ficha actual y la tabla del select). Ver parámetro 4 (tipo de control).<br /><br />
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>&nbsp; Operaci&oacute;n&nbsp;&nbsp;| cd_operacion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp; | S |&nbsp; 3|||||</code><br /><code>&nbsp; Asesor&nbsp;&nbsp;&nbsp;&nbsp; | cd_gs_user{gs_user,cd_gs_user,user_surname,', ',user_name}&nbsp; | 0&nbsp; | S |&nbsp; 3|||||</code><br /><code>&nbsp; Asesor&nbsp;&nbsp;&nbsp;&nbsp; | cd_gs_user{gs_user,cd_gs_user,user_name as nombre}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp; | S |&nbsp; 3|||||</code><br /><code>&nbsp; Asesor&nbsp;&nbsp;&nbsp;&nbsp; | cd_gs_user{gs_user,cd_gs_user,user_name} alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp; | S |&nbsp; 3|||||</code><br /><code>&nbsp; Asesor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| cd_gs_user{gs_user,cd_gs_user,user_name} as alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0&nbsp; | S |&nbsp; 3|||||</code><br /><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | gs_user:cd_gs_user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ...</code><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | gs_user:cd_gs_user&nbsp;alias&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ...</code><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | gs_user:cd_gs_user as alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ...</code><br /><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | #gs_user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ...</code><br /><code>&nbsp; Label &nbsp;&nbsp;&nbsp;&nbsp; | dt_alta as udt_alta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| F4 | T | 10|||||</code><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| dt_alta&nbsp;udt_alta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | F4 | T | 10|||||</code><br /><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Tabla.Campo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ...</code><br /><code>&nbsp; Label&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | A.Campo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | ...</code><br /><br /><br />La definici&oacute;n del campo que le precede un "#" indica que la definici&oacute;n se encuentra en el fichero "/_datos/config/defaux.ini" con la siguiente estructura:<br /><code>#usuario&nbsp; | gs_user{gs_user,cd_gs_user,user_surname,', ',user_name}</code><br /><code>#cd_prov&nbsp; | prov{prov,cd_prov,nm_prov}</code><br /><code>...</code><br /><code>&lt;span style="color: #400080;"&gt;#ETIQUETA | DEFINICION DEL CAMPO&lt;/span&gt;</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Fields]</code><br /><code>. | Field&nbsp; &nbsp; &nbsp; &nbsp;| TE | TC | Lng&nbsp; &nbsp; &nbsp; &nbsp;| Px&nbsp; &nbsp; &nbsp; | Mod | Default | Cnd | Msg Error</code><br /><code>&nbsp; | pk&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | +&nbsp; | T&nbsp; | 5&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| *&nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|</code><br /><code>&lt; | tiny[texto] | o&nbsp; | A&nbsp; | -1,100,30 | 900,500 | M&nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|</code></td>
+</tr>
+<tr>
+<td id="txt">Define un plugin como un objeto, cargará un plugin denominado "/_datos/config/tiny.plugin" que cargará las variables necesarias para instanciarlo y grabarlo.<br />Al cargar el plugin llamará a la función function tiny($Mode, &$Field, &$value="");</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

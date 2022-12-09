@@ -1,0 +1,198 @@
+#include(*) lng
+[Title]=@Titulo@
+[DBTable]gs_exp_file
+[DBOrder]cdi desc
+[DBLimit]5000,500
+[WinCloseESC]
+[NoSort]
+[AddOption]*|tipo|L,@Listado@; I,@Informe@; R,@Recuento@; E,@Etiquetas@; F,@Fichas@
+[AddOption]*|formato|0,@OpRECUENTO@; 1,HTML; 2,TXT; 3,DBF; 4,XLS; 5,PDF; 6,MDB; 7,XML; 8,CSV; 9,PDF
+[AddOption]*|estado|P,@Pendiente@; T,@Terminado@; H,@Histórico@
+[PHPIni]?R,l
+function DesdeCDI(){
+global $_DownloadDays;
+if( !isset($_DownloadDays) || $_DownloadDays=='' ) $_DownloadDays = 30;
+return "cdi>'".date('Y-m-d 00:00:00', mktime( 0,0,0, date('m'), date('d')-$_DownloadDays, date('Y') ))."'";
+}
+[DBAddFilter]DesdeCDI()
+[RowColor]descargado==0|id=P
+[CC]#INFO|$_GET['INFO']==1
+[PHPStart]l
+eUnset('INFO');
+global $_DescargasPendientes;
+$_DescargasPendientes = 0;
+[Format]
+$Ext = array('count','html','txt','dbf','xls','pdf','mdb','xml','csv','pdf');
+if( $_SESSION['_D_']!='' ){
+$_vF[1] = '<img src="g/l_d_'.$Ext[$_vF[1]].'.gif" onclick=uDown() oncontextmenu=ViewStructure()>';
+}else{
+$_vF[1] = '<img src="g/l_d_'.$Ext[$_vF[1]].'.gif" onclick=uDown()>';
+}
+if( $_vF[6]=='P' ) $GLOBALS['_DescargasPendientes']++;
+[PDFCol],0
+[DefAux]cd_gs_user|gs_user,cd_gs_user,user_surname,', ',user_name
+[THColSpan]img,formato,@FORMATO@
+[TipTH]descargado=@NDescargas@
+[Fields]
+@TIPO@|tipo|N|SV|9||AQ|||
+|formato img|+|SV|8||A||=|
+|formato|+|SV|8||A|||
+@DESCRIPCION@|descripcion|#D|T|60||A|||
+@REGISTROS@|t_reg|+|T|9||A|||
+@FECHA@|cdi|CDI|T|19||AQ||#|
+@ESTADO@|estado|N|SV|9||A|||
+#INFO ¿
+@DOWNLOAD@|download|CDI|T|19||A||#|
+@SG@|sg|+|T|9||A|||
+@Nº@|descargado|+|T|2||AQ|||
+@USUARIO@|cd_gs_user|0|S|9||A|||
+?¿
+|descargado|+|T|2||*|||
+?
+|comprimido|+|T|4||*|||
+|fichero|#D|T|20||*|||
+sql_1|sql_1|#|A|255,80,3||AL|||
+sql_2|sql_2|#|A|255,80,3||AL|||
+sql_3|sql_3|#|A|255,80,3||AL|||
+[PHPStart]l
+$_DownloadUrl = ( (isset($_DownloadFile)) ? $_DownloadFile : $_DownloadUrl );
+[JSOnClickRow]*
+var Obj = S.event(window);
+if( Obj.cellIndex==10 ){
+top.eSWOpen(window, 'edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user'), 'USUARIO', false);
+return;
+}
+if( Obj.cellIndex==9 ){
+top.eCallSrv(window,'ExporSQL='+escape(eGF('fichero'))+','+escape(eGF('cdi')));
+return;
+}
+if( eGF('estado')=='@Pendiente@' ){
+top.eInfo(window,"@SinTerminar@");
+}else{
+var NomFile = eGF('fichero'),
+ext = NomFile.substr( NomFile.indexOf('.') ),
+Dato =	'<?= $_DownloadUrl ?>edes.php?E:$descarga.gs&' +
+'F=' + escape(NomFile) +
+'&H='+ escape(eGF('cdi')) +
+'&U=<?= $_User ?>'+
+'&DOWNLOAD=1';
+top.eCallSrv(window, Dato);
+Obj.parentNode.id = '';
+}
+[JSIni]l
+var _DimEstado = {'P':'@Pendiente@', 'T':'@Terminado@', 'H':'@Histórico@' };
+function uDown(){
+S(S.event(window).parentNode).eventFire("click");
+}
+function ViewStructure(){
+if( eGF('tipo')!='R' && DGI("BROWSE").rows[0].cells.length > 10 && eGF('cd_gs_user') > 0 ){
+top.eSWOpen(window,'edes.php?E:$a/d/exp_file_str.gs&_SEEK='+eGF('cdi')+'|'+eGF('cd_gs_user')+'|'+eGF('fichero'), 'ESTRUCTURA EXTRACCION', false );
+}
+return eClearEvent();
+}
+var _RecargarLst = false;
+function RecargarLst(){
+var Obj = S.event(window);
+if( !_RecargarLst ){
+Obj.className = "OFF";
+uRecargar();
+}else{
+Obj.className = "";
+}
+_RecargarLst = !_RecargarLst;
+}
+function uRefresca( txt ){
+if( _RecargarLst ){
+var Dim = txt.split('|'), n, Linea, nt = 0, tmp;
+for( n=1; n<Dim.length; n++ ){
+Linea = Dim[n].split(',');
+BROWSE.rows[Linea[0]].cells[4].textContent = Linea[1];
+BROWSE.rows[Linea[0]].cells[6].textContent = _DimEstado[Linea[2]];
+tmp = eTrim(BROWSE.rows[Linea[0]].cells[9].textContent);
+if( tmp=='' ) BROWSE.rows[Linea[0]].cells[9].textContent = Linea[3];
+if( Linea[2]=='T' ){
+BROWSE.rows[Linea[0]].style.color = 'red';
+}
+}
+for( n=parseInt(S("#BROWSE.AltoTH"))+1; n<BROWSE.rows.length; n++ ){
+if( eTrim(BROWSE.rows[n].cells[6].textContent)=='@Pendiente@' ) nt++;
+}
+if( nt==0 ){
+DGI('ImgReload').style.display = 'none';
+_RecargarLst = false;
+}else setTimeout( 'uRecargar();', 10000 );
+}
+}
+function uRecargar(){
+var TestFile = Filas = '', tmp, n;
+for( n=parseInt(S("#BROWSE.AltoTH"))+1; n<BROWSE.rows.length; n++ ){
+if( eTrim(BROWSE.rows[n].cells[6].textContent)=='@Pendiente@' ){
+tmp = eTrim(BROWSE.rows[n].cells[9].textContent);
+if( tmp=='' ){
+tmp = ':'+eTrim(BROWSE.rows[n].cells[5].textContent);
+}
+TestFile += ','+tmp;
+Filas += ','+n;
+}
+}
+top.eCallSrv( window, 'TestFile='+TestFile+'&Filas='+Filas );
+}
+[CSSAdd]l
+#BROWSE TD {
+cursor:pointer;
+}
+[HTMEnd]l
+<img onclick='RecargarLst()' id=ImgReload src='edes.php?R:$a/g/reload.gif' style='position:absolute;left:15px;top:15px;' title='@Reload@'>
+[PHPEnd]l
+if( $GLOBALS['_DescargasPendientes']==0 ) echo "<script type='text/javascript'>DGI('ImgReload').style.display = 'none';</script>";
+[CallSrv]TestFile
+_FileNoCache('edes.js');
+if( $TestFile!='' ){
+global $_DownloadDays;
+if( !isset($_DownloadDays) || $_DownloadDays=='' ) $_DownloadDays = 30;
+$sCDI = date( 'Y-m-d 00:00:00', mktime( 0,0,0, date('m'), date('d')-$_DownloadDays, date('Y') ) );
+$DimFilas = explode(',',substr($Filas,1));
+$TestFile = substr($TestFile,1);
+$DimFiles = explode(',',$TestFile);
+$ConCDI = '';
+$RowFile = array();
+for( $n=0; $n<count($DimFiles); $n++ ){
+if( substr($DimFiles[$n],0,1)==':' ){
+if( $ConCDI<>'' ) $ConCDI .= ',';
+$ConCDI .= "'".substr($DimFiles[$n],1)."'";
+$TestFile = str_replace($DimFiles[$n].',','',$TestFile);
+$TestFile = str_replace(','.$DimFiles[$n],'',$TestFile);
+}
+$RowFile[$DimFiles[$n]] = $DimFilas[$n];
+}
+$TestFile = str_replace(' ','',$TestFile);
+$TestFile = "'".str_replace(',',"','",$TestFile)."'";
+$Sql = "select fichero, t_reg, estado from gs_exp_file where cd_gs_user={$_User} and cdi>'{$sCDI}' and t_reg>0 and fichero in ( {$TestFile} )";
+eTrace( $Sql );
+$txt = '';
+qQuery( $Sql );
+while( $r=qRow() ) $txt .= '|'.$RowFile[trim($r[0])].','.eNumberFormat($r[1]).','.$r[2];
+if( $ConCDI<>'' ){
+$Sql = "select fichero, t_reg, estado, cdi from gs_exp_file where cd_gs_user={$_User} and t_reg>0 and cdi in ( {$ConCDI} )";
+eTrace( $Sql );
+qQuery( $Sql );
+while( $r=qRow() ) $txt .= '|'.$RowFile[':'.trim($r[3])].','.eNumberFormat($r[1]).','.$r[2].','.trim($r[0]);
+}
+echo '<script type="text/javascript">';
+echo "_WOPENER.uRefresca( '{$txt}' );";
+echo '</script>';
+}
+[CallSrv]ExporSQL
+list( $File, $CDI ) = explode(',',$ExporSQL);
+$File = substr($File,0,-3);
+echo '<script type="text/javascript">';
+if( file_exists( eScript( $_DownloadPath.$File.'sql' ) ) ){
+$Doc = file_get_contents( eScript( $_DownloadPath.$File.'sql' ) );
+?>
+window.clipboardData.setData( 'text', "<?= str_replace('"','\\"',$Doc) ?>" );
+alert( "SQL copiado en el \"Clipboard\":\n\n<?= str_replace('"','\\"',$Doc) ?>" );
+<?PHP
+}else{
+?>top.eInfo(window.frameElement.WOPENER,'Fichero "<?= $File ?>sql" no encontrado');<?PHP
+}
+echo '</script>';

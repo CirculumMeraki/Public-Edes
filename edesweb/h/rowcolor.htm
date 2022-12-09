@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">RowColor</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[RowColor] Condition | CSS</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En un listado podemos modificar el color de las filas en función de ciertas condiciones, por ejemplo para resaltar valores negativos.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Condition</strong>: Condición PHP, También podría ser una función PHP en cuyo caso solo llevaría un parámetro dejando el valor "CSS" a lo que devuelva la función.<br /><strong>CSS</strong>: Instrucciones de hoja de estilo, este contenido va dentro del TR.<br />Si el listado tiene cursor solo podrá usar el "id" y "class" ya que "style" si pasas el cursor por encima anulará los colores.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[RowColor] estado=='T'               | style='color:blue'</code><br /><code>[RowColor] $row[3]=='00'             | id='p'</code><br /><code>[RowColor] cd_field=='03'            | style='color:#FF0000'</code><br /><code>[RowColor] substr(cd_field,0,1)=='0' | style='color:#FF0000' </code><br /><code>[RowColor] cd_field[0]=='0'          | style='color:#FF0000'</code><br /><code>[RowColor] cd_field[0]=='0'          | class='Pie'</code><br /><code>[RowColor] ColorFila($row)</code>
+<p><code>[PHPIni] l</code><br /><code>     function ColorFila($row){</code><br /><code>          if( $row[0]=='...' ) return 'style="color:blue"';</code><br /><code>          if( ... ) return 'style="color:red"';</code><br /><code></code><code>          if( ... ) return 'class="Pie"';</code><br /><code>          if( ... ) return 'id="Negativo"';</code><br /><code>     }</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

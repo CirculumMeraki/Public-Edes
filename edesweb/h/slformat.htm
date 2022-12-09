@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>
+<P>slFormat</P>
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{slFormat} FormatCol1 [, FormatCol2] ..... [, FormatColN] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>&nbsp;<FONT color=#0000a0>En los listados de las sublistas, formatea las columnas de datos que se deseen.<BR>Como parámetro para cualquier columna se puede poner una función de usuario, si queremos pasar a la función el valor de la columna actual pondremos el símbolo "#", por ejemplo 'uPinta("#")', en el caso de querer pasar mas de un parámetro los separaremos con una coma en su representación&nbsp;decimal "&amp;#44;". Si se quisiera pasar el valor del cursor completo pasaríamos como parámetro la variable "$_vF" y si quisiéramos poder modificar los valores en la función que lo recibe la definiríamos que el valor pase por referencia.<BR>Se puede incluir código HTML.&nbsp;</FONT><FONT color=#0000a0>También se puede&nbsp; poner un gráfico en función de la extensión del nombre del fichero<BR>&nbsp; &lt;img </FONT><A href="mailto:src='g/t_file_@.gif'"><FONT color=#0000a0>src='g/t_file_@.gif'</FONT></A><FONT color=#0000a0> onclick='NomFuncion()' style='cursor:hand' </FONT><A href="mailto:title='_@_'"><FONT color=#0000a0>title='_@_'</FONT></A><FONT color=#0000a0>&gt;<BR>&nbsp; donde:<BR>&nbsp;&nbsp; </FONT><A href="mailto:'_@_'"><FONT color=#0000a0>'_@_'</FONT></A><FONT color=#0000a0> -&gt; Se cambia por el 'title' y<BR>&nbsp;&nbsp;&nbsp; </FONT><A href="mailto:'@'"><FONT color=#0000a0>'@'</FONT></A><FONT color=#0000a0>&nbsp; -&gt; Se cambia por la extensión del fichero</FONT></P>
+<P>&nbsp;- En campos virtuales con calculo se puede utilizar la forma "Calculo() \ M2" la primera parte para php y la segunda para indicar el formato.</P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>&nbsp;Los tipos de alineación permitidas son: 
+<TABLE id=Opciones style="HEIGHT: 136px; WIDTH: 384px" cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>L&nbsp;</TD>
+<TD>&nbsp;Alineación a la izquierda (o en blanco)</TD></TR>
+<TR>
+<TD>C</TD>
+<TD>&nbsp;Alineación centrada. </TD></TR>
+<TR>
+<TD>R</TD>
+<TD>&nbsp;Alineación a la derecha.</TD></TR>
+<TR>
+<TD>H</TD>
+<TD>&nbsp;Ocultar columna. </TD></TR>
+<TR>
+<TD>M</TD>
+<TD>&nbsp;Separa las cifras de los millares del resto mediante un punto </TD></TR>
+<TR>
+<TD>M2</TD>
+<TD>&nbsp;Separa las cifras de los millares del resto mediante un punto y <BR>&nbsp;enseña los dos primeros decimales el valor a mostrar </TD></TR></ <TR>
+<TR>
+<TD>B</TD>
+<TD>&nbsp;Si el valor es cero no pintará nada.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>&nbsp;{slFormat} ,,,,,,&lt;img <A href="mailto:src='g/d_@.gif'">src='g/d_@.gif'</A> onclick='VerFoto()' <A href="mailto:title='_@_'">title='_@_'</A>&gt; 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

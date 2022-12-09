@@ -1,0 +1,355 @@
+# Version: 2019-08
+
+eAbout()~Ejecuta el fichero de configuración "about.htm" ubicado en "/_datos/config/", se utiliza desde el fichero de configuración&nbsp;"desktop_user.ini".
+eAddButton( $icon="", $label="", $click="", $title="", $inner="" )~
+eAddDaysToDate( Fecha, Dias )~
+eAddField( $DefinicionField, $ValorPorDefecto, $MasDatos )~Función para crear campos variables, pudes crear un formulario y dentro de la etiqueta "{P}" del formulario añadir mas campos. No se pueden crear dinamicamente los campos tipo: File, Radiobuttom ni Select con RelationFields.
+eAddForm( $LineaDefinicionEDF )~Añade campos a la etiqueta [Fields]
+eAddIFRAME()~Si al cargar el Desktop esta función está definida la ejecutará con lo que se podrá meter zonas de trabajo en el mismo area que el IWORK
+eAddMenuOption( $Label, $HR='', $Icon='', $Title='', $Activo=true )~En el arbol de opciones se puede definir una opción en la que se podrá definir opciones dinámicas en la carga del Desktop, para ello se definirá la URL de la opción como "PHP:" mas la función a ejecutar y desde dentro de la función de usuario se podrán insertar nuevas opciones.
+eAddMonth( Periodo, NºDeperiodos )~Añade cualquier número de meses ( positivo o negativo ) a un valor de periodo (AAAA-MM) y devuelve el nuevo periodo. Para utilizar la función se ha de cargar mediante
+eAddMonth( Periodo/Object, NºDeMeses )~Añade cualquier número de meses ( positivo o negativo ) a un valor de periodo (AAAA-MM) y devuelve el nuevo periodo y si se le paso un objeto a demas lo cambia.
+eAddMonth( Periodo/Object, NºDeMeses )~Añade cualquier número de meses ( positivo o negativo ) a un valor de periodo (AAAA-MM) y devuelve el nuevo periodo y si se le paso un objeto a demas lo cambia.
+eAddOption( $Campo, $Contenido )~Añade "option" a un select en la página auxiliar, en esta página podemos mandar un "select" para que se cargue al entrar en la aplicación y mas tardes las páginas lo puedan mandar vacío y copiando su contenido en el cliente ahorrándose tráfico de datos cuando el "select" es muy grande y va ha ser de uso continuo.
+eAddOption( NmSelect, DimValues [,Position] )~Añade&nbsp;optión de un campo select.
+eAddShowFilter( $TxtCondición [, $Antes=true [ , $MaxRows=null [, $HV=null ] ] ] )~Añade&nbsp;condiciones a las generadas automáticamente para mostrarlas por pantalla y en el PDF
+eAddYearsToDate( Fecha, NumeroDeAños )~Te devuelve la fecha en formato "dd-mm-yyyy" sumando o restando el número de años indicados.
+eAge( $date )~Devuelve la edad actual
+eAlert( Titulo, Descripción [ , Botones, Img, MyFunc, DimForm, DimParametros, MyFuncCheck ] )~Sustituye las funciones de javascript alert(), prompt() y confirm() unificándolas en una sola para unificar la estética de toda la aplicación y ampliando la función prompt() en varios campos. Hay una diferencia sustancial en la forma de operar en las funciones originales la ejecución se para al ejecutar las opciones y continua una vez aceptado la ventana en esta función la estrategia hay que cambiarla ya que cuando llamas a la función la ejecución del programa no se para, para simularlo lo que se hace es pasar a eAlert() el nombre de la función a ejecutar después de aceptar los datos, ha esta función se le pasará el valor del botón pulsado, una matriz con los valores de los campos si se ha definido "DimForm" y la matriz "DimParametros". Se pueden uar las teclas "
+eAlert( Titulo, Descripción [ , Botones, Img, MyFunc, DimForm, DimParametros, MyFuncCheck ] )~Sustituye las funciones de javascript alert(), prompt() y confirm() unificándolas en una sola para unificar la estética de toda la aplicación y ampliando la función prompt() en varios campos. Hay una diferencia sustancial en la forma de operar en las funciones originales la ejecución se para al ejecutar las opciones y continua una vez aceptado la ventana en esta función la estrategia hay que cambiarla ya que cuando llamas a la función la ejecución del programa no se para, para simularlo lo que se hace es pasar a eAlert() el nombre de la función a ejecutar después de aceptar los datos, ha esta función se le pasará el valor del botón pulsado, una matriz con los valores de los campos si se ha definido "DimForm" y la matriz "DimParametros". Se pueden uar las teclas "
+eAlertAlign( TipoAlineacion )~Indica el tipo de justificación del parámetro descripción de la función eAlert(), por defecto es "left".
+eAlertHide()~Oculta una ventana eAlert(), normalmente se utiliza para cuando sacamos una ventana eAlert() sin botones, para indicar procesando, y luego queremos quitarla.
+eAlertIcon( NomIcono, Message [, Activar ] )~Manda un aviso al cliente iluminando un icono del desktop&nbsp;y mediante un sonido
+eAlertText( texto [, ConSombra] )~
+eAlertTitle( texto [, ConSombra] )~
+eAlertWidth( Ancho )~Indica el ancho al que hay que formatear el texto del parámetro descripción de la función eAlert(), por defecto es "nowrap".
+eAutoMenu( TipoVisualización )~Permite ocultar zonas del desktop para ampliar la zona de trabajo IWORK. Si existe la función de usuario "userAutoMenu( TipoVisualización )" será llamada será llamada.
+eBacktrace( [ $Variable1 [, $Variable2 [,...] ] ] )~Limpia la salida y muestra el rastro de las llamadas a funciones y archivos, con posibilidad de hacer un print_r() de cada variable pasada a la función&nbsp;y termina la ejecución.
+eBlink( [Visible] )~Hace que el título de la Ficha o del listado parpadee. Se debe ejecutar al final de la página o despues de la carga.
+eBlink( [Visible] )~Hace que el título de la Ficha o del listado parpadee. Se debe ejecutar al final de la página o despues de la carga.
+eCallParent( ScriptAEjecutar[,ConEvento] )~Llama al servidor creando un iframe (ICALLPARENT) en la página actual, a diferencia de la función "eCallSrv()" que utiliza un iframe del desktop.
+eCallSrv( window, url [ , Condicion=true ] )~Conecta con el servidor de forma transparente. Suele usarse con la etiqueta [OnChange] para completar datos o chequearlos, la ejecución se hace mediante un iframe ubicado en el desktop. Si se quiere evitar que se ejecute en el inicio, cuando se pone algún dato por defecto, la función se llamará con un guión bajo delante "_eCallSrv()".
+eCallSrv( window, url [ , Condicion=true ] )~Conecta con el servidor por un iframe oculto.
+eCallSrvPost( url, Dim [, window] )~Envía un post a la "url" mediante una matriz asociativa por el ICallSrv , si en el último parámetro ponemos window desde la url donde se hace el post se podrá referenciar la pagina dese la que se llamó.
+eCallTapi( NumTelefono )~Función para llamar por telefonos IP si se incorpora el plugin "TAPI AVAYA".
+eCapture()~
+eChartCol( [ LongitudGráfica=100 [, ColumnaARepresentar=Ultima] ] )~Añade una gráfica al final de cada fila incrustada en el listado, se representa la última columna.
+eChartRow( CadenaDeColumnas, [ Ancho=100 [ , Alto=100 ] ] )~Muestra una gráfica vertical incrustada en el listado.
+eCheck( MatrizDeCondiciones )~Chequeará todas las condiciones pasadas, marcará los errores y mostrará los mensajes de error de las condiciones no cumplidas.
+eCheckAlert()~Obliga a chequear las alertas del usuario programadas en el script "alerts.ini"
+eCheckDate( Fecha )~Devolverá si la fecha es correcta true/false, formato "dd-mm-aaaa" o "dd/mm/aaaa".
+eClearEvent( [ConMensaje] )~Elimina todos los eventos del explorador, el parámetro es porque hay algún evento que la única manera de pararlo es consumirlo y para ello si le pasamos el parámetro "true" mostrará el mensaje "Acción no permitida" para consumir el evento, rara vez se utiliza con parámetro.
+eClearEvent( [ConMensaje] )~Elimina todos los eventos del explorador, el parámetro es porque hay algún evento que la única manera de pararlo es consumirlo y para ello si le pasamos el parámetro "true" mostrará el mensaje "Acción no permitida" para consumir el evento, rara vez se utiliza con parámetro.
+eClearPag( window )~limpia la ventana pasada como parámetro.
+eClearSelect( NomSelect [, OnChange=true] )~Borra todos los "option " de un select.
+eClearThousands( Object / String )~Se el pasa el objeto input text o un string con un número formateado en miles y con notación en español y te devuelve el número para poder operar.
+eClearThousands( Objeto:Valor )~Convierte una número formateado en miles y opcionalmente con decimales&nbsp;a un valor numérico operable.
+eClose()~Cierra el desktop se utiliza desde el fichero de configuración "desktop_user.ini"
+eColorContrastBW( Color )~Devuelve el color Blanco o Negro dando el mayor contraste al parámetro "Color".
+eColorRange( cIni, cFin, tTonos, iTono )~Entre el color "cIni" y el color "cFin" se divide en "tTonos" y devolverá el color de la posición "iTono".
+eColorSelect( [ [ Field ] [, ColorLapiz ] )~Asignar a un campo un color de la paleta del sistema, si se sale escapando no modificará el valor del campo.
+eColorTone( Red, Green, Blue, TantoPorciento )<BR>eColorTone( RGB, TantoPorCiento )~Te devuelve del color suministrado un tono acercandose al negro si es positivo o acercandose al blanco si es negativo
+eColsOp( Definicion )~
+eConcat( ListaDeValoresAConcatenar )~Esta función solo es necesaria dentro de la etiqueta [JPCheck] para no utilizar el "+" al sumar cadenas
+eContextUrl( Url )~Registra urls para poder ser ejecutadas.
+eContextUrl( url )~Registra y devuelve una url para poder ejecutarla, esta funci?n es por si no se tiene el contexto (en un php personal)
+eDTS( Date [, Delimitador=""] )~Devuelve una fecha en formato "DD-MM-YYYY" al formato "YYYYMMDD" para poder comparar fechas ( Date To Strong ), también se puede utilizar el alias eD2S().
+eDTS( Date [, Delimitador=""] )~Devuelve una fecha en formato "DD-MM-YYYY" al formato "YYYYMMDD" para poder comparar fechas ( Date To Strong ), también se puede utilizar el alias eD2S().
+eDate( Plantilla [, Date/TextDate] )~Es como la funci?n date() de PHP.
+eDateOk( $year, $month, $day )~Devuelve true/false si la fecha es correcta.
+eDate( $date=today )~Devuelve la fecha en formato sql
+eDaysInDates( FechaFinal, FechaInicio )~
+eDaysInMonth( Año, Mes )~
+eDelHelp()~Elimina el mensaje eShowHelp()
+eDelOption(NomField [, DimValor])~Borra uno o mas elementos "option" de un "select".
+eDelShowFilter( ListaDeCampos/* )~Elimina de la lista de condiciones los campos indicados, las condiciones sólo son visibles en los listados html y en los PDF. Si la lista de campos es un "*" eliminará de las condiciones todas las variables $_POST y $_GET visualizando solo las que pongas con "eAddShowFilter()".
+eDesktopResize( Op )~Redimensiona la ventana del desktop al 50% en los cuatro lados de la pantalla y ventana completa
+eDirectorySelect( Title [ [, PathRoot=~Selecciona una carpeta local
+eDisableButton( [Acction=true] )~Desactiva la linea de botones de la ficha incluido el F10 o la activa si ha sido desactivada.
+eEF()~Alias de eEditField()
+eEditField( Campo, OnOff [ [ , CSS ], ImgOnOff ] )~Activa/Desactiva la edición de un campo pudiendo cambiar su estilo, también se puede usar el alias "eEF()".
+eEditISubList( url, true/false )~Activa/Desactiva los iconos de una ISubList
+eEditListResetCell()~Desde la etiqueta [EditList] se puede ejecutar un php del usuario antes de modificar el valor, si desde este script se quiere cancelar la modificación habrá que llamar a esta función.
+eEditSubList( ListObj, true/false )~Activa/Desactiva los iconos de una o varias&nbsp;SubList
+eEnd( [$TextError=""] )~Es la forma correcta de terminar cualquier petición en PHP en lugar de usar 'exit' o 'die()', dado que esta función comprimirá la página y mostrará todas las salidas de la etiqueta [DEBUG] con el parámetro "DF", así como cerrar la base de datos (transacciones). En el caso de tener la opción de cachear páginas en el servidor es esta función quien las cachea. Si llamaramos a un PHP mediante el método javascript 'startDownload()' se tiene que generar la salida sin compresión por tanto deberemos salir con 'exit' o 'die()'.
+eEntityEncode($txt)~
+eEntityDecode($txt)~
+eExcel( "Comando|Parametro|Parametro|..." )~Función para la comunicación con el Excel.
+eExecute( ObjEDes [, arrayPOST=null [, arrayGET=null ] ] )~Ejecuta una instancia del motor
+eExplodeOne( $Cadena, $Divisor, $Izquierda, $Derecha );~Explota una cadena en dos trozos mediante el "$Divisor" dejando cada mitad en $Izquierda y $Derecha.
+eExport( )~Muestra una ventana incrustada con los ficheros que se han exportado, con las últimas extracciones de datos. se utiliza en el fichero de configuración "deskto_user.ini".
+eFileCopy( FileOrigen, FileDestino )~
+eFileDelete( NomFile, MensaError=true )~
+eFileDir( NomDirectorio )~Devuelve una matriz de dos dimensiones con el nombre del fichero y su instante de última modificación.
+eFileExists( NombreFichero )~Comprueba si existe un fichero devolviendo un valor lógico.
+eFileExistsSrv( window, File, FunctionJS [, FuncPHP ] )~Chequea si en el servidor existe un fichero respondiendo en la functión "FunctionJS" (es una cadena),&nbsp; la función recibe un parámetro con true/false indicando si existe el fichero.
+eFileGet( FicheroOrigen, FicheroDestino )~Graba ficheros del servidor al disco local.
+eFileGetAsync( Origen, Destino [ , Ejecutar=0 [ , ViewDownload=0 [ , FuncUser='_eFileGetAsyncEnd' [ , MsgIni="" [ ,MsgEnd="" [ ,Sg=2 ] ] ] ] ] ] )~Copia del Servidor al PC de forma As?ncrona, sin limite de tama?o
+eFileGetVar( NomGrupo[.NomVar]  [ [,var1 ] , var2 [... var10] )~Recupera una o todas las variables del grupo de un fichero de variables llamada "/_datos/config/group.var".
+eFileHelp( NomAyuda )~Muestra un fichero de ayuda, esta es editable desde el menú "mTools" y la opción "gsHelp".
+eFileInUse( NmFile )~Retorna un valor booleano para indicar si el fichero está en uso.
+eFileKill( NmFile [, BorradoPermanente=true [, Dialogo=false [, MensajeSiError ]]] )~Borrado permanente del fichero, no se podrá recuperar de la papelera de reciclaje.
+eFileName( path )~Devuelve la parte del path correspondiente al nombre del fichero.
+eFilePrint( File [,Servidor=false] )~Imprime un fichero del PC o del Servidor, si es Word o Excel lo imprime directamente si no se abrirá la aplicación por defecto para su extensión.
+eFilePut( FicheroOrigen, FicheroDestino )~Grabar fichero desde el disco local al servidor.
+eFilePutAsync( FilePC, FileSrv [, Include, Variables, TextAlert ] )~Copia del PC al Servidor de forma Asincrona, sin limite de tamaño. Si al enviar ficheros desde un formulario está declarada la función "uFilePut( NmFile )" ejecutará la función de usuario que será la encargada de enviar el fichero.
+eFilePutVar( $File, $Array )~Modifica el valor de variables de configuración. Retorna si ha grabado bien.
+eFileRename( FileOrigen, FileDestino )~
+eFileSize( NomFile )~
+eFileTempName( )~Devuelve un nombre temporal de fichero.
+eFillSelect( $NmField, $Dim [, NomAttribute/ArrayNomAttribute] )~Rellena un select dinamicamente
+eFitToContent( ObjCampo, MaxAlto, MinAlto )~Controla de forma dinámica el alto de un campo textarea
+eFocus( NomCampo )~Pone el foco al campo indicado si el objeto lo permite.
+eFormPrint( $pkForm, $replaceText=array(), $totalCopy=1, $download=true, $fileCopyTo="")~Imprime uno o varios impresos, estos impresos se generan con el "Editor de Impresos"
+eGA( NomField, NomAttribute )~Te devuelve el valor del atributo de un control, si el campo pertenece a un [RelationFields] y todavía no se ha cargado devolverá un "null", hasta que se cargue.
+eGCol( NomCampo )~Número de columna del campo en el listado.
+eGF( NomCampo/Objeto )~Retorna el valor del campo especificado de la fila del listado selecionada. Abreviatura de getFields.
+eGF( NomCampo/Objeto )~Retorna el valor del campo especificado de la fila del listado selecionada. Abreviatura de getFields.
+eGL( NmField )~Devuelve el objeto label asociada a un determinado&nbsp;campo
+eGO( NomCampo [ , AvisarError=true ] )~Obtiene el objeto al que pertenece el campo especificado.
+eGetCWD()~Es la función "GetCWD()" de PHP pero compatible para Linux como para Windows.
+eGetCWD()~Es la función "GetCWD()" de PHP pero compatible para Linux como para Windows.
+eGetCondition( NameField )~Devuelve el valor de la condición del campo puesta en la etiqueta [Fields]
+eGetCss( window, Regla, Atributo )<BR>eGetCss( window, Regla, Array( Atributo, ... ) )~Te devuelve el valor del atributo o atributos o el valor de la regla completa si ponemos "*", si se pasa una matriz de atributos te devolvera otra matriz cuyos indices seran los atributos en mayúsculas.
+eGetFileName( NmField )~Devuelve el nombre del fichero con su path.
+eGetFocus( NomCampo )~Te devuelve el objeto al que hay que hacer el foco según el nombre del campo, esto es necesario para los campos del tipo select, checkbox y radiobutton, si el objeto no lo permite devolverá null.&nbsp;
+eGetIFrameById( window, IdIFrame )~Esta función devolverá el objeto IFRAME de la ventana "window" con el ID igual a "IdIFrame" o NULL si no lo encuentra.
+eGetInterval()~Devuelve el numero de segundos desde que se inicio la conexión de php.
+eGetMicroTime()~Devuelve el segundo en el que estas con precisión de microsegundo.
+eGetUrlParameter( window, NmParameter )~Devuelve el valor de un parámetro de la url
+eGetUrlParameter( window, url )~Ejecuta una url dentro de una subventana
+eGraphGet( ... )~Esta función&nbsp;devuelve:
+eGroupPDF( ArrayURLs [, NomFile [ , CachearFile=false ] ] )~Descargar varios PDF unidos solicitandolos desde un solo formulario.
+eHelp( NmFileHelp )~Muestra el contenido de un fichero de ayuda, el cual desaparecerá al pulsar una tecla o el ratón.
+eHelp( NmFileHelp )~Muestra el contenido de un fichero de ayuda, el cual desaparecerá al pulsar una tecla o el ratón.
+eHide( Campo [ [ , Nivel/TagName ] , OcultaElEspacio=true ] )~Oculta el "Campo" o el "parentElement" de nivel "Nivel" si es un valor num?rico o hasta que encuentre el "TagName" de sus "parentElement" sucesivos, el parametro Nivel puede tener un valor especial "GROUP" para ocultar un grupo de campos, los comprendidos entre varias lineas divisorias y el valor "FIELDSET" que ocultar? la linea donde se encuentra el "FIELDSET", tambi?n si ponemos "-" ocultar? hasta el &lt;HR&gt; y si ponemos "L" ocultar? su label asociado.
+eHideBusy()~En los listados de selección al pulsar sobre una fila se mostrará un reloj si se interrumpe la acción del motor y se quiere ocultar el reloj de calculando se utiliza esta función.
+eHideNotOver( Id, sg )~Ocultar en nº sg si no estas encima de otro objeto
+eHideNotOver( id, sg )~Ocultar en nª sg si no estas encima de otro objeto
+eIBAN( PAIS, BANCO, OFICINA, DC, CUENTA )~Devuelve el código IBAN compuesto de dos letras (el pais) y dos números.
+eISLCount( NmScript )~Cuenta las filas rellenas de la ISubList, si esá está paginada solo cuenta los registros de la página actual.
+eITools( window )~Si se desarrolla una página independiente y se quiere cojer el control de la página mediante el menú "iTools" pondremos en el body con el evento "onload" la carga de dicho menú y un metatag con el nombre del script.
+eIWorkLocation( URL [, ConELoading=true ] )~Ejecuta la URL dentro de la página central del desktop IWORK. En la URL es opcional la partícula "edes.php?".
+eIcon( KeyCode [, InteriorDelObjeto [, Class ] ] )~Devuelve un icono del sistema, es igual que el label [Icon]
+eIconsShow( [...] )~Esta función sirve para pintar los iconos que se van a mostrar en el desktop, estos iconos se mantienen en la opción&nbsp;"Iconos Desktop", pues cada usuario puede tener asociado un número distinto de iconos, además a cada icono se le asocia un "Mode" ( Inser, Update, Delete, etc ) pudiendo parar la intranet para solo consultas para todos los usuarios menos a algunas excepciones.
+eImg64( $NmFile )~Devuelve la imagen en base64
+eInclude( NomRecurso [, NomRecurso,... ] )~Incluye:
+eInfo( window, Mensaje [ [, Segundos=3 ], Title ] )~Muestra un mensaje en el centro de la pantalla actual mientras puede seguir ejecutandose la página, si el parámetro "Segundos" le ponemos a "-1" no se borrará hasta llamar a la función "eInfoHide()" o hacer click sobre el mensaje.
+eInfoError( window, Mensaje [ [, Segundos=3 ], Title ] )~Igual que eInfo() pero cambia los colores ( rojos )
+eInfoHide()~Oculta el mesaje mostrado con la función "eInfo()".
+eInit( [ConEDes=false [, ConCabecera=false ] ] )~Inicializará la generación de la página HTML dejando la salida limpia. En cualquier momento de la generación de la página se puede limpiar y coger el usuario el control y generarla él.
+eInsertAtCursor( Obj, Text )~Inserta texto en la posición del cursor
+eIsWindow( window )~Indica si estamos en una Ventana, no en la zona principal.
+eKey( window, TipoDeEntrada [,Function/Value )~
+eLng( $pk, $v1='', $v2='', $v3='' )~Función que te devuelve un texto en el idioma actual, con posibilidad de hacer replace de las variables $v1...
+eLngLoad( $File='', $Idioma='' )~Carga un fichero de idiomas, solo necesario en ficheros php. Todos los textos se trasforma la comilla sencilla por "&amp;amp;" y la comilla doble por "'&amp;quot;".
+eLngReplaze( $txt )~Sustituye las claves de idioma que esten dentro de "$txt" si las hay
+eLoadDiv( NomVentana, URL [ , Title, x, y, ColorLapiz, Colorpapel, ColorBorde, NomFuncUsu, Reload, Modal=false ] )~Carga dentro de un "div" una página html / php. Esta función es mas rapida si va&nbsp;acompañada&nbsp;de la etiqueta [SubWin]
+eLoadJS( window, url )~Carga un javascript de forma dinámica
+eLoadList( $Tabla, $Titulo [, $where] [, 'NoEmpty'] )~Se carga un listado en la página principal que será llamado desde un "select" vacío, es decir el servidor manda un "select" vacío que cuando queramos elegir un "option" nos mostrará el listado de la página auxiliar y al elegir un registro se grabará en el "select".
+eLoadPList( $Tabla, $Titulo [, $where] [, $ValorIni ] [, 'NoEmpty'] )~Es igual que la función "eLoadList()" pero con paginación en el cliente.
+eLoadSelect( $NomSelect, $Tabla, $Campos, $Condicion, $Orden [ ,'NoEmpty'] )~Carga en la pagina auxiliar un "select" que luego será copiado por la página que lo requiera hiendo en esta vacía.
+eLoadTList( $Tabla, $Titulo, $where )~
+eLoading( Estado [, OcultarTexto=false ] )~Al desarrollar páginas propias en la zona principal IWORK al ejecutar una página la zona se oculta poniendo un mensaje central "...Cargando.." para quitar este mensaje después de que se cargue la página, hay que llamar a la función eLoading(false) para visualizar la página.
+eLogDebug( Text )~Es igual que la función eTron pero el rastro que&nbsp;deja se ve&nbsp;&nbsp;en la opción del editor "Ver / SQL".
+eMail( $Para, $Asunto, $Texto, $De, $cc='', $bcc='', $ArrayFiles )~Envío de correos con posibilidad de ficheros adjuntos. Devuelve true/false
+eManagement( ListMode [,Type=W [, FuncUser ] ] )~Desde un listado&nbsp;saldr? un men? para su gesti?n. Una vez pulsado una opción se queda memorizado hasta que vuelvas a pulsar ptra opción.
+eMap()~Muestra el mapa de opciones de la aplicación, se utiliza desde el fichero de configuración "desktop_user.ini".
+eMarkedRowClass( ClassName )~Define una clase a la fila del listado de las&nbsp;fichas deslizantes.
+eMarkedRowSkip( bSaltaFila )~En las fichas deslizantes al moverte a otra fila se saltan las filas que ya se han modificado.
+eMarkedRowStyle( cssText )~De define un estilo (style.cssText) a la fila del listado de las fichas deslizantes.
+eMaximize()~Maximiza la aplicación, se utiliza desde el fichero de configuración "desktop_user.ini".
+eMenu( window, Objeto, SubMenu, Funcion [[[[, EnElPXDondeSePulso=false ] ,TieneSubMenus=false ], VarUser=null ], OcultarMenu=true )~La funci?n crea un submen? de opciones encima del objeto indicado. el SubMenu creado tendr? el id "SubMenu" y su css est? en "ficha.css" y en "lista.css". En el caso de poner linea divisoria en el men? la primera linea se indica con un "-" la segunda linea con dos "-2", "-3",&nbsp;etc y el segundo campo vacio, si este segundo campo lo rellenamos se visualizar? un t?tulo en el men?.
+eMenuHide( window )~Oculta el menú mostrado con eMenu(), cuando se usa la función eMenu() anidada y no todas las opciones del primer menú no tienen submenús, no llaman a otro eMenu() para poder ocultar el primer menú se usa eMenuHide()
+eMessage( $Mensaje, $Accion, $mlsg, $exe )~Se mostrará la página con un único elemento un mensaje central.
+eMinimize()~Minimiza la aplicación, se utiliza desde el fichero de configuración "desktop_user.ini".
+eModal( window, Obj [, Function [, Opacity ]] )~Poneuna capa por debajo del objeto Obj para simular una ventana modal
+eNew()~Muestra una ventana incrustada con las últimas novedades, se utiliza desde el fichero de configuración "desktop_user.ini".
+eNewIframe( window, IdPadre, IdIFrame, URL, Ancho, Alto )~Crea un IFrame y devuelve un puntero al iframe creado.
+eNum2String( $Numero, $NumDecimales=0, $FormatoSalida='L', $SufijoEntero='', $SufijoDecimal='' )~Te devolverá un número en formato texto. Para utilizar la función se ha de cargar mediante "eInclude('lib')".
+eNumberFormat($value, $nDecimal)~Imprime un número con la puntuación configurada, por defecto la "," para decimales y el "." para los miles.
+eOkCIF( CIF, Letra )~Chequea que el CIFI sea correcto mediante su crc (Letra)
+eOkColor( Valor )~Retorna si el valor es un color hexadecimal válido o true si la cadena está vacia.
+eOkCompany( datos )~Chequea el CIF/DNI de una empresa aunque sea de autónomos.
+eOkDNI( dni, cif )~Devuelve true o fase si el 'cif' corresponde con el 'dni'.
+eOkDate( Fecha )~Chequea que el dato que se le pasa a la función sea una fecha correcta y devuelte uno de los siguientes valores:
+eOkDate( Fecha )~Chequea que el dato que se le pasa a la función sea una fecha correcta y devuelte uno de los siguientes valores:
+eOkEMail( EMail )~Chequea que un email sea valido
+eOkFile( ObjFile, Extensiones )~Devuelve true si todo es correcto chequenado la extensión del fichero y su longitud ( buscado el valor del campo MAX_FILE_SIZE ).
+eOkHour( Valor, Long )~Chequea que "Valor" sea un formado correcto HH:MM:SS
+eOkNCC( banco, sucursal, dc, ccc )~Cheque el Número de Cuenta Corriente
+eOkPeriod( Periodo )~Chequea el formato de un campo periodo año-mes ( AAAA-MM )
+eOkPeriod( Periodo )~Chequea el formato de un campo periodo año-mes ( AAAA-MM )
+eOkTab()~Esta función ejecuta&nbsp;"submit()" es igual que pulsar "F10" o pulsar el botón de "aceptar", si se ha definido la etiqueta [JSCheck] la ejecutará antes de hacer el "submit()" real.
+eOpCheck( NOp )~Chequea si si una opción determinada, a traves de su "cd_gs_op" la tiene el usuario en el menú y devuelve true/false.
+eOpCheck( PK )~Chequea si si una opción determinada, a traves de su "cd_gs_op" la tiene el usuario en el menú y devuelve true/false.
+eOpOn( ListaIds, true/false )~Activa o desactiva una o varias opciones del menú principal o de la lista de iconos.
+eOpOnId( ListaIds, true/false )~Activa o desactiva una o varias opciones del menú principal o de la lista de iconos.
+eOpVisible( ListaIds, true/false [,VerErrores=true] )~Muestra u oculta una o varias opciones del menú.
+ePE(NomCampo, Mensaje, VerError=false)<br />ePE([[NomCampo, Mensaje],...], VerError=false)~Abreviatura de putError.
+ePF( NomCampo/Matriz, Valor, ConChange )~Abreviatura de putField.
+ePGF( NmField, [OkReadyState=true] )~Retorna el valor del campo de la ventana padre, es igual que la función "eGF()" ( ePGF() = Parent Get Field ).
+ePGF( NmField, [OkReadyState=true] )~Retorna el valor del campo de la ventana padre, es igual que la función "eGF()" ( ePGF() = Parent Get Field ).
+ePGO( NomCampo, [OkReadyState=true] )~Igual que "eGO()" pero de la ventana padre, abreviatura de ParentGetObject.
+ePPF( NombreFields, Value, ConChange, [OkReadyState=true] )~Es igual que la función "ePF()" pero asigna los valores en la ventana Padre ( ePPF() = ParentPutFields )
+ePPF( NombreFields, Value, ConChange, [OkReadyState=true] )~Es igual que la función "ePF()" pero asigna los valores en la ventana Padre ( ePPF() = ParentPutFields )
+ePadL( Cadena, Longitud, Relleno )~
+ePadLeft( field/value, length [, ChrFill=0] );~Formatea un campo con '0' por la izquierda, si el primer parámetro es un objeto y el tipo de dato es 'DNI' o 'NIF' y el primer caracter no es un número los '0' los añade despues del primer caracter.
+eParseError( [GrabaEnTRON] )~El motor por defecto si hay un "parse error" se para y te informa del error, si esta información es genérica y no puedes determinar las lineas del código fuente que han causado el error y necesitas poner testigos utilizaremos esta función. Al final del mensaje de error se mostrará entre parentesis el número de la función "eParseError()" en el que se ha detectado el error. Si no eres desarrollador se mostrará en pantalla el texto "ERROR INTERNO" y una cadena aleatoria de tres caracteres y se grabará en el TRON.
+ePeriodDiff( PeriodoDesde, PeriodoHasta )~Devuelve el número de meses de diferencia
+ePermission( Label [, Script=OpDeEntrada ] )~En el Desktop hay una opción para el mantenimiento de los&nbsp;"Permisos Especiales" que significa que dentro de una opción haya usuarios que puedan hacer alguna cosa distinta como por ejemplo poder modificar un dato delicado, esto se gestiona desde el usuario y a la hora de programar si se quiere buscar si tiene ese permiso especial se utiliza esta función, retorna un valor lógico.
+ePlugin( PluginName [,arg1, arg2, ...] )~Carga de&nbsp;plugins, normalmente en el Desktop configurandose en el fichero "desktop_user".
+ePosition( Obj, x, y, ObjTarget )~
+ePrint()~Imprime la página IWORK que está&nbsp; en el centro del desktop.
+ePrintR( $Variable1 [, $Variable2 [,...] ] )~Limpia la salida y hace un print_r() de cada variable pasada a la función&nbsp;y termina.
+eProgress( $Realizado, $Titulo='', $TextoEnBarra='', $TextoDetalle='' [ , $Sound=M ] )~Cuando se realiza un proceso que tarde mucho podemos ir informando del paso en el que estamos, si en "Realizado" ponemos.
+eProgress( window, Realizado [, Titulo [, TextoEnBarra [, TextoDetalle ] ] ] )~Se muestra una barra de progreso.
+eProgressHidden( $Sound=M )~Para evitar que la barra de progreso se quede visible se llamará a la opción antes de que tenga el valor de 100%, por defecto ejecutará la función eSound('M') si se quiere evitar el sonido pasar como parámetro una cadena vacia.
+ePutCondition( NameField, Value [, ResetClass ] )~Pone una condición a un campo de la etiqueta [Fields]
+ePutCss( window, Clase [ , Regla ] )<BR>ePutCss( Object, ListaReglasCSS )~Esta funci?n opera seg?n el n?mero de par?metros:
+ePutRelationFields( NomField, Value [, ConOnchange=true ] )~Los campos que están en un [RelationFields] se deben modificar desde javascript mediante esta función para que&nbsp;se ejecute el evento onchange.
+eQuote( Cadena / Matriz )~El motor permite tanto las comillas dobles como las sencillas en el contenido de los controles, cuando se coge información de una tabla y se va a asignar tanto en JavaScript como en HTML valores que pueden contener tanto comillas sencillas como las dobles deberemos delimitador la cadena con&nbsp;comillas dobles y tomar el valor con la función "eQuote()" o anteponer la barra invertida "\" delante de las comillas dobles.
+eReadyState( window )~Devuelve si la ventana se ha terminado de cargar.
+eRelationField( window, Matriz )~Carga una relación de select con un solo acceso al servidor.
+eRepeat( String, Number )~
+eResetCondition( NameField )~Restaura el valor por defecto de la condición.
+eReverse( $String )~
+eRound( num, dec, miles )~
+eRound( num, dec, miles )~Valor a redondear
+eRowsOp( Definicion )~
+eRun( CadenaDeEjecucion [, Parametro ] )~Ejecuta programas externos
+eRun()~
+eRunExist( File [, ConMensaje=false] )~Ejecuta un fichero del PC si existe
+eRunTimeout( MiliSegundos, window, CódigoJS/Funcion, Parametro1, Parametr2, ... , Parametro6 )~es igual que la función setTimeout() con la salbedad de que se pueden pasar objetos a la función y se chequea que la página donde se ejecuta no haya cambiado.
+eS2D( YYYYMMDD )~Devuelve una fecha en formato "YYYYMMDD" al formato "DD-MM-YYYY".
+eS2S( yyyymmdd )~Devuelve la fecha en el formato "yyyy-mm-dd" si la longitud del parámetro es de 8, si no devolverá el parámetro.
+eSLAction( NombreSubLista/null, Action ) <br />eSubList( Action )~Las SubListas tienen las opciones de Alta, Baja y Modificación en un submenú oculto que e muestra pulsando botón derecho en la SubLista, si queremos además tener iconos de acceso directo a las acciones pondremos esta función en el icono para asignarle una determinada acción a una SubLista.
+eSLCount( NmSubList )~Cuenta las filas rellenas de la SubList.
+eSLGet( NmSubList )~Devuelve una matriz con la SubLista, sin contar la columna cero, que es la de los iconos.
+eSLInsertRow( Obj )~Crea un nuevo TR en la sublista indicada devuelve el objeto TR de la sublista con las celdas creadas y vacias.
+eSLRecalcColsOp( Obj )~Recalcula la sublista cuando tiene la etiqueta {slColsOp}, normalmente se usa despues de la función eSLInsertRow()
+eSLRecalcColsOp()~Cuando en un listado hay cáculo por columnas y se modifica el valor de alguna celda o se oculta o se pone el textDecoration recalculará.
+eSTD( YYYYMMDD )~De una fecha en formato "YYYYMMDD" te devuelte "DD-MM-YYYY", también se puede usar el alias "eS2D()" ( String To date )
+eSWCaptionHidden( txt )~Caption de la lista de las ventanas ocultas, se utiliza antes de crearla, por defecto es el "caption" de la ventana..
+eSWClear()~Borra la salida eSWWrite()
+eSWClose( window )~Cierra la ventana.
+eSWFocus( window [, ConSombra=true] )~Pone el foco en la ventana indicada.
+eSWFull( window, ConTitle=false )~En subventanas con fichas quita los márgenes y el título
+eSWGetCaption( window [,ConHtml=false] )~Devuelve el contenido del título de la ventana
+eSWIResize( window [, Ancho, Alto , Centrada=true] )~Establece el ancho y alto&nbsp;interior de una ventana, si solo ponemos el primer parámetro la ventana será fullscreen y si ponemos el primero y el segundo&nbsp;"Ancho" y le damos el valor "0" calculará el ancho y alto del documento y si "Ancho" y&nbsp; "Alto" valen&nbsp;menor de "0" será el margen de mas que tendrá la ventana.
+eSWLoading( window, On/Off )~Visualiza u oculta el gráfico cargando.
+eSWMove( window, x, y )~Mueve la ventana a las coordenadas "x" e "y".
+eSWOnClose( window, FuncionAEjecutar )~Define una función a ejecutar antes de cerrar la ventana y/o antes de que cambie la url,&nbsp;esta función también tiene efecto en la página central.
+eSWOpen( window, URL [, Titulo, Modal=true, Ancho, Alto, x, y, Minimizar=true, Maximizar=true, PrefijoClass ] )~Abre una nueva ventana&nbsp;devolviendo el puntero a esta.
+eSWOpenSubmit( window, url, title [,Ancho=500 [, Alto=500 ] ] )~Ejecuta el submit en una subventana
+eSWResize( window [, Ancho, Alto [, Centrada=true ] ] )~Establece el Ancho y Alto exterior de una ventana, si solo se pone el primer parámetro pondrá la ventana maximizada.
+eSWSetCaption( window, txt [,sobrescribir=false] )~Estable el valor del Caption después de crear la ventana.
+eSWSetIcon( ObjIcono, window, URL, Titulo [, Modal, Ancho, Alto, x, y, Minimizar=true, Maximizar=true, PrefijoClass ] )~Asigna una ventana a un icono, el uso es tener iconos en el desktop asociados a ventanas, estas se minimizan al icono y no a la lista de ventanas minimizadas, por ejemplo puedes tener la opción de caja siempre activa en un formulario&nbsp;estático mandando al servidor solo datos y recibir el formulario una sola vez.&nbsp;
+eSWSetStatus( window, txt )~Estable el valor del Status después de crear la ventana.
+eSWSize( window )~Devuelve un array con el ancho y alto de la ventana actual.
+eSWStatus( txt )~Estatus de la nueva ventana antes de crearla.
+eSWTools( window, Option, Comando [,FuncionDeUsuario] )~Varias opciones relativas a la cabecera de las SubVentanas.
+eSWView( window )~Si se ejecuta en una subventana&nbsp;una página personal se deberá ejecutar esta función para que la subventana sea visible.
+eSWWrite( html )~Graba codigo HTML en la proxima ventana que se cree al abrirla con src igual a null.
+eScreenToPdf( window [,x,y,w,h] )~Genera un pdf de la ventana actual
+eScript( $File )~Devuelve la trayectoria real del fichero '$File', dentro del motor&nbsp;se manejan tres&nbsp;directorios por defecto:
+eScript( $File )~Devuelve la trayectoria real del fichero '$File', dentro del motor&nbsp;se manejan tres&nbsp;directorios por defecto:
+eScrollHide( ObjContenedor [ , TipoScroll="" ][, $ObjHijo] )~Deja a un contenedor sin scroll, o solo con el scroll horizontal o con el vertical
+eScrollSet( window, Label, Filas, Repetir, A?adir=3 )~Establece un alto a un contenedor que dentro tiene una tabla y se quiere ver el alto solo de algunas filas.
+eScrollTH ( ObjContenedor [ , ObjHijo ] )~Hace deslizante los TH de un listado cuando está dentro de un contenedor
+eScrollText( ObjContenedor, NCeldasPorFila [, SeDesCuentaTH=false] )~En listados con rowspan si la celda que tiene rowspan, siempre la calumna cero, la alineación vetical es top llamando a esta función a utilizar el scroll el texto de la celda estará siempre visible
+eSelInfo( EDF, nForm, Asignaciones, WTitulo )~Igual que la etiqueta [SelInfo] pero lo desencadena una función
+.eColorSelect( functionUser )~Muestra una paleta de colores para elegir, se debe cargar un script adicional con
+eSelectLength( NmField )~Devuelve la longitud del select
+eSelectLoad( Field [, DependeDe [, Sql [, PutValor [, NmFunction [, ScriptPHP ]]]]] )~Recarga un select de forma dinámica.
+eSelectValue( NomCampo )~Devuelve el "innerText" del valor actual del select.
+eShow( Campos [ [ , Nivel/TagName ] , OcultaElEspacio=true ] )~Visualiza el "Campo" o el "parentElement" de nivel "Nivel" si es un valor numérico o hasta que encuentre el "TagName" de sus "parentElement" sucesivos, el parámetro nivel puede tener un valor especial "GROUP" para mostrar un grupo de datos comprendidos entre varias lineas divisorias y "FIELDSET" que mostraá la linea donde se encuentra el "FIELDSET"., también si el parámetro es "-" mostrará hasta el &lt;HR&gt; y si ponemos "L" ocultará su label asociado.
+eShowError()~Muestra la lista de errores memorizados con la función ePE() esta función tiene su utilidad cuando quieres mostrar errores mientras estas editando la ficha, al ejecutar eShowError() se borrará la lista interna de errores.
+eShowFilter( $ArrayCondiciones )~Define las condiciones del usuario en un listado.
+eShowGroup( Obj/ID [ [ , LineaIncluida=false [ , OnOff ] ] , OcultaElEspacio=true ] )~Oculta/Muestra los TR siguientes hasta el proximo "&lt;HR&gt;", dentro de la etiqueta [FIELDS] en las fichas se pueden poner "&lt;HR&gt;" con la propiedad de que se oculten/visualizen los datos hasta el siguiente "&lt;HR&gt;" mediante esta función simulamos el click sobre este elemento.
+eShowHelp( Texto [ , Segundos [ , Estilo [ [, x, y ], HiddenOut ] ] ] )~Muestra un mensaje ligero, el cual desaparecer? al hacer click con el&nbsp;rat?n, si est? definido el par?metro "Segundos" o al ejecutar "eDelShow()", este mensaje ser? visible por encima de cualquier aplicaci?n, pordefecto la ayuda se muestra centrada.
+eShowLTools( [Modo] )~Muestra la ventana de utilidades de los listados (LTools).
+eShowOption( NomSelect, DimValores/Valor [, true/false ] )~Oculta o muestra determinados valores de un select
+eShowThousands( Numero, Decimales )~Formatea un número con un número determinado de decimales y separandolo en miles.
+eShowThousands( Valor, NumDecimales )~Formatea un valor número separandolo en miles y opcionalmente con coma decimal.
+eSound( Type )~
+eStrLower( $Cadena )~Pone en minúsculas la cadena y evita los problemas con los caracteres "ÑÇÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙÃÕ".
+eStrTranslater( Matriz/Cadena )~Traduce los carácteres extendidos que genera el motor a los normales, la variable pasa por referencia.
+eStrUpper( $Cadena )~Pone en mayúsculas la cadena y evita los problemas con los caracteres "ñçáéíóúàèìòùâêîôûãõ".
+eStringToDate( Fecha )~Fecha en formato dd-mm-yyyy a date
+eStyle( Objet, JavascriptStyleString [,....] )~Pone los parámetros de style a un objeto, se pueden mezclar parametros de texto con el nombre del atributo, dos puntos y el valor con cadenas de texto con los dos valores.
+eStyleOption( NomCampo, Valor/es, Estilo [ , EstiloInnerText ] )~Pone un determinado estilo a un option de un select y opcionalmente pudiendo tomar el innerText del select el estilo seleccionado.
+eSubListDelete( NmSubList [, NumRow ] );~Borra una fila de una sublista, si no se pasa el parámetro de "NumRow" la vacia entera.
+eSubListInsert( NmSubList, ArrayDeValores() );~Función para insertar filas con valores en SubListas
+eSubStr( String, PosIni [, PosFin ] )~Devuelve parte de una cadena
+eSubTab( $xCaption, $xAction, $xIcon, $xShow, $xTitle, $SubTab )~Crea uno o mas tab
+eSubmit( [Action] )~
+eSwapId()~Al ponernos sobre el nombre del nodo se visualiza el nombre del usuario, se utiliza desde el fichero de configuración "desktop_user.ini".
+eTabFocus( NmTab )~En una multificha pone la solata indicada en primer plano.
+eTabOff()~
+eTabOn()~
+eTabOnClick( NomTab/NumTab, NomFunc [,UnaSolaVez=true ] )~En las multifichas se ejecutará una función al entrar en una solapa,&nbsp;la primera&nbsp;vez o cada vez que se entre.
+eTabResize( Estado )~Recalcula&nbsp;el tamaño de la ficha, en ocasiones cuando modificamos el contenido de una ficha y en el cálculo automático del tamaño se ha ejecutado antes de que nosotros manipulemos la ficha, para volver a reclacular se utiliza esta función.
+eTabShow( NomSolapa, flag )~En las multifichas muestra&nbsp;/ oculta&nbsp;la solapa especificada en función del segundo parámetro, si "flag=0" ocultará la solapa, si "flag=1" la mostrará ( false / true ), también podrá tener el valor "2" para hacerla visible y poner el foco en ella.
+eTagClose( Obj [, RemoveNode=false] )~Si se ha utilizado la función eTagShadow() tambien ocultará la sombra asociada.
+eTagMove( window [,ElElementoActual=false] )~Mueve objetos (span o div) por la pantalla, se captura mediante "onmousedown".
+eTagShadow( window, ObjASombrear [ [ , Modal=false ] , FunctionClickTapa ] )~Da sombra a un tag con posibilidad de visualizar el tag en Modal
+eTest( NomFunction, DimParametros [ , NomFunction, DimParametros ] ... )~Función&nbsp;para realizar pruebas unitarias, al ejecutarlo se verá el resultado&nbsp;mostrando en rojo los resultados que no coinciden
+eTest( window, NomFuncion, ArrayDeParametros [, NomFuncion, ArrayDeParametros ] ... )~Función en el top para realizar pruebas unitarias, al ejecutarlo se ver? el resultado en una subventana mostrando en rojo los resultados que no coinciden.
+eTestSg( [ [Inicializa=true] , ConAlert=true ] )~Sirve para medir en segundos lo que se tarda en realizar un grupo de operaciones, la primera vez que se invoque reseteará el contador y la siguiente vez saldrá un alert() con el número de segundos transcurridos. También se resetea el contador pasandole el valor "true" en la primera llamada.
+eToAround( ObjPadre, ObjAPintar [, Show=false ] )~Te devuelve un array con las mejores corrdenadas x e y para pintar el ObjAPintar dandote la mejor ubicación alrededor del ObjOPadre, en el caso de estar en una subventana si fuera necesario cambiaría su tamaño, Si el parámetro "Show" lo ponemos a true lo hará visible.
+eToAround( ObjPadre, ObjAPintar [, Show=false ] )~Te devuelve un array con las mejores corrdenadas x e y para pintar el ObjAPintar dandote la mejor ubicación alrededor del ObjOPadre, en el caso de estar en una subventana si fuera necesario cambiaría su tamaño, Si el parámetro "Show" lo ponemos a true lo hará visible.
+eToTag( Objeto, Etiqueta [ [, NVeces=1 ] , TagsDePartida ] ) <BR>eToTag( Objeto, Atributo, Valor [, TagsDePartida ] )~Devuelve el Objeto padre cuya etiqueta es "Etiqueta", si el tagname del objeto actual es el mismo que el de la etiqueta no hará nada a no ser que el "NVeces" sea menor de cero, en cuyo caso lo hará ese número de veces.
+eTrace( $txt, $tipo=false )~Es una función de depuración y rastreo, solo se debe utilizar en tiempo de desarrollo. Muestra por pantalla o mediante un 'alert()' de javascript el contenido de la variable "$txt", si 'tipo' es true y se está en javascript el mensaje se mostrará en un 'alert()' y si es HMTL se mostrará en texto sin resaltar.
+eTrace( $txt, $tipo=false )~Es una función de depuración y rastreo, solo se debe utilizar en tiempo de desarrollo. Muestra por pantalla o mediante un 'alert()' de javascript el contenido de la variable "$txt", si 'tipo' es true y se está en javascript el mensaje se mostrará en un 'alert()' y si es HMTL se mostrará en texto sin resaltar.
+eTrace( [ Valor [, NumFilasHistorial=1] ] )~Es una función de depuración y rastreo desde JavaScript, sólo se debe utilizar en tiempo de desarrollo. Muestra en la coordenada 0,0 los valores a rastrear, pudiendo ver un número determinado de ellos. Para borrar el historial hacer click en la ventana de información,&nbsp;llamar a la función sin parámetros o en el menú "sTools" pulsar el icono "Ver eCallSrv()" .
+eTrim( str )~Devuelve la cadena sin espacios por delante ni por detrás además de sustituir los espacios dobles por sencillos.
+eTrim( str )~Devuelve la cadena sin espacios por delante ni por detrás además de sustituir los espacios dobles por sencillos.
+eTrimTArea( str )~Quita del final de "str" todos los caracteres no visibles como espacios, tabuladores, retornos de carro y saltos de línea, se utiliza en campos de tipo "textarea".
+eTron( $txt [, $ConDelimitador=false [, $InicializarTron=false/SQL ] ] )~Es una función de depuración y rastreo, solo se debe utilizar en tiempo de desarrollo. Graba en un fichero de texto personal el contenido de la variable "$txt", este fichero es visible desde el editor "gsEdit" desde la opción "TRON leer".
+eTron( $txt [, $ConDelimitador=false [, $InicializarTron=false/SQL ] ] )~Es una función de depuración y rastreo, solo se debe utilizar en tiempo de desarrollo. Graba en un fichero de texto personal el contenido de la variable "$txt", este fichero es visible desde el editor "gsEdit" desde la opción "TRON leer".
+eTron( [[ txt ] [,EscaparHTML=true] )~Es una función de depuración y rastreo, solo se debe utilizar en tiempo de desarrollo. En la primera ejecución se mostrará en la parte inferior la ventana de rastreo, las siguientes veces para visualizar la salida se ha de pulsar el icono de "Ver eCallSrv()" del menú "Sistem Tools", con parámetro mostrará esa información y sin parámetros borrará la lista o volviendo a pulsar. Viendo la lista de resultados si se pulsa en el titulo "TRON" pondrá una linea divisoria en la lista de resultados y si pulsamos con el botón derecho la vaciará y ocultará.
+eTronClose()~Es una función de depuración y rastreo, solo se debe utilizar en tiempo de desarrollo. Restaura el tamaño del desktop despues de utilizar "top.eTron()".
+eTronSql( $txt )~El rastro del tron lo deja en el log de sql, es un sinónimo de&nbsp;la función eLogDebug()
+eTronWin( Texto [[[, Enter=true ], Sg=true ], window ] )~Desde el submenú de desarrollo "mTools" al pulsar con la tecla "control" pulsada el icono de "Campos del Formulario/Listado&nbsp; · eTron", se abrirá una ventana para mandar la información de eTronWin() de javascript, hay que recordad que al estar en el desktop hay que llamar a la función como "top.eTronWin()". Esta función es igual que la de PHP eTron() pero para tracear cosas en javascript, también está la función top.eTron() que saca la información por un iframe en la parte inferior del desktop.
+eURL( url )~Ejecuta una página dentro del desktop, si se ejecuta con un evento y se pulsa la tecla "Control" se abrirá una nueva ventana.
+eUcFirst( $Cadena )~Pone una cadena con el primer carácter en mayúsculas y el resto en minúsculas, evitando los problemas con los caracteres "ÑÇÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙÃÕ".
+eUnEscape( $Cadena [, $ModoAlReses=false ] )~Traduce caracteres normales a extendidos, si se pone el segundo parámetro a true lo hará al reves.
+eUnSet( NomVar )~Elimina una variable, la ventaja con la función unset() es que la elimina también de las matrices publicas $_POST, $_GET, $_SERVER y $_REQUES.
+eValueSelect( NmField, NumIndice [ , NumCol=0 ] )~Devuelve el valor de un optión
+eVar( NmVar )~Desde la gestión de opciones poder tomar variables del desktop, para el parámetro URL.
+eVarToString( Variable )~Devuelve la variable como una cadena para adjuntarla a un setTimeout() / setInterval()
+eView( Id/Object [,~Muestra/Oculta un elemento con "block" / "none"
+eWOpen( EspecialURL, Condicion, Mensaje, ConIframe )~Abre una nueva ventana estándar del navegador de forma mas cómoda controlando y centrando la ventana, con posibilidad de que se habra solo si se cumple cierta condición y en su defecto se mostraría un error.&nbsp;
+eWaiting( url/MensajeError )~ 
+eWarningBelow( NmField/ObjField, Texto [,x] );~Crea una nueva linea (TR) con un mensaje de error en la linea inferior del control
+eWord( "Comando|Parametro|Parametro|..." )~Función para la comunicación con el Word.
+eWordToHtml( window [, DelSource=null, CopyTo=null, ImgInternal=true, CopyImgTo=null ] )~Pasa un documento Word del pc a HTML en el servidor con posibilidad de incrustar las imágenes en el html o poner las imagenes externas en el directorio "//http/img/". Si la página de llamada contiene la función "eWordToHtmlPut( txt )" le pasará el contenido del html.
+eXLS~Función para los listados que estén en la página central IWORK exportarlos a Excel, se utiliza desde el fichero de configuración "desktop_user.ini".
+eXY( Objeto1 [, Objeto2 ] )~Te devuelve una matriz con las coordenadas absolutas "x" e "y" del "Objeto1", si se pasa un segundo objeto calculará las coordenadas para ubicar el "Objeto2" sobre el "Objeto1" para evitar que el "Objeto2" se salga por los bordes.
+eXY( Objeto1 [, Objeto2 ] )~Te devuelve una matriz con las coordenadas absolutas "x" e "y" del "Objeto1", si se pasa un segundo objeto calculará las coordenadas para ubicar el "Objeto2" sobre el "Objeto1" para evitar que el "Objeto2" se salga por los bordes.
+eYmd2Dmy( Date )~Convierte una fecha del formato "yyyy-mm-dd" o "yyyy/mm/dd" &nbsp;al formato "dd-mm-yyyy".
+eYmd2Dmy( Valor )~Pasa una fecha de formato "DDMMYYYY" a "YYYY-MM-DD"
+qArray( [$Cursor] )~Devuelve una matriz asociativa con los valores de la fila del cursor actual.
+qCount( $Tabla, $Condicion [, $Cursor] )~Devuelve el número de registros encontrados ( Count ).
+qEnd()~Cierra transacciones si están activas y cierra la conexión con la base de datos.
+qFree( [$Cursor] )~Libera la memoria utilizada por el cursor.
+qGetArray( $Sql )~Devuelve una matriz bidimensional con todos los campos de los registros devueltos por la sentencia sql sindo el indice de la matriz el primer campo de la sentencia sql. El primer campo
+qGetSelect()~Devuelve la lista de campos que se van a ejecutar en el "select". Solo en listados
+qGetWhere( [ $Alias="", [ $Transforma=true/Array, [ $Dim ] ] ] )~Devuelve la condici?n "where" de la sentencia SQL que se va ha ejecutar. Solo en listados.
+qId( [NmTabla] )~Devuelve el último serial generado en la sesión si se llama sin parámetros, si se pone el nombre de la tabla devolverá el último serial de esa tabla.
+qQuery( $Sql [ [, $Cursor] , $Continuar=false ] )~Ejecuta una sentencia SQL y retorna el número de registros afectados, en el caso de "Informix" ese número es aproximado.
+qQueryLog( $Sql, $Tabla, $Where [, $Clave='' [, $User=$_User ] ] )~Ejecuta una sentencia sql solo insert o update grabando en la tabla gs_log para guardar el historial de modificaciones
+qRecord( $sql )~Devuelve una matriz asociativa con el primer registro que encuentre, utiliza un puntero propio.
+qRecordMD5( NomTabla, CondicionWhere, ListaCamposNoMD5 )~Calcula el md5 de un registro
+qRow( [$Cursor] )~Devuelve una matriz numérica con la fila del cursor actual.
+qSelect( Tabla, ListaCampos [, Where, Order, PunteroCursor ] );~Ejecuta la sentencia SQL&nbsp;select.
+xlsClose( $handle )~
+xlsCreate( $file )~Crea un fichero Excel, devuelve un puntero al fichero a crear ($handle).
+xlsNumber( $handle, $row, $col, $value )~Inserta un número en la celda indicada. La primera celda es la 0,0.
+xlsText( $handle, $row, $col, $value )~Inserta un texto en la celda indicada. La primera celda es la 0,0.
+xmlClose( $handle )~
+xmlCreate( $file )~Crea un fichero Excel, devuelve un puntero al fichero a crear ($handle).
+xmlDate( $handle, $row, $col, $value )~Inserta una fecha en la celda indicada. La primera celda es la 0,0.
+xmlNumber( $handle, $row, $col, $value )~Inserta un número en la celda indicada. La primera celda es la 0,0.
+xmlText( $handle, $row, $col, $value )~Inserta un texto en la celda indicada. La primera celda es la 0,0.

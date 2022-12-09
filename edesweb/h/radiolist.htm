@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>RadioList 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[RadioList] Field | NmCol | Field/Select/FuncUser/OptionList [ |&nbsp;TypeList=''&nbsp; [ | AltoEnPx ]] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Muestra un grupo de raiobutton. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>&nbsp;Field&nbsp;&nbsp;</TD>
+<TD>&nbsp;Nombre del campo, del tipo varchar</TD></TR>
+<TR>
+<TD>&nbsp;NmCol </TD>
+<TD>&nbsp;Número de columnas de radiobutton</TD></TR>
+<TR>
+<TD>&nbsp;Field/Select/FuncUser/OptionList &nbsp;</TD>
+<TD>&nbsp;Select para generar los radiobutton<BR>&nbsp;Nombre de campo del tipo "cd_[NmTable]" (IDA)<BR>&nbsp;Función de usuario que deberá devolver una matriz de dos dimensiones.<BR>&nbsp;Lista de opciones como en la etiqueta [AddOption]</TD></TR>
+<TR>
+<TD>&nbsp;TypeList</TD>
+<TD>&nbsp;Tipo de visualización en los listados:<BR><SPAN style="WIDTH: 25px"></SPAN>- Vacio: Se ven los códigos<BR><SPAN style="WIDTH: 25px"></SPAN>- Text: Se verá los literales<BR><SPAN style="WIDTH: 25px"></SPAN><FONT color=#ff0000>-&nbsp;All: Se verá el código y el literal<BR></FONT><SPAN style="WIDTH: 25px"></SPAN><FONT color=#ff0000>- Title: Futura prestación se verán los códigos y al ponerte encima se verán los literales</FONT></TD></TR>
+<TR>
+<TD>&nbsp;AltoEnPx</TD>
+<TD>&nbsp;Define el alto en px del contenedor, por defecto no hay contenedor, si se pone "0" se pondrá contenedo ajustado al tamaño del objeto</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[RadioList] prueba | 4 | select cd_auto, nm_auto from auto order by 2 | Text<BR><BR>[Fields]<BR>&nbsp; Prueba | prueba&nbsp;| o | T | 40 | | M&nbsp;|&nbsp;|&nbsp;| 
+<TR>
+<TD id=txt>En el campo "prueba" se guardará una selección de autonomías, en un listado se verá cada autonomía seleccionada en una linea.
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[RadioList] prueba | 4 |&nbsp;cd_auto<BR>[RadioList] prueba | 4 | C,Consultas; M,Modificaciones; B,Borrado | wrap | 4</TD></TR>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[RadioList] prueba | 4 | uCargar()</P>
+<P>[PHPIni] *<BR>function uCargar(){<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim = array();<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[] = array(1,1111);<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[] = array(2,2222);<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[] = array(3,3333);<BR><SPAN style="WIDTH: 25px"></SPAN>return $Dim;<BR>}</P></TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

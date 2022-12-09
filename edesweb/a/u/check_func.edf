@@ -1,0 +1,23 @@
+[Title]=CHEQUEO DE FUNCIONES PHP
+[Fields]
+Grupo|grupo|D|T|30||-|||
+Función|func|D|T|30||-|||
+Activa|activa|D|C|1||-||=|
+[ColsOp]s
+[PDFVar]PDF_Grid = true
+[PHPIni]l
+$_CheckBox['H']['ON']  = '<img src=g/tf_1.gif>';
+$_CheckBox['H']['OFF'] = '<img src=g/tf_0.gif>';
+[DBSql]l
+$Grupo = 'General';
+$usuCursor = array();
+$Dim = file('../../edesweb/a/u/check_func.ini');
+for( $n=0; $n<count($Dim); $n++ ){
+$Dim[$n] = trim($Dim[$n]);
+if( $Dim[$n][0]=='-' ){
+$Grupo = trim(substr($Dim[$n],1));
+}else{
+if( $Dim[$n]!='' ) $usuCursor[] = array( $Grupo, $Dim[$n], ((function_exists($Dim[$n])?'S':'')));
+}
+}
+$usuCursor[] = array( 'SESSION', 'session_save_path()', ((session_save_path()!='')?'S':'') );

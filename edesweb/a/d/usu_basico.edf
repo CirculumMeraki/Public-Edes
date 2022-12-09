@@ -1,0 +1,33 @@
+#include(*) $lng/usu_basico.edf.lng
+[Title]@titulo@
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[FormButtons]
+[NoButton]cR
+[Stop]
+[CC]#ConIdioma|qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>0
+[TipForm]*|phone2|@Segundo Teléfono@
+[OnChange]*|dni|ePadLeft(this,8)
+[Fields]2
+@DNI@|dni|DNI|T|8||MQ||#|
+#!(a) +2 @Usuario@|cd_gs_user|+|T|5||Q-|||
+@Nombre@|user_name|X|T|20||MQ||#|
++2 @Apellidos@|user_surname|X|T|30||MQ||#|
+@Local@|cd_gs_node|X|S|60|+user_surname|AQ||#|
+@Teléfonos@|phone|T|T|10||ML|||
+,|phone2|T|T|10||ML|||
+#ConIdioma ¿
++2 @Idioma@|cd_gs_language|n|S|20|+user_surname|M|es||
+?¿
++2 @Idioma@|cd_gs_language|n|T|2||*|es||
+?
+@E-Mail@|email|@|T|65|+user_surname|ML|||
+[JSCheck]a,mR
+var sLng = '<?= $_SESSION['_LanguageDefault'] ?>';
+if( sLng=='' ) sLng = 'es';
+[PHPIni]M
+qQuery( "select cd_gs_language from gs_user where cd_gs_user={$cd_gs_user}" );
+list( $cd_gs_languageBAK ) = qRow();
+[DBEnd]M
+if( $cd_gs_languageBAK != $_vF['cd_gs_language'] ) $_SESSION['_LANGUAGE_'] = $_vF['cd_gs_language'];

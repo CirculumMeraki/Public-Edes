@@ -1,0 +1,176 @@
+[Title]=Script y Usuarios
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBIndex]seq
+[DBOrder]script
+[Fields]?
+Script|script|#|T|100||MQcp|||
+Código PDF|_cd_pdf|#|T|6||Q|||
+[JSCheck]?
+if( eGF('script')=='' && eGF('_cd_pdf')=='' ) ePE('script','Introduzca criterio de búsqueda');
+[PHPIni]cR
+eInit();
+?>
+<LINK REL="stylesheet" HREF="<?=$_SESSION['_PathCSS']?>/mapa.css" TYPE="text/css">
+<?=_FileNoCache('edes.js')?>
+<script type="text/javascript">
+function edScriptMenu(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+var nTR = Obj.parentNode.rowIndex;
+var Script = Obj.HR;
+if( Script=='' ) return false;
+if( Script.substr(0,1)==':' ) return false;
+if( Script.substr(Script.length-1)==':' ){
+do{
+}while( LstOpciones.rows[--nTR].cells[0].HR.substr(0,1)!=':' );
+Script += LstOpciones.rows[nTR].cells[0].HR.substr(1);
+}
+Script = top._NomDF( Script );
+if( Script.indexOf(':')>-1 ){
+var tmp = Script.split(':');
+Script = tmp[1];
+}
+top.gsEdit(window, Script,10);
+}
+function edScript(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+top.gsEdit(window, Obj.textContent,10);
+}
+</script>
+<center>
+<table style='margin-top:10px' id=LstOpciones onclick="edScriptMenu()">
+<caption style="white-space:nowrap;">OPCIONES</caption>
+<?PHP
+if( $_POST['script']!='' ){
+$script = str_replace('*','%',$script);
+$_Script = $script;
+$Dim = array();
+$top = 0;
+$nc = 0;
+$tScript = 0;
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op where script_url like '%{$script}%' order by seq" );
+while( $r=qArray() ){
+if( $r['type']=='F' ){
+$Seq = $r['seq']+1;
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op where indent={$r['indent']}+1 and seq>{$r['seq']} and script_url like '%:' order by seq", $p3 );
+$op=qArray($p3);
+while( $op['caption']!='' && $op['type']=='O' ){
+$top++;
+$Dim[] = $op['indent'].'|'.$op['caption'].'|'.$op['type'].'|'.$op['script_url'].'|'.$op['cd_gs_op'];
+$op=qArray($p3);
+$Seq++;
+if( $Seq != $op['seq'] ) break;
+}
+$Dim = array_reverse($Dim);
+}
+while( $r['caption']!='' ){
+$top++;
+$Dim[] = $r['indent'].'|'.$r['caption'].'|'.$r['type'].'|'.$r['script_url'].'|'.$r['cd_gs_op'];
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_op where indent={$r['indent']}-1 and seq<{$r['seq']} order by seq desc", $p2 );
+$r=qArray($p2);
+}
+if( count($Dim) > 0 ){
+if( $nc>0 ) echo '<tr><td>&nbsp;';
+$nc++;
+for( $n=count($Dim)-1; $n>=0; $n-- ){
+$tmp = explode('|',$Dim[$n]);
+echo '<tr><td id='.$tmp[0]." HR='".$tmp[3]."'>";
+if( $tmp[2]=='F' ){
+echo '<img src="edes.php?R:$a/g/c2_1.gif">';
+}else{
+echo '<img src="edes.php?R:$a/g/opcion.gif">';
+}
+echo $tmp[1];
+}
+$Dim = array();
+}
+}
+}
+echo '</table>';
+$DimFile = array( 'edf','gdf','ldf','fdf','lst','idf', 'gs','php' );
+$usuCursor = array();
+$Dim = array();
+$uDebug = !true;
+if( $uDebug ) echo '<table border=1px>';
+echo '<table id=LstScript style="margin-top:10px" onclick="edScript()">';
+echo '<caption style="white-space:nowrap;">SCRIPT DESDE DONDE SE LLAMA</caption>';
+if( $_POST['script']!='' ){
+$TFile = WCFile( '../d', $DimFile, $Dim );
+if( $uDebug ) echo '</table>';
+foreach( $Dim as $key => $value ){
+array_push( $usuCursor, array( $key, $value, 0,0 ) );
+if( $uDebug ) echo '<br>'.$key .'=>'. $value;
+}
+sort( $usuCursor );
+$Total = 0;
+for( $n=0; $n<count($usuCursor); $n++ ) $Total += $usuCursor[$n][1];
+for( $n=0; $n<count($usuCursor); $n++ ){
+$usuCursor[$n][2] = ($usuCursor[$n][1]*100)/$Total;
+$usuCursor[$n][3] = ($usuCursor[$n][1]*100)/$TFile;
+}
+if( $uDebug ) exit;
+}
+echo '</table>';
+echo '<table id=PdfScript style="margin-top:10px" onclick="edScript()">';
+echo '<caption style="white-space:nowrap;">SCRIPT QUE GENERO EL PDF</caption>';
+$tPdf = 0;
+if( $_POST['_cd_pdf']!='' ) $tPdf = _OpenDir('../d',0);
+echo '</table>';
+echo '</center>';
+if( $top+$tScript+$tPdf == 0 ){
+eInclude('message');
+eMessage('Opciones no encontradas', 'HS' );
+}
+echo '<script type="text/javascript">';
+if( $top==0 ) echo 'document.all.LstOpciones.style.display = "none";';
+if( $tScript==0 ) echo 'document.all.LstScript.style.display = "none";';
+if( $tPdf==0 ) echo 'document.all.PdfScript.style.display = "none";';
+echo 'top.eLoading(0,window);';
+echo '</script>';
+eEnd();
+function WCFile( $dorg, $DimFile, &$Dim ){
+global $uDebug, $_Script, $tScript;
+$TFile = 0;
+$di = opendir( $dorg );
+while( $file = readdir( $di ) ){
+if( ($file != ".") && ($file != "..") ){
+if( is_dir("$dorg/$file") ){
+$TFile += WCFile( "$dorg/$file", $DimFile, $Dim );
+}else{
+$ext = substr($file, strrpos($file,'.')+1);
+if( in_array( $ext, $DimFile ) ){
+$txt =  file_get_contents( "$dorg/$file" );
+if( substr_count( $txt, $_Script ) > 0 ){
+$script = "$dorg/$file";
+if( substr($script,0,2)=='..' ) $script = substr($script,2);
+if( substr($script,0,3)=='/d/' ) $script = substr($script,3);
+echo '<tr><td>'.$script;
+$tScript++;
+}
+}
+}
+}
+}
+closedir( $di );
+return $TFile;
+}
+function _OpenDir( $DirBase, $nv ){
+$di = opendir( $DirBase );
+while( $file = readdir( $di ) ){
+if( $file != '.' && $file != '..' ){
+if( is_dir( "{$DirBase}/{$file}" ) ){
+$nv = _OpenDir( "{$DirBase}/{$file}", $nv );
+}else{
+$NomFile = substr($DirBase.'/'.$file,5);
+$c = substr(md5($NomFile),-6);
+if( $c==$_POST['_cd_pdf'] ){
+echo '<tr><td>'.$NomFile;
+$nv++;
+}
+}
+}
+}
+closedir( $di );
+return $nv;
+}

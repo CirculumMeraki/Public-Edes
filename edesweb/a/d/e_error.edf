@@ -1,0 +1,527 @@
+#include(*) lng
+[Title]@ERRORES@
+[DBTable]{$_SESSION['ShareDictionary']}gs_error
+[DBIndex]codigo
+[DBOrder]cdi desc
+[DBLimit]1000,200
+[DBAddFilter]is_solved is null
+[WinCloseESC]
+[AutoMenu]l|1
+[OnLoad]l|if( top.eIsWindow(window) ) top.eSWResize(window);
+[ColsWidth]110, , , , ,  , ,300
+[PDFCol]10,5,0,0,7,35,5,42
+[ColsOp]C
+[PDFWrap]5, false
+[PDFVar]PDF_Grid = true
+[AddCode]cR|cd_gs_user|A|&nbsp;<img src='edes.php?R:$a/g/usuario.gif' style='margin-bottom:5;' title='@Consultar Usuario@' onclick='top.eSWOpen( window,"edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user="+eGF("cd_gs_user")+"&_NOBUTTON","USUARIO",false)'>
+[AddCode]cR|fichero|A|<img src='g/t_op_update.gif' title='@Editar script@' onclick='Editar()' style="margin-right:5px">
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+#(cR) [Label] trace | <img id=VerSQL src='edes.php?R:$a/g/sql.gif' style='margin-bottom:5;' title='@Ver SQL@' onclick='ViewSQL()'><br><img src='g/copy.png' onclick='window.clipboardData.setData("Text",FRM1.trace.value);S("body").tip("@Copiado al clipboard@",3);' title='@Copiar contenido@'><br><br>@Error@<br><br><img src='edes.php?R:$t/g/e/2_borrar.gif' onclick='BorrarError()' title='@Borrar error@' style='vertical-align:top;'>
+[AddOption]*|tipo|,; J,JS; P,PHP; S,SQL
+[TipTH]||@Ver pantalla del Error@
+[PHPIni]cR,l
+$_ImagenesDesde = date( 'Y-m-d H:i:s', mktime( date('H'),date('i'),date('s'), date('m'), date('d')-45, date('Y') ));
+[Format]
+if( $_vF[2]=='S' ){
+if( $_vF[0]>$GLOBALS['_ImagenesDesde'] ) $_vF[2] = '<img src=g/l_epc.gif onclick=uVerError()>';
+else $_vF[2] = '';
+}
+$_vF[8] = str_replace("\n",'<br>',$_vF[8]);
+$_vF[8] = str_replace("\t",'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$_vF[8]);
+[AddCode]cR|img|A|<img id=uIEI src=g/t_epc.gif onclick=uVerError() title='@Ver la pantalla del cliente en el momento del error@'>
+[AddCode]cR|img|I|style='display:none'
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]||trim
+@Instante Desde@|_desde|F4|T|10||QF|#today#||
+,|_desde_hours|H|T|8||Q|||
+,  @Hasta@|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+@Instante@|cdi|CDI|T|19||-|||
+,  @Tipo·Error@|tipo|N|SV|3||Q-||=|
+#(l) @P@|img|N|T|1||-|||
+#(cR) ,<span id=uIET>@Pantalla del Error@</span>|img|N|T|1||-|||
+#(?) @Usuario@|_cd_gs_user|D|T|68||Q|||
+#(?) @Usuario@|cd_gs_user|+|T|5||*Q|||
+#!(?) @Usuario@|cd_gs_user|+|S|68||-|||
+@Desde@|desde|X|T|68||Q-|||
+-||||||Q|||
+@Script@|fichero|#X|T|68||Q-|||
+,  @Linea@|linea|+|T|5||Q-|||
+@Texto@|texto|#X|T|80|trace|Q-|||
+#!(l) @Error@|trace|#|A|5000,95,15||Q-|||
+@Código@|codigo|*|T|7||*|||
+[ColsColor],,,JSOnClickRow
+[JSOnClickRow]*
+var Obj = S.event(window);
+if( Obj.cellIndex==3 ){
+var url = 'edes.php?FcR:$a/d/usu_basico.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user')+'&_NOBUTTON';
+top.eSWOpen(window, url, '', false);
+}else{
+location.href = 'edes.php?FcR:$a/d/e_error.edf&_SEEK&codigo='+eGF('codigo');
+}
+[JSIni]l|$a/d/e_errorr.edf
+function uCerrar(){
+var r = 0, n;
+for(n=1; n<BROWSE.rows.length-1; n++) if( BROWSE.rows[n].offsetHeight>0 ) r++;
+if( r==0 ){
+_WOPENER._Fila.style.display = 'none';
+}else{
+_WOPENER._Fila.cells[2].textContent = r;
+}
+}
+top.eSWOnClose(window, uCerrar);
+[JSIni]cR
+function uVerError(){
+top.eSWOpen(window, 'edes.php?E:$errorview.gs&PK='+eGF('codigo'), '@IMAGEN DEL ERROR@', false, 0,0,0,0,1,1,'df');
+}
+[JSIni]l
+function uVerError(){
+var Obj = S.event(window).parentNode.parentNode;
+top.eSWOpen(window, 'edes.php?E:$errorview.gs&PK='+eClearThousands(Obj.cells[8].textContent), '@IMAGEN DEL ERROR@', false, 0,0,0,0,1,1,'df');
+return eClearEvent();
+}
+[PHPEnd]cR
+if( $_vF['img']!='S' or $_vF['cdi']<$GLOBALS['_ImagenesDesde'] ){
+echo '<script type="text/javascript">';
+echo 'eHide("img","L");';
+echo 'DGI("uIEI").style.display = "none";';
+echo '</script>';
+}
+[JSEnd]l
+function _BorrarError(Ok, NO, Dim){
+if( Ok==2 ){
+Obj = Dim[0];
+top.eCallSrv(window, 'edes.php?E:$error.gs&DELETE='+eClearThousands(Obj.parentNode.cells[8].textContent));
+}
+}
+function BorrarError(){
+var Obj = S.event(window);
+if( Obj.tagName == 'TD' ){
+top.eAlert(S.lng(210), "@BORRAR errores iguales@", 'A,C', 'DH', _BorrarError, null, Array(Obj));
+}
+eClearEvent();
+}
+DGI("BROWSE").oncontextmenu = BorrarError;
+[JSIni]cR
+function _BorrarError( Ok ){
+if( Ok==2 ) top.eCallSrv(window, 'edes.php?E:$error.gs&DELETE='+DGI("codigo").value);
+}
+function BorrarError(){
+top.eAlert(S.lng(210), "@BORRAR errores iguales@", 'A,C', 'DH', _BorrarError);
+}
+function Editar(){
+var s = DGI("fichero").value.replace(/\s/g,'');
+if( s.substr(0,1)=='/' ) s = s.substr(1);
+if( s.substr(0,9)=='edes.php?' ) s = s.substr(9);
+if( s.substr(0,4).indexOf(':')>-1 ){
+if( s.substr(0,4).indexOf('$')>-1 && top._M_!='~' ) return;
+var tmp = s.split(':');
+var Dim = tmp[1].split('?');
+Dim = tmp[1].split('&');
+if( Dim[0].indexOf('.') == -1 ) Dim[0] += '.'+((tmp[0].substring(0,1)=='G') ? 'gdf':'edf');
+top.gsEdit(window, Dim[0],10);
+}else{
+top.gsEdit(window, s,10);
+}
+}
+function ExeOp(){
+var txt = DGI("fichero").value.replace(/\s+$/g,'').replace('edes.php?','').substr(1),
+nm = 1, na, OK;
+if( top._Desktop==2 ){
+var tmp = DGI("fichero").value.replace(/\s+$/g,'').split('edes.php?');
+var txt = tmp[tmp.length-1];
+tmp = txt.split('?'); txt = tmp[0];
+tmp = txt.split('&'); txt = tmp[0];
+if( txt.substr(0,1)=='F' || txt.substr(0,1)=='G' ){
+if( txt.substr(2,1)=='R' ){
+txt = txt.substr(0,2)+txt.substr(3);
+}else txt = txt.substr(0,1)+txt.substr(1,1).toLowerCase()+txt.substr(2);
+}
+if( txt.substr(0,1)=='F' ) txt = '#'+txt.substr(1);
+else if( txt.substr(0,1)=='G') txt = '@'+txt.substr(1);
+else if( txt.substr(0,1)=='L' ) txt = '='+txt.substr(1);
+var _Nivel = 1;
+var Obj = S("TR", top.DGI("SM0").parentNode).dim;
+var Ext = txt.split('.');
+txt = Ext[0];
+var Ok = 0;
+var tmp = txt.split(':');
+var SubOp = tmp[0]+'';
+SubOp = SubOp.replace('F','#').replace('G','@').replace('L','=');
+txt = SubOp+':'+tmp[1];
+var Dir = ':'+tmp[1];
+for(var i=0; i<Obj.length; i++){
+if( Obj[i].HR!=null ){
+if( Obj[i].HR.indexOf(txt)>-1 ){
+Ok = 2;
+}else if( Obj[i].HR==Dir ){
+Ok = 1;
+}else if( Ok==1 && Obj[i].HR.indexOf(SubOp)>-1 ){
+Ok = 2;
+}
+if( Ok==2 ){
+if( Obj[i].parentNode.parentNode.onclick==null ) Obj[i].parentNode.parentNode.onclick = top._VerPag;
+S(Obj[i]).eventClick();
+return;
+}
+}
+}
+return;
+alert(txt);
+top.eIWorkLocation( DGI("fichero").value.replace(/\s+$/g,'') );
+return;
+var sHR = txt;
+if( sHR.substr(0,1)==':' ) return;
+if( sHR.substr(sHR.length-1)==':' ){
+var sID = Obj.id;
+for(var n = Obj.sourceIndex; n>2; n--){
+if( document.all(n).tagName=='TD' ){
+if( document.all(n).id<sID ){
+var pEle = document.all(n).parentNode.n * 1,
+xHR = top.document.all(pEle).HR;
+sHR += xHR.substr(1);
+break;
+}
+}
+}
+}
+top.VerPag(sHR, top.document.all(nEle));
+return;
+}else if( top._Desktop==1 ){
+var Obj = top.DGI("NewSolapas").cells;
+var Incre = 1;
+}else if( top._Desktop==0 ){
+var Obj = top.DGI("OpF").cells;
+var Incre = 2;
+}
+var Ext = txt.split('.');
+txt = Ext[0];
+var Ok = 0;
+var tmp = txt.split(':');
+var SubOp = tmp[0]+'';
+SubOp = SubOp.replace('F','#').replace('G','@').replace('L','=');
+txt = SubOp+':'+tmp[1];
+var Dir = ':'+tmp[1];
+for( var n=0; n<Obj.length; n+=Incre ){
+var Obj2 = top.DGI('sm'+(nm)).cells;
+for( var i=0; i<Obj2.length; i++ ){
+if( Obj2[i].HR!=null ){
+if( Obj2[i].HR.indexOf(txt) > -1 ){
+Ok = 2;
+}else if( Obj2[i].HR == Dir ){
+Ok = 1;
+}else if( Ok == 1 && Obj2[i].HR.indexOf(SubOp) > -1 ){
+Ok = 2;
+}
+if( Ok == 2 ){
+if( top._MenuESC ) setTimeout( 'top.MenuRapido(1);', 250 );
+S(Obj[n]).eventClick();
+if( Incre==1 ) S(Obj[n]).eventClick();
+na = Obj2[i].id;
+for( var op=i-1; op>=0; op-- ){
+if( Obj2[op].id < na ){
+na = Obj2[op].id;
+if( Obj2[op].parentNode.HV == 0 ) S(Obj2[op]).eventClick();
+}
+}
+S(Obj2[i]).eventClick();
+return;
+}
+}
+}
+nm++;
+}
+}
+[CallSrv]TABLA
+include( '../../edesweb/t/getfields.gs' );
+$txt = '('.implode(',',eGetFields( $TABLA )).')';
+echo '<script type="text/javascript">';
+echo "window.frameElement.WOPENER.ViewInsert( undefined, '{$txt}' );";
+echo '</script>';
+exit;
+[JSEnd]cR
+var _TXT = '';
+function ViewInsert( txt, xCampos ){
+if( xCampos!=undefined ){
+txt = _TXT;
+var vi = txt.indexOf(' values ');
+txt = txt.substr(0,vi)+' '+xCampos+' '+txt.substr(vi);
+}
+var Update = new Array();
+var i=0; while( txt.indexOf('insert ',i)>-1 )i++;
+txt = txt.substring( i-1 );
+var SQL = txt;
+if( txt.indexOf('values ') < txt.indexOf('(') && xCampos==undefined ){
+var ti = txt.indexOf(' into ')+6;
+var vi = txt.indexOf(' values ');
+top.eCallSrv( window, 'TABLA='+txt.substr( ti, vi-ti ) );
+_TXT = txt;
+return;
+}
+var Clase = txt.substring( 0, txt.indexOf('(') );
+var Campos = txt.substring( txt.indexOf('(')+1, txt.indexOf(')') );
+Campos = Campos.replace(/\s/g,'');
+var tmp = Campos.split(',');
+var Valores = txt.substring( txt.indexOf(')')+1 );
+var Valores = Valores.substring( Valores.indexOf('(')+1 );
+var v = '', c = '', fin = '', Estado = 0;
+var ini = false, nc = 0;
+for( var n=0; n<Valores.length; n++ ){
+c = Valores.charAt(n);
+if( Estado==0 ){
+switch( c ){
+case ' ':
+break;
+case '"':
+case "'":
+fin = c;
+Estado = 2;
+break;
+default:
+fin=',';
+Estado = 2;
+}
+continue;
+}
+if( Estado==1 ){
+switch( c ){
+case ' ':
+case ',':
+break;
+case '"':
+case "'":
+fin = c;
+Estado = 2;
+break;
+default:
+fin=',';
+Estado = 2;
+}
+continue;
+}
+if( Estado==2 && c==fin ){
+Update[nc] = Array( tmp[nc], v );
+nc++;
+v = '';
+Estado = 1;
+continue;
+}
+if( Estado==2 ) v += c;
+}
+txt  = '<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>SQL</TITLE><STYLE>BODY{font-size:16px;}TD{font-size:16px;}</STYLE></HEAD><BODY scroll=auto onload="top.eSWLoading(window,0)">';
+txt += '<table border=1px cellspacing=0px cellpadding=3px><tr><td colspan=2>'+Clase;
+for( var n=0; n<Update.length; n++ ){
+txt += '<tr><td>'+Update[n][0]+'<td>'+Update[n][1]+'</tr>';
+}
+txt += '</table>';
+txt += '<br><table border=1px cellspacing=0px cellpadding=5px><tr><td>SQL<td>'+SQL+'</table>';
+txt += '</BODY></HTML>';
+var url = top.eSWOpen( window,'','ERROR SQL', false, 0 );
+url.document.write( txt );
+url.document.close();
+}
+function ViewUpdate( txt ){
+var Update = new Array();
+var u=0; while( txt.indexOf('update ',u)>-1 )u++;
+txt = txt.substring( u-1 );
+var SQL = txt;
+var sTxt = txt;
+var Clase = txt.substring( 0, txt.indexOf(' set ') );
+if( txt.indexOf(' where ') > -1 ){
+txt = txt.substring( txt.indexOf(' set ')+5, txt.indexOf(' where ') );
+}else{
+txt = txt.substring( txt.indexOf(' set ')+5 );
+}
+var Campo = '', Valor = '', v = '', c = '', fin = '', Estado = 0;
+var ini = false, nc = 0;
+for( var n=0; n<txt.length; n++ ){
+c = txt.charAt(n);
+if( Estado==0 ){
+switch( c ){
+case ',':
+case ' ':
+break;
+case '=':
+Estado = 1;
+break;
+default:
+Campo += c;
+}
+continue;
+}
+if( Estado==1 ){
+switch( c ){
+case ' ':
+break;
+case '"':
+case "'":
+fin = c;
+Estado = 2;
+break;
+default:
+fin=',';
+Estado = 2;
+}
+continue;
+}
+if( Estado==2 && c==fin ){
+Update[nc] = Array( Campo, v );
+nc++;
+v = '';
+Campo = '';
+Estado = 0;
+continue;
+}
+if( Estado==2 ) v += c;
+}
+if( Campo!='' ) Update[nc] = Array( Campo, v );
+txt  = '<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>SQL</TITLE><STYLE>BODY{font-size:16px;}TD{font-size:16px;}</STYLE></HEAD><BODY scroll=auto onload="top.eSWLoading(window,0)">';
+txt += '<table border=1px cellspacing=0px cellpadding=3px><tr><td colspan=2>'+Clase;
+for( var n=0; n<Update.length; n++ ){
+txt += '<tr><td>'+Update[n][0]+'<td>'+Update[n][1]+'</tr>';
+}
+txt += '</table>';
+if( sTxt.indexOf(' where ') > -1 ){
+txt += '<br><table border=1px cellspacing=0px cellpadding=3px><tr><td colspan=2>where';
+sTxt = sTxt.substring( sTxt.indexOf(' where ')+7 );
+var tmp = sTxt.split(' and ');
+for( var n=0; n<tmp.length; n++ ){
+Campo = tmp[n].substring(0,tmp[n].indexOf('=')).replace(/^\s+/g,'').replace(/\s+$/g,'');
+Valor = tmp[n].substring(tmp[n].indexOf('=')+1).replace(/^\s+/g,'').replace(/\s+$/g,'');
+c = Valor.charAt(0);
+if( c=='"' || c=="'" ) Valor = Valor.substring(1,Valor.length-1);
+txt += '<tr><td>'+Campo+'<td>'+Valor+'</tr>';
+}
+txt += '</table>';
+}
+txt += '<br><table border=1px cellspacing=0px cellpadding=5px><tr><td>SQL<td>'+SQL+'</table>';
+txt += '</BODY></HTML>';
+var url = top.eSWOpen( window,'','ERROR SQL', false, 0 );
+url.document.write( txt );
+url.document.close();
+}
+function ViewSelect( txt ){
+var Where = new Array();
+var i=0; while( txt.indexOf('select ',i)>-1 )i++;
+txt = txt.substring( i-1 );
+var SQL = txt;
+var Campos = txt.substring( 6, txt.indexOf(' from ') );
+var ListCampos = Campos.replace(/\s/g,'').split(',');
+var Tablas;
+if( txt.indexOf(' where ') > -1 ){
+Tablas = txt.substring( txt.indexOf(' from ')+6, txt.indexOf(' where ') ).split(',');
+}else if( txt.indexOf(' group by ') > -1 ){
+Tablas = txt.substring( txt.indexOf(' from ')+6, txt.indexOf(' group by ') ).split(',');
+}else if( txt.indexOf(' order by ') > -1 ){
+Tablas = txt.substring( txt.indexOf(' from ')+6, txt.indexOf(' order by ') ).split(',');
+}else{
+Tablas = txt.substring( txt.indexOf(' from ')+6 ).split(',');
+}
+GroupBy = '';
+OrderBy = '';
+if( txt.indexOf(' where ') > -1 ){
+if( txt.indexOf(' group by ') > -1 ){
+if( txt.indexOf(' order by ') > -1 ){
+GroupBy = txt.substring( txt.indexOf(' group by ')+10, txt.indexOf(' order by ') );
+OrderBy = txt.substring( txt.indexOf(' order by ') );
+}else{
+GroupBy = txt.substring( txt.indexOf(' group by ')+10 );
+}
+txt = txt.substring( txt.indexOf(' where ')+7, txt.indexOf(' group by ') );
+}else if( txt.indexOf(' order by ') > -1 ){
+OrderBy = txt.substring( txt.indexOf(' order by ')+10 );
+txt = txt.substring( txt.indexOf(' where ')+7, txt.indexOf(' order by ') );
+}else{
+txt = txt.substring( txt.indexOf(' where ')+7 );
+}
+Where = txt.split(' and ');
+}else{
+txt = '';
+}
+txt  = '<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>SQL</TITLE><STYLE>BODY{font-size:16px;}TD{font-size:16px;}</STYLE></HEAD><BODY scroll=auto onload="top.eSWLoading(window,0)">';
+txt += '<table border=1px cellspacing=0px><tr><td>SELECT';
+for( var n=0; n<ListCampos.length; n++ ){
+txt += '<tr><td>'+ListCampos[n]+'</tr>';
+}
+txt += '</table>';
+if( Tablas.length > 0 ){
+txt += '<br><table border=1px cellspacing=0px><tr><td>FROM';
+for( var n=0; n<Tablas.length; n++ ){
+txt += '<tr><td>'+Tablas[n]+'</tr>';
+}
+txt += '</table>';
+}
+if( Where.length > 0 ){
+txt += '<br><table border=1px cellspacing=0px><tr><td>WHERE';
+for( var n=0; n<Where.length; n++ ){
+txt += '<tr><td>'+Where[n]+'</tr>';
+}
+txt += '</table>';
+}
+if( GroupBy!='' ) txt += '<br><table border=1px cellspacing=0px><tr><td>GROUP BY<tr><td>'+GroupBy+'</tr></table>';
+if( OrderBy!='' ) txt += '<br><table border=1px cellspacing=0px><tr><td>ORDER BY<tr><td>'+OrderBy+'</tr></table>';
+txt += '<br><table border=1px cellspacing=0px><tr><td>SQL<td>'+SQL+'</table>';
+txt += '</BODY></HTML>';
+var url = top.eSWOpen( window,'','ERROR SQL', false, 0 );
+url.document.write( txt );
+url.document.close();
+}
+function ViewDelete( txt ){
+var Delete = new Array();
+var u=0; while( txt.indexOf('delete ',u)>-1 )u++;
+txt = txt.substring( u-1 );
+var SQL = txt;
+var sTxt = txt;
+if( txt.indexOf(' where ') > -1 ){
+var NomTabla = txt.substring( u+5, txt.indexOf(' where ') );
+}else{
+var NomTabla = txt.substring( u+5 );
+}
+var Campo = '', Valor = '', v = '', c = '', fin = '', Estado = 0;
+var ini = false, nc = 0;
+txt  = '<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>SQL</TITLE><STYLE>BODY{font-size:16px;}TD{font-size:16px;}</STYLE></HEAD><BODY scroll=auto onload="top.eSWLoading(window,0)">';
+txt += '<table border=1px cellspacing=0px cellpadding=3px><tr><td>delete<tr><td>'+NomTabla+'</tr></table>';
+if( sTxt.indexOf(' where ') > -1 ){
+txt += '<br><table border=1px cellspacing=0px cellpadding=3px><tr><td colspan=2>where';
+sTxt = sTxt.substring( sTxt.indexOf(' where ')+7 );
+var tmp = sTxt.split(' and ');
+for( var n=0; n<tmp.length; n++ ){
+Campo = tmp[n].substring(0,tmp[n].indexOf('=')).replace(/^\s+/g,'').replace(/\s+$/g,'');
+Valor = tmp[n].substring(tmp[n].indexOf('=')+1).replace(/^\s+/g,'').replace(/\s+$/g,'');
+c = Valor.charAt(0);
+if( c=='"' || c=="'" ) Valor = Valor.substring(1,Valor.length-1);
+txt += '<tr><td>'+Campo+'<td>'+Valor+'</tr>';
+}
+txt += '</table>';
+}
+txt += '<br><table border=1px cellspacing=0px cellpadding=5px><tr><td>SQL<td>'+SQL+'</table>';
+txt += '</BODY></HTML>';
+var url = top.eSWOpen( window,'','ERROR SQL', false, 0 );
+url.document.write( txt );
+url.document.close();
+}
+function ViewSQL(){
+if( _TipoSQL=='U' ) ViewUpdate(txt);
+if( _TipoSQL=='I' ) ViewInsert(txt);
+if( _TipoSQL=='D' ) ViewDelete(txt);
+if( _TipoSQL=='S' ) ViewSelect(txt);
+}
+DGI("trace").value = DGI("trace").value.replace(/<br>/g,'\n');
+var txt = DGI("trace").value;
+var d=0; while( txt.indexOf('delete ',d)>-1 )d++;
+var i=0; while( txt.indexOf('insert ',i)>-1 )i++;
+var u=0; while( txt.indexOf('update ',u)>-1 )u++;
+var s=0; while( txt.indexOf('select ',s)>-1 )s++;
+var _TipoSQL = Math.max(i,Math.max(u,Math.max(d,s)));
+if( _TipoSQL==0 ) DGI("VerSQL").style.display='none';
+if( _TipoSQL==u ) _TipoSQL='U';
+if( _TipoSQL==i ) _TipoSQL='I';
+if( _TipoSQL==d ) _TipoSQL='D';
+if( _TipoSQL==s ) _TipoSQL='S';

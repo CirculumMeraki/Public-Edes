@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">eCheck</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">eCheck( MatrizDeCondiciones )</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Chequeará todas las condiciones pasadas, marcará los errores y mostrará los mensajes de error de las condiciones no cumplidas.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">Se pasa una metrid de condiciones con la siguiente estructura por linea:<br />     [NombreCampo, MensajeDeError, Condición],<br />     o<br />     [Condición, [MatrizDeCondiciones]]</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code> var ok = eCheck([</code><br /><code>     ['_nm_concepto' , 'Introduce el concepto', $_nm_concepto==''],</code><br /><code>     [$_suplido!='S', [</code><br /><code>          ['_nm_concepto' , 'Introduce el concepto', $_nm_concepto==''],</code><br /><code>          ['_nm_concepto' , 'Introduce el concepto', $_nm_concepto=='']</code><br /><code>     ]],</code><br /><code>     ['_precio' , $_suplido=='S' ? 'Introduce el precio de los Suplidos':'Introduce el precio de los Honorários', $_precio==0]</code><br /><code>]);</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

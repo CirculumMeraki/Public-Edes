@@ -1,0 +1,147 @@
+[Title]@USUARIO/S@|l
+[CC]#FormaSS|($_TaskStatus>0  && $_ViewDesktop=='S')||$_SESSION['_D_']!=''
+[CC]#FormaSN|!$_Variable['#FormaSS'] && (($_TaskStatus>0  && $_ViewDesktop!='S')||$_SESSION['_D_']!='')
+[CC]#FormaNS|!$_Variable['#FormaSS'] && (($_TaskStatus==0 && $_ViewDesktop=='S')||$_SESSION['_D_']!='')
+[PHPStart]*||unique
+global $_SystemUser;
+include_once($Dir_.$_Sql.'.inc');
+qQuery( "select system_user,task_status,view_desktop from gs_user where cd_gs_user={$_User}" );
+list( $_SystemUser, $_TaskStatus, $_ViewDesktop ) = qRow();
+$_TaskStatus = (int)$_TaskStatus;
+[DBTable]gs_user
+[DBIndex]cd_gs_user; login||true|user_name,user_surname|@USUARIO YA EXISTE@|BorraOrigen
+[DBOrder]user_name,user_surname
+[DBSerial]cd_gs_user
+¿ $_SystemUser!='S' ? [DBAddFilter] (system_user!='S' or system_user is null or system_user='')
+[DBLimit]5000,750,750
+[DBLog]cd_gs_user
+[NoAbort]
+[Cursor]
+[AddOption]*|pc_with_id|,@No@; A,@Cualquier PC@ ; U,@Sus PCs@
+[AddOption]*|desktop_type|-1,@Por defecto@; 0,@Solapas@; 1,@Vertical@; 2,@Horizontal@
+[AddOption]*|permission|S,@Si@; N,@No@; C,@Caducado@
+[AddOption]?|permission|,; S,@Si@; N,@No@; C,@Caducado@; )'S'(,@Sin permiso@
+[TipForm]*|phone2|@Segundo Teléfono@
+[TipForm]*|ip|@Primera IP@
+[TipForm]*|ip2|@Segunda IP@
+[TipForm]*|ip_from|@IP-Inicial@
+[TipForm]*|ip_to|@IP-Final@
+[AddCode]cR|cd_gs_node|A|<span><img src='edes.php?R:$a/g/t_local.gif' title='@Consultar Local@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/nodo.edf&_SEEK&cd_gs_node="+eGF("cd_gs_node")+"&_NOBUTTON","LOCAL",false)'>  <span style='margin-left:20px' id='_VerExplorer'>@Información@ <img src='g/t_web.gif' title='@Datos del explorador@' onclick='VerExplorer()'></span>
+#!(t1) [WhereSelect] a,mR | cd_gs_tree | cd_gs_tree!=1
+[SlideCol]
+[OnChange]*|dni|ePadLeft(this,8)
+[ListCheckBox]H|<img src=g/tf_1.gif>
+[GroupLabels]Format|TipTH
+pc_total	| b
+new_pass	| b
+permission	|   | @Permiso@
+log_user	|   | @Log Usuario@
+log_history	|   | @Log Histórico@
+webmaster	|   | @WebMaster@
+pc_with_id	| c
+[Fields]?|2
+@DNI@|dni|DNI|T|8||Qcpq||#|
+,2 @Usuario@|cd_gs_user|+|T|5||Qq|||
+@Nombre@|user_name|X|T|20||Qd||#|
+,2 @Apellidos@|user_surname|X|T|30||Q||#|
+@Local@|cd_gs_node|+|S|3,60|+user_surname|QI||#|
+@Departamento@|cd_gs_office|+|S|40|+user_surname|Q|||
+@Cargo@|cd_gs_position|+|S|30|+user_surname|Q|||
+@E-Mail@|email|@|T|65|+user_surname|Q|||
+-|@PERMISOS@|||||Q|||
+,2 @Permiso@|permission|X|SV|11||Q|||
+¿ $GLOBALS['_SystemUser']=='S' ? ,@System·User@|system_user|X|c|1||Q|||
+[CC]#ConIdioma|qCount("{$_SESSION['ShareDictionary']}gs_language")>0
+[AddOptionValue]cd_gs_language|img_sel|lng_
+[PDFCol],,,,,,0,,,,,,0,,0,0,0,0,0,0,0,0,0,0
+[Fields]3||trim
+@DNI@|dni|DNI|T|8||MLcp||#|
+,  @Usuario@|cd_gs_user|+|T|5|>user_surname|a=*; *=-|||
+,3 @Fecha·Alta@|dt_add|F4|T|10||-|#today#||
+,|dt_access_last|F4|T|10||*|#today#||
+@Nombre@|user_name|X|T|20||M||#|
+,  @Apellidos@|user_surname|X|T|30||M||#|
+,3 @Fecha·Baja@|dt_del|F4|T|10||MF|||
+@Local@|cd_gs_node|+|S|60|+user_surname|M||#|
+,3 @LOPD@|dt_confidential|F4|T|10||-|||
+@Teléfonos@|phone|T|T|9||ML|||
+,|phone2|T|T|9||ML|||
+,  @Cargo@|cd_gs_position|+|S|30|+cd_gs_node|M|||
+@Departamento@|cd_gs_office|+|S|40|cd_gs_node|M|||
+@E-Mail@|email|@|T|65|cd_gs_node|MLE|||
+-|@PERMISOS@
+@Login@|login|#|T|65|+user_surname|M|||
+@Permiso@\@P@|permission|N|SV|8||M|S|#|
+#ConIdioma ¿
+,2 @Idioma@|cd_gs_language|n|S|12||M|es||
+?¿
+,  @Idioma@|cd_gs_language|n|T|12||*|es||
+?
+,3 @WebMaster@\@WM@|webmaster|N|c|1||-||%|
+¿ $_SystemUser=='S' ? ,3 @System·User@|system_user|X|c|1||M||%|
+&#49;ª IP - 2ª IP\1ª IP|ip|X|T|15|87|M|||
+,  \2ª IP|ip2|X|T|15|87|M|||
+,2 @Chequear·PC@|pc_with_id|X|SV|12||M|||
+,3 @Altas·de PC@|pc_total|+|T|1||Ms|||
+@IP Rango@\@IP·INI@|ip_from|X|T|15|87|M|||
+,  \@IP·FIN@|ip_to|X|T|15|87|M|||
+,2 @Tipo desktop@|desktop_type|-|SV|12||ML|-1||
+,3 @Cambiar·clave@|new_pass|+|T|1||MS|1||
+#FormaSS ¿
+2 @Incidencias@|task_status|D|SV|12||ML|||
+?
+¿ #FormaSN ? 2 @Incidencias@|task_status|D|SV|12||ML|||
+¿ #FormaNS ? 3 @Visor Escritorio Remoto@|view_desktop|N|C|1||ML|||
+-|@OBSERVACIONES@
+<|notes|#|A|250,90,3|+dt_del|ML|||
+|ys_news|CDI|T|19||*|#y2s#||
+#(a)|pass|D|T|32||*|||
+|system_user|||||h|||
+-|@PERFIL DE USUARIO@
+[Plugin]*|$a/plugin/usertree.form|10|10|C|300|450
+[Plugin]*|$a/plugin/usertree.body
+[AddOption]*|task_status|,; 1,@Iniciar@; 2,@Enviar@; 3,@Asignar@; 4,@Desarrollo@
+[TipForm]*|task_status|@Desde que estado se crean incidencias@
+[PHPForm]a,mR
+if( $_SESSION['_WebMaster']=='S' ) $_Form['webmaster'][6] = 'M';
+[JSIni]a,mR
+function BorraOrigen(){
+ePF("dni,email",'',false);
+}
+[PHPIni]a,mR
+global $_JSCHECK;
+eFileGetVar("Login", true);
+$cmp = $Type;
+if($cmp=="") $cmp= "email";
+if( $cmp!="login" ){
+$_JSCHECK .= "S(':login').val(S(':{$cmp}').val());";
+$_Form[array_search("login", array_column($_Form, 1))][_MODE] = '*';
+}
+$_Form[array_search($cmp, array_column($_Form, 1))][_CONDITION] = '#';
+[PHPEnd]cR
+echo '<script type="text/javascript">';
+echo 'function VerExplorer(){';
+sql_Busca('gs_conexion', '*', "cd_gs_user={$_Fila['cd_gs_user']}", 'cdi desc');
+$row = sql_Array();
+if( $row['cd_gs_navegador']!='' ){
+sql_Busca('gs_navegador', '*', "cd_gs_navegador={$row['cd_gs_navegador']}");
+$row2 = sql_Array();
+if( $row2["cd_gs_navegador"]>0 ){
+echo 'top.eSWOpen(window,"edes.php?FcR:$a/d/e_nave.edf&_SEEK&'.'cd_gs_navegador='. $row['cd_gs_navegador'].'","@WTEXPLORADOR@",false );';
+}
+}
+echo '}';
+if( $row2["cd_gs_navegador"]=="" ) echo 'S("#_VerExplorer").none();';
+echo '</script>';
+[DBIni]M
+$_uActivarPermiso = false;
+if( $_POST["permission"]=="S" ){
+qQuery("select permission from gs_user where cd_gs_user=".$_POST["cd_gs_user"]);
+$row=qArray();
+if( $row["permission"]=="C" ) $_uActivarPermiso = true;
+}
+[DBEnd]M
+if( $_uActivarPermiso ){
+qQuery("update gs_user set dt_access_last='' where cd_gs_user=".$_POST["cd_gs_user"]);
+}
+[Exit]

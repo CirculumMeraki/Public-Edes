@@ -1,0 +1,8 @@
+[Title]TIPO DE EVENTO
+[DBTable]gs_event_type
+[DBIndex]cd_gs_event_type; nm_gs_event_type
+[DBOrder]nm_gs_event_type
+[FormStatic]
+[Fields]
+|cd_gs_event_type|*|T|4||*|||
+Nombre|nm_gs_event_type|D|T|15||MQ||#|

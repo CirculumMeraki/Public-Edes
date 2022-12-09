@@ -1,0 +1,149 @@
+#include(*) $lng/x_campo.edf.lng
+[Title]=TABLA A GENERAR CAMPOS PARA EXTRACCIÓN
+[DBTable]{$_SESSION['ShareDictionary']}gs_campo
+[DBIndex]cd_gs_campo; cd_gs_entidad,tabla,campo,relacion,tipo
+[DBSerial]cd_gs_campo
+[RelationFields]cd_gs_entidad,cd_gs_grupo
+[Button]a|Generar
+[AddOption]*|nivel|,; 1,Básico; 2,Medio; 3,Total; 9,INFORMATICA
+[Fields]
+     Entidad             | cd_gs_entidad | 0 | S  | 30       |              | MQ |   | # |
+  ,  Grupo               | cd_gs_grupo   | D | Ss | 30       | <orden       | MQ |   | # |
+     Tabla               | tabla         | x | SV | 30       |              | MQ |   | # |
+  ,  Nivel de·extracción | nivel         | + | SV | 12       |              | MQ | 9 | # |
+  ,  NºOrden             | orden         | + | T  | 3        | <cd_gs_grupo | MQ | 1 |   |
+     Relación            | relacion      | x | A  | 255,80,3 | +orden       | MQ |   |   |
+     Solo test           | test          | N | C  | 1        |              | M  |   |   |
+[AddOption]a|tabla|uTablas()
+[PHPIni]a
+function uTablas(){
+if( eSqlType('informix') ){
+qSelect( 'systables', 'tabname,tabtype', 'tabid>100' );
+}else if( eSqlType('oracle') ){
+global $_SqlUsuario; $SqlUsuario = strtoupper($_SqlUsuario);
+$sql = "SELECT TABLE_NAME FROM all_tables where OWNER='{$SqlUsuario}'";
+qQuery( $sql );
+}else if( eSqlType('mysql,mysqli') ){
+qQuery('show tables');
+}
+$Dim = array();
+while( $row = qRow() ){
+if( eSqlType('informix') ){
+if( $row[1]=='S' ){
+$Dim[] = trim($row[0]);
+}else{
+$Dim[] = trim($row[0]);
+}
+}else if( eSqlType('oracle') ){
+$Dim[] = strtolower(trim($row[0]));
+}else if( eSqlType('mysql,mysqli') ){
+$Dim[] = trim($row[0]);
+}
+}
+sort($Dim);
+$DimTablas = array();
+for($n=0; $n<count($Dim); $n++) $DimTablas[] = array($Dim[$n], strtolower($Dim[$n]));
+return $DimTablas;
+}
+[PHPIni]A
+eInit();
+include( '../../edesweb/t/credf.inc' );
+$xCampos = '';
+$xValores = '';
+if( qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>0 ){
+$nLng = 0;
+qQuery( "select cd_gs_language from {$_SESSION['ShareDictionary']}gs_language where tf_translation='S'" );
+while( $r=qRow() ){
+$xCampos .= ',etiqueta_'.$r[0];
+$xValores .= ",'{".'$'."Etiqueta}'";
+$nLng++;
+}
+}
+$Tabla = $_POST['tabla'];
+$Entidad = $_POST['cd_gs_entidad'];
+$Grupo = $_POST['cd_gs_grupo'];
+$uNivel = $_POST['nivel']; if( $uNivel=='' ) $uNivel = 1;
+$NOrden = (int)$_POST['orden'];
+$Relacion = eQuote($_POST['relacion']);
+$DimField = array();
+if( eSqlType('informix') ){
+CreaFCHInformix( $Tabla, false, false, $DimField );
+}else if( eSqlType('oracle') ){
+CreaFCHOracle( $Tabla, false, false, $DimField );
+}else if( eSqlType('mysql') ){
+CreaFCHMySql( $Tabla, false, false, $DimField );
+}else if( eSqlType('mysqli') ){
+CreaFCHMySqli( $Tabla, false, false, $DimField );
+}
+if( $_POST['test']=='S' ){
+eInit(1);
+eTrace('Campos a generar');
+eTrace('----------------');
+}
+	if( $NOrden==0 ){
+		qQuery("select max(orden) from {$_ENV['.']['Setup']['ShareDictionary']}gs_campo where cd_gs_entidad='{$Entidad}' and cd_gs_grupo='{$Grupo}'");
+		$r = qRow();
+		$NOrden = $r[0]*1+1;
+	}
+
+$TCInsertados = 0;
+$TCNoInsertados = 0;
+for( $n=0; $n<count($DimField); $n++){
+$Campo = $DimField[$n][0];
+$Etiqueta = strtoupper($Campo);
+list( $Ancho, $Decimales ) = explode(',',$DimField[$n][2].',');
+if( $Ancho>80 ) $Ancho = 80;
+if( $Decimales=='' ) $Decimales = 0;
+$UnEscape = '';
+$Tipo = '';
+switch( $DimField[$n][1] ){
+case "#D":
+$Alineacion = 'I';
+$TipoDato = "T";
+break;
+case "F4":
+$Alineacion = 'C';
+if( eSqlType('informix') ){
+}else if( eSqlType('oracle') ){
+}else if( eSqlType('mysql,mysqli') ){
+$Tipo = "date_format(#,\'%d-%m-%Y\')";
+}
+$TipoDato = "F";
+break;
+case "+":case "-":case "+,":case "-,":
+$Alineacion = 'D';
+$TipoDato = "N";
+break;
+case "#":
+$Alineacion = 'I';
+$UnEscape = 'S';
+$TipoDato = "T";
+break;
+default:
+$Alineacion = 'I';
+$TipoDato = "T";
+}
+$Etiqueta = substr($Etiqueta,0,30);
+if( qCount("{$_SESSION['ShareDictionary']}gs_campo", "cd_gs_entidad='{$Entidad}' and campo='{$Campo}'")==0 ){
+$Etiqueta = str_replace('_','.',$Etiqueta);
+if( $nLng > 0 ) $xValores = str_repeat( ",'".$Etiqueta."'", $nLng );
+if( $_POST['test']=='S' ){
+eTrace("{$Tabla}.{$Campo}");
+}else{
+sql_Inserta("{$_SESSION['ShareDictionary']}gs_campo",
+'cd_gs_entidad,cd_gs_grupo,    tabla  ,   etiqueta  ,   campo  ,  ancho ,   decimales ,    alineacion  ,    unescape  ,    orden ,   tipo_dato  ,    tipo  ,    nivel , extraccion,    relacion'.$xCampos ,
+" {$Entidad}  ,  {$Grupo} , '{$Tabla}','{$Etiqueta}','{$Campo}',{$Ancho}, {$Decimales}, '{$Alineacion}', '{$UnEscape}', {$NOrden}, '{$TipoDato}', '{$Tipo}', {$uNivel},    'S'    , '{$Relacion}'{$xValores}"
+);
+}
+$NOrden++;
+$TCInsertados++;
+}else{
+$TCNoInsertados++;
+}
+}
+if( $_POST['test']=='S' ){
+eTrace('----------------');
+eTrace( 'Campos generados '.$TCInsertados.'/'.($TCInsertados+$TCNoInsertados) );
+eEnd();
+}
+eMessage( 'Campos generados '.$TCInsertados.'/'.($TCInsertados+$TCNoInsertados), 'H' );

@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Variables JavaScript generales</td>
+</tr>
+<tr>
+<td id="Descripcion"><br /><strong>DESKTOP</strong>:<br />
+<table id="Opciones" style="height: 181px; width: 693px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> _D2S</td>
+<td>Fecha en formato "YYYYMMDD" y alias "_ymd"</td>
+</tr>
+<tr>
+<td> _Node</td>
+<td>C?digo del nodo</td>
+</tr>
+<tr>
+<td> _Tree</td>
+<td>C?digo del ?rbol</td>
+</tr>
+<tr>
+<td> _Source</td>
+<td>Nombre del script</td>
+</tr>
+<tr>
+<td> _ToDay</td>
+<td>Fecha en formato "DD-MM-YYYY"y alias "_dmy"</td>
+</tr>
+<tr>
+<td> _User</td>
+<td>C?digo del usuario</td>
+</tr>
+<tr>
+<td> _Y2S</td>
+<td>Fecha y hora formato "YYYY-MM-DD HH:MM:SS" alias de "_cdi"</td>
+</tr>
+<tr>
+<td> _WebMaster</td>
+<td>Indica si el usuario es "_WebMaster"</td>
+</tr>
+<tr>
+<td> _Desktop</td>
+<td>Tipo de desktop: 0:Horizontal, 1:Vertical y 2:Men?s flotantes</td>
+</tr>
+<tr>
+<td> _WithAccents</td>
+<td>Para que los campos de texto en may?sculas admitan acento, ejemplo: _WithAccents['nm_auto'] = 1;</td>
+</tr>
+</tbody>
+</table>
+<br /><strong>LISTADO</strong>:<br />
+<table id="Opciones" style="height: 116px; width: 695px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>_aTR</td>
+<td>Array con los valores de la fila seleccionada</td>
+</tr>
+<tr>
+<td>_oTD</td>
+<td>Objeto TD de la celda pulsada</td>
+</tr>
+<tr>
+<td>_oTR</td>
+<td>Objeto TR de la fila pulsada</td>
+</tr>
+<tr>
+<td>_SubMode</td>
+<td>_SubMode: cl, bl, ml</td>
+</tr>
+<tr>
+<td>_MarkVisited</td>
+<td>Clase para marcar las filas en los listados cuando se abre una subventana</td>
+</tr>
+</tbody>
+</table>
+<strong><br />FICHA</strong>:<br />
+<table id="Opciones" style="height: 171px; width: 807px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> _Action</td>
+<td>URL a ejecutar al hacer el submit</td>
+</tr>
+<tr>
+<td> _ShowZero</td>
+<td>Valor num?rico que indica como se visualizan los valores num?ricos en las fichas ( la variable se insertar? en [JSIni] ), los valores son:<br />        1.- Se muestra el valor cero<br />        0.- Si es cero se muestra el campo vacio, valor por defecto.<br />       -1.- Se muestra cero solo si se mete el valor cero, es decir que en un campo num?rico si pones cero se ver? y si lo borras se ver? vacio.</td>
+</tr>
+<tr>
+<td> _ShowZeroFields</td>
+<td>Valor num?rico que indica como se visualiza el valor numéricos de un determinado campo de una ficha, esta es una variable hash con el subindice el nombre del campo ( la variable se insertar? en [JSIni] ), los valores son:<br />        1.- Se muestra el valor cero<br />        0.- Si es cero se muestra el campo vacio, valor por defecto.<br />       -1.- Se muestra cero solo si se mete el valor cero, es decir que en un campo num?rico si pones cero se ver? y si lo borras se ver? vacio.</td>
+</tr>
+<tr>
+<td>_Question</td>
+<td>Desactiva el tercer estado de los checkbox (=) y permite desmarcar los radiobutton</td>
+</tr>
+<tr>
+<td> _WithAccents</td>
+<td>En las fichas los campos de texto en may?sculas por defecto no admite acentos para definir un solo campo ejemplo. <br />_WithAccents[name_field]=true o todos los campos _WithAccents['*'] = true;</td>
+</tr>
+<tr>
+<td>_SelectMultiple</td>
+<td>Indica que todos los select son de multiple selecci?n, true/false.</td>
+</tr>
+<tr>
+<td>_SelectMultipleField</td>
+<td>Indica individualmente que campos son de m?ltiple selecci?n, es una matriz asociativa.</td>
+</tr>
+<tr>
+<td>_WrapForm</td>
+<td>Indica la acción a ejecutar cuando estas en el último campo de un formulario al pasar de campo, por defecto es "true" lo que indicará volvel al primer campo editable y con "false" se quedará el foco en este último campo.</td>
+</tr>
+</tbody>
+</table>
+<br /><strong>GENERAL</strong>:<br />
+<table id="Opciones" style="height: 316px; width: 806px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> _D2S</td>
+<td>Fecha en formato "YYYYMMDD"</td>
+</tr>
+<tr>
+<td> _WType</td>
+<td>Tipo de ventana: 0:Desktop, 1:SubVentana y 2:Ventana Deslizante</td>
+</tr>
+<tr>
+<td> _HndWeb</td>
+<td>C?digo de la conexi?n</td>
+</tr>
+<tr>
+<td> _Mode</td>
+<td>Modo de ejecuci?n</td>
+</tr>
+<tr>
+<td> _Node</td>
+<td>C?digo del nodo</td>
+</tr>
+<tr>
+<td> _Obj</td>
+<td>Objeto que se est? ejecutando: F,G,L y M (mensaje)</td>
+</tr>
+<tr>
+<td> _PSOURCE</td>
+<td>Nombre del script de la ventana padre, si es "WDESKTOP" es una ventana abierta por el Desktop y si es "WWORK" se est? ejecutando en la ventana de trabajo.</td>
+</tr>
+<tr>
+<td> _Source</td>
+<td>Nombre del script</td>
+</tr>
+<tr>
+<td> _User</td>
+<td>C?digo del usuario</td>
+</tr>
+<tr>
+<td> _WOPENER</td>
+<td>Es un puntero a la ventana padre.</td>
+</tr>
+<tr>
+<td><span style="color: #ff0000;"> _StatusVar</span></td>
+<td>Es una variable para la ayuda a la depurac?n, desde los submenus STools e ITools al pulsar el icono para ver los datos del formulario o el listado tambi?n se ver?n el valor de las variables indicadas en esta variable separada por comas ej; var :StatusVar="var1,var2,..."</td>
+</tr>
+</tbody>
+</table>
+<br /><strong>URL</strong>:<br />
+<table id="Opciones" style="height: 111px; width: 805px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> _SEEK</td>
+<td>Busca un determinado registro por la URL.<br />ej: <span style="font-family: Courier;">edes.php?FmR:script.edf&_SEEK&campo=[VALOR]&...</span></td>
+</tr>
+<tr>
+<td> _ASSIGN </td>
+<td>Asigna variables en la llamada por la URL <br />ej: <span style="font-family: Courier;">edes.php?Fa:script.gdf&_ASSIGN=a&campo=[VALOR]&...</span></td>
+</tr>
+<tr>
+<td> _NOBUTTON</td>
+<td>Muestra una ficha de consulta quitando el boton de nueva b?squeda.<br />ej: <span style="font-family: Courier;">edes.php?FcR:script.gdf&_NOBUTTON&_SEEK&campo=[VALOR]&...</span></td>
+</tr>
+<tr>
+<td> _NOEDITFILLED</td>
+<td>Asigna variables en la llamada por la URL y las pondr? no editables.<br />ej: <span style="font-family: Courier;">edes.php?Fa:script.gdf&_NOEDITFILLED&_ASSIGN=a&campo=[VALOR]&...</span></td>
+</tr>
+<tr>
+<td> _FILTER</td>
+<td>Busca un grupo de registros.<br />ej: <span style="font-family: Courier;">edes.php?Ll:script.edf&_FILTER="+escape("A.campo='"+valor+"'")</span></td>
+</tr>
+<tr>
+<td> _DB</td>
+<td>La primera ejecuci?n la ejecuta con el diccionario "congreso"<br />ej: <span style="font-family: Courier;">edes.php?Ll:script.edf&_DB=congreso</span></td>
+</tr>
+<tr>
+<td> _PERSISTENTDB</td>
+<td>Ejecuta todas las opcioes con el diccionario "congreso"<br />ej: <span style="font-family: Courier;">edes.php?Ll:script.edf&_PERSISTENTDB=congreso</span></td>
+</tr>
+<tr>
+<td> _STOP</td>
+<td>En la llamada a una subventana esta se cerrará al pulsar el botón y terminar de hacer la operación.</td>
+</tr>
+<tr>
+<td> _CLOSE</td>
+<td>En la llamada a una subventana esta se cerrará despues de hacer la operación.</td>
+</tr>
+<tr>
+<td> _BUTTONCLOSE</td>
+<td>Al llamar a una subventana en modo "cR" con este parámetro te mostrará la ventana con el icono de cerrar.</td>
+</tr>
+<tr>
+<td> _SHOWFILTER</td>
+<td>Activa "1" / Desactiva "0" que se vean las condiciones en los listados.</td>
+</tr>
+<tr>
+<td>_TRANSPARENT</td>
+<td>Valor=1 el body de la página será transparente</td>
+</tr>
+<tr>
+<td>_FORMBUTTONSDELETE</td>
+<td>Desactiva el icono de las fichas para cambiar el modo de ejecución.</td>
+</tr>
+<tr>
+<td>_EMPTYLIST</td>
+<td>Si el listado no tiene datos lo mostrará de todas formas</td>
+</tr>
+</tbody>
+</table>
+<br /><strong><u>SUBVENTANAS</u></strong><br />Desde cualquier ventana podemos saber desde que ventana fue abierta mediante la variable javascript "window.frameElement.WOPENER" o la variable global "_WOPENER", desde los script del motor se puede acceder a los datos del padre mediante las funciones "ePPF()" y "ePGF()".<br /><br /><strong><u>CAMPOS VIRTUALES</u></strong><br />Los campos virtuales son aquellos que empiezan por barra baja y no tienen su contrapartida en la DB, su uso es para pasar informaci?n adicional a los script. Hay campos virtuales del sistema como es '_gs_formato_'  y sirve para desde una ficha de consulta poder elegir el tipo de listado a mostrar pudiendo ser en los formatos HTML ( valor por defecto ), PDF o por XLS, dependiendo del valor del campo "_gs_formato_" 'H', 'P', o 'X', para ello en el formulario se pondr? un control ya sea un checkbox, radiobuton o un select ejemplo de select virtual:<br /><span style="font-family: Courier New;">[AddOption] * | _gs_formato_ | H,HTML; P,PDF</span><span style="font-family: Courier New;"> <br /></span><strong><br /><u>Contracciones del DOM</u></strong><br />Para quitar complejidad a la parte javascript se tiene acceso a algunos metodos mediante sus iniciales en may?sculas como "DGI" que es los mismo que "document.getElementById", etc. <br />
+<table id="Opciones" style="height: 141px; width: 243px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> DA</td>
+<td> document.all</td>
+</tr>
+<tr>
+<td> DB</td>
+<td> document.body</td>
+</tr>
+<tr>
+<td> DF</td>
+<td> document.forms</td>
+</tr>
+<tr>
+<td> DGI</td>
+<td> document.getElementById</td>
+</tr>
+<tr>
+<td> DGT</td>
+<td> document.getElementsByTagName</td>
+</tr>
+<tr>
+<td> W</td>
+<td> window</td>
+</tr>
+<tr>
+<td> WO</td>
+<td> window.open</td>
+</tr>
+</tbody>
+</table>
+<br /><strong><u>Conmutar modos en una ficha</u></strong><br />La variable "_FORMBUTTONS" tanto en JS como en PHP ( tambi?n hay una etiqueta [FormButtons] ) controla los modos a los que se puede intercambiar, as? como en las b?squedas con sublistado, los modos que se tienen activos. Esta variable es una cadena que puede contener los siguientes car?cteres:<br />
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>
+<p align="center">V</p>
+</td>
+<td>View. Ver la ficha en modo consulta </td>
+</tr>
+<tr>
+<td>
+<p align="center">v</p>
+</td>
+<td>View. Buscar ficha a consultar</td>
+</tr>
+<tr>
+<td>
+<p align="center"> U</p>
+</td>
+<td>Update. Ver la ficha en modo modificaci?n </td>
+</tr>
+<tr>
+<td>
+<p align="center">u</p>
+</td>
+<td>Update. Buscar ficha a modificar</td>
+</tr>
+<tr>
+<td>
+<p align="center">I</p>
+</td>
+<td>Insert. Ficha en mod alta</td>
+</tr>
+<tr>
+<td>
+<p align="center">D</p>
+</td>
+<td>Delete. Ver la ficha en modo borrado</td>
+</tr>
+<tr>
+<td>
+<p align="center">d</p>
+</td>
+<td>Delete. Buscar ficha a borrar</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

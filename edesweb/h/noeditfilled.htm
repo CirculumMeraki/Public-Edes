@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>NoEditFilled 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[NoEditFilled] Mode [ [ | session ]&nbsp; | ListaDeCampos ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Evita la edición de los campos que esten rellenos con un valor por defecto cuando este tenga contenido. Puedes tener usuarios con distinto tipo de campos a editar. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD><STRONG>Mode</STRONG>&nbsp;</TD>
+<TD>Modo de ejecución</TD></TR>
+<TR>
+<TD><STRONG>Session</STRONG>&nbsp;</TD>
+<TD>Si se pone el parámetro "session" evitará la edición sólo de las variables de sesión si están rellenas.&nbsp;</TD></TR>
+<TR>
+<TD><STRONG>ListaDeCampos</STRONG>&nbsp;</TD>
+<TD>Sólo desabilitará la edición a estos campos que estén rellenos</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[NoEditFilled] a 
+<TR>
+<TD id=txt>No dejará editar ningún campo que esté relleno</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[NoEditFilled] a | session</TD></TR>
+<TR>
+<TD id=txt>No dejara editar ningún campo que esté relleno mediante variables de sesión si está rellenos, si hay campos rellenos pero no son de variables de sesión si los dejará editar.</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[NoEditFilled] a | | campo1, campo2</TD></TR>
+<TR>
+<TD id=txt>No dejará editar los campos que estén rellenos de la lista de campos</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

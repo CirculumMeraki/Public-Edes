@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">TitleIcon</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[TitleIcon] Mode | IconoHtml [ | NomDF,... / else ] <br />[TitleIcon] Mode | HPCV   [ [ [ | NomDF,... / else ] | FileHelp ]  | ClaveHelp ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">A la derecha del titulo de la ficha se puede poner uno o mas iconos de acceso rápido, así como en los listados a la izquierda de los lTools.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Mode</td>
+<td> Modo </td>
+</tr>
+<tr>
+<td>IconoHtml / HPCV </td>
+<td> Hay dos formas:<br />1.- Poner el html de un icono<br />2.- Las iniciales (H)tml, (P)DF, (C)HM (V)ideo, una varias o un asterisco para indicar los cuatro tipos de ficheros</td>
+</tr>
+<tr>
+<td>NomDF</td>
+<td> Condiciona la etiqueta si viene de tal DF o "else" si no se ha inicializado</td>
+</tr>
+<tr>
+<td>FileHelp</td>
+<td> Cuando se define HPCV tomará ese nombre de fichero de ayuda:<br />- si se deja en blanco será el nombre del script y el del modo.<br />- se puede llamar a una función. <br />- si el nombre de la ayuda lleva extensión será un fichero externo en /help/tip/<br /><br />Para definir la ayuda dentro del edf se utilizan las etiquetas [HelpHTML] o [HelpMarkdown]</td>
+</tr>
+<tr>
+<td>ClaveHelp</td>
+<td> Cuando se usa el formato chm se puede saltar a una zona en particular con este par?metro.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[TitleIcon] * | < img title="..." src="g/historico.png" / ></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[TitleIcon] * | HP | | distribuir</td>
+</tr>
+<tr>
+<td id="txt">Se mostrará un icono de ayuda que al pulsar sandrá un submenú para ver la ayuda en formato html o en pdf</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[TitleIcon] * | <span title="Usuarios">u</span></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[TitleIcon] ?R | [@,  title='Histórico de emails de {$_User}' onclick='top.eSWOpen(window,"Ll:...")']    </p>
+</td>
+</tr>
+<tr>
+<td id="txt">El icono es una fuente, es como usar eIcon()</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[TitleIcon] * | H | | userFunction()</p>
+</td>
+</tr>
+<tr>
+<td id="txt">Con función de usuario</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[TitleIcon] * | H | | aplication.mark</p>
+</td>
+</tr>
+<tr>
+<td id="txt">Fuchero externo en formato markdown</td>
+</tr>
+</tbody>
+</table>
+<p> </p><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,123 @@
+[Title]ERRORES SQL
+[DBTable]{$_SESSION['ShareDictionary']}gs_error|gs_user
+[DBIndex]codigo
+[DBOrder]cdi DESC
+[DBLimit]1000,200
+[AutoMenu]l|1
+[DefAux]cd_gs_user|gs_user, cd_gs_user, user_name
+[Format], , ,  , ,  , str_replace('>','&gt;',str_replace('<','&lt;',trim($row[6])))
+[ColsWidth]100, , ,  , ,  ,500
+[PDFCol]10,0,0,15,0,20, 70
+[PDFWrap]5, false
+[PDFVar]PDF_Grid = true
+[Stop]
+[AddCode]cR|_surname|A|&nbsp;<img src='edes.php?R:$a/g/usuario.gif' style='margin-bottom:5;' title='Consultar Usuario' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user="+eGF("__cd_gs_user"))'>
+[AddCode]cR|texto|A|<img src='edes.php?R:$a/g/editar.gif' style='margin-bottom:5;' title='Editar script' onclick='Editar()'>
+[AddCode]cR|texto|A|<img src='g/ver.gif' title='Ejecutar opción' onclick='ExeOp()'>
+[ShowFields]cR|_surname|cd_gs_user{gs_user,cd_gs_user,user_surname}
+#(cR) [Label] trace | <img src='g/copy.png' onclick='window.clipboardData.setData("Text",FRM1.trace.value);alert("Copiado al clipboard");' title='Copia contenido'><br><br>Error<br><br><img src='edes.php?R:$t/g/e/2_borrar.gif' onclick='BorrarError()' title='Borrar error' style='vertical-align:top;'>
+[Fields]
+CDI|cdi|CDI|T|19||Q-|#sy2s#||
+Usuario|cd_gs_user|+|S|5||QI|||
+#(cR) ,Apellidos|_surname|N|T|30||-|||
+Desde|desde|X|T|40||Q-|||
+-||||||Q-|||
+Fichero|fichero|#X|T|40||Q-|||
+Linea|linea|+|T|4||Q-|||
+,Texto|texto|#X|T|50||Q-|||
+#(cR)¿
+|trace|#|A|5000,85,10||Q-|||
+?¿
+Error|trace|#|A|5000,85,12||Q-|||
+?
+Código|codigo|0|T|7||*|||
+|tipo|N|T|1||*Q|S||
+[JSEnd]l
+function _BorrarError( Ok, NO, Dim ){
+if( Ok==2 ){
+Obj = Dim[0];
+top.eCallSrv( window, 'edes.php?E:$error.gs&DELETE='+Obj.parentNode.cells[7].textContent );
+}
+}
+function BorrarError(){
+var Obj = S.event(window);
+if( Obj.tagName == 'TD' ){
+if( Obj.cellIndex == 1 ){
+var url = 'edes.php?FcR:$a/d/usu_basico.edf&_SEEK&cd_gs_user='+Obj.parentNode.cells[9].textContent;
+top.eSWOpen( window, url, 'USUARIO', false );
+}else{
+top.eAlert( S.lng(210), "BORRAR errores iguales", 'A,C', 'DH', _BorrarError, null, Array(Obj) );
+}
+}
+eClearEvent();
+}
+document.all.BROWSE.oncontextmenu = BorrarError;
+[JSEnd]cR
+function _BorrarError( Ok ){
+if( Ok==2 ) top.eCallSrv( window, 'edes.php?E:$error.gs&DELETE='+document.all.codigo.value );
+}
+function BorrarError(){
+top.eAlert( S.lng(210), "BORRAR errores iguales", 'A,C', 'DH', _BorrarError );
+}
+function Editar(){
+var s = document.all.texto.value.replace(/\s/g,'');
+if( s.substr(0,1)=='/' ) s = s.substr(1);
+if( s.substr(0,8)=='edes.php?' ){
+s = s.substr(8);
+if( s.substr(0,4).indexOf(':') > -1 ){
+var tmp = s.split(':');
+var Dim = tmp[1].split('?');
+if( Dim[0].indexOf('.') == -1 ) Dim[0] += '.'+(( tmp[0].substring(0,1)=='G' ) ? 'gdf':'edf' );
+top.gsEdit(window, Dim[0],1);
+}
+}
+}
+function ExeOp(){
+var txt = document.all.texto.value.replace(/\s+$/g,'').replace('edes.php?','').substr(1);
+var nm = 1, na, OK;
+if( null != top.document.all.NewSolapas ){
+var Obj = top.document.all.NewSolapas.cells;
+var Incre = 1;
+}else{
+var Obj = top.document.all.OpF.cells;
+var Incre = 2;
+}
+var Ext = txt.split('.');
+txt = Ext[0];
+var Ok = 0;
+var tmp = txt.split(':');
+var SubOp = tmp[0]+'';
+SubOp = SubOp.replace('F','#').replace('G','@').replace('L','=');
+txt = SubOp+':'+tmp[1];
+var Dir = ':'+tmp[1];
+for( var n=0; n<Obj.length; n+=Incre ){
+var Obj2 = top.DGI('sm'+(nm)).cells;
+for( var i=0; i<Obj2.length; i++ ){
+if( Obj2[i].HR!=null ){
+if( Obj2[i].HR.indexOf(txt) > -1 ){
+Ok = 2;
+}else if( Obj2[i].HR == Dir ){
+Ok = 1;
+}else if( Ok == 1 && Obj2[i].HR.indexOf(SubOp) > -1 ){
+Ok = 2;
+}
+if( Ok == 2 ){
+S(Obj[n]).eventClick();
+if( Incre==1 ) S(Obj[n]).eventClick();
+na = Obj2[i].id;
+for( var op=i-1; op>=0; op-- ){
+if( Obj2[op].id < na ){
+na = Obj2[op].id;
+if( Obj2[op].parentNode.HV == 0 ) S(Obj2[op]).eventClick();
+}
+}
+S(Obj2[i]).eventClick();
+Obj2[i].scrollIntoView();
+return;
+}
+}
+}
+nm++;
+}
+}
+document.all.trace.value = document.all.trace.value.replace(/<br>/g,'\n');

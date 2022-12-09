@@ -1,0 +1,48 @@
+[Title]=RunScript
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]cd_gs_user
+[FormButtons]VUD
+[Stop]*
+[WinClose]*
+[WinTools]*|mM
+[AddCode]a|php|i|style='font-family:monospace;font-size:120%'
+[Button]a|<img src="g/op_nupdate.gif"> Modificar
+[Fields]
+]Código PHP/SQL a ejecutar desde el icono <i class='ICONINPUT' style='color:#bd454b;' title='Icono ubicado en los accesos rápidos'>&#230;</i>|php|#|A|10000,100,20||Mk|||
+|SMode|#|T|1||*|||
+[JSCheck]a
+if( S("#_RunScript", top).exists() ){
+S("#_RunScript", top).class((eGF('php')!="") ? "-ICONOFF" : "+ICONOFF");
+}
+[PHPIni]*
+$_FORMBUTTONS = '';
+[PHPEnd]a
+if( file_exists('../_d_/usr/runscript.'.$_SESSION["_User"]) ){
+$txt = file_get_contents('../_d_/usr/runscript.'.$_SESSION["_User"]);
+?>
+<script type="text/javascript">
+var txt = '<?= str_replace(chr(13).chr(10),'{#ENTER#}',$txt) ?>';
+while( txt.indexOf('{#ENTER#}')>-1 ) txt = txt.replace('{#ENTER#}','\n');
+while( txt.indexOf('&gt;')>-1 ) txt = txt.replace('&gt;','>');
+while( txt.indexOf('&lt;')>-1 ) txt = txt.replace('&lt;','<');
+while( txt.indexOf('&quot;')>-1 ) txt = txt.replace('&quot;','"');
+while( txt.indexOf('&#39;')>-1 ) txt = txt.replace('&#39;',"'");
+while( txt.indexOf('&#92;')>-1 ) txt = txt.replace('&#92;',"\\");
+while( txt.indexOf('&#43;')>-1 ) txt = txt.replace('&#43;',"+");
+ePF("php", txt, 0);
+if( S("#_RunScript", top).exists() ){
+S("#_RunScript", top).class((txt=="")?"+ICONOFF":"-ICONOFF");
+}
+</script>
+<?PHP
+}
+[PHPIni]A
+eInclude('message');
+if( $_POST['php']!="" ){
+file_put_contents('../_d_/usr/runscript.'.$_SESSION["_User"], $_POST['php']);
+eMessage('RunScript GRABADO','HS', 5, 'if(top.eIsWindow(window))top.eSWClose(window);');
+}else{
+@unlink( '../_d_/usr/runscript.'.$_SESSION["_User"]);
+eMessage('RunScript BORRADO','HS', 5, 'if(top.eIsWindow(window))top.eSWClose(window);');
+}

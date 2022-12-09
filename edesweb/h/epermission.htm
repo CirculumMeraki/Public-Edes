@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>ePermission 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>ePermission( Label [, Script=OpDeEntrada ] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>En el Desktop hay una opción para el mantenimiento de los&nbsp;"Permisos Especiales" que significa que dentro de una opción haya usuarios que puedan hacer alguna cosa distinta como por ejemplo poder modificar un dato delicado, esto se gestiona desde el usuario y a la hora de programar si se quiere buscar si tiene ese permiso especial se utiliza esta función, retorna un valor lógico.<BR>Si la función se puede utilizar dentreo de las&nbsp;etiquetas [JS*] o [HTM*]<BR>Cuando estas escribiendo en eDes también puede usar la forma "#P(Label)". 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Label&nbsp;&nbsp;</TD>
+<TD>Palabra clave o palabras separadas por coma en este último caso con cualquiera que encuentre devolvería true</TD></TR>
+<TR>
+<TD>Script </TD>
+<TD>Es opcional y por defecto será el script que se ha ejecutado la opción.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[JSEnd] mR<BR>if( &lt;?= ePermission('PuedeModificarDNI') ?&gt; ) eEF('dni',false);<BR>if( &lt;?= !ePermission('PuedeModificarDNI') ?&gt; ) eEF('dni',false); 
+<TR>
+<TD id=txt>El campo "dni" se manda editable y si el permiso "PuedeModificarDNI" no lo tiene pondrá al campo "dni" como no editable. 
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[PHPIni] ?R<BR>if( ePermission('PuedeModificarDNI') ){<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>}else{<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>}</TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

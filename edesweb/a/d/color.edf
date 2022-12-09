@@ -1,0 +1,24 @@
+[Title]COLORES
+[DBTable]{$_SESSION['ShareDictionary']}gs_color
+[DBIndex]cd_gs_color
+[DBOrder]orden
+[DBLimit]1000,1000
+[Cursor]NO
+[FormStatic]
+[PHPEnd]l
+if( $_GET['_SORT']==1 ) echo '<script type="text/javascript">setTimeout("document.ondblclick = function anonymous(){ return false; }",1);</script>';
+[Chr]HEX|U|#0123456789ABCDEF
+¿ $_GET['_SORT']==1 ? [SortList] * | orden
+[Format]|zero
+$_CellsStyle[0] = 'background:#'.$_vF["cd_gs_color"];
+[Fields]
+#(L) Orden|orden|+|T|3||-|||
+Color|cd_gs_color|HEX|T|6||AQ|||
+Nombre|nm_gs_color|#D|T|25||MQ|||
+Luminosidad|luminosidad|+,|T|3,3||-|||
+Luma|luma|+,|T|3,3||-|||
+[JSCheck]a,mR
+ePF( 'luminosidad', top.eColorLuminosity( eGF('cd_gs_color') ) );
+ePF( 'luma', top.eColorLuma( eGF('cd_gs_color') ) );
+[PHPIni]?R
+$_ShowZero = 1;

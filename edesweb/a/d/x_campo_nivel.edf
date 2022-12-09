@@ -1,0 +1,18 @@
+[Title]CAMPO/S
+[DBTable]{$_SESSION['ShareDictionary']}gs_campo|{$_SESSION['ShareDictionary']}gs_entidad, {$_SESSION['ShareDictionary']}gs_grupo
+[DBIndex]cd_gs_campo ; cd_gs_entidad,tabla,campo,relacion
+[DBOrder]cd_gs_entidad,cd_gs_grupo,etiqueta
+[DBSerial]cd_gs_campo
+[RelationFields]cd_gs_entidad,cd_gs_grupo
+[AddOption]*|alineacion|I,Izquierda; C,Centro; D,Derecha
+[AddOption]*|nivel|,; 1,Básico; 2,Medio; 3,Total; 9,INFORMATICA
+[EditList]etiqueta,nivel||id=P
+[NoSelectRow]
+[Fields]
+|cd_gs_campo|*|T|2||*|||
+Tabla|tabla|x|T|15||MQcpd||#|
+Campo|campo|x|T|40||MQ||#|
+Entidad|cd_gs_entidad|0|S|30||MQ||#|
+,Grupo|cd_gs_grupo|D|Ss|30|>nivel|MQ||#|
+Etiqueta|etiqueta|X|T|20||MQ||#|
+,Nivel de·extracción|nivel|+|SV|12||MQ|||

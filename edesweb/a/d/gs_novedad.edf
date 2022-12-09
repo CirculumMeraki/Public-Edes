@@ -1,0 +1,103 @@
+#include(*) lng
+¿ eFileGetVar("Desktop.DesktopTreeType")=='O' ? #include(*) $a/d/gs_novedad2.edf
+[Title]=@ULTIMAS NOVEDADES@
+#(a) [Title] @NOVEDADES@
+[DBTable]gs_novedad
+[DBIndex]codigo
+[DBOrder]cdi DESC
+[DBSerial]codigo
+[DBMemo]resumen
+[DBLimit]1000,20
+[OnLoad]l|if( top.eIsWindow(window) ){ top.eSWResize(window); }
+[AutoMenu]l|1
+[Cursor]
+[ColsWidth]65,160,550
+[PDFCol]19, 50, 95
+[PDFWrap]5
+[PDFVar]PDF_Grid = true
+[CSSAdd]l
+.HTML_IN_TD {
+width:100%;
+}
+#CNT .HTML_IN_TD {
+vertical-align:top;
+}
+¿ $GLOBALS['_PSOURCE']=='WDESKTOP' ? [TEMPLATE] l | $novedades.htm
+[Fields]
+@Instante@|cdi|CDI|T|19||AQ|#sy2s#||
+@Título@|titulo|X|T|90|600|MQ||#|
+@Descripción@|resumen|#|H|1000000,90,8|600,350|MQ||#|
+|codigo|0|T|7||*|||
+|cd_gs_user|0|T|7||*|_User||
+|dt_alta|F4|T|10||*|#today#||
+[SetVar]_MaxImageSize = 565,-1
+[SetVar]_MaxImageLength = 500000
+[PHPForm]a,mR
+$MaxSize = eFileGetVar('New.PageSize');
+if( $MaxSize > 0 ){
+$_Form['resumen'][_SIZE] = $MaxSize.',90,8';
+$GLOBALS['_MAXIMAGELENGTH'] = $MaxSize;
+}
+[JSEnd]l
+var Color = top.eGetCss( window, '.Celda', Array('BACKGROUND','COLOR') );
+setTimeout("Recalcula();",1000);
+[PHPIni]a,?R
+eInclude('lib');
+$cPapel = $cLapiz = '';
+echo '<style>';
+$Dim = file( "{$_SESSION['_PathCSS']}/lista.css" );
+for( $n=0; $n<count($Dim); $n++ ){
+$tmp = explode('{',$Dim[$n]);
+if( trim($tmp[0])=='.Celda' ){
+echo '.edOUT{';
+for( $i=$n+1; $i<count($Dim); $i++ ){
+$tmp = explode(';',$Dim[$i]);
+$tmp = explode(':',$tmp[0]);
+if( strToUpper(trim($tmp[0]))=='BACKGROUND' ){
+echo 'BACKGROUND:'.$tmp[1].';';
+$cPapel = trim($tmp[1]);
+}else if( strToUpper(trim($tmp[0]))=='COLOR' ){
+echo 'COLOR:'.$tmp[1].';';
+$cLapiz = trim($tmp[1]);
+}else if( trim($tmp[0])=='}' ){
+break;
+}
+}
+echo '}';
+break;
+}
+}
+$r = new eColor();
+echo '.edOVER{';
+echo 'BACKGROUND:'.$r->Tone($cPapel,2).';';
+echo 'COLOR:'.$cLapiz.';';
+echo '}';
+echo '#edMENUS {';
+echo 'BACKGROUND:'.$r->Tone($cPapel,2).';';
+echo '}';
+echo '</style>';
+[PHPIni]l
+$EmptyList = true;
+[JSEnd]l|WDESKTOP
+function uFin(){
+top.eToDoRun();
+}
+function uLeido(){
+uLEIDO.style.display='none';
+top.eCallSrv( window, 'edes.php?E:$a/d/gs_novedades.gs' );
+}
+var usObj = DGI('BROWSE');
+if( usObj.rows.length == 1 ){
+top.S("body").tip('@No hay novedades este mes@',3);
+DGI("UtilListICO").style.display = 'none';
+}else{
+if( !top._SinNovedad ){
+document.write('<br><center><INPUT id="uLEIDO" class="Boton" TYPE="button" VALUE="@LEIDO@" onclick="uLeido()" style="cursor:pointer"></center>');
+}else{
+}
+document.body.style.marginTop = 15;
+if( top.DGI('MainMenu')!=undefined ){
+window.frameElement.eExit = uFin;
+top.DGI('MainMenu').style.zIndex = top.DGI('swM_'+window.frameElement.id.substring(4)).style.zIndex - 1;
+}
+}

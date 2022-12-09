@@ -1,0 +1,21 @@
+[Title]=HISTORICO DE VERSIONES DEL DOCUMENTO
+[DBTable]gs_log_doc
+[DBIndex]cdi_insert
+[DBOrder]cdi_log desc
+[DBSerial]cd_gs_log_doc
+[PHPStart]l
+$tmp = explode(",", $_FILTER);
+$_POST["dbtable"] = $tmp[0];
+$_POST["nm_field"] = $tmp[1];
+$_POST["pk"] = $tmp[2];
+$_FILTER = "";
+[PDFVar]PDF_Grid = true
+[UploadFile]nm_file|{$_SESSION["LogPathFileVersion"]}|cd_gs_log_doc|500.000|Descargar documento|*
+[Format]tipo=ICON
+[Fields]
+|cd_gs_log_doc|+|T|9||*|||
+Documento|nm_file|D|T|60||-|||
+Tamaño|doc_size|+|T|12||-|||
+Fecha grabación|cdi_log|CDI|T|19||-|||
+Usuario|cd_gs_user{gs_user, cd_gs_user, user_name,' ',user_surname}|0|S|50||-|||
+Tipo|nm_file tipo|D|T|4||-|||

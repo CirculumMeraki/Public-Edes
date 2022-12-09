@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML><HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<TITLE> HELP EDESWEB </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/edesweb.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">S.alert</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">S.alert(x)</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion"> </td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code> S.alert({</code><br /><code>     title:"ERRORES ENCONTRADOS"</code><br /><code>     icon:'<img src="g/sys_warning.gif">',</code><br /><code>     button:"A",</code><br /><code>     text:error.join("<br>")</code><br /><code>});</code><br /><br /><code> S.alert({</code><br /><code>     title:"MENSAJE DEL SISTEMA",</code><br /><code>     icon:'<img src="g/notification.png">',</code><br /><code>     button:"A",</code><br /><code>     text:"Permitir mostrar las Notificaciones",</code><br /><code>     function:function(){</code><br /><code>          if( ... ){<br /></code>                    ...<br /><code></code><code>          }  </code><br /><code>     }</code><br /><code>});</code><br /><br /><code> S.alert({</code><br /><code>     title:'www', </code><br /><code>     text:'xxxxxxxxxxxx', </code><br /><code>     button:'A', </code><br /><code>     icon:'W', </code><br /><code>     form:[</code><br /><code>          ["Nombre"   ,"30","","","nombre"],</code><br /><code>          ["Apellido1","30","","","apel-1"],</code><br /><code>          ["Apellido2","30","","","apel-2"]</code><br /><code>     ]</code><br /><code>});</code><br /><br /><code>		S.alert({</code><br /><code>			     title:Titulo,</code><br /><code>			     icon:Img,</code><br /><code>			     button:Botones||"A",</code><br /><code>			     text:Nota,</code><br /><code>			     form:dimF,</code><br /><code>			     function: MyFunc,</code><br /><code>			     parameter: DimParametros ? DimParametros:null</code><br /><code>		});<br /></code><br /><code>.</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

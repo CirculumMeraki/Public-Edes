@@ -1,0 +1,91 @@
+[Title]=TEST DE VELOCIDAD
+[Button]*|<img src='edes.php?R:$a/g/reload.gif'> Iniciar Test
+[AddCode]*|_Download,_Upload|E|&nbsp;Kb/sg
+[FormAction]*|IniciarTest()
+[AddOption]*|_Repeticiones|1,1;2,2;3,3;4,4;5,5|NoEmpty
+[Fields]
+Nº Repeticiones|_Repeticiones|+|SV|1|20|M|||
+Download|_Download|+|T|7||-|||
+Upload|_Upload|+|T|7||-|||
+Segundos|_Segundos|+,|T|3,2||-|||
+[JSIni]*
+var _SgI = _SgF = _sSgI = _nTest = 0;
+var _TDownload = _TUpload = _TSegundos = 0;
+function DownloadEnd( txt ){
+try{
+_SgF = Date.now();
+}catch(e){
+_SgF = Date.parse(new Date());
+}
+var Dif = ( _SgF - _SgI );
+if( txt.indexOf('Allowed memory size')>-1 ){
+alert(S.lng(212));
+return;
+}
+if( Dif==0 ) Dif = 1;
+Dif = Dif/1000;
+ePF( '_Segundos', Dif );
+ePF( '_Download', parseInt(txt.length/Dif/1000) );
+_TDownload += parseInt(txt.length/Dif/1000);
+_TSegundos += Dif;
+UploadIni();
+}
+function DownloadIni(){
+top.eInfo( window,'Ejecutando Test...'+_nTest, -1);
+try{
+_SgI = Date.now();
+}catch(e){
+_SgI = Date.parse( new Date() );
+}
+var n = 10;
+if( n>30 ){
+alert( 'El valor máximo para el test es de 30Mg' );
+}else{
+top.ObjDescarga.startDownload( 'edes.php?E:$a/u/vcarga.gs&FILE='+(n*1024), DownloadEnd );
+}
+}
+function UploadEnd(n){
+try{
+_SgF = Date.now();
+}catch(e){
+_SgF = Date.parse(new Date());
+}
+var Dif = ( _SgF - _SgI );
+if( Dif==0 ) Dif = 1;
+Dif = ( _SgF - _sSgI );
+Dif = Dif/1000;
+ePF( '_Upload', parseInt(n/Dif/1000) );
+_TUpload += parseInt(n/Dif/1000);
+Dif = ( _SgF - _sSgI );
+Dif = Dif/1000;
+ePF( '_Segundos', Dif );
+_nTest--;
+_TSegundos += Dif;
+if( _nTest>0 ){
+IniciarTest();
+}else{
+ePF( '_Download', parseInt(_TDownload/eGF('_Repeticiones')) );
+ePF( '_Upload', parseInt(_TUpload/eGF('_Repeticiones')) );
+ePF( '_Segundos', _TSegundos );
+top.eInfoHide();
+}
+}
+function UploadIni(){
+var txt = _SgI, n;
+_sSgI = _SgI;
+for( n=0; n<200000; n++ ) txt += '0123456789';
+try{
+_SgI = Date.now();
+}catch(e){
+_SgI = Date.parse( new Date() );
+}
+top.eCallSrvPost( 'edes.php?E:$a/u/vcarga.gs&UPLOAD=10', {'TEXTO':txt}, window );
+}
+function IniciarTest(){
+if( _nTest==0 ){
+_SgI = _SgF = _sSgI = _nTest = 0;
+_TDownload = _TUpload = _TSegundos = 0;
+_nTest = eGF('_Repeticiones');
+}
+DownloadIni();
+}

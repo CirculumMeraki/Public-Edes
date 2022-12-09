@@ -1,0 +1,63 @@
+[Title]=INFORME CON 3 NIVELES
+[DBOrder]grupo, concepto
+[Fields]
+Grupo 1|grupo_1|D|T|20||-|||
+Grupo 2|grupo_2|D|T|40||-|||
+Grupo 3|grupo_3|D|T|40||-|||
+Concepto|concepto|D|T|40||-|||
+Importe|importe|+|T|5||-|||
+[ColsOp]S,S,S,#,+
+[DBSql]l
+for($g1=1; $g1<3; $g1++){
+for($g2=1; $g2<3; $g2++){
+for($g3=1; $g3<3; $g3++){
+for($l=0; $l<5; $l++){
+$usuCursor[] = array("Grupo {$g1}", "Grupo {$g2}", "Grupo {$g3}", "Concepto {$l}", $l*10);
+}
+}
+}
+}
+eAddButton("pdf", "PDF"        		, "gsExpor('P&BW=&VIEW=0')", "", "id=BOTONPDF");
+eAddButton("on" , "GreenBar"        , "uGreenBar()", "", "id=BOTONGreenBar");
+eAddButton("off", "Informe Resumido", "uResumen()" , "", "id=BOTONResumen" );
+[JSEnd]l
+S("#BOTONPDF").fixed(5, -80);
+S("#BOTONGreenBar").fixed(5, -40);
+S("#BOTONResumen" ).fixed(5, -1);
+[JSIni]l
+function uGreenBar(){
+var on;
+if( S(".BROWSE").class("?GREENBAR") ){
+S(".BROWSE").class("-GREENBAR");
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "i";
+on = false;
+}else{
+S(".BROWSE").class("+GREENBAR");
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "j";
+on = true;
+}
+var EditList = top.S.ruleGet(window, ".EditList"),
+EditListGreenBar = top.S.ruleGet(window, ".EditListGreenBar"),
+dim = "2l".split(","), n;
+if( !on ) EditListGreenBar = EditList;
+for(n=0; n<dim.length; n++){
+top.S(window).rule("+.col_"+dim[n]+" td:nth-child("+(top.S.mid(dim[n],0,-1)*1+1)+"){"+EditList+"}", "list");
+top.S(window).rule("+.col_"+dim[n]+" TBODY TR:nth-child(even) td:nth-child("+(top.S.mid(dim[n],0,-1)*1+1)+"){"+EditListGreenBar+"}", "list");
+}
+}
+function uResumen(){
+S("TR[eDetail='1']").display("table-row");
+var o = S("TR[eDetail='2']");
+if( o.length ){
+if( o.dim[0].offsetHeight>0 ){
+o.none();
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "j";
+}else{
+o.display("table-row");
+S.toTag(S.eventObj(event),"TABLE").rows[0].cells[0].children[0].innerText = "i";
+}
+}
+}
+[JSIni]*
+function poneClases(){
+}

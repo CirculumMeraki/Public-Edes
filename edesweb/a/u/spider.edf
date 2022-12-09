@@ -1,0 +1,156 @@
+[Title]SPIDER
+[DBTable]gs_spider
+[DBIndex]cd_gs_spider
+[DBOrder]cdi_insert desc
+[DBSerial]cd_gs_spider
+[UploadFile]filename|/d/_spider|cd_gs_spider|5.000.000|Fichero Spider|zip
+[AddOption]*|objeto|,; F,Ficha; G,MultiFicha; L,Listado
+[AddOption]*|estado|,; P,Pendiente; I,Investigando; S,Solucionado
+[Icon]a|app|==L|id="DIMAPP" onclick="MenuServer()"
+[JSIni]a
+function MenuServer(){
+S(S.event(window)).menu(_MenuServer, {zIndex:9999999,
+function:function(o,p,a,s,d,z,x,c){
+ePF("app", o);
+}
+});
+}
+[AddButton]cR|Generar Opción "<b>Ejecutar SPIDER</b>"||GenerarSpider()
+[JSIni]cR
+function GenerarSpider(){
+top._Spider = "edes.php?"+eGF("objeto")+eGF("modo")+":"+eGF("url")+"&_SPIDER_=E";
+S.info('Opción "<b>Ejecutar SPIDER</b>" generada.', 3);
+}
+[JSEnd]cR
+if( eGF("estado")!="I" ) S("#AddButton1").none();
+[Fields]l||TRIM
+|cd_gs_spider|+|T|4||*|||
+Aplicación|app|D|T|30||MQ|||
+,En·desarrollo|en_desarrollo|D|C|1||M|||
+CDI Petición|cdi_insert|CDI|T|19||Q-|||
+Estado|estado|D|SV|12||-|||
+Descripción|nm_gs_spider|D|T|60||M|||
+Pantalla de acceso|objeto|D|T|10||M||=|
+[Format]
+$_vF[6] = '<img src="edes.php?R:/d/_spider/'.$_vF[0].'.png">';
+if( $_vF[4][0]=="P" ){
+$_CellsStyle[4] = "color:red";
+}else if( $_vF[4][0]=="I" ){
+$_CellsStyle[4] = "color:blue";
+}else if( $_vF[4][0]=="S" ){
+$_CellsStyle[4] = "color:green";
+}
+[Fields]
+|cd_gs_spider|+|T|4||*|||
+Aplicación|app|D|T|30||AQ||#|
+,En desarrollo|en_desarrollo|D|C|1||M|||
+#!(a) ,Version edes|version_edes|D|T|10||-|||
+Descripción|nm_gs_spider|D|T|60|problema|M||#|
+Objeto|objeto|#|SV|10||M||#|
+,Modo|modo|#|T|2||M|||
+,Url|url|#|T|60||M||#|
+HRef|href|#|T|60|problema|M||#|
+Problema|problema|#|A|256,80,5||M||#|
+Reportado por|reportado_por|N|T|60|problema|M||#|
+#(a) Estado|estado|D|SV|12||-|P|#|
+#!(a) Estado|estado|D|SV|12||MQ||#|
+,Fichero Spider|filename|d|F|30|<problema|M||#|
+#(?) CDI Petición|cdi_insert|CDI|T|19||Q|||
+#(a) CDI Petición|cdi_insert|CDI|T|19||-|#y2s#||
+#!(a) CDI Petición|cdi_insert|CDI|T|19||-|||
+#!(a) CDI Ok|cdi_ok|CDI|T|19||-|||
+#(?R) -|Captura de Pantalla
+#(?R) {P} Imagen|NoTD
+[P]Imagen
+echo '<td colspan=2 style="text-align:center">';
+echo '<img src="edes.php?R:/d/_spider/'.$_vF["cd_gs_spider"].'.png">';
+[JSEnd]a--
+ePF([
+["app","XXX"],
+["nm_gs_spider","INFORME - NO HACE COLSPAN EN EL PDF"],
+["problema","NO HACE COLSPAN"],
+["reportado_por", "JAVIER"]
+]);
+[PHPEnd]a
+if( qCount("gs_spider")==0 ){
+?>
+<script type="text/javascript">
+S("#DIMAPP").none();
+</script>
+<?PHP
+}else{
+$menu="[['-Menú de aplicaciones']";
+qQuery("select app from gs_spider group by app order by app");
+while($r=qRow()){
+$menu .= ",['{$r[0]}','','{$r[0]}']";
+}
+$menu.="];";
+echo "<script type='text/javascript'>var _MenuServer={$menu}</script>";
+}
+[PHPIni]M
+$_UltimoEstado = "";
+if( $_vF["estado"]=="I" ){
+qQuery("select estado from gs_spider where cd_gs_spider=".$_vF["cd_gs_spider"], $p1);
+$row=qArray($p1);
+$_UltimoEstado = $row["estado"];
+}
+[PHPEnd]M
+if( $_vF["estado"]=="I" ){
+if( $_UltimoEstado<>"I" ){
+eUnZip("../d/_spider/".$_vF["cd_gs_spider"].".zip", "../d/_spider");
+}
+}else{
+list($nomFile) = explode(".", $_vF["filename"]);
+if( $nomFile<>"" ){
+$mask = "../d/_spider/{$nomFile}*.*";
+array_map("unlink", glob($mask));
+}
+}
+[DBIni]M
+if( $_vF["estado"]=="S" ){
+if( $_vF["cdi_ok"]=="" ) $_vF["cdi_ok"] = eGetCDI();
+}else{
+$_vF["cdi_ok"] = "";
+}
+[DBEnd]A
+$id = qId();
+$fileZip = $_FILES["filename"]["name"];
+if( file_exists($fileZip) ){
+$fileExp = "";
+$fileDef = "";
+$dim = eZipDir($fileZip);
+for($n=0; $n<count($dim); $n++){
+if( substr($dim[$n],-4)==".png" ){
+$fileExp = $dim[$n];
+}else if( substr($dim[$n],-4)==".def" ){
+$fileDef = $dim[$n];
+}
+}
+if( $fileExp<>"" ){
+if( eUnZip($fileZip, '../d/_spider', [$fileExp, $fileDef])==2 ){
+eImgResize("../d/_spider/{$fileExp}", "../d/_spider/{$id}.png", "25%");
+@unlink("../d/_spider/{$fileExp}");
+if( $fileDef<>"" ){
+$dim = file("../d/_spider/{$fileDef}");
+list($url) = explode("&", $dim[0]);
+list($obj, $url) = explode(":", $dim[0]);
+if( $url[0]=="/" ) $url = substr($url,1);
+$mode = substr($obj,1);
+$obj = $obj[0];
+list(,,$ver,,,,,$href) = explode("|", $dim[2]);
+@unlink("../d/_spider/{$fileDef}");
+$href = str_replace("'", "&#39;", $href);
+qQuery("update gs_spider set objeto='{$obj}', modo='{$mode}', url='{$url}', version_edes='{$ver}', href='{$href}' where cd_gs_spider={$id}");
+}
+}
+}
+}
+[DBIni]B
+list($nomFile) = explode(".", $_vF["filename"]);
+if( $nomFile<>"" ){
+$mask = "../d/_spider/{$nomFile}*.*";
+array_map("unlink", glob($mask));
+}
+@unlink("../d/_spider/".$_vF["cd_gs_spider"].".png");
+[PHPIni]a
+if( !is_dir("../d/_spider") ) eMessage("Falta el directorio [../d/_spider]", "HSE");

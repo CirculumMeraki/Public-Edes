@@ -1,0 +1,9 @@
+[Title]CATEGORIA/S DOCUMENTO/S
+[DBTable]gs_doc_class
+[DBIndex]cd_gs_doc_class;nm_gs_doc_class||true
+[DBOrder]nm_gs_doc_class
+[DBSerial]cd_gs_doc_class
+[FormStatic]
+[Fields]
+|cd_gs_doc_class|+|T|9||*|||
+Categoría|nm_gs_doc_class|D|T|30||MQ||#|

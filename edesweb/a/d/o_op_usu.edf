@@ -1,0 +1,215 @@
+[Title]=Opciones x Usuario
+[SubTitle]uOps()
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBIndex]cd_gs_op
+[DBOrder]cd_gs_op
+[DBLimit]50000,50000
+[Expire]300
+[PHPStart]l
+$_TopMaxRec = 5000;
+[NoSort]
+[Cursor]NO
+[TipTH]Acceso=Opciones asignadas por el árbol, seq _insert=Opciones Activadas Individualmente, seq _delete=Opciones Desactivadas Individualmente
+[AccessFields]opcion, op_mode, op_add, op_del|arbol_opciones
+[Fields]
+seq|seq|+|T|9||*|||
+cd_gs_op|cd_gs_op|+|T|9||*|||
+Indent|indent|+|T|4||*|||
+type|type|N|T|1||*|||
+Caption|caption|D|T|80||-|||
+I|seq _insert|+|T|6||-|||
+D|seq _delete|+|T|6||-|||
+|mode|X|T|1||*|||
+[ColsOp],,,,c,+,+
+[Format],,,, ,b,b
+$_CellsClass[4] = 'n'.$_vF[2];
+if( $_vF[3]=='F' ){
+$_vF[4] = '<img src=g/tree_0.gif onclick=OO()>'.$_vF[4];
+$_vF[5] = $_vF[6] = '';
+}
+[DBSql]l
+$AddFiltro = '';
+if( $_GET['_FILTER']!='' ) $AddFiltro = ' and '.str_replace( 'seq=','O.seq=',$_GET['_FILTER']);
+$OpNo = "'U'";
+if( $_Development ) $OpNo .= "";
+else if( $_Test ) $OpNo .= ",'D'";
+else $OpNo .= ",'D','T'";
+if( file_exists('../_datos/config/manager_op_filter.php') ) include('../_datos/config/manager_op_filter.php');
+$FilterUser = str_replace('#.','',$FilterUser);
+if( $FilterUser<>'' ) $FilterUser = ' and '.$FilterUser;
+$xUserWhereIn = '';
+if( $_GET['_UserWhereIn'] ) $xUserWhereIn = ' and U.cd_gs_user in (select cd_gs_user from gs_user_in where user_op='.$_SESSION['_User'].')';
+$xPermission = ( $xUserWhereIn!='' ) ? '' : " and permission='S'";
+if( $AddFiltro=='' ){
+qQuery( "select O.seq, O.cd_gs_op, O.indent, O.type, O.caption
+,(select count(distinct U.cd_gs_user) from gs_user_op U where U.cd_gs_op=O.cd_gs_op and U.action='I' {$xUserWhereIn} and U.cd_gs_user in ( select cd_gs_user from gs_user where cd_gs_user=U.cd_gs_user {$xPermission} {$FilterUser} and cd_type_tree='P' ) )
+,(select count(distinct U.cd_gs_user) from gs_user_op U where U.cd_gs_op=O.cd_gs_op and U.action='D' {$xUserWhereIn} and U.cd_gs_user in ( select cd_gs_user from gs_user where cd_gs_user=U.cd_gs_user {$xPermission} {$FilterUser} and cd_type_tree='P' ) )
+,O.mode
+from {$_SESSION['ShareDictionary']}gs_op O where O.type<>'L' and O.show_type not in ({$OpNo}) {$AddFiltro}
+order by O.seq" );
+}else{
+qQuery( "select O.seq, O.cd_gs_op, O.indent, O.type, O.caption
+,0
+,0
+,O.mode
+from {$_SESSION['ShareDictionary']}gs_op O where O.type<>'L' and O.show_type not in ({$OpNo}) {$AddFiltro}
+order by O.seq" );
+}
+$_TReg = 1;
+[PHPEnd]l
+if( $_GET['_FILTER']!='' ){
+?>
+<script type="text/javascript">
+BROWSE.children[0].children[5].style.display = 'none';
+BROWSE.children[0].children[6].style.display = 'none';
+</script>
+<?PHP
+}
+[JSEnd]l
+var _IndentBase = 0;
+if( BROWSE.rows.length>2 ) _IndentBase = BROWSE.rows[1].cells[2].textContent*1;
+var _RowNumber;
+function OO(){
+var Obj = S.event(window);
+var tmp = Obj.src.split('_');
+var Estado = tmp[tmp.length-1].substring(0,1);
+var i = Obj.parentNode.parentNode.rowIndex + 1;
+var oID = Obj.parentNode.className;
+var sID = 'n'+(parseInt(oID.substring(1))+1);
+var FILA = BROWSE.rows;
+var tTR = FILA.length;
+if( Estado == 0 ){
+Obj.src = Obj.src.replace('_0.','_1.');
+while( i < tTR && oID < FILA[i].cells[4].className ) FILA[i++].style.display = 'none';
+}else{
+Obj.src = Obj.src.replace('_1.','_0.');
+while( i < tTR && (oID < FILA[i].cells[4].className ) ){
+if( sID == FILA[i].cells[4].className ){
+FILA[i].style.display = 'block';
+if( FILA[i].cells[4].all.length == 1 ) FILA[i].cells[4].firstChild.src = FILA[i].cells[4].firstChild.src.replace('_0.','_1.');
+}
+i++;
+}
+}
+setTimeout('_RecalcSlideTH();MovTitulos();',1);
+}
+var _FILAS = BROWSE.rows;
+function Procesando(e){
+if( e ){
+with( PROCESANDO.style ){
+top = px(_XY[1]);
+left = px(_XY[0]);
+display = 'block';
+}
+}else{
+PROCESANDO.style.display = 'none';
+}
+}
+function VerTodo(){
+_XY = top.eXY( S.event(window) );
+Procesando(1);
+setTimeout('_VerTodo()',1);
+}
+function _VerTodo(){
+for( var v=_FILAS.length-1; v>=1; v-- ){
+_FILAS[v].style.display = 'block';
+if( _FILAS[v].cells[4].all.length == 1 ) _FILAS[v].cells[4].firstChild.src = _FILAS[v].cells[4].firstChild.src.replace('_1.','_0.');
+}
+Procesando(0);
+}
+function VerResumen(){
+_XY = top.eXY( S.event(window) );
+Procesando(1);
+setTimeout('_VerResumen()',1);
+}
+function _VerResumen(){
+for( var v=_FILAS.length-2; v>=1; v-- ){
+if( _FILAS[v].cells[4].className=='n'+_IndentBase ){
+_FILAS[v].style.display = 'block';
+if( _FILAS[v].cells[4].all.length == 1 ) _FILAS[v].cells[4].firstChild.src = _FILAS[v].cells[4].firstChild.src.replace('_0.','_1.');
+}else{
+_FILAS[v].style.display = 'none';
+}
+}
+setTimeout('top.eScrollTH(document.all.BROWSE.parentNode)',1);
+Procesando(0);
+}
+function Ver2Resumen(){
+_XY = top.eXY( S.event(window) );
+Procesando(1);
+setTimeout('_Ver2Resumen()',1);
+}
+function _Ver2Resumen(){
+for( var v=_FILAS.length-1; v>=1; v-- ){
+if( _FILAS[v].cells[4].className < 'n'+(_IndentBase+2) ){
+_FILAS[v].style.display = 'block';
+if( _FILAS[v].cells[4].all.length == 1 ) _FILAS[v].cells[4].firstChild.src = _FILAS[v].cells[4].firstChild.src.replace('_0.','_1.');
+}else{
+_FILAS[v].style.display = 'none';
+}
+}
+setTimeout('top.eScrollTH(document.all.BROWSE.parentNode)',1);
+Procesando(0);
+}
+function MarcarOp2( Op, OpTextContent, Obj ){
+if( Op!=null ){
+var Obj = BROWSE.rows, n;
+for( n=1; n<Obj.length; n++ ){
+if( eTrim(Obj[n].cells[7].textContent)==Op ){
+Obj[n].style.backgroundColor = '#FFF0AF';
+}else{
+Obj[n].style.backgroundColor = '';
+}
+}
+}
+}
+function MarcarOp(){
+top.eMenu( window, S.event(window), _uMode, MarcarOp2 );
+}
+[PHPEnd]l
+global $_ModeLabel;
+include_once( '../_datos/config/manager_op.ini' );
+echo '<script type="text/javascript">';
+echo 'var _uMode = { ".~":"Modo a Marcar"';
+foreach( $_ModeLabel as $k=>$v ){
+echo ",'.{$k}':'{$v}'";
+}
+echo ",'.-':''";
+echo ",'.*':'Limpiar'";
+echo '};';
+echo '</script>';
+[JSOnClickRow]l||4,5,6
+_RowNumber = RowNumber;
+if( ColNumber==4 ){
+if( eGF('type')=='O' ){
+top.eSWOpen( window, 'edes.php?Ll:$a/d/o_users_op.edf&cd_gs_op='+eGF('cd_gs_op')+'&mode='+eGF('mode')+'&_MODE=<?=$_GET["_MODE"]?>&_cm=<?=$_GET["_cm"]?>&_UserWhereIn=<?=$_GET["_UserWhereIn"]?>' );
+}else{
+S(S.event(window).parentNode.cells[4].children[0]).eventClick();
+}
+}else{
+if( eClearThousands(_oTD.textContent) > 0 ){
+top.eSWOpen( window, 'edes.php?Ll:$a/d/o_user_op_del.edf&cd_gs_op='+eGF('cd_gs_op')+'&action='+((ColNumber==5)?'I':'D')+'&_MODE=<?=$_GET["_MODE"]?>&_UserWhereIn=<?=$_GET["_UserWhereIn"]?>' );
+}
+}
+[CSSAdd]l
+.n0 { padding-left:   5px; }
+.n1 { padding-left:  22px; }
+.n2 { padding-left:  39px; }
+.n3 { padding-left:  56px; }
+.n4 { padding-left:  73px; }
+.n5 { padding-left:  90px; }
+.n6 { padding-left: 107px; }
+.n7 { padding-left: 124px; }
+.n8 { padding-left: 141px; }
+.n9 { padding-left: 158px; }
+[PHPIni]l
+function uOps(){
+?>
+<table><tr>
+<TH class=THOption width=1 style='background:transparent'><img src='g/tree_1.gif' onclick=VerTodo() title='Mostrar todas las opciones'>
+<TH class=THOption width=1 style='background:transparent'><img src='g/tree_2.gif' onclick=Ver2Resumen() title='Mostrar dos niveles'>
+<TH class=THOption width=1 style='background:transparent'><img src='g/tree_0.gif' onclick=VerResumen() title='Mostrar solapas'>
+<TH class=THOption width=1 style='background:transparent'><img src='g/buscar.gif' onclick=MarcarOp() title='Marcar opciones'>
+</table>
+<?PHP
+}

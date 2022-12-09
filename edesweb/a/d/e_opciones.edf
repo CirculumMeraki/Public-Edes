@@ -1,0 +1,248 @@
+[Title]ESTADISTICA DE USO
+[DBTable]gs_acceso
+[DBIndex]num_acceso
+[DBOrder]cdi
+[DBSerial]num_acceso
+[DefAux]cd_gs_user|gs_user, user_name, ' ', user_surname
+[Fields]
+num_acceso|num_acceso|+|T|9||-|||
+cd_gs_toperacion|cd_gs_toperacion|0|S|40||M|||
+conexion|conexion|+|T|9||M|||
+objeto|objeto|#D|T|1||M||#|
+modo|modo|#D|T|2||M||#|
+edf|edf|#D|T|40||M||#|
+tabla|tabla|#D|T|15||M||#|
+parametros|parametros|#D|T|80||M||#|
+CDI|cdi|CDI|T|19||MQ|#sy2s#|#|
+pagina|pagina|#D|T|80||M|||
+parametro|parametro|#D|T|80||M||#|
+registros|registros|+|T|9||M|||
+uso_cpu|uso_cpu|+|T|9||M||#|
+byts|byts|+|T|9||M||#|
+Local|cd_gs_node|0|S|60||MQ|||
+Usuario|cd_gs_user|+|S|60||MQ|||
+[DBSql]l
+include_once('../_datos/config/desktop.ini');
+$usuCursor = array();
+qQuery( "select filename from {$_SESSION['ShareDictionary']}gs_tree where cd_gs_tree={$_Tree}" );
+$row = qRow();
+$Dim = file( '../tree/'.$row[0] );
+eInit();
+for( $n=0; $n<count($Dim); $n++ ){
+list( $Label, $Op ) = explode( '|', $Dim[$n] );
+list( $Op ) = explode( '~', $Op );
+$Op = trim($Op);
+if( trim($Label)=='' ) continue;
+$sURL = '';
+if( $Op[0]==':' ){
+$Mas = substr($Op,1);
+}else if( $Op!='' ){
+if( substr( $Op,-1)==':' ){
+$sURL = $Op . $Mas;
+}else{
+$sURL = $Op;
+}
+}
+$nivel = strlen($Label) - strlen(ltrim($Label));
+$Label = trim($Label);
+if( substr($Label,0,1) == '¿' ) $Label = trim(substr( $Label, strpos($Label,'?')+1 ));
+if( substr($Label,0,1) == '[' ){
+$ico = trim(substr( $Label, 1,strpos($Label,']')-1 ));
+if( $ico[0]=='$' ){
+$ico = '<img src="edes.php?R:$a/g/'.substr($ico,1).'">';
+}else{
+$ico = '<img src="'.$ico.'">';
+}
+$Label = $ico.trim(substr( $Label, strpos($Label,']')+1 ));
+}else if( $Label[0] == '{' ){
+$ico = trim(substr( $Label, 1,strpos($Label,'}')-1 ));
+if( $ico[0]=='$' ){
+$ico = '<img src="edes.php?R:$a/g/'.substr($ico,1).'">';
+}else{
+$ico = '<img src="'.$ico.'">';
+}
+$Label = $ico.trim(substr( $Label, strpos($Label,'}')+1 ));
+}else if( $nivel==0 ){
+if( $_DesktopType == 2 ) $Label = '<img src="g/tab.gif">'.$Label;
+}
+if( $sURL[0]=='2' || $sURL[0]=='3' ) $sURL = substr( $sURL, 1 );
+if( $sURL[0] == '?' ){
+$sURL = substr( $sURL, 1 );
+if( $sURL[0] > 0 ) $sURL = trim(substr( $sURL, 1 ));
+}
+if( $sURL[0]=='W' ) $sURL = substr( $sURL, 1 );
+if( $sURL[0]=='w' ) $sURL = substr( $sURL, 1 );
+if( $sURL[0]=='2' || $sURL[0]=='3' ) $sURL = substr( $sURL, 1 );
+if( $sURL[0] == '?' ){
+$sURL = substr( $sURL, 1 );
+if( $sURL[0] > 0 ) $sURL = trim(substr( $sURL, 1 ));
+}
+if( $sURL[0] == 'm' ) $sURL = substr( $sURL, 1 );
+if( $sURL[0] == 'M' ) $sURL = substr( $sURL, 1 );
+if( $sURL[0] == 'R' && substr($sURL,0,2) != 'R:' && substr($sURL,0,3) != 'RR:' && substr_count(substr($sURL,0,5),':') > 0 ){
+$sURL = substr( $sURL, 1 );
+}
+if( substr($sURL,0,2) == 'R:' || substr($sURL,0,2) == 'D:' ) $sURL = 'edes.php?'.$sURL;
+switch( $sURL[0] ){
+case 'F': case '#':
+$sURL = 'F'.substr($sURL,1);
+break;
+case 'L': case '=':
+$sURL = 'L'.substr($sURL,1);
+break;
+case 'G': case '@':
+$sURL = 'G'.substr($sURL,1);
+break;
+case 'E': case '>':
+if( substr_count( $sURL, ':' ) == 0 ){
+$sURL = 'E:'.substr($sURL,1);
+}else{
+$sURL = substr($sURL,1);
+}
+break;
+case 'J': case '^':
+$sURL = substr($sURL,1);
+break;
+case '[':
+break;
+}
+list( $sURL ) = explode('&',$sURL);
+if( substr($sURL,0,10)=='edes.php?R:' ){
+$sURL = eScript( substr( $sURL, 10 ) );
+}
+if( $Label=='-' ){
+$usuCursor[] = array( $nivel, '-', 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 );
+}else{
+$usuCursor[] = array( $nivel, $Label, $sURL, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 );
+}
+}
+$DimALTA   = array('a'	        ,'A');
+$DimBAJA   = array('b','bl','bR','B');
+$DimMODIFI = array('m','ml','mR','M');
+$DimCONSUL = array('c','cl','cR'    );
+$DimModo = array();
+for( $n=0; $n<count($usuCursor); $n++ ){
+$URL = trim($usuCursor[$n][2]);
+if( $URL!='-' && $URL!='' ){
+$DimModo[$URL] = array($n,0);
+if( substr_count( substr($URL,1,4), ':' ) > 0 ){
+if( $URL[0]=='F' || $URL[0]=='G' || $URL[0]=='L' ){
+list( $o, $s ) = explode(':',$URL);
+$Obj = $URL[0];
+$Modo = substr( $o, 1 );
+$MasEXT = '';
+if( $URL[0]=='F' && substr($s,-4)!='.edf' ) $MasEXT = '.edf';
+if( $URL[0]=='G' && substr($s,-4)!='.gdf' ) $MasEXT = '.gdf';
+if( $URL[0]=='L' && substr($s,-4)!='.edf' ) $MasEXT = '.edf';
+if( in_array(	    $Modo, $DimALTA ) ){
+for( $i=0; $i<count($DimALTA); $i++ ){
+$DimModo[$URL[0].$DimALTA[$i].':'.$s] = array($n,0,$DimALTA[$i]);
+$DimModo[$URL[0].$DimALTA[$i].':'.$s.$MasEXT] = array($n,0,$DimALTA[$i]);
+}
+}else if( in_array( $Modo, $DimBAJA ) ){
+for( $i=0; $i<count($DimBAJA); $i++ ){
+$DimModo[$URL[0].$DimBAJA[$i].':'.$s] = array($n,0,$DimBAJA[$i]);
+$DimModo[$URL[0].$DimBAJA[$i].':'.$s.$MasEXT] = array($n,0,$DimBAJA[$i]);
+}
+$DimModo['D'.'bl'.':'.$s.$MasEXT] = array($n,0,'D');
+}else if( in_array( $Modo, $DimMODIFI ) ){
+for( $i=0; $i<count($DimMODIFI); $i++ ){
+$DimModo[$URL[0].$DimMODIFI[$i].':'.$s] = array($n,0,$DimMODIFI[$i]);
+$DimModo[$URL[0].$DimMODIFI[$i].':'.$s.$MasEXT] = array($n,0,$DimMODIFI[$i]);
+}
+$DimModo['D'.'ml'.':'.$s.$MasEXT] = array($n,0,'D');
+}else if( in_array( $Modo, $DimCONSUL ) ){
+for( $i=0; $i<count($DimCONSUL); $i++ ){
+$DimModo[$URL[0].$DimCONSUL[$i].':'.$s] = array($n,0,$DimCONSUL[$i]);
+$DimModo[$URL[0].$DimCONSUL[$i].':'.$s.$MasEXT] = array($n,0,$DimCONSUL[$i]);
+}
+$DimModo['D'.'cl'.':'.$s.$MasEXT] = array($n,0,'D');
+}else if( $Modo == 'l' ){
+$DimModo[$URL[0].'l:'.$s] = array($n,0,'l');
+$DimModo[$URL[0].'l:'.$s.$MasEXT] = array($n,0,'l');
+$DimModo['D'.'l'.':'.$s] = array($n,0,'D');
+$DimModo['D'.'l'.':'.$s.$MasEXT] = array($n,0,'D');
+}
+}else{
+if( $URL[0]=='E' ){
+$DimModo[$URL] = array($n,0,$URL[0]);
+}
+}
+}
+}
+}
+$uWhere = qGetWhere( '' );
+if( $uWhere!='' ) $uWhere = ' where '.$uWhere;
+qQuery( 'select * from gs_acceso'.$uWhere );
+while( $row = qArray() ){
+$uObj = $row['objeto'];
+$uModo = $row['modo'];
+$uEDF = $row['edf'];
+if( $DimModo[ $uObj.$uModo.':'.$uEDF ][0] > 0 ){
+$DimModo[ $uObj.$uModo.':'.$uEDF ][1]++;
+}else{
+}
+}
+$nCol = array();
+$DimOPCION = explode( ',', 'a,A,b,bl,bR,B,m,ml,mR,M,c,cl,cR,l,E,D' );
+$Color = array(
+'A'=>'#fcffd9',
+'B'=>'#ffffff',
+'M'=>'#fcffd9',
+'C'=>'#ffffff',
+'L'=>'#fcffd9',
+'E'=>'#ffffff',
+'D'=>'#fcffd9'
+);
+?>
+<style>
+IMG {
+margin-right: 5px;
+vertical-align: middle;
+}
+</style>
+<?PHP
+$Totales = array(0,0,0);
+echo '<TABLE border=1px cellspacing=1px cellpadding=0>';
+echo '<col><col><col>';
+for( $i=0; $i<count($DimOPCION); $i++ ){
+echo '<COL style="background:'.$Color[ strtoupper($DimOPCION[$i][0]) ].'">';
+}
+echo '<TR><TH>Nº</TH><TH>OPCION</TH><TH>URL</TH>';
+for( $i=0; $i<count($DimOPCION); $i++ ){
+echo '<TH>'.$DimOPCION[$i].'</TH>';
+$nCol[trim($DimOPCION[$i])] = $i+3;
+$Totales[$i+3] = 0;
+}
+echo '</TR>';
+for( $n=0; $n<count($usuCursor); $n++ ){
+if( $usuCursor[$n][1]=='-' ){
+echo '<TR style="font-size:1px;background:red"><TD>'.$n.'</TD>';
+echo '<TD colspan='.(count($DimOPCION)+2).'>&nbsp;</TD></TR>';
+}else{
+echo '<TR><TD>'.$n.'</TD>';
+echo '<TD style="padding-left:'.($usuCursor[$n][0]*15).'px">'.$usuCursor[$n][1].'</TD><TD>'.$usuCursor[$n][2].'&nbsp;</TD>';
+for( $i=0; $i<count($DimOPCION); $i++ ){
+echo '<TD>';
+$Valor = 0;
+foreach( $DimModo as $key => $value ){
+if( $value[0]==$n ){
+if( $DimOPCION[$i]==$value[2] ){
+$Valor += $value[1];
+}
+}
+}
+$Totales[$i+3] += $Valor;
+if( $Valor==0 ) $Valor = '&nbsp;';
+echo $Valor.'</TD>';
+}
+echo '</TR>';
+}
+}
+echo '<TR><TH></TH><TH></TH><TH></TH>';
+for( $i=0; $i<count($DimOPCION); $i++ ){
+echo '<TH>'.$Totales[$i+3].'</TH>';
+}
+echo '</TR>';
+echo '</TABLE>';
+eEnd();

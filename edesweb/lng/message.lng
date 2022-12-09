@@ -1,0 +1,24 @@
+[Language] es,ca,en,fr
+60|Registros encontrados: #1<br>Nº máximo de registros a visualizar: #2<br>Active más condiciones|Registres oposats: #1<br>Nº màxim de registres a visualitzar: #2<br>Activi més condicions|Records found: #1<br>Maximum Nº of records to extract: #2<br>Activate more conditions|Registros encontrados: #1<br>Nº máximo de registros a visualizar: #2<br>Active más condiciones
+61|Demasiados registros a extraer.<br>Nº máximo de registros a visualizar: #.<br>Active más condiciones|Massa registres a extreure.<br>Nº màxim de registres a visualitzar: #.<br>Activi més condicions|Too many records to extract.<br>Maximum Records Nº to extract: #.<br>Activate more conditions|Demasiados registros a extraer.<br>Nº máximo de registros a visualizar: #.<br>Active más condiciones
+62|Registros encontrados FUERA DE TU AMBITO: #1<br>Nº máximo de registros a visualizar: #2<br>Active más condiciones|Registres oposats FORA DEL TEU ÀMBIT: #1<br>Nº màxim de registres a visualitzar: #2<br>Activi més condicions|Records found OUTSIDE YOUR FIELD: #1<br>Maximum Nº of records to extract: #2<br>Activate more conditions|Registros encontrados FUERA DE TU AMBITO: #1<br>Nº máximo de registros a visualizar: #2<br>Active más condiciones
+63|Demasiados registros a extraer.<br>Nº máximo de registros a visualizar: #<br>Active más condiciones|Massa registres a extreure.<br>Nº màxim de registres a visualitzar: #<br>Activi més condicions|Too many records to extract.<br>Maximum Records Nº to extract: #.<br>Activate more conditions|Demasiados registros a extraer.<br>Nº máximo de registros a visualizar: #<br>Active más condiciones
+64|Objeto no soportado "#"|Objecte no suportat "#"|Non supported Item "#"|Objeto no soportado "#"
+65|Ya hay un registro igual|Ja hi ha un registre igual|This record is alredy in use|Ya hay un registro igual
+66|No hay registros|No hi ha registres|There are no records|No hay registros
+67|No hay registros que cumplan la condición|No hi ha registres que compleixin la condició|There are no records that can carry on the condition|No hay registros que cumplan la condición
+68|INSERTADO|INSERIT|ADDED|INSERTADO
+69|MODIFICADO|MODIFICAT|MODIFIED|MODIFICADO
+70|BORRADO|ESBORRAT|DELETED|BORRADO
+71|RECUPERADO|RECUPERAT|RECOVERED|RECUPERADO
+72|Cargando PDF|Carregant PDF|Loading PDF|Cargando PDF
+73|Cargando XLS|Carregant XLS|Loading XLS|Cargando XLS
+74|Cargando MDB|Carregant MDB|Loading MDB|Cargando MDB
+75|ERROR: Fichero excede el máximo tamaño permitido|ERROR: Fitxer excedeix la màxima grandària permesa|ERROR: The Data file surpass the maximum size allowed|ERROR: Fichero excede el máximo tamaño permitido
+76|ERROR: Fichero demasiado grande|ERROR: Fitxer massa gran|ERROR: The Data file is too big|ERROR: Fichero demasiado grande
+77|ERROR: Fichero incompleto|ERROR: Fitxer incomplet|ERROR: Incomplete data file|ERROR: Fichero incompleto
+78|ERROR: Fichero no cargado|ERROR: Fitxer no carregat|ERROR: Data file not loaded|ERROR: Fichero no cargado
+79|ENVIADO A PAPELERA|ENVIAT A PAPERERA|SENT TO TRASH|ENVIADO A PAPELERA
+80|Cargando TXT|Carregant TXT|Loading TXT|Cargando TXT
+81|Cargando XML|Carregant XML|Loading XML|Cargando XML
+82|Cargando ZIP|Carregant ZIP|Loading ZIP|Cargando ZIP

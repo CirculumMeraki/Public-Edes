@@ -1,0 +1,88 @@
+#include(*) lng
+    
+	[Title] @ACCESO/S@
+#(l)[Title] @LISTADO DE ACCESOS@
+
+[DBTable]  gs_acceso
+[DBIndex]  num_acceso
+[DBOrder]  num_acceso desc
+[DBSerial] num_acceso
+[DBLimit]  10000,1000
+
+[DBAddFilter] cd_gs_user not in (select cd_gs_user from gs_user where system_user='S')
+
+[Cursor]
+
+[DefAux] cd_gs_user | gs_user, cd_gs_user, user_surname,', ',user_name
+[TipTH] || Modo |||| Objeto
+
+[AddCode] cR | cd_gs_user | A | &nbsp;<img src='edes.php?R:$a/g/usuario.gif' style='margin-bottom:5;' title='@Consultar Usuario@' onclick='top.eSWOpen( window,"edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user="+eGF("cd_gs_user"))'>
+[AddCode] cR | cd_gs_node | A | &nbsp;<img src='edes.php?R:$a/g/local.gif' style='margin-bottom:5;' title='@Consultar Local@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/nodo.edf&_SEEK&cd_gs_node="+eGF("cd_gs_node"))'>
+
+[AddCode] ? | _desde_hours,_hasta_hours | I | noConditions
+[DBRange] ? | cdi | _desde | _hasta
+
+[Fields]
+    @Instante Desde@ | _desde           | F4  | T | 10 |             | QF | #today# |   | 
+   ,                 | _desde_hours     | H   | T | 8  |             | Q  |         |   | 
+   ,@Hasta@          | _hasta           | F4  | T | 10 |             | QF |         |   | 
+   ,                 | _hasta_hours     | H   | T | 8  |             | Q  |         |   | 
+    @Instante@       | cdi              | CDI | T | 19 |             | -  |         |   | 
+
+   ,@Acción@         | cd_gs_toperacion | #X  | S | 15 | +objeto     | Q- |         |   | 
+
+    @Modo@\@M@       | modo             | #N  | T | 2  |             | Q- |         | % | 
+   ,@Tabla@          | tabla            | n   | T | 15 | <parametros | Q- |         |   | 
+
+    @Parámetros@     | parametros       | #X  | T | 50 | +objeto     | Q- |         |   | 
+    @Script@         | edf              | #D  | T | 40 |             | Q- |         |   | 
+   ,@Objeto@\@O@     | objeto           | N   | T | 1  |             | Q- |         | % | 
+   -
+    @Usuario@        | cd_gs_user       | 0   | S | 35 | edf         | Q- |         |   | 
+    @Nodo@           | cd_gs_node       | 0   | S | 35 | edf         | Q- |         |   | 
+    @Acceso número@  | num_acceso       | +   | T | 7  |             | *  |         |   | 
+
+
+[Note]
+.[DBRange] ? | cdi | _desde | _hasta
+[Fields] ?
+    Fecha Solicitud | _desde | F4 | T | 10 |     | QF  |||
+   ,                | _hasta | F4 | T | 10 |     | QF  |||
+    Fecha Solicitud | cdi    | F4 | T | 19 | 140 | *Q* |||
+
+[Debug] * | sql
+[JSCheck] ?
+var Desde=Hasta='';
+if( eGF('_desde')!='' ){
+	Desde = eDTS( eGF('_desde') );
+	Desde = Desde.substr(0,4)+'-'+Desde.substr(4,2)+'-'+Desde.substr(6,2)+' 00:00:00';
+}
+if( eGF('_hasta')!='' ){
+	Hasta = eDTS( eGF('_hasta') );
+	Hasta = Hasta.substr(0,4)+'-'+Hasta.substr(4,2)+'-'+Hasta.substr(6,2)+' 23:59:59';
+}
+
+if( Desde!='' && Hasta!='' ){
+	ePF('cdi','>='+Desde+'<='+Hasta);
+}else if( Desde!='' ){
+	ePF('cdi','>='+Desde);
+}else if( Hasta!='' ){
+	ePF('cdi','<='+Hasta);
+}else{
+	ePF('cdi','');
+}
+alert( eGF('cdi') );
+
+
+[Note]
+	strip_tags()
+
+    Registros            | registros                               | +   | T |  7 |   | Q- |        ||
+    Nodo                 | conexion{gs_conexion,conexion,cd_gs_node} | 0   | S |  7 |   | Q- |        ||
+    Pagina               | pagina                                  | X   | T | 80 | 2 | Q- |        ||
+    Uso Cpu              | uso_cpu                                 | 0   | T |  7 |   | Q- |        ||
+    Bits                 | byts                                    | 0   | T |  7 |   | Q- |        ||
+
+structure gs_acceso;
+alter table gs_acceso add tabla char(15) after edf;
+structure gs_acceso;

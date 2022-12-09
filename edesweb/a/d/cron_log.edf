@@ -1,0 +1,18 @@
+[Title]=CRON LOG
+[DBTable]cron_log
+[DBOrder]ys_ini
+[AddOption]*|estado|,; P,Precesandose; E,Error; T,Terminado
+[DBRange]?|ys_ini|_desde|_hasta
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[Fields]?
+Proceso|cd_cron|N|S|80||MQ|||
+Inicio Desde|_desde|F4|T|10||QF|#today#||
+,|_desde_hours|H|T|8||Q|||
+,Hasta|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+Estado|estado|#D|SV|12||MQ|||
+[Fields]
+Proceso|cd_cron|N|S|80||MQ|||
+Inicio|ys_ini|CDI|T|19||MQ|||
+,Final|ys_fin|CDI|T|19||M|||
+,Estado|estado|#D|SV|12||MQ|||

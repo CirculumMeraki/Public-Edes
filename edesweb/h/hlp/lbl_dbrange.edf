@@ -1,0 +1,41 @@
+[Help]dbrange.htm
+[Title]DBRange
+[Delimiter]Mode|","
+[Fields]
+Condición intérprete|ConditionLine|#|T|50||M|||
+Modo|Mode|#|T|20||M|?|#||:-Modo; ?,?; c,c; m,m; b,b; q,q; s,s
+Campo|Field|#|T|20||M||#|
+Campo virtual Desde|from|#|T|20||M||#|
+Campo virtual Hasta|to|#|T|20||M||#|
+-
+Valores Inclusive|ValoresInclusive|#|C|1||M|||
+Copiar en "Campo Hasta"|CopiarEnVarHasta|#|C|1||M|||
+-
+Rem|Rem|#|T|50||M|||
+[JSLoad-]
+if( S(":ValoresInclusive").val()=="" ) S(":ValoresInclusive").val("S");
+[JSCheck]
+if( S(":ValoresInclusive").val()=="S" ){
+o = S(":ValoresInclusive").obj;
+o.type = "input";
+o.value = "";
+}
+if( S(":CopiarEnVarHasta").val()=="S" ){
+o = S(":CopiarEnVarHasta").obj;
+o.type = "input";
+o.value = "=";
+}
+return true;
+[JSCheck-]
+var o;
+if( S(":CopiarEnVarHasta").val()=="" ){
+o = S(":CopiarEnVarHasta").obj;
+o.type = "input";
+o.value = "";
+if( S(":ValoresInclusive").val()=="S" ){
+o = S(":ValoresInclusive").obj;
+o.type = "input";
+o.value = "";
+}
+}
+return true;

@@ -1,0 +1,38 @@
+[Title]IMAGEN|l
+[Format]
+if( eIsPDF() ){
+$_vF[1] = substr($_vF[1],0,strrpos($_vF[1],'.'));
+}else{
+$_vF[1] = '<img src="edes.php?R:/'.'/img/t'.$_vF[0].'.'.$_vF[12].'">';
+}
+if( $_vF[13]==0 ) $_vF[13] = '';
+$_vF[14] = "<img src='g/l_d_".$_vF[12].".gif' onclick='VD()' t='{$_vF[12]}'>";
+[THColSpan]copyrighted,img,Características
+[ColsWidth]quality=0,description=400
+[PDFCol]quality=0, sign_image=0, ppi=0, img=0, REC=0
+[Fields]l
+|cd_gs_img|+|T|9||*|||
+Fichero|nm_gs_img|#D|F|30||-|||
+Categoría|cd_gs_img_class|+|S|20||-|||
+SubCategoría|cd_gs_img_sclass|+|Ss|20||-|||
+Descripción|description|#|A|70||-|||
+Copyright\©|copyrighted|N|C|1||-||=|
+Marca·de agua\MA|sign_image|N|C|1||-||=|
+Calidad|quality|N|SV|5||-|||
+Puntos Por Pulgada\PPI|ppi|+|T|5||-|||
+Tamaño|bytes|+|T|10||-|||
+Ancho px\Ancho|width_px|+|T|4||-|||
+Alto px\Alto|height_px|+|T|4||-|||
+Tipo|extension|#D|T|4||-||=|
+Recortes\NºR|(select count(*) from gs_img MT where MT.copy_of=A.cd_gs_img) as REC|+|T|2||-||=|
+|extension as img|#D|T|4||-||=|
+[PDFWrap]3,,true|description
+[PHPIni]l
+$_PDFLABELHIDDEN['type_file'] = 'NOTTOSHOW';
+$_AddShowFilter = array( 'CLASE: Imagenes' );
+[JSIni]l
+function VD(){
+var TR = S.toTag(S.event(window),'TR');
+top.eCallSrv( window, 'edes.php?D://img/o'+eTrim(TR.cells[0].textContent)+'.'+S.event(window).t+'&FILE='+eTrim(TR.cells[1].textContent) );
+return eClearEvent();
+}

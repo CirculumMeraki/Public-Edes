@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>[Graph] 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Graph]&nbsp; [R/C/A] | ROW(y) | COL(x) | TERRITORIO(x) | ALL COL(x) | LegendTitle | Variable=Valor, ... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Genera gráficas partiendo del listado.<BR><BR>$_GRAPHHIDECOL[5] = true;<BR>$_GRAPHPERCENTAGE['C'] = 1; <BR><BR>Si existe la función eGraphUser() se llamará para modificar las variables por cada tipo de gráfica, se definiría de la siguiente forma:<BR>function eGraphUser( $TipoGRafica, &amp;$_Form, &amp;$_COLSOP, &amp;$TituloGrafica, &amp;$TituloColumna, &amp;$TituloFila, &amp;$TituloLeyenda ){<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>}<BR>También se puede llamar a la función "eGraphUserData" en los tipos Columns y Pie:<BR>eGraphUserData( $TIPO, $_Form, $DatosCol ){<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>}
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Type</TD>
+<TD><STRONG>C</STRONG>: Gráfica de las columnas (Columns)<BR><STRONG>R</STRONG>: Gráfica de las filas (Rows)<BR><STRONG>G</STRONG>: Gráfica del cruze de columnas por filas (Grid)<BR>Tipo de gráfica separada por coma o dejar en blanco y generará las tres.<BR><STRONG>P</STRONG>: Tarta (Pie)</TD></TR>
+<TR>
+<TD>RowTitle</TD>
+<TD>Título de las&nbsp;Filas&nbsp;</TD></TR>
+<TR>
+<TD>ColTitle</TD>
+<TD>Título de las Columnas en Col</TD></TR>
+<TR>
+<TD>ColTitle</TD>
+<TD>Título de las Columnas en&nbsp;Row&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;</TD>
+<TD>Col x Row</TD></TR>
+<TR>
+<TD>LegendTitle</TD>
+<TD>Título de la Leyenda&nbsp;</TD></TR>
+<TR>
+<TD>Variable=Valor</TD>
+<TD>
+<P>Lista de variables con su valor para cambiar la configuración,las variables a cambiar son:<BR><SPAN style="WIDTH: 25px"></SPAN>Decimals<BR><BR><SPAN style="WIDTH: 25px"></SPAN>BarColorGradient<BR><SPAN style="WIDTH: 25px"></SPAN>BarBorderColor<BR><SPAN style="WIDTH: 25px"></SPAN>BarAxisColor&nbsp;<BR><SPAN style="WIDTH: 25px"></SPAN>BarLightPosition<BR><BR><SPAN style="WIDTH: 25px"></SPAN>GraphBorderColor<BR><SPAN style="WIDTH: 25px"></SPAN>GraphLayerColor</P>
+<P><SPAN style="WIDTH: 25px"></SPAN>TitleColor<BR><SPAN style="WIDTH: 25px"></SPAN>TitleRowColor<BR><SPAN style="WIDTH: 25px"></SPAN>TitleColColor</P>
+<P><SPAN style="WIDTH: 25px"></SPAN>DataColor<BR><BR><SPAN style="WIDTH: 25px"></SPAN>GrillColorOne<BR><SPAN style="WIDTH: 25px"></SPAN>GrillColorTwo<BR><BR><SPAN style="WIDTH: 25px"></SPAN>TitleFontType<BR><SPAN style="WIDTH: 25px"></SPAN>FontType<BR>Todas las variables menos Decimals se encuentran en el fichero de configuración "/_datos/config/graph.ini"</P></TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[Graph]&nbsp;* | VOTOS | CANDIDATOS | TERRITORIO | CANDIDATOS x TERRITORIO | CANDIDATOS | BarColorGradient='#FFFFFF', BarColor0='#00FF00'<BR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,175 @@
+#include(*) $lng/activity.edf.lng
+[Title]=ACTIVIDAD
+[FormAction]c|edes.php?Ll:
+[PHPIni]*||UNIQUE
+$_QuestionsEmptyData = false;
+function uLoadUser(){
+$Dim = array(array('',''));
+$xDim = file_get_contents( '../_d_/cfg/dim.lp' );
+$DimUser = array();
+if( $xDim!='' ) $DimUser = unserialize( gzuncompress($xDim) );
+foreach( $DimUser as $k=>$v ){
+$uTxt .= ','.substr($k,1);
+$Dim[] = array(substr($k,1),$v);
+if( trim($v=='') || substr_count($v,'@')==0 ){
+unset($DimUser[$k]);
+$xDim = serialize( $DimUser );
+file_put_contents( '../_d_/cfg/dim.lp', gzcompress($xDim,1) );
+}
+}
+return $Dim;
+}
+[PHPStart]?
+function uMes(){
+return date('d-m-Y', strtotime('-1 month'));
+}
+[PHPIni]l
+$uDim = uLoadUser();
+$uDimUser = array();
+foreach( $uDim as $k=>$v ) $uDimUser[$v[0]] = $v[1];
+[AddOption]?|cd_gs_user|uLoadUser()
+[Fields]?
+Fecha|fecha|F4|T|10||QF|>uMes()||
+User|cd_gs_user|D|SV|45||Q||#|
+[PHPStart]l
+if( isset($_GET['_dia']) ){
+$_POST['fecha'] = $_GET['_dia'];
+$_POST['cd_gs_user'] = $_GET['cd_gs_user'];
+eval(qSetup());
+eInclude($_Sql);
+qQuery( 'select email from gs_user where cd_gs_user='.$_POST['cd_gs_user']);
+list($_POST['_INPUT_cd_gs_user']) = qRow();
+}
+$BuscarDia = $_POST['fecha'];
+$Posicion = eDateDiff(date('Y-m-d'), $BuscarDia);
+if( $Posicion==0 ) $Posicion = 2;
+$Posicion *= 8*60*5+7;
+$DiaABuscar = '';
+$Dim = explode('-',substr($BuscarDia,2));
+for( $n=0; $n<3; $n++ ){
+$v = base_convert($Dim[$n]+17,10,36);
+if( strlen($v)==1 ) $v = '0'.$v;
+$DiaABuscar .= $v;
+}
+$Resultado = '';
+$File = '../_d_/usr/'.substr($BuscarDia,0,4).'.'.$_POST['cd_gs_user'];
+if( file_exists($File) ){
+$fp = @fopen($File,"r");
+fseek($fp, 0, SEEK_END);
+$LongFile = ftell( $fp );
+if( $LongFile > $Posicion ){
+fseek($fp, -$Posicion, SEEK_END);
+$Linea = fgets($fp);
+$UltimoDia = substr($Linea,0,6);
+if( $UltimoDia > $DiaABuscar ){
+$Posicion = $Posicion*2;
+if( $LongFile < $Posicion ) $Posicion = $LongFile;
+fseek($fp, -$Posicion, SEEK_END);
+$Linea = fgets($fp);
+$UltimoDia = substr($Linea,0,6);
+}
+}else{
+fseek($fp, 0, SEEK_SET);
+$Linea = fgets($fp);
+$UltimoDia = substr($Linea,0,6);
+}
+if( $UltimoDia < $DiaABuscar ){					 //eTron('El dia esta mas adelante');
+while( !feof($fp) ){
+$Linea = fgets($fp);
+$UltimoDia = substr($Linea,0,6);
+if( $UltimoDia < $DiaABuscar ){
+}else if( $UltimoDia == $DiaABuscar ){
+$Resultado = substr($Linea,7);
+break;
+}else{
+}
+}
+}else if( $UltimoDia == $DiaABuscar ){
+$Resultado = $Linea;
+}else{
+}
+fclose($fp);
+}else{
+eMessage( 'No existe el fichero', 'HS' );
+}
+if( $Resultado=='' ){
+eMessage( 'No day datos el día '.$_POST['fecha'], 'HS' );
+}
+$Dim = explode(',',$Resultado);
+$DimMinuto = array();
+for( $n=0; $n<count($Dim); $n++ ) $DimMinuto[$Dim[$n]] = true;
+$HoraIni = substr(trim($Dim[0]),0,2);
+$HoraFin = substr(trim($Dim[count($Dim)-1]),0,2);
+$HoraIni = (base_convert($HoraIni,36,10)-17);
+$HoraFin = (base_convert($HoraFin,36,10)-17);
+if( $HoraIni>9 ) $HoraIni = 9;
+if( $HoraFin<18 ) $HoraFin = 18;
+?>
+<style>
+#n {
+background-color:transparent;
+}
+#t {
+background-color:blue;
+}
+#MINUTOS {
+border-left: 1px solid #dddddd;
+border-top: 1px solid #dddddd;
+border-right: 1px solid #dddddd;
+}
+#HORAS {
+background-color:#dddddd;
+}
+#HORAS TH {
+background-color:#ffffff;
+}
+</style>
+<?PHP
+echo '<table cellspacing=0 cellpadding=0 border=0 width=100% height=100%>';
+echo '<tr><td align=center valign=middle>';
+echo '<table cellspacing=0 cellpadding=0 border=0>';
+echo '<tr><th>';
+echo $_POST['_INPUT_cd_gs_user'];
+echo '</th></tr>';
+echo '<tr><td>';
+echo '<table cellspacing=0 cellpadding=0 border=0 height=50 id="MINUTOS">';
+echo '<tr>';
+for( $h=$HoraIni; $h<=$HoraFin; $h++ ){
+for( $m=0; $m<60; $m++ ){
+$v = base_convert($h+17,10,36);
+if( strlen($v)==1 ) $v = '0'.$v;
+$aHora = $v;
+$v = base_convert($m+17,10,36);
+if( strlen($v)==1 ) $v = '0'.$v;
+$aHora .= $v;
+if( $DimMinuto[$aHora] ){
+echo '<td id=t><img src=g/nada.png>';
+}else{
+echo '<td id=n><img src=g/nada.png>';
+}
+}
+}
+echo '</tr>';
+echo '</table>';
+echo '</td></tr>';
+echo '<tr><td>';
+echo '<table cellspacing=1px cellpadding=0 border=0 width=100% id="HORAS">';
+echo '<tr>';
+for( $h=$HoraIni; $h<=$HoraFin; $h++ ){
+echo '<th>'.(($h<10)?'0':'').$h;
+}
+echo '</tr>';
+echo '</table>';
+echo '</td></tr>';
+echo '</table>';
+echo '</td></tr>';
+echo '</table>';
+?>
+<script type="text/javascript">
+top.eLoading(0,window);
+if( top.eIsWindow(window) ){
+top.eSWIResize(window,document.body.scrollWidth,document.body.scrollHeight);
+}
+</script>
+<?PHP
+exit;

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Variables en PHP</td>
+</tr>
+<tr>
+<td id="Descripcion">Variables PHP:<br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> $_Mode</td>
+<td>Variable Modo</td>
+</tr>
+<tr>
+<td> $_SubMode</td>
+<td>Variable SubModo, solo en listados ( cl, ml, bl )</td>
+</tr>
+<tr>
+<td> $_Form</td>
+<td>Matriz con los datos de la etiqueta [Fields]</td>
+</tr>
+<tr>
+<td> $_pF</td>
+<td>Puntero a la matriz $_Form, eje: $_Form[ $pF["NomCampo"] ]</td>
+</tr>
+<tr>
+<td> $_HndDB</td>
+<td>Conexión con la base de datos</td>
+</tr>
+<tr>
+<td> $_InsertId</td>
+<td>Matriz con los valores seriales ( $_InsertId[NomTabla] )</td>
+</tr>
+<tr>
+<td> $_PSOURCE </td>
+<td>Nombre del script que ejecutó la página ( WDESKTOP, WWORK ).</td>
+</tr>
+<tr>
+<td> $_Records</td>
+<td>Variable pública para almacenar el total de registros en un qCount()</td>
+</tr>
+<tr>
+<td> $_vF</td>
+<td>Valor de los campos tanto el las fichas como en los listados ( $_vF[ NomField ]  )</td>
+</tr>
+<tr>
+<td> $EmptyList</td>
+<td>Mostrará el listado aunque no tenga registros, por defecto es false.</td>
+</tr>
+<tr>
+<td> $_SourceScript</td>
+<td>Nombre del fichero de definición DF principal</td>
+</tr>
+<tr>
+<td> $_DownloadPDF</td>
+<td>Modifica el comportamiento de los listados, si esta variable vale "P" se descargará directamente un PDF y si vale "X" será un fichero Excel.</td>
+</tr>
+<tr>
+<td> $_ShowZero</td>
+<td>Valor numérico que indica como se visualizan los valores numéricos en las fichas ( la variable se insertará en [PHPStart] ), los valores son:<br />        1.- Se muestra el valor cero<br />        0.- Si es cero se muestra el campo vacio, valor por defecto.<br />       -1.- Se muestra cero solo si se mete el valor cero, es decir que en un campo numérico si pones cero se verá y si lo borras se verá vacio.</td>
+</tr>
+<tr>
+<td> $_ShowZeroFields</td>
+<td>Valor numérico que indica como se visualiza el valor numérico de un campo en una ficha, esta es una vaiable hash ( la variable se insertará en [PHPStart] ), los valores son:<br />        1.- Se muestra el valor cero<br />        0.- Si es cero se muestra el campo vacio, valor por defecto.<br />       -1.- Se muestra cero solo si se mete el valor cero, es decir que en un campo numérico si pones cero se verá y si lo borras se verá vacio.</td>
+</tr>
+<tr>
+<td> $_AutoJump</td>
+<td>Define si al escribir en un input al rellenar todos los carácteres se salta de campo automaticamente, si la variable es "true" será sobre todos los input, si se define una matriz hash se puede definir unos determinados campos.<br />$_AutoJump = true;<br />$_AutoJump = array( "cd_auto"=>1, ... );<br />$_AutoJump["cd_auto"] = true;<br />En "desktop5.css" esta la clase "AutoJump" con el color con el que se ejecuta el efecto a mostrar los campos de salto automático cuando se pone el foco.</td>
+</tr>
+<tr>
+<td>$_SummaryNoHeaders</td>
+<td>Si esta variable la ponemos a "true" los informes con agrupaciones ([ColsOp] S) no mostrará la cabecera del grupo solo sacará los subtotales.</td>
+</tr>
+<tr>
+<td>$_NOSELECTFILL</td>
+<td>Los campos select aunque no sean editables contienen todos los registros si se quiere, cuando el campos solo es de lectura, tiene dos formas de uso:<br />- $_NOSELECTFILL[ NmField ] = true;// anulas el relleno de los select de uno en uno<br />- $_NOSELECTFILL["*"] = true;     // anulas el relleno de todos los select</td>
+</tr>
+<tr>
+<td>$_DBSEQUENCE</td>
+<td>Si estamos en el controlador oracle y queremos configurar que todas las tablas con secuenciales los generan trigger pondremos esta variable como "NO".</td>
+</tr>
+</tbody>
+</table>
+<br />Etiquetas y variables:<br />Se tiene acceso a todas las etiquetas del lenguaje mediante la variable pública del mismo nombre en mayúsculas precedida de una barra baja, siendo por norma general una cadena si la etiqueta tiene solo un parámetro o una matriz si tiene mas de uno.<br /><br />
+<p>Variables de sesión:<span style="font-size: small;"><br /></span></p>
+<table id="Opciones" style="height: 61px; width: 241px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> $_Node</td>
+<td>Código del nodo</td>
+</tr>
+<tr>
+<td> $_Tree</td>
+<td>Código del árbol de opciones</td>
+</tr>
+<tr>
+<td> $_User</td>
+<td>Código del usuario</td>
+</tr>
+<tr>
+<td> $_pxH</td>
+<td>Altura en pixel del monitor</td>
+</tr>
+</tbody>
+</table>
+<br />Valores por defecto:<br />Estas variables van en la etiqueta [FIELDS] en la columna ocho valores por defecto.
+<table id="Opciones" style="height: 116px; width: 787px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> #clock#</td>
+<td>Formato "HH:MM:SS" dependiendo de la longitud del campo</td>
+</tr>
+<tr>
+<td> #default#</td>
+<td>En los modos (a,b,c,m) si en el desktop está almacenada la variable con el mismo nombre del campo tomará el valor por defecto.</td>
+</tr>
+<tr>
+<td> #sy2s#</td>
+<td>Formato ">YYYY-MM-DD 00:00:00" para búsquedas desde el inicio del día.</td>
+</tr>
+<tr>
+<td> #today#</td>
+<td>Formato "DD-MM-YYYY"</td>
+</tr>
+<tr>
+<td> #y2s#</td>
+<td>Formato "YYYY-MM-DD HH:MM:SS"</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+Variables en "sql.ini":<br />
+<table id="Opciones" style="height: 126px; width: 785px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> $_DownloadUrl </td>
+<td>URL para cuando las descargas se hacen desde otro Apache</td>
+</tr>
+<tr>
+<td> $_DownloadPath</td>
+<td>Directorio donde se guardarán los ficheros de las extracciones.</td>
+</tr>
+<tr>
+<td> $_DownloadDays</td>
+<td>Dias que se guardan las descargas.</td>
+</tr>
+<tr>
+<td>$_TABFormType</td>
+<td>Define el tamaño de las fichas del grupo de fichas, estas puede ser:<br />Diferent: valor por defecto, cada ficha tendrá el tamaño en función de su contenido.<br />Ecual: todas las fichas tendrá el mismo tamaño, siendo tanto el ancho como el alto el mas desfavorable.</td>
+</tr>
+<tr>
+<td> $_NoContentTree</td>
+<td>Indica si al dar de alta o modificar usuarios los árboles que asignes tiene que estar dentro del tuyo, por defecto es false es decir sólo puedes asignar los árboles que te pertenezcan.</td>
+</tr>
+<tr>
+<td> $_CompressedPages</td>
+<td>Para desactivar la compresión de las páginas en Procesos.</td>
+</tr>
+<tr>
+<td> $_DEFAULTNOTOOLS</td>
+<td>Se indica las prestaciones que se desactivan en los listados, es como la etiqueta [NoTools] pero global.</td>
+</tr>
+<tr>
+<td> $_CheckBox</td>
+<td>$_CheckBox['H']['ON'] = '<img src="g/tf_1.gif" />'; // HTM.True<br />$_CheckBox['H']['OFF'] = '';  // HTM.False<br />$_CheckBox['P']['ON']  = 'S';         // PDF.True<br />$_CheckBox['P']['OFF'] = '';           // PDF.False<br />$_CheckBox['X']['ON']  = 'S';         // XLS.True<br />$_CheckBox['X']['OFF'] = '';   // XLS.False.</td>
+</tr>
+<tr>
+<td> $_CheckBoxSave</td>
+<td>Valor de los checkbox al grabar, por defecto es array("S",""), matriz bidimensional con el valor true y el false.</td>
+</tr>
+<tr>
+<td> $_MarkVisited</td>
+<td>Clase para marcar las filas en los listados cuando se abre una subventana</td>
+</tr>
+</tbody>
+</table>
+<p>$_QuestionsEmptyData = false;                      // Al preguntar en los select añade dos option "Sin datos" y "Con datos"<br />$_QuestionsEmptyDataColor = '#666666';     // Color de los option especiales</p>
+<p>$_ExportExtras = false; // Añade dos opciones en los LTools: Exportar con Clave y Exportar por EMail<br />$_KeyRequired = false;</p>
+</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>DBOrder 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[DBOrder] Field [DESC] [, Field [DESC]] ... [, Field [DESC]] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Columnas de ordenación para los listados, en el caso del grupo de fichas (GDF) se debe poner en la primera de ellas.<BR>En caso de incluir el parámetro "DESC" detrás de un campo, la ordenación del mismo será descendente.<BR>El los listados también se puede añadir la cláusula "group by" después de la lista de campos a ordenar. <BR>Si quieres ordenar un listado por un campo select "cd_[tabla]" se tendrá que poner "nm_[tabla]". <BR>Se puede definir la ordenación en petición mediante la variable del sistema "_ORDEN_" declarandola como un select virtual "SV". 
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[DBOrder] codigo, fecha desc, articulo<BR>[DBOrder] nm_prov group by 1,2 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[AddOption] c | _ORDEN_ | refe,Nº Referencia; A.cd_prov+A.cd_muni+A.cd_distrito+A.cd_barrio+A.nombre,Distrito y Barrio; pvp,PVP; pvp DESC, PVP Descendente; L.nombre+K.apellidos,Asesor<BR><BR></P>
+<P>[Fields]<BR>Ordenación | _ORDEN_ | 0 | SV | 3 | | Q | | |</P></TD></TR>
+<TR>
+<TD id=txt>Declarando la ordenación mediante un select virtual</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[DBOrder] B.nm_auto, C.nm_t_cuota, A.dt_ini DESC</TD></TR>
+<TR>
+<TD id=txt>En caso que hubiera conflicto con nombres de campos se le puede preceder con el alias de la tabla, teniendo encuenta que los alias de las tablas empiezan por la "A", "B", etc y habrá uno por cada select y en el orden en que se encuentren en el listado.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

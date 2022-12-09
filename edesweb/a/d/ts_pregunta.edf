@@ -1,0 +1,113 @@
+[Title]PREGUNTA DE CUESTIONARIO/S|l
+[DBTable]ts_pregunta
+[DBIndex]cd_ts_pregunta
+[DBOrder]cd_ts_test,orden
+[DBSerial]cd_ts_pregunta
+[SortList]ml|orden|cd_ts_test
+[ColsWidth],,500
+[AddOption]*|cd_ts_trespuesta|,; S,Si y No; 1,Si, No y NS/NC; N,No y Si; 2,No, Si y NS/NC; P,Puntuación de 1 a 5; R,Elegir respuesta; O,Ordenar respuestas; T,Texto; X,Texto libre
+[OnChange]a,mR|cd_ts_trespuesta|_Alta()
+[Fields]
+Cd. Pregunta|cd_ts_pregunta|+|T|4||*|||
+Cuestionario|cd_ts_test|0|S|60||MQd||#|
+Pregunta|pregunta|#|H|255,80,7||M||#|
+Tipo respuesta|cd_ts_trespuesta|N|SV|20||M||#|
+,Nº de·Respuestas|n_respuestas|+|T|1||MQS||#|
+,Nº de·Orden\Orden|orden|+|T|4||MQ|||
+#(a,mR)¿
+-|SUBFICHA "Respuesta"
+Nº de Orden|_orden|+|T|4||M|||
+|_preguntas_hidden|#D|T|50||*|||
+Respuesta|_respuesta|#|A|255,80,3||M||#|
+?
+#(a,?R)¿
+-|LISTADO "Respuestas"
+|[__ts_respuesta]|o|||||||
+?
+[SubList]a,mR,bR,cR|__ts_respuesta
+{slGL} Sql          | Align | ColsWidth | TypeData | Format | ColsOp | Fields            | TH
+''			    |  C\H	|	30\0	|          |  AMB() |		 | IMG               | <IMG SRC="g/l_op_insert.gif" title="" onclick="eSLAction('__ts_respuesta','i')">\
+orden            |   D   |     20    |    +     |        |        | _orden            | ORDEN
+preguntas_hidden |   H   |     50    |    #D    |        |        | _preguntas_hidden |
+respuesta        |   I   |    550    |    #     |        |        | _respuesta        | RESPUESTA
+{slSql} select # from ts_respuesta where cd_ts_pregunta='{cd_ts_pregunta}' order by cd_ts_pregunta,orden | cd_ts_respuesta
+{slMenu}  a,mR | Insertar:i, Modificar:u, Borrar:d              | # || FormOnLine | <IMG SRC='g/l_op_update.gif' title='Modificar' onclick=eSLAction('__ts_respuesta','u')><IMG SRC='g/l_op_delete.gif' title='Borrar' onclick=eSLAction('__ts_respuesta','d')>
+{slWin} ,7
+{slSort} orden
+[PHPIni]cR,bR
+function AMB(){
+}
+[PHPIni]a,mR
+function AMB(){
+echo '<IMG SRC="g/l_op_update.gif" title="Modificar" onclick=eSLAction("__ts_respuesta","u")>';
+echo '<IMG SRC="g/l_op_delete.gif" title="Borrar" onclick=eSLAction("__ts_respuesta","d")>';
+}
+[JSIni]a,mR
+function _Alta(){
+if( DGI('[__ts_respuesta]').rows[1].LIBRE==undefined ) return;
+switch( eGF('cd_ts_trespuesta') ){
+case 'S':
+eSubListInsert( '__ts_respuesta', Array(1,'','Si') );
+eSubListInsert( '__ts_respuesta', Array(2,'','No') );
+break;
+case '1':
+eSubListInsert( '__ts_respuesta', Array(1,'','Si') );
+eSubListInsert( '__ts_respuesta', Array(2,'','No') );
+eSubListInsert( '__ts_respuesta', Array(3,'','NS/NC') );
+break;
+case 'N':
+eSubListInsert( '__ts_respuesta', Array(1,'','No') );
+eSubListInsert( '__ts_respuesta', Array(2,'','Si') );
+eSubListInsert( '__ts_respuesta', Array(3,'','NS/NC') );
+break;
+case '2':
+eSubListInsert( '__ts_respuesta', Array(1,'','No') );
+eSubListInsert( '__ts_respuesta', Array(2,'','Si') );
+eSubListInsert( '__ts_respuesta', Array(3,'','NS/NC') );
+break;
+case 'P':
+eSubListInsert( '__ts_respuesta', Array(1,'','1') );
+eSubListInsert( '__ts_respuesta', Array(2,'','2') );
+eSubListInsert( '__ts_respuesta', Array(3,'','3') );
+eSubListInsert( '__ts_respuesta', Array(4,'','4') );
+eSubListInsert( '__ts_respuesta', Array(5,'','5') );
+break;
+case 'R':
+case 'O':
+break;
+case 'X':
+eSubListInsert( '__ts_respuesta', Array(1,'','Texto de varias lineas') );
+break;
+case 'T':
+eSubListInsert( '__ts_respuesta', Array(1,'','Texto') );
+break;
+default:
+}
+}
+function eSubListInsert( txt, Dim ){
+var Obj = DGI('['+txt+']');
+var Reutilizar = false, d = 0, oTR, oTD, n;
+for( n=1; n<Obj.rows.length-Obj.COLSOP; n++ ){
+if( Obj.rows[n].LIBRE!=undefined ){
+Obj.rows[n].removeAttribute('LIBRE');
+d = n;
+Reutilizar = true;
+oTR = Obj.rows[n];
+break;
+}
+}
+if( d <= 0 ){
+if( Obj.COLSOP==1 ){
+oTR = Obj.insertRow(Obj.rows.length-1);
+}else{
+oTR = Obj.insertRow();
+}
+}
+for( n=0; n<Obj.rows[Obj.AltoTH].cells.length; n++ ){
+oTD = ( !Reutilizar ) ? oTR.insertCell() : oTR.cells[n];
+oTD.textContent = Dim[n];
+}
+Obj.ENVIAR = true;
+S(Obj.parentNode).eventFire("scroll");
+eClearEvent();
+}

@@ -1,0 +1,93 @@
+- Se pone despues del [OnChange] normal, por si tiene que formatear el dato
+[OnChangeShow] a,mR | cd_banco			| Script.SDF
+[OnChangeShow] a,mR | cd_banco + cd_sucur	| Script.SDF		// Si están los dos campos rellenos
+[OnChangeShow] a,mR | cd_banco , cd_sucur	| Script.SDF		// Cualquier campo que cambie
+
+
+[DBQuery] select B.nm_banco, A.nm_sucur, A.cd_postal, A.nm_loca from banco, sucursal where cd_banco='{$cd_banco}' and cd_sucur='{$cd_sucur}' and sucursal.cod_banco=banco.cod_banco
+
+[TotalRec] 1
+	[PutFields]	_nm_banco = nm_banco,
+			_nm_sucur = nm_sucur,
+			_cd_postl = cd_postal,
+			_nm_loca  = nm_loca
+[TotalRec] 0
+	[PutFields]	_nm_banco = "*** NO ENCONTRADO ***"
+			... si no están en la lista usa los de: "[TotalRec] 1"
+			_nm_sucur = ,
+			_cd_postl = ,
+			_nm_loca  = 
+
+
+[DBTable] sucur
+[DBSeek]  cd_banco, cd_sucur
+
+[DBTable]   cpostal
+[DBSeek]    cd_postal
+[PutFields] _nm_postal = nm_postal,
+	    _c_prov = cd_prov
+
+
+[DBSeek] select B.nm_banco, A.nm_sucur, A.cd_postal, A.nm_loca from banco, sucursal where cd_banco='{$cd_banco}' and cd_sucur='{$cd_sucur}' and sucursal.cod_banco=banco.cod_banco
+[Query]
+		...
+		NomCampo
+		CampoDestino = CampoOrigen
+		_cd_prov = cd_prov{cadda,vvv,vvv}
+		PHPFuncUsu()
+
+
+if( $TotalRec == 1 ) ShowFields('cd_post, nom_post,,,,');
+
+[TotalRec] 1
+	[ShowFields] cd_post, nom_post,,,,
+	[VaciarCampos]
+
+[TotalRec] 0
+	[HiddenFields] 
+
+[ElseTotalRec] ScriptEXE 
+ScriptEXE( 'url' );
+
+[ShowFields] cd_post, nom_post,,,,
+[HiddenFields] 
+
+[ShowTR] 
+[HiddenTR] 
+
+[ScriptEXE] o alert(...)
+
+[IfSource]
+[ElseSource]
+
+[IfVar]
+[ElseVar]
+
+[TotalRec] 0
+[TotalRec] 1
+[TotalRec] >1	ScriptEXE	[ElseTotalReg]
+
+[PHP]
+
+[OnChangeShow] Modo | Campos,... ¿ Icono ? | Script.SDF | Parametros / FuncUsu()
+
+
+
+- Con posibilidad de informar de los datos con una subventana
+- Con posibilidad de informar de los datos con una subventana y elegir si cancelar o modificar el solicitado
+
+
+
+
+
+
+
+
+
+
+
+[DBTable] banco
+
+[PutFields] _nom_banco=nm_banco
+
+cd_sucur, _nm_sucur=

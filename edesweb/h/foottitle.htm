@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>FootTitle 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[FootTitle] Linea de C?digo PHP 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Crea un subt?tulo pegado a la parte inferior de un listado. Al sacar el PDF tambi?n se ejecutar? esta linea, para saber si es un PDF o no utilizar la funci?n eIsPDF(), en caso de ser PDF deberemos devolver una cadena pudiendo imprimir varias lineas utilizando "&lt;BR&gt;". <BR>En la extracci?n a XLS o XML podemos el caracter "t" saltar? a la siguiente columna y el caracter "&lt;BR&gt;" o "n" saltar? de linea.
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[FootTitle] echo "&lt;div width=100% align=left&gt; TOTAL: ".$<FONT size=2>_Records</FONT>." &lt;/div&gt;"; 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[FootTitle] FuncPintaPie()<BR><BR>[PHPIni] l<BR>function FuncPintaPie(){<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>}</TD></TR>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[FootTitle] FuncPintaPie()<BR><BR>[PHPIni] l<BR>function FuncPintaPie(){<BR><SPAN style="WIDTH: 25px"></SPAN>if( eIsPDF() ){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>return ...;<BR><SPAN style="WIDTH: 25px"></SPAN>}else if( eIsXML() || eIsXLS()&nbsp;){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>return "col 1tcol 2tCol3&lt;br&gt;col 1tcol 2";<BR><SPAN style="WIDTH: 25px"></SPAN>}else if( eIsHTM() ){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>echo ...;<BR><SPAN style="WIDTH: 25px"></SPAN>}<BR>}</TD></TR>
+<TR>
+<TD id=txt>Si queremos pintar una linea en el listado a PDF atraves de esta etiqueta, si fueran mas de una linea usariamos [PDFInclude]</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,188 @@
+[Title]=GENERADOR DE LISTADOS|l
+[DBTable]gs_list_store
+[DBIndex]cd_gs_list_store
+[DBSerial]cd_gs_list_store
+[DBOrder]nm_gs_list_store
+[DBMemo]ls_definition
+[ForUsers]*|select count(*) from gs_user where cd_gs_user={$_User} and system_user='S'
+[PersistentVar]_Ejecutar
+¿ $_GET['_Ejecutar']==1 ? [AddButton]   cR | <IMG src='edes.php?R:$a/g/desa.gif'> Generar Listado | | uGererarListado()
+[AddButton]a,mR|<IMG src='edes.php?R:$a/g/desa.gif'> Probar Listado||uProbarListado()
+[AddCode]*|_sql|I|style='font-family:monospace;font-size:120%' NotFilter=1
+[Label]_ReportCol|,<img src='g/report_col.png' style='margin-left:20px'> Gráfica por Fila
+[Label]_ReportRow|,<img src='g/report_row.png' style='margin-left:20px'> Gráfica por Columna
+[AddCode]a,?R|_sql|I|onkeyup=eFitToContent(this,800,35)
+[AddCode]a,?R|dct_sql|I|onkeyup=eFitToContent(this,200,35)
+[PDFCol]0,70,16,16,0
+[Fields]2
+|cd_gs_list_store|+|T|5||*|||
+DDBB|_ddbb|f|T|20||M|$_Sql||
+,Gráfica por Fila|_ReportCol|D|C|1||M|||
+,Gráfica por Columna|_ReportRow|D|C|1||M|||
+,Máximo nº de Filas|_dblimit|D|T|10|<nm_gs_list_store|M|10000,1000||
+#(?) Título|nm_gs_list_store|#|T|150|500|MQ|||
+#!(?) Título|nm_gs_list_store|#|T|150|770|MQ||#|
+Sql|_sql|#|A|4000,150,20|770,35|Mk||#|
+Grid|_grid|#|T|150|770|M|||
+|_dynamic_generation|D|T|1||*|||
+#(a,?R){P} ListaDeCampos
+#(?,l) Etiquetas|dct_sql|#L|A|250,40,4||MDQ|||
+#(l) mm:ss|time|H|T|5||-|||
+#!(l)|time|H|T|5||*|||
+Creado por|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|+|S|50||-L|_User||
+,Fecha de Alta|cdi_insert|CDI|T|19||-L|#y2s#||
+,Fecha última·Modificación|cdi_update|CDI|T|19||-L|#y2s#||
+|ls_definition|#|A|4000,150,20||*L|||
+¿ $_GET['_Ejecutar']==1 ? Generar|cd_gs_list_store ejecutar|IMG|T|2||-||=|
+[PHPStart]l
+$_PDFLABELHIDDEN['cd_gs_user'] = "NotToShow";
+$_PDFLABELHIDDEN['cdi_insert'] = "NotToShow";
+$_PDFLABELHIDDEN['cdi_update'] = "NotToShow";
+[Format]
+$_vF[1] = str_replace('&#183;',' ',$_vF[1]);
+if( $_vF[4]<>'' ) $_vF[4] = '<IMG src="edes.php?R:$a/g/desa.gif" title="Generar Listado" onclick="uGenerar()">';
+[JSEnd]mR
+ePF('cdi_update','<?= date('Y-m-d H:i:s') ?>');
+[JSEnd]cR,bR
+if( eGF('_grid')=='' ) eHide('_grid','TR');
+[PHPStart]A,M
+$_POST['nm_gs_list_store'] = str_replace('·','&#183;',$_POST['nm_gs_list_store']);
+$txt = '';
+foreach( $_POST as $k=>$v ){
+if( $k[0]=='_' && $v<>'' && $k<>'_MD5' ){
+$v = str_replace('·' ,'&#183;' ,$v);
+$txt .= "~~{$k}~~{$v}";
+}
+}
+$_POST['ls_definition'] = $txt;
+[JSIni]?R,l
+function uProcesando(time){
+top.eInfoHide();
+if( eTrim(time)!='' ){
+var s = time.split(':');
+top.eLoading(1,window);
+_Progress = s[0]*60+s[1];
+_ProgressTitle = 'Procesando...';
+_ProgressDetail = '';
+Obj = Obj.rows[1].cells[0].children[2];
+Obj.rows[0].cells[0].innerHTML = ( typeof(_ProgressTitle)!='undefined' ) ? _ProgressTitle : '';
+Obj.rows[2].Detail = ( typeof(_ProgressDetail)!='undefined' ) ? (_ProgressDetail+',').split(',') : '';
+top.eProgressShow(Obj,_Progress);
+}
+}
+[JSIni]l
+function uGenerar(){
+var TD = S.toTag(S.event(window),'TR').cells;
+top.eSWOpen( window, 'Ll:$a/d/list_gen.edf&_dynamic_generation=S&_FILTER='+escape('cd_gs_list_store='+TD[0].textContent)+'&_FORMBUTTONS=VvW&_PSOURCE=WWORK', TD[1].textContent );
+eClearEvent();
+uProcesando(TD[3].textContent);
+}
+[PHPEnd]?R
+echo '<script type="text/javascript">var Obj="";';
+$Dim = explode('~~',$_vF['ls_definition']);
+for( $n=1; $n<count($Dim); $n+=2 ){
+echo 'Obj = DGI("'.$Dim[$n].'");';
+if( $Dim[$n]=='_sql' ){
+$Dim[$n+1] = str_replace(chr(13).chr(10),'#&1310&#',$Dim[$n+1]);
+$Dim[$n+1] = str_replace(chr(10).chr(13),'#&1013&#',$Dim[$n+1]);
+$Dim[$n+1] = str_replace(chr(13),'#&13&#',$Dim[$n+1]);
+$Dim[$n+1] = str_replace(chr(10),'#&10&#',$Dim[$n+1]);
+}
+echo 'Obj.value="'.$Dim[$n+1].'";'."\n";
+if( $Dim[$n]=='_sql' ){
+echo 'Obj.value = Obj.value.replace(/#&1310&#/g,String.fromCharCode(13)+String.fromCharCode(10));'."\n";
+echo 'Obj.value = Obj.value.replace(/#&1013&#/g,String.fromCharCode(10)+String.fromCharCode(13));'."\n";
+echo 'Obj.value = Obj.value.replace(/#&13&#/g,String.fromCharCode(13)).replace(/#&10&#/g,String.fromCharCode(10));'."\n";
+}
+}
+?>
+function uPoneValores( Obj ){
+var Dim = '&#39;,\',&#43;,+,&#34;,",&quot;,",&#92;,\\,&amp;,&,&#183;,·'.split(','), n, patt;
+for( n=0; n<Dim.length; n+=2 ){
+patt = new RegExp( Dim[n], 'g' );
+Obj.value = Obj.value.replace( patt, Dim[n+1] );
+}
+}
+uPoneValores( eGO('nm_gs_list_store') );
+for( var nc=0; nc<document.forms[0].elements.length; nc++ ){
+if( document.forms[0].elements[nc].name.substr(0,1)=='_' ){
+uPoneValores( document.forms[0].elements[nc] );
+}
+}
+<?PHP
+echo '</script>';
+[P]ListaDeCampos|NoTD
+echo '<TABLE border=0 cellspacing=1px cellpadding=0 style="margin-left:46px">';
+echo '<tr>';
+echo '<td style="vertical-align:top">';
+echo '<TABLE border=0 cellspacing=1px cellpadding=0>';
+echo '<TR>';
+echo '<TH title="Nombre del campo">CAMPO</TH>';
+echo '<TH title="Texto en columna">TITULO</TH>';
+echo '<TH title="Texto en grupo de columnas">TITULO DE GRUPO</TH>';
+echo '<TH title="Operaciones de columna">Op</TH>';
+echo '<TH title="Formato">Frm</TH>';
+echo '</TR>';
+for( $n=0; $n<30; $n++ ){
+echo "<TR".(($n==0)?'':" style='display:none'")."><TD>";
+eAddField( "| _field_{$n}  | #  | T | 40 |130| M |||" );
+echo "</TD><TD>";
+eAddField( "| _th_{$n}     | #  | T | 40 |130| M |||" );
+echo "</TD><TD>";
+eAddField( "| _th2_{$n}    | #  | T | 60 |200| M |||" );
+echo "</TD><TD>";
+eAddField( "| _colsop_{$n} | #U | T | 2  |   | M |||" );
+echo "</TD><TD>";
+eAddField( "| _format_{$n} | #  | T | 3  |   | M |||" );
+echo "</TD></TR>";
+}
+echo '</TABLE>';
+echo '</td><td style="vertical-align:top">';
+echo '<TABLE border=0 cellspacing=1px cellpadding=0>';
+echo '<TR><td align=center>Etiquetas';
+echo '<TR><td>';
+eAddField( "Etiquetas | dct_sql | #L | A | 250,40,4 |200,35| MD ||| ");
+echo '</TABLE>';
+echo '</TABLE>';
+[JSEnd]a,mR
+function uProbarListado(){
+if( eGF('_sql')=='' ) return;
+ePF('_dynamic_generation','S');
+top.eSWOpenSubmit( window, 'edes.php?Ll:$a/d/list_gen.edf&_Ejecutar=1', 'SQL' );
+ePF('_dynamic_generation','');
+}
+[JSEnd]?R
+function uGererarListado(){
+_Action = _Action.replace('?Fc:','?Ll:');
+_Accion = 'mR';
+ePF('_dynamic_generation','S');
+eSubmit();
+uProcesando(eGF('time'));
+}
+[JSEnd]a,?R
+function uNuevaLinea(){
+var Obj = S.event(window);
+var nCampo = Obj.name.replace('_th_','')*1;
+if( eGO('_th_'+(nCampo+1)).offsetWidth==0 ){
+if( Obj.value!='' ){
+S.toTag(eGO('_th_'+(nCampo+1)),'TR').style.display = 'block';
+}else if( nCampo>0 ){
+eFocus('_field_'+(nCampo-1));
+S.toTag(eGO('_th_'+nCampo),'TR').style.display = 'none';
+}
+}
+}
+[JSEnd]a,?R
+function uOcultaField(){
+var n,ver=false;
+for( n=29; n>=0; n-- ){
+eGO('_th_'+n).onchange = uNuevaLinea;
+eGO('_colsop_'+n).style.textAlign = eGO('_format_'+n).style.textAlign = 'center';
+if( n==0 || eGF('_field_'+n)+''+eGF('_th_'+n)+''+eGF('_th2_'+n)+eGF('_colsop_'+n)+''+eGF('_format_'+n)!='' ){
+ver = true;
+if( _Mode=='mR' ) S.toTag(eGO('_th_'+(n+1)),'TR').style.display = 'block';
+}
+if( ver ) S.toTag(eGO('_th_'+n),'TR').style.display = 'block';
+}
+}
+setTimeout('uOcultaField()',1);

@@ -1,0 +1,89 @@
+[Title]GESTOR DOCUMENTAL
+[DBTable]gs_img
+[DBIndex]cd_gs_img
+[DBOrder]nm_gs_img
+[DBSerial]cd_gs_img
+[FormAction]*|Ll:
+[AddOption]*|type_file|,; A,Audio; D,Documento; I,Icono; P,Imagen; S,Sonido; V,Video
+[AddOption]*|quality|,; L,Baja; A,Media; H,Alta
+[AddOption]*|visibility|,; G,Grupo; N,Nodo; U,Usuario
+[AddOption]*|_formato|,; H,Horizontal; V,Vertical; C,Cuadrada
+[OnChange]?|visibility|_Visibilidad()
+[OnChange]?|cd_gs_group|_Grupo()
+[JSIni]a,mR,?
+function uCreadoPor(){
+top.eSWOpen( window, 'edes.php?Fa:$a/d/img_created_by' );
+}
+function _Visibilidad(){
+while( DGI('oDirectorios').rows.length > 0 ) DGI('oDirectorios').deleteRow(0);
+switch( eGF('visibility') ){
+case "G":
+eEF('cd_gs_group',1);
+_Grupo();
+break;
+case "N":
+eEF('cd_gs_group',0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+eGO('IdSelDir').className = "";
+eGO('IdSelDir').style.cursor = 'pointer';
+break;
+case "U":
+eEF('cd_gs_group',0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+eGO('IdSelDir').className = "";
+eGO('IdSelDir').style.cursor = 'pointer';
+break;
+default:
+eEF('cd_gs_group',0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+eGO('IdSelDir').className = "OFF";
+eGO('IdSelDir').style.cursor = 'default';
+}
+}
+function _Grupo(){
+while( DGI('oDirectorios').rows.length > 0 ) DGI('oDirectorios').deleteRow(0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+if( eGF('cd_gs_group') < 1 ){
+eGO('IdSelDir').className = "OFF";
+eGO('IdSelDir').style.cursor = 'default';
+}else{
+eGO('IdSelDir').className = "";
+eGO('IdSelDir').style.cursor = 'pointer';
+}
+}
+[Fields]?
+Clase|type_file|N|SV|16||*Q||#|
+Calidad|quality|N|SV|5||Q||#|
+,PPI|ppi|+|T|5||Q|||
+,Copyright|copyrighted|N|C|1||Q|||
+,Marca de agua|sign_image|N|C|1||Q|||
+,Formato|_formato|N|SV|10||Q|||
+Pie de Foto|caption|#D|T|80|520|Q|||
+Fecha creación|creation_date|F4|T|10||QF|||
+,|cd_gs_created_by|+|T|5||*Q*|||
+,Creado por|_cd_gs_created_by|D|T|60|<caption|Q|||
+Visibilidad|visibility|N|SV|10||Q|||
+,Grupo|cd_gs_group|+|Ss|50||Q|||
+|cd_gs_folder|+|T|9||*Q*|||
+Carpeta|_cd_gs_folder|D|T|68|+cd_gs_group|-Q|||
+Fecha de Alta Desde|_desde|F4|T|10||QF|||
+,|_desde_hours|H|T|8||Q|||
+,Hasta|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+|cdi_insert|CDI|T|19||-|||
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi_insert|_desde|_hasta
+[THColSpan]copyrighted,extension,Características
+[ColsWidth]description=400
+[Fields]l
+|cd_gs_img|+|T|9||*|||
+Fichero|nm_gs_img|#D|F|60||-|||
+Descripción|description|#|A|2000,80,4||-|||
+Copyright\©|copyrighted|N|C|1||-||=|
+Puntos Por Pulgada\PPI|ppi|+|T|5||-|||
+Tamaño|bytes|+|T|11||-|||
+Ancho px\Ancho|width_px|+|T|4||-|||
+Alto px\Alto|height_px|+|T|4||-|||
+Duración|duration|H8|T|8||-||=|
+Marca·de agua|sign_image|N|C|1||-||=|
+Tipo|extension|#D|T|4||-||=|

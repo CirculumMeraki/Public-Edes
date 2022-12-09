@@ -1,0 +1,225 @@
+[Title]=CONFIGURAR DOCUMENTO EN PDF
+[Button]*|<img src='g/op_update.png'> Modificar
+[Fields]
+{P} Formulario
+[P]Formulario
+echo '<TABLE cl-ass=TIP border=0 cellspacing=5 cellpadding=0><tr>';
+echo '<tr>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>General</caption>';
+echo '<TR><TD>Fuente				</TD><TD>'; eAddField("| FontFamily			| + | SV |  12 |            | - | Helvetica | | "); echo '</TD></TR>';
+echo '<TR><TD>Justificar Títulos	</TD><TD>'; eAddField("| JustifyTitle		| N | C  |   1 |            | M |           | | "); echo '</TD></TR>';
+echo '<TR><TD>Justificar Párrafos	</TD><TD>'; eAddField("| JustifyParagraph	| N | C  |   1 |            | M |     S     | | "); echo '</TD></TR>';
+echo '<TR><TD>Indice Nombre			</TD><TD>'; eAddField("| IndexName			| # | T  |  80 | FontFamily | M |   INDICE  | | "); echo '</TD></TR>';
+echo '<TR><TD>Indice Hasta			</TD><TD>'; eAddField("| IndexType			| + | SV |  12 |            | M |           | | "); echo '</TD></TR>';
+echo '<TR><TD>Indice Margen			</TD><TD>'; eAddField("| IndexTop			| + | T  |   3 |            | MS|           | | "); echo '</TD></TR>';
+echo '<TR><TD>Tabulador Ancho		</TD><TD>'; eAddField("| TabWidth			| + | T  |   2 |            | MS|           | | "); echo '</TD></TR>';
+echo '<TR><TD>Nueva página desde	</TD><TD>'; eAddField("| PagJump			| + | SV |  12 |            | M |           | | "); echo '</TD></TR>';
+echo '<TR><TD>En página				</TD><TD>'; eAddField("| TituloPagImpPar	| + | SV |  12 |            | M |           | | "); echo '</TD></TR>';
+echo '<TR><TD>Indice nº Página		</TD><TD>'; eAddField("| IndexNumPagina	    | + | T  |   3 |     30     | M |           | | "); echo '</TD></TR>';
+echo '<TR><TD>Indice Coeficiente	</TD><TD>'; eAddField("| IndexCoefSize	    | +,| T  | 1,2 |     30     | M |    0.75   | | "); echo '</TD></TR>';
+echo '<TR><TD>Indice Salto Linea	</TD><TD>'; eAddField("| IndexCoefLinea	    | +,| T  | 1,2 |     30     | M |    0.45   | | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Configurar Fuentes</caption>';
+echo '<col><col id=c><col id=c><col id=c><col id=c><col id=c>';
+echo '<TR><TD>			</TD><TD>Tamaño</TD><TD>Negrita</TD><TD>Itálica</TD><TD title="Mayúsculas">May</TD><TD id=c>Color</TD></TR>';
+echo '<TR><TD>Título 1	</TD><TD>'; eAddField("| h1Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h1Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h1Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h1Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h1Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Título 2	</TD><TD>'; eAddField("| h2Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h2Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h2Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h2Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h2Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Título 3	</TD><TD>'; eAddField("| h3Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h3Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h3Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h3Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h3Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Título 4	</TD><TD>'; eAddField("| h4Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h4Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h4Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h4Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h4Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Título 5	</TD><TD>'; eAddField("| h5Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h5Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h5Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h5Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h5Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Título 6	</TD><TD>'; eAddField("| h6Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h6Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h6Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h6Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h6Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Título 7	</TD><TD>'; eAddField("| h7Size   | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| h7Bold | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h7Italic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h7Upper | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| h7Color | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Párrafo	</TD><TD>'; eAddField("| pSize    | + | T | 2 | | MS | | | "); echo '</TD><TD colspan=3></TD><TD>'; eAddField("| pColor  | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>INDICE	</TD><TD>'; eAddField("| IndexSize| + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| IndexBold | N | C | 1 || M |||"); echo '</TD><TD colspan=2>'; eAddField("| IndexItalic | N | C | 1 || M |||"); echo '</TD><TD>'; eAddField("| IndexColor  | CLR | T | 7 | | M | | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '</TABLE>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Margenes</caption>';
+echo '<TR><TD>			</TD><TD align=center>Impar</TD><TD align=center>Par</TD></TR>';
+echo '<TR><TD>Izquierdo </TD><TD>'; eAddField("| MarginLeftImp  | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| MarginLeftPar  | + | T | 2 | | MS | | | "); echo '</TD></TR>';
+echo '<TR><TD>Derecho   </TD><TD>'; eAddField("| MarginRightImp | + | T | 2 | | MS | | | "); echo '</TD><TD>'; eAddField("| MarginRightPar | + | T | 2 | | MS | | | "); echo '</TD></TR>';
+echo '<TR><TD>			</TD><TD>Primera</TD><TD>Resto</TD></TR>';
+echo '<TR><TD>Superior  </TD><TD>'; eAddField("| MarginTopMain	| + | T | 3 | | MS | | | "); echo '</TD><TD>'; eAddField("| MarginTop | + | T | 3 | | MS | | | "); echo '</TD></TR>';
+echo '<TR><TD>Inferior  </TD><TD>'; eAddField("| MarginBottom	| + | T | 2 | | MS | | | "); echo '</TD><TD>'; echo '</TD></TR>';
+echo '<TR><TD colspan=3 style="text-align:center;font-weight:bold;">Tañano Papel (mm)</TD></TR>';
+echo '<TR><TD>Ancho / Alto          </TD><TD>'; eAddField("| HojaAncho	| + | T | 3 | | MS | 210 | | "); echo '</TD><TD>'; eAddField("| HojaAlto | + | T | 3 | | MS | 297 | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen de Corte		</TD><TD colspan=2>'; eAddField("| MagenDeCorte		| + | T |  2 | | MS |20 | | "); echo '</TD></TR>';
+echo '<TR style="display:none"><TD>Marcar Lineas de Corte</TD><TD>'; eAddField("| LineasDeCorte	| N | C |  1 | | M  | | | "); echo '</TD><TD>Check'; eAddField("| TestDeCorte | N | C |  1 | | M  | | | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '<tr>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Logo</caption>';
+echo '<TR><TD>Desde la página		</TD><TD>'; eAddField("| LogoStart			| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Impar	</TD><TD>'; eAddField("| LogoAlignmentImp	| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Par	</TD><TD>'; eAddField("| LogoAlignmentPar	| N | SV | 10 | | M  | L | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Superior		</TD><TD>'; eAddField("| LogoMarginTop		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Izquierdo		</TD><TD>'; eAddField("| LogoMarginLeft		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Derecho		</TD><TD>'; eAddField("| LogoMarginRight	| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Inferior		</TD><TD>'; eAddField("| LogoMarginBotton	| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Paginar</caption>';
+echo '<TR><TD>Tamaño/Color			</TD><TD>'; eAddField("| PagSize			| + | T  |  2 | | MS |   | | "); eAddField("| PagColor			|CLR| T  |  7 | | M  |   | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Plantilla				</TD><TD>'; eAddField("| PagFormat			| # | T  | 10 | | M  | Pág # | | "); echo '#</TD></TR>';
+echo '<TR><TD>Desde la página		</TD><TD>'; eAddField("| PagNumber			| + | T  |  2 | | MS | 1 | | "); echo '</TD></TR>';
+echo '<TR><TD>Primer nº de página	</TD><TD>'; eAddField("| PagStart			| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Impar	</TD><TD>'; eAddField("| PagAlignmentImp	| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Par	</TD><TD>'; eAddField("| PagAlignmentPar	| N | SV | 10 | | M  | L | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Inferior		</TD><TD>'; eAddField("| PagMargin			| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Fecha y Hora</caption>';
+echo '<TR><TD>Tamaño/Color			</TD><TD>'; eAddField("| DateSize			| + | T  |  2 | | MS |   | | "); eAddField("| DateColor			|CLR| T  |  7 | | M  |   | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Plantilla				</TD><TD>'; eAddField("| DateFormat			| # | T  | 19 |140 | M  | dd-mm-AAAA HH:mm:ss | | "); echo '</TD></TR>';
+echo '<TR><TD>Desde la página		</TD><TD>'; eAddField("| DateStart			| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Impar	</TD><TD>'; eAddField("| DateAlignmentImp	| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Par	</TD><TD>'; eAddField("| DateAlignmentPar	| N | SV | 10 | | M  | L | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Horizontal		</TD><TD>'; eAddField("| DateMarginHor		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Vertical	</TD><TD>'; eAddField("| DateAlignmentVer	| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Vertical		</TD><TD>'; eAddField("| DateMarginVer		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '<tr>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Numerar Lineas</caption>';
+echo '<TR><TD>Tamaño/Color			</TD><TD>'; eAddField("| LineSize			| + | T  |  2 | | MS |   | | "); eAddField("| LineColor			|CLR| T  |  7 | | M  |   | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Desde la página		</TD><TD>'; eAddField("| LineStart			| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Impar	</TD><TD>'; eAddField("| LineAlignmentImp	| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Pág Impar		</TD><TD>'; eAddField("| LineMarginImp		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Par	</TD><TD>'; eAddField("| LineAlignmentPar	| N | SV | 10 | | M  | L | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Pág Par		</TD><TD>'; eAddField("| LineMarginPar		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR style="display:none"><TD>Posición Pág Impar</TD><TD>'; eAddField("| LinePosAlignmentImp| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR style="display:none"><TD>Posición Pág Par	 </TD><TD>'; eAddField("| LinePosAlignmentPar| N | SV | 10 | | M  | L | | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '<td style="vertical-align:top;text-align:center">';
+echo '<TABLE class=TIP border=0 cellspacing=1px cellpadding=0>';
+echo '<caption>Numerar Párrafos</caption>';
+echo '<TR><TD>Tamaño/Color			</TD><TD>'; eAddField("| PrgSize			| + | T  |  2 | | MS |   | | "); eAddField("| PrgColor			|CLR| T  |  7 | | M  |   | | "); echo '<img src="edes.php?R:$t/g/i/colorlapiz.gif" onclick="eColorSelect(undefined,1)" title="Seleccionar color"></TD></TR>';
+echo '<TR><TD>Desde la página		</TD><TD>'; eAddField("| PrgStart			| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Impar	</TD><TD>'; eAddField("| PrgAlignmentImp	| N | SV | 10 | | M  | R | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Pág Impar		</TD><TD>'; eAddField("| PrgMarginImp		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR><TD>Alineación Pág Par	</TD><TD>'; eAddField("| PrgAlignmentPar	| N | SV | 10 | | M  | L | | "); echo '</TD></TR>';
+echo '<TR><TD>Margen Pág Par		</TD><TD>'; eAddField("| PrgMarginPar		| + | T  |  2 | | MS |   | | "); echo '</TD></TR>';
+echo '<TR style="display:none"><TD>Desde Etiqueta</TD><TD>'; eAddField("| PrgTag| + | SV | 12 | | M  | h1| | "); echo '</TD></TR>';
+echo '</TABLE>';
+echo '</TABLE>';
+[AddOption]*|DateAlignmentVer|,; T,Superior; B,Inferior
+[AddOption]*|LogoAlignmentImp,LogoAlignmentPar|,; L,Izquierdo; C,Centro; R,Derecha
+[AddOption]*|LinePosAlignmentImp,LinePosAlignmentPar, PrgAlignmentImp,PrgAlignmentPar|,; L,Izquierdo; R,Derecha
+[AddOption]*|TituloPagImpPar|,; I,Impar; P,Par
+[AddOption]*|PagAlignmentImp,PagAlignmentPar, DateAlignmentImp,DateAlignmentPar, PrgAlignmentImp,PrgAlignmentPar, LineAlignmentImp,LineAlignmentPar|L,Izquierdo; C,Centro; R,Derecha
+[AddOption]*|FontFamily|Courier,Courier; Helvetica,Helvetica; Times-Roman,Times-Roman
+[AddOption]*|IndexType,PagJump|,; h1,Título 1; h2,Título 2; h3,Título 3; h4,Título 4; h5,Título 5; h6,Título 6; h7,Título 7
+[AddOption]*|PrgTag|,; h1,Título 1; h2,Título 2; h3,Título 3; h4,Título 4; h5,Título 5; h6,Título 6; h7,Título 7; p,Parrafo
+[CSSAdd]*
+.TIP {
+PADDING-BOTTOM: 1px;
+PADDING-LEFT: 2px;
+PADDING-RIGHT: 2px;
+PADDING-TOP: 1px;
+}
+[JSEnd]*
+if( _WOPENER.name!='Main' ){
+if( ePGF('estado')!='B' ){
+eEF('*',false);
+eHide('Submit');
+}
+}
+[FormAction]*|GrabarConfig()
+[JSIni]*
+function GrabarConfig(){
+var f,fc,c,txt='';
+for( f=0; f<document.forms.length; f++ ){
+fc = document.forms[f].elements;
+for( c=0; c<fc.length; c++ ){
+try{
+if( fc[c].name.indexOf('_INPUT_')==-1 ){
+txt += '|'+fc[c].name+'='+fc[c].value.replace('|','&#166;');
+}
+}catch(e){}
+}
+}
+if( _WOPENER.name!='Main' ){
+if( ePGF('estado')=='B' ){
+ePPF('pdf_setup',txt);
+}else{
+top.eInfoError(window,'Solo se puede modificar si el Estado es "Borrador"',7);
+}
+top.eSWClose(window);
+}else{
+var t = document.FRM1.elements, n;
+for( n=0; n<t.length; n++ ){
+if( t[n].tagName=='FIELDSET' || t[n].type=='button' ) continue;
+if( t[n].name.substring(0,1)=='_' ) continue;
+t[n].name = 'PDF'+t[n].name;
+}
+for( n=t.length-1; n>=0;  n-- ){
+if( t[n].tagName=='FIELDSET' || t[n].type=='button' ) continue;
+if( t[n].name.substring(0,1)=='_' ){
+}
+}
+eSubmit('edes.php?FM:/_datos/config/htm2pdf.ini');
+}
+}
+function SeModificoSetup(){
+if( _PSOURCE=='WWORK' ){
+var f,fc,c;
+for( f=0; f<document.forms.length; f++ ){
+fc = document.forms[f].elements;
+for( c=0; c<fc.length; c++ ){
+try{
+if( fc[c].name.indexOf('_INPUT_')==-1 ){
+if( fc[c].value.substr(0,1)=='#' ){
+fc[c].style.backgroundColor = fc[c].value;
+fc[c].style.color = top.eColorContrastBW( fc[c].value );
+}
+}
+}catch(e){}
+}
+}
+}else{
+if( _WOPENER.name!='Main' ){
+if( ePGF('pdf_setup')!='' ){
+var Dim = ePGF('pdf_setup').split('|'),n,v;
+for( n=1; n<Dim.length; n++ ){
+v = Dim[n].split('=');
+ePF( v[0], v[1].replace('&#166;','|') );
+if( v[1]!='' && v[1].substr(0,1)=='#' ){
+try{
+eGO(v[0]).style.backgroundColor = v[1];
+eGO(v[0]).style.color = top.eColorContrastBW( v[1] );
+}catch(e){}
+}
+}
+}
+}
+}
+}
+[PHPEnd]a
+$VarOk = false;
+$_DesdeVar = 1;
+include('../_datos/config/htm2pdf.ini');
+$_HastaVar = 1;
+echo '<script type="text/javascript">';
+foreach( $GLOBALS as $k=>$v ){
+if( $k=='_DesdeVar' ){
+$VarOk = true;
+continue;
+}else if( $k=='_HastaVar' ) break;
+if( $VarOk ){
+echo "ePF('".substr($k,3)."','".$v."');";
+if( $v[0]=='#' && substr($k,3)<>'PagFormat' ){
+echo "eGO('".substr($k,3)."').style.backgroundColor = '".$v."';";
+echo "eGO('".substr($k,3)."').style.color = top.eColorContrastBW( '".$v."' );";
+}
+}
+}
+echo 'SeModificoSetup();';
+echo '</script>';

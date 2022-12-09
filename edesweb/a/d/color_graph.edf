@@ -1,0 +1,36 @@
+[Title]COLORES
+[DBTable]{$_SESSION['ShareDictionary']}gs_color
+[DBIndex]cd_gs_color
+[DBOrder]graph_ord
+[DBLimit]1000,1000
+[FormStatic]
+[PHPEnd]l
+if( $_GET['_SORT']==1 ) echo '<script type="text/javascript">setTimeout("document.ondblclick = function anonymous(){ return false; }",1);</script>';
+[Chr]HEX|U|#0123456789ABCDEF
+¿ $_GET['_SORT']==1 ? [SortList] * | graph_ord
+[Format]
+if( $_GET['_SORT']==1 ){
+$_CellsStyle[1] = 'background:#'.$_vF[1];
+}else{
+$_CellsStyle[0] = 'background:#'.$_vF[0];
+}
+[Fields]
+#(L) Orden|graph_ord|+|T|3||-|||
+Color|cd_gs_color|HEX|T|6||AQ|||
+Nombre|nm_gs_color|#D|T|25||MQ|||
+Luminosidad|luminosidad|+,|T|3,3||-|||
+Luma|luma|+,|T|3,3||-|||
+[JSCheck]a,mR
+ePF( 'luminosidad', top.eColorLuminosity( eGF('cd_gs_color') ) );
+ePF( 'luma', top.eColorLuma( eGF('cd_gs_color') ) );
+[PHPIni]?R
+$_ShowZero = 1;
+[JSEnd]l
+function FUNCTION_SortList( SE ){
+var CSS = ( SE=='S' ) ? '' : '1 solid red';
+if( BROWSE.rows.length > 25 ){
+var TD = BROWSE.rows[25].cells;
+for( var n=0; n<TD.length; n++ ) TD[n].style.borderBottom = CSS;
+}
+}
+FUNCTION_SortList('E');

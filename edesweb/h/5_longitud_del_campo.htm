@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>5. Longitud del campo 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Indica la cantidad de caracteres que el campo puede contener como máximo. </P>
+<P>&nbsp;- Si el campo contiene decimales se indicará de la forma:&nbsp;&nbsp;<BR><SPAN style="WIDTH: 25px"></SPAN>DígitosEnteros, DígitosDecimales&nbsp;&nbsp;<BR>&nbsp;<SPAN style="WIDTH: 25px"></SPAN>Por ejemplo: 3,2 (tres dígitos para la parte entera y dos para los decimales).&nbsp;&nbsp;<BR><BR>&nbsp;- Si el tipo de control es un "select" se puede definir el ancho del valor interno y del externo, así como el alto del select:<BR><SPAN style="WIDTH: 25px"></SPAN>LongitudValue, LongitudInnerText [ , AltoSelect (futuro) ]. <BR><SPAN style="WIDTH: 25px"></SPAN>(futuro) Si en "AltoSelect" ponemos "-1" el alto será el número total de opciones. <BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;- Si el campo es un TEXTAREA (# en la columna 3): LongitudTotal,Ancho,Alto<BR><SPAN style="WIDTH: 25px"></SPAN>Por ejemplo: 250,100,5. Si quisieramos no poner límite a la longitud pondriamos -1 por ejemplo: -1,100,5<BR><BR>&nbsp;- Si el campo es un TEXTAREA con HTML&nbsp; tipo=H (# en la columna 3): LongitudTotal,Ancho,Alto [,Tamaño máximo por imagen]<BR><SPAN style="WIDTH: 25px"></SPAN>Por ejemplo: 750000,100,10, 50000 al poner tamaño de imagen &gt; 0 se podrán incrustar imágenes hasta 50000 byts, ni no pusieramos el cuarto parámero o pusieramos "0"&nbsp;no tendríamos la opción de incrustar imágenes.<BR><BR>&nbsp;- Si el campo es un INPUTEXT se podrá poner de la forma "MAXLENGTH,SIZE":<BR><SPAN style="WIDTH: 25px"></SPAN>Nombre | nm_distrito | x | T | 100,30 || MQ || # |<BR></P>
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = 'none';
+window.focus();
+</SCRIPT>
+</BODY></HTML>

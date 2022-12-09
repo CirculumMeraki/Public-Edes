@@ -1,0 +1,57 @@
+#(a)[Title] =ENVIAR MENSAJE
+#(c)[Title] =MENSAJE RECIBIDO
+#(c) [Stop]
+[NoButton]c
+[Button]a|<img src='g/aviso.gif'> Enviar
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]a
+#(a) Para|_cd_gs_user|D|T|68|600|M||#|
+#(a) Para|cd_gs_user|+|T|5||*|||
+Texto|texto|#|H|1000000,100,20|600,300|M||#|
+[Fields]c
+De|cd_gs_user|D|T|68|600|-Q|||
+Texto|texto|#|H|1000000,100,20|600,300|-Q|||
+[PHPEnd]c
+$File = eScript('/_tmp/'.$_User.'.mss');
+$txt = file_get_contents( $File );
+$Dim = explode('~~~',$txt);
+if( count($Dim)>1 ){
+$txt = '';
+for( $n=1; $n<count($Dim); $n++ ){
+if( $n>1 ) $txt .= '~~~';
+$txt .= $Dim[$n];
+}
+file_put_contents( $File, $txt );
+}else{
+@unlink($File);
+}
+$Datos = explode('|',$Dim[0]);
+qQuery( 'select user_name,user_surname from gs_user where cd_gs_user='.$Datos[0] );
+list($n,$a) = qRow();
+$Valor = str_replace( '&#92;', chr(92), $Datos[1] );
+$Valor = str_replace( '&#43;', '+'	  , $Valor    );
+echo '<script type="text/javascript">';
+echo 'ePF("cd_gs_user","'.trim($n),' ',trim($a).'");';
+?>
+ePF( "texto", "<?= $Valor ?>".replace(/&quot;/g,'"').replace(/&#39;/g,"'") );
+<?PHP
+echo 'edIni("texto");';
+echo 'top.eSound("R");';
+echo 'window.external.eMaximize();';
+echo '</script>';
+[PHPStart]A
+$File = eScript('/_tmp/'.$_POST['cd_gs_user'].'.mss');
+if( file_exists($File) ){
+$txt = file_get_contents( $File ).'~~~'.$_User.'|'.$_POST['texto'];
+file_put_contents( $File, $txt );
+}else{
+file_put_contents( $File, $_User.'|'.$_POST['texto'] );
+}
+eMessage('Mensaje enviado','HS');
+[JSEnd]*
+document.body.oncontextmenu = function anonymous(){ return false; }

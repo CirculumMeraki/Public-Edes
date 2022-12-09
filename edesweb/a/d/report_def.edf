@@ -1,0 +1,22 @@
+[Title]DEFINICION INFORME
+[DBTable]gs_formato
+[DBIndex]cd_gs_formato
+[DBOrder]cd_gs_user,cd_gs_entidad,nm_gs_formato
+[DBSerial]cd_gs_formato
+[DBAddFilter]informe='S'
+[DBGatewayOne]cR,mR,bR|$a/d/listados_def.gs?MODO=$Opcion
+[Fields]
+Entidad|cd_gs_entidad|0|S|30||Q-|||
+Nombre Formato|nm_gs_formato|D|T|60||MQ|||
+|cd_gs_user|N|T|5||*Q*|_User||
+|cd_gs_formato|N|T|5||*Q*|||
+|informe|N|T|1||*Q*|S||
+[PHPEnd]c,m,b
+if( $_ASSIGN!='' && $cd_gs_entidad!='' ){
+?>
+<script type="text/javascript">
+eGO('cd_gs_entidad').parentNode.parentNode.style.display = 'none';
+eTabResize(1);
+</SCRIPT>
+<?PHP
+}

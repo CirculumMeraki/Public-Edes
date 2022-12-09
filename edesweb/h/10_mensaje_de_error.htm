@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>10. Mensaje de error 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Mensaje en caso de error en la condición del campo.<BR>El mensaje puede contener códigos como: <FONT color=#ff0080>"\n", "\t",</FONT> etc</P>
+<P>Marca el mensaje de error a mostrar en caso de que el campo no esté rellenado correctamente. <BR>Si lo dejamos en blanco pondrá "Falta introducir el campo 'Nombre de la etiqueta' ". <BR><BR><FONT color=#ff0080>'Falta rellenar' ...&nbsp;&nbsp;<BR>'Falta introducir' ... <BR>'Error en' ...&nbsp; <BR>&nbsp;<BR></FONT>Si ponemos un texto se verá esa información. </P>
+<P>Si no hay mensaje de error personalizado y el campo no tiene etiqueta podemos poner: "<STRONG>L:MensajedeError</STRONG>", es decir esto funciona de tres forma que son:<BR>1.- Si se deja en blanco el mensaje será generado por el sistema añadiendo la "Etiqueta" definida en la primera columna.<BR>2.- Si se pone un texto este será el mensaje de error mas el mensaje por defecto.<BR>3.- Si ponemos L:[Texto], el mensaje será generico y le pondrá el nombre del campo definido en "L:", es decir si en la ficha no quieres mostrar ningún nombre del campo y si en el mensaje de error utilizaras este formato o cuando quieres definirlo mas<BR>Por ejemplo&nbsp;<BR><BR><FONT face=Courier><FONT color=#ff0080>&nbsp;Localidad/CP&nbsp;| nm_loca&nbsp;&nbsp; | N | T |30|| M ||#| <BR>&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| cd_post&nbsp;&nbsp; | 0 | T | 5|| M ||#|</FONT> </FONT></P>
+<P>Estos dos campos van seguidos si aceptamos sin introducir datos nos informará de 2 errores: </P>
+<P>&nbsp;&nbsp; Falta introducir el campo 'LOCALIDAD/CP' <BR>&nbsp;&nbsp; Falta introducir el campo '' ( y no pondrá nada pues no lleva etiqueta, pero si ponemos:&nbsp;<BR><BR><FONT face=Courier><FONT color=#ff0080>&nbsp;,&nbsp;| cd_post&nbsp;| 0 | T | 5|| M ||#| L:Código Postal</FONT>&nbsp; <BR></FONT><BR>nos mostrará:&nbsp;&nbsp; <FONT color=#ff0080>Falta introducir el campo "CODIGO POSTAL" </FONT></P>
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT type="text/javascript" LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = 'none';
+window.focus();
+</SCRIPT>
+</BODY></HTML>

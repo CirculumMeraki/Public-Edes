@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">CSSAdd</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[CSSAdd] Mode [ [ | Filename [ , Filename2, ... ]  ]  |  VarInSql<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Añadir un nuevo archivo de hojas de estilo en cascada al documento actual, no se suprime o elimina la hoja de estilo por defecto.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Mode </td>
+<td>Modo en el que se ejecuta </td>
+</tr>
+<tr>
+<td>Filename</td>
+<td>Nombre de un archivo CSS sin subdirectorio ni extensión. Puede contenir variables incrustadas.<br />Si no ponemos Filename ser? una etiqueta multilinea pudiendo escribir codigo CSS, esta etiqueta es la única que en multilinea el "." no es un comentario, es una clase del css. <br />Si no está definido "ListFontSizeBody" o "ListFontSizeIcon" se establecerá como "TabFontSizeBody" y/o "TabFontSizeIcon" <br />Si el tercer parámetro se pode se debe poner la etiqueta [CssAdd] antes de las etiquetas [Fileds]</td>
+</tr>
+<tr>
+<td>VarInSql</td>
+<td>Matriz definida en "sql.ini" con los 4 siguientes indices [ TabFontSizeBody, TabFontSizeIcon, ListFontSizeBody, ListFontSizeIcon  ]<br />Este parámetro también puede tener los valor: "BIG" y "SMALL" para que el contenido sea mas grande o mas pequeño, este tamaño está definido en la configuración del css.<br />Y los parámtros "paddingSmall" y "paddingBig" para poner el padding en el listado el pequeño o el grande.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[CSSAdd] a,mR | MyCss</td>
+</tr>
+<tr>
+<td id="txt">Incluye el fichero de estilos MyCss en los modos de alta y modificaci?n</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[CSSAdd] ? | {$NomFileCss}</td>
+</tr>
+<tr>
+<td id="txt">En las fichas de consulta se carga una CSS adicional definida en la variable "$NomFileCss"</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[CSSAdd] * || $_FontSizeSettings</td>
+</tr>
+<tr>
+<td id="txt"><code>$_FontSizeSettings = [18,15,0,0];     // declarada en el fichero "sql.ini" (configuración global para esta variable)</code><br /><br /><code>Parámetros:</code><br /><code>     1.- En fichas tamaño de la fuente</code><br /><code>     2.- En fichas tamaño de los iconos</code><br /><code>     3.- En listas tamaño de la fuente</code><br /><code>     4.- En listas tamaño de los iconos</code></td>
+</tr>
+<tr>
+<td> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[CSSAdd] * || big paddingBig</td>
+</tr>
+<tr>
+<td id="txt"><code>La fuente será la grande en fichas y listados y en el listado el padding será el grande. </code></td>
+</tr>
+<tr>
+<td> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Chart 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Chart] ChartType | Cols | NColTitle [ |&nbsp;XAxisTitle | YAxisTitle | MaxRec | TitleColor | TitleAxisColor | Value | ... | Title | NomImg | Ancho | Alto ]<BR>... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Muestra una o varias gráficas con los valores de las columnas que se indiquen, para tener mas de una gráfica se pondrá una definición por cada gráfica. Obviamente, solamente tiene validez en listados. <BR>En las gáficas de Microsoft se chequea al imprimir si existe la funcion "ChartPrint(true/false)" mandando el valor "true" antes de imprimir y "false" al terminar por si se quiere cambiar algo y restaurarlo en la impresión, normalmente el color de fondo. <BR>Si se utilizan las gráficas de PHP/SWF hay que definir&nbsp;la licencia de uso de&nbsp;la librería en el fichero de configuración "sql.ini" en la variable $_PHPSWFCharts = '...' . 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD><STRONG>ChartType</STRONG>&nbsp;</TD>
+<TD>Es el tipo de gráfica que deseamos mostrar, los posibles valores pueden se un número del 0 al 45, una lista de números del 0 al 45 separada por comas o un asterisco, si es un literal se usarán las gráficas en Flash de <STRONG>PHP/SWF Charts por</STRONG> $45(<A href="http://www.maani.us/charts/index.php">http://www.maani.us/charts/index.php</A>).&nbsp;</TD></TR>
+<TR>
+<TD><STRONG>Cols</STRONG></TD>
+<TD>Lista de columnas separadas por comas que deseamos ver en la gráfica, empezando por "0".</TD></TR>
+<TR>
+<TD><STRONG>NColTitle</STRONG></TD>
+<TD>Nº de la columna del listado empezando por "0", indicando el titulo de los valores.</TD></TR>
+<TR>
+<TD><STRONG>XAxisTitle</STRONG></TD>
+<TD>Textos que deseamos mostrar en el eje X.</TD></TR>
+<TR>
+<TD><STRONG>YAxisTitle</STRONG></TD>
+<TD>Textos que deseamos mostrar en el eje Y.</TD></TR>
+<TR>
+<TD><STRONG>MaxRec</STRONG></TD>
+<TD>Número máximo de registros a visualizar desde el inicio del listado. Si el valor es negativo significa que si hay mas registros de los indicados no se mostrará el Chart.</TD></TR>
+<TR>
+<TD><STRONG>TitleColor</STRONG></TD>
+<TD>Color del título (titulo del listado).</TD></TR>
+<TR>
+<TD><STRONG>TitleAxisColor</STRONG></TD>
+<TD>Color de los títulos de los ejes X e Y.</TD></TR>
+<TR>
+<TD><STRONG>Value</STRONG></TD>
+<TD>Poniendo la constante "value" se mostrará el valor de cada dato en la gráfica.</TD></TR>
+<TR>
+<TD><STRONG>Title</STRONG></TD>
+<TD>Título de la gráfica, por defecto es el título del listado, en el caso de haber mas de una gráfica este título también se pondrá en el "title" del icono.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>NomImg</STRONG></TD>
+<TD>Nombre del icono alternativo, para cuando se tiene mas de una gráfica y se quieren diferenciar los iconos de acceso.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Ancho</STRONG></TD>
+<TD>Ancho.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Alto</STRONG></TD>
+<TD>Alto.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[Title] ESTADISTICA DE PROPIEDADES</P>
+<P>[Chart] 3 | 1,2 | 0 | UNIDADES | PROPIEDADES</P>
+<P>[TotalsRows]<BR>[ColsColor] PieLista</P>
+<P>[Fields]<BR>&nbsp; Propiedad | a | D | T | 30 || M |||<BR>&nbsp; Locales&nbsp;&nbsp; | b | + | T |&nbsp; 5 || M |||<BR>&nbsp; Globales&nbsp; | c | + | T |&nbsp; 5 || M |||<BR>&nbsp; Totales&nbsp;&nbsp; | d | + | T |&nbsp; 5 || M |||<BR><BR>
+<HR>
+<BR>[ChartGrid] 2<BR>[Chart] area | 4 | 0 | Gasto |Destinos|||||| DESTINOS MAS VOLADOS (GASTOS)&nbsp;&nbsp; ||500|<BR>[Chart] bar&nbsp; | 4 | 0 | Gasto |Destinos|||||| DESTINOS MAS VOLADOS (GASTOS)&nbsp;&nbsp; ||500| 
+<P></P>
+<P>&nbsp;$Chart['draw'] = array ( array (<BR>&nbsp;&nbsp; &nbsp;'type'=&gt;"text",<BR>&nbsp;&nbsp;&nbsp;'transition' =&gt; 'zoom',<BR>&nbsp;&nbsp;&nbsp;'delay'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; 1,<BR>&nbsp;&nbsp;&nbsp;'duration'&nbsp;&nbsp; =&gt; 1,<BR>&nbsp;&nbsp;&nbsp;'color'=&gt;"000000",<BR>&nbsp;&nbsp;&nbsp;'alpha'=&gt;10,<BR>&nbsp;&nbsp;&nbsp;'font'=&gt;"arial",<BR>&nbsp;&nbsp;&nbsp;'rotation'=&gt;-90,<BR>&nbsp;&nbsp;&nbsp;'bold'=&gt;true,<BR>&nbsp;&nbsp;&nbsp;'size'=&gt;40,<BR>&nbsp;&nbsp;&nbsp;'x'=&gt;20,<BR>&nbsp;&nbsp;&nbsp;'y'=&gt;250,<BR>&nbsp;&nbsp;&nbsp;'width'=&gt;300,<BR>&nbsp;&nbsp;&nbsp;'height'=&gt;150,<BR>&nbsp;&nbsp;&nbsp;'text'=&gt;"DESTINOS",<BR>&nbsp;&nbsp;&nbsp;'h_align'=&gt;"left",<BR>&nbsp;&nbsp;&nbsp;'v_align'=&gt;"top" ),</P>
+<P>&nbsp;&nbsp;array (<BR>&nbsp;&nbsp;&nbsp;'type'=&gt;"text",<BR>&nbsp;&nbsp;&nbsp;'transition' =&gt; 'slide_down',<BR>&nbsp;&nbsp;&nbsp;'delay'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; 1,<BR>&nbsp;&nbsp;&nbsp;'duration'&nbsp;&nbsp; =&gt; 1,<BR>&nbsp;&nbsp;&nbsp;'color'=&gt;"2F8A4A",<BR>&nbsp;&nbsp;&nbsp;'alpha'=&gt;10,<BR>&nbsp;&nbsp;&nbsp;'font'=&gt;"arial",<BR>&nbsp;&nbsp;&nbsp;'rotation'=&gt;0,<BR>&nbsp;&nbsp;&nbsp;'bold'=&gt;true,<BR>&nbsp;&nbsp;&nbsp;'size'=&gt;40,<BR>&nbsp;&nbsp;&nbsp;'x'=&gt;200,<BR>&nbsp;&nbsp;&nbsp;'y'=&gt;30,<BR>&nbsp;&nbsp;&nbsp;'width'=&gt;300,<BR>&nbsp;&nbsp;&nbsp;'height'=&gt;50,<BR>&nbsp;&nbsp;&nbsp;'text'=&gt;"TOP 10",<BR>&nbsp;&nbsp;&nbsp;'h_align'=&gt;"center",<BR>&nbsp;&nbsp;&nbsp;'v_align'=&gt;"middle" )<BR>&nbsp;);</P>
+<P>[THColSpan] segmento,psegmento,SEGMENTOS | gasto,pgasto,GASTOS<BR>[ColsColor]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#FEF4E2,, , ,#FEF4E<BR>[ColsOp]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,,+,%,+&nbsp;&nbsp;&nbsp;&nbsp; ,%<BR>[FormatTotals] '&lt;b&gt;TOTALES TOP 10:&lt;/b&gt;',,b,b,b&nbsp;&nbsp;&nbsp;&nbsp; ,b<BR>[Format]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ,,b,b,b&nbsp;&nbsp;&nbsp;&nbsp; ,b</P>
+<P>[Fields] l<BR>&nbsp;&nbsp;&nbsp; Código&lt;br&gt;Destino | cd_destino&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | N&nbsp; | T |&nbsp; 3&nbsp;&nbsp; || A |||<BR>&nbsp;&nbsp;&nbsp; Destino&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cd_destino&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | N&nbsp; | S | 40&nbsp;&nbsp; || A |||<BR>&nbsp;&nbsp;&nbsp; Nº&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | sum(numper) as segmento&nbsp; | +&nbsp; | T |&nbsp; 9&nbsp;&nbsp; || A |||<BR>&nbsp;&nbsp;&nbsp; %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | sum(numper) as psegmento | +, | T |&nbsp; 3,2 || A |||<BR>&nbsp;&nbsp;&nbsp; Euros&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | sum(i_total) as gasto&nbsp;&nbsp;&nbsp; | +&nbsp; | T |&nbsp; 9&nbsp;&nbsp; || A |||<BR>&nbsp;&nbsp;&nbsp; %&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | sum(i_total) as pgasto&nbsp;&nbsp; | +, | T |&nbsp; 3,2 || A |||</P>
+<TR>
+<TD id=txt>En el segundo ejemplo se usan gráficas en Flash, la matriz&nbsp;&nbsp;$Chart es para alterar el comportamiento por defecto de las gráficas que está definido en /edesweb/a/chart/ con un fichero "ini" por tipo de gráfica.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->

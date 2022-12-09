@@ -1,0 +1,412 @@
+[Title]=MAPA DE IMAGEN
+[button]*|[u] Grabar
+[OnChange]*|area_01|_AyadirOtraArea(this)
+[Fields]
+|cd_gs_poll_img|#|T|6||*|$_GET["_pk"]||
+{P} Imagen
+[P]Imagen
+global 	$_MAPA;
+echo '<table border=1 style="border:0px solid red;background-color:transparent">';
+echo '<tr>';
+echo '<td rowspan=5 style="vertical-align:top; padding-right:10px;">';
+echo '<canvas id="canvas" width="400" height="375" style="border:1px solid #aaaaaa; cursor:crosshair;"></canvas>';
+qQuery("select * from gs_poll_img where cd_gs_poll_img=".$_GET["_pk"]);
+$r = qArray();
+$_MAPA = $r["mapa"];
+echo '<img id="IMAGENMAPA" src="'.eImg64("/http/poll/".$_GET["_pk"].".".$r["extension"]).'" style="cursor:crosshair; display:none;">';
+echo '</td>';
+echo '<tr>';
+echo '<td>Paleta de colores';
+echo '<table id="PALETACOLORES" border=1 style="-border:1px solid #dddddd; background-color:#dddddd;"><tr>';
+echo '<td style="width:20px;height:20px;background-color:#ff0000; cursor:pointer;" onclick="SetColor(this)"></td>';
+echo '<td style="width:20px;height:20px;background-color:#00ff00; cursor:pointer;" onclick="SetColor(this)"></td>';
+echo '<td style="width:20px;height:20px;background-color:#0000ff; cursor:pointer;" onclick="SetColor(this)"></td>';
+echo '<td style="width:20px;height:20px;background-color:#eb984e; cursor:pointer;" onclick="SetColor(this)"></td>';
+echo '<td style="width:20px;height:20px;background-color:#ffff00; cursor:pointer;" onclick="SetColor(this)"></td>';
+echo '</tr></table>';
+echo '</td>';
+echo '<tr>';
+echo '<td>Menú';
+echo "<table id='MENUCANVAS'><tr>";
+echo "<td>"; eAddButton("==&#275;", "", "UndoLinea()", "Undo", "id=iUNDO");
+echo "<td>"; eAddButton("==&#274;", "", "RedoLinea()", "Redo", "id=iREDO");
+echo "<td>"; eAddButton("==&#82;", "", "Cerrar()", "Cerrar polígono", "id=iCERRAR");
+echo "<td>"; eAddButton("i", "", "AddPoligono()", "Nuevo polígono", "id=iNUEVOPOLIGONO");
+echo "<td>"; eAddButton("S", "", "ZoomImagen(1)", "Zoom original", "id=iZOOM1");
+echo "<td>"; eAddButton("==&#208;", "", "ZoomImagen(2)", "Zoom al doble", "id=iZOOM2");
+echo "<td>"; eAddButton("==&#183;", "", "NuevoPoligono()", "Limpiar lienzo", "id=iLIMPIARLIENZO");
+echo "<td>"; eAddButton("==&#121;", "", "VerPoligonos()", "Ver polígonos", "id=iVERPOLIGONOS");
+echo "<td>"; eAddButton("==&#122;", "", "NuevoPoligono()", "Ocultar polígonos", "id=iOCULTARPOLIGONOS");
+echo "<td>"; eAddButton("==&#198;", "", "ModoTest(this)", "Test", "id=iTEST");
+echo "</table>";
+echo '</td>';
+echo '<tr>';
+echo '<td>Areas';
+echo "<table id='AREAS'>";
+echo "<tr><td>";
+eAddField("| area_01 | # | T | 30 | | M | | |");
+echo eIcon("v", "onclick=VerPoligono(this) title='Ver polígono'");
+echo eIcon("u", "onclick=ModificarPoligono(this) title='Modificar polígono'");
+eAddField("| poligono_01 | # | T | 256 | | * | | |");
+eAddField("| color_01    | # | T | 7   | | * | | |");
+eAddField("| pk_01       | + | T | 7   | | * | | |");
+echo "</table>";
+echo '</td>';
+echo '<tr>';
+echo '<td height=100%>';
+echo '</table>';
+[JSEnd]a
+var _ColorPunto = "#f00",
+_nPunto = -1,
+_DimFondo = [],
+_nPoligono = 1,
+_BakImagen,
+_Zoom = 1,
+_ModoTest = false;
+function SetColor(o){
+_ColorPunto = S(o).css("background-color");
+S("#PALETACOLORES TD").css("border:0px");
+S(o).css("border:2px solid #000000");
+}
+SetColor(S("#PALETACOLORES TD").obj);
+S("#MENUCANVAS .AddButton").css("margin:0px");
+function ZoomImagen(n){
+_Zoom = n;
+document.getElementById('canvas').style.zoom = _Zoom;
+}
+function UndoLinea(){
+if( _nPunto==-1 ){
+_nPunto = -1;
+lastPoint = null,
+iniPoint = null;
+return;
+}
+var canvas = document.getElementById('canvas'),
+context = canvas.getContext('2d'),
+oImgCanvas = new Image();
+context.save();
+context.setTransform(1, 0, 0, 1, 0, 0);
+context.clearRect(0, 0, canvas.width, canvas.height);
+context.restore();
+oImgCanvas.src = _DimFondo[_nPunto];
+oImgCanvas.onload = function () {
+context.drawImage(oImgCanvas, 0, 0);
+}
+if( _nPunto==-1 ){
+_nPunto = -1;
+lastPoint = null,
+iniPoint = null;
+}else{
+_nPunto--;
+if( _nPunto>=0 ) lastPoint = [dim[_nPunto][0], dim[_nPunto][1]];
+}
+}
+function RedoLinea(){
+if( _nPunto<dim.length-1 ){
+getPosition(null, dim[_nPunto+1][0], dim[_nPunto+1][1]);
+}
+}
+function NuevoPoligono(func){
+var canvas = document.getElementById('canvas'),
+context = canvas.getContext('2d'),
+oImgCanvas = new Image();
+oImgCanvas.src = _BakImagen;
+oImgCanvas.onload = function(){
+context.drawImage(oImgCanvas, 0, 0);
+if( func ) func();
+}
+_nPunto = -1;
+_DimFondo = [];
+dim = [],
+lastPoint = null,
+iniPoint = null;
+}
+function OtroPoligono(){
+var n,i,nm;
+for(i=1; i<99; i++){
+nm = S.padL(i,2);
+if( S(":area_"+nm).length ){
+_nPoligono = i;
+}
+}
+NuevoPoligono();
+MarcarInput();
+}
+function AddPoligono(){
+if( _nPunto!=-1 ){
+S.alert({
+title:"MENSAJE",
+icon:"DH",
+button:"AC",
+text:"Hay un polígono a medias,\nsi continua se borrarán los datos.",
+function: function(op){
+if( op==2 ) OtroPoligono();
+}
+});
+}else{
+OtroPoligono();
+}
+}
+function VerPoligono(o){
+_nPoligono = S.right(S("INPUT", S.toTag(o,"TR")).obj.name, "_")*1;
+NuevoPoligono(function(){
+var tmp = S(":poligono_"+S.padL(_nPoligono,2)).val().split(";"), n;
+for(n=0; n<tmp.length; n++){
+dim[n] = tmp[n].split(",");
+}
+for(n=0; n<tmp.length; n++){
+dim[n] = [dim[n][0]*1, dim[n][1]*1];
+}
+_nPunto = tmp.length-1;
+_ColorPunto = S(":color_"+S.padL(_nPoligono,2)).val();
+DibujarPoligono();
+});
+MarcarInput();
+}
+function VerPoligonos(){
+NuevoPoligono(function(){
+var n,i,nm;
+for(i=1; i<99; i++){
+nm = S.padL(i,2);
+if( S(":area_"+nm).length && S(":area_"+nm).val()!="" ){
+_nPoligono = i;
+var tmp = S(":poligono_"+S.padL(_nPoligono,2)).val().split(";"), n;
+for(n=0; n<tmp.length; n++){
+dim[n] = tmp[n].split(",");
+}
+for(n=0; n<tmp.length; n++){
+dim[n] = [dim[n][0]*1, dim[n][1]*1];
+}
+_nPunto = tmp.length-1;
+_ColorPunto = S(":color_"+S.padL(_nPoligono,2)).val();
+DibujarPoligono();
+}else{
+break;
+}
+}
+MarcarInput();
+});
+}
+function ModificarPoligono(o){
+_nPoligono = S.right(S("INPUT", S.toTag(o,"TR")).obj.name, "_")*1;
+MarcarInput();
+NuevoPoligono(function(){});
+}
+var app = (function(){
+var canvas = document.getElementById('canvas'),
+context = canvas.getContext('2d'),
+public = {};
+context.font = "10px eDes";
+context.fillStyle = "green";
+context.textAlign = "center";
+context.fillText("I",5,10);
+return public;
+}());
+app.loadPicture();
+canvas.onclick = function(e){
+getPosition(e);
+};
+var pointSize = 3,
+dim = [],
+iniPoint = null;
+function ModoTest(o){
+_ModoTest = !_ModoTest;
+if( _ModoTest ) S("I", o).css("color:red");
+else S("I", o).css("color:");
+}
+function getPosition(event, x,y){
+if( _ModoTest ){
+CheckMapa();
+return;
+}
+var rect = canvas.getBoundingClientRect(),
+ctx = document.getElementById("canvas").getContext("2d");
+if( event ){
+x = event.clientX - rect.left;
+y = event.clientY - rect.top;
+}
+_nPunto++;
+_DimFondo[_nPunto] = document.getElementById("canvas").toDataURL("image/png");
+ctx.fillStyle = _ColorPunto;
+ctx.beginPath();
+ctx.arc(x, y, pointSize, 0, Math.PI*2, true);
+ctx.fill();
+dim[_nPunto] = [x,y];
+if( iniPoint==null ){
+iniPoint = [x,y];
+}
+if( _nPunto>0 ){
+ctx.lineWidth = 1;
+ctx.strokeStyle = _ColorPunto;
+ctx.beginPath();
+ctx.moveTo(dim[_nPunto-1][0], dim[_nPunto-1][1]);
+ctx.lineTo(x, y);
+ctx.stroke();
+}
+}
+function Cerrar(){
+if( _nPunto<0 ) return;
+var ctx = document.getElementById("canvas").getContext("2d"), n, nm;
+for(n=0; n<=_nPunto; n++){
+if( dim[n][0]==NaN || dim[n][1]==NaN ){
+S.error("Se ha producido un error, por favor vuelva a dibujar el polígono");
+NuevoPoligono();
+return;
+}
+}
+ctx.lineWidth = 1;
+ctx.strokeStyle = _ColorPunto;
+ctx.beginPath();
+ctx.moveTo(dim[_nPunto][0], dim[_nPunto][1]);
+ctx.lineTo(dim[0][0], dim[0][1]);
+ctx.stroke();
+ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+ctx.beginPath();
+ctx.moveTo(dim[0][0], dim[0][1]);
+for(n=1; n<=_nPunto; n++){
+ctx.lineWidth = 1;
+ctx.strokeStyle = _ColorPunto;
+ctx.lineTo(dim[n][0], dim[n][1]);
+}
+ctx.lineTo(dim[0][0], dim[0][1]);
+ctx.closePath();
+ctx.fill();
+nm = S.padL(_nPoligono,2);
+if( S(":area_"+nm).val()=="" ){
+S(":area_"+nm).val("(nuevo)");
+}
+S(":poligono_"+nm).val(dim.join(";"));
+S(":color_"+nm).val(_ColorPunto);
+if( S(":pk_"+nm).val()=="" ){
+n = 1;
+S("INPUT[name^='pk_']").each(function(k,o){
+if( o.value*1>n ) n = o.value*1;
+});
+S(":pk_"+nm).val(n+1);
+}
+setTimeout(function(){
+OtroPoligono();
+}, 1000);
+}
+function DibujarPoligono(){
+var ctx = document.getElementById("canvas").getContext("2d"), n;
+for(n=0; n<=_nPunto; n++){
+ctx.beginPath();
+ctx.fillStyle = _ColorPunto;
+ctx.arc(dim[n][0], dim[n][1], pointSize, 0, Math.PI*2, true);
+ctx.closePath();
+ctx.fill();
+}
+ctx.beginPath();
+ctx.lineWidth = 1;
+ctx.strokeStyle = _ColorPunto;
+ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+for(n=0; n<=_nPunto; n++){
+if( n>0 ){
+ctx.lineTo(dim[n][0], dim[n][1]);
+}else{
+ctx.moveTo(dim[0][0], dim[0][1]);
+}
+}
+ctx.lineTo(dim[0][0], dim[0][1]);
+ctx.stroke();
+ctx.closePath();
+ctx.fill();
+}
+function MarcarInput(){
+S("INPUT[name^='area_']").each(function(k,o){
+S(o).css("border:");
+});
+S(":area_"+S.padL(_nPoligono,2)).css("border:1px solid #1b6b8d");
+}
+setTimeout(function(){
+MarcarInput();
+setTimeout(function(){
+_nPoligono = S("INPUT[name^='area_']").length;
+MarcarInput();
+}, 100);
+}, 10);
+var datos = '<?=$GLOBALS["_MAPA"]?>', k, mapa;
+if( datos!="" ){
+mapa = S.json(datos, true);
+for(k in mapa){
+if( /^area_/.test(k) ){
+mapa[k] = S.replace(mapa[k], "&#39;", "'", "&quot;", "'", "&#34;", '"');
+}
+ePF(k, mapa[k]);
+}
+}
+[JSIni]*
+function _AyadirOtraArea(o){
+var aqui = S("#AREAS TR").length,
+t = S("INPUT[name^='area_']").length,
+txt, n, i=0, borrar, nm;
+if( S.trim(S(o).val())=="" ){
+borrar = S.right(o.name, "_");
+S(S.toTag(S(":area_"+borrar).obj, "TR")).nodeRemove();
+for(n=(borrar*1)+1; n<=t; n++){
+nm = S.padL(n-1,2);
+S(":area_"+S.padL(n,2)).obj.name = "area_"+nm;
+S(":poligono_"+S.padL(n,2)).obj.name = "poligono_"+nm;
+S(":color_"+S.padL(n,2)).obj.name = "color_"+nm;
+S(":pk_"+S.padL(n,2)).obj.name = "pk_"+nm;
+}
+_nPoligono = borrar*1;
+}else{
+if( S(S("INPUT[name^='area_']").dim[t-1]).val()=="" ) return;
+t++;
+nm = S.padL(t,2);
+var o = S("#AREAS").tr("R", S.toTag(S(":area_01").obj, "TR").rowIndex);
+txt = S.replace(S(o).html(), "area_01", "area_"+nm, "poligono_01", "poligono_"+nm, "color_01", "color_"+nm, "pk_01", "pk_"+nm);
+S("#AREAS").tr("O", aqui, txt);
+_nPoligono = t-1;
+}
+MarcarInput();
+}
+[PHPIni]A
+$pk = $_POST["cd_gs_poll_img"];
+unset($_POST["cd_gs_poll_img"]);
+foreach($_POST as $k=>$v ){
+$_POST[$k] = str_replace(["'",'"'], ["&#39;","&#34;"], utf8_decode($_POST[$k]));
+}
+$dim = json_encode($_POST);
+qQuery("update gs_poll_img set mapa='{$dim}' where cd_gs_poll_img={$pk}");
+eMessage("Mapa actualizado", "HS");
+[JSIni]*
+function CheckMapa(){
+var rect = canvas.getBoundingClientRect(),
+ctx = document.getElementById("canvas").getContext("2d"),
+x = event.clientX - rect.left,
+y = event.clientY - rect.top,
+label = "";
+var n,i,nm;
+for(i=1; i<99; i++){
+nm = S.padL(i,2);
+if( S(":area_"+nm).length && S(":area_"+nm).val()!="" ){
+var tmp = S(":poligono_"+S.padL(i,2)).val().split(";"), n, dim=[];
+for(n=0; n<tmp.length; n++){
+dim[n] = tmp[n].split(",");
+}
+for(n=0; n<tmp.length; n++){
+dim[n] = [dim[n][0]*1, dim[n][1]*1];
+}
+if( inside(x, y, dim) ){
+S.info(S(":area_"+S.padL(i,2)).val(), 1, "ok").css({left:x+rect.left, top:y+rect.top});
+return;
+}
+}
+}
+S.info("Area en blanco", 1, "error").css({left:x+rect.left, top:y+rect.top});
+function inside(x, y, vs){
+var inside=false, i, xi, yi, xj, yj, intersect;
+for(i=0, j=vs.length-1; i<vs.length; j=i++){
+xi = vs[i][0];
+yi = vs[i][1];
+xj = vs[j][0];
+yj = vs[j][1];
+intersect = ((yi>y)!=(yj>y)) && (x<(xj-xi)*(y-yi)/(yj-yi)+xi);
+if( intersect ) inside = !inside;
+}
+return inside;
+};
+}

@@ -1,0 +1,15 @@
+[Title]CUESTIONARIO/S
+[DBTable]ts_test
+[DBIndex]cd_ts_test
+[DBOrder]dt_creacion
+[DBSerial]cd_ts_test
+[Fields]?
+Título|titulo|D|A|150,95,2||Q|||
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|+|S|60||Q|||
+,F.Creación|dt_creacion|F4|T|10|<titulo|Q|||
+[Fields]else
+#!(a) Nº Cuestionario|cd_ts_test|+|T|4||-|||
+Título|nm_ts_test|D|A|150,95,2||QM||#|
+Descripcion|descripcion|#|A|2000,95,10||M|||
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|+|S|60||QA|_User|#|
+,F.Creación|dt_creacion|F4|T|10|<titulo|Q-|#today#|#|

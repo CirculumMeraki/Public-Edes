@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eToTag 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eToTag( Objeto, Etiqueta [ [, NVeces=1 ]&nbsp;, TagsDePartida ] ) <BR>eToTag( Objeto, Atributo, Valor [, TagsDePartida ] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Devuelve el Objeto padre cuya etiqueta es "Etiqueta", si el tagname del objeto actual es el mismo que el de la etiqueta no hará nada a no ser que el "NVeces" sea menor de cero, en cuyo caso lo hará ese número de veces. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Objeto&nbsp;</TD>
+<TD>Objeto hijo</TD></TR>
+<TR>
+<TD>Etiqueta</TD>
+<TD>TagName del Objeto que queremos que nos devuelva&nbsp; o varios separados por coma.<BR>Puede contener también el nombre de un atributo.</TD></TR>
+<TR>
+<TD>NVeces</TD>
+<TD>Cuando por ejemplo el evento se genera en un&nbsp;td y tu quieres cojer el objeto table del table de ese td pondremos 2 porque queremos no el primer table si no el segundo.<BR>Puede contener también el valor de un atributo.</TD></TR>
+<TR>
+<TD>TagsDePartida</TD>
+<TD>Parámetro opcional es una lista de tags separados por coma para indicar desde cuales se calcula el padre</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>var Obj =&nbsp;top.eToTag( event.srcElement, 'table' ); 
+<TR>
+<TD id=txt>Te devolvera el Objeto TABLE</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>var Obj = top.eToTag(event.srcElement,'TR',1,'IMG,TD'), n, css;<BR>if( Obj==null ) return;<BR></TD></TR>
+<TR>
+<TD id=txt>Si el evento no parte de un "TD" o un "IMG" devolverá NULL en caso contrario te devolverá el objeto "TR"</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>var Obj = top.eToTag( event.srcElement, 'className', 'Resaltado' );</TD></TR>
+<TR>
+<TD id=txt>Devuelve el primer objeto padre que su "class" sea "Resaltado";</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>var Obj = top.eToTag( event.srcElement, 'TABLE,TR' );</TD></TR>
+<TR>
+<TD id=txt>Primero ascenderá buscando la primera "TABLE" y luego continuará hasta encontrar a "TR".</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

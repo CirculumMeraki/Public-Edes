@@ -1,0 +1,151 @@
+#include(*) $lng/usu_clave.edf.lng
+[Title]=CAMBIE LA CLAVE PARA CONTINUAR
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[Stop]
+[OnChange]mR|pass|PassCalidad()
+[Chr]uChr||ABCDEFGHIJKLMNÑOPQRSTUVWXYZÇÜabcdefghijklmnñopqrstuvwxyzçü0123456789 .,:-=*_@ºª!¡(){}[]%/áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛãõÃÕ
+[Fields]
+DNI|dni|X|T|9||-|||
+Nombre|user_name|X|T|30||-|||
+Apellidos|user_surname|X|T|30||-|||
+{H} Consejo|NoTD
+@Clave@|pass|uChr|P|60|user_surname|ML||'#'.length>=@|@LongitudMinima@
+{H} Complejidad|NoTD
+{H} Fortaleza|NoTD
+@Repetir Clave@|_pass|uChr|P|60|user_surname|ML||#|
+|new_pass|+|T|1||*|||
+|dt_pass|F4|T|10||*|||
+|cd_gs_user|*|T|5||*|||
+|_window|*|T|10||*|||
+[H]Consejo
+<td><td style='padding-left:4px;line-height:17px;'>@Es aconsejable una frase como clave@
+[H]Complejidad
+<td id=LD>@Complejidad@<td style='padding-left:5px'><span id="Complejidad" style='display:table'><span style='height:100%;display:table'></span></span>
+[H]Fortaleza
+<td id=LD>@Fortaleza@<td style='padding-left:5px'><span id="Fortaleza" style='display:table'><span style='height:100%;display:table'></span></span>
+[JSIni]mR
+function PassCalidad(){
+var Clave=eGF('pass'), n, c, CalidadType=CalidadLeng=0, TypoChr = new Array(0,0,0,0,0), Color;
+var DimColor = new Array( '#ff0000','#ffcc00','#0000ff','#009900' );
+if( Clave=='' ){
+S(DGI('Complejidad').children[0]).css({
+width: DGI('Fortaleza').children[0].style.width = "0",
+title: DGI('Fortaleza').title = ''
+});
+return;
+}
+for( n=0; n<Clave.length; n++ ){
+c = Clave.substr(n,1);
+if( 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(c)>-1 ){
+TypoChr[0] = 26;
+}else if( 'abcdefghijklmnopqrstuvwxyz '.indexOf(c)>-1 ){
+TypoChr[1] = 27;
+}else if( '0123456789'.indexOf(c)>-1 ){
+TypoChr[2] = 10;
+}else if( 'áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛãõÃÕ'.indexOf(c)>-1 ){
+TypoChr[3] = 30;
+}else if( 'ÑñÇçÜü.,:-=*_@ºª!¡(){}[]%/'.indexOf(c)>-1 ){
+TypoChr[4] = 26;
+}
+}
+for( n=0; n<TypoChr.length; n++ ) CalidadType += TypoChr[n];
+CalidadType = (CalidadType*100)/119;
+CalidadLeng = ( Clave.length>=32 ) ? 100 : (Clave.length*100)/32;
+if(      CalidadType<=25 ) Color = 0;
+else if( CalidadType<=50 ) Color = 1;
+else if( CalidadType<=75 ) Color = 2;
+else				Color = 3;
+S(DGI('Complejidad').children[0]).css({
+backgroundColor: DimColor[Color],
+width: (DGI('user_surname').offsetWidth*CalidadType)/100,
+title: eRound(CalidadType,0)+'%'
+});
+if(      CalidadLeng<=25 ) Color = 0;
+else if( CalidadLeng<=50 ) Color = 1;
+else if( CalidadLeng<=75 ) Color = 2;
+else				Color = 3;
+S(DGI('Fortaleza').children[0]).css({
+backgroundColor: DimColor[Color],
+width: (DGI('user_surname').offsetWidth*CalidadLeng)/100,
+title: eRound(CalidadLeng,0)+'%'
+});
+}
+function VerPass(){
+var Obj = S.event(window),txt,t,
+o = eIndex(Obj.sourceIndex-1);
+if( Obj.src.indexOf('_1.')>0 ){
+t = 'text';
+top.SwapImg( Obj, '_1', '_0' );
+Obj.title = 'Ocultar clave';
+}else{
+t = 'password';
+top.SwapImg( Obj, '_0', '_1' );
+Obj.title = 'Ver clave';
+}
+o.type = t;
+}
+[FormCheck]
+M | {pass}=={_pass} | Las claves son distintas
+[PHPForm]a,mR
+$uDim = file( "{$_SESSION['_PathCSS']}/login.css" );
+for( $u=0; $u<count($uDim); $u++ ){
+list( $uValor, $uLong ) = explode(':',$uDim[$u] );
+list( $uLong ) = explode(';',$uLong );
+$uLong = trim($uLong);
+switch( trim($uValor) ){
+case 'min_login':
+case 'max_login':
+break;
+case 'min_password':
+$_Form['pass'][8] = str_replace('@',$uLong,$_Form['pass'][8]);
+$_Form['pass'][9] = str_replace('@',$uLong,$_Form['pass'][9]);
+break;
+case 'max_password':
+$_Form['pass'][4]  = $uLong;
+$_Form['_pass'][4] = $uLong;
+break;
+}
+}
+if( $_Form['pass'][8]=='' ){
+eFileGetVar('Login', true);
+$_Form['pass'][8] = str_replace('@',$GLOBALS['min_password'],$_Form['pass'][8]);
+$_Form['pass'][9] = str_replace('@',$GLOBALS['min_password'],$_Form['pass'][9]);
+$_Form['pass'][4]  = $GLOBALS['max_password'];
+$_Form['_pass'][4] = $GLOBALS['max_password'];
+}
+[JSCheck]mR
+document.FRM1.new_pass.value = 0;
+[DBRead]mR
+$_Fila['pass'] = '';
+[JSEnd]mR
+FRM1._window.value = window.name;
+if( S(':user_surname').css('border-color')!=undefined ){
+var xBorder = 'solid 1px '+S(':user_surname').css('border-color');
+}else{
+var xBorder = 'solid 1px #aaaaaa';
+}
+S(['#Complejidad','#Fortaleza']).css({
+fontSize: 10,
+width: S(':user_surname').css("width")+4,
+height: S(':user_surname').css("height")-6,
+backgroundColor: '#cccccc',
+border: xBorder,
+display: "inline-block"
+});
+[PHPEnd]M,A
+$_POST['dt_pass'] = date('Y-m-d');
+$dt_pass = date('Y-m-d');
+[DBIni]M
+include_once('../_datos/config/desktop.ini');
+qSelect('gs_user', 'pass', "cd_gs_user='{$_User}'");
+$row = qArray();
+qFree();
+if( $pass==$row['pass'] ){
+eMessage('NO PUEDE PONER LA MISMA CLAVE', 'HSE', 2000, 'top._ToDo=new Array();top.Terminar();');
+}else if( $pass==$_ClaveReset ){
+eMessage('NO PUEDE PONER LA CLAVE POR DEFECTO', 'HSE', 2000, 'top._ToDo=new Array();top.Terminar();');
+}
+[DBEnd]M
+eMessage('CLAVE MODIFICADA', 'HS', 3, 'S(S(window.frameElement).toTag("SPAN")["Parent"]).on("DOMNodeRemoved"); if(top.DGI("SMContentFull")!=null) top.DGI("SMContentFull").disabled=false; top.S.window(window);');

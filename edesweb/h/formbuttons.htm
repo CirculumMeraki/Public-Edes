@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>FormButtons 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[FormButtons] OpFicha [ | OpcionesNoDisponibles ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P class=MsoNormal style="MARGIN: 0cm 0cm 0pt">Define las acciones que se pueden ejecutar desde las fichas, por defecto desde las fichas se puede cambiar el modo en la que se est? ejecutando, y ejecutar opciones de b?squeda en distintos modos. Si se quisiera definirlo de forma global <SPAN style="mso-spacerun: yes">&nbsp;</SPAN>pondr?amos en el fichero "sql.ini" la variable "$_FORMBUTTONS" con las acciones permitidas afectando a todas las fichas que no se defina en su DF de forma particular.<BR>Si la ficha tiene la etiqueta [DBLog] saldr? un icono para visualizar las modificaciones que ha tenido, este solo se muestra cuando la ficha se abre desde el men? principal, si se quisiera que estuviera en subventanas de otras ventanas se tendr?a que declarar la variable $_GET["_LOG"] = "S".</P>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>OpFicha:</STRONG> Cadena con las iniciales de las acciones permitidas (VvUuIDd).<BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TH>&nbsp;INICIAL</TH>
+<TH>ACCION&nbsp;</TH></TR>
+<TR>
+<TD>
+<P align=center>V</P></TD>
+<TD>View. Ver la ficha en modo consulta&nbsp;</TD></TR>
+<TR>
+<TD>
+<P align=center>v</P></TD>
+<TD>View. Buscar ficha a consultar</TD></TR>
+<TR>
+<TD>
+<P align=center>&nbsp;U</P></TD>
+<TD>Update. Ver la ficha en modo modificaci?n&nbsp;</TD></TR>
+<TR>
+<TD>
+<P align=center>u</P></TD>
+<TD>Update. Buscar ficha a modificar</TD></TR>
+<TR>
+<TD>
+<P align=center>I</P></TD>
+<TD>Insert. Ficha en mod alta</TD></TR>
+<TR>
+<TD>
+<P align=center>D</P></TD>
+<TD>Delete. Ver la ficha en modo borrado</TD></TR>
+<TR>
+<TD>
+<P align=center>d</P></TD>
+<TD>Delete. Buscar ficha a borrar</TD></TR></TBODY></TABLE><STRONG>OpNoDisponibles:</STRONG> Cadena con las iniciales de las acciones NO permitidas (SLC).<BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TH>&nbsp;INICIAL</TH>
+<TH>ACCION&nbsp;</TH></TR>
+<TR>
+<TD>
+<P align=center>S</P></TD>
+<TD>SubVentana&nbsp;</TD></TR>
+<TR>
+<TD>
+<P align=center>L</P></TD>
+<TD>B?squeda c?n SubListado</TD></TR>
+<TR>
+<TD>
+<P align=center>&nbsp;C</P></TD>
+<TD>Convertir en Contar&nbsp;</TD></TR>
+<TR>
+<TD>
+<P align=center>-</P></TD>
+<TD>Suprime todas las prestaciones</TD></TR></TBODY></TABLE><BR>Si un determinado script se ejecuta con distintas prestaciones seg?n desde donde se ejecute se puede condicionar el comportamiento introduciendo en la url la variable "_FORMBUTTONS" con las iniciales de las opciones permitidas, por ejemplo queremos modificar una sola ficha desde una opci?n del ?rbol.<BR><BR>Si se quieren suprimir todas las prestaciones $_FORMBUTTONSDELETE = "-" dejando solo&nbsp;el icono de limpiar datos del formulario en los modos de "c", "m", "b", si se quiere suprimir estos también se le asignará "--" (un doble guión).<BR><BR><SPAN style="WIDTH: 25px"></SPAN>#mR:nodo.edf&amp;_SEEK&amp;cd_gs_node=#node#&amp;_FORMBUTTONS&amp;_STOP<BR><BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>#</TD>
+<TD>Ejecutar una ficha</TD></TR>
+<TR>
+<TD>mR</TD>
+<TD>En modo modificaci?n ( no "m" que ser?a que te pregunte que ficha quieres modificar )</TD></TR>
+<TR>
+<TD>:</TD>
+<TD>Delimitador</TD></TR>
+<TR>
+<TD>nodo.edf</TD>
+<TD>Script a ejecutar ( fichero de definici?n )</TD></TR>
+<TR>
+<TD>&amp;_SEEK</TD>
+<TD>Indica que los siguientes campos son de b?squeda, menos los virtuales que empiezan por "_".</TD></TR>
+<TR>
+<TD>cd_gs_node=#node#.- </TD>
+<TD>Indicamos el campo ?ndice&nbsp;y su valor del registro a modificar, el valor "#node#" es un macro que se sustituye por el valor del nodo del usuario, este valor podr?a se cualquiera.</TD></TR>
+<TR>
+<TD>&amp;_FORMBUTTONS</TD>
+<TD>Al no poner valores a esta variable estamos deshabilitando todas las acciones a ejecutar estando en la ficha.</TD></TR>
+<TR>
+<TD>&amp;_STOP</TD>
+<TD>Indica que despu?s de modificar el registro se pare y no contin?e pregunt?ndote por otra ficha a modificar.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[FormButtons] VU 
+<TR>
+<TD id=txt>Solo puede alternar la ficha en modo consulta y en modo modificaci?n.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eManagement 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eManagement( ListMode [,Type=W [, FuncUser ] ] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Desde un listado&nbsp;saldr? un men? para su gesti?n. Una vez pulsado una opción se queda memorizado hasta que vuelvas a pulsar ptra opción.
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>ListMode&nbsp;</TD>
+<TD>&nbsp;Lista de Modos a ejecutar, la inicial del label de todas las opciones son únicas y están reservadas las inicales "ABCM" para los modos de gestión.<BR>&nbsp;Las iniciales de gestión con: "I" Alta, "D" Borrar, "V" Consultar y "U" Modificar.<BR>&nbsp;El guión medio "-" generará una linea de separación.<BR>&nbsp;El guión bajo para las opciones del usuario es para que pregunte por un registro del listado</TD></TR>
+<TR>
+<TD>Type</TD>
+<TD>&nbsp;Por defecto el submen? es de tipo ventana Type=W, pero con el Type='D' se colocar? abaja en una sola linea. </TD></TR>
+<TR>
+<TD>FuncUser</TD>
+<TD>&nbsp;Funci?n de usuario al llamarlo en un modo personalizado</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>eManagement('IUVD'); 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>function uFunc( Op, Mode ){&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// [Op]Opcion, [Mode]<BR><SPAN style="WIDTH: 25px"></SPAN>if( Mode=='C' ){&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>//[C]reate<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>if( Op=='H' ) return['info_field','Help'];<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>else if( Op=='F' ) return['file','Fichero','FcR:man/pais.edf'];<BR><SPAN style="WIDTH: 25px"></SPAN>}else{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>//[E]xecute<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>alert('Opcion a ejecutar: '+Op);<BR><SPAN style="WIDTH: 25px"></SPAN>}<BR>}<BR>eManagement( 'IUVD_FH', 'D', uFunc );</TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

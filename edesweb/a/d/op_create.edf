@@ -1,0 +1,46 @@
+[Title]=CREAR NUEVA CARPETA &#47; OPCION TEMPORAL
+[Button]a|Crear
+[Fields]
+Nombre|op_nombre|#|T|100|330|Mk||#|
+URL|op_url|#|T|100|330|Mk||#|
+[PHPIni]A
+eInit();
+echo "<LINK REL='stylesheet' HREF='{$_SESSION['_PathCSS']}/lista.css' TYPE='text/css'>";
+echo '<SCRIPT type="text/javascript">';
+if( $op_url[0]==':' ){
+?>
+var NewMenu = top._MenuEDes;
+while( top.DGI('SM'+NewMenu)!=null ) NewMenu++;
+var oTABLE = top.DGI('SM'+top._MenuEDes);
+var oTR = oTABLE.insertRow(0);
+oTR.HR = '<?= $op_url ?>';
+oTR.title = '<?= $op_url ?>';
+oTR.m = NewMenu;
+var oTD = oTR.insertCell(0);
+oTD.innerHTML = '<img src="edes.php?R:$a/g/new.gif" title="Nuevo submenú">';
+oTD = oTR.insertCell(1);
+oTD.textContent = '<?= $op_nombre ?>';
+oTD = oTR.insertCell(2);
+oTD.innerHTML = "<IMG SRC='g/menu.gif'>";
+var oDIV = top.eCreateElement( 'div', 'SM'+NewMenu );
+var xMenu = "<TABLE id=SM"+NewMenu+" class=SM><TR HR='#b:' title='#b:'><td><TD>Borrar<TD><TR HR='#c:' title='#c:'><td><TD>Consultar<TD><TR HR='#a:' title='#a:'><td><TD>Insertar<TD><TR HR='#m:' title='#m:'><td><TD>Modificar<TD></TABLE>";
+oDIV.outerHTML = xMenu;
+top.eInfo(window,'Grupo de opciones creadas');
+<?PHP
+}else{
+?>
+var oTABLE = top.DGI('SM'+top._MenuEDes);
+var oTR = oTABLE.insertRow(0);
+oTR.HR = '<?= $op_url ?>'.replace('&gt;','>');
+oTR.title = '<?= $op_url ?>'.replace('&gt;','>');
+var oTD = oTR.insertCell(0);
+oTD.innerHTML = '<img src="edes.php?R:$a/g/new.gif" title="Nueva opción">';
+oTD = oTR.insertCell(1);
+oTD.textContent = '<?= $op_nombre ?>';
+oTR.insertCell(2);
+top.eInfo(window,'Opción creada');
+<?PHP
+}
+echo 'top.eLoading(0,window);';
+echo '</SCRIPT>';
+eEnd();

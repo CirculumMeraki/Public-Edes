@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">eInclude</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">eInclude( NomRecurso [, NomRecurso,... ] )</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Incluye:<br />Los recursos del motor, si NomRecurso va sin extensión, indicados en el script del usuario si ha entrado por "edes.php". <br />Y los script de usuario si NomRecurso tiene extensión. Recordar que si no empieza por "/" lo leerá a partir de "d" y si empieza por "/" desde la raíz de la aplicación.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" style="width: 639px; height: 191px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> mysql</td>
+<td>Controlador DB de MySql </td>
+</tr>
+<tr>
+<td> informix</td>
+<td>Controlador DB de Informix</td>
+</tr>
+<tr>
+<td> oracle</td>
+<td>Controlador DB de Oracle</td>
+</tr>
+<tr>
+<td> message</td>
+<td>Función para mostrar un mensaje único en la pantalla </td>
+</tr>
+<tr>
+<td> markdown</td>
+<td>Función para convertir de markdown a html "eMarkDown($txt)"</td>
+</tr>
+<tr>
+<td> lib</td>
+<td>Funciones:<br />eAddMonth( $AyoMes, $AddDelNumMeses )<br />eNum2String( $xNumero, $NDeci=0, $Salida='L', $SufijoNumero='', $SufijoDecimal='' )<br />Clases<br />eColor:<br />Metodo: Tone( $color, $Porcentaje )</td>
+</tr>
+</tbody>
+</table>
+<br />
+<table id="Opciones" style="width: 443px; height: 21px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>[path]Script.Extensión</td>
+<td> Script del usuario                                                                  </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">eInclude( $_Sql );// Se include el controlador de DB por defecto.<br />eInclude( 'mysql', 'message' ); // Include el controlado de MySql y la función de mensaje. <br />eInclude( 'cliente.php' );   // Include del script situado en el directorio "d" de datos</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

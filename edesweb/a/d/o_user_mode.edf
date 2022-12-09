@@ -1,0 +1,183 @@
+[Title]=LISTA DE USUARIOS
+[DBTable]gs_user_tree
+[DBIndex]cd_gs_user
+[DBOrder]B.user_name, B.user_surname
+[DBAddFilter]B.permission='S'
+[DBLimit]20000
+[WinCloseESC]
+[ColsOp]c
+[PDFCol],,,0
+[PHPStart]l
+$_ConMode = ( substr_count($_FILTER,'%') > 0 );
+[PHPIni]l
+list( ,$uTree ) = explode( '=', $_FILTER );
+list( $uTree ) = explode( ' ', $uTree );
+qQuery( "select nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where cd_gs_tree={$uTree}" );
+list( $uNomTree ) = qRow();
+eAddShowFilter( 'Arbol: '.trim($uNomTree) );
+echo '<script type="text/javascript">';
+$uMode = '';
+if( substr_count($_FILTER,'%') > 0 ){
+list( ,$uMode ) = explode( '%', $_FILTER );
+eAddShowFilter( 'Modo: '.$uMode );
+}
+echo "var _uMode = '{$uMode}';";
+echo '</script>';
+if( file_exists('../_datos/config/manager_op_filter.php') ) include('../_datos/config/manager_op_filter.php');
+$FilterUser = str_replace('#.','',$FilterUser);
+if( $FilterUser<>'' ) $FilterUser = ' and '.$FilterUser;
+$_DBADDFILTER = "B.permission='S' and #.cd_gs_user in (select cd_gs_user from gs_user where cd_gs_user=gs_user.cd_gs_user {$FilterUser} )";
+echo '<script type="text/javascript">var _SoloConsulta='.(($_DBADDFILTER=='')?'false':'true').'</script>';
+[CSSAdd]l
+.Celda { cursor:pointer; }
+[Fields]
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|0|S|50||-|||
+|cd_gs_tree|+|T|3||*|||
+Modo|mode|N|T|1||-|||
+Quitar·Poner|mode quitar|N|T|1||-||=|
+#Include(l) o_user_mode.edf|true
+[Format]
+$_vF[3] = '<img src="g/tf_0.gif">';
+[JSEnd]l
+var _uTD, _uIMG;
+function uSetOnOffMode( Quitar, Modo ){
+if( Quitar ){
+_uIMG.src = _uIMG.src.replace('_0.','_1.');
+_uTD.textContent = _uTD.textContent.replace(','+Modo,'');
+_uTD.textContent = _uTD.textContent.replace(Modo+',','');
+if( eTrim(_uTD.textContent)==Modo ) _uTD.textContent = '';
+var n = eClearThousands( _WOPENER._oTD.textContent )-1;
+_WOPENER._oTD.textContent = eShowThousands( n, 0 );
+}else{
+_uIMG.src = _uIMG.src.replace('_1.','_0.');
+_uTD.textContent = Modo;
+var n = eClearThousands( _WOPENER._oTD.textContent )*1+1;
+_WOPENER._oTD.textContent = eShowThousands( n, 0 );
+}
+}
+function uOnOffMode(){
+var Obj = S.event(window);
+if( Obj.tagName=='TH' ){
+SeleccionaLinea();
+}else if( Obj.tagName=='IMG' || ( Obj.tagName=='TD' && Obj.cellIndex==3 ) ){
+if( _SoloConsulta ) return;
+var TR = S.toTag(Obj,'TR');
+if( Obj.tagName=='TD' ) Obj = Obj.children[0];
+_uIMG = Obj;
+_uTD = TR.cells[2];
+top.eCallSrv( window, 'PonQuitaModo='+Obj.src.indexOf('_0.')+'&mode='+_uMode+'&cd_gs_user='+eGF('cd_gs_user')+'&cd_gs_tree='+eGF('cd_gs_tree') );
+}else{
+top.eSWOpen( window, 'F'+((_SoloConsulta)?'c':'m')+'R:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user')+((_SoloConsulta)?'&_CLOSE_=1':'') );
+}
+}
+function uSetOnOffTree( Quitar, Modo ){
+if( Quitar ){
+_uIMG.src = _uIMG.src.replace('_0.','_1.');
+_uTD.textContent = '';
+for( var n=2; n<_WOPENER._oTR.cells.length-2; n++ ){
+if( eTrim(_WOPENER._oTR.cells[n].textContent)!='' && Modo.indexOf(eTrim(_WOPENER.BROWSE.rows[1].cells[n-2].textContent))>-1 ){
+var v = eClearThousands( _WOPENER._oTR.cells[n].textContent )-1;
+_WOPENER._oTR.cells[n].textContent = eShowThousands( v, 0 );
+}
+}
+n = _WOPENER._oTR.cells.length-2;
+var v = eClearThousands( _WOPENER._oTR.cells[n].textContent )-1;
+_WOPENER._oTR.cells[n].textContent = eShowThousands( v, 0 );
+}else{
+_uIMG.src = _uIMG.src.replace('_1.','_0.');
+_uTD.textContent = Modo;
+for( var n=2; n<_WOPENER._oTR.cells.length-2; n++ ){
+if( eTrim(_WOPENER._oTR.cells[n].textContent)!='' ){
+if( eTrim(_WOPENER._oTR.cells[n].textContent)!='' && Modo.indexOf(eTrim(_WOPENER.BROWSE.rows[1].cells[n-2].textContent)) > -1 ){
+var v = eClearThousands( _WOPENER._oTR.cells[n].textContent )*1+1;
+_WOPENER._oTR.cells[n].textContent = eShowThousands( v, 0 );
+}
+}
+}
+n = _WOPENER._oTR.cells.length-2;
+var v = eClearThousands( _WOPENER._oTR.cells[n].textContent )*1+1;
+_WOPENER._oTR.cells[n].textContent = eShowThousands( v, 0 );
+}
+}
+function uOnOffTree(){
+var Obj = S.event(window);
+if( Obj.tagName=='TH' ){
+SeleccionaLinea();
+}else if( Obj.tagName=='IMG' || ( Obj.tagName=='TD' && Obj.cellIndex==3 ) ){
+if( _SoloConsulta ) return;
+var TR = S.toTag(Obj,'TR');
+if( Obj.tagName=='TD' ) Obj = Obj.children[0];
+_uIMG = Obj;
+_uTD = TR.cells[2];
+if( Obj.src.indexOf('_0.') > -1 ){
+TR.oMode = TR.cells[2].textContent;
+var Mode = TR.cells[2].textContent;
+}else{
+var Mode = TR.oMode;
+}
+top.eCallSrv( window, 'PonQuitaTree='+Obj.src.indexOf('_0.')+'&mode='+Mode+'&cd_gs_user='+eGF('cd_gs_user')+'&cd_gs_tree='+eGF('cd_gs_tree') );
+}else{
+top.eSWOpen( window, 'F'+((_SoloConsulta)?'c':'m')+'R:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user')+((_SoloConsulta)?'&_CLOSE_=1':'') );
+}
+}
+¿ $_ConMode==true  ? [OnLoad] l | document.all.BROWSE.onclick = uOnOffMode;
+¿ $_ConMode==false ? [OnLoad] l | document.all.BROWSE.onclick = uOnOffTree;
+[CallSrv]PonQuitaModo
+$cd_gs_user = str_replace('.','',$cd_gs_user);
+if( $PonQuitaModo > -1 ){
+$Accion = 1;
+qQuery( "update gs_user_tree set mode=replace(mode,',{$mode}','') where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user}" );
+qQuery( "update gs_user_tree set mode=replace(mode,'{$mode},','') where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user}" );
+qQuery( "update gs_user_tree set mode=''						  where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user} and mode='{$mode}'" );
+qQuery( "delete from gs_user_tree		 						  where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user} and mode=''" );
+}else{
+$Accion = 0;
+include_once('../_datos/config/manager_op.ini');
+$Plantilla = '';
+foreach( $_Mode as $k=>$v ) $Plantilla .= ",{$k}";
+if( $Plantilla[0]==',' ) $Plantilla = substr( $Plantilla , 1 );
+if( qCount( 'gs_user_tree', "cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user}" ) == 0 ){
+$Insertar = true;
+$oMode = '';
+}else{
+qQuery( "select mode from gs_user_tree where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user}" );
+list( $oMode ) = qRow();
+$oMode = trim($oMode);
+$Insertar = false;
+}
+$oMode .= $mode;
+$oMode = str_replace( ',', '', $oMode );
+$Quitar = str_replace( ' ', '', strtr( $Plantilla, $oMode, str_repeat(' ',strlen($oMode)) ) );
+while( substr_count($Quitar,' ')  > 0 ) $Quitar = str_replace( ' ' , '' , $Quitar );
+while( substr_count($Quitar,',,') > 0 ) $Quitar = str_replace( ',,', ',', $Quitar );
+$Quitar = str_replace( ',', '', $Quitar );
+$Queda = str_replace( ' ', '', strtr( $Plantilla, $Quitar, str_repeat(' ',strlen($Quitar)) ) );
+while( substr_count($Queda,' ')  > 0 ) $Queda = str_replace( ' ' , '', $Queda );
+while( substr_count($Queda,',,') > 0 ) $Queda = str_replace( ',,', ',', $Queda );
+if( $Queda[0]==',' ) $Queda = substr( $Queda , 1 );
+if( substr($Queda,-1)==',' ) $Queda = substr( $Queda , 0,-1 );
+$Queda = trim($Queda);
+$mode = $Queda;
+if( $Insertar ){
+qQuery( "insert into gs_user_tree values ( {$cd_gs_user}, {$cd_gs_tree}, '{$Queda}' )" );
+}else{
+qQuery( "update gs_user_tree set mode='{$Queda}' where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user}" );
+}
+}
+echo '<script type="text/javascript">';
+echo "window.frameElement.WOPENER.uSetOnOffMode( {$Accion}, '{$mode}' );";
+echo '</script>';
+eEnd();
+[CallSrv]PonQuitaTree
+$cd_gs_user = str_replace('.','',$cd_gs_user);
+if( $PonQuitaTree > -1 ){
+$Accion = 1;
+qQuery( "delete from gs_user_tree where cd_gs_tree={$cd_gs_tree} and cd_gs_user={$cd_gs_user}" );
+}else{
+$Accion = 0;
+qQuery( "insert into gs_user_tree values ( {$cd_gs_user}, {$cd_gs_tree}, '{$mode}' )" );
+}
+echo '<script type="text/javascript">';
+echo "window.frameElement.WOPENER.uSetOnOffTree( {$Accion}, '{$mode}' );";
+echo '</script>';
+eEnd();

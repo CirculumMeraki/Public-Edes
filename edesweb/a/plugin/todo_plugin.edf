@@ -1,0 +1,525 @@
+-
+#(a,?R) {P} UserPermission
+[CSSAdd]a,?R
+.colSel td:nth-child(2){
+font-family: eDes;
+font-size: 50%;
+padding-left: 3px;
+}
+[DBEnd]A
+$_POST["_OpTreeUSER"] = $_IdRegistro['gs_user'];
+[DBEnd]A,M
+$Test = false;
+if( $Test ){
+eInit();
+echo '<pre>'; echo $_POST["_OpTreeFIELD"]."<br>";echo '</pre>';
+}else{
+qQuery( "delete from gs_user_tree where cd_gs_user={$_POST['_OpTreeUSER']}" );
+qQuery( "delete from gs_user_op   where cd_gs_user={$_POST['_OpTreeUSER']}" );
+}
+$DimTR = explode( "\n" ,$_POST["_OpTreeFIELD"] );
+for( $l=0; $l<count($DimTR)-1; $l++ ){
+list( $Tree, $Add, $Del ) = explode( '~' ,$DimTR[$l] );
+$i = strpos( $Tree, ',' );
+$txt = trim(substr( $Tree, $i+1, -1 ) );
+$Arbol = trim(substr( $Tree, 0, $i ) );
+if( $txt!='' ){
+if( $Test ){
+}else{
+qQuery( "insert into gs_user_tree values ( {$_POST['_OpTreeUSER']}, {$Arbol}, '{$txt}' )" );
+}
+}
+$Dim = explode('|',$Add);
+for( $n=1; $n<count($Dim); $n++ ){
+$Op = $Dim[$n];
+if( $Test ){
+}else{
+qQuery( "insert into gs_user_op   values ( {$_POST['_OpTreeUSER']}, {$Arbol}, 'I', {$Op} )" );
+}
+}
+$Dim = explode('|',$Del);
+for( $n=1; $n<count($Dim); $n++ ){
+$Op = $Dim[$n];
+if( $Test ){
+}else{
+qQuery( "insert into gs_user_op   values ( {$_POST['_OpTreeUSER']}, {$Arbol}, 'D', {$Op} )" );
+}
+}
+}
+if( $Test ){
+exit;
+}
+[JSIni]a,mR
+var _SelGrupoTree = false;
+function _TreeOpGroup(){
+_SelGrupoTree = !_SelGrupoTree;
+if( _SelGrupoTree ){
+S.event(window).src = S.event(window).src.replace('_one.','_all.');
+}else{
+S.event(window).src = S.event(window).src.replace('_all.','_one.');
+}
+}
+var _SelGrupoTree = false;
+function _TreeSelect(){
+var el = S.event(window);
+if( el.tagName=='IMG' ) el = el.parentNode;
+if( el.tagName!='TD' ) return;
+var _LABEL = 2;
+if( el.cellIndex==1 ){
+_SeModTree = true;
+var NEstado = (el.textContent==_ChrON ) ? _ChrOFF : _ChrON;
+el.textContent = NEstado;
+if( _SelGrupoTree ){
+Obj = el;
+var _FILAS = DGI("_TreeListOp").children[0].rows;
+var i = Obj.parentNode.rowIndex + 1;
+var tTR = _FILAS.length;
+var oID = Obj.parentNode.cells[_LABEL].id;
+var sID = 'n'+(parseInt(oID.substring(1))+1);
+while( i < tTR && oID < _FILAS[i].cells[_LABEL].id  ){
+if( _FILAS[i].dlt==undefined ) _FILAS[i].cells[1].textContent = NEstado;
+i++;
+}
+}
+}else if( el.cellIndex==_LABEL ){
+if( el.all.length == 0 ) return;
+var _FILAS = DGI("_TreeListOp").children[0].rows;
+var Obj = el.children[0];
+var tmp = Obj.src.split('_');
+var Estado = tmp[tmp.length-1].substring(0,1);
+var i = el.parentNode.rowIndex + 1;
+var oID = el.id;
+var sID = 'n'+(parseInt(oID.substring(1))+1);
+var tTR = _FILAS.length;
+if( Estado == 0 ){
+Obj.src = Obj.src.replace('_0.','_1.');
+while( i < tTR && oID < _FILAS[i].cells[_LABEL].id ){
+if( _FILAS[i].dlt==undefined ) _FILAS[i++].style.display = 'none';
+else i++;
+}
+}else{
+Obj.src = Obj.src.replace('_1.','_0.');
+while( i < tTR && oID < _FILAS[i].cells[_LABEL].id ){
+if( _FILAS[i].dlt==undefined ){
+if( sID == _FILAS[i].cells[_LABEL].id ){
+_FILAS[i].style.display = 'block';
+if( _FILAS[i].cells[_LABEL].all.length == 1 ) _FILAS[i].cells[_LABEL].firstChild.src = _FILAS[i].cells[_LABEL].firstChild.src.replace('_0.','_1.');
+}
+}
+i++;
+}
+}
+eResize();
+}
+}
+[P]UserPermission
+global $_Modo, $_vF;
+include_once('../_datos/config/manager_op.ini' );
+$_ChrON = "j";
+$_ChrOFF = "";
+?>
+<style>
+#o { DISPLAY: none; }
+#n0 { PADDING-LEFT: 5px; }
+#n1 { PADDING-LEFT: 22px; }
+#n2 { PADDING-LEFT: 39px; }
+#n3 { PADDING-LEFT: 56px; }
+#n4 { PADDING-LEFT: 73px; }
+#n5 { PADDING-LEFT: 90px; }
+#n6 { PADDING-LEFT: 107px; }
+#n7 { PADDING-LEFT: 124px; }
+#n8 { PADDING-LEFT: 141px; }
+#n9 { PADDING-LEFT: 158px; }
+</style>
+<script type="text/javascript">
+function OpTreeSubmit(){
+var txt = '', TR = DGI("_TreeList").children[0].rows;
+for( var f=1; f<TR.length; f++ ){
+txt += TR[f].cells[0].textContent+',';
+for( var c=2; c<TR[0].cells.length-2; c++ ) if( TR[f].cells[c].textContent==_ChrON ) txt += TR[0].cells[c].getAttribute("Modo")+',';
+txt += '~'+TR[f].opsAdd;
+txt += '~'+TR[f].opsDel;
+txt += '\n';
+}
+ePF('_OpTreeFIELD',txt);
+return true;
+}
+var _Plugin = new Array();
+_Plugin[_Plugin.length] = new Array( 'S', 'OpTreeSubmit()' );
+var _ChrOFF  = String.fromCharCode(<?= $_ChrOFF ?>);
+var _ChrON  = String.fromCharCode(<?= $_ChrON ?>);
+var _ChrOFF = String.fromCharCode(<?= $_ChrOFF ?>);
+function _OpTreeClick(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+if( Obj.cellIndex < 2 ) return;
+if( Obj.cellIndex == Obj.parentNode.cells.length-1 ){
+_TreeOpLoad(Obj.parentNode.cells[0].textContent,'D');
+}else if( Obj.cellIndex == Obj.parentNode.cells.length-2 ){
+_TreeOpLoad(Obj.parentNode.cells[0].textContent,'I');
+}else{
+Obj.textContent = ( Obj.textContent==_ChrON ) ? _ChrOFF : _ChrON;
+}
+}
+var _yTreeOpLoad = 0;
+function _TreeOpLoad( nTree, Tipo ){
+var el = S.event(window), Modos='',
+TD = el.parentNode.cells,
+oTH = el.parentNode,
+TH = el.parentNode.parentNode.parentNode.rows[0], c;
+for(c=2; c<TD.length-2; c++) if( TD[c].textContent==_ChrON ) Modos += TH.cells[c].getAttribute("Modo")+',';
+if( Tipo=='D' && Modos=='' ){
+top.eInfo(window,'@No hay seleccionado ningun Modo@');
+return;
+}else if( Tipo=='I' && Modos.length==((TD.length-2-2)*2) ){
+top.eInfo(window,'@Todos los Modos estan seleccionados@');
+return;
+}
+var xy = top.eXY(el);
+_yTreeOpLoad = xy[1];
+DGI("_TreeListOp").style.left = px(xy[0]+el.offsetWidth);
+var sHtm = "<!DOCTYPE HTML>";
+sHtm += '<HTML><HEAD>';
+sHtm += '<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">';
+sHtm += '</HEAD><BODY>';
+sHtm += "<FORM METHOD='POST' ACTION='edes.php?E:CallSrv=$a/d/usu_ficha.edf&_TreeOpLoad="+nTree+"&Tipo="+Tipo+"&Modos="+Modos+"&Posicion="+TD[0].parentNode.rowIndex+"&User="+eGF('cd_gs_user')+"' target=TLF>";
+sHtm += "<INPUT NAME='IsUTF8' value='Ñ'>";
+if( Tipo=='I' ){
+sHtm += "<TEXTAREA NAME='ListaOpsAdd' COLS=48 ROWS=12 style='width:400'>"+oTH.opsAdd+"</TEXTAREA>";
+}else{
+sHtm += "<TEXTAREA NAME='ListaOpsDel' COLS=48 ROWS=12 style='width:400'>"+oTH.opsDel+"</TEXTAREA>";
+}
+sHtm += "</FORM>";
+sHtm += "</BODY></HTML>";
+top.TLF.document.write(sHtm);
+top.TLF.frameElement.WOPENER = window;
+top.TLF.document.forms[0].submit();
+}
+function _TreeOpSave(){
+var el = S.event(window);
+while( el.tagName!='TABLE' ) el = el.parentNode;
+do{ el = el.parentNode; } while( el.tagName!='TABLE' );
+var TABLA = DGI("_TreeListOp").children[0],
+_FILAS = TABLA.rows,
+txt = '', no = 0, v
+for(v=1; v<_FILAS.length; v++) if( _FILAS[v].cells[1].textContent.replace(/\s/g,'')==_ChrON ){
+txt += '|'+_FILAS[v].getAttribute("n");
+no++;
+}
+var TablaArboles = DGI("_TreeList").children[0];
+if( TABLA.getAttribute("Tipo")=='I' ){
+TablaArboles.rows[TABLA.getAttribute("Posicion")].opsAdd = txt;
+TablaArboles.rows[TABLA.getAttribute("Posicion")].cells[TablaArboles.rows[TABLA.getAttribute("Posicion")].cells.length-2].textContent = no;
+}else{
+TablaArboles.rows[TABLA.getAttribute("Posicion")].opsDel = txt;
+TablaArboles.rows[TABLA.getAttribute("Posicion")].cells[TablaArboles.rows[TABLA.getAttribute("Posicion")].cells.length-1].textContent = no;
+}
+S.modalDelete(window);
+DGI("_TreeListOp").style.display = "none";
+}
+function VerTodo(){
+var _FILAS = DGI("_TreeListOp").children[0].rows, _LABEL=2, v;
+for(v=_FILAS.length-1; v>=1; v--){
+_FILAS[v].style.display = 'block';
+if( _FILAS[v].cells[_LABEL].all.length == 1 ) _FILAS[v].cells[_LABEL].firstChild.src = _FILAS[v].cells[_LABEL].firstChild.src.replace('_1.','_0.');
+}
+top.eScrollSet(window,'_TreeListOp',0);
+eResize();
+}
+var _MinIndent = 0;
+function VerResumen(){
+var _FILAS = DGI("_TreeListOp").children[0].rows, _LABEL=2, oNivel = 'n'+_MinIndent;
+for( var v=_FILAS.length-1; v>=1; v-- ){
+if( _FILAS[v].cells[_LABEL].id==oNivel ){
+_FILAS[v].style.display = 'block';
+if( _FILAS[v].cells[_LABEL].all.length == 1 ) _FILAS[v].cells[_LABEL].firstChild.src = _FILAS[v].cells[_LABEL].firstChild.src.replace('_0.','_1.');
+}else{
+_FILAS[v].style.display = 'none';
+}
+}
+DGI("_TreeListOp").scrollTop = 0;
+top.eScrollSet(window,'_TreeListOp',0);
+eResize();
+}
+function Ver2Resumen(){
+var _FILAS = DGI("_TreeListOp").children[0].rows, _LABEL=2, oNivel = 'n'+(_MinIndent+2);
+for( var v=_FILAS.length-1; v>=1; v-- ){
+if( _FILAS[v].cells[_LABEL].id < oNivel ){
+_FILAS[v].style.display = 'block';
+if( _FILAS[v].cells[_LABEL].all.length == 1 ) _FILAS[v].cells[_LABEL].firstChild.src = _FILAS[v].cells[_LABEL].firstChild.src.replace('_0.','_1.');
+}else{
+_FILAS[v].style.display = 'none';
+}
+}
+DGI("_TreeListOp").scrollTop = 0;
+top.eScrollSet(window,'_TreeListOp',0);
+eResize();
+}
+</script>
+<?PHP
+if( $_Modo=='a' ){
+echo "<INPUT NAME='_OpTreeUSER' TYPE='HIDDEN' VALUE=''>";
+}else{
+echo "<INPUT NAME='_OpTreeUSER' TYPE='HIDDEN' VALUE='{$_vF['cd_gs_user']}'>";
+}
+?>
+<TEXTAREA NAME='_OpTreeFIELD' COLS=80 ROWS=3 MAXLENGTH=255 WRAP=VIRTUAL style='display:none'></TEXTAREA>
+<span id=_TreeList class=SubLista style="overflow:auto;padding:0;vertical-align:top;line-height:1.7;" onscroll='top.eScrollTH(this)'>
+<table border=0 cellspacing=1px cellpadding=2<?= (($_Modo=='a' || $_Modo=='mR')?' onclick=_OpTreeClick()':'') ?>>
+<col style='display:none'>
+<col>
+<?PHP
+$tCursor = (($_Modo=='a' || $_Modo=='mR')?'pointer':'default');
+foreach( $_Mode as $k=>$v ) echo "<col style='width:15px;text-align:center;font-family:{$_FontFamily};cursor:{$tCursor}'>";
+echo "<col style='width:15px;text-align:center;font-family:{$_FontFamily};cursor:pointer'>";
+echo "<col style='width:15px;text-align:center;font-family:{$_FontFamily};cursor:pointer'>";
+echo '<tr><th>Cód<th>ARBOL';
+foreach( $_Mode as $k=>$v ) echo '<th Modo='.$k.' style="FONT-FAMILY:verdana;" title="'.$_ModeLabel[$k].'">'.$v;
+echo '<th Modo="+" title="">+<th Modo="-" title="">-';
+$ArbolModo = array();
+if( substr_count( $_Modo, 'R' ) > 0 ){
+qQuery( "select * from gs_user_tree where cd_gs_user={$_vF['cd_gs_user']}" );
+while( $r=qArray() ) $ArbolModo[$r['cd_gs_tree']] = $r['mode'];
+}
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_tree where permission='S' order by nm_gs_tree");
+while( $r=qArray() ){
+$sAdd = '';
+$sDel = '';
+$nAdd = 0;
+$nDel = 0;
+if( substr_count( $_Modo, 'R' ) > 0 ){
+qQuery( "select id from gs_user_op where cd_gs_user='{$_vF['cd_gs_user']}' and cd_gs_tree={$r['cd_gs_tree']} and action='I'", $p1 );
+while( $r2=qArray($p1) ){
+$sAdd .= '|'.$r2['id'];
+$nAdd++;
+}
+qQuery( "select id from gs_user_op where cd_gs_user='{$_vF['cd_gs_user']}' and cd_gs_tree={$r['cd_gs_tree']} and action='D'", $p1 );
+while( $r2=qArray($p1) ){
+$sDel .= '|'.$r2['id'];
+$nDel++;
+}
+}
+echo '<tr tree='.$r['cd_gs_tree'].' opsAdd="'.$sAdd.'" opsDel="'.$sDel.'"><td>'.$r['cd_gs_tree'].'<td>'.$r['nm_gs_tree'];
+foreach( $_Mode as $k=>$v ){
+echo "<td style='cursor:{$tCursor}'>";
+if( isset($ArbolModo[$r['cd_gs_tree']]) && substr_count( $ArbolModo[$r['cd_gs_tree']], $k ) > 0 ){
+echo chr($_ChrON);
+}else{
+echo chr($_ChrOFF);
+}
+}
+echo "<td style='cursor:{$tCursor}'>".( ($nAdd>0) ? $nAdd : '' );
+echo "<td style='cursor:{$tCursor}'>".( ($nDel>0) ? $nDel : '' );
+}
+echo '</table>';
+echo '</span>';
+?>
+<span id=_TreeListOp class=SubLista style="overflow:auto;padding:0px;vertical-align:top;display:none;position:absolute;" onscroll='top.eScrollTH(this)'></span>
+<script type="text/javascript">
+function eResize( Repetir ){
+var TABLA = DGI("BROWSE");
+var DIV = TABLA.parentNode;
+var xy = top.eXY(DIV);
+if( DIV.clientWidth < DIV.scrollWidth ){
+DIV.style.width = TABLA.offsetWidth + (DIV.scrollWidth-DIV.clientWidth) + 2;
+}
+if( DIV.clientWidth > TABLA.offsetWidth ) DIV.style.width = TABLA.offsetWidth + 2;
+if( xy[1]+2+TABLA.offsetHeight > document.body.clientHeight ){
+DIV.style.height = document.body.clientHeight - xy[1];
+}else{
+if( DIV.clientHeight < TABLA.offsetHeight ) DIV.style.height = TABLA.offsetHeight + 2;
+}
+if( DIV.clientHeight > TABLA.offsetHeight ) DIV.style.height = TABLA.offsetHeight + 2;
+if( Repetir==undefined ) setTimeout( 'eResize(1)', 1 );
+}
+top.eScrollSet(window,'_TreeList',7);
+</script>
+<?PHP
+[CallSrv]_TreeOpLoad
+if( $_GET['Tipo']=='I' ){
+$Marca = explode('|',$_POST['ListaOpsAdd']);
+}else{
+$Marca = explode('|',$_POST['ListaOpsDel']);
+}
+$DimMarca = array();
+for( $n=1; $n<count($Marca); $n++ ) $DimMarca[$Marca[$n]] = true;
+$Modos = str_replace( ',', "','", substr($Modos,0,-1) );
+include_once('../_datos/config/manager_op.ini' );
+$_ChrON = "j";
+$_ChrOFF = "";
+?>
+<script type="text/javascript">
+function eResize(){}
+function _TreeSelect(){}
+</script>
+<table id=BROWSE Tipo=<?= $_GET['Tipo'] ?> Arbol=<?= $_GET['_TreeOpLoad'] ?> Posicion=<?= $_GET['Posicion'] ?> border=0 cellspacing=1px cellpadding=2px on_resize="eResize(0)" onclick="_TreeSelect()">
+<col style='width:15px;text-align:center;cursor:default'>
+<col style='width:15px;text-align:center;font-family:<?= $_FontFamily; ?>;cursor:pointer;'>
+<col style='cursor:pointer' class=Option>
+<TR>
+<TH style='font-size:10px'>Icon
+<TH style='font-size:10px;font-family:Arial'>Sel
+<TH>
+<table border=0 width=100% cellspacing=0 cellpadding=0><tr>
+<th nowrap style="white-space:nowrap">&nbsp;Caption&nbsp;(<?= (($_GET['Tipo']=='I')?'+':'-') ?>)&nbsp;
+<th width=100%>
+<th><img src='g/tree_sel_one.gif' onclick='_TreeOpGroup()' title='Seleccionar grupo de opciones' style='marign-left:10px;margin-right:3px;'>
+<TH width=1px><img src=g/tree_1.gif onclick=VerTodo() title='Mostrar todas las opciones'>
+<TH width=1px><img src=g/tree_2.gif onclick=Ver2Resumen() title='Mostrar dos niveles'>
+<TH width=1px><img src=g/tree_0.gif onclick=VerResumen() title='Mostrar solapas'>
+<th><img src='g/t_grabar.gif' onclick='_TreeOpSave()' title='Grabar opciones' style='margin-right:3px;'>
+<th><img src='g/tree_close.gif' onclick='S.modalDelete(window);DGI("_TreeListOp").style.display="none"' title='Cerrar ventana'>
+</table>
+<?PHP
+if( $_GET['Tipo']=='I' ){
+qQuery( "select o.id,o.indent,o.icon,o.type,o.caption, o.mode
+from {$_SESSION['ShareDictionary']}gs_tree_op as t, {$_SESSION['ShareDictionary']}gs_op as o
+where t.cd_gs_tree={$_GET['_TreeOpLoad']} and t.cd_gs_op=o.id and ( o.mode not in ('{$Modos}') or o.type<>'O' )
+order by o.seq" );
+}else{
+qQuery( "select o.id,o.indent,o.icon,o.type,o.caption, o.mode
+from {$_SESSION['ShareDictionary']}gs_tree_op as t, {$_SESSION['ShareDictionary']}gs_op as o
+where t.cd_gs_tree={$_GET['_TreeOpLoad']} and t.cd_gs_op=o.id and ( o.mode in ('{$Modos}') or o.type<>'O' )
+order by o.seq" );
+}
+$tmp = array();
+$OpReales = 0;
+while( $r=qArray() ){
+$tmp[] = $r;
+if( $r['type']=='O' ) $OpReales++;
+}
+if( $OpReales==0 ) NoHayReg();
+while( count($tmp)> 0 && $tmp[count($tmp)-1]['type']<>'O' ) unset( $tmp[count($tmp)-1] );
+$TOpciones = count($tmp);
+$MinId = 99;
+$Dim = array();
+$Actual = $TOpciones-1;
+$Dim[] = $tmp[$Actual];
+$Test = !true;
+for( $n=$TOpciones-1; $n>0; $n-- ){
+$Anterior = $n-1;
+if( $tmp[$Actual]['type']=='F' ){
+if( $tmp[$Anterior]['type']=='O' && $tmp[$Anterior]['indent'] < $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='F' && $tmp[$Anterior]['indent'] >= $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='L' && $tmp[$Anterior]['indent'] > $tmp[$Actual]['indent'] ){
+continue;
+}
+}else if( $tmp[$Actual]['type']=='O' ){
+if( $tmp[$Anterior]['type']=='O' && $tmp[$Anterior]['indent'] < $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='F' && $tmp[$Anterior]['indent']+1 <> $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='L' && $tmp[$Anterior]['indent'] <> $tmp[$Actual]['indent'] ){
+continue;
+}
+}else if( $tmp[$Actual]['type']=='L' ){
+if( $tmp[$Anterior]['type']=='O' && $tmp[$Anterior]['indent'] < $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='F' ){
+unset($Dim[count($Dim)-1]);
+}
+if( $tmp[$Anterior]['type']=='F' && $tmp[$Anterior]['indent']+1 <> $tmp[$Actual]['indent'] ){
+continue;
+}
+if( $tmp[$Anterior]['type']=='L' ){
+continue;
+}
+}
+$Dim[] = $tmp[$Anterior];
+$MinId = Min( $MinId, $tmp[$Anterior]['indent'] );
+$Actual = $Anterior;
+}
+$Dim = array_reverse( $Dim );
+unset($tmp);
+$TOpciones = count($Dim);
+if( $TOpciones==0 ) NoHayReg();
+$MinId += 1;
+if( $TOpciones < 26 ) $MinId += 99;
+$OpVisible = 0;
+$OpOculta = 0;
+$MinIndent = 99;
+for( $n=0; $n<$TOpciones; $n++ ){
+$r = $Dim[$n];
+echo '<tr n='.$r['id'];
+if( $r['indent'] > $MinId ){
+echo ' id=o';
+$OpOculta++;
+}else{
+$OpVisible++;
+}
+$MinIndent = min( $MinIndent, $r['indent'] );
+echo '>';
+echo '<td Icon="'.$r['icon'].'">'.(( $r['icon']!='' ) ? '<img style="cursor:default" src="'.str_replace('$','edes.php?R:$a/g/',$r['icon']).'">' : '&nbsp;');
+if( $Modos!='' && $r['mode']!='' ){
+$Eliminar = ( substr_count($Modos,$r['mode'])==0 );
+}else $Eliminar = true;
+echo '<td>'. ( ( isset($DimMarca[$r['id']]) && $Eliminar ) ? chr($_ChrON) : chr($_ChrOFF) );
+echo "<td tp={$r['type']} id=n{$r['indent']}>";
+$txt = trim($r['caption']);
+if( $r['type']=='L' ){
+if( $txt=='' ){
+echo "<img src=g/linea.gif width=100% height=2px style='cursor:default;margin-top:3px'>";
+}else{
+echo "<img src=g/linea.gif width=30px height=2px style='cursor:default'>".trim(substr($txt,1))."<img src=g/linea.gif width=30px height=2px style='cursor:default'>";
+}
+}else{
+if( $r['type']=='F' ){
+if( $r['indent'] >= $MinId ){
+echo '<img src=g/tree_1.gif>';
+}else{
+echo '<img src=g/tree_0.gif>';
+}
+}
+echo str_replace('"','&quot;',$txt);
+}
+}
+?>
+</table>
+<?PHP
+?>
+<script type="text/javascript">
+var Obj = window.frameElement.WOPENER;
+var el = Obj.DGI("_TreeListOp");
+el.innerHTML = DGI("BROWSE").outerHTML;
+with( el.style ){
+display = 'block';
+top = "5px";
+width = '';
+height = (Obj.document.body.scrollHeight-10)+"px";
+}
+S.modal(el);
+Obj._MinIndent = <?= $MinIndent ?>;
+Obj._SelGrupoTree = false;
+top.eScrollSet(Obj,'_TreeListOp',0);
+<?PHP 	if( $OpOculta == 0 ){ ?>
+if( el.offsetHeight+10 < document.body.clientHeight ){
+if( (Obj._yTreeOpLoad + el.offsetHeight) > document.body.clientHeight ){
+el.style.top = Obj._yTreeOpLoad - ( Obj._yTreeOpLoad + el.offsetHeight - document.body.clientHeight );
+}else{
+el.style.top = Obj._yTreeOpLoad;
+}
+}
+<?PHP 	} ?>
+</script>
+<?PHP
+function NoHayReg(){
+global $_Lng;
+eInit();
+?>
+<script type="text/javascript">
+window.frameElement.WOPENER.DGI("_TreeListOp").style.display = 'none';
+try{
+window.frameElement.WOPENER.Procesando(0);
+}catch(e){}
+top.eInfo(window,'<?=$_Lng['No hay registros']?>');
+</script>
+<?PHP
+eEnd();
+}

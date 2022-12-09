@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>Columns 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{Columns} { NºColumnas [ |&nbsp;Propiedades [&nbsp;| Title [&nbsp;| CódigoEnLinea ] ] ] <BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>} 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Esta etiqueta sólo funciona dentro de&nbsp; la etiqueta [Fields] y sirbe para tener un número distinto de columnas dentro de su ambito, el final se marca con una llave de cierre "}". 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>Propiedades</STRONG>:<BR><SPAN style="WIDTH: 25px"></SPAN>Por defecto se justitica a la izquierda, si sequiere centrar poner el flag "center".<BR><SPAN style="WIDTH: 25px"></SPAN>Si se quiere que ocupe el 100% de la ficha poner el flag "100%".<BR><SPAN style="WIDTH: 25px"></SPAN>Si se quiere que tenga border poner el flag "border". 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[Fields]<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>{Columns}{ 3 | 100% | TITULO DEL GRUPO | style='border:1 solid red'<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR>}<BR><SPAN style="WIDTH: 25px"></SPAN>... 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

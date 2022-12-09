@@ -1,0 +1,79 @@
+#include(*) lng
+[Title]@ESTADISTICAS DE CONEXIONES DISTINTAS@|uVerCondiciones()
+[DBTable]gs_conexion
+[DBOrder]C.user_surname, C.user_name, D.nm_gs_node, E.nm_gs_tree
+[DBLimit]2000,250
+#Include(l) /_datos/config/history.ayo | true
+[DBAddFilter]A.cd_gs_user not in (select cd_gs_user from gs_user where system_user='S')
+[FormAction]c|edes.php?Ll:
+[Cursor]
+[AutoMenu]l|1
+[ColsOp]C,,,,,+
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[Fields]||trim
+@DNI@|cd_gs_user{gs_user,cd_gs_user,dni}|0|S|7||A|||
+@Nombre@|cd_gs_user{gs_user,cd_gs_user,user_surname,', ',user_name}|0|S|60||A|||
+@Local@|cd_gs_node|0|S|60||Q-|||
+@Arbol@|cd_gs_tree|0|S|60||Q-|||
+@Instante Desde@|_desde|F4|T|10||QF|#today#||
+,|_desde_hours|H|T|8||Q|||
+,@Hasta@|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+@Instante@|cdi|CDI|T|19||-|||
+@NºEntradas@|cd_gs_user|+|T|5||-|||
+[PHPIni]l
+function uVerCondiciones(){
+$Dim = array();
+foreach( $_POST as $k=>$v ){
+if( $v!='' ){
+if( $k=='cd_gs_node' || $k=='cd_gs_tree' || $k=='_desde' || $k=='_hasta' || $k=='_desde_hours' || $k=='_hasta_hours' ) continue;
+if( $k=='_INPUT_cd_gs_node' ) $k = 'LOCAL';
+if( $k=='_INPUT_cd_gs_tree' ) $k = 'ARBOL';
+if( $k=='cdi'				){
+$k = 'CDI';
+$v = str_replace('"','',$v);
+}
+$Dim[] = array( $k, str_replace(' AND ',' Y ',strtoupper($v)) );
+}
+}
+return $Dim;
+}
+[DBSql]l
+$uWhere = qGetWhere('A.');
+if( $uWhere!='' ) $uWhere = ' where '.$uWhere;
+qQuery( 'select A.cd_gs_user, A.cd_gs_node, A.cd_gs_tree, count(*), max(cdi) from gs_conexion A '.$uWhere.' group by A.cd_gs_user, A.cd_gs_node, A.cd_gs_tree' );
+$uUser = array();
+$uTotalAccesos = array();
+$uCDI = array();
+while( $r=qRow() ){
+$uUser[$r[0]] = 1;
+$uIndice = $r[0].','.$r[1].','.$r[2];
+$uTotalAccesos[ $uIndice ] = $r[3];
+$uCDI[ $uIndice ] = $r[4];
+}
+$uListaUser = '';
+foreach( $uUser as $k=>$v ){
+if( $uListaUser!='' ) $uListaUser .= ',';
+$uListaUser .= $k;
+}
+unset($uUser);
+if( $uListaUser!='' ) $uListaUser = 'A.cd_gs_user in ('.$uListaUser.')';
+if( $uWhere!='' ){
+if( $uListaUser!='' ) $uWhere .= ' and '.$uListaUser;
+}else if( $uListaUser!='' ){
+$uWhere = ' where '.$uListaUser;
+}
+qQuery( 'select '.$Campos.', A.cd_gs_node, A.cd_gs_tree from '.$_DBTABLE . $uWhere .' order by '.$_DBORDER );
+$usuCursor = array();
+$n = 0;
+while( $r=qRow() ){
+$uIndice = $r[5].','.$r[6].','.$r[7];
+if( $uTotalAccesos[$uIndice] > 0 ){
+$usuCursor[$n] = $r;
+$usuCursor[$n][4] = $uCDI[$uIndice];
+$usuCursor[$n][5] = $uTotalAccesos[$uIndice];
+$uTotalAccesos[$uIndice] = 0;
+$n++;
+}
+}

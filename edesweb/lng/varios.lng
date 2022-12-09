@@ -1,0 +1,30 @@
+[Language] es,ca,en,fr
+1|L|L|L|L~Lunes
+2|M|M|T|M~Tuesday
+3|X|X|W|X~Miercoles
+4|J|J|J|J~Jueves
+5|V|V|V|V~Viernes
+6|S|S|S|S~Sábado
+7|D|D|S|D~Sunday
+ACEPTAR|ACEPTAR|ACCEPTAR|ACEPTAR|ACEPTAR
+Aceptar las cláusulas|Aceptar las cláusulas|Aceptar les clàusules|Aceptar las cláusulas|Aceptar las cláusulas
+CANCELAR|CANCELAR|CANCEL·LAR|CANCELAR|CANCELAR
+CONFIRMACION GRABADA CORRECTAMENTE|CONFIRMACION GRABADA CORRECTAMENTE|CONFIRMACIÓ GRAVADA CORRECTAMENT|CONFIRMACION GRABADA CORRECTAMENTE|CONFIRMACION GRABADA CORRECTAMENTE
+Está viendo lo que se veía en el cliente<br>en el momento del error|Está viendo lo que se veía en el cliente<br>en el momento del error.|Està veient el que es veia en el client<br>en el moment de l´error.|Está viendo lo que se veía en el cliente<br>en el momento del error.|Está viendo lo que se veía en el cliente<br>en el momento del error.
+FALTA DEFINIR EL RESPONSABLE DE SEGURIDAD|FALTA DEFINIR EL RESPONSABLE DE SEGURIDAD|FALTA DEFINIR EL RESPONSABLE DE SEGURETAT|FALTA DEFINIR EL RESPONSABLE DE SEGURIDAD|FALTA DEFINIR EL RESPONSABLE DE SEGURIDAD
+Fdo|Fdo|Signat|Fdo|Fdo~Firmado
+Firma del responsable|Firma del responsable|Signa del responsable|Firma del responsable|Firma del responsable
+IMAGEN DEL ERROR|IMAGEN DEL ERROR|IMATGE DEL ERROR|IMAGEN DEL ERROR|IMAGEN DEL ERROR
+IMAGEN ANTES DEL ERROR|IMAGEN ANTES DEL ERROR
+IMAGEN DESPUES DEL ERROR|IMAGEN DESPUES DEL ERROR
+Imagen no disponible|Imagen no disponible|Imatge no disponible|Imagen no disponible|Imagen no disponible
+IMPRIMIR|IMPRIMIR|IMPRIMIR|IMPRIMIR|IMPRIMIR
+Imprimir documento|Imprimir documento|Imprimir document|Imprimir documento|Imprimir documento
+LEIDO Y ACEPTADO|LEIDO Y ACEPTADO|LLEGIT I ACCEPTAT|LEIDO Y ACEPTADO|LEIDO Y ACEPTADO
+No se puede entrar sin aceptar el documento|No se puede entrar sin aceptar el documento|No es pot entrar sense acceptar el document|No se puede entrar sin aceptar el documento|No se puede entrar sin aceptar el documento
+Responsable|Responsable|Responsable|Responsable|Responsable
+Salir de la aplicación|Salir de la aplicación|Sortir de l´aplicació|Salir de la aplicación|Salir de la aplicación
+Usuarios conectados|Usuarios conectados|Usuaris connectats|Usuarios conectados|Usuarios conectados
+Página anterior (años)|Página anterior (años)|Pàgina anterior (anys)
+Página siguiente (años)|Página siguiente (años)|Pàgina següent (anys)
+Cerrar Selección de Periodo|Cerrar Selección de Periodo|Tancar Selecció de Període

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>slSubMenu 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{slSubMenu}&nbsp;Mode | ListaDeOpciones [&nbsp;|&nbsp;LugarIcono [ | THAddIcon [&nbsp;| TDAddIcon [&nbsp;| FormOnLine / ... [&nbsp;| Coordenadas ] ] ] ] ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Define las opciones disponibles en las Sublistas y el lugar donde se edita. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;<STRONG>Mode</STRONG></TD>
+<TD>En que modos aparece el menú&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>ListaDeOpciones</STRONG></TD>
+<TD>Lista de opciones disponibles en las SubLista,las opciones pueden ser:<BR><SPAN style="WIDTH: 25px"></SPAN>i.- Insert.<BR><SPAN style="WIDTH: 25px"></SPAN>u.- Update.<BR><SPAN style="WIDTH: 25px"></SPAN>d.- Delete.<BR><SPAN style="WIDTH: 25px"></SPAN>v.- View<BR><SPAN style="WIDTH: 25px"></SPAN>F.- Ver File<BR><SPAN style="WIDTH: 25px"></SPAN>E.- Edit File</TD></TR>
+<TR>
+<TD><STRONG>&nbsp;LugarIcono</STRONG></TD>
+<TD>Indica si se visualiza una columna de opciones con iconos en la primera (Before) o en la última&nbsp;(After) columna, si se deja en blanco&nbsp;las opciones serán accesibles desde un submenú contextual, pulsando el botón derecho&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>THAddIcon</STRONG> </TD>
+<TD>Iconos a añadir en la columna de opciones en la fila del TH.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>TDAddIcon</STRONG> </TD>
+<TD>Iconos a añadir en las filas de datos.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>FormOnLine</STRONG> </TD>
+<TD>Puede tener los siguientes valores:<BR><SPAN style="WIDTH: 25px"></SPAN>FormOnLine: La edición de la SubFicha se hace dentro de la propia ficha, valor por defecto.<BR><SPAN style="WIDTH: 25px"></SPAN>FormStatic: La edición de la SubFicha se hace en una ventana nueva, en este nuevo EDF habrá que declarar la etiqueta [FormStatic] con todos sus parámetros.</TD></TR>
+<TR>
+<TD>&nbsp;<STRONG>Coordenadas</STRONG> </TD>
+<TD>Coordenada "x" e "y" (separadas por coma) de la subventana de edición cuando se edita en modo subventana, por defecto estará centrada.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[Fields]<BR>&nbsp;&nbsp; ...<BR>#(a,mR,bR,cR){<BR>- | SUBFICHA "__w_viajero"<BR>&nbsp;&nbsp; apellidos | _apellidos&nbsp;&nbsp; | N &nbsp; | T | 60 | | M&nbsp; | |&nbsp;&nbsp; |<BR>&nbsp;&nbsp; nombre&nbsp;&nbsp;&nbsp; | _nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | N&nbsp;&nbsp; | T | 30 | | M&nbsp; | |&nbsp;&nbsp; |<BR>&nbsp;&nbsp; dni&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _dni&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | DNI | T |&nbsp; 8 | | M&nbsp; | |&nbsp;&nbsp; |<BR>&nbsp;&nbsp;,dt_nac&nbsp;&nbsp;&nbsp; | _dt_nac&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | F4&nbsp; | T | 10 | | M&nbsp; | |&nbsp;&nbsp; |<BR>- | LISTADO "__w_viajero"<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | [__w_viajero]| o&nbsp;&nbsp; |&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp;&nbsp; | |&nbsp;&nbsp; | <BR>}</P>
+<P>[SubList] a,mR,bR,cR | __w_viajero<BR>{slGL}&nbsp; Sql | Align | ColsWidth | TypeData | Format | ColsOp | Fields&nbsp;&nbsp;&nbsp;&nbsp; | TH<BR>.cd_w_tpv&nbsp;&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _cd_w_tpv&nbsp; |<BR>&nbsp;apellidos&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; #D&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _apellidos | APELLIDOS<BR>&nbsp;nombre&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; #D&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _nombre&nbsp;&nbsp;&nbsp; | NOMBRE<BR>&nbsp;dni&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; #D&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _dni&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | DNI<BR>&nbsp;dt_nac&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp; I&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; F4&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _dt_nac&nbsp;&nbsp;&nbsp; | F.NACIOMIENTO<BR>{slSql} select # from w_viajero where cd_w_tpv='{cd_w_tpv}' order by apellidos, nombre<BR>{slSubMenu}&nbsp; a,mR | i,u,d,v | Before<BR>{slSubMenu} bR,cR |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; v | Before<BR>{slWin} ,5<BR></P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

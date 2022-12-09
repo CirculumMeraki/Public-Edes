@@ -1,0 +1,11 @@
+#include(*) $lng/m_arbol.edf.lng
+[Title]@MANTENIMIENTO DE ARBOLES@
+[DBTable]{$_SESSION['ShareDictionary']}gs_tree|gs_user
+[DBIndex]cd_gs_tree
+[DBOrder]nm_gs_tree
+[DBSerial]cd_gs_tree
+[Cursor]
+[Fields]
+@Codigo@|cd_gs_tree|+|T|9||-||#|
+@Nombre@|nm_gs_tree|X|T|60||MQ||#|
+@Descripción@|description|#|A|255,85,15|495|M|||

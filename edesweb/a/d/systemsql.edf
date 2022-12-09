@@ -1,0 +1,26 @@
+[Title]=System SQL - Cambia la estructura de eDes
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]cd_gs_user
+[FormButtons]VUD
+[Stop]*
+[WinClose]*
+[AddCode]a|php|i|style='font-family:monospace;font-size:120%'
+[Button]a|<img src="edes.php?R:$a/g/tabla.gif"> Modificar System
+[Fields]
+]Sentencia SQL a ejecutar en el sistema eDes|php|#|A|10000,100,10||Mk|||
+|SMode|#|T|1||*|||
+[PHPIni]*
+$_FORMBUTTONS = '';
+[PHPIni]A
+eInclude('message');
+if( trim($_POST['php'])!='' ){
+$NomFile = '../_datos/config/system_sql.log';
+$txt = '';
+if( file_exists($NomFile) ) $txt = trim(file_get_contents($NomFile))."\n";
+$txt .= date('Y-m-d H:i:s ').trim($_POST['php']);
+file_put_contents( $NomFile, $txt );
+eMessage('System SQL GRABADO','HS',5,'top.document.all._RunScript.style.display="block";if(top.eIsWindow(window))top.eSWClose(window);');
+}else{
+eMessage('System SQL descartado','HS',5);
+}

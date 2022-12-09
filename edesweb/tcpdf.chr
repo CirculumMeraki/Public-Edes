@@ -1,0 +1,36 @@
+//origen, , destino	https://www.ascii.cl/htmlcodes.htm
+039, ´, &acute;		// la ' por ´
+231, ç, &ccedil;
+199, Ç, &Ccedil;
+225, á, &aacute;
+233, é, &eacute;
+237, í, &iacute;
+243, ó, &oacute;
+250, ú, &uacute;
+193, Á, &Aacute;
+201, É, &Eacute;
+205, Í, &Iacute;
+211, Ó, &Oacute;
+218, Ú, &Uacute;
+241, ñ, &ntilde;
+209, Ñ, &Ntilde;
+220, Ü, &Uuml;
+252, ü, &uuml;
+063, ?, &#128;
+170, ª, &ordf;
+186, º, &ordm;
+180, ´, &acute;
+192, À, &Agrave;
+200, È, &Egrave;
+204, Ì, &Igrave;
+210, Ò, &Ograve;
+217, Ù, &Ugrave;
+224, à, &agrave;
+232, è, &egrave;
+236, ì, &igrave;
+242, ò, &ograve;
+249, ù, &ugrave;
+239, ï, &iuml;
+183, ·, &middot;
+063, ?, &euro;
+176, °, &ordm;		// ojo, no borrar es el carácted 0176 de grados centígrados

@@ -1,0 +1,294 @@
+# Version: 2019-08
+
+.HTML(x)~
+.TEXT(x)~
+.add(query)~Añade elementos a una selección
+.after()~
+.append()~
+.append()~
+.appendTo(target)~
+.around(tip, p)~
+.attr(dim, valor, asign)~
+.background(valor)~Establece el "background" de un objeto.
+.block(tipo)~
+.button(prm)~
+.calendar(o)~
+.calendarMonth(o)~
+.callSrvPost(url, Dim)~
+.center(att)~
+.check(val)~
+.class(txt)~
+.clipboardGet(field)~
+.clipboardPut()~
+.col(n, ver)~
+.color(lapiz, papel)~
+.css(dim, valor)~
+.cssVal(prop)~
+.display(x)~
+.download(files)~Descarga uno o mas ficheros
+.drag(aqui [, max [, ... ] ])~
+.each()~
+.error(txt, uPosition)~
+.eventChange()~
+.eventClick()~
+.eventFire(eventName)~
+.exists()~
+.fieldError(txt)~
+.fields(dim)~
+.file()~
+.find(selector, context)~
+.fixed(x,y)~
+.fullscreen()~
+.get(index)~
+.goto(x, y)~
+.hidden(tipo)~
+.html(x)~
+.incr(prop)~
+.info(txt, sg, error)~
+.infoRun(txt, sg, func [, ...])~llama a una función mostrando un mensaje previo en el objeto pulsado	
+.isParent(oHijo)~
+.label()~
+.loading(on)~
+.menu(op, para, arg)~
+.menuRow(oTabla, oMenu, oFunc=null)~
+.modal( [ objectKeys ] )~
+.move(zona, captura, p)~
+.nextValue()~
+.nodeAfter(oAqui)~
+.nodeBefore(oAqui)~
+.nodeBegin(padre)~
+.nodeCopy()~
+.nodeEmpty()~
+.nodeEnd(padre)~
+.nodeMove(item3)~
+.nodeMoveFirst(item3)~
+.nodeRemove()~
+.nodeReplace(oNew)~
+.nodeStart(oAqui)~
+.nodeSwap(item3)~
+.none(tipo)~
+.obj()~
+.on(eventos, func)~
+.option()~
+.over(over, out)~
+.padding(padre)~
+.radio(val)~
+.ready(func)~
+.resize(minw, minh)~
+.rule(txt, nmStyle)~
+.scroll(tag)~
+.scrollSet(hijo)~
+.selectColLabel(n)~
+.sequence(evento)~
+.sort(col, type, ad, add)~
+.submitCheck()~
+.sum(xGroups)~
+.table(tipo)~
+.td(col, txt)~
+.trFilter(condition, col)~
+.text(x)~
+.tip(txt, sg, error, soloRecuadro)~
+.title(x)~
+.toScroll(x, y)~
+.toTag(tag, saltar)~
+.tooltip(txt)~
+.tr(op, rec, dim, dimTr)~
+.tree(op, p)~
+.tree2(op, p)~
+.value(val, change)~
+.values(val, change)~
+.visibility(x)~
+.visible(tipo)~
+.widthText(txt)~
+.window()~
+.windowCaption(txt, ok)~
+.windowColor(papel, lapiz, borde, icon)~
+.windowGetCaption(conTag)~
+.windowIcon(op, xObj, func)~
+.windowInside(obj)~
+.windowIs()~
+.windowList(o)~
+.windowResize(minw, minh, interna, centrar)~
+.windowWrite(txt)~
+.xy(obj)~
+.zIndex(valor)~
+S.Extend()~
+S.alert(x)~
+S.alertCheck(sg)~
+S.arrayObject(arg [, window ])~
+S.call(url, datos, p)~
+S.callCreate(win)~
+S.callSrv(url, win)~
+S.captureImage(op)~
+S.cellIndex(o)~
+S.char(n)~
+S.chartDraw(oChart, p)~
+S.chartRedraw(win)~
+S.check()~
+S.click(func, tag, saltar)~
+S.clipboardPut(txt)~
+S.clone(obj)~
+S.code(txt, n)~
+S.colapse(txt, ini, end, x)~
+S.colorTone(r, t)~
+S.count(c, str)~
+S.createHTML(html, win)~
+S.d2s(fecha)~
+S.date(Formato, Fecha, mes, ano)~
+S.dateAddDays(fecha, dias)~
+S.dateAddMonth(fecha, meses)~
+S.dateAddYear(fecha, Ayos)~
+S.dateDiff(fechaEnd, fechaIni)~
+S.dateType(fecha)~	
+S.display(obj, on, ver)~
+S.each(dim, callback, bak)~
+S.editScript(window)~Si el usuario es desarrollador podrá editar el fuente con control+botón derecho
+S.error(win, txt)~
+S.errorHidden(win, txt)~
+S.event(win, tag, saltar)~
+S.eventClear(win, ev)~
+S.eventCode(ev)~
+S.eventFire(obj, eventName)~
+S.eventObj(evt)~
+S.exit()~
+S.exitNow(txt)~
+S.exitToTime(txt)~
+S.fieldLabel(obj)~
+S.fieldNext(el, cmpAnt)~
+S.file(obj, destino, funcEnd, pct)~
+S.fileAttrCopy(win, file, tmp, tc)~
+S.fileClearName(nom, acent)~
+S.fileDrag(evt)~
+S.fileDrop(evt)~
+S.fileFullname(txt)~
+S.fileName(txt)~
+S.fileType(txt)~
+S.filterAccent(txt)~
+S.filterChar(txt, filter[, ignorar=true])~Filtra caracteres
+S.fitHeight(win, txt)~
+S.fitWidth(o)~
+S.fnExtend()~
+S.focus()~
+S.focusOff()~
+S.format(tipo, txt)~
+S.fullscreen(on)~
+S.getCookie()~	
+S.getSelection(win)~
+S.help(){}~
+S.hex2rgb(c)~
+S.iframe(w, id)~
+S.info(win, txt, sg, error)~
+S.infoHide(win, sg)~
+S.infoRun(txt, sg, func [, ...])~llama a una función mostrando un mensaje previo en el centro de la pantalla
+S.init(win, css, dim)~
+S.is(c, txt, pos)~
+S.isNotOnLoad(win)~
+S.isReady(win)~
+S.isUtf8(txt)~
+S.join( dim [ , delimiter="," ] )~Devuelve un array asociativo en una cadena
+S.json( array/txt [, false ] )~
+S.key(win, type, long, dec)~
+S.keyPaste( obj, type, lon, dec, sType, otype, typeBak )~
+S.key_Char(otype, pos, izq, char, dch, long, dec, accent, sType, noChar, typeBak, win, obj)~
+S.left(txt, ini, len)~
+S.linkField(o)~
+S.linkField2(o)~
+S.lng(i, c1, c2, c3)~
+S.loadJS(win, txt)~
+S.loading(win, on)~
+S.lower(x)~
+S.ltrim(txt)~
+S.mid(txt, ini, len, inverso)~
+S.midn(txt, ini, len)~
+S.modal( [ objectKeys ] )~
+S.modalDelete(win)~
+S.month(txt, n)~
+S.monthAdd(periodo, n)~
+S.monthDays(periodo, mes)~
+S.monthDiff(periodoIni, periodoEnd)~
+S.news()~
+S.notification(title, body, ev)~
+S.nsp(txt)~
+S.objWindow(obj)~
+S.offset(win)~
+S.open(idVen, iUrl, iTipo, Ancho, Alto, ix, iy, Cerrar)~
+S.padL(x,l,c)~
+S.padR(x,l,c)~
+S.posCursor(obj, p)~
+S.posCursorHtml(obj, start, end)~
+S.ppublic(wdes, k)~
+S.progressText(txt)~
+S.progressUpload(pct, txt)~
+S.publicRow(win, row, n)~
+S.regExp(txt)~
+S.relationReset(o)~
+S.repeat(c,n)~
+S.replace(obj, att)~
+S.reverse(x)~
+S.rgb(r, g, b)~
+S.rgb2hex(c)~
+S.right(txt, ini, len)~
+S.round(num, dec, miles)~
+S.rtrim(txt)~
+S.ruleGet(win, Clase, Regla [, nmFile ] )~Obtiene la definición de la hoja de estilo
+S.run(win, code, name)~
+S.runHTML(win, html)~
+S.s2d(fecha)~	
+S.screen(win)~
+S.screenshot(nom)~
+S.script(win, dim, func)~
+S.scriptCopy(win, id)~
+S.scrollGet(obj)~
+S.selectAttr(txt, attr, win)~
+S.selectClear(txt, ConChange, win)~
+S.selectClick(obj, ev)~
+S.selectKey(obj, ev)~
+S.selectOff(win)~
+S.selectRange(obj, ini, end, copy)~
+S.selectReset(txt, win, ConChange)~
+S.selectValue(o, val)~
+S.serialize(dim)~
+S.sheet(win)~
+S.sheetCopy(win, nm, add)~
+S.sliderPut(win, campo, valor)~
+S.sort(tabla)~
+S.split(c, txt)~
+S.splitHash(dim, deli, txt)~
+S.splitLast(c, txt)~
+S.stripTags(x)~
+S.submit(win, real)~
+S.tableFit(oTB)~
+S.td(o, col)~
+S.thousands(num, dec, showZero)~
+S.thousandsClear(obj, dec, showZero)~
+S.tip(win, txt, sg)~
+S.toArray(txt)~
+S.toExcel(obj, file="")~
+S.toClass(o, clas)~
+S.toObject(obj, win)~	
+S.toTag(o, tag, saltar)~
+S.tree(win, context)~
+S.trim(txt)~
+S.trimTextArea(txt)~
+S.type(obj)~
+S.unserialize(txt)~
+S.upper(x)~
+S.url(win, name)~
+S.urlAdd(url, win, origen)~
+S.values(win, val, change)~
+S.visibility(obj, on)~
+S.wOpener()~
+S.window(url, p, wOPENER)~
+S.windowClose(window)~
+S.windowFocus([nodo])~
+S.windowIs(window)~
+S.windowHidden(win)~
+S.windowObject(obj)~
+S.windowShow(index)~
+S.windowSize(win)~Te devuelve una matriz hash con "width" y "height" de la ventana.
+S.windowView(o)~
+S.windowStatus(win)~
+S.wrapFunction(win, fun, uFun, antes)~
+S.write(w, obj, txt)~
+S.xy(obj, xObj)~
+S.xyTop(obj)~

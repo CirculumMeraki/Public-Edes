@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="height: 888px; width: 100%;" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta" style="height: 18px;">DBRange</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tSintaxis" style="height: 18px;">SINTAXIS</td>
+</tr>
+<tr style="height: 50px;">
+<td id="Sintaxis" style="height: 50px;">
+<p>[DBRange] Mode | Field | VarDesde | VarHasta [ [ | ValoresInclusive=true ] | CopiarEnVarHasta="" ]</p>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tDescripcion" style="height: 18px;">DESCRIPCION</td>
+</tr>
+<tr style="height: 72px;">
+<td id="Descripcion" style="height: 72px;">Rellena el campo (Field) con la expresión del contenido de las variables "VarDesde" y "VarHasta" creando una condición de rango. El uso de esta etiqueta es para coger un rango de datos en dos campos virtuales diferentes. Un campo virtual es un campo de un formulario que empieza por "_" esto significa que estos campos en el servidor no se utilizan solo son para el usuario pero no se graban en las tabla, se pueden usar todos los tipos de datos. <br />Se puede hacer un DBRange de un CDI poniendo dos fechas y se les puede añadir la hora si el campo tiene el mismo nombre que en el DBRange mas el sufijo "_hours", si no se pone los campos de hora el campo necesita el prefijo "cdi".</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tParametro" style="height: 18px;">PARAMETROS</td>
+</tr>
+<tr style="height: 116px;">
+<td id="Parametro" style="height: 116px;">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Field </td>
+<td>Nombre del campo. </td>
+</tr>
+<tr>
+<td>VarDesde</td>
+<td>Variable para contener el valor inicial.</td>
+</tr>
+<tr>
+<td>VarHasta</td>
+<td>Variable para contener el valor final.</td>
+</tr>
+<tr>
+<td>ValoresInclusive</td>
+<td>Indica con "true/1" o "false/0" si la condición es con los valores inclusives, el valor por defecto es "true".</td>
+</tr>
+<tr>
+<td>CopiarEnVarHasta</td>
+<td>Si se pone un "=" al salir de "VarDesde" copiará el contenido en "VarHasta".</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 122px;">
+<td id="Ejemplo" style="height: 122px;"><code>[DBRange] c | dt_alta | _desde | _hasta</code><br /><br /><code>[Fields]</code><br /><code>F. Desde | _desde | F4 | T | 10 || QF || |</code><br /><code>F. Hasta | _hasta | F4 | T | 10 || QF || |</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;"> </td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 192px;">
+<td id="Ejemplo" style="height: 192px;"><code>[DBRange] ? | cdi | _desde | _hasta</code><br /><code>[Fields]</code><br /><code>    CDI Desde | _desde       | F4  | T | 10 || QF |||</code><br /><code>   ,          | _desde_hours | H   | T |  8 || Q  |||</code><br /><code>   ,Hasta     | _hasta       | F4  | T | 10 || QF |||</code><br /><code>   ,          | _hasta_hours | H   | T |  8 || Q  |||</code><br /><code>    CDI       | cdi          | CDI | T | 19 || -  |||</code><br /><code>...</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;">El DBRange tomará los cuatro campos para hacer la busqueda en el campo "cdi".</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 156px;">
+<td id="Ejemplo" style="height: 156px;"><code>[DBRange] ? | cdi | _desde | _hasta</code><br /><code>[Fields]</code><br /><code>    CDI Desde | _desde | F4  | T | 10 || QF |||</code><br /><code>   ,Hasta     | _hasta | F4  | T | 10 || QF |||</code><br /><code>    CDI       | cdi    | CDI | T | 19 || -  |||</code><br /><code>...</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;">Al ser un campo tipo CDI y la petición ser en formato fecha al campo "_desde" le sumará la hora "00:00:00" y al campo "_hasta" si está relleno se sumará la hora "23:59:59", importante el nombre del campo sobre el que se hace el DBRange empieza os es "cdi", también podría llamarse "cdi_alta", "cdi[...]", etc.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

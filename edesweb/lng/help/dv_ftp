@@ -1,0 +1,33 @@
+<p>Configuraci&oacute;n FTP</p>
+<table id="Opciones" style="font-family: ARIAL; background: #7b8083;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">NOM.ORIGEN</td>
+<td style="background: #fffff3; font-size: 12px;">Nombre del servidor origen&nbsp;</td>
+</tr>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">ORIGEN</td>
+<td style="background: #fffff3; font-size: 12px;">IP del servidor origen&nbsp;</td>
+</tr>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">NOM.DESTINO</td>
+<td style="background: #fffff3; font-size: 12px;">Nombre del servidor destino&nbsp;</td>
+</tr>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">FTP DESTINO&nbsp;</td>
+<td style="background: #fffff3; font-size: 12px;">IP del FTP de destino</td>
+</tr>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">LOGIN</td>
+<td style="background: #fffff3; font-size: 12px;">Login del FTP&nbsp;</td>
+</tr>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">USUARIO</td>
+<td style="background: #fffff3; font-size: 12px;">Clave del FTP</td>
+</tr>
+<tr>
+<td style="background: #fffff3; font-size: 12px;">DIRECTORIO</td>
+<td style="background: #fffff3; font-size: 12px;">Trayectoria completa del directorio de la aplicaci&oacute;n&nbsp;</td>
+</tr>
+</tbody>
+</table>

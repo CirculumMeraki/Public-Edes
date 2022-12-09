@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Variables javascript en listados
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<TR>
+<TD id=Descripcion>Salidas de listados en función de la variable "<STRONG>_gs_formato_</STRONG>":<BR>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>H</TD>
+<TD>&nbsp;Página HTML</TD></TR>
+<TR>
+<TD>P</TD>
+<TD>&nbsp;En formato PDF</TD></TR>
+<TR>
+<TD>X</TD>
+<TD>&nbsp;Hoja de cálculo Excel</TD></TR></TBODY></TABLE>
+<P>[AddOption]&nbsp;&nbsp; c &nbsp;| _gs_formato_&nbsp; | &nbsp;P,PDF; H,HTML; X,XLS<BR>[Fields]<BR>&nbsp;Tipo Listado &nbsp;| &nbsp;_gs_formato_&nbsp; |&nbsp; 0&nbsp; | SV | 3 |&nbsp;&nbsp; |&nbsp; Q&nbsp;&nbsp; |||<BR><BR><BR>$_LimitON<BR><BR><STRONG>$EmptyList: </STRONG>En los listados sin no hay registros saldrá un mensaje de aviso si se quiere que salga el listado vacio se pondrá esta variable a "true".</P></TD></TR>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

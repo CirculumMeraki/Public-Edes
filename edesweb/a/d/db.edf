@@ -1,0 +1,46 @@
+[Title]=Inventario Base de Datos
+[Format],Mb
+[PDFVar]PDF_AltoLetra = 10
+[Fields]
+Concepto|nombre|N|T|15||-|||
+Número|numero|+|T|15||-|||
+[DBSql]l
+$TTablas = 0;
+$TCampos = 0;
+$TIndices = 0;
+$TReg = 0;
+$TReferencial = 0;
+$TTriggers = 0;
+$TProcedures = 0;
+$TVistas = 0;
+if( eSqlType('informix') ){
+qSelect( 'systables', 'tabname,tabid', 'tabid>100 and tabtype="T"' );
+while( $NomTabla = qRow() ) $DimTabla[] = array( $NomTabla[0], $NomTabla[1] );
+$TTablas = count($DimTabla);
+for( $n=0; $n<$TTablas; $n++ ){
+$TReg     += qCount( $DimTabla[$n][0] );
+$TCampos  += qCount( 'syscolumns', 'tabid='.$DimTabla[$n][1] );
+$TIndices += qCount( 'sysindexes', 'tabid='.$DimTabla[$n][1] );
+}
+$TVistas = qCount( 'systables', 'tabid>100 and tabtype="V"' );
+}else{
+qQuery( 'show tables' );
+while( $NomTabla = qRow() ) $DimTabla[] = $NomTabla[0];
+$TTablas = count($DimTabla);
+for( $n=0; $n<$TTablas; $n++ ){
+if( substr_count($DimTabla[$n],'.')>0 ) continue;
+$TReg += qCount( $DimTabla[$n] );
+qQuery( 'SHOW FIELDS FROM '.$DimTabla[$n] );
+while( $row = qArray() ) $TCampos++;
+qQuery( 'SHOW KEYS FROM '.$DimTabla[$n] );
+while( $row = qArray() ) $TIndices++;
+}
+}
+$usuCursor[] = array( 'TABLAS'			, $TTablas );
+$usuCursor[] = array( 'INDICES'			, $TIndices );
+$usuCursor[] = array( 'CAMPOS'			, $TCampos );
+$usuCursor[] = array( 'INTEGRIDAD REF.'	, $TReferencial );
+$usuCursor[] = array( 'TRIGGERS' 		, $TTriggers );
+$usuCursor[] = array( 'PROCEDURES'		, $TProcedures );
+$usuCursor[] = array( 'REGISTROS'		, $TReg );
+$usuCursor[] = array( 'VISTAS'			, $TVistas );

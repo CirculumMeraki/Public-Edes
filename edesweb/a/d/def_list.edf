@@ -1,0 +1,481 @@
+[Title]DEFINICION DE FORMATO
+[DBTable]{$_SESSION['ShareDictionary']}gs_formato
+[DBIndex]cd_gs_formato; cd_gs_user, cd_gs_entidad, nm_gs_formato
+[DBOrder]cd_gs_user, cd_gs_entidad, nm_gs_formato
+[DBSerial]cd_gs_formato
+[DBAddFilter](informe is null or informe='')
+[PersistentVar]_cd_gs_entidad
+[DefAux]cd_gs_user2|gs_user, cd_gs_user, user_name, ', ', user_surname
+[Fields]
+Cd gs formato|cd_gs_formato|+|T|9||*|||
+Cd gs user|cd_gs_user|+|T|5||*Q*|_User||
+Entidad|cd_gs_entidad|+|T|5||*Q*|$_GET["_cd_gs_entidad"]|#|
+Nombre|nm_gs_formato|D|T|60||MQ||#|
+Descripción|descripcion|#|A|255,80,3|nm_gs_formato|M|||
+#(a,?R) {P} Definicion
+-|Compartir con
+Usuario|cd_gs_user2|+|S|60||ML|||
+Local|cd_gs_node|+|S|60||ML|||
+Cargo|cd_gs_position|+|S|60||ML|||
+Árbol de opciones|cd_gs_tree|+|S|60||ML|||
+Formato|formato|#|A|500,80,6||-L|||
+Ordenación|ordenacion|#|T|36||-L|||
+Cabecera|cabecera|#|A|255,80,3||*L|||
+Operación|operacion|#|A|255,80,3||*L|||
+Titulo list|titulo_list|#|A|255,80,3||*L|||
+|grupo|+|T|20||*|0||
+[PHPStart]a
+if( $_GET["_cd_gs_entidad"]=="" ) eMessage('Falta definir el parámetro "_cd_gs_entidad"', "HSE");
+[PHPStart]a,?R
+$cd_gs_entidad = 1;
+$_User = $_SESSION["_User"];
+$_TotalCampos	= 0;
+$_TotalAncho	= 0;
+$_Orden			= 0;
+[PHPForm]?
+if( $_GET["_cd_gs_entidad"]=="" ){
+$_Form["cd_gs_entidad"][3] = "S";
+$_Form["cd_gs_entidad"][4] = 30;
+$_Form["cd_gs_entidad"][5] = 200;
+$_Form["cd_gs_entidad"][6] = "M";
+}
+[PHPIni]a
+$_TReg = qCount("{$_SESSION['ShareDictionary']}gs_entidad", "");
+if( $_TReg == 0 ){
+eMessage('NO HAY NINGUNA ENTIDAD CREADA','HES');
+}else if( $_TReg == 1 ){
+qSelect("{$_SESSION['ShareDictionary']}gs_entidad", 'cd_gs_entidad', '');
+$row = qArray();
+$ENTIDAD = $row['cd_gs_entidad'];
+}
+[PHPIni]a,?R
+qQuery( "select export_level from gs_user where cd_gs_user={$_User}" );
+$row = qArray();
+$_export_level_ = trim($row['export_level'])*1;
+if( $_export_level_==0 ){
+eMessage('NO TIENE PERMISO DE EXTRACCION', 'HS');
+}
+qQuery("select nm_gs_entidad from {$_SESSION['ShareDictionary']}gs_entidad where cd_gs_entidad='{$cd_gs_entidad}'");
+$row = qRow();
+$_TITLE .= " - {$row[0]}";
+if( $_Mode!="a" ){
+if( $cd_gs_formato=="" ){
+qSelect("{$_SESSION['ShareDictionary']}gs_formato", '*');
+$Formato = qArray();
+$cd_gs_formato = $Formato['cd_gs_formato'];
+}else{
+qSelect("{$_SESSION['ShareDictionary']}gs_formato", '*', "cd_gs_formato='{$cd_gs_formato}'");
+$Formato = qArray();
+}
+$Formato['formato'] = str_replace('##','#',$Formato['formato']);
+$ListaCampos		= '#'.$Formato['formato'];
+$ListaOrdenacion	= '#'.$Formato['ordenacion'];
+}else{
+$ListaCampos		= '';
+$ListaOrdenacion	= '';
+}
+[P]Definicion
+function ListaDeCampos(){
+global $_export_level_, $cd_gs_entidad, $ListaCampos;
+$Grupo = array();
+qQuery("select cd_gs_grupo, count(*) from {$_SESSION['ShareDictionary']}gs_campo where cd_gs_entidad='{$cd_gs_entidad}' and extraccion='S' and nivel>=0 and (nivel<={$_export_level_} or nivel is null) and (log_only<>'S' or log_only is null) group by cd_gs_grupo");
+while( $row = qRow() ){
+$Grupo[ $row[0] ] = (int)$row[1];
+}
+$sTitle = '';
+$TCampos = 0;
+$TGrupos = 0;
+qSelect("{$_SESSION['ShareDictionary']}gs_campo as C, {$_SESSION['ShareDictionary']}gs_grupo as G", 'C.*,G.orden as g_orden,G.nm_gs_grupo as g_nm_grupo', "C.cd_gs_entidad='{$cd_gs_entidad}' and extraccion='S' and nivel>=0 and (C.nivel<={$_export_level_} or C.nivel is null) and (log_only<>'S' or log_only is null) and C.cd_gs_grupo=G.cd_gs_grupo", 'g_orden,g_nm_grupo,C.orden');
+while( $row=qArray() ){
+$TCampos++;
+echo '<tr i='.$row['cd_gs_campo'].'>';
+if( $sCodGrupo != $row['cd_gs_grupo'] ){
+$TGrupos++;
+echo '<td class=SelectOFF valign=top id="tabl'.$TGrupos.'"';
+echo ' rowspan='.$Grupo[ $row['cd_gs_grupo'] ];
+$sCodGrupo = $row['cd_gs_grupo'];
+echo ' style="vertical-align:top;';
+if( $TCampos==1 ) echo 'width:119px;';
+echo '">';
+echo trim($row['g_nm_grupo']);
+echo '</td>';
+$sTitle = trim($row['g_nm_grupo']);
+}
+echo "<td id=S L='{$row['ancho']}' class=";
+echo (substr_count( $ListaCampos, '#'.$row['cd_gs_campo'].'#')>0)? 'SelectON' : 'SelectOFF';
+echo " title='{$sTitle}'>";
+echo str_replace('·',' ',trim($row['etiqueta']));
+echo '</td>';
+echo '</tr>';
+}
+if( $TCampos==0 ) eMessage("No hay acceso a ningún dato", "HSE");
+}
+function CamposSeleccionados(){
+global $cd_gs_entidad, $_export_level_;
+if( $GLOBALS[MODO]=='a' ) return;
+global $ListaCampos, $ListaOrdenacion, $Formato;
+global $_TotalAncho, $_TotalCampos, $_Orden;
+$nLineas = 0;
+$DimGrupo = array();
+qQuery( "select cd_gs_grupo,nm_gs_grupo from {$_SESSION['ShareDictionary']}gs_grupo order by 1" );
+while( $r=qRow() ) $DimGrupo[$r[0]] = trim($r[1]);
+$tmp = explode('#',$ListaOrdenacion);
+for( $n=1; $n<count($tmp)-1; $n++ ){
+$DimOrden[$tmp[$n]] = $n;
+$_Orden++;
+}
+$ListaNumCampos = str_replace('#' ,',',$Formato['formato']).",";
+$ListaNumCampos = str_replace(' ' ,'' ,$ListaNumCampos);
+$ListaNumCampos = str_replace(',,','' ,$ListaNumCampos);
+if( $ListaNumCampos == ',' ) return;
+$DimCampos = explode(',', $ListaNumCampos);
+for($n=0; $n<count($DimCampos); $n++){
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_campo where cd_gs_campo={$DimCampos[$n]}" );
+$DimCampo = qArray();
+$sCodCampo = $DimCampo['cd_gs_campo'];
+if( $sCodCampo == '' ) continue;
+$sOrdenacion =' ';
+if( substr_count( $ListaOrdenacion, '#'.$DimCampo['cd_gs_campo'].'#' ) > 0 ){
+$sOrdenacion = $DimOrden[ $DimCampo['cd_gs_campo'] ];
+}
+$sEtiqueta	= trim($DimCampo['etiqueta']);
+$sTitulo		= $DimGrupo[$DimCampo['cd_gs_grupo']].' : '.trim($DimCampo['etiqueta']);
+$sAncho		= $DimCampo['ancho'];
+$_TotalCampos++;
+$_TotalAncho += $sAncho;
+echo "<tr i={$sCodCampo} style='cursor:pointer'>";
+echo "<td class='SelectOFF' id='C' style='cursor:pointer'>".$sOrdenacion;
+echo "<td class='SelectOFF' style='cursor:pointer' title='{$sTitulo}'>".$sEtiqueta;
+echo "<td class='SelectOFF' id='D'>".$sAncho;
+}
+}
+?>
+<table cellspacing=0px cellpadding=5px height=100% class=Transparente>
+<tr>
+<td id=Todo class=Transparente style='vertical-align:top;'>
+<table id='TLisCampos' class="BROWSE" width='280px'>
+<tr><th colspan=3>LISTA DE CAMPOS</th></tr>
+<tr><th>GRUPO</th><th>DATO</th><th>&nbsp;</th></tr>
+</table>
+<div class='ScrollOri' style='overflow:auto; margin:0px;' onscroll='top.eScrollText(this,2)'>
+<table id='LisCampos' class="BROWSE" style='position:relative; top:-1px; left:-1px' width='100%'>
+<?PHP  ListaDeCampos(); ?>
+</table>
+</div>
+</td>
+<td class=Transparente style="vertical-align:top;">
+<table id='TSelCampos' class="BROWSE" style="width:100%">
+<tr><th colspan=4>CAMPOS SELECCIONADOS</th></tr>
+<tr><th width='25px' title='Ordenación'>Or</th><th width='258px' title='Título Columna'>DATO</th><th width='30px' title='Longitud'>Lg</th><th width='12px'>&nbsp;</th></tr>
+</table>
+<div class='ScrollDes' style='overflow:auto; margin:0px; width:100%; padding:0px;'>
+<table id='SelCampos' class="BROWSE" style='position:relative;top:-1px;left:-1px;cursor:pointer;'>
+<col class='SelectOFF' id='C'	s-tyle='width:expression(TSelCampos.rows[1].cells[0].offsetWidth-4);cursor:pointer;'>
+<col class='SelectOFF'			s-tyle='width:expression(TSelCampos.rows[1].cells[1].offsetWidth-4);cursor:pointer;'>
+<col class='SelectOFF' id='D'	s-tyle='width:expression(TSelCampos.rows[1].cells[2].offsetWidth-4)'>
+<?PHP  CamposSeleccionados(); ?>
+</table>
+</div>
+<table cellspacing=0px cellpadding=0px border=0px style='width:100%; border-collapse:collapse;' class="Contorno BROWSE">
+<tr>
+<th>&nbsp;Total&nbsp;Columnas</th>
+<th style="text-align:left"><INPUT TYPE="text" SIZE=3 NAME="_TCampos" ID="_TCampos" VALUE="<?= $_TotalCampos; ?>" style="text-align:right" disabled></th>
+<th style="width:100%">&nbsp;</th>
+<th>Total&nbsp;Caracteres</th>
+<th><INPUT TYPE="text" SIZE=3 NAME="_TLong" ID="_TLong" VALUE="<?= $_TotalAncho; ?>" style="text-align:right" disabled></th>
+</tr>
+</table>
+</td>
+</table>
+<?PHP
+[JSCheck]a,mR
+return AltaFormato();
+[JSCheck]?
+if( DGI("_INPUT_cd_gs_entidad") ){
+if( eGF("cd_gs_entidad")=="" ){
+ePE("cd_gs_entidad", 'Falta definir la "ENTIDAD"');
+}
+}
+[JSEnd]a,?R
+if( SelCampos.rows.length > 1 ) ConfigRow( SelCampos.rows[0] );
+_Orden = '<?= $_Orden ?>';
+[JSEnd]a,?R
+VerUso();
+[JSEnd]a,mR
+DGI("LisCampos").onclick = LisCampo;
+DGI("SelCampos").onclick = SelCampo;
+DGI("SelCampos").ondblclick = ModCampo;
+[JSIni]a,?R
+var _Mover = false,
+_Fila = 0,
+_Orden = 0;
+function ConfigRow( row ){
+row.cells[0].width = px(TSelCampos.rows[1].cells[0].offsetWidth-4);
+row.cells[1].width = px(TSelCampos.rows[1].cells[1].offsetWidth-4);
+row.cells[2].width = px(TSelCampos.rows[1].cells[2].offsetWidth-4);
+row.cells[0].className = 'SelectOFF';
+row.cells[1].className = 'SelectOFF';
+row.cells[2].className = 'SelectOFF';
+row.cells[0].id = 'C';
+row.cells[2].id = 'D';
+}
+function LisCampo(){
+if( S.event(window).tagName != 'TD' ) return;
+var Obj = S.event(window),
+Grupo='', Obj2, n;
+if( Obj.className == 'SelectOFF' ){
+if( eGF("_TCampos") >= 100 ){
+top.eAlert( S.lng(209), 'Solo se pueden extraer "99" campos', 'A', 'W' );
+return false;
+}
+if( Obj.parentNode.cells.length == 2 ){
+if( Obj.cellIndex == 0 ) return;
+Grupo = Obj.parentNode.cells[0].textContent;
+}else{
+Obj2 = Obj.parentNode;
+for(n=Obj.parentNode.rowIndex-1; n>=0; n--){
+if( LisCampos.rows[n].cells.length == 2 ){
+Grupo = LisCampos.rows[n].cells[0].textContent;
+break;
+}
+}
+}
+Obj.className = 'SelectON';
+var row = SelCampos.insertRow();
+row.insertCell(0).textContent = '';
+row.insertCell(1).textContent = Obj.textContent;
+row.insertCell(2).textContent = Obj.getAttribute("L");
+row.cells[0].style.cursor = row.cells[1].style.cursor = 'pointer';
+row.cells[1].title = Grupo+': '+Obj.textContent;
+row.cells[2].id = "D";
+ConfigRow( row );
+row.setAttribute("i", Obj.parentNode.getAttribute("i"));
+FRM1._TCampos.value++;
+if( isNaN( parseInt(FRM1._TLong.value) ) ){
+FRM1._TLong.value = Obj.getAttribute("L");
+}else{
+FRM1._TLong.value = (parseInt(FRM1._TLong.value) + parseInt(Obj.getAttribute("L")));
+}
+}else if( Obj.className == 'SelectON' ){
+Obj2 = SelCampos.rows;
+for( var n=0; n<Obj2.length; n++){
+if( Obj2[n].getAttribute("i") == Obj.parentNode.getAttribute("i") ){
+RestaOrden( Obj2[n].rowIndex );
+Obj.className = 'SelectOFF';
+FRM1._TCampos.value--;
+FRM1._TLong.value = (parseInt(FRM1._TLong.value) - parseInt(Obj2[n].cells[2].textContent));
+SelCampos.deleteRow(Obj2[n].rowIndex);
+_Mover = false;
+break;
+}
+}
+}
+}
+function SelCampo(){
+var Obj = S.event(window);
+if( Obj.tagName != 'TD' ) return;
+if( Obj.cellIndex == 0 ){
+if( S.trim(Obj.textContent)=="" ){
+if( _Orden < 7 ){
+Obj.textContent = ++_Orden;
+}else{
+top.eAlert(S.lng(209), 'Solo se puede ordenar por 7 campos', 'A', 'W');
+}
+}else{
+RestaOrden( Obj.parentNode.rowIndex );
+}
+return;
+}
+if( Obj.cellIndex != 1 ) return;
+if( _Mover ){
+Obj.className = 'SelectOFF';
+if( Obj.parentNode.rowIndex > _Fila ){
+var row = SelCampos.insertRow( Obj.parentNode.rowIndex+1 );
+row.setAttribute("i", SelCampos.rows[_Fila].getAttribute("i"));
+row.insertCell(0).textContent = SelCampos.rows[_Fila].cells[0].textContent;
+row.insertCell(1).textContent = SelCampos.rows[_Fila].cells[1].textContent;
+row.insertCell(2).textContent = SelCampos.rows[_Fila].cells[2].textContent;
+row.cells[1].title = SelCampos.rows[_Fila].cells[1].title;
+SelCampos.deleteRow( _Fila );
+}else{
+var row = SelCampos.insertRow( Obj.parentNode.rowIndex );
+row.setAttribute("i", SelCampos.rows[_Fila+1].getAttribute("i"));
+row.insertCell(0).textContent = SelCampos.rows[_Fila+1].cells[0].textContent;
+row.insertCell(1).textContent = SelCampos.rows[_Fila+1].cells[1].textContent;
+row.insertCell(2).textContent = SelCampos.rows[_Fila+1].cells[2].textContent;
+row.cells[1].title = SelCampos.rows[_Fila+1].cells[1].title;
+SelCampos.deleteRow( _Fila+1 );
+}
+row.cells[0].style.cursor = row.cells[1].style.cursor = 'pointer';
+ConfigRow( row );
+}else{
+Obj.className = 'SelectON';
+_Fila = Obj.parentNode.rowIndex;
+}
+_Mover = !_Mover;
+}
+function RestaOrden( nFila ){
+var Obj = SelCampos.rows[nFila].cells[0],
+sOrd = S.trim(Obj.textContent),
+Obj2 = SelCampos.rows, n;
+if( sOrd=='' ) return;
+for(n=0; n<Obj2.length; n++){
+if( Obj2[n].cells[0].textContent > sOrd ){
+Obj2[n].cells[0].textContent = parseInt( Obj2[n].cells[0].textContent ) - 1;
+}
+}
+_Orden--;
+Obj.textContent = '';
+}
+function _ModCampo( Op, Valores, Para ){
+if( Op!=2 ) return;
+Para[0].textContent = Valores[0];
+}
+function ModCampo(){
+var Obj = S.event(window);
+if( Obj.tagName != 'TD' ) return;
+if( Obj.cellIndex != 1 ) return;
+_Mover = false;
+Obj.className = 'SelectOFF';
+top.eAlert('','ENTRADA DE DATOS','A,C','g/sys_keyboard.gif', _ModCampo, Array(Array('Nuevo título\nde columna',30,'^[0-9A-Za-zÇçÜúÑñ ªº\'".,/()-]*$','^[0-9A-Za-zÇçÜúÑñ ªº\'".,/()-]*$',Obj.textContent)), Array( Obj ) );
+eClearEvent();
+}
+function AltaFormato(){
+var Orden = new Array(),
+n, error = 0;
+ePF("formato,ordenacion,cabecera,operacion", "");
+for(n=0; n<SelCampos.rows.length; n++){
+document.FRM1.formato.value += SelCampos.rows[n].getAttribute("i") + '#';
+if( S.trim(SelCampos.rows[n].cells[0].textContent)!="" ){
+Orden[ SelCampos.rows[n].cells[0].textContent ] = SelCampos.rows[n].getAttribute("i");
+}
+}
+for(n=1; n<Orden.length; n++){
+document.FRM1.ordenacion.value += Orden[n] + '#';
+}
+if( eGF("formato")=="" ){
+ePE("formato", 'No se ha seleccionado ningún campo');
+return false;
+}
+if( eGF("ordenacion")=="" ){
+ePE("ordenacion", 'No se ha seleccionado ninguna ordenación');
+return false;
+}
+if( document.FRM1.formato.value.length >= 500 ){
+ePE("ordenacion", 'Demasiados campos');
+error++;
+}
+if( document.FRM1.cabecera.value.length >= 255 ){
+ePE("ordenacion", 'Demasiado texto de cabecera');
+error++;
+}
+if( document.FRM1.operacion.value.length >= 255 ){
+ePE("ordenacion", 'Demasiadas operaciones');
+error++;
+}
+if( error == 0 ){
+document.FRM1.titulo_list.value = escape(document.FRM1.titulo_list.value);
+document.FRM1.descripcion.value = escape(document.FRM1.descripcion.value);
+}
+return(error==0);
+}
+function VerUso(repetir){
+var FontSize = S( S("#LisCampos").obj.rows[0].cells[0] ).cssVal("fontSize");
+S(window).rule("+#LisCampos TBODY TD > * {font-size:"+FontSize+"px;}");
+S(window).rule("+.BROWSE TH {font-size:"+FontSize+"px;}");
+eHide("cd_gs_node","-");
+var TAncho = LisCampos.parentNode.offsetWidth,
+aTD = LisCampos.rows[0].cells[0].offsetWidth-4;
+TLisCampos.style.width = TAncho+"px";
+TLisCampos.rows[1].cells[0].style.width = aTD+"px";
+TLisCampos.rows[1].cells[2].style.width = (TAncho - LisCampos.offsetWidth - 5)+"px";
+var tr = S("#SelCampos").obj.rows, n, t=0, i=0;
+if( tr.length>0 ){
+S(":_TCampos").val(tr.length);
+for(n=0; n<tr.length; n++){
+t += tr[n].cells[2].textContent*1;
+i = tr[n].cells[0].textContent*1;
+if( i>_Orden ) _Orden = i;
+}
+S(":_TLong").val(t);
+}
+var ori = S("#TLisCampos").obj.rows[1].cells,
+des = S("#TSelCampos").obj.rows[1].cells;
+des[3].style.width = ori[2].offsetWidth+"px";
+var ori = S("#TSelCampos").obj.rows[1].cells,
+des = S("#SelCampos").obj.rows, n;
+if( des.length>0 ){
+for(n=0; n<ori.length-1; n++){
+des[0].cells[n].style.width = (ori[n].offsetWidth-2)+"px";
+}
+}
+S(window).rule("-.BROWSE TBODY TR:hover > TD");
+}
+[CssAdd]a,?R
+TH {
+text-align:center;
+background-color:#61adc3 !important;
+}
+.BROWSE TBODY TR:nohover > TD {
+BACKGROUND-COLOR: inherit !important;
+COLOR: inherit !important;
+}
+.Transparente {
+background: transparent;
+}
+.SelectOFF {
+cursor:default;
+}
+#FORM TD {
+background: transparent;
+}
+#Titulo {
+cursor:default;
+}
+#TLisCampos {
+cursor:default;
+}
+#TSelCampos {
+cursor:default;
+}
+#SelCampos {
+cursor:pointer;
+}
+.ScrollOri {
+BORDER-TOP: #C1C1C1 0px solid;
+BORDER-RIGHT: #C1C1C1 1px solid;
+BORDER-LEFT: #C1C1C1 1px solid;
+BORDER-BOTTOM: #C1C1C1 1px solid;
+HEIGHT: 288px;
+}
+.ScrollDes {
+BORDER-TOP: #C1C1C1 0px solid;
+BORDER-RIGHT: #C1C1C1 1px solid;
+BORDER-LEFT: #C1C1C1 1px solid;
+BORDER-BOTTOM: #C1C1C1 0px solid;
+HEIGHT: 266px;
+}
+.Contorno {
+BORDER-RIGHT: #C1C1C1 1px solid;
+BORDER-TOP: #C1C1C1 1px solid;
+BORDER-LEFT: #C1C1C1 1px solid;
+BORDER-BOTTOM: #C1C1C1 1px solid;
+}
+.SelectOFF {
+BACKGROUND: #fffbf0;
+COLOR: #332211;
+}
+.SelectON {
+BACKGROUND: #fffdc0;
+COLOR: #001987;
+}
+#S {
+CURSOR: pointer;
+}
+#SelCampos {
+CURSOR: pointer;
+}
+#TC {
+PADDING-RIGHT: 10px;
+TEXT-ALIGN: right;
+}

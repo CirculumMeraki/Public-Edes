@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>CC 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[CC] #ConditionName | Condition 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Asigna el resultado de la condición a evaluar al nombre de la condición. <BR>El uso habitual es crear una condición para posteriormente utilizarla tantas veces como deseemos simplemente utilizando su nombre, por ejemplo para omitir porciones de código dentro de un archivo EDF. <BR>Las operadores lógicos "and" y "or" hay que ponerlos en formato texto y no con los símbolos "&amp;" ni "|" pues el símbolo "|" se utiliza para separar parámetros. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>#ConditionName</STRONG>: Nombre de la condición que deseamos crear. Debemos introducir la almuadilla "#" como primer carácter con el objetivo que EDES detecte que es una condición. <BR><STRONG>Condition</STRONG>: Expresión condicional con resultado true o false en PHP, los operadores logicos hay que ponerlos con letra (and,or,..) al usar el carácter '|' como delimitador. Si se ha creado la variable por ejemplo "#da" también se puede usar "#!da" para hacer un not al valor de la variable. <BR>La condición también puede ser un sql que devuelva un 0 para false y distinto de 0 para true.. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[PHPStart] *<BR>function userFunction(){<BR><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>return true/false;<BR>}<BR><BR>[CC] #da &nbsp;| $_Modo!='a'&nbsp; and $_Modo!='A'<BR>[CC] #ic&nbsp; | $_Modo=='c'&nbsp; or&nbsp; $_Modo=='cR'<BR><BR>[CC] #c1 | select count(*) from gs_user where cd_gs_user={$_User}<BR>[CC] #c2 | qCount('gs_user','cd_gs_user={$_User}');<BR><BR>[CC] #c3 | userFunction()<BR><BR><BR>[Fields]<BR>#da ¿<BR>...<BR>?<BR>¿ #ic ? ...<BR>¿ #!ic ? ... 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>$_Variable['#GPForm'] = true;<SPAN style="WIDTH: 25px"></SPAN>// Se puede dar el valor que se quiera a una variable [CC]<BR><BR>[Fields] #GPForm<BR>...</TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

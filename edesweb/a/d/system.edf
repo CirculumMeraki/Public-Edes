@@ -1,0 +1,47 @@
+[Title]=MODIFICAR SISTEMA - SIN TRADUCIR
+[AddCode]a|_PassDaysToChange, _PassDaysToExpire|A|&nbsp;(nunca=-1)
+[Chr]uChr||ABCDEFGHIJKLMNÑOPQRSTUVWXYZÇÜabcdefghijklmnñopqrstuvwxyzçü0123456789 .,:-=*_@ºª!¡(){}[]%/áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛãõÃÕ
+[Button]a|<img src='g/op_update.gif'> Modificar
+[Fields]
+-|Clave
+Dias sin cambiar clave|_PassDaysToChange|-|T|3||M||#|
+Dias sin entrar para que caduque la clave|_PassDaysToExpire|-|T|3||M||#|
+Enviar las claves por email|_UserPasswordByEmail|X|C|1||M|||
+EMail remitente para los email del sistema|_EMailSystem|@|T|65||M|||
+-|Clave por defecto la primera vez que se entra
+Clave|_ClaveReset|uChr|P|60||M|||
+Repetir Clave|_ClaveResetRep|uChr|P|60||M|||
+[FormCheck]
+A | {_ClaveReset}=={_ClaveResetRep} | @ClavesDistintas@
+[JSCheck]a
+if( _ErrMensaje=='' && document.FRM1._ClaveReset.value!='' ){
+if( document.FRM1._ClaveReset.value.length<6 ){
+ePE( '_ClaveReset', 'La longitud mínima de la "CLAVE" es de @ caracteres' );
+}else{
+document.FRM1._ClaveReset.value = _e_(document.FRM1._ClaveReset.value).toUpperCase();
+document.FRM1._ClaveResetRep.value = _e_(document.FRM1._ClaveResetRep.value).toUpperCase();
+}
+}
+[JSCheck]a
+[PHPEnd]a
+include('../_datos/config/desktop.ini');
+?>
+<script type="text/javascript">
+ePF('_PassDaysToChange', '<?=$_PassDaysToChange?>');
+ePF('_PassDaysToExpire', '<?=$_PassDaysToExpire?>');
+ePF('_UserPasswordByEmail', '<?=$_UserPasswordByEmail?>');
+ePF('_EMailSystem', '<?=$_EMailSystem?>');
+</script>
+<?PHP
+[PHPForm]a
+global $_TIPFORM;
+$_TIPFORM['_ClaveReset']['F'] = 'Clave actual: '.eFileGetVar("Login.ClaveReset");
+[PHPIni]A
+$Dim = array();
+if( $_POST['_ClaveReset']!='' ) $Dim[] = array( '_ClaveReset', $_POST['_ClaveReset'] );
+$Dim[] = array( '_PassDaysToChange', $_POST['_PassDaysToChange'] );
+$Dim[] = array( '_PassDaysToExpire', $_POST['_PassDaysToExpire'] );
+$Dim[] = array( '_UserPasswordByEmail', $_POST['_UserPasswordByEmail']=='S' );
+$Dim[] = array( '_EMailSystem'		  , $_POST['_EMailSystem'] );
+eFilePutVar( '/_datos/config/desktop.ini', $Dim );
+eMessage('MODIFICADO','HS');

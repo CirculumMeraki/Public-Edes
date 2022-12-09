@@ -1,0 +1,211 @@
+#include(*) lng
+[Title]@CAMPO/S@|l
+#(?R) [Title] =@DEFINICION DE "CAMPO"@
+[DBTable]{$_SESSION['ShareDictionary']}gs_campo
+[DBIndex]cd_gs_campo ; cd_gs_entidad,tabla,campo,relacion,tipo
+[DBOrder]B.nm_gs_entidad, C.orden, A.orden, A.etiqueta
+[DBSerial]cd_gs_campo
+[DBLimit]1000,1000
+[RelationFields]cd_gs_entidad,cd_gs_grupo
+[AddOption]*|alineacion|I,@Izquierda@; C,@Centro@; D,@Derecha@; L,@MultiLinea@
+[AddOption]*|nivel|,; 1,@Básico@; 2,@Medio@; 3,@Total@; 9,@INFORMATICA@
+[SortList]l|orden|cd_gs_entidad,cd_gs_grupo
+[Width]L|unescape|71
+[AddCode]mR|descripcion|A|<img src='g/sys_insert.gif' onclick='InsertarModi()' title='@Generar un alta con la modificación@'>
+[SlideCol]5
+[AddOption]*|log_history|,; V,Valor; T,Texto;  A,Valor y Texto; N,No
+[EditList]ancho,decimales,campo_ref, tipo_dato,cd_gs_grupo,alineacion,etiqueta,label_tab,label_inf,nivel,  extraccion,informe,log_only
+[Fields]l||trim
+     @Orden@                               | orden         | +  | T  | 3        |        | M |   |   |
+     @Entidad@                             | cd_gs_entidad | 0  | S  | 30       |        | M |   | # |
+     @Grupo@                               | cd_gs_grupo   | 0  | Ss | 30       | 180    | M |   | # |
+     @Tabla@                               | tabla         | x  | SV | 30       |        | M |   | # |
+     @Campo@                               | campo         | x  | T  | 80       | 180    | M |   | # |
+     @Tipo Dato@                           | tipo_dato     | N  | SV | 7        |        | M |   |   |
+     @Ancho@                               | ancho         | +  | T  | 3        |        | M |   | # |
+     @Decimales@\@Dec.@                    | decimales     | +  | T  | 1        |        | M |   |   |
+     @Alineación@\@ALIN.@                  | alineacion    | D  | SV | 12       |        | M | I |   |
+                                           | cd_gs_campo   | *  | T  | 5        |        | * |   |   |
+     @Nivel extracción@                    | nivel         | +  | SV | 12       |        | M |   |   |
+     @Campo Referencia@                    | campo_ref     | x  | T  | 20       |        | M |   |   |
+     @Texto en·Listados@                   | etiqueta      | #U | T  | 30       |        | M |   | # |
+     @Texto en·Fichas@                     | label_tab     | #  | T  | 30       |        | M |   |   |
+     @Texto en·Informes@                   | label_inf     | #  | T  | 30       |        | M |   |   |
+     @Campo en Extracciones\Extracción@    | extraccion    | N  | C  | 1        |        | M |   |   |
+     @Campo en Informes\Informe@           | informe       | N  | C  | 1        |        | M |   |   |
+     @Solo en LOG@\@SH@                    | log_only      | X  | C  | 1        |        | M |   |   |
+     @Tipo Extracción@                     | tipo          | #  | A  | 255,80,3 | +campo | M |   |   |
+     @Relación@                            | relacion      | x  | A  | 255,80,3 | +campo | M |   |   |
+     @Tipo LOG@                            | tipo_log      | #  | T  | 60       | +campo | M |   |   |
+     @Ver en LOG@\@HST@                    | log_history   | X  | SV | 15       |        | M | V |   |
+     @Sólo si lo Modificó el usuario@\@HU@ | log_no_system | X  | C  | 1        |        | M |   |   |
+[Fields]2|?
+     @Entidad@                          | cd_gs_entidad | 0  | S  | 30 |     | MQd |  |  |
+  ,2 @Grupo@                            | cd_gs_grupo   | 0  | Ss | 30 | 180 | MQ  |  |  |
+     @Tabla@                            | tabla         | x  | SV | 30 |     | MQd |  |  |
+  ,2 @Campo@                            | campo         | x  | T  | 80 | 180 | MQ  |  |  |
+     @Tipo Dato@                        | tipo_dato     | N  | SV | 7  |     | MQ  |  |  |
+  ,2 @Nivel extracción@                 | nivel         | +  | SV | 12 |     | MQ  |  |  |
+-||||||Q
+     @Campo en Extracciones\Extracción@ | extraccion    | N  | C  | 1  |     | MQ  |  |  |
+  ,  @Campo en Informes\Informe@        | informe       | N  | C  | 1  |     | MQ  |  |  |
+  ,  @Solo en LOG@\@SH@                 | log_only      | X  | C  | 1  |     | MQ  |  |  |
+     @Texto en·Listados@                | etiqueta      | #U | T  | 30 |     | MQ  |  |  |
+     @Texto en·Fichas@                  | label_tab     | #  | T  | 30 |     | MQ  |  |  |
+     @Texto en·Informes@                | label_inf     | #  | T  | 30 |     | MQ  |  |  |
+[Fields]3|else
+                                           | cd_gs_campo   | *  | T  | 5        |        | *     |   |   |
+     @Tabla@                               | tabla         | x  | SV | 30       |        | MQcpd |   | # |
+  ,2 @Campo@                               | campo         | x  | T  | 80       | 180    | MQ    |   | # |
+  ,3 @Campo Referencia@                    | campo_ref     | x  | T  | 20       |        | M     |   |   |
+     @Tipo Dato@                           | tipo_dato     | N  | SV | 7        |        | MQ    |   |   |
+  ,  @Ancho@                               | ancho         | +  | T  | 3        |        | M     |   | # |
+  ,  @Decimales@\@Dec.@                    | decimales     | +  | T  | 1        |        | M     |   |   |
+  ,  @Alineación@\@ALIN.@                  | alineacion    | D  | SV | 12       |        | M     | I |   |
+     #(?) ,@Nivel extracción@              | nivel         | +  | SV | 12       |        | MQ    |   |   |
+     #!(?) ,3 @Nivel extracción@           | nivel         | +  | SV | 12       |        | MQ    |   |   |
+  -
+     @Entidad@                             | cd_gs_entidad | 0  | S  | 30       |        | MQd   |   | # |
+  ,2 @Grupo@                               | cd_gs_grupo   | 0  | Ss | 30       | 180    | MQ    |   | # |
+  ,3 @NºOrden@\@Orden@                     | orden         | +  | T  | 3        |        | M     |   |   |
+     @Campo en Extracciones\Extracción@    | extraccion    | N  | C  | 1        |        | MQ    |   |   |
+  ,  @Campo en Informes\Informe@           | informe       | N  | C  | 1        |        | MQ    |   |   |
+  ,  @Solo en LOG@\@SH@                    | log_only      | X  | C  | 1        |        | MQ    |   |   |
+     @Texto en·Listados@                   | etiqueta      | #U | T  | 30       |        | MQ    |   | # |
+     @Texto en·Fichas@                     | label_tab     | #  | T  | 30       |        | MQ    |   |   |
+     @Texto en·Informes@                   | label_inf     | #  | T  | 30       |        | MQ    |   |   |
+     @Tipo Extracción@                     | tipo          | #  | A  | 255,80,3 | +campo | M     |   |   |
+     @Relación@                            | relacion      | x  | A  | 255,80,3 | +campo | M     |   |   |
+     @Descripción@                         | descripcion   | x  | A  | 255,80,3 | +campo | M     |   |   |
+  - |LOG de Modificaciones
+     @Ver en LOG@\@HST@                    | log_history   | X  | SV | 15       |        | M     | V |   |
+  ,  @Sólo si lo Modificó el usuario@\@HU@ | log_no_system | X  | C  | 1        |        | M     |   |   |
+     @Tipo LOG@                            | tipo_log      | #  | T  | 60       | +campo | M     |   |   |
+[AddOption]*|tipo_dato|,; C,CheckBox; F,Fecha; I,CDI; N,Número; P,Periodo; S,Select; T,Texto
+[TipForm]a,mR|campo
+<TABLE>
+<TR><TH>FORMATOS</TH><TH>EJEMPLO</TH></TR>
+<TR><TD>Nombre de campo</TD><TD>nombre</TD></TR>
+<TR><TD>Función</TD><TD>date_format(dt_alta,'%d-%m-%Y')</TD></TR>
+<TR><TD>Concatenar campos</TD><TD>nombre,' ',apellidos</TD></TR>
+</TABLE>
+[TipForm]a,mR|tipo
+<TABLE>
+<TR><TH>FORMATOS</TH><TH>EJEMPLO</TH></TR>
+<TR><TD>Select virtual</TD><TD>,NO; S,SI</TD></TR>
+<TR><TD>Función de la DDBB</TD><TD>date_format(#,'%d-%m-%Y')</TD></TR>
+<TR><TD>Función de usuario</TD><TD>FuncionUsuario('#')</TD></TR>
+</TABLE>
+[TipForm]a,mR|relacion
+La relación "where" de la tabla principal con la auxiliar.
+[TipForm]a,mR|campo_ref||350
+Solo se utiliza en los informes, cuando tenemos un campo ("Campo referencia") que es el puntero a otra tabla y lo hemos definido
+para mostrar la información de la otra tabla.
+[TipForm]a,mR|tipo_log
+Solo está activo al mostrar el Log de Modificaciones y sustituye<br>
+el valor de "Tipo extracción" si estuviera relleno
+[AddOption]a,?R,?|tabla|uTablas()
+[PHPIni]a,?R,?
+function uTablas(){
+global $_Sql, $_SqlPDOType;
+if( eSqlType('informix') ){
+qSelect( 'systables', 'tabname,tabtype', 'tabid>100' );
+}else if( eSqlType('oracle') ){
+global $_SqlUsuario; $SqlUsuario = strtoupper($_SqlUsuario);
+$sql = "SELECT TABLE_NAME FROM all_tables";
+qQuery( $sql );
+}else if( eSqlType('mysql,mysqli') ){
+qQuery( 'show tables' );
+}
+$Dim = array();
+if( file_exists('../_datos/config/add_tables.cfg') ){
+$Dim = file('../_datos/config/add_tables.cfg');
+}
+while( $row = qRow() ){
+if( eSqlType('informix') ){
+if( $row[1]=='S' ){
+$Dim[] = trim($row[0]);
+}else{
+$Dim[] = trim($row[0]);
+}
+}else if( eSqlType('oracle') ){
+$Dim[] = strtolower(trim($row[0]));
+}else if( eSqlType('mysql,mysqli') ){
+$Dim[] = trim($row[0]);
+}
+}
+sort($Dim);
+$DimTablas = array();
+if( strlen($GLOBALS['_Mode'])==1 ) $DimTablas[] = array( '', '' );
+for( $n=0; $n<count($Dim); $n++ ) $DimTablas[] = array( $Dim[$n], $Dim[$n] );
+return $DimTablas;
+}
+[PHPIni]l
+if( $_SORTLIST!='' ) $_TITLE = '@Lista de "CAMPOS" a ordenar manualmente@';
+[JSIni]mR
+function InsertarModi(){
+_Accion = 'A';
+_Action = _Action.replace('edes.php?FM:','edes.php?FA:');
+ePF('cd_gs_campo','');
+eOkTab();
+}
+[JSEnd]mR|$a/d/x_campo.edf
+eEF('orden',0);
+[PHPForm]*
+global $_Mode, $_SubMode, $_DBORDER;
+if( qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+$Sufijo = $_SESSION['_LANGUAGE_'];
+if( $Sufijo!='' ) $Sufijo = '_'.$Sufijo;
+if( substr_count(',b,bR,c,cR,m,l,',$_Mode)>0 ){
+}else if( substr_count(',a,mR,',",{$_Mode},")>0 ){
+global $_ONCHANGE, $_ADDCODE;
+eAddField('-|@Lenguaje@||||||||');
+qQuery( "select * from {$_SESSION['ShareDictionary']}gs_language where tf_translation='S' order by nm_gs_language", $p );
+while( $r=qArray($p) ){
+$Idioma = trim($r['cd_gs_language']);
+if( $Idioma=='es' ){
+eAddField( '@Texto en·Listados@ | etiqueta_'.$r['cd_gs_language'].' | D | T | 30 || * ||  |');
+$_ONCHANGE[] = array( 'etiqueta', 'ePF("etiqueta_es",eGF("etiqueta"));', '', '' );
+eAddField( '@Texto en·Fichas@ | label_tab_'.$r['cd_gs_language'].' | D | T | 30 || * || |');
+$_ONCHANGE[] = array( 'label_tab', 'ePF("label_tab_es",eGF("label_tab"));', '', '' );
+eAddField( '@Texto en·Informes@ | label_inf_'.$r['cd_gs_language'].' | D | T | 30 || * || |');
+$_ONCHANGE[] = array( 'label_inf', 'ePF("label_inf_es",eGF("label_inf"));', '', '' );
+}else{
+$Idioma = strtoupper($Idioma);
+eAddField( '@Texto en·Listados@ | etiqueta_'.$r['cd_gs_language'].' | D | T | 30 || M ||  |');
+if( $_Mode=='a' ) $_ONCHANGE[] = array( 'etiqueta', 'ePF("etiqueta'.$Sufijo.'",eGF("etiqueta"));', '', '' );
+eAddField( '@Texto en·Fichas@ | label_tab_'.$r['cd_gs_language'].' | D | T | 30 || M || |');
+if( $_Mode=='a' ) $_ONCHANGE[] = array( 'label_tab', 'ePF("label_tab'.$Sufijo.'",eGF("label_tab"));', '', '' );
+eAddField( '@Texto en·Informes@ | label_inf_'.$r['cd_gs_language'].' | D | T | 30 || M || |');
+if( $_Mode=='a' ) $_ONCHANGE[] = array( 'label_inf', 'ePF("label_inf'.$Sufijo.'",eGF("label_inf"));', '', '' );
+$_ADDCODE['etiqueta_'.$r['cd_gs_language']]['A'] = ' '.eUcFirst(trim($r['nm_gs_language']));
+$_ADDCODE['label_tab_'.$r['cd_gs_language']]['A'] = ' '.eUcFirst(trim($r['nm_gs_language']));
+$_ADDCODE['label_inf_'.$r['cd_gs_language']]['A'] = ' '.eUcFirst(trim($r['nm_gs_language']));
+}
+}
+}
+}
+
+	if( $_Mode=="a" || $_Mode=="mR" ){
+		global $_pField;
+		file_put_contents('../_tmp/php/'.str_replace('/','_',$GLOBALS["OriFichero"]).".{$_ENV[':']['_User']}.var", serialize($_Form));
+		foreach($_Form as $k=>$v){
+			if( $v[2]!="" && $v[1][0]!="[" ){
+				$tmp = NombreCampo($v[1]);
+				if( !isset($_pField[$tmp]) ){
+					$_Field[$tmp] = true;
+					$_pField[$tmp] = $v;
+				}
+			}
+		}
+		file_put_contents('../_tmp/php/'.str_replace('/','_',$GLOBALS["OriFichero"]).".p.{$_ENV[':']['_User']}.var", serialize($_pField));
+	}
+
+
+[PHPIni] A,M,B 
+	$_Form = unserialize(file_get_contents('../_tmp/php/'.str_replace('/','_',$GLOBALS["OriFichero"]).".{$_ENV[':']['_User']}.var"));
+	$_pField = unserialize(file_get_contents('../_tmp/php/'.str_replace('/','_',$GLOBALS["OriFichero"]).".p.{$_ENV[':']['_User']}.var"));
+
+
+[DBEnd]A,M,B
+eExportSrvTable("{$_SESSION['ShareDictionary']}gs_campo", false);

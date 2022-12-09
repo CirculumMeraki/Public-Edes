@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">SelectMultiple</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[SelectMultiple] a,?R | Field |  LongitudDelCampo[,maxItem] [BOX]  [ | SQL [ | Sort=false ] ]<br />[SelectMultiple]   ?     | ListaFields</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Mantenimiento de un campo que se puede seleccionar ,mas de un option alimentado por un select. <br />Esta etiqueta tiene dos comportamientos en los modos de consultas (c,b,m) se puede seleccionar mas de un opci?n pulsando la tecla control+click y en el resto de modos es un select que te permite seleccionar mas de un option mostrandote los opction fuera del select pero almacena todas las claves de los option seleccionados en el mismo campo separados los valores por coma y emezando y teminando por coma.<br />Si se quiere activar el SelectMultiple en todos los select se definir? en el fichero "sql.ini" la variable "$_SelectMultiple = true;"<br />A estos campos se les puede añadir y eliminar item individuales con los prefijos "+" y "-", S(campo).val("+01") o S(campo).val("-01") poniendo o quitando solo el elemento "01" o con varios S(campo).val("-01,+02,+03")</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td> Mode  </td>
+<td> Modo/s en la que está activa la etiqueta.</td>
+</tr>
+<tr>
+<td> Field</td>
+<td> Nombre del campo</td>
+</tr>
+<tr>
+<td> LongitudDelCampo</td>
+<td> Es la longitud del campo donde se guardarán todas las selecciones separadas por coma.<br />- Si queremos poner un máximo de item pondremos "," y el número máximo de item.<br />- Si ponemos la partícula "BOX" el [SelectMultiple] tendrá todos los item dentro del campo<code></code></td>
+</tr>
+<tr>
+<td> SQL</td>
+<td> sql a ejecutar para extraer los elementos a seleccionar.</td>
+</tr>
+<tr>
+<td> Sort</td>
+<td> Por defecto no ordena la selección. </td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[SelectMultiple] * | multi_provincia | 12</code><br /><code>[Fields]</code><br /><code>    Multiples provincias | multi_provincia:cd_prov | X | S | 40 || M |||</code></td>
+</tr>
+<tr>
+<td id="txt">El select se rellena de una tabla</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[SelectMultiple] a | share_group | 30</code><br /><code>[AddOption]      a | share_group | C,Consultas; M,Modificaciones; B,Borrado</code> <code>[Fields] a</code><br /><code>Compartir con Grupos | share_group | X | SV | 60 || M |||</code></td>
+</tr>
+<tr>
+<td id="txt">El select se rellena con el [AddOption]</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[SelectMultiple] * | multi_provincia | 12</code><br /><code>[Fields]</code><br /><code>Multiples provincias | multi_provincia{prov,cd_prov,nm_prov} | X | S | 40 || M |||</code></td>
+</tr>
+<tr>
+<td id="txt">El select se rellena de una tabla</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[SelectMultiple] ? | cd_auto,cd_prov</code><br /><code>[Fields] ?</code><br /><code>Autonom?a | cd_auto | 0 | S  | 2 | 24,200 | QI | _Auto_ | | </code><br /><code>Provincia | cd_prov | 0 | Ss | 2 | 24,200 | QI | _Prov_ | |</code><br /><code>Tipo      | cd_tipo | + | S  | 3 |        | QI |        | |</code></td>
+</tr>
+<tr>
+<td id="txt">Solo los select de los campos cd_auto y cd_prov son de multiselecci?n para buscar y el campo cd_tipo solo se puede seleccionar un solo option.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[SelectMultiple] * | cd_auto | 20,3 box | select cd_auto,nm_auto from auto order by nm_auto</code><br /><code>[Fields]</code><br /><code>Autonomía | cd_auto | 0 | SV  | 2 | 200 | M | _Auto_ | | </code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

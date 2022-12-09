@@ -1,0 +1,36 @@
+#include(*) lng
+[Title]@TIPO PERMISO@
+[DBTable]{$_SESSION['ShareDictionary']}gs_tpermission
+[DBIndex]cd_gs_tpermission
+[DBOrder]nm_gs_tpermission, script
+[DBSerial]cd_gs_tpermission
+[AddOption]*|type|,; V,@Ver dato@; U,@Modificar dato@; E,@Ejecutar opción@; O,@Otros@
+[ColsWidth]note=400
+[PDFCol]note=60
+[PDFWrap]10
+[PDFVar]PDF_Grid = true
+[AddCode]mR,cR,bR|dt_add|A|<img src='edes.php?R:$a/g/usuario.gif' title='@Usuarios que tienen este permiso@' onclick='uVerUser()'>
+[Fields]
+|cd_gs_tpermission|*|T|5||*|||
+@Script@|script|#|T|30||QM|||
+,@KeyWord@|nm_gs_tpermission|#|T|30|200|QM||#|
+@Acción@|type|N|SV|20|script|QM||#|
+,@Permiso·activo@|active|N|C|1||QM|||
+,@Fecha·Alta@|dt_add|F4|T|10|<nm_gs_tpermission|a=*; *=-|#today#||
+@Descripción@|note|#D|T|70|+nm_gs_tpermission|QM|||
+|icons|D|T|30||*|||
+#Include( a,?R ) $a/d/optree.zdf
+[PHPStart]mR
+$dim = file("../_tmp/php/{$_GRUPOMENU}menu.".$_SESSION["_User"]);
+for($n=0; $n<count($dim); $n++){
+if( trim($dim[$n])=="@m:u_usuario" || trim($dim[$n])=="#:$a/d/usu_ficha" ){
+$_GET['_cm'] = "m";
+break;
+}
+}
+[JSIni]mR,cR,bR
+function uVerUser(){
+top.eSWOpen(window, 'edes.php?L<?=$_GET['_cm']?>l:$a/d/tpermission_user.edf&_cd_gs_tpermission='+eGF('cd_gs_tpermission') );
+}
+[DBEnd]A,M,B
+eExportSrvTable("{$_SESSION['ShareDictionary']}gs_tpermission", false);

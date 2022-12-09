@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">ShowFields</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[ShowFields] Mode | Field [,Field,...] | SearchExpr<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Muestra campos que no existen en la tabla actual.<br />En los modos indicados muestra en el campo indicado por Field la información establecida por el tercero de los parámetros ( SearchExpr ), cuya sintaxis es la siguiente:<br />SourceField{ Table, FieldToSave, FieldToShow }<br />Rellena etiquetas generadas con una "B" en modo. (ver [Fields])<br />Se puede poner más de una expresión de búsqueda sumando los campos con un más "+".</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Field</strong>: Nombre de campo destino, lo habitual será un campo virtual ( son los que empiezan por "_" ).<br /><strong>SearchExpr</strong>: Expresión de búsqueda. La sintaxis es la siguiente:<br />CampoDeRelación { TablaRelacionada, CampoDeRelación, CampoAMostrar }<br />el "Campo a mostrar" se verá en el parámetro "Field". También puede relacionarse por mas de un campo uniendolos con el símbolo <span style="font-family: Courier;">"+"</span> ej:<br />Campo1+Campo2 [+CampoN+...]{ TablaRelacionada, Campo1+Campo2[+CampoN], CampoAMostrar }  y se puede mostrar mas de un campo separandolos por comas y poner constantes como un espacio entre campos <span style="font-family: Courier;">' '</span> o un guión <span style="font-family: Courier;">'-'</span>. <br />También admite un select, en este caso iguala nombre del campo destino con nombre del campo del select.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[ShowFields] mR,cR | _habitantes     | cd_postal{ poblacion, cd_poblacion, num_habitantes }<br />[ShowFields] mR,cR | _habitantes, m2 | cd_postal{ poblacion, cd_poblacion, num_habitantes, m2 }<br />[ShowFields]    cR | _nombre         | cd_gs_user{ gs_user, cd_gs_user, user_name,' ',user_surname } <br /><br />[ShowFields] mR,cR | _pro_dni, _pro_nombre, _pro_apellidos | cd_prop{ propietario, cd_prop, dni, nombre, apellidos }</p>
+<p>[ShowFields] mR,cR | _pro_apellidos | cd_prop{ propietario, cd_prop, nombre,', ',apellidos }<br />[ShowFields] ?R | campo1, campo2 | select campo3 as campo1, campo2 from TABLA where campo3='{$_vF[campo3]}'</p>
+</td>
+</tr>
+<tr>
+<td id="txt">En el primer ejemplo se quiere mostrar un campo de otra tabla "poblacion.num_habitantes" y el campo de relación es "cd_postal", el where será <span style="font-family: Courier;">"cd_poblacion='{$cd_postal}'"</span>.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Desktop 
+<TR>
+<TR>
+<TD id=Descripcion>
+<P>El desktop está dividido en&nbsp;tres partes una zona de usuario que se programa mediante el fichero de configuración "desktop_user.ini", un árbol de opciones que se configura desde la aplicación "gsTree" y una zona central de trabajo&nbsp;llamada "IWORK".<BR><BR>Estando en la zona de usuarios o en el árbol de opciones pulsando el botón derecho del ratón saldrá un menú denominado "mTools" de donde parten todas las utilidades de desarrollo.<BR><BR>En la zona central "IWORK" es donde se ejecutan la mayoría de las páginas para desde esta ventana o desde nuevos exploradores mostrar las opciones de desarrollo se pulsará la tecla "control" mas el botón derecho mostrándose el menú "iTools".<BR><BR>Para desencadenar los objetos del motor desde el árbol de opciones se configura desde "gsTree", en la ficha de definición de la opción hay una casilla a rellenar denominada "Script URL" que puede contener los siguientes parámetros.<BR>...<BR><BR><STRONG><U>DESKTOP LIBRE<BR></U></STRONG>Si la variable "$_DesktopType" la ponemos a&nbsp;"4" ( ubicada en el fichero de configuración "desktop.ini" ) nos permite hacer un desktop propio añadiendo el menú horizontal y teniendo todas las prestaciones del resto de desktop mediante el fichero "/_datos/config/desktop.php".<BR><BR><U>Plantilla:</U><BR><FONT face=Courier>&lt;!DOCTYPE HTML&gt;<BR>&lt;HTML&gt;<BR>&lt;HEAD&gt;<BR>&lt;META HTTP-EQUIV="Window-target" CONTENT="_top"&gt;<BR>&lt;META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;<BR>...<BR>&lt;/HEAD&gt;<BR>&lt;BODY style='margin:0px' scroll=no onhelp='return false' onselectstart='return false'&gt;<BR>...<BR>&lt;? include('../../edesweb/main_free.gs'); ?&gt;<BR>...</FONT>&nbsp;</P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

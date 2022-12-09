@@ -1,0 +1,96 @@
+#include(*) lng | true
+[Title]=LISTADO ULTIMAS CONEXIONES|l
+[DBTable]gs_conexion
+[DBOrder]nombre
+[DBLimit]20000
+#Include(l) /_datos/config/history.ayo | true
+¿$_SESSION["_SystemUser"]<>"S"? [DBAddFilter] A.cd_gs_user not in (select cd_gs_user from gs_user where system_user='S')
+[FormAction]c|edes.php?Ll:
+[Expire]300
+[Cursor]
+[ColsOp],C
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[AddOption]?|_ORDEN_|nombre,Nombre; cdi desc,@Instante@
+[Fields]l
+|cd_gs_user|+|T|5||*|||
+@Nombre@|cd_gs_user{gs_user,cd_gs_user,user_surname,', ',user_name}|0|S|60||-|||
+@Local@|cd_gs_node|0|S|60||-|||
+@Instante@|cdi|CDI|T|19||-|||
+Permiso|permission|X|C|1||-||=|
+[Fields]?
+@DNI@|cd_gs_user{gs_user,cd_gs_user,dni}|0|S|7||A|||
+@Nombre@|cd_gs_user{gs_user,cd_gs_user,user_surname,', ',user_name}|0|S|60||A|||
+@Local@|cd_gs_node|0|S|60||Q-|||
+@Instante Desde@|_desde|F4|T|10||QF|||
+,|_desde_hours|H|T|8||Q|||
+,@Hasta@|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+@Instante@|cdi|CDI|T|19||-|||
+@NºEntradas@|cd_gs_user|+|T|3||-|||
+Ordenado por|_ORDEN_|x|SV|19||Q|nombre||
+#include(?) /_datos/config/user_cnd.idf|true
+[JSIni]l
+var usuScriptExe = "";
+[DBSql]l
+if( file_exists('../_datos/config/manager_op_filter.php') ) include('../_datos/config/manager_op_filter.php');
+echo "<script>usuScriptExe = '{$usuScriptView}';</script>";
+$dim = file("../_tmp/php/{$_SESSION['_GRUPOMENU']}menu.{$_SESSION['_User']}");
+for($n=0; $n<count($dim); $n++){
+if( trim($dim[$n])==$usuScriptSeek ){
+echo "<script>usuScriptExe = '{$usuScriptUpdate}';</script>";
+break;
+}
+}
+$uWhere = qGetWhere('B.');
+if( $uWhere!='' ) $uWhere = ' and '.$uWhere;
+$uWhere = str_replace("B.cdi", "A.cdi", $uWhere);
+$FilterUser = str_replace('#.','B.',$FilterUser);
+if( $FilterUser<>'' ) $FilterUser = ' and '.$FilterUser;
+if( eSqlType('mysql,mysqli') ){
+$sql = "select
+A.cd_gs_user,
+concat(B.user_surname,', ',B.user_name) nombre,
+C.nm_gs_node,
+A.cdi,
+B.permission
+from gs_conexion A
+left join gs_user B on B.cd_gs_user=A.cd_gs_user
+left join gs_node C on C.cd_gs_node=B.cd_gs_node
+where A.cdi in (select max(cdi) from gs_conexion where cd_gs_user=A.cd_gs_user) {$uWhere} {$FilterUser}";
+}else{
+$sql = "select
+A.cd_gs_user,
+(B.user_surname||', '||B.user_name) nombre,
+C.nm_gs_node,
+A.cdi,
+B.permission
+from gs_conexion A, gs_user B, gs_node C
+where
+A.cd_gs_user=B.cd_gs_user and B.cd_gs_node=C.cd_gs_node and
+A.cdi in (select max(cdi) from gs_conexion where cd_gs_user=A.cd_gs_user) {$uWhere} {$FilterUser}";
+}
+$desdeAyo = "";
+if( $_POST["cdi"]!="" ){
+$desdeAyo = $_POST["cdi"];
+if( $desdeAyo[0]==">" ) $desdeAyo = substr($desdeAyo,1);
+if( $desdeAyo[0]=="<" ) $desdeAyo = substr($desdeAyo,1);
+if( $desdeAyo[0]=="=" ) $desdeAyo = substr($desdeAyo,1);
+$desdeAyo = substr($desdeAyo,2,2);
+}
+$newSql = $sql;
+for($n=1; $n<count($_DBUNION); $n++){
+if( $desdeAyo!="" && $_DBUNION[$n]<$desdeAyo ) continue;
+if( $_DBUNION[$n]<0 ) continue;
+if( $_DBUNION[$n]<10 ) $_DBUNION[$n] = "0".($_DBUNION[$n]*1);
+$tabla = "gs_conexion".$_DBUNION[0].$_DBUNION[$n];
+if( qExists($tabla) ){
+$newSql .= " union all ".str_replace(" gs_conexion ", " {$tabla} ", $sql);
+}
+}
+$sql = $newSql." order by {$_DBORDER}";
+qQuery($sql);
+[JSOnClickRow]l
+if( event.srcElement.tagName=='TD' && usuScriptExe!="" ){
+top.eSWOpen(window, "edes.php?"+usuScriptExe+'&_SEEK&cd_gs_user='+eGF('cd_gs_user')+'&_CLOSE_=1');
+}

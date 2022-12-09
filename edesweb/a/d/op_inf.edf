@@ -1,0 +1,15 @@
+[Title]=INVENTARIO ARBOL DE OPCIONES
+[DBTable]
+[DBOrder]
+[ColsOp]c,+
+[Fields]
+Tipo|nombre|N|T|6||-|||
+Número|contador|+|T|5||-|||
+[DBSql]l
+$Dim = array('F'=>'Folder', 'O'=>'Option', 'L'=>'Line' );
+qQuery( "select type,count(*) from {$_SESSION['ShareDictionary']}gs_op where caption<>'-' group by 1 order by 1" );
+$_TReg = 3;
+while( $r=qRow() ){
+$r[0] = $Dim[$r[0]];
+$usuCursor[] = $r;
+}

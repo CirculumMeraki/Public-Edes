@@ -1,0 +1,134 @@
+[Title]=LOGFULL
+[DBTable]gs_logfull
+[DBIndex]pk
+[DBOrder]cdi
+[DBSerial]pk
+[AutoMenu]*
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]||trim
+Pk|pk|+|T|9||-||#|
+Instante Desde|_desde|F4|T|10||QF|||
+,|_desde_hours|H|T|8||Q|||
+,Hasta|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+Objeto|object|#|T|2||Q|||
+Modo|mode|#|T|2||Q|||
+Campo|campo|#|T|30||Q|||
+Valor|valor|#|T|30||Q|||
+#(l) Cdi|cdi|CDI|T|19||MQ||#|
+#(?) Usuario|_cd_gs_user|D|T|68||Q|||
+#(?) Usuario|cd_gs_user|+|T|5||*Q|||
+#!(?) Usuario|cd_gs_user|+|S|68||-|||
+Recuest|request|#|A|10000,80,10||ML|||
+Answer|answer|#|A|10000,80,10||ML|||
+[PHPStart]cR
+if( $_POST["object"]!="" ){
+$_POST['request->\'$.object\''] = $_POST["object"];
+eUnSet("object");
+}
+if( $_POST["mode"]!="" ){
+$_POST['request->\'$.mode\''] = $_POST["mode"];
+eUnSet("mode");
+}
+if( $_POST["campo"]!="" && $_POST["valor"]!="" ){
+$_POST['request->\'$.post.'.$_POST["campo"].'\''] = $_POST["valor"];
+eUnSet("campo,valor");
+}
+[JSIni]l
+var __PK = null;
+function uSetCursor(){
+S("TR td:nth-child(1)","#BROWSE").each(function(k,o){
+if( __PK==o.innerText ){
+S(o.parentNode).class("=PieLista");
+return null;
+}
+});
+}
+[PHPNextPage]l
+eJS("_WOPENER.uSetCursor()");
+[JSOnClickRow]l
+S("TR[class='PieLista']").class("-PieLista");
+S(_oTR).class("=PieLista");
+__PK = _oTR.cells[0].innerText;
+uIFRAME.location.href = S.callSrvUrl("pkLog", $pk, window);
+[JSEnd]l
+S("#PAGINA").css("width:100%;height:100%");
+[PHPForm]l
+if( $_POST["cd_gs_user"]>0 ){
+$_Form["cd_gs_user"][_MODE] = "*";
+}
+[HTMIni]l
+<table border=0px cellspacing=0px cellpadding=0px style="width:99%;height:100%;display:table;">
+<tr>
+<td style="vertical-align:top; text-align:center; width:1px">
+[HTMEnd]l
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td valign=middle align=center width=100% id=cIFrame style="width:100%;height:100%;display:table;">
+<SCRIPT type="text/javascript">
+top.eNewIFrame(window, "cIFrame", "uIFRAME", "about:blank");
+</SCRIPT>
+</td>
+</tr>
+</table>
+[CallSrv]pkLog
+qQuery("select * from gs_logfull where pk={$pkLog}");
+$r = qArray();
+$request = json_decode($r["request"]);
+$answer = json_decode($r["answer"]);
+qQuery("select user_name,user_surname from gs_user where cd_gs_user={$r['cd_gs_user']}");
+$u = qArray();
+if( $request->title!="" ) echo $request->title."<br>";
+echo '<table border=1>';
+echo "<tr><td>Instante</td><td><b>".$r["cdi"]."</b></td></tr>";
+echo "<tr><td>Usuario</td><td><b>".trim($u["user_name"])." ".trim($u["user_surname"])."</b></td></tr>";
+echo "<tr><td>Objeto</td><td><b>".$request->object."</b></td></tr>";
+echo "<tr><td>Modo</td><td><b>".$request->mode."</b></td></tr>";
+echo "<tr><td>Script</td><td><b>".$request->script."</b></td></tr>";
+echo "</tr></table>";
+echo "<br>";
+if( $request->post ){
+echo '<table border=1>';
+foreach($request->post as $k=>$v){
+if( !preg_match('/^(_FIELDSLIST|_FIELDSWITHFILES|_FILESUPDATE|_FILE__MULTIFILE|_HIDDENFIELDS|_ISUBLISTSERIAL|_SAVEDATALIST)$/', $k) ){
+echo "<tr><td>".$k."</td><td>".$v."</td></tr>";
+}
+}
+echo '</table>';
+echo "<br>";
+}
+if( $answer->form ){
+echo '<table border=1>';
+foreach($answer->form as $k=>$v){
+echo "<tr><td>".$k."</td><td>".$v."</td></tr>";
+}
+echo '</table>';
+echo "<br>";
+}
+if( $answer->fields ){
+echo '<table border=1>';
+echo "<tr>";
+foreach($answer->fields as $k=>$v){
+echo "<th>".$k."</th>";
+}
+echo "</tr>";
+echo "<tr>";
+foreach($answer->list as $k=>$v){
+echo "<tr>";
+foreach($v as $k2=>$v2){
+echo "<td>".$v2."</td>";
+}
+echo "</tr>";
+}
+echo "</tr>";
+echo '</table>';
+}

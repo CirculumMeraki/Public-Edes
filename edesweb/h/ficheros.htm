@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>Ficheros 
+<TR>
+<TD id=Descripcion>
+<P><STRONG>Ficheros de configuración de la aplicación en "/_datos/config"</STRONG>: 
+<TABLE style="WIDTH: 562px; HEIGHT: 281px" id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;about.htm</TD>
+<TD>Página&nbsp;acerca de la empresa</TD></TR>
+<TR>
+<TD>&nbsp;alerts.ini </TD>
+<TD>Configuración de alertas</TD></TR>
+<TR>
+<TD>&nbsp;aux_page.ini </TD>
+<TD>Definición de la página auxiliar conteniendo listados y select a copiar en el cliente</TD></TR>
+<TR>
+<TD>&nbsp;desktop.ini</TD>
+<TD>Configuración del desktop&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;desktop_user.ini</TD>
+<TD>Zona del desktop personalizada por el usuario</TD></TR>
+<TR>
+<TD>&nbsp;empty_page.htm</TD>
+<TD>Página central vacia&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;empty_html.htm</TD>
+<TD>Página HTML vacia&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;index.htm</TD>
+<TD>Para evitar la ejecución del subdirectorio</TD></TR>
+<TR>
+<TD>&nbsp;install.php</TD>
+<TD></TD></TR>
+<TR>
+<TD>&nbsp;pdf.ini</TD>
+<TD>Configuración de los listados a PDF&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;session.ini </TD>
+<TD>Configuración de las variables de sesión adicionales</TD></TR>
+<TR>
+<TD>&nbsp;sql.ini</TD>
+<TD>Define principalmente la conexión SQL y diversos parámetros generales.</TD></TR>
+<TR>
+<TD>&nbsp;stop.php</TD>
+<TD></TD></TR>
+<TR>
+<TD>&nbsp;stop_off.ini</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;stop_on.ini</TD>
+<TD>&nbsp;</TD></TR></TBODY></TABLE><BR><STRONG>Ficheros de configuración para el entorno de desarrollo en "/_d_/cfg/"</STRONG>:<BR>
+<TABLE style="WIDTH: 297px; HEIGHT: 41px" id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;avisos.ini </TD>
+<TD>Avisos toscos sin driver</TD></TR>
+<TR>
+<TD>&nbsp;edes.ini</TD>
+<TD>Configuración principalmente del gsEdit</TD></TR></TBODY></TABLE><BR><STRONG>Otros ficheros</STRONG>:<BR>/_tmp/err/stop.web<BR>/_tmp/err/_log.err&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;{f3}<BR>/_tmp/err/{$_User}.ord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {f9}<BR>/_tmp/err/stop_mod.web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {f8}<BR>/_tmp/err/location.php&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {f2}<SPAN style="WIDTH: 25px"></SPAN>//.Desvia la página despues del LOGIN<BR>/_tmp/err/_remote.err<BR>/_tmp/__pirata.txt<BR>/_tmp/__tron.{$_User}<BR>/_datos/config/{$REMOTE_ADDR}.remote<BR>/http/favicon.ico&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {f1}<BR><BR><STRONG>Tipos de archivos</STRONG>:<BR>Para realizar su cometido, el sistema se nutre de distintos tipos de archivos, la extensión que adopta cada uno de ellos depende de su funcionalidad. <BR><BR>Tipos de archivo gestionados directamente por el sistema.<BR>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;edf&nbsp;</TD>
+<TD>Definición de fichas. </TD></TR>
+<TR>
+<TD>&nbsp;gdf&nbsp; </TD>
+<TD>Definición de grupos de fichas. </TD></TR>
+<TR>
+<TD>&nbsp;ldf&nbsp; </TD>
+<TD>Definición de listados de busqueda, parámetro 7 de la etiqueta [FIELDS]) contiene una 'b' (búsqueda por listado).&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;fdf&nbsp;</TD>
+<TD>Definición para los campos de tipo 'SS' (subselects) y cuando el modo parámetro 7 de la etiqueta [FIELDS]) contiene una 'B' (búsqueda por&nbsp;ficha).&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;idf&nbsp;</TD>
+<TD>Es un fichero de definición del que se hace include desde otro fichero mediante la directiva "#Include()".&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;zdf&nbsp;</TD>
+<TD>Es un fichero de definición que se graba encriptado.&nbsp;</TD></TR></TBODY></TABLE><BR>Tipos de archivo NO gestionados directamente por el sistema&nbsp;&nbsp;&nbsp; </P>
+<P>.sel Código PHP para los campos del tipo 'SX' (select especial). <BR>.ini Archivo de configuración por defecto. <BR>.css Hojas de estilo en cascada. <BR>.gs&nbsp; Archivo que contiene código PHP. <BR>.php Archivo que contiene código PHP. <BR>.inc Contiene código Javascript/PHP para realizar inclusiones cuando lo precisemos. <BR>.js&nbsp; Contiene código Javascript. <BR>.str Structura SQL de una tabla<BR>.unl Descarga de los datos de una tabla.<BR>.imp&nbsp; Archivo para la importación de datos (no es gestionado directamente por el sistema). <BR>.html Código HTML. <BR>.txt&nbsp; Archivo de texto plano.<BR><BR><STRONG>Desktop.ini</STRONG><BR>Por defecto el árbol de opciones se coge del subdirectorio tree, pero esto es configurable mediante la variable $_TreeType (no disponible en los desktop tipo 0 y 1) que puede tener los valores:<BR><SPAN style="WIDTH: 25px"></SPAN>"" Vacio o no estar definida es el comportamiento normal, se toma el fichero del directorio "tree".<BR><SPAN style="WIDTH: 25px"></SPAN>"T" de Table para coger las opciones de la tabla de opciones directamente de la tabla<BR><SPAN style="WIDTH: 25px"></SPAN>"A" de Array toma las opciones de la variable $_TreeArray, cada indice de este array se contruye de la siguiente forma:<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Nº de tabuladores en función de su indendación<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Label<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- "|" delimitador vertical<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Orden a ejecutar<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- "~" Delimitador<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Nº de la opción<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- "~" Delimitador<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Title si lo tubiera<BR><BR><STRONG>Install.ini</STRONG><BR>Al instalar la intranet tiene la posibilidad de pedir clave de instalación.</P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

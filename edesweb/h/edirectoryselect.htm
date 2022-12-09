@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eDirectorySelect 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eDirectorySelect( Title [ [,&nbsp;PathRoot=<FONT size=2 face=Consolas><FONT size=2 face=Consolas>MyComputer]</FONT></FONT>, CreateDir=false ]&nbsp;) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Selecciona una carpeta local 
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Title </TD>
+<TD>Título de la ventana&nbsp;</TD></TR>
+<TR>
+<TD>PathRoot</TD>
+<TD>Directorio desde el que se abre la ventana de selección:<BR><SPAN style="WIDTH: 25px"></SPAN>MyComputer (valor por defecto)<BR><SPAN style="WIDTH: 25px"></SPAN>MyDocuments<BR><SPAN style="WIDTH: 25px"></SPAN>MyPictures<BR><SPAN style="WIDTH: 25px"></SPAN>MyMusic<BR><SPAN style="WIDTH: 25px"></SPAN>Personal<BR><SPAN style="WIDTH: 25px"></SPAN>Recent<BR><SPAN style="WIDTH: 25px"></SPAN>Desktop<BR><SPAN style="WIDTH: 25px"></SPAN>DesktopDirectory<BR><SPAN style="WIDTH: 25px"></SPAN>Favorites<BR><SPAN style="WIDTH: 25px"></SPAN>InternetCache<BR><SPAN style="WIDTH: 25px"></SPAN>LocalApplicationData</TD></TR>
+<TR>
+<TD>CreateDir</TD>
+<TD>Si al seleccionar puede crear directorios nuevos, por defecto false</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

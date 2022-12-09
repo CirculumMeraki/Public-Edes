@@ -1,0 +1,572 @@
+[Title]=CONFIGURACIÓN DE COLORES
+[AutoMenu]*
+[AddButton]*|[=]||uMenu()
+[AddButton]*|CA|Activa el Color Actual|top.gsCssReload(null,_CSSDefault);setTimeout(function(){frames[0].poneClases();viewCssActual();RestaurarCss();},1000);
+[AddButton]*|NC|Activa el Nuevo Color|top.gsCssReload(null,"css_tmp");setTimeout(function(){frames[0].poneClases();viewCssActual();RestaurarCss();},1000);
+[NoButton]*
+[AddButton]*|[U] Grabar||S.submit(window)
+[JSIni]*
+function RestaurarCss(){
+S(".ICONINPUT").css("font-size:60%");
+S(".AddButton td:nth-child(1)").css("padding-bottom:17px");
+S("INPUT").css("padding:2px");
+S("INPUT").css("font-size:14px");
+S("#TABContainer").css("line-height: 1.1");
+S(".TABMenuOn, .TABMenuOff").css("border-top-left-radius:5px; border-top-right-radius:5px;");
+setTimeout(function(){
+S(window).rule("+INPUT {border: 1px solid #C3C3C3;font-family: 'Libre Franklin';box-sizing: content-box;outline: none;padding-left: 2px;padding-right: 2px;padding-top: 2px;padding-bottom: 2px;border-radius: 2px;}");
+},500);
+}
+[CSSAdd]*
+.ICONINPUT {
+font-size:60%;
+}
+.AddButton td:nth-child(1) {
+padding-bottom:17px;
+}
+INPUT, TEXTAREA, #edCONTAINER {
+padding:2px !important;
+border-radius:3px !important;
+}
+#TABContainer {
+line-height: 1.1;
+}
+.TABMenuOn, .TABMenuOff {
+border-top-left-radius: 5px !important;
+border-top-right-radius: 5px !important;
+}
+[OnChange]*|xGCDegradado, _xGCDegradado, xGRDegradado, _xGRDegradado,  pGC1,_pGC1,pGR1,_pGR1|_degradadoGrupos(this)
+[JSIni]*
+var _Time = (S.date("u")*1)+3000,
+_DimCSS = [["-Style Sheets"],["css","","",null,null,"color:red"],["css_tmp","",""],["-"]],
+_CSSDefault = "css";
+function _degradadoGrupos(o){
+if( _Time>S.date("u") ) return;
+switch(o.name){
+case "pGC1":
+o = S(":xGCDegradado").obj;
+break;
+case "_pGC1":
+o = S(":_xGCDegradado").obj;
+break;
+case "pGR1":
+o = S(":xGRDegradado").obj;
+break;
+case "_pGR1":
+o = S(":_xGRDegradado").obj;
+break;
+}
+o.value = S.nsp(o.value);
+var tpc = (o.value+",,,,").split(","), aColor,degradado, prefijo;
+switch(o.name){
+case "xGCDegradado":
+prefijo = "pGC";
+break;
+case "_xGCDegradado":
+prefijo = "_pGC";
+break;
+case "xGRDegradado":
+prefijo = "pGR";
+break;
+case "_xGRDegradado":
+prefijo = "_pGR";
+break;
+}
+setTimeout(function(){
+S("INPUT[name^="+prefijo+"]").each(function(k,o){
+if( k==0 ){
+aColor = o.value;
+return;
+}
+if( tpc[k-1]!="" && tpc[k-1]>=0 && tpc[k-1]<100 ){
+degradado = S.colorTone(aColor, tpc[k-1]);
+S(o).val(degradado);
+S(o).color(top.eColorContrastBW2(degradado), degradado);
+}
+});
+}, 100);
+}
+function uCopiaColores($ok){
+S.alert({
+icon:'DH',
+button:"Y,N",
+title:"¿Copiar los colores?",
+text:($ok=="new"? "<span style='color:red'>old</span> <- <span style='color:green;font-weight:bold;'>NEW</span>":"<span style='color:green;font-weight:bold;'>OLD</span> -> <span style='color:red'>new</span>"),
+function: function(yn, field){
+if(yn!=1) return;
+if( $ok=="new" ){
+S("#TABNumber1 tbody td:nth-child(2) INPUT").each(function(k,o){
+if( S.left(o.name,4)!="_NO_" ){
+S(o).val(S(":_"+o.name).val());
+}
+});
+}else{
+S("#TABNumber1 tbody td:nth-child(3) INPUT").each(function(k,o){
+if( S.left(o.name,4)!="_NO_" ){
+S(o).val(S(":"+S.mid(o.name,1,0)).val());
+}
+});
+}
+S.info("Colores Copiados");
+}
+});
+}
+function uMenu(){
+S(S.event(window)).menu([
+["-Menú"],
+["Ficha", "F", "F"],
+["Listado", "F", "L"],
+["SubList", "F", "SL"],
+["-"],
+["Informe con 1 nivel"  , "&#187;", "I1"],
+["Informe con 2 niveles", "&#187;", "I2"],
+["Informe con 3 niveles", "&#187;", "I3"],
+["Informe con 4 niveles", "&#187;", "I4"],
+["-"],
+["Informe PDF con 4 niveles", "&#187;", "PDF"],
+["-"],
+["Página de inicio", "F", "PI"],
+["-"],
+["<span><span style='color:green;font-weight:bold;display:contents;'>Color actual</span>-><span style='color:red;display:contents;'>Nuevo color</span></span>", "[copy]", "ON", 'Copia los valores de "Nuevo color" sobre "Color actual"'],
+["<span><span style='color:red;display:contents;'>Color actual</span><-<span style='color:green;font-weight:bold;display:contents;'>Nuevo color</span></span>", "[copy]", "NO", 'Copia los valores de "Color actual" sobre "Nuevo color"'],
+['Colores de Informes a PDF', "C", "copypdf"],
+["-"],
+['Limpia "Nuevo color"', "U", "CLR"]
+], {function:function(o){
+switch(o){
+case "F":
+uIFRAME.location.href = "edes.php?Ga:$a/d/view_color.gdf&_soloFicha=1";
+break;
+case "L":
+uIFRAME.location.href = "edes.php?Ll:$a/d/color_list.edf";
+break;
+case "I1":
+uIFRAME.location.href = "edes.php?Ll:$a/d/view_inf_1.edf";
+break;
+case "I2":
+uIFRAME.location.href = "edes.php?Ll:$a/d/view_inf_2.edf";
+break;
+case "I3":
+uIFRAME.location.href = "edes.php?Ll:$a/d/view_inf_3.edf";
+break;
+case "I4":
+uIFRAME.location.href = "edes.php?Ll:$a/d/view_inf_4.edf";
+break;
+case "PDF":
+uIFRAME.location.href = "edes.php?Ll:$a/d/view_inf_pdf.edf";
+break;
+case "copypdf":
+S.alert({
+icon:'DH',
+button:"Y,N",
+text:"¿Copiar los colores de Informes para la salida a PDF?",
+function: function(yn, field){
+if(yn!=1) return;
+var dim = [],
+tmp = "pCaption,cCaption,pText,cText,pGreenBar,cGreenBar,pListTotals,cListTotals".split(","), n;
+for(n=0; n<tmp.length; n++){
+S("INPUT[name="+tmp[n]+"]").each(function(k,o){
+dim[o.name] = o.value;
+});
+}
+S("INPUT[name*=GC], INPUT[name*=GR]").each(function(k,o){
+if( o.name[0]=="_" || S.is("Degradado", o.name) ) return;
+dim[o.name] = o.value;
+});
+S(window).callSrvPost("edes.php?E:CallSrv="+_Source+"&CopyPDF=1'", dim);
+}
+});
+break;
+case "SL":
+uIFRAME.location.href = "edes.php?Fa:$a/d/color_sublist.edf";
+break;
+case "PI":
+uIFRAME.location.href = "edes.php?Ga:$a/d/view_color.gdf";
+break;
+case "ON":
+uCopiaColores("old");
+break;
+case "NO":
+uCopiaColores("new");
+break;
+case "CLR":
+S.alert({
+icon:'DH',
+button:"Y,N",
+text:'¿Limpia el "Nuevo color" asignándole el color blanco?',
+function: function(yn, field){
+if(yn!=1) return;
+S.each(S.values(), function(pk,o){
+if( pk[0]=="_" ) S(":"+pk).val("#FFFFFF");
+});
+}
+});
+break;
+}
+}});
+}
+function viewCssActual(){
+var n, tmp;
+for(n=0; n<top.document.styleSheets.length; n++){
+if( top.document.styleSheets[n].title=="all" ){
+if( top.document.styleSheets[n].href==null ){
+S("#_CssActual").text("css");
+break;
+}else{
+tmp = top.document.styleSheets[n].href.split("/all.css")[0].split("/");
+S("#_CssActual").text(tmp[tmp.length-1]);
+if( tmp[tmp.length-1]!="css_tmp" ){
+_CSSDefault = tmp[tmp.length-1];
+S(":_css_default").val(tmp[tmp.length-1]);
+}
+break;
+}
+}
+}
+}
+function cssChange(){
+S(S.event(window)).menu(_DimCSS,{function:function(o,label){
+S("#_CssActual").text(label);
+top.gsCssReload(null, label);
+if( label!="css_tmp" ){
+_CSSDefault = label;
+S(":_css_default").val(label);
+S.error("Recalculando...");
+setTimeout(function(){
+location.href = "edes.php?Fa:$a/d/color_core.edf&_css_default="+label;
+}, 2000);
+}
+}, noMark:true});
+}
+[AddTools]*|cGC1, cGC2, cGC3, cGC4, cGR1, cGR2, cGR3, cGR4|eToneSelect||C
+[AddTools]*|_cGC1,_cGC2,_cGC3,_cGC4,_cGR1,_cGR2,_cGR3,_cGR4|eToneSelect||C
+[AddTools]*|pGC1, pGC2, pGC3, pGC4, pGR1, pGR2, pGR3, pGR4|eToneSelect||B
+[AddTools]*|_pGC1,_pGC2,_pGC3,_pGC4,_pGR1,_pGR2,_pGR3,_pGR4|eToneSelect||B
+[AddTools]*|cText, cTab, cCaption, cTitle, cSubWin, cSubWinCaption, cLine, cGreenBar, cListTotals,  cIconHeader, cIcon, cIconInsert, cIconDelete, cIconView, cIconTitle, cIconWin, cIconUpdate, cIconSeek, cIconCount, cIconClose, cIconOption, cIconLoading, bIconLoading, cIconDevelopment|eToneSelect||C
+[AddTools]*|_cText,_cTab,_cCaption,_cTitle,_cSubWin,_cSubWinCaption,_cLine,_cGreenBar,_cListTotals, _cIconHeader,_cIcon,_cIconInsert,_cIconDelete,_cIconView,_cIconTitle,_cIconWin,_cIconUpdate,_cIconSeek,_cIconCount,_cIconClose,_cIconOption,_cIconLoading,_bIconLoading,_cIconDevelopment|eToneSelect||C
+[AddTools]*|pText, pCaption, pSubWin, pSubWinCaption, pGreenBar, pListTotals, pBody, pWin, cButton, pButtonIni, pButtonMid, pButtonEnd|eToneSelect||B
+[AddTools]*|_pText,_pCaption,_pSubWin,_pSubWinCaption,_pGreenBar,_pListTotals,_pBody,_pWin,_cButton,_pButtonIni,_pButtonMid,_pButtonEnd|eToneSelect||B
+[AddTools]*|pInfo, pInfoOk, pInfoWarning, pInfoError|eToneSelect||B
+[AddTools]*|_pInfo,_pInfoOk,_pInfoWarning,_pInfoError|eToneSelect||B
+[AddTools]*|cInfo, cInfoOk, cInfoWarning, cInfoError, cWin|eToneSelect||C
+[AddTools]*|_cInfo,_cInfoOk,_cInfoWarning,_cInfoError,_cWin|eToneSelect||C
+[AddTools]*|cEditable, cEditableFocus, cReadOnly, cError, cErrorFocus, cSelected, bInput, bRequired, cItemBox, bItemBox, cItemBoxRead, bItemBoxRead|eToneSelect||C
+[AddTools]*|_cEditable,_cEditableFocus,_cReadOnly,_cError,_cErrorFocus,_cSelected,_bInput,_bRequired,_cItemBox,_bItemBox,_cItemBoxRead,_bItemBoxRead|eToneSelect||C
+[AddTools]*|pEditable, pEditableFocus, pReadOnly, pError, pErrorFocus, pSelected,  pItemBox,  pItemBoxRead|eToneSelect||B
+[AddTools]*|_pEditable,_pEditableFocus,_pReadOnly,_pError,_pErrorFocus,_pSelected, _pItemBox, _pItemBoxRead|eToneSelect||B
+[AddTools]*|cCursor,_cCursor|eToneSelect||C
+[AddTools]*|pCursor,_pCursor|eToneSelect||B
+[AddTools]*|cDesktop,  iDesktop,  cTree,  cTreeCursor,  cTreeFather,  iTree,  iTreeCursor,  iTreeFather,  mTree,  mTreeCursor|eToneSelect||C
+[AddTools]*|_cDesktop, _iDesktop, _cTree, _cTreeCursor, _cTreeFather, _iTree, _iTreeCursor, _iTreeFather, _mTree, _mTreeCursor|eToneSelect||C
+[AddTools]*|pDesktop,  pTree,  pTree2,  pTreeCursor,  pTreeFather|eToneSelect||B
+[AddTools]*|_pDesktop, _pTree, _pTree2, _pTreeCursor, _pTreeFather|eToneSelect||B
+[AddTools]*|boxBreadcrumb,  pBreadcrumb|eToneSelect||B
+[AddTools]*|_boxBreadcrumb, _pBreadcrumb|eToneSelect||B
+[AddTools]*|cBreadcrumb,  opBreadcrumb|eToneSelect||C
+[AddTools]*|_cBreadcrumb, _opBreadcrumb|eToneSelect||C
+[Fields]
+|_css_default|#|T|20||*|||
+{P} GeneraInput
+[P]GeneraInput
+global $_dimColor;
+$_dimColor = explode(",",str_replace(" ","",'$cTitle,$cEditable,$pEditable,$cEditableFocus,$pEditableFocus,$cReadOnly,$pReadOnly,$cError,$pError,$cErrorFocus,$pErrorFocus,$cSelected,$pSelected,$bInput,$bRequired,$pItemBox,$cItemBox,$bItemBox,$pItemBoxRead,$cItemBoxRead,$bItemBoxRead,$cCursor,$pCursor,$cText,$cTab,$pText,$cCaption,$pCaption,$cSubWin,$pSubWin,$cGreenBar,$pGreenBar,$cListTotals,$pListTotals,$pInfo,$cInfo,$pInfoOk,$cInfoOk,$pInfoWarning,$cInfoWarning,$pInfoError,$cInfoError,$cIcon,$cIconHeader,$pBody,$cIconInsert,$cIconDelete,$cIconView,$cIconTitle,$cIconWin,$cIconUpdate,$cIconSeek,$cIconCount,$cIconClose,$cIconOption,$cIconLoading,$bIconLoading,$cIconDevelopment,$pWin,$cWin,$pSubWinCaption,$cSubWinCaption,$cLine,$cButton,$pButtonIni,$pButtonMid,$pButtonEnd,$cGC1,$cGC2,$cGC3,$cGC4,$cGR1,$cGR2,$cGR3,$cGR4,$pGC1,$pGC2,$pGC3,$pGC4,$pGR1,$pGR2,$pGR3,$pGR4,$xGCDegradado,$xGRDegradado,  $cDesktop, $iDesktop, $cTree, $cTreeCursor, $cTreeFather, $iTree, $iTreeCursor, $iTreeFather, $mTree, $mTreeCursor, $pDesktop, $pTree, $pTree2, $pTreeCursor, $pTreeFather, $boxBreadcrumb,$pBreadcrumb,$cBreadcrumb,$opBreadcrumb'));
+$ancho = 70;
+if( $_SESSION["_PathCSS"]<>"css" ) eMessage('Opción no disponible con el css "'.$_SESSION["_PathCSS"].'"', "HSE");
+$file = "../_datos/config/core.css";
+$dim = file($file);
+for($n=0; $n<count($dim); $n++){
+$txt = trim($dim[$n]);
+if( $txt[0]=="/" && substr_count($txt, "PathSuffix")==1 ){
+$txt = explode(":", $txt)[1];
+$txt = trim(explode("/"."/", $txt)[0]);
+if( $txt!="" ){
+echo '<script type="text/javascript">';
+$tmp = explode(",", eNsp($txt));
+for($i=0; $i<count($tmp); $i++){
+$file = "../_datos/config/core".str_replace("css","",$tmp[$i]).".css";
+if( !file_exists($file) ){
+copy("../_datos/config/core.css", $file);
+}
+if( !file_exists($tmp[$i]) || !is_dir($tmp[$i]) ){
+recurse_copy("css", $tmp[$i]);
+}
+echo '_DimCSS.push(["'.$tmp[$i].'","",""]);';
+}
+echo '</script>';
+break;
+}
+}
+}
+echo "<tr><th>Path: <span style='color:red;cursor:pointer;' id='_CssActual' onclick='cssChange()'></span><th colspan=1 align=center>Actual<th colspan=2 align=center>Nuevo</tr>";
+$valoresNumericos = false;
+$file = "../_datos/config/core".str_replace("css","",$_GET["_css_default"]).".css";
+$dim = file($file);
+for($n=0; $n<count($dim); $n++){
+$txt = trim($dim[$n]);
+if( substr($txt,0,3)=="/"."/[" && substr_count($txt, "]")==1 ){
+$xTitulo = eMid($txt,"[","]");
+if( strtoupper($xTitulo)=="FIN" ) break;
+echo '<tr st="" ttr="+" a="3"><td class="TABMenuOne" colspan="3"><table class="TABMenu" style="width:100%; border-collapse:collapse;" border="0px" cellspacing="0px" cellpadding="0px"><tbody><tr><td class="TABMenuSeparator">&nbsp;</td><td class="TABMenuOn TABOnly" nowrap="" title="" style="white-space:nowrap;" efrm="1" vertr="none" onclick="eHideGroups();eShowGroup(this)">'.$xTitulo.'</td><td class="TABMenuSeparator" style="width:100%">&nbsp;</td></tr></tbody></table></td></tr>';
+if( $xTitulo=="NumericalValues" ) $valoresNumericos = true;
+}
+list($propiedad) = explode(":",$txt);
+$propiedad = trim($propiedad);
+if( substr($txt,0,6)=='$color' ){
+list($num) = explode(":",substr($txt,6,3));
+if( is_numeric($num) ){
+$txt = str_replace("/"."/", ":", $txt);
+list($color, $valor) = explode(":",$txt);
+$color = substr($color,1,50);
+$valor = strtoupper(trim($valor));
+echo "<tr style='display:none'><td><label id='LD'>{$color} </label><td>"; eAddField("| {$color} | CLR | T |7|{$ancho}| M | {$valor} | # |"); echo "<td>"; eAddField("| _{$color} | CLR | T |7|{$ancho}| M | {$valor} | # |");
+}
+}else if( in_array($propiedad, $_dimColor) ){
+$txt = str_replace("/"."/", ":", $txt);
+list($color, $valor) = explode(":",$txt);
+$color = trim($color);
+$color = substr($color,1,50);
+list($valor) = explode(";",$valor);
+$valor = strtoupper(trim($valor));
+if( $color[0]=="x" ){
+echo "<tr style='display:none'><td><label id='LD'>{$color} </label><td>"; eAddField("| {$color} | # | T |10|{$ancho}| M | {$valor} | # |"); echo "<td>"; eAddField("| _{$color} | # | T |10|{$ancho}| M | {$valor} | # |");
+}else{
+echo "<tr style='display:none'><td><label id='LD'>{$color} </label><td>"; eAddField("| {$color} | CLR | T |7|{$ancho}| M | {$valor} | # |"); echo "<td>"; eAddField("| _{$color} | CLR | T |7|{$ancho}| M | {$valor} | # |");
+}
+}else if( $valoresNumericos && $propiedad[0]=='$' ){
+$propiedad = substr($propiedad,1);
+$txt = str_replace("/"."/", ":", $txt);
+list(,$valor) = explode(":",$txt);
+echo "<tr style='display:none'><td><label id='LD'>{$propiedad} </label><td>"; eAddField("| {$propiedad} | + | T |10|{$ancho}| M | {$valor} | # |"); echo "<td>"; eAddField("| _{$propiedad} | + | T |10|{$ancho}| M | {$valor} | # |");
+}
+}
+if( file_exists("../_datos/config/core_tmp.css") ){
+echo '<script>';
+$valoresNumericos = false;
+$dim = file("../_datos/config/core_tmp.css");
+for($n=0; $n<count($dim); $n++){
+$txt = trim($dim[$n]);
+if( substr($txt,0,3)=="/"."/[" && substr_count($txt, "]")==1 ){
+$xTitulo = eMid($txt,"[","]");
+if( $xTitulo=="NumericalValues" ) $valoresNumericos = true;
+if( strtoupper($xTitulo)=="FIN" ) break;
+}
+list($propiedad) = explode(":",$txt);
+$propiedad = trim($propiedad);
+if( substr($txt,0,6)=='$color' ){
+list($num) = explode(":",substr($txt,6,3));
+if( is_numeric($num) || in_array($num,$_dimColor) ){
+$txt = str_replace("/"."/", ":", $txt);
+list($color, $valor) = explode(":",$txt);
+$color = substr($color,1,50);
+$valor = strtoupper(trim($valor));
+echo "ePF('_{$color}', '{$valor}');";
+}
+}else if( in_array($propiedad, $_dimColor) ){
+$txt = str_replace("/"."/", ":", $txt);
+list($color, $valor) = explode(":",$txt);
+$color = substr($color,1,50);
+list($valor) = explode(";",$valor);
+$valor = strtoupper(trim($valor));
+echo "ePF('_{$color}', '{$valor}');";
+}else if( $valoresNumericos && $propiedad[0]=='$' ){
+$propiedad = substr($propiedad,1);
+$txt = str_replace("/"."/", ":", $txt);
+list(,$valor) = explode(":",$txt);
+echo "ePF('_{$propiedad}', '{$valor}');";
+}
+}
+echo '</script>';
+}
+[JSEnd]a
+S("#TABContainer").obj.parentNode.style.verticalAlign = "top";
+S("#TABNumber1 tbody td:nth-child(2) I").css("font-size:10px");
+S("#TABNumber1 tbody td:nth-child(3) I").css("font-size:10px");
+eHideGroups();
+var Obj = S("*[VerTr][eFRM='"+S.left(xFRM,3,0)+"']").dim, n=0;
+eShowGroup(Obj[n]);
+viewCssActual();
+setTimeout(function(){
+S("LABEL").each(function(k,o){
+if( /^(pDesktop|pCaption|pSubWinCaption|cTitle|cTab|cIcon|cIconWin|pGC1|pGR1)$/.test(S.trim(o.innerText)) ){
+o.style.color = "green";
+}
+});
+}, 1000);
+[PHPStart]A
+$file = "../_datos/config/core".str_replace("css","",$_POST["_css_default"]).".css";
+$_dimColor = explode(",", str_replace(" ", "", '$cTitle,$cEditable,$pEditable,$cEditableFocus,$pEditableFocus,$cReadOnly,$pReadOnly,$cError,$pError,$cErrorFocus,$pErrorFocus,$cSelected,$pSelected,$bInput,$bRequired,$pItemBox,$cItemBox,$bItemBox,$pItemBoxRead,$cItemBoxRead,$bItemBoxRead,$cCursor,$pCursor,$cText,$cTab,$pText,$cCaption,$pCaption,$cSubWin,$pSubWin,$cGreenBar,$pGreenBar,$cListTotals,$pListTotals,$pInfo,$cInfo,$pInfoOk,$cInfoOk,$pInfoWarning,$cInfoWarning,$pInfoError,$cInfoError,$cIcon,$cIconHeader,$pBody,$cIconInsert,$cIconDelete,$cIconView,$cIconTitle,$cIconWin,$cIconUpdate,$cIconSeek,$cIconCount,$cIconClose,$cIconOption,$cIconLoading,$bIconLoading,$cIconDevelopment,$pWin,$cWin,$pSubWinCaption,$cSubWinCaption,$cLine,$cButton,$pButtonIni,$pButtonMid,$pButtonEnd,$cGC1,$cGC2,$cGC3,$cGC4,$cGR1,$cGR2,$cGR3,$cGR4,$pGC1,$pGC2,$pGC3,$pGC4,$pGR1,$pGR2,$pGR3,$pGR4,$xGCDegradado,$xGRDegradado,   $cDesktop, $iDesktop, $cTree, $cTreeCursor, $cTreeFather, $iTree, $iTreeCursor, $iTreeFather, $mTree, $mTreeCursor, $pDesktop, $pTree, $pTree2, $pTreeCursor, $pTreeFather, $boxBreadcrumb,$pBreadcrumb,$cBreadcrumb,$opBreadcrumb'));
+$_dimNumeric = explode(",", str_replace(" ", "", '$inputPaddingH,$inputPaddingV,$inputRadius'));
+if( !file_exists("css_tmp") ){
+mkdir("css_tmp");
+chmod("css_tmp", 0666);
+}
+if( !file_exists($file.".old") ) copy($file, $file.".old");
+$css1 = "";
+$css2 = "";
+$dim = file($file);
+for($n=0; $n<count($dim); $n++){
+$txt = trim($dim[$n]);
+$regla = $dim[$n];
+list($propiedad) = explode(":",$txt);
+$propiedad = trim($propiedad);
+$_POST[$color] = strtoupper($_POST[$color]);
+$_POST["_".$color] = strtoupper("_".$_POST[$color]);
+if( substr($txt,0,6)=='$color' ){
+list($num) = explode(":",substr($txt,6,3));
+if( is_numeric($num) ){
+$txt = str_replace("/"."/", ":", $txt);
+list($color, $valor) = explode(":",$txt);
+$color = substr($color,1,50);
+$valor = trim($valor);
+$regla = str_replace($valor, $_POST[$color], $dim[$n]);
+$dim[$n] = str_replace($valor, $_POST["_".$color], $dim[$n]);
+}
+}else if( in_array($propiedad, $_dimColor) ){
+$txt = str_replace("/"."/", ":", $txt);
+list($color, $valor) = explode(":",$txt);
+$color = substr($color,1,50);
+list($valor) = explode(";",$valor);
+$valor = trim($valor);
+$regla = str_replace($valor, $_POST[$color], $dim[$n]);
+$dim[$n] = str_replace($valor, $_POST["_".$color], $dim[$n]);
+}else if( in_array($propiedad, $_dimNumeric) ){
+$propiedad = substr($propiedad,1);
+$txt = str_replace("/"."/", ":", $txt);
+list(,$valor) = explode(":",$txt);
+list($valor) = explode(";",$valor);
+$regla = str_replace($valor, $_POST[$propiedad], $dim[$n]);
+$dim[$n] = str_replace($valor, $_POST["_".$propiedad], $dim[$n]);
+}
+$css1 .= $regla;
+$css2 .= $dim[$n];
+}
+file_put_contents($file, $css1);
+file_put_contents("../_datos/config/core_tmp.css", $css2);
+$_Sufijo = str_replace("css","",$_POST["_css_default"]);
+include("../../edesweb/t/create_css.php");
+$_Sufijo = "_tmp";
+include("../../edesweb/t/create_css.php");
+eMessage("Nueva gama generada", "HS", 5);
+[PHPStart]a
+function recurse_copy($src, $dst){
+$dir = opendir($src);
+if( !file_exists($dst) || is_dir($tmp[$i]) ){
+mkdir($dst);
+chmod($dst, 0666);
+}
+while(false!==($file=readdir($dir)) ){
+if( ($file!='.') && ($file!='..') ){
+if( is_dir($src.'/'.$file) ){
+recurse_copy($src.'/'.$file, $dst.'/'.$file);
+}else{
+copy($src.'/'.$file, $dst.'/'.$file);
+}
+}
+}
+closedir($dir);
+}
+[HTMIni]a
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table;border-collapse:collapse; border:0px solid red">
+<tr>
+<td valign=middle align=center style='border:0px solid blue'>
+[HTMEnd]a
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td valign=middle align=center width=100% id=cIFrame style='border:0px solid green'>
+<SCRIPT type="text/javascript">
+top.eNewIFrame(window, "cIFrame", "uIFRAME", "edes.php?Ga:$a/d/view_color.gdf");
+</SCRIPT>
+</td>
+</tr>
+</table>
+[CallSrv]CopyPDF
+$cambiar = "
+pCaption,TH
+cCaption,TH
+pText,TD
+cText,TD
+pGreenBar,.GreenBar
+cGreenBar,.GreenBar
+pListTotals,.Totals
+cListTotals,.Totals
+pGC1,.GroupHeader_1
+pGC2,.GroupHeader_2
+pGC3,.GroupHeader_3
+pGC4,.GroupHeader_4
+cGC1,.GroupHeader_1
+cGC2,.GroupHeader_2
+cGC3,.GroupHeader_3
+cGC4,.GroupHeader_4
+pGR1,.GroupSubTotal_1
+pGR2,.GroupSubTotal_2
+pGR3,.GroupSubTotal_3
+pGR4,.GroupSubTotal_4
+cGR1,.GroupSubTotal_1
+cGR2,.GroupSubTotal_2
+cGR3,.GroupSubTotal_3
+cGR4,.GroupSubTotal_4";
+$cambiar = explode("\n", $cambiar);
+$exe = array();
+for($n=0; $n<count($cambiar); $n++){
+$cambiar[$n] = trim($cambiar[$n]);
+if( $cambiar[$n]!="" ){
+list($pk, $atributo) = explode(",", eNsp($cambiar[$n]));
+$exe[$pk] = $atributo;
+}
+}
+$dim = file("css/pdf.css");
+foreach($_POST as $k=>$v){
+if( $exe[$k]!="" ){
+if( $k[0]=="p" ){
+CambiaColorPDF($dim, $exe[$k], "background", $v);
+}else if( $k[0]=="c" ){
+CambiaColorPDF($dim, $exe[$k], "color", $v);
+}
+}
+}
+file_put_contents("{$_SESSION['_PathCSS']}/pdf.css", implode("\n", $dim));
+?>
+<script type="text/javascript">
+top.S.info("Grabado", 3, "ok");
+</script>
+<?PHP
+eEnd();
+function CambiaColorPDF(&$dim, $bPropiedad, $bAtributo, $bValor){
+if( $bPropiedad[0]=="." ) $bPropiedad = substr($bPropiedad,1);
+for($n=0; $n<count($dim); $n++){
+$regla = trim($dim[$n]);
+$dim[$n] = rtrim($dim[$n]);
+if( substr_count($regla,"{") ){
+list($regla) = explode("{",$regla);
+$regla = trim($regla);
+if( $regla[0]=="." || $regla[0]=="#" ) $regla = substr($regla,1);
+if( $regla==$bPropiedad ){
+for($i=$n+1; $i<count($dim); $i++){
+$txt = trim($dim[$i]);
+$dim[$i] = rtrim($dim[$i]);
+if( $txt=="}" ){
+eTrace("error 1: ".$bPropiedad.'.'.$bAtributo);
+return;
+}
+list($propiedad, $rem) = explode("/"."*",$txt);
+list($propiedad, $valor) = explode(":",$propiedad);
+$propiedad = strtolower(trim($propiedad));
+$valor = trim($valor);
+if( $rem!="" ){
+list($rem) = explode("*"."/",$rem);
+if(substr_count($rem, ",")>0 ){
+$rem = "\t\t/"."* ".$_POST["_PLT_{$regla}_{$propiedad}"].",".$_POST["_PRC_{$regla}_{$propiedad}"]." *"."/";
+}else{
+$rem = "\t\t/"."* ".trim($rem)." *"."/";
+}
+}
+if( $propiedad==$bAtributo ){
+$dim[$i] = "\t{$bAtributo}: {$bValor};{$rem}";
+return;
+}
+}
+}
+}
+}
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>Grid 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Grid] Field [ | [%][M][2][b] &nbsp;[ | Definicion ] ]<BR>... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>En un listado te hace el cruce entre varios campos. A continuación de la etiquéta se puede introducir el código del interior de la función para calcular la columna donde se colocará el dato, el parámetro que recibe es "$Value" y este código tiene que terminar con el comando "return" y el número de columna donde se colocará el dato. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[Grid] cd_propiedad<BR>[Grid] cd_propiedad | % | select cd_propiedad, abreviatura from propiedad order by abreviatura<BR>[Grid] cd_propiedad | | select cd_propiedad, nm_propiedad from propiedad where tipo='{Field}' order by cd_propiedad<BR>[Grid] cd_propiedad | | A,AA; B,BB; C,CC <BR><BR>
+<P>[Grid] f_nacimiento | | 1,Niños; 2,Adultos; 3,Ancianos<BR><SPAN style="WIDTH: 25px"></SPAN>$edad = $Hoy-$Value;<BR><SPAN style="WIDTH: 25px"></SPAN>if( $Value&lt;20 ){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>$p = 1;<BR><SPAN style="WIDTH: 25px"></SPAN>}else if( $Value&gt;65 ){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>$p = 3;<BR><SPAN style="WIDTH: 25px"></SPAN>}else{<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>$p = 2;<BR><SPAN style="WIDTH: 25px"></SPAN>}<BR>return $p;</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

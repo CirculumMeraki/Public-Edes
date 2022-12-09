@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">eEditField</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">eEditField( Campo, OnOff [ [ , CSS ], ImgOnOff ] )</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Activa/Desactiva la edición de un campo pudiendo cambiar su estilo, también se puede usar el alias "eEF()".<br />También tiene la función de ocultar/mostrar el botón de submit y los botones adicionales, así como activar y desactivar iconos.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" style="height: 162px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="height: 90px;">
+<td style="height: 90px; width: 74px;"> <strong>Campo</strong> </td>
+<td style="height: 90px; width: 811px;">Campo o lista de campos separados por coma.<br />Si el campo es "OpEXE" ocultará/mostrará el botón de submit, también se puede usar la función eDisableButton().<br />Si el campo es "AddButton[NºBotón]" ocultará/mostrará el botón indicado.<br />Se pueden desactivar todos los campos a la vez con el asterisco eEF("*",false);<br />Si el id es de una imagen la podrá desactivar y activar para que se pueda ejecutar sus eventos.</td>
+</tr>
+<tr style="height: 36px;">
+<td style="height: 36px; width: 74px;"> <strong>OnOff</strong></td>
+<td style="height: 36px; width: 811px;">Valor lógico para indicar si el campo es editable true/false 1/0, solo actua sobre los campos visibles.<br />Si se quiere actuar sobre los visibles y los ocultos pasaremos los valores "-1" y "2".</td>
+</tr>
+<tr style="height: 18px;">
+<td style="height: 18px; width: 74px;"> <strong>CSS</strong></td>
+<td style="height: 18px; width: 811px;">Contenido opcional del atributo "Style"</td>
+</tr>
+<tr style="height: 18px;">
+<td style="height: 18px; width: 74px;"><strong>ImgOnOff</strong></td>
+<td style="height: 18px; width: 811px;">Valor lógico para indicar si el icono asociado está activo o no, por defecto no se toca.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

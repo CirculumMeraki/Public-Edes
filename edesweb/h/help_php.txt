@@ -1,0 +1,311 @@
+# Version: 2019-08
+
+array_change_key_case ( array $array [, int $case = CASE_LOWER ] ) : array~Cambia a mayúsculas o minúsculas todas las claves en un array
+array_chunk ( array $array , int $size [, bool $preserve_keys = FALSE ] ) : array~Divide un array en fragmentos
+array_column ( array $input , mixed $column_key [, mixed $index_key = null ] ) : array~Devuelve los valores de una sola columna del array de entrada
+array_combine ( array $keys , array $values ) : array~Crea un nuevo array, usando una matriz para las claves y otra para sus valores
+array_count_values ( array $array ) : array~Cuenta todos los valores de un array
+array_diff_assoc ( array $array1 , array $array2 [, array $... ] ) : array~Calcula la diferencia entre arrays con un chequeo adicional de índices
+array_diff_key ( array $array1 , array $array2 [, array $... ] ) : array~Calcula la diferencia entre arrays empleando las claves para la comparación
+array_diff_uassoc ( array $array1 , array $array2 [, array $... ], callable $key_compare_func ) : array~Calcula la diferencia entre arrays con un chequeo adicional de índices que se realiza por una función de devolución de llamada suministrada por el usuario
+array_diff_ukey ( array $array1 , array $array2 [, array $... ], callable $key_compare_func ) : array~Calcula la diferencia entre arrays usando una función de devolución de llamada en las keys para comparación
+array_diff ( array $array1 , array $array2 [, array $... ] ) : array~Calcula la diferencia entre arrays
+array_fill_keys ( array $keys , mixed $value ) : array~Llena un array con valores, especificando las keys
+array_fill ( int $start_index , int $num , mixed $value ) : array~Llena un array con valores
+array_filter ( array $array [, callable $callback [, int $flag = 0 ]] ) : array~Filtra elementos de un array usando una función de devolución de llamada
+array_flip ( array $array ) : array~Intercambia todas las claves de un array con sus valores asociados
+array_intersect_assoc ( array $array1 , array $array2 [, array $... ] ) : array~Calcula la intersección de arrays con un chequeo adicional de índices
+array_intersect_key ( array $array1 , array $array2 [, array $... ] ) : array~Calcula la intersección de arrays usando sus claves para la comparación
+array_intersect_uassoc ( array $array1 , array $array2 [, array $... ], callable $key_compare_func ) : array~Calcula la intersección de arrays con una comprobación adicional de índices, los cuales se comparan con una función de retrollamada
+array_intersect_ukey ( array $array1 , array $array2 [, array $... ], callable $key_compare_func ) : array~Calcula la intersección de arrays usando una función de devolución de llamada en las claves para la comparación
+array_intersect ( array $array1 , array $array2 [, array $... ] ) : array~Calcula la intersección de arrays
+array_key_exists ( mixed $key , array $array ) : bool~Verifica si el índice o clave dada existe en el array
+array_key_first ( array $array ) : mixed~Gets the first key of an array
+array_key_last ( array $array ) : mixed~Gets the last key of an array
+array_keys ( array $array ) : array~Devuelve todas las claves de un array o un subconjunto de claves de un array
+array_map ( callable $callback , array $array1 [, array $... ] ) : array~Aplica la retrollamada a los elementos de los arrays dados
+array_merge_recursive ( array $array1 [, array $... ] ) : array~Une dos o más arrays recursivamente
+array_merge ( array $array1 [, array $... ] ) : array~Combina dos o más arrays
+array_multisort ( array &$array1 [, mixed $array1_sort_order = SORT_ASC [, mixed $array1_sort_flags = SORT_REGULAR [, mixed $... ]]] ) : bool~Ordena varios arrays, o arrays multidimensionales
+array_pad ( array $array , int $size , mixed $value ) : array~Rellena un array a la longitud especificada con un valor
+array_pop ( array &$array ) : mixed~Extrae el último elemento del final del array
+array_product ( array $array ) : number~Calcula el producto de los valores de un array
+array_push ( array &$array , mixed $value1 [, mixed $... ] ) : int~Inserta uno o más elementos al final de un array
+array_rand ( array $array [, int $num = 1 ] ) : mixed~Seleccionar una o más entradas aleatorias de un array
+array_reduce ( array $array , callable $callback [, mixed $initial = NULL ] ) : mixed~Reduce iterativamente un array a un solo valor usando una función llamada de retorno
+array_replace_recursive ( array $array1 , array $array2 [, array $... ] ) : array~Reemplaza los elementos de los arrays pasados al primer array de forma recursiva
+array_replace ( array $array1 , array $array2 [, array $... ] ) : array~Reemplaza los elementos del array original con elementos de array adicionales
+array_reverse ( array $array [, bool $preserve_keys = false ] ) : array~Devuelve un array con los elementos en orden inverso
+array_search ( mixed $needle , array $haystack [, bool $strict = false ] ) : mixed~Busca un valor determinado en un array y devuelve la primera clave correspondiente en caso de éxito
+array_shift ( array &$array ) : mixed~Quita un elemento del principio del array
+array_slice ( array $array , int $offset [, int $length = NULL [, bool $preserve_keys = false ]] ) : array~Extraer una parte de un array
+array_splice ( array &$input , int $offset [, int $length = 0 [, mixed $replacement = array() ]] ) : array~Elimina una porción del array y la reemplaza con otra cosa
+array_sum ( array $array ) : number~Calcular la suma de los valores de un array
+array_udiff_assoc ( array $array1 , array $array2 [, array $... ], callable $value_compare_func ) : array~Computa la diferencia entre arrays con una comprobación de indices adicional, compara la información mediante una función de llamada de retorno
+array_udiff_uassoc ( array $array1 , array $array2 [, array $... ], callable $value_compare_func , callable $key_compare_func ) : array~Computa la diferencia entre arrays con una verificación de índices adicional, compara la información y los índices mediante una función de llamada de retorno
+array_udiff ( array $array1 , array $array2 [, array $... ], callable $value_compare_func ) : array~Computa la diferencia entre arrays, usando una llamada de retorno para la comparación de datos
+array_uintersect_assoc ( array $array1 , array $array2 [, array $... ], callable $value_compare_func ) : array~Calcula la intersección de arrays con una comprobación de índices adicional, compara la información mediante una función de retrollamada
+array_uintersect_uassoc ( array $array1 , array $array2 [, array $... ], callable $value_compare_func , callable $key_compare_func ) : array~Calcula la intersección de arrays con una comprobación de índices adicional, compara la información y los índices mediante funciones de retrollamada por separado
+array_uintersect ( array $array1 , array $array2 [, array $... ], callable $value_compare_func ) : array~Computa una intersección de arrays, compara la información mediante una función de llamada de retorno
+array_unique ( array $array [, int $sort_flags = SORT_STRING ] ) : array~Elimina valores duplicados de un array
+array_unshift ( array &$array , mixed $value1 [, mixed $... ] ) : int~Añadir al inicio de un array uno a más elementos
+array_values ( array $array ) : array~Devuelve todos los valores de un array
+array_walk_recursive ( array &$array , callable $callback [, mixed $userdata = NULL ] ) : bool~Aplicar una función de usuario recursivamente a cada miembro de un array
+array_walk ( array &$array , callable $callback [, mixed $userdata = NULL ] ) : bool~Aplicar una función proporcionada por el usuario a cada miembro de un array
+array ([ mixed $... ] ) : array~Crea un array
+arsort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool~Ordena un array en orden inverso y mantiene la asociación de índices
+asort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool~Ordena un array y mantiene la asociación de índices
+compact ( mixed $varname1 [, mixed $... ] ) : array~Crear un array que contiene variables y sus valores
+count ( mixed $array_or_countable [, int $mode = COUNT_NORMAL ] ) : int~Cuenta todos los elementos de un array o algo de un objeto
+current ( array &$array ) : mixed~Devuelve el elemento actual en un array
+each ( array &$array ) : array~Devolver el par clave/valor actual de un array y avanzar el cursor del array
+end ( array &$array ) : mixed~Establece el puntero interno de un array a su último elemento
+extract ( array &$array [, int $flags = EXTR_OVERWRITE [, string $prefix = NULL ]] ) : int~Importar variables a la tabla de símbolos actual desde un array
+in_array ( mixed $needle , array $haystack [, bool $strict = FALSE ] ) : bool~Comprueba si un valor existe en un array
+in_array ( mixed $needle , array $haystack [, bool $strict = FALSE ] ) : bool~Alias de array_key_exists()
+key ( array &$array ) : mixed~Obtiene una clave de un array
+krsort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool~Ordena un array por clave en orden inverso
+ksort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool~Ordena un array por clave
+list ( mixed $var1 [, mixed $... ] ) : array~Asignar variables como si fueran un array
+natcasesort ( array &$array ) : bool~Ordenar un array usando un algoritmo de &quot;orden natural&quot; insensible a mayúsculas-minúsculas
+natsort ( array &$array ) : bool~Ordena un array usando un algoritmo de &quot;orden natural&quot;
+next ( array &$array ) : mixed~Avanza el puntero interno de un array
+next ( array &$array ) : mixed~Alias de current()
+prev ( array &$array ) : mixed~Rebobina el puntero interno del array
+range ( mixed $start , mixed $end [, number $step = 1 ] ) : array~Crear un array que contiene un rango de elementos
+reset ( array &$array ) : mixed~Establece el puntero interno de un array a su primer elemento
+rsort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool~Ordena un array en orden inverso
+shuffle ( array &$array ) : bool~Mezcla un array
+shuffle ( array &$array ) : bool~Alias de count()
+sort ( array &$array [, int $sort_flags = SORT_REGULAR ] ) : bool~Ordena un array
+uasort ( array &$array , callable $value_compare_func ) : bool~Ordena un array con una función de comparación definida por el usuario y mantiene la asociación de índices
+uksort ( array &$array , callable $key_compare_func ) : bool~Ordena un array según sus claves usando una función de comparación definida por el usuario
+usort ( array &$array , callable $value_compare_func ) : bool~Ordena un array según sus valores usando una función de comparación definida por el usuario
+basename ( string $path [, string $suffix ] ) : string~Devuelve el último componente de nombre de una ruta
+chgrp ( string $filename , mixed $group ) : bool~Cambia el grupo del archivo
+chmod ( string $filename , int $mode ) : bool~Cambia el modo de un fichero
+chown ( string $filename , mixed $user ) : bool~Cambia el propietario del fichero
+clearstatcache ([ bool $clear_realpath_cache = false [, string $filename ]] ) : void~Limpia la caché de estado de un archivo
+copy ( string $source , string $dest [, resource $context ] ) : bool~Copia un fichero
+copy ( string $source , string $dest [, resource $context ] ) : bool~Véase unlink()
+dirname ( string $path [, int $levels = 1 ] ) : string~Devuelve la ruta de un directorio padre
+disk_free_space ( string $directory ) : float~Devuelve el espacio disponible de un sistema de archivos o partición de disco
+disk_total_space ( string $directory ) : float~Devuelve el tamaño total de un sistema de archivos o partición de disco
+disk_total_space ( string $directory ) : float~Alias de disk_free_space()
+fclose ( resource $handle ) : bool~Cierra un puntero a un archivo abierto
+feof ( resource $handle ) : bool~Comprueba si el puntero a un archivo está al final del archivo
+fflush ( resource $handle ) : bool~Vuelca la salida a un archivo
+fgetc ( resource $handle ) : string~Obtiene un carácter de un puntero a un archivo
+fgetcsv ( resource $handle [, int $length = 0 [, string $delimiter = &quot;,&quot; [, string $enclosure = &#039;&quot;&#039; [, string $escape = &quot;&#92;&quot; ]]]] ) : array~Obtiene una línea de un puntero a un fichero y la analiza en busca de campos CSV
+fgets ( resource $handle [, int $length ] ) : string~Obtiene una línea desde el puntero a un fichero
+fgetss ( resource $handle [, int $length [, string $allowable_tags ]] ) : string~Obtiene un línea desde un puntero a un archivo y elimina las etiquetas HTML
+file_exists ( string $filename ) : bool~Comprueba si existe un fichero o directorio
+file_get_contents ( string $filename [, bool $use_include_path = FALSE [, resource $context [, int $offset = 0 [, int $maxlen ]]]] ) : string~Transmite un fichero completo a una cadena
+file_put_contents ( string $filename , mixed $data [, int $flags = 0 [, resource $context ]] ) : int~Escribir datos en un fichero
+file ( string $filename [, int $flags = 0 [, resource $context ]] ) : array~Transfiere un fichero completo a un array
+fileatime ( string $filename ) : int~Obtiene el momento del último acceso a un archivo
+filectime ( string $filename ) : int~Obtiene el momento del último cambio del i-nodo de un archivo
+filegroup ( string $filename ) : int~Obtiene el grupo de un archivo
+fileinode ( string $filename ) : int~Obtiene el i-nodo del archivo
+filemtime ( string $filename ) : int~Obtiene el momento de la última modificación de un archivo
+fileowner ( string $filename ) : int~Obtiene el propietario de un archivo
+fileperms ( string $filename ) : int~Obtiene los permisos de un fichero
+filesize ( string $filename ) : int~Obtiene el tamaño de un fichero
+filetype ( string $filename ) : string~Obtiene el tipo de fichero
+flock ( resource $handle , int $operation [, int &$wouldblock ] ) : bool~Bloqueo de ficheros recomendado y portable
+fnmatch ( string $pattern , string $string [, int $flags = 0 ] ) : bool~Compara un nombre de fichero con un patrón
+fopen ( string $filename , string $mode [, bool $use_include_path = FALSE [, resource $context ]] ) : resource~Abre un fichero o un URL
+fpassthru ( resource $handle ) : int~Escribe toda la información restante de un puntero a un archivo
+fputcsv ( resource $handle , array $fields [, string $delimiter = &quot;,&quot; [, string $enclosure = &#039;&quot;&#039; [, string $escape_char = &quot;&#92;&quot; ]]] ) : int~Dar formato CSV a una línea y escribirla en un puntero a un fichero
+fputcsv ( resource $handle , array $fields [, string $delimiter = &quot;,&quot; [, string $enclosure = &#039;&quot;&#039; [, string $escape_char = &quot;&#92;&quot; ]]] ) : int~Alias de fwrite()
+fread ( resource $handle , int $length ) : string~Lectura de un fichero en modo binario seguro
+fscanf ( resource $handle , string $format [, mixed &$... ] ) : mixed~Analiza la entrada desde un archivo de acuerdo a un formato
+fseek ( resource $handle , int $offset [, int $whence = SEEK_SET ] ) : int~Busca sobre un puntero a un fichero
+fstat ( resource $handle ) : array~Obtiene información acerca de un archivo usando un puntero al archivo abierto
+ftell ( resource $handle ) : int~Devuelve la posición de lectura/escritura actual del puntero a un fichero
+ftruncate ( resource $handle , int $size ) : bool~Trunca un archivo a una longitud dada
+fwrite ( resource $handle , string $string [, int $length ] ) : int~Escritura de un archivo en modo binario seguro
+glob ( string $pattern [, int $flags = 0 ] ) : array~Buscar coincidencias de nombres de ruta con un patrón
+is_dir ( string $filename ) : bool~Indica si el nombre de archivo es un directorio
+is_executable ( string $filename ) : bool~Indica si el nombre de archivo es ejecutable
+is_file ( string $filename ) : bool~Indica si el nombre de fichero es un fichero normal
+is_link ( string $filename ) : bool~Indica si el nombre de archivo es un enlace simbólico
+is_readable ( string $filename ) : bool~Indica si un fichero existe y es legible
+is_uploaded_file ( string $filename ) : bool~Indica si el archivo fue subido mediante HTTP POST
+is_writable ( string $filename ) : bool~Indica si un archivo existe y es escribible
+is_writable ( string $filename ) : bool~Alias de is_writable()
+lchgrp ( string $filename , mixed $group ) : bool~Cambia el grupo de un enlace simbólico
+lchown ( string $filename , mixed $user ) : bool~Cambia el propietario de un enlace simbólico
+link ( string $target , string $link ) : bool~Crea un enlace duro
+linkinfo ( string $path ) : int~Obtiene información acerca de un enlace
+lstat ( string $filename ) : array~Da información acerca de un archivo o enlace simbólico
+mkdir ( string $pathname [, int $mode = 0777 [, bool $recursive = FALSE [, resource $context ]]] ) : bool~Crea un directorio
+move_uploaded_file ( string $filename , string $destination ) : bool~Mueve un archivo subido a una nueva ubicación
+parse_ini_file ( string $filename [, bool $process_sections = FALSE [, int $scanner_mode = INI_SCANNER_NORMAL ]] ) : array~Analiza un fichero de configuración
+parse_ini_string ( string $ini [, bool $process_sections = FALSE [, int $scanner_mode = INI_SCANNER_NORMAL ]] ) : array~Analiza una cadena de configuración
+pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] ) : mixed~Devuelve información acerca de la ruta de un fichero
+pclose ( resource $handle ) : int~Cierra un proceso de un puntero a un fichero
+popen ( string $command , string $mode ) : resource~Abre un proceso de un puntero a un fichero
+readfile ( string $filename [, bool $use_include_path = FALSE [, resource $context ]] ) : int~Realizar la salida de un fichero
+readlink ( string $path ) : string~Devuelve el objetivo de un enlace simbólico
+realpath_cache_get ( void ) : array~Obtiene las entradas de la caché de la ruta real
+realpath_cache_size ( void ) : int~Obtiene el tamaño de la caché de la ruta real
+realpath ( string $path ) : string~Devuelve el nombre de la ruta absoluta canonizado
+rename ( string $oldname , string $newname [, resource $context ] ) : bool~Renombra un fichero o directorio
+rewind ( resource $handle ) : bool~Rebobina la posición de un puntero a un archivo
+rmdir ( string $dirname [, resource $context ] ) : bool~Elimina un directorio
+rmdir ( string $dirname [, resource $context ] ) : bool~Alias de stream_set_write_buffer()
+stat ( string $filename ) : array~Da información acerca de un fichero
+symlink ( string $target , string $link ) : bool~Crea un enlace simbólico
+tempnam ( string $dir , string $prefix ) : string~Crea un fichero con un nombre de fichero único
+tmpfile ( void ) : resource~Crea un archivo temporal
+touch ( string $filename [, int $time = time() [, int $atime ]] ) : bool~Establece el momento de acceso y modificación de un archivo
+umask ([ int $mask ] ) : int~Cambia la máscara de usuario actual
+unlink ( string $filename [, resource $context ] ) : bool~Borra un fichero
+abs ( mixed $number ) : number~Valor absoluto
+acos ( float $arg ) : float~Arco coseno
+acosh ( float $arg ) : float~Arco coseno hiperbólico
+asin ( float $arg ) : float~Arco seno
+asinh ( float $arg ) : float~Arco seno hiperbólico
+atan ( float $arg ) : float~Arco tangente
+atan2 ( float $y , float $x ) : float~Arco tangente de dos variables
+atanh ( float $arg ) : float~Arco tangente hiperbólica
+base_convert ( string $number , int $frombase , int $tobase ) : string~Convertir un número entre bases arbitrarias
+bindec ( string $binary_string ) : number~Binario a decimal
+ceil ( float $value ) : float~Redondear fracciones hacia arriba
+cos ( float $arg ) : float~Coseno
+cosh ( float $arg ) : float~Coseno hiperbólico
+decbin ( int $number ) : string~Decimal a binario
+dechex ( int $number ) : string~Decimal a hexadecimal
+decoct ( int $number ) : string~Decimal a octal
+deg2rad ( float $number ) : float~Convierte el número en grados a su equivalente en radianes
+exp ( float $arg ) : float~Calcula la exponencial de e
+expm1 ( float $arg ) : float~Devuelve exp(numero)-1, calculado de tal forma que no pierde precisión incluso cuando el valor del numero se aproxima a cero.
+floor ( float $value ) : mixed~Redondear fracciones hacia abajo
+fmod ( float $x , float $y ) : float~Devuelve el resto en punto flotante (módulo) de la división de los argumentos
+getrandmax ( void ) : int~Mostrar el mayor valor aleatorio posible
+hexdec ( string $hex_string ) : number~Hexadecimal a decimal
+hypot ( float $x , float $y ) : float~Calcula la longitud de la hipotenusa de un triángulo de ángulo recto
+intdiv ( int $dividend , int $divisor ) : int~División entera
+is_finite ( float $val ) : bool~Encuentra si un valor es un número finito legal
+is_infinite ( float $val ) : bool~Encuentra si un valor es infinito
+is_nan ( float $val ) : bool~Encuentra si un valor no es un número
+lcg_value ( void ) : float~Generador lineal congruente combinado
+log ( float $arg [, float $base = M_E ] ) : float~Logaritmo natural
+log10 ( float $arg ) : float~Logaritmo en base 10
+log1p ( float $number ) : float~Devuelve log(1 + numero), calculado de tal forma que no pierde precisión incluso cuando el valor del numero se aproxima a cero.
+max ( array $values ) : mixed~Encontrar el valor más alto
+min ( array $values ) : mixed~Encontrar el valor más bajo
+mt_getrandmax ( void ) : int~Mostrar el mayor valor aleatorio posible
+mt_rand ( void ) : int~Genera un mejor número entero aleatorio
+mt_srand ([ int $seed ] ) : void~Genera el mejor número aleatorio a partir de una semilla
+octdec ( string $octal_string ) : number~Octal a decimal
+pi ( void ) : float~Obtener valor de pi
+pow ( number $base , number $exp ) : number~Expresión exponencial
+rad2deg ( float $number ) : float~Convierte el número en radianes a su equivalente en grados
+rand ( void ) : int~Genera un número entero aleatorio
+round ( float $val [, int $precision = 0 [, int $mode = PHP_ROUND_HALF_UP ]] ) : float~Redondea un float
+sin ( float $arg ) : float~Seno
+sinh ( float $arg ) : float~Seno hiperbólico
+sqrt ( float $arg ) : float~Raíz cuadrada
+srand ([ int $seed ] ) : void~Genera un número aleatorio a partir de una semilla
+tan ( float $arg ) : float~Tangente
+tanh ( float $arg ) : float~Tangente hiperbólica
+addcslashes ( string $str , string $charlist ) : string~Escapa una cadena al estilo de C
+addslashes ( string $str ) : string~Escapa un string con barras invertidas
+bin2hex ( string $str ) : string~Convierte datos binarios en su representación hexadecimal
+bin2hex ( string $str ) : string~Alias de rtrim()
+chr ( int $ascii ) : string~Devuelve un caracter específico
+chunk_split ( string $body [, int $chunklen = 76 [, string $end = &quot;&#92;r&#92;n&quot; ]] ) : string~Divide una cadena en trozos más pequeños
+convert_cyr_string ( string $str , string $from , string $to ) : string~Convierte de un juego de caracteres cirílico a otro juego de caracteres cirílico
+convert_uudecode ( string $data ) : string~Descodifica una cadena codificada mediante uuencode
+convert_uuencode ( string $data ) : string~Codificar mediante uuencode una cadena
+count_chars ( string $string [, int $mode = 0 ] ) : mixed~Devuelve información sobre los caracteres usados en una cadena
+crc32 ( string $str ) : int~Calcula el polinomio crc32 de una cadena
+crypt ( string $str [, string $salt ] ) : string~Hash de cadenas de un sólo sentido
+echo ( string $arg1 [, string $... ] ) : void~Muestra una o más cadenas
+explode ( string $delimiter , string $string [, int $limit = PHP_INT_MAX ] ) : array~Divide un string en varios string
+fprintf ( resource $handle , string $format [, mixed $args [, mixed $... ]] ) : int~Escribir una cadena con formato a una secuencia
+get_html_translation_table ([ int $table = HTML_SPECIALCHARS [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = &quot;UTF-8&quot; ]]] ) : array~Devuelve la tabla de traducción utilizada por htmlspecialchars()
+hebrev ( string $hebrew_text [, int $max_chars_per_line = 0 ] ) : string~Convierte texto hebreo lógico a texto visual
+hebrevc ( string $hebrew_text [, int $max_chars_per_line = 0 ] ) : string~Convertir texto de hebreo lógico a texto visual con conversión de línea nueva
+hex2bin ( string $data ) : string~Decodifica una cadena binaria codificada hexadecimalmente
+html_entity_decode ( string $string [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = ini_get(&quot;default_charset&quot;) ]] ) : string~Convierte todas las entidades HTML a sus caracteres correspondientes
+htmlentities ( string $string [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = ini_get(&quot;default_charset&quot;) [, bool $double_encode = TRUE ]]] ) : string~Convierte todos los caracteres aplicables a entidades HTML
+htmlspecialchars_decode ( string $string [, int $flags = ENT_COMPAT | ENT_HTML401 ] ) : string~Convierte entidades HTML especiales de nuevo en caracteres
+htmlspecialchars ( string $string [, int $flags = ENT_COMPAT | ENT_HTML401 [, string $encoding = ini_get(&quot;default_charset&quot;) [, bool $double_encode = true ]]] ) : string~Convierte caracteres especiales en entidades HTML
+implode ( string $glue , array $pieces ) : string~Une elementos de un array en un string
+implode ( string $glue , array $pieces ) : string~Alias de implode()
+lcfirst ( string $str ) : string~Pasa a minúscula el primer caracter de un string
+levenshtein ( string $str1 , string $str2 ) : int~Cálculo de la distancia Levenshtein entre dos strings
+localeconv ( void ) : array~Obtener información sobre el formato numérico
+ltrim ( string $str [, string $character_mask ] ) : string~Retira espacios en blanco (u otros caracteres) del inicio de un string
+md5_file ( string $filename [, bool $raw_output = FALSE ] ) : string~Calcula el resumen criptográfico md5 de un archivo dado
+md5 ( string $str [, bool $raw_output = FALSE ] ) : string~Calcula el &#039;hash&#039; md5 de un string
+metaphone ( string $str [, int $phonemes = 0 ] ) : string~Calcula la clave metaphone de un string
+money_format ( string $format , float $number ) : string~Da formato a un número como un string de moneda
+nl_langinfo ( int $item ) : string~Consulta información sobre el idioma y la configuración regional
+nl2br ( string $string [, bool $is_xhtml = TRUE ] ) : string~Inserta saltos de línea HTML antes de todas las nuevas líneas de un string
+number_format ( float $number [, int $decimals = 0 ] ) : string~Formatear un número con los millares agrupados
+ord ( string $string ) : int~devuelve el valor ASCII de un caracter
+parse_str ( string $str [, array &$arr ] ) : void~Convierte el string en variables
+print ( string $arg ) : int~Mostrar una cadena
+printf ( string $format [, mixed $args [, mixed $... ]] ) : int~Imprimir una cadena con formato
+quoted_printable_decode ( string $str ) : string~Convierte un string quoted-printable en un string de 8 bits
+quoted_printable_encode ( string $str ) : string~Convierte un string de 8 bits en un string quoted-printable
+quotemeta ( string $str ) : string~Escapa meta caracteres
+rtrim ( string $str [, string $character_mask ] ) : string~Retira los espacios en blanco (u otros caracteres) del final de un string
+setlocale ( int $category , string $locale [, string $... ] ) : string~Establecer la información del localismo
+sha1_file ( string $filename [, bool $raw_output = FALSE ] ) : string~Calcula el hash sha1 de un archivo
+sha1 ( string $str [, bool $raw_output = FALSE ] ) : string~Calcula el &#039;hash&#039; sha1 de un string
+similar_text ( string $first , string $second [, float &$percent ] ) : int~Calcula la similitud entre dos strings
+soundex ( string $str ) : string~Calcula la clave soundex de un string
+sprintf ( string $format [, mixed $args [, mixed $... ]] ) : string~Devuelve un string formateado
+sscanf ( string $str , string $format [, mixed &$... ] ) : mixed~Interpreta un string de entrada de acuerdo con un formato
+str_getcsv ( string $input [, string $delimiter = &quot;,&quot; [, string $enclosure = &#039;&quot;&#039; [, string $escape = &quot;&#92;&#92;&quot; ]]] ) : array~Convierte un string con formato CSV a un array
+str_ireplace ( mixed $search , mixed $replace , mixed $subject [, int &$count ] ) : mixed~Versión insensible a mayúsculas y minúsculas de str_replace()
+str_pad ( string $input , int $pad_length [, string $pad_string = &quot; &quot; [, int $pad_type = STR_PAD_RIGHT ]] ) : string~Rellena un string hasta una longitud determinada con otro string
+str_repeat ( string $input , int $multiplier ) : string~Repite un string
+str_replace ( mixed $search , mixed $replace , mixed $subject [, int &$count ] ) : mixed~Reemplaza todas las apariciones del string buscado con el string de reemplazo
+str_rot13 ( string $str ) : string~Realizar la transformación rot13 sobre una cadena
+str_shuffle ( string $str ) : string~Reordena aleatoriamente una cadena
+str_split ( string $string [, int $split_length = 1 ] ) : array~Convierte un string en un array
+str_word_count ( string $string [, int $format = 0 [, string $charlist ]] ) : mixed~Devuelve información sobre las palabras utilizadas en un string
+strcasecmp ( string $str1 , string $str2 ) : int~Comparación de string segura a nivel binario e insensible a mayúsculas y minúsculas
+strcasecmp ( string $str1 , string $str2 ) : int~Alias de strstr()
+strcmp ( string $str1 , string $str2 ) : int~Comparación de string segura a nivel binario
+strcoll ( string $str1 , string $str2 ) : int~Comparación de cadenas basada en la localidad
+strcspn ( string $subject , string $mask [, int $start [, int $length ]] ) : int~Averiguar la longitud del segmento inicial que no coincida con una máscara
+strip_tags ( string $str [, string $allowable_tags ] ) : string~Retira las etiquetas HTML y PHP de un string
+stripcslashes ( string $str ) : string~Desmarca la cadena marcada con addcslashes()
+stripos ( string $haystack , string $needle [, int $offset = 0 ] ) : mixed~Encuentra la posición de la primera aparición de un substring en un string sin considerar mayúsculas ni minúsculas
+stripslashes ( string $str ) : string~Quita las barras de un string con comillas escapadas
+stristr ( string $haystack , mixed $needle [, bool $before_needle = FALSE ] ) : string~strstr()
+strlen ( string $string ) : int~Obtiene la longitud de un string
+strnatcasecmp ( string $str1 , string $str2 ) : int~Comparación de strings, insensible a mayúsculas y minúsculas, utilizando un algoritmo de &quot;orden natural&quot;
+strnatcmp ( string $str1 , string $str2 ) : int~Comparación de strings utilizando un algoritmo de &quot;orden natural&quot;
+strncasecmp ( string $str1 , string $str2 , int $len ) : int~Comparación de los primeros n caracteres de cadenas, segura con material binario e insensible a mayúsculas y minúsculas
+strncmp ( string $str1 , string $str2 , int $len ) : int~Comparación segura a nivel binario de los primeros n caracteres entre strings
+strpbrk ( string $haystack , string $char_list ) : string~Buscar una cadena por cualquiera de los elementos de un conjunto de caracteres
+strpos ( string $haystack , mixed $needle [, int $offset = 0 ] ) : mixed~Encuentra la posición de la primera ocurrencia de un substring en un string
+strrchr ( string $haystack , mixed $needle ) : string~Encuentra la última aparición de un caracter en un string
+strrev ( string $string ) : string~Invierte una string
+strripos ( string $haystack , mixed $needle [, int $offset = 0 ] ) : int~Encuentra la posición de la última aparición de un substring insensible a mayúsculas y minúsculas en un string
+strrpos ( string $haystack , mixed $needle [, int $offset = 0 ] ) : int~Encuentra la posición de la última aparición de un substring en un string
+strspn ( string $subject , string $mask [, int $start [, int $length ]] ) : int~Averigua la longitud del segmento inicial de un string que consista únicamente en caracteres contenidos dentro de una máscara dada
+strstr ( string $haystack , mixed $needle [, bool $before_needle = FALSE ] ) : string~Encuentra la primera aparición de un string
+strtok ( string $str , string $token ) : string~Tokeniza string
+strtolower ( string $string ) : string~Convierte una cadena a minúsculas
+strtoupper ( string $string ) : string~Convierte un string a mayúsculas
+strtr ( string $str , string $from , string $to ) : string~Convierte caracteres o reemplaza substrings
+substr_compare ( string $main_str , string $str , int $offset [, int $length [, bool $case_insensitivity = FALSE ]] ) : int~Comparación segura a nivel binario de dos o más strings desde un índice hasta una longitud de caracteres dada
+substr_count ( string $haystack , string $needle [, int $offset = 0 [, int $length ]] ) : int~Cuenta el número de apariciones del substring
+substr_replace ( mixed $string , mixed $replacement , mixed $start [, mixed $length ] ) : mixed~Reemplaza el texto dentro de una porción de un string
+substr ( string $string , int $start [, int $length ] ) : string~Devuelve parte de una cadena
+trim ( string $str [, string $character_mask = &quot; &#92;t&#92;n&#92;r&#92;0&#92;x0B&quot; ] ) : string~Elimina espacio en blanco (u otro tipo de caracteres) del inicio y el final de la cadena
+ucfirst ( string $str ) : string~Convierte el primer caracter de una cadena a mayúsculas
+ucwords ( string $str [, string $delimiters = &quot; &#92;t&#92;r&#92;n&#92;f&#92;v&quot; ] ) : string~Convierte a mayúsculas el primer caracter de cada palabra de una cadena
+vfprintf ( resource $handle , string $format , array $args ) : int~Escribe un string con formato en un flujo
+vprintf ( string $format , array $args ) : int~Muestra una cadena con formato
+vsprintf ( string $format , array $args ) : string~Devuelve una cadena con formato
+wordwrap ( string $str [, int $width = 75 [, string $break = &quot;&#92;n&quot; [, bool $cut = FALSE ]]] ) : string~Ajusta un string hasta un número dado de caracteres

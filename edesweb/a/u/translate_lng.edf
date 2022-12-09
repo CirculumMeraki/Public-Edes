@@ -1,0 +1,30 @@
+[Title]=Traducir Ficheros LNG
+[DBTable]auto
+[DBIndex]cd_auto
+[DBOrder]serial
+[DBLimit]10000
+[MaxRec]full
+[FormAction]a|Ll:
+[AddOption]a|_Directorio|..,; ../d,Fuentes; ../_datos,Configuración
+[Button]a|<img src='g/op_buscar.gif'> Buscar
+[Fields]a
+Directorio|_Directorio|D|SV|20||A|../d||
+Idioma|cd_gs_language|n|S|20||A|es|#|
+[Fields]l
+Fichero|Fichero|D|T|40||-|||
+[DBSql]l
+$usuCursor = array();
+_DirLNG( $_POST['_Directorio'] );
+function _DirLNG( $dorg ){
+global $usuCursor;
+$di = opendir( $dorg );
+while( $file = readdir( $di ) ){
+if( ($file!=".") && ($file!="..") ){
+if( is_dir("{$dorg}/{$file}") ){
+if( "{$dorg}/{$file}" == '../tmp' || "{$dorg}/{$file}" == '../_bak_' || "{$dorg}/{$file}" == '../http' ) continue;
+_DirLNG( "{$dorg}/{$file}" );
+}else if( substr($file, strrpos($file,'.')+1)=='lng' ) $usuCursor[] = array(substr("{$dorg}/{$file}",3));
+}
+}
+closedir( $di );
+}

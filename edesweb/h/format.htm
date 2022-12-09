@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Format</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Format] FormatCol1 [, FormatCol2] ..... [, FormatColN]  [ |  iSubList / NoZero ]<br />...<br />  <span style="font-weight: normal;">Sintaxis alternativa<br /><strong>[Format] NomCampo=FormatCol</strong></span></td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En los listados, formatea las columnas de datos que se deseen.  Se puede poner una funci?n PHP en la cual se sustituir? el c?digo asci '#' por el valor del campo a formatear en esa columna. Los valores de la fila a pintar vienen en la matriz "<strong>$_vF</strong>", tanto su posición numérica como con el nombre del campo. En los campos donde se guarda el nombre de un fichero la extensi?n del mismo se puede sacar mediante el s?mbolo "@". <br />Esta etiqueta tambi?n es multilinea de c?digo PHP donde se puede escribir c?digo para modificar la fila a imprimir, se est? escribiendo dentro de una funci?n que recibe una matriz por referencencia llamada "<strong>$_vF</strong>" para modificar el cursor en curso, facilitando el realizar c?lculos entre columnas, se pasa por referencia las matrices "<strong>$_CellsStyle</strong>" y <strong>"$_CellsClass"</strong> (posición numérica o nombre de campo) que ser? el interior de la propiedad "style" y el nombre de la clase de cada una de las celdas, del registro actual, a cambiar su estilo, as? mismo se pueden utilizar las variables "<strong>$_RowStyle</strong>",   "<strong>$_RowClass</strong>" que hacen referencia a la fila as? como "<strong>$_RowDisabled</strong>" para desactivar la fila y la variable "<strong>$RowNumber</strong>" por valor que indica el n?mero de registro del listado completo aunque est? paginado. <br />Tambi?n est?n disponigles las variable <strong>$_RowAdd</strong> y la matriz <strong>$_CellsAdd</strong> (posición numérica o nombre de campo) para a?adir contenido dentro del "td".<br />La partícula "<strong>NoZero"</strong> hace que no se pinte el valor cero en ninguna columna, es como poner el valor "B" a todas las columnas, la partícula "<strong>ZERO</strong>" se verá el cero y la partícula "<strong>iSubList</strong>" hace que la etiqueta [Format] solo se aplique cuando el listado se ejecuta como iSubList.<br />Para los PDF esta, que puede ser una cadena y repercute a toda la fila o una matriz para solo determinadas columnas:<br />     <strong>$_PDFBackgroundColor</strong><br />     <strong>$_PDFColor</strong><br />     <strong>$_PDFLineRows</strong> (usu futuro)<br />Para mostrar una imagen en el listado se puede calcular el nombre de la imagen mediante la funci?n "eImgName()", esta funci?n tiene cuatro par?metros:<br />eImgName(  NombreCampo [, Prefijo [, Titulo [, OnClick ] ] ]  ); <br />Otras funciones son:<br />     eImgDocType( NmField [ , Titulo [ , OnClick  ] ] )<br />     eDocView( NmField )<br />     eDocEdit( NmFiled ) </td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">Los tipos de alineaci?n permitidas son:<br />
+<table id="Opciones" style="height: 151px; width: 814px;" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="text-align: center;" /> </colgroup><colgroup> </colgroup>
+<tbody>
+<tr>
+<td>L</td>
+<td>Alineaci?n a la izquierda (o en blanco)</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Alineaci?n centrada.</td>
+</tr>
+<tr>
+<td>R</td>
+<td>Alineaci?n a la derecha.</td>
+</tr>
+<tr>
+<td>H</td>
+<td>Ocultar columna.</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Separa las cifras de los millares. Es automático en los campos definidos como num?ricos.</td>
+</tr>
+<tr>
+<td>M2</td>
+<td>Separa las cifras de los millares del resto mediante un punto y los dos primeros decimales del valor a mostrar. Es autom?tico en los campos definidos como num?ricos.</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Si el valor es cero no pintar? nada.</td>
+</tr>
+<tr>
+<td>N</td>
+<td>No separa las cifras de los millares.</td>
+</tr>
+<tr>
+<td>IMG</td>
+<td>En la columna de un campo tipo file se mostrar? un icono seg?n el tipo de fichero y haciendo click en el icono se visualizar? el fichero. Si en la columna modo ponemos una "C" de Cambio/Change se podr? modificar el fichero directamente. esta columna no se mostrar? en las salidas PDF ni en XLS.</td>
+</tr>
+<tr>
+<td>ICON</td>
+<td>Este par?metro s?lo es para ficheros de tipo imagen, en la columna de un campo tipo file se mostrar? el gr?fico y haciendo click en el icono se visualizar? el fichero. Si en la columna modo ponemos una "C" de Cambio/Change se podr? modificar el fichero directamente. esta columna no se mostrar? en las salidas PDF ni en XLS.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Format] ,,,,,,M,M2,M2,,,</code><br /><code>[Format] ,,substr('#', 0, 3),M2</code><br /><code>[Format] '#'.substr($_vF[2], strpos($_vF[2], '.'))</code><br /><code>[Format] ,,,"<img />src='g/l_d_@.gif' onclick='NameFunction()'>"</code><br />
+<p><code>[Format] | NoZero</code><br /><code>     $_vF[6] = $_vF[4]-$_vF[5];</code><br /><code>     $_vF[7] = $_vF[6]/$_vF[4]*100;</code><br /><code>     if( $_vF[7]>50 ) $_CellsStyle[7] = 'color:red;font-weight:bold';</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">En el ?ltimo ejemplo antes de pintar la fila si ejecutamos el c?digo para modificar los valores del cursor en curso, se pasa linea por linea.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[<code>UploadFile] foto | /http/w_test/http/g | cd_w_op_colectivo | 300000 | Ver gr?fico | jpg,gif,png | cl_</code><br /><code>[Format]</code><br /><code>     $_vF["foto"] = eImgName("foto");</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[UploadFile] foto | /http/w_test/http/g | cd_w_op_colectivo | 300000 | Ver gr?fico | jpg,gif,png | cl_ | 120,120 | clr_ | /../w_g7/http/g</code><br /><code>[Format]</code><br /><code>     $_vF["foto"] = eImgName("foto", "clr_");</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Format]</code><br /><code>     if( isZero($_vF["cdi"]) ) $_vF["cdi"] = '';</code></td>
+</tr>
+<tr>
+<td id="txt">Modifica el contenido de los campos mediante su nombre.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

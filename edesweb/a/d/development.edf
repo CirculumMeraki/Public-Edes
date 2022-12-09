@@ -1,0 +1,111 @@
+#include(*) $lng/usu_clave.edf.lng
+[Title]=PASSWORD DEVELOPMENT
+[Button]a|[setup] Develop
+[Fields]
+|pass|#|P|60|220|M||'#'.length>=@|@LongitudMinima@
+¿ file_exists("../tree/__personal.".$_SESSION["_UserEMail"]) ? <Load TreePersonal|TreePersonal|#|C|1||M|||
+[JSCheck]a
+if( _ErrMensaje=='' ){
+document.cookie = "eDesPassword="+document.FRM1.pass.value+";max-age="+(60*60*24*30)+";";
+}
+[JSEnd]a
+if( S.is("eDesPassword=", document.cookie) ){
+ePF("pass", S.mid(document.cookie+";", "eDesPassword=",";"));
+setTimeout(function(){eSubmit();}, 100);
+}
+[JSIni]a
+S(window).windowColor("#bd454b", "#ffffff", "#ec8084", "#ffffff");
+[DBIni]A
+include(eScript('$t/lp.gs'));
+qQuery("select user_name from gs_user where cd_gs_user=".$_SESSION["_User"]);
+list($nmUser) = qRow();
+LeerLP($_SESSION['_UserEMail'], $_POST['pass'], $_gsMaster, $NumBak, $nmUser, $_gsACCESO);
+if( $_gsMaster!='' ){
+$_SESSION['_D_'] = $_gsMaster;
+$_SESSION['_L_'] = $_gsACCESO['LOGIN'];
+$_SESSION["_gsACCESO"] = $_gsACCESO;
+if( $_gsACCESO['LOGEAR'] ) gsLogear('FW', 'S', '');
+if( $_gsACCESO['ACCESO']>=1 && $_gsACCESO['Edit']>=1 ){
+include("../../edesweb/t/developer.js");
+eContextPut('E:$t/development.js');
+eContextPut('E:$t/create_css.php');
+eContextPut('E:$t/create_css_ini.php');
+}
+if( file_exists("../_d_/{$_User}.dvl") ){
+include("../_d_/{$_User}.dvl");
+$_SESSION["_gsDirAccess"] = $_gsDirAccess;
+}
+$cargar = "";
+if( $_POST["TreePersonal"]=="S" ) $cargar .= 'document.cookie="eDesTreePersonal=S;max-age='.(60*60*24*30).';";';
+if( $_gsMaster=="~" ) $cargar .= 'document.cookie="eDesTreeSystem=S;max-age='.(60*60*24*30).';";';
+$dimLanguage = "";
+if( qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+$dimLanguage = "if(S('#arSTOOLS',top).length>0){S('#eIDIOMA','#arSTOOLS',top).text('{$_SESSION['_LANGUAGE_']}'); S('#eIDIOMA','#arSTOOLS',top).block('table-cell');} top['_DimLanguage']=[['-Idioma']";
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_language where tf_translation='S' order by nm_gs_language");
+while($r=qArray()){
+$dimLanguage .= ",['{$r['nm_gs_language']}','','{$r['cd_gs_language']}'";
+if( $r['cd_gs_language']==$_SESSION['_LANGUAGE_'] ){
+$dimLanguage .= ",null,null,'font-weight:bold']";
+}else{
+$dimLanguage .= ",null,null,null]";
+}
+}
+$dimLanguage .= "];";
+}
+eMessage("Active Development", "HSC", 0, $dimLanguage.'S.script(top,"$t/developer.js");'.$cargar);
+}else{
+eMessage("No Development", "HSC", 0);
+}
+[CallSrv]LoginPC
+eInit();
+if( $_GET["LoginPC"]<>"34" ){
+}else{
+include("../../edesweb/_e.js");
+?>
+S.call("edes.php?E:CallSrv=$a/d/development.edf&LoginSRV=43", {pass:_e_(S.mid(document.cookie+";", "eDesPassword=",";")).toUpperCase()});
+<?PHP
+}
+eEnd();
+[CallSrv]LoginSRV
+eInit();
+if( $_GET["LoginSRV"]<>"43" ){
+}else{
+include(eScript('$t/lp.gs'));
+qQuery("select user_name from gs_user where cd_gs_user=".$_SESSION["_User"]);
+list($nmUser) = qRow();
+LeerLP($_SESSION['_UserEMail'], $_POST['pass'], $_gsMaster, $NumBak, $nmUser, $_gsACCESO);
+if( $_gsMaster!='' ){
+$_SESSION['_D_'] = $_gsMaster;
+$_SESSION['_L_'] = $_gsACCESO['LOGIN'];
+$_SESSION["_gsACCESO"] = $_gsACCESO;
+if( $_gsACCESO['LOGEAR'] ) gsLogear('FW', 'S', '');
+if( $_gsACCESO['ACCESO']>=1 && $_gsACCESO['Edit']>=1 ){
+include("../../edesweb/t/developer.js");
+eContextPut('E:$t/development.js');
+eContextPut('E:$t/create_css.php');
+eContextPut('E:$t/create_css_ini.php');
+}
+}
+if( $_gsMaster!='' ){
+?>
+S.script(top, '$t/developer.js');
+<?PHP
+$dimLanguage = "";
+if( qCount("{$_SESSION['ShareDictionary']}gs_language", "tf_translation='S'")>1 ){
+$dimLanguage = "if(S('#arSTOOLS',top).length>0){S('#eIDIOMA','#arSTOOLS',top).text('{$_SESSION['_LANGUAGE_']}'); S('#eIDIOMA','#arSTOOLS',top).block('table-cell');} top['_DimLanguage']=[['-Idioma']";
+qQuery("select * from {$_SESSION['ShareDictionary']}gs_language where tf_translation='S' order by nm_gs_language");
+while($r=qArray()){
+$dimLanguage .= ",['{$r['nm_gs_language']}','','{$r['cd_gs_language']}'";
+if( $r['cd_gs_language']==$_SESSION['_LANGUAGE_'] ){
+$dimLanguage .= ",null,null,'font-weight:bold']";
+}else{
+$dimLanguage .= ",null,null,null]";
+}
+}
+$dimLanguage .= "];";
+}
+echo $dimLanguage;
+}else{
+}
+}
+eEnd();

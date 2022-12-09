@@ -1,0 +1,78 @@
+[DBTable]{$_SESSION['ShareDictionary']}gs_tpermission
+[DBIndex]cd_gs_tpermission
+[DBOrder]source,keyword
+[DBSerial]cd_gs_tpermission
+[DBLimit]5000,100
+[AddOption]*|license_type|,; I,Icono; O,Opción; S,Fuente; M,SubOpcion; V,Variable
+[AddOption]*|visible,active|S,Si; ;No
+[NoTools]*
+[ColsColor],,,,,EditList
+[RowColor]$_vF[5]!='S'|id=M
+[Format]
+global $_uDimOp;
+if( $_vF[2] > 0 ){
+if( $_uDimOp[$_vF[2]][1] > 0 ) $_vF[1] = uNomIcono( $_uDimOp[$_uDimOp[$_vF[2]][1]][0] );
+$_vF[2] = uNomIcono( $_uDimOp[$_vF[2]][0] );
+}else{
+$_vF[2] = '';
+}
+if( $_vF[5]=='' ){
+$_vF[5] = '<img src=g/tf_s.gif onclick=On()>';
+}else{
+$_vF[5] = '<img src=g/tf_1.gif onclick=On()>';
+}
+[THColSpan]op_padre,option_id,Menú
+¿ $Type=='V' ? [Align] H,H,H
+[Fields]
+cd_gs_tpermission|cd_gs_tpermission|*|T|5||*|||
+Carpeta|op_padre|T|T|15||-|||
+Opción|option_id|T|T|15||-|||
+Fuente|source|#D|T|30||Md|||
+KeyWord|keyword|#D|T|30||M|||
+ON|on|N|T|2||M|||
+Descripción|note|#|A|240,80,3||M|||
+Permiso·activo|active|#D|C|1||*|S||
+[JSEnd]*
+function On(){
+if( S.event(window).src.indexOf('tf_1.gif') == -1 ){
+top.eCallSrv( window, 'edes.php?E:$a/d/permission_set.gs&U='+_User+'&P='+S.event(window).parentNode.parentNode.cells[0].textContent+'&O=S' );
+S.event(window).src = S.event(window).src.replace('tf_s.gif','tf_1.gif');
+}else{
+top.eCallSrv( window, 'edes.php?E:$a/d/permission_set.gs&U='+_User+'&P='+S.event(window).parentNode.parentNode.cells[0].textContent+'&O=N' );
+S.event(window).src = S.event(window).src.replace('tf_1.gif','tf_s.gif');
+}
+}
+[DBSql]l
+$uWhere = "T.license_type='".$_GET['Type']."'";
+if( $_GET['Activos']=='S' ) $uWhere .= " and T.active='S'";
+qQuery( "select
+T.cd_gs_tpermission
+, '',t.option_id
+, T.source
+, T.keyword
+, (select 'S' from gs_permission where cd_gs_user=".$_GET['User']." and cd_gs_tpermission=T.cd_gs_tpermission)
+, T.note
+, T.active
+from
+{$_SESSION['ShareDictionary']}gs_tpermission as T
+left join gs_permission as P on T.cd_gs_tpermission=P.cd_gs_tpermission
+where
+{$uWhere} " );
+$_TReg=1;
+[PHPIni]l
+$_uDimOp = array();
+qQuery("select id, caption, seq_parent from {$_SESSION['ShareDictionary']}gs_op order by id");
+while( $r=qRow() ) $_uDimOp[$r[0]] = array( $r[1], $r[2] );
+function uNomIcono( $txt ){
+if( $txt[0]=='{' ){
+list( $Icono, $txt ) = explode('}',substr($txt,1));
+}else if( $txt[0]=='[' ){
+list( $Icono, $txt ) = explode(']',substr($txt,1));
+}
+if( $Icono[0]=='$' ) $Icono = 'edes.php?R:$a/g/'.substr($Icono,1);
+if( $Icono!='' ){
+return "<img src={$Icono}>".trim($txt);
+}else{
+return trim($txt);
+}
+}

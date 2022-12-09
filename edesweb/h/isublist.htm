@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">iSubList</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">{iSubList} Mode | Script | RelationField | Size | Options | Acciones [ [ [ | ModoConsulta=false | MinimoN?Registros | innerStyle ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Crea un iframe con un listado con mantenimiento. Si existe el fichero "css/ilista.css" lo cargar? para tener otros colores en el listado.<br />El campo RelationField si es de tipo num?rico tiene que aceptar valores negativos y el ancho del campo en la base de datos tiene que admitir como m?nimo el mayor c?digo de usuario (cd_gs_user) pero en negativo, que es el dato que se usa cuando la ficha padre se ejecuta en alta. <br />En el edf definido en {iSubList} cada vez que se inserta o modifica una fila se invoca a la funci?n "FUNCTION_iSubList( Accion, Fila )", si existe, por si se quiere modificar o completar alg?n dato, ser?a el caso de campos que no coincidan en la ficha y en el listado, dentro de esta funci?n no se puede utilizar la funci?n "eGF()" devolver? datos erroneos con n?meros con decimales.<br />La tabla de la iSubList no tienen que tener constraints ya que el campo que hace relación con la tabla padre tiene que almacenar números negativos de forma temporal en el alta de la tabla padre, si se necesitan los constraints en la definición de la etiqueta [DBTable] de la iSubList hay que definir un sufijo para una tabla temporal para almacenar los registros hijos en el alta y en [DBIndex] CampoPadre, serial</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td style="width: 147px;"> Mode  </td>
+<td style="width: 1519px;"> Cuando se despliega la SubLista</td>
+</tr>
+<tr>
+<td style="width: 147px;"> Script</td>
+<td style="width: 1519px;">EDF hijo a ejecutar en la sublista, se le puede asignar variables virtuales ej:<br />{iSubList} a,?R | sl_isublist_win.edf&_VAR={$nref} | cd_exp | 800,150 | IUVD</td>
+</tr>
+<tr>
+<td style="width: 147px;"> RelationField</td>
+<td style="width: 1519px;">Campo de relaci?n, en la sublista este valor si se tiene que poder grabar el campo "gs_user.cd_gs_user" con signo menos para indicar que es una alta temporal, cuando se confirmen los datos pondr? el dato del padre.<br />Si RelationField es una funci?n devolvera un texto con el nombre del campo de relacion y su valor ( ej: return "cd_exp='15'"; ).</td>
+</tr>
+<tr>
+<td style="width: 147px;"> Size</td>
+<td style="width: 1519px;">Tama?o del iframe. <br />El ancho puede ser un valor con y sin %<br />El Alto puede ser: un valor, valor negativo (indica tama?o inicial que despues se recalcula), valor mas una "r" para indicar el n? de filas a visualizar</td>
+</tr>
+<tr>
+<td style="width: 147px;"> Options</td>
+<td style="width: 1519px;">Inser, Update, View, Delete, File, Tools (de listado), Menú, - un separador del men? o una funci?n de usuario (en php en la sublista) que se le pasar? el valor "TH" o TD" para indicar donde se va a colocar los iconos, en el caso de ser la funci?n de usuario, en php, est? recibir? el par?metro "TH" o "TD" para indicar donde ir? el icono y si este va a desencadenar una opci?n de mantenimiento en la sublista se tendr? que pone " onclick='_ModeChange( [ Mode ] )' " siendo el Mode [i]nsert, [d]elete, [v]iew y [u]pdate</td>
+</tr>
+<tr>
+<td style="width: 147px;"> Acciones</td>
+<td style="width: 1519px;">"-title", "-icons"</td>
+</tr>
+<tr>
+<td style="width: 147px;"> ModoConsulta</td>
+<td style="width: 1519px;">Solo en el caso de que la SubLista se quiera ejecutar en modo consultas y la ficha contenedora en otro modo</td>
+</tr>
+<tr>
+<td style="width: 147px;"> MinimoNº Registros</td>
+<td style="width: 1519px;">M?nimo n?mero de registros a mostrar, si hay menos se rellenar? en blanco</td>
+</tr>
+<tr>
+<td style="width: 147px;"> InnerStyle</td>
+<td style="width: 1519px;">Interior de la propidad "style" del tag "iframe"</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">{iSubList} a,?R | prueba | cd_auto | -40,-30 | IUV-DTM / uFunction()</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[Fields]</code><br /><code>    Código     | cd_auto | 0 | T | 2  |     | A |  | = | </code><br /><code>   ,Autonom?a  | nm_auto | # | T | 50 | 200 | M |  | # | </code><br /><code>  </code><br /><code>{iSubList} a,?R | prueba  | cd_auto | 100%,3r | uFunc() | -title</code><br /><br /><code>// En el fuente "prueba.edf"</code><br /><code>[Fields]</code><br /><code>    cAuto   | cd_auto | #D | T | 2  |  | -  |  |   | </code><br /><code>    cProv   | cd_prov | #D | T | 2  |  | AQ |  | # | </code><br /><code>    NomProv | nm_prov | #D | T | 40 |  | MQ |  | # | </code><br /><br /><code>[PHPIni] l</code><br /><code>     function uFunction( $el ){</code><br /><code>          if( $el=='TH' ){</code><br /><code>               return '<img src="g/l_op_insert.gif" />';</code><br /><code>          }else{</code><br /><code>               return '<img src="g/l_op_update.gif" />';</code><br /><code>          }</code><br /><code>     }</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

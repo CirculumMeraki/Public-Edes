@@ -1,0 +1,77 @@
+#include(*) lng
+[Title]CONFIGURAR TEXTOS
+[RadioList]radiolist|4|ListarIdiomas()|text
+[Button]*|[U] Editar texto
+[FormAction]*|uEditar()
+[Fields]||trim
+Idioma|radiolist|o|SV|60||QM|es||
+-
+Texto a editar|texto|#|SV|40||M|||
+[CC]#SYS|$_GET["_SYS"]==18
+¿ $_GET["_SYS"]==18 ?¿
+[AddOption]*|texto
+TA,Textos de ayuda
+HK,Help KEY
+FM,Filtro múltiple
+?¿
+[AddOption]*|texto
+ME,Mensaje al exportar
+LG,Login
+CC,Política de cookies - Texto corto
+CL,Política de cookies - Texto largo
+NU,Password	New User
+RS,Password Reset
+RM,Password Remember
+DS,Documento de seguridad
+?
+[JSIni]*
+function uEditar(){
+var full = true,
+idioma = "_"+$radiolist;
+switch($texto){
+case "ME":
+url = "#a:$a/d/lng_expor";
+full = false;
+break;
+case "LG":
+url = "E:$t/translate.php&_EDF=/_datos/config/login.lng&_NOSORT=1&_KEYOFF=1";
+break;
+case "CC":
+url = "E:$wysiwyg_file.php&file=cookies_short"+idioma;
+break;
+case "CL":
+url = "E:$wysiwyg_file.php&file=cookies_long"+idioma;
+break;
+case "NU":
+url = "E:$wysiwyg_file.php&file=user_new"+idioma;
+break;
+case "RS":
+url = "E:$wysiwyg_file.php&file=pass_reset"+idioma;
+break;
+case "RM":
+url = "E:$wysiwyg_file.php&file=pass_remember"+idioma;
+break;
+case "DS":
+url = "E:/_datos/config/docsecurity"+idioma+".htm&T=H&D=P&TRACE=-1";
+break;
+case "TA":
+url = "E:$wysiwyg_help.php&file=seek";
+break;
+case "HK":
+url = "E:$lng/key_help"+idioma+".htm&T=H&D=P&TRACE=-1";
+break;
+case "FM":
+url = "E:$wysiwyg_help.php&file=condi_list";
+break
+}
+S.window(url, {fullscreen:full, title:S(":texto").option()+((S(":__radiolist").length>1)? " ("+S(":radiolist").option()+")":"")});
+}
+[PHPIni]*||UNIQUE
+function ListarIdiomas(){
+$p = array();
+qQuery("SELECT cd_gs_language,nm_gs_language FROM {$_SESSION['ShareDictionary']}gs_language");
+while( $row=qRow() ){
+$p[] = array($row[0], $row[1]);
+}
+return $p;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">6. Ancho en píxels</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">
+<p>Indica el ancho del campo en píxels.</p>
+<p>1.- Si el campo es un TEXTAREA (# en la columna 3) se pondrá: Ancho, Alto ( 100,30 ). <br />En los select que en la columna 7 (Modo) ponemos "I" o "i" pondremos: AnchoSelect, AnchoInteriorSelect.<br />Si queremos ver mas de una línea en un select pondremos el alto del select como tercer parámetro: AnchoSelect, AnchoInteriorSelect, AltoSelect.<br /><br />2.- El ancho también se puede expresar indicando el nombre de otro campo para asumir su longitud o bien la distancia entre dos controles con ellos inclusive poniendo campo inicial "+" campo final, ej.: "nombre+apellidos" la longitud del control actual será desde donde empieza el campo "nombre" hasta donde acaba el campo "apellidos" (su longitud no la alineación), y por ultimo si ponemos el signo mas "+" y luego el nombre de otro campo el campo actual será el ancho necesario para coincidir su lado derecho con el campo indicado, ej: "+apellidos".<br />- "vacio": Asume el ancho definido por la longitud del campo en caracteres<br />- "CampoReferncia": El campo actual será igual de ancho que el "CampoReferencia"<br />- "+CampoReferencia": El final del campo se alineará con el final del "CampoReferencia"<br />- "-CampoReferencia": Ajusta el ancho teniendo en cuenta los iconos que tenga el campo a su derecha para alinearlo con el CampoReferencia.<br />
+- "CampoReferncia1+CampoReferncia2".- La longitud del campo será igual que la distancia del inicio del "CampoReferncia1" hasta el final del "CampoReferencia2".<br />
+- "CampoReferncia1-CampoReferncia2".- La longitud del campo será igual que la distancia del inicio del "CampoReferncia1" hasta el final del "CampoReferencia2" mas los iconos que estén a su derecha.<br /><br />
+3.- En este campo podremos mover el campo con su label hasta en principio o final de otro de la siguiente forma:<br />
+
+- "&lt;camporeferencia": alinea el final del campo con "camporeferencia".<br />
+- "&gt;CampoReferencia": Alinea el principio del campo con el principio del campo "CampoReferencia.<br />
+- "&lt;&lt;": Alinea el final del campo con sus iconos con otro campo.<br /><br />
+Se pueden usar dos formatos a la vez separándolos por el símbolo "/".<br /><br />
+
+Los anchos solo se tiene encuenta en las fichas para que se aplique a listados anteponer el símbolo "=".<br />
+- 200 / =100: En la ficha será de 200px y en el listado de 100px</p>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table>
+<p> </p><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = 'none';
+window.focus();
+</SCRIPT>
+</BODY></HTML>

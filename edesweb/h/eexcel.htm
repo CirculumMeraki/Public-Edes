@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eExcel 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eExcel( "Comando|Parametro|Parametro|..." ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Función para la comunicación con el Excel. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL vAlign=middle>
+<COL vAlign=left>
+<COL vAlign=left>
+<TBODY>
+<TR>
+<TD>NEW, N</TD>
+<TD>Nuevo documento Excel, se crea de forma oculta.</TD>
+<TD>top.eExcel("N|NomFile");</TD></TR>
+<TR>
+<TD>OPEN, O</TD>
+<TD>Abre un documento existente.</TD>
+<TD>top.eExcel("O|NomFile");</TD></TR>
+<TR>
+<TD>VISIBLE, V</TD>
+<TD>Muestra (1/T/TRUE) u oculta (0/F/FALSE) el documento</TD>
+<TD>top.eExcel("V|T");</TD></TR>
+<TR>
+<TD>SAVE, S</TD>
+<TD>Graba el documento</TD>
+<TD>top.eExcel("S");</TD></TR>
+<TR>
+<TD>SAVEAS, SA</TD>
+<TD>Graba el documento</TD>
+<TD>top.eExcel("SA|NomFile");</TD></TR>
+<TR>
+<TD>EXIT, E, QUIT,&nbsp;Q</TD>
+<TD>Cerrar el documento</TD>
+<TD>top.eExcel("E");</TD></TR>
+<TR>
+<TD>FREE</TD>
+<TD>Libera la memoria usada.</TD>
+<TD>top.eExcel("Free");</TD></TR>
+<TR>
+<TD>PRINT</TD>
+<TD>Imprime el documento actual.</TD>
+<TD>top.eExcel("PRINT");</TD></TR>
+<TR>
+<TD>WORKSHEETS, W</TD>
+<TD>Hoja por defecto</TD>
+<TD>top.eExcel("W|1");</TD></TR>
+<TR>
+<TD>WORKSHEETS.NAME, WN</TD>
+<TD>Dá nombre a una hoja del documento, empieza por la hoja 1.</TD>
+<TD>top.eExcel("WN|NumHoja|NomHoja");</TD></TR>
+<TR>
+<TD>GET, G</TD>
+<TD>Obtener el valor de una celda.</TD>
+<TD>top.eExcel("G|y,x");</TD></TR>
+<TR>
+<TD>MERGE,M</TD>
+<TD>Une celdas</TD>
+<TD>top.eExcel("M|A1:A5");</TD></TR>
+<TR>
+<TD>INSERTROW</TD>
+<TD>Inserta filas</TD>
+<TD>top.eExcel("INSERTROW|NumRow|Rows a insertar");</TD></TR>
+<TR>
+<TD>INSERTCOLUMN</TD>
+<TD>Inserta una columna</TD>
+<TD>top.eExcel("INSERTCOLUMN|NumColumn");</TD></TR>
+<TR>
+<TD>RESIZE</TD>
+<TD>Cambia la posición y el tamaño de la ventana</TD>
+<TD>top.eExcel("RESIZE|left,top,width,height");</TD></TR>
+<TR>
+<TD>SAVEASHTML</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>
+<P>SAVEASCSV</P></TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>REPLACE</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>PUT, P</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>PASTE</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>FORMULA, F</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>COLUMNWIDTH, CW</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>ROWHEIGHT, RH</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>BOLD,B</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>FONTNAME, FN</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>FONTSIZE, FS</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>FONTITALIC, FI</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>WRAPTEXT, WT</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>INTERIORCOLOR, IC</TD>
+<TD>Si x e y son mayores de cero pintará una celda.<BR>Si la coordenada "y" se pone a "0" pondrá de color toda la fila<BR>top.Excel("IC|3,0|"+_ImportColorCursor)<BR>Si solo se pone una coordenada pintara toda la columna</TD>
+<TD>top.eExcel("IC|3,1|#00FF00");</TD></TR>
+<TR>
+<TD>FONTCOLOR, FC</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>BORDERCOLOR, BC</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>BORDERWEIGHT, BW</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>NUMBERFORMAT, NF</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>HORIZONTALALIGNMENT, HA</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>VERTICALALIGNMENT, VA</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>COLUMNSDELETE, CD</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>ROWSDELETE, RD</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>AUTOFIT, A</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>INSERTROW</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>INSERTCOLUMN</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>USEDRANGE</TD>
+<TD></TD>
+<TD>top.eExcel("|");</TD></TR>
+<TR>
+<TD>PICTURE</TD>
+<TD>Inserta un gráfico en una celda. Parametros:<BR>LF = LinkToFile<BR>SW = SaveWithDocument</TD>
+<TD>
+<P>WE.eExcel("PICTURE|C:\tmp\grafico.png|LF,SW|y,x|Ancho,Alto");<BR>WE.eExcel("PICTURE|http://.../grafico.png|LF,SW|y,x|Ancho,Alto");</P></TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR style="DISPLAY: none">
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR>
+<TR style="DISPLAY: none">
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

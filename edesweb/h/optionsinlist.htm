@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">OptionsInList</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[OptionsInList] Opciones [ | Icon | userFunction | label ... ]  [ | Condition/Funcion ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Ejecutar un listado con opciones de mantenimiento, la opción se ejecutará como "edes.php?Lcl:..", el modo en que se ejecuta indica la opción por defecto a ejecutar en el listado, también puede ser "ml", o "bl".<br />En los script "gdf" se pondrá la etiqueta en el script de la primera solapa, que es de la que se genera el listado.<br />Si se quiere poder filtrar al entrar se ejcutará con "edes.php?Lgl:.." y activará la condición si existe.<br />En "Opciones" se puede combinar el "*" con cualquier opción así como desactivarla ponieno un signo menos delate de la opción "*-b" todas las opciones menos la de borrar.<br />La coma "," delimitará mediante una barra vertical las opciones.<br />La "Condición" puede ir en el 2 o 5 parámetro en función de si tiene la opción de usuario o no, la condición puede ser texto o el nombre de una función terminada con "()" que devuelva la cadena del where.<br />En "Opciones" si ponemos una "o" será una o varias opciones del usuario, cada opción constará de tres parámetros: el icono, la función de usuario y el label, estas opciones funcionan igual que las de gestión pulsas la opción y luego un registro de la tabla, si se quiere ejecutar la opción directamente se pondrá el caracter ">" delante del nombre de la función y esta enviará el objeto "this".<br />Esta etiqueta anula a [FormAction].<br />Esta etiqueta al ejecutar listados se activa una variable para saber el modo en que se ejecuta dicha etiqueta:<br />     $_OptionsInListMode:<br /><code>          LR....: LastRecords</code><br /><code>          NLR-NR: NoLastRecords-NoRecords</code><br /><code>          NLR-L.: NoLastRecords-List</code><br /><code>          NLR-AF: NoLastRecords-AddFilter</code></td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code><span style="font-family: sans-serif;">[OptionsInList] *</span></code></td>
+</tr>
+<tr>
+<td id="txt"><code><span style="font-family: sans-serif;">Establece las opciones de "abcmfou", "f" de Filter, "u" de "últimos registros gestionados" y la "o" representa una opción definida por el usuario.</span></code></td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code><span style="font-family: sans-serif;">[OptionsInList] mc</span></code></td>
+</tr>
+<tr>
+<td id="txt">Solo se permiten las opciones de Modificar y Consultar</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><span style="font-family: sans-serif;"><code>[OptionsInList] bcmafou | email | uFunction | Mandando email</code><br /><code>[JSIni] *</code><br /><code>function uFunction(oTR, pk1 [,...]){</code><br /><code>     // oTR: objeto TR pulsado</code><br /><code>     // pk1: primer valor de la etiqueta [DBIndex]</code><br /><code>}</code></span></td>
+</tr>
+<tr>
+<td id="txt">La "o" define una opción del usuario</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[OptionsInList] fu,abcm,o                               _</code><br /><code>     | ==& #281; | EditarPDF       | Editar             _</code><br /><code>     | print     | ImprimirPDF     | Imprimir           _</code><br /><code>     | copy      | DuplicarImpreso | Duplicar Impreso   _</code><br /><code>     | ==& #230; | >TipoDeImpresos | Tipo Impresos      _</code><br /><code>     | ==& #123; | SiguienteHoja   | Ver impreso        _</code><br /><code>     | ==& #124; | SiguienteHoja2  | Siguiente impreso | cd_gs_form_type={$cd_gs_form_type}</code><code></code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

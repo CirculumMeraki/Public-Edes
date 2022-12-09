@@ -1,0 +1,67 @@
+[Title]=HELP FUNCION "e"
+[DBLimit]10000,1000
+[MaxRec]FULL
+[ColsWidth],500
+[PDFWrap]50
+[PDFCol]descripcion=94
+[Fields]
+Label|label|#|T|20||-|||
+Descripción|descripcion|#|A|500||-|||
+[DBSql]l
+$files = array("../../edesweb/h/help_edes_e.txt", "../../lib/edesweb/help_edes_e.txt");
+for($i=0; $i<2; $i++){
+if( file_exists($files[$i]) ){
+$help = file($files[$i]);
+for($n=0; $n<count($help); $n++){
+$linea = trim($help[$n]);
+if( $linea<>"" && $linea[0]<>"#" ){
+list($linea, $desc) = explode("~", $linea);
+list($cmd, $linea) = explode("(", $linea);
+$usuCursor[] = array(trim($cmd), $desc);
+}
+}
+}
+}
+[JSOnClickRow]*
+var pkTitle = S.trim(_oTR.cells[0].innerText),
+pk = S.replace(pkTitle,".", "_");
+if( (top._M_=="~" || (top.opener && top.opener._M_=="~")) && event.ctrlKey ){
+S.window("edes.php?E:$help_edes.gs&EDITHELP="+pk+"~W",
+{fullscreen:true, title:pkTitle, minimize:0}
+);
+return S.eventClear(window);
+}
+if( _WOPENER._AplicationEDES=="gsEdit" ){
+if( ColNumber==0 ){
+if( !_WOPENER.EditorActivo() ) return S.eventClear(window);
+var cmd = _oTR.cells[0].innerText+"(",
+nLinea = _WOPENER._Editor.getCursor()["line"]*1,
+line = S.rtrim(_WOPENER._Editor.doc.getLine(nLinea)),
+c = _WOPENER._Editor.getCursor()["ch"],
+dim = _WOPENER._Editor.doc.getValue().split("\n"),
+st = _WOPENER._Editor.getDoc().scrollTop;
+if( cmd[0]=="e" ){
+cmd = S.mid(cmd,1,0);
+}else{
+line = S.left(line, line.length-1);
+}
+dim[nLinea] = line+cmd;
+_WOPENER._CargaEDF(dim.join("\n"));
+_WOPENER._Editor.scrollTo((line+cmd).length, st);
+_WOPENER._Editor.setCursor(nLinea, (line+cmd).length);
+S.window(window);
+}else{
+S.window("edes.php?E:$help_edes.gs&PK="+pk,
+{fullscreen:true, title:pkTitle, minimize:0}
+);
+return S.eventClear(window);
+}
+}
+[JSEnd]*
+top.S.info('<center><b>HELP</b></center><table class="HELP">\
+<tr><td>Click en la cabecera del "Label"</td><td>Ordenará la columna\
+<tr><td>Click Derecho en la cabecera</td><td>Filtrará los datos\
+<tr><td>Click en la columna izquierda</td><td>Insertará la Etiqueta/Función (si el editor está activo)\
+<tr><td>Click en la columna derecha</td><td>Mostrará la Ayuda completa de la Etiqueta/Función\
+</table>',
+20);

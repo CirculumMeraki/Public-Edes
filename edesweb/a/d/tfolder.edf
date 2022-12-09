@@ -1,0 +1,20 @@
+[Title]TIPO DE ESTRUCTURA
+[DBTable]gs_tstructure
+[DBIndex]cd_gs_tstructure
+[DBOrder]sort
+[DBSerial]cd_gs_tstructure
+[UploadFile]icon_0|/_datos/config|cd_gs_tstructure|20.000|Tipo Estructura|gif|_0
+[UploadFile]icon_1|/_datos/config|cd_gs_tstructure|20.000|Tipo Estructura|gif|_1
+[Format],,C,C
+if( $_vF[2]!='' ) $_vF[2] = '<img src="edes.php?R:/_datos/config/'.$_vF[0].'_0.gif">';
+if( $_vF[3]!='' ) $_vF[3] = '<img src="edes.php?R:/_datos/config/'.$_vF[0].'_1.gif">';
+[SortList]ml|sort
+[AddOption]*|container|,; S,Sitio; G,Grupo; P,Puesto
+[THColSpan]icon_0,icon_1,Iconos
+[Fields]
+|cd_gs_tstructure|+|T|2||*|||
+Elemento|nm_gs_tstructure|#D|T|60||MQ||#|
+Icono Cerrado\Cerrado|icon_0|#D|F|60||MD||#|
+Icono Abierto\Abierto|icon_1|#D|F|60||MD||#|
+Tipo|container|N|SV|6||M|||
+,Ordenación\ORD|sort|+|T|2||M|||

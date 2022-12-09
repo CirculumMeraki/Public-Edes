@@ -1,0 +1,66 @@
+#!(l) [CSSAdd] * | fch_{$_GRUPOMENU}
+#(l)  [CSSAdd] * | lst_{$_GRUPOMENU}
+[Title]=Listado de Usuarios con permisos especiales
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[DBLimit]10.000
+[OnChange]?|dni|ePadLeft(this,8);
+[AddOption]?|permission|,;S,Activado; N,Desactivado; C,Caducado
+[SelectMultiple]?|_cd_gs_tree|11
+[NoEditFilled]*|Session
+[FormAction]*|Ll:
+[Fields]?
+DNI|dni|DNI|T|8||Qcpq|||
+,Usuario|cd_gs_user|+|T|8|<user_name|Q|||
+Apellidos|user_surname|X|T|30|user_name|Q|||
+Nombre|user_name|X|T|20|294|Q|||
+Local|cd_gs_node|X|S|7|user_name|Q|||
+E-Mail|email|@|T|65|user_name|QEq|||
+-||||||Q|||
+Árbol|_cd_gs_tree{{$_SESSION['ShareDictionary']}gs_tree,cd_gs_tree,nm_gs_tree}|X|S|2|+user_name|Q|||
+Permiso de Acceso|permission|X|SV|10|100|Q|S||
+#include(?) /_datos/config/report_usr_1.idf|true
+#(l) [Expire] 0
+[PDFWrap]5
+[PDFCol]permiso=90
+[PDFVar]PDF_Grid = true
+[ColsOp]S
+[Fields]l
+Usuario|cd_gs_user|X|T|60||-|||
+Permiso Especial|permiso|X|T|255|400|-|||
+[PHPIni]l||UNIQUE
+if( $_POST["_FILTER_dni"]<>"" ){
+$_POST["dni"] = "";
+$txtDNI = "'".str_replace(chr(13), "','", str_replace(array(","," ",chr(10)), array(chr(13),"",""), trim($_POST["_FILTER_dni"])))."'";
+$txtDNI = str_replace(",''", "", $txtDNI);
+}
+if( $_POST["_FILTER_email"]<>"" ){
+$_POST["email"] = "";
+$txtEMAIL = "'".str_replace(chr(13), "','", str_replace(array(","," ",chr(10)), array(chr(13),"",""), trim($_POST["_FILTER_email"])))."'";
+$txtEMAIL = str_replace(",''", "", $txtEMAIL);
+}
+$where = qGetWhere();
+if( $where<>"" ) $where .= " and ";
+if( $txtDNI<>"" ) $where .= " dni in ({$txtDNI}) and ";
+if( $txtEMAIL<>"" ) $where .= " email in ({$txtEMAIL}) and ";
+$arboles = "";
+if( $_POST["_cd_gs_tree"]<>"" ) $arboles = " cd_gs_tree in (".str_replace("||", ",", $_POST["_cd_gs_tree"]).") and ";
+[DBSql]l
+$tmptablename2 = "_op_especial_{$_SESSION['_User']}";
+if( eSqlType('mysql,mysqli') ){
+qQuery("create temporary table {$tmptablename2} (cd_gs_user integer, usuario varchar(60), options varchar(60), seq integer, cd_gs_tpermission integer, note varchar(255) )");
+}else{
+qQuery("create temp table {$tmptablename2} (cd_gs_user integer, usuario varchar(60), options varchar(60), seq integer, cd_gs_tpermission integer, note varchar(255) )");
+}
+qQuery("insert into {$tmptablename2} select P.cd_gs_user, '', T.options,0, P.cd_gs_tpermission, T.note from {$_SESSION['ShareDictionary']}gs_tpermission T, gs_permission P where T.cd_gs_tpermission=P.cd_gs_tpermission and exists (select cd_gs_user from gs_user where {$where} P.cd_gs_user=cd_gs_user)");
+if( eSqlType('mysql,mysqli') ){
+qQuery("update {$tmptablename2} set usuario=(select concat(user_name,' ',user_surname) from gs_user where cd_gs_user={$tmptablename2}.cd_gs_user)");
+}else{
+qQuery("update {$tmptablename2} set usuario=(select user_name||' '||user_surname from gs_user where cd_gs_user={$tmptablename2}.cd_gs_user)");
+}
+$usuCursor = array();
+qQuery("select * from {$tmptablename2} order by usuario, note", $p1);
+while($r=qArray($p1)){
+$usuCursor[] = array($r["usuario"], $r["note"]);
+}

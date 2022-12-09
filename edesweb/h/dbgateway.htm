@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>DBGateway 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[DBGateway] Mode | ScriptPHP 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Esta etiqueta sólo tiene validez en archivos EDF simples (no en grupos de fichas).<BR>Cuando solicitamos una búsqueda desde un formulario, una vez encontrado algún registro, se ejecutará el script PHP introducido.<BR>El script de esta etiqueta tendrá validez sólo en caso de que se encuentre algún registro. El modo para ejecutar el EDF puede ser "s" para ejecutar el script de la etiqueta DBGateway llegando a este script la variable "$_SQL" con la sentencia sql sin ejecutar y el modo "q" que es igual pero lo que llega al script es el cursor, es decir despues de ejecutar la sentencia sql.
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>ScriptPHP: Se le puede pasar un parámetro a este php poniendo un "=" y luego la asignación, ejemplo:<BR>[DBGateway] S | inf_productos.php?=$cd_fabrica=12 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[Title] INFORMES DE PRODUCCION<BR><BR>[DBGateway] S&nbsp;| inf_produc.php&nbsp;</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

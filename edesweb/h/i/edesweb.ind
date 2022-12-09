@@ -1,0 +1,373 @@
+eDesWeb
+
+	Concepto
+		eDes+ini
+		S
+		.add
+		.after
+		.append
+		.appendTo
+		.each
+		.get
+		.obj
+		
+	Funciones de Array
+		S.toArray
+
+	Funciones de CSS
+		.background
+		.block
+		.class
+		.color
+		.css
+		.cssVal
+		.display
+		.fixed
+		.hidden
+		.none
+		.rule
+		.table
+		.toScroll
+		.visibility
+		.visible
+		.zIndex
+		S.display
+		S.labelFix
+		S.ruleGet
+		S.sheet
+		S.sheetCopy
+		S.visibility
+
+	Funciones de Cadena
+		.HTML+u
+		.TEXT+u
+		.html
+		.text
+		S.char
+		S.code
+		S.colapse
+		S.crc32
+		S.filterAccent
+		S.filterChar
+		S.getCookie
+		S.getSelection
+		S.join
+		S.left
+		S.lng
+		S.lower
+		S.ltrim
+		S.mid
+		S.midn
+		S.month
+		S.nsp
+		S.padL
+		S.padR
+		S.regExp
+		S.repeat
+		S.replace
+		S.reverse
+		S.right
+		S.rtrim
+		S.serialize
+		S.split
+		S.splitHash
+		S.splitLast
+		S.stripTags
+		S.trim
+		S.trimTextArea
+		S.unserialize
+		S.upper
+		S.write
+
+	Funciones de Campos
+		.download
+		.fieldError
+		.fields
+		.label
+		.nextValue
+		.option
+		.radio
+		.selectColLabel
+		.value
+		.values
+		S.fieldLabel
+		S.fieldNext
+		S.fileFullname
+		S.fileName
+		S.fileType
+		S.fitHeight
+		S.fitWidth
+		S.focus
+		S.focusOff
+		S.format
+		S.linkField
+		S.relationReset
+		S.selectAttr
+		S.selectClear
+		S.selectClick
+		S.selectKey
+		S.selectOff
+		S.selectRange
+		S.selectReset
+		S.selectValue
+		S.thousands
+		S.thousandsClear
+		S.values
+
+	Funciones de Chequeo
+		S.check
+		S.checkType
+		S.format
+
+	Funciones de Colores
+		S.colorTone
+		S.hex2rgb
+		S.rgb
+		S.rgb2hex
+
+	Funciones de Comunicación
+		.callSrvPost
+		S.call
+		S.callCreate
+		S.callSrv
+		S.loadJS
+		S.script
+		S.notification
+
+	Funciones de Desarrollo
+		S.editScript
+		
+	Funciones de Eventos
+		.drag
+		.eventChange
+		.eventClick
+		.eventFire
+		.on
+		.over
+		S.click
+		S.event
+		S.eventClear
+		S.eventCode
+		S.eventFire
+		S.eventObj
+
+	Funciones de Fecha
+		S.d2s
+		S.date
+		S.dateAddDays
+		S.dateAddMonth
+		S.dateAddYear
+		S.dateDiff
+		S.dateType
+		S.monthAdd
+		S.monthDays
+		S.monthDiff
+		S.s2d
+		
+	Funciones de Formularios
+		.submitCheck
+
+	Funciones de Tablas
+		.col
+		.sort
+		.td
+		.tr
+		.trFilter
+		S.cellIndex
+		S.colNumber
+		S.sort
+		S.tableFit
+		S.td
+
+	Funciones de Ventanas
+		.goto
+		.resize
+		.window
+		.windowCaption
+		.windowColor
+		.windowFit
+		.windowGetCaption
+		.windowIcon
+		.windowInside
+		.windowIs
+		.windowList
+		.windowResize
+		.windowWrite
+		S.iframeToWindow
+		S.open
+		S.window
+		S.windowClose
+		S.windowFocus
+		S.windowHidden
+		S.windowIs
+		S.windowObject
+		S.windowShow
+		S.windowSize
+		S.windowView
+		S.windowStatus
+
+	Manipulación de objetos
+		.nodeAfter
+		.nodeBefore
+		.nodeBegin
+		.nodeCopy
+		.nodeEmpty
+		.nodeEnd
+		.nodeMove
+		.nodeMoveFirst
+		.nodeRemove
+		.nodeReplace
+		.nodeStart
+		.nodeSwap
+		S.createHTML
+
+	Funciones Lógicas
+		S.is
+		S.isUtf8
+
+	Funciones UI
+		.calendar
+		.calendarMonth
+		.error
+		.info
+		.infoRun
+		.loading
+		.menu
+		.menuRow
+		.tip
+		.tooltip
+		.tree
+		.tree2
+		S.alert
+		S.error
+		S.errorHidden
+		S.help
+		S.info
+		S.infoHide
+		S.infoRun
+		S.loading
+		S.ok
+		S.progressText
+		S.progressUpload
+		S.tip
+		S.tree
+		S.warning
+
+	Funciones Varias
+		.around
+		.attr
+		.button
+		.center
+		.clipboardGet
+		.clipboardPut
+		.exists
+		.find
+		.fullscreen
+		.incr
+		.isParent
+		.modal
+		.move
+		.ready
+		.scroll
+		.scrollSet
+		.search
+		.sequence
+		.set
+		.sum
+		.title
+		.toTag
+		.widthText
+		.xy
+		S.arrayObject
+		S.captureImage
+		S.clipboardPut
+		S.count
+		S.cssToJson
+		S.dataFormat
+		S.each
+		S.exit
+		S.fullscreen
+		S.iframe
+		S.imgResize
+		S.imgToBase64
+		S.imgTools
+		S.init
+		S.isNotOnLoad
+		S.isReady
+		S.json
+		S.key
+		S.keyPaste
+		S.modal
+		S.modalDelete
+		S.objWindow
+		S.offset
+		S.posCursor
+		S.posCursorHtml
+		S.preview
+		S.round
+		S.run
+		S.runHTML
+		S.screen
+		S.scrollGet
+		S.sound
+		S.toClass
+		S.toObject
+		S.toTag
+		S.toExcel
+		S.type
+		S.url
+		S.wrapFunction
+		S.xy
+		S.xyTop
+
+	~INTERNO~
+		Variables
+			TEXT
+			_Lng
+			session
+			setup
+		Funciones
+			.check
+			.radio
+			_viewLog+w
+			addEvent
+			array+w
+			atributo
+			code
+			createDOM+w
+			cssCapitalize+w
+			cssUnCapitalize+w
+			divide
+			eIndex+w
+			getStyle+w
+			iff+w
+			insert
+			is
+			lng
+			lower
+			mid
+			midn
+			nsp
+			objWindow+w
+			padL
+			padR
+			property
+			px+w
+			px2num+w
+			removeEvent
+			repeat
+			S.toDo
+			screen
+			selectElements+w
+			showtoggle
+			sourceIndex+w
+			split
+			splitArg+w
+			splitLast
+			thousandsClear
+			tipShow
+			trim
+			type
+			upper
+			valuesForm
+			xy

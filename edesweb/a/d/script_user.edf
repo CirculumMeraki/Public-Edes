@@ -1,0 +1,21 @@
+[Title]=Script y Usuarios|l
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]script
+[DBLimit]50000, 1000
+[ColsOp]c,+
+[Fields]?
+Usuario|cd_gs_user{gs_user, cd_gs_user, user_name,' ',user_surname}|0|S|9|script|MQ|||
+Cdi|cdi|CDI|T|19||MQ|||
+Script|script|#|T|90||MQ|||
+Cdi FTP|cdi_ftp|CDI|T|19||MQ|||
+[Fields]else
+Script|script|#|T|100||MQ|||
+Número de·Grabaciones|total|+|T|9||MQ|||
+[DBSql]l
+$xWhere = qGetWhere( 'A' );
+if( $xWhere<>'' ) $xWhere = ' and '.$xWhere;
+qQuery( "select A.script, count(*) from {$_SESSION['ShareDictionary']}gs_activity A where edes<>'P' {$xWhere} group by 1 order by 1" );
+$_TReg = 3;
+[JSOnClickRow]l
+top.eSWOpen( window, 'Ll:$a/u/activity_df&_FILTER='+escape('script="'+eTrim(_oTR.cells[0].innerHTML)+'"'), '', false );

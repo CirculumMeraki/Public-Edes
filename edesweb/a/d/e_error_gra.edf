@@ -1,0 +1,55 @@
+#include(*) $lng/e_error.edf.lng
+[Title]=EVOLUCION DE ERRORES|l
+[DBTable]{$_SESSION['ShareDictionary']}gs_error
+[DBLimit]1000,200
+[FormAction]*|edes.php?Ll:
+[AutoMenu]l|1
+[PDFVar]PDF_Grid = true
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[Fields]
+@Instante desde@|_desde|F4|T|10||QF|||
+,@Hasta@|_hasta|F4|T|10||QF|||
+|_ReportAll|X|C|1||Q||S|
+Dia|dia|F4|T|10||-|||
+Errores|errores|+|T|5||-|||
+Corregidos|corregido|+|T|5||-|||
+[DBSql]l
+$xWhere = qGetWhere();
+if( $xWhere!='' ) $xWhere = ' where '.qGetWhere();
+$Hoy = date('Y-m-d');
+$Hasta = date( 'Y-m-d', strtotime( "+1 day", strtotime($Hoy) ) );
+$Desde = date( 'Y-m-d', strtotime( "-30 day", strtotime($Hoy) ) );
+$CdiFecha = "cdi";
+qQuery("select {$CdiFecha},count(*) from {$_SESSION['ShareDictionary']}gs_error
+where cdi>'{$Desde} 00:00:00' and cdi<'{$Hasta} 00:00:00'
+group by 1 order by 1");
+$nd = 0;
+$Fecha = $Desde;
+$NewFecha = $Desde;
+while( $r=qRow() ){
+while( $NewFecha<$r[0] && $NewFecha<$Hasta ){
+$usuCursor[] = array( $NewFecha, 0, 0 );
+$nd++;
+$NewFecha = date('Y-m-d', strtotime( "+{$nd} day", strtotime($Fecha) ) );
+}
+$usuCursor[] = array( $r[0], $r[1], 0 );
+$nd++;
+$NewFecha = date('Y-m-d', strtotime("+{$nd} day", strtotime($Fecha)));
+}
+qQuery("select {$CdiFecha},count(*) from {$_SESSION['ShareDictionary']}gs_error
+where cdi>'{$Desde} 00:00:00' and cdi<'{$Hasta} 00:00:00' and is_solved='S'
+group by 1 order by 1");
+while( $r=qRow() ){
+for( $n=0; $n<count($usuCursor); $n++ ){
+if( $usuCursor[$n][0]==$r[0] ){
+$usuCursor[$n][2] = $r[1];
+break;
+}
+}
+}
+[Format],b,b
+[Graph]P,C,G|OCURRENCIAS|ERRORES||ULTIMOS 30 DIAS|Legenda
+[RowsOp],+,-, Diferencia
+[ColsOp]c,+,+
+[ChartCol]3

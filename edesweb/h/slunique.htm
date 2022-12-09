@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="height: 620px; width: 100%;" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="height: 18px;">
+<td id="Etiqueta" style="height: 18px;">slUnique</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tSintaxis" style="height: 18px;">SINTAXIS</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Sintaxis" style="height: 18px;">{slUnique} ListaDeCampos [ | MensajeDeError]</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tDescripcion" style="height: 18px;">DESCRIPCION</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Descripcion" style="height: 18px;">Evita duplicados dentro de las sublistas, etiqueta [SubList].</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tParametro" style="height: 18px;">PARAMETROS</td>
+</tr>
+<tr style="height: 36px;">
+<td id="Parametro" style="height: 36px;">ListaDeCampos : Lista de campos separados por coma que no se pueden repetir. Si en la SubLista el nombre de los campos tiene alias en esta etiqueta habrá que poner en slUnique los nombres de los campos con alias.<br />MensajeDeError: El mensaje es opcional, se pueden poner saltos de línea "<br>" y si aparece en el mensaje el símbolo "#" lo sustituirá por el número de la fila que tiene los mismos valores en la sublista.</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 36px;">
+<td id="Ejemplo" style="height: 36px;"><code>{slUnique} talla, modelo, color | Artículo repetido<br>Compruebe la lista. </code><br /><code>{slUnique} a.nm_articulo</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;"> </td>
+</tr>
+<tr style="height: 18px;">
+<td id="tEjemplo" style="height: 18px;">EJEMPLO</td>
+</tr>
+<tr style="height: 368px;">
+<td id="Ejemplo" style="height: 368px;">
+<p><code>- | SUBFICHA "Usuario"</code><br /><code>     Usuario         | _cd_gs_user{gs_user,cd_gs_user, email} | + | S | 60 | | M | | # |</code><br /><code>     ...</code><br /><code>- | LISTADO "Usuarios</code><br /><code>          | [__gs_chat_user] | o                                      |   |   |    | |   | |</code></p>
+<p><br /><code>[SubList] a,?R | __gs_chat_user</code><br /><code>     {slGL} Sql  | TypeData | Align | ColsWidth | Format        | ColsOp | Menu         | TH</code><br /><code>            ""   |          |   I   |           | [v][d][u]\[v] |        | IMG          | [i]\</code><br /><code>     c.cd_gs_user| T        |   H   |           |               |        | _cd_gs_user  | Usuario</code><br /><code>     u.email     | T        |   I   |           |               |        | *_cd_gs_user | EMail</code><br /><code>     c.msg_send  | C        |   C   |           |               |        | _msg_send    | Mensages·Enviar</code><br /><code>     ...</code></p>
+<p><code>{slUnique} u.email                                   // Campo literal del select</code></p>
+<p><code>{slUnique} c.msg_send | Registro ya insertado        // Con un checkbox</code><br /><code>{slUnique} c.msg_send                                //</code></p>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

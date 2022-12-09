@@ -1,0 +1,22 @@
+[Title]=PALABRAS TABU
+[DBTable]gs_tabu
+[DBIndex]palabra
+[DBOrder]nm_gs_tabu_tipo, palabra
+[FormStatic]
+[WinTools]a,?R|P
+[OptionsInList]fuabcm,o					_
+| &#125; | >TabuTipo | Tipo de palabras
+[JSIni]*
+function TabuTipo(oRow, pk){
+S.window("edes.php?Lml:$a/poll/gs_tabu_tipo.edf", {title:"TIPO DE PALABRAS TABU", fullscreen:true});
+}
+[Chr]letras|L||a-z ñçáéíóúâêîôûàèìòùäëïöü!¡ãõ
+#(?) [Chr] letras | L | | *?a-z ñçáéíóúâêîôûàèìòùäëïöü!¡ãõ
+[Fields]
+Tipo|cd_gs_tabu_tipo|D|S|25||MQd||#|
+Palabra|palabra|letras|T|25||MQ||#|
+Varias palabras|varias|N|C|1||*QL|||
+[JSCheck]a,mR
+if( $palabra.indexOf(" ")>-1 ) $varias = "S";
+[DBEnd]A,M
+qQuery("delete from gs_poll_dct where palabra='{$_POST['palabra']}'");

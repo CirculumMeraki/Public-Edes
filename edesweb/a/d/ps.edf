@@ -1,0 +1,76 @@
+#include(*) lng
+[Title]=@PROCESOS EJECUTANDOSE EN EL SERVIDOR@
+[Fields]
+UID|UID|X|T|20||-|||
+PID|PID|+|T|10||-|||
+PPID|PPID|+|T|10||-|||
+C|C|+|T|10||-|||
+SZ|SZ|+|T|10||-|||
+RSS|RSS|+|T|10||-|||
+PSR|PSR|+|T|10||-|||
+STIME|STIME|X|T|20||-|||
+TTY|TTS|X|T|10||-|||
+TIME|TIME|X|T|10||-||=|
+COMMAND|COMMAND|X|T|30||-|||
+PARAMETROS|PARAMETROS|#|H|20||-|||
+ES PHP|PHP|X|T|1||*||=|
+@Usuario@|cd_gs_user|+|T|5||-|||
+[ColsColor]PID=JSOnClickRow, cd_gs_user=JSOnClickRow
+[JSIni]l
+function uKill( Op, Dim, PID ){
+if( Op==2 ) top.eCallSrv( window,"KillPID="+PID );
+return;
+}
+[JSOnClickRow]*
+if( ColNumber==13 && eGF('cd_gs_user')>0 ){
+top.eSWOpen( window, 'edes.php?FcR:$a/d/usu_ficha.edf&_SEEK&cd_gs_user='+eGF('cd_gs_user') );
+}else if( eGF('PHP')=='S' || eGF('COMMAND')=='grep' ){
+top.eAlert( S.lng(210), '@Matar el proceso@'.replace('#',eGF('PID')), "A,C", 'DH', uKill, null, eGF('PID') );
+}else{
+top.eInfo(window,'@El proceso no es de PHP@');
+}
+[DBSql]l
+global $usuCursor;
+$usuCursor = array();
+$xSalida = shell_exec("ps -F");
+if( !isset($_PHPEXE) ) $_PHPEXE = 'php';
+$_PHPEXE = str_replace('\\','/',$_PHPEXE);
+$_PHPEXE = '/'.$_PHPEXE;
+$xPhpExe = explode('/',$_PHPEXE);
+$xPhpExe = $xPhpExe[count($xPhpExe)-1];
+$DimPS = explode("\n",$xSalida);
+for( $n=0; $n<count($DimPS); $n++ ){
+$txt = trim($DimPS[$n]);
+while( substr_count($txt,'  ') > 0 ) $txt = str_replace('  ',' ',$txt);
+if( trim($txt)=='' ) continue;
+$Dim = explode(' ',$txt);
+if( count($Dim)<11 ) continue;
+$xPID = $Dim[1];
+if( $xPID=='PID' ) continue;
+$xSTIME = $Dim[7];
+$xTIME = $Dim[9];
+$xCMD = $Dim[10];
+if( !isset($Dim[11]) ) $Dim[11] = '';
+$xEXE = $Dim[11];
+if( !isset($Dim[12]) ) $Dim[12] = '';
+$xParametros = '';
+for( $i=11;$i<count($Dim); $i++ ){
+if( $xParametros!='' ) $xParametros .= ' ';
+$xParametros .= $Dim[$i];
+}
+$xParametros = wordwrap($xParametros,80,'<br>');
+$Dim[11] = $xParametros;
+$Dim[12] = (( $xCMD != $xPhpExe ) ? '':'S');
+$cdi = date( 'Y-m-d H:i:s', mktime(0,0,0,date('m'),date('d')-2,date('Y')) );
+qQuery("select cd_gs_user from gs_bkg where bkg_pid='{$Dim[1]}' and y2s_start>'{$cdi}'" );
+list( $Dim[13] ) = qRow();
+$usuCursor[] = $Dim;
+}
+[CallSrv]KillPID
+shell_exec( "kill -9 {$KillPID}" );
+?>
+<script type="text/javascript">
+top.eInfo(window.frameElement.WOPENER,'<?=eLng('Proceso eliminado')?>');
+window.frameElement.WOPENER.history.go();
+</script>
+<?PHP

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">View</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[View] Title1 | Title2 | ...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Te muestra un listado con varias visualiaciones a la vez, representadas con un icono cad una arriba a la izquierda</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">En la columna "Color" / "Mode", a parte de modo se pone el nº de la posición de la vista a visualizar, empezando por el cero.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[View] Datos gen&eacute;ricos | Datos de pago | Otros datos<br /><br />[Fields] l || mix</code><br />&nbsp; &nbsp; &nbsp;<code>.  Label&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Field&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | TE | TC | Px&nbsp; | Mod | Color | ColsOp&nbsp; | Align |</code><br /><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| cd_referencia&nbsp; &nbsp; &nbsp; | +&nbsp; | T&nbsp; | 9&nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;| *&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tienda&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | nm_referencia&nbsp; &nbsp; &nbsp; | X&nbsp; | T&nbsp; | 45&nbsp; | 400 | - 12&nbsp; | #00FF00 |&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fichero config&nbsp; &nbsp; &nbsp; | fich_config&nbsp; &nbsp; &nbsp; &nbsp; | x&nbsp; | T&nbsp; | 100 |&nbsp; &nbsp; &nbsp;| *&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visualizaci&oacute;n&nbsp; &nbsp; &nbsp; &nbsp;| plantilla&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | +&nbsp; | SV | 100 | 300 | - 1&nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tipo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | seleccionable&nbsp; &nbsp; &nbsp; | N&nbsp; | SV | 1&nbsp; &nbsp;| 300 | -012&nbsp; |&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ver en&middot;tienda&nbsp; &nbsp; &nbsp; &nbsp;| flg_ver_en_tienda&nbsp; | X&nbsp; | C&nbsp; | 1&nbsp; &nbsp;| 50&nbsp; | -0 2&nbsp; |&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code>&nbsp; &nbsp; &nbsp;Requiere&middot;validaci&oacute;n | flg_req_validacion | X&nbsp; | C&nbsp; | 1&nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;| -0 2&nbsp; |&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp; &nbsp;|</code><br /><code></code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">&nbsp;</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

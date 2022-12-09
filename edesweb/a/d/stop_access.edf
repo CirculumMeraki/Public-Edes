@@ -1,0 +1,82 @@
+#include(*) lng
+[Title]=@MODO SOLO PERSONAL AUTORIZADO@
+[Button]*|[tools] Desactivar
+[MsgSubmit]*|¿Confirmar "PARADA TOTAL" solo personal autorizado?
+[Fields]
+@Mensaje<br>informativo<br>al entrar@|texto|#|A|500,80,10||M|@Sistema parado por mantenimiento@|#|
+-|@Lista de usuarios sin restricciones@
+@Usuario@|_cd_gs_user|D|T|60||M|||
+|_cd_gs_user_BAK|D|T|60||*|||
+{P} ListaUser
+{P} Reactivar
+[P]ListaUser
+global $_User, $_Sql;
+echo '<table class=LstFieldBrowser border=0px cellspacing=0px cellpadding=1px id=ListaUser width=100px>';
+echo '<col style="display:none"><col><col>';
+if( eSqlType('mysql,mysqli') ){
+qQuery( "select concat(user_name,' ',user_surname),cd_gs_user from gs_user where cd_gs_user={$_User}" );
+}else{
+qQuery( "select user_name||' '||user_surname,cd_gs_user from gs_user where cd_gs_user={$_User}" );
+}
+list( $Nom ) = qRow();
+echo '<tr><td>'.$_User.'<td>&nbsp<td>'.$Nom;
+echo '</table>';
+[OnLoad]*|eAlign("ListaUser", ">", "_cd_gs_user");
+[AddCode]*|_cd_gs_user|E|<img src='g/t_op_insert.gif' onclick=AddSelect() title="@Insertar entrada@">
+[JSIni]*
+function AddSelect(){
+var User = eGF('_cd_gs_user_BAK'), Insertar = true;
+if( User=='' ) return;
+for( var f=0; f<ListaUser.rows.length; f++ ) if( ListaUser.rows[f].cells[0].textContent==User ){
+Insertar = false;
+top.eInfo(window, 'Usuario ya seleccionado');
+}
+if( Insertar ){
+var TR = ListaUser.insertRow();
+TR.insertCell().textContent = User;
+TR.insertCell().innerHTML = "<img src='g/t_op_delete.gif' onclick='S(this.parentNode.parentNode).nodeRemove()' style='margin-right:2px' title='"+eLng(95)+"'>";
+TR.insertCell().textContent = eGF('_cd_gs_user');
+eAlign( 'ListaUser', '>', '_cd_gs_user' );
+}
+ePF('_cd_gs_user','',0);
+ePF('_cd_gs_user_BAK','',0);
+}
+[JSCheck]*
+var txt = "", f;
+for(f=0; f<ListaUser.rows.length; f++){
+txt += ','+ListaUser.rows[f].cells[0].textContent;
+}
+ePF('_cd_gs_user_BAK', txt);
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|_cd_gs_user_BAK|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # and cd_gs_node={$_Node} order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|_cd_gs_user_BAK|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # and cd_gs_node={$_Node} order by 1|7
+?
+[P]Reactivar
+global $_User;
+@unlink('../_tmp/err/stop.total');
+if( file_exists('../_tmp/err/stop.access') ){
+unlink('../_tmp/err/stop.access');
+$di = opendir('../_tmp/err/');
+while( $file = readdir($di) ){
+if( ($file!='.') && ($file!='..') ){
+if( substr($file,-4)=='.ord' ) unlink("../_tmp/err/{$file}");
+}
+}
+closedir( $di );
+echo '<center style="margin-top:10px"><span style="color:red; border: 2px solid red; padding: 7px;">@¡¡¡ INTRANET REACTIVADA !!!@</SPAN></center>';
+}
+[DBIni]A
+if( $_cd_gs_user_BAK!='' ){
+$tmp = explode(',', $_cd_gs_user_BAK);
+for($n=1; $n<count($tmp); $n++){
+$tmp[$n] = trim($tmp[$n]);
+if( $tmp[$n]!="" ){
+file_put_contents("../_tmp/err/{$tmp[$n]}.ord", 'Inicio stop: '.date('Y-m-d H:i:s'));
+}
+}
+}
+file_put_contents('../_datos/config/closeprogram.cdi', time());
+file_put_contents('../_tmp/err/stop.access', addslashes(str_replace(array(chr(10),chr(13)), array('<br>',''), rtrim($texto))));
+eMessage('@INTRANET SOLO PERSONAL AUTORIZADO@', 'HS');

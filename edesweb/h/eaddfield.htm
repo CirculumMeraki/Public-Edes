@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eAddField 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eAddField( $DefinicionField, $ValorPorDefecto, $MasDatos ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Función para crear campos variables, pudes crear un formulario y dentro de la etiqueta "{P}" del formulario añadir mas campos. No se pueden crear dinamicamente los campos tipo: File, Radiobuttom ni Select con RelationFields. <BR>Si la función es llamada&nbsp; mientras se contruye el formulario, es decir en una etiqueta {p} generará el control en linea, en otro caso se memoriza hasta la renderización.
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[PHPIni] a<BR>eAddField( 'Select&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | tipo&nbsp;&nbsp; | D | S&nbsp; | 15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | M || # |' );<BR>eAddField( 'Select virtual | campo1 | D | SV | 20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | M || # |', 'S', ',; S,SI; N,NO' );<SPAN style="WIDTH: 25px"></SPAN>&nbsp;// Con AddOption<BR>eAddField( 'Select Virtual | campo2 | D | SV | 20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | M || # |', '', 'CargarSelect' );<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// Con función<BR>eAddField( 'CheckBox&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | campo3 | D | C&nbsp; |&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | M || # |' );<BR>eAddField( 'Inputext&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| campo4 | D | T&nbsp; | 20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | M || # |' );<BR>eAddField( 'TextArea&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | campo5 | # | A &nbsp;| 500,80,4 | | M || # |' );<BR><BR>function CargarSelect(){<BR><SPAN style="WIDTH: 25px"></SPAN>return array( array('',''), array('1','Option 1'), array('2','Option 2') );<BR>}</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

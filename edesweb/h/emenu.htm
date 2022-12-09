@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eMenu 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eMenu( window, Objeto, SubMenu, Funcion [[[[, EnElPXDondeSePulso=false ] ,TieneSubMenus=false ], VarUser=null&nbsp;], OcultarMenu=true&nbsp;) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>La funci?n crea un submen? de opciones encima del objeto indicado. el SubMenu creado tendr? el id "SubMenu" y su css est? en "ficha.css" y en "lista.css". En el caso de poner linea divisoria en el men? la primera linea se indica con un "-" la segunda linea con dos "-2", "-3",&nbsp;etc y el segundo campo vacio, si este segundo campo lo rellenamos se visualizar? un t?tulo en el men?.<BR>Cuando el men? se oculta llama a la funci?n de usuario con el valor de Op=null. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>&nbsp;window&nbsp;</TD>
+<TD>&nbsp;Ventana en la que nos encontramos.</TD></TR>
+<TR>
+<TD>&nbsp;Objeto</TD>
+<TD>&nbsp;Objeto en el que se coloca el submenu.</TD></TR>
+<TR>
+<TD>&nbsp;SubMenu</TD>
+<TD>&nbsp;Descripci?n del submenu mediante un array asociativo o num?rico, el submenu puede tener imagenes, lineas divisorias y t?tulos.<BR>&nbsp;En los arrays num?rico su pede definir el caracter desencadenante mediante el s?mbolo "_" delante del caracter desencadenante, tener encuenta si la intranet tiene varios idiomas.</TD></TR>
+<TR>
+<TD>&nbsp;Funcion</TD>
+<TD>&nbsp;Funci?n a ejecutar al pulsar una de las opciones y al ocultar el men? si no se pulsa ninguna opci?n.</TD></TR>
+<TR>
+<TD>&nbsp;EnElPXDondeSePulso</TD>
+<TD>&nbsp;Por defecto el SubMen? se coloca en relaci?n al objeto donde se puls?, si ponemos este par?metro a true se colocar? en la posici?n del cursor.</TD></TR>
+<TR>
+<TD>&nbsp;TieneSubMenus</TD>
+<TD>&nbsp;Por defecto no tiene SubMenus.</TD></TR>
+<TR>
+<TD>&nbsp;VarUser</TD>
+<TD>&nbsp;Variable de usuario</TD></TR>
+<TR>
+<TD>&nbsp;OcultarMenu</TD>
+<TD>&nbsp;Por defecto al pulsar el men? desaparece</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>function FuncPrueba( Op, OpInnerText, Obj, OpObj, VarUser&nbsp;){<BR><SPAN style="WIDTH: 25px"></SPAN>switch( Op ){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>case null:<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>break;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>case "A":<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>break;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>case "B":<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>break;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>}<BR>}<BR><BR>onclick="top.eMenu( window, this, {<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'A':'[t/g/e/2_css.gif]Alta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'B':'Baja', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'-':'', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'C':'Consulta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'M':'Modificar'<BR>&nbsp;<SPAN style="WIDTH: 25px"></SPAN>}, FuncPrueba )"<BR><BR>onclick="top.eMenu( window, this, {<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'-':'MENU',<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'A':'Alta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'B':'Baja',&nbsp;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'C':'Consulta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'M':'Modificar',<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'-2':'MENU 2',<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>}, FuncPrueba )" 
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>onclick="top.eMenu( window, this, {<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'.A':'[t/g/e/2_css.gif]Alta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'.B':'Baja', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'.-':'', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'.C':'Consulta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'.M':'Modificar'<BR><SPAN style="WIDTH: 25px"></SPAN>}, FuncPrueba )"</TD></TR>
+<TR>
+<TD id=txt>Si la matriz no sale ordenada se pondr? un "." como primer caracter o se definir? una matriz num?rica.</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>function FuncPrueba( Op, OpInnerText, Obj, OpObj ){<BR><SPAN style="WIDTH: 25px"></SPAN>switch( Op ){<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>case 1:<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>break;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>case 2:<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>break;<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>}<BR>}<BR><BR>onclick="top.eMenu( window, this, {<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'-Titulo',<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// Titulo<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'[t/g/e/2_css.gif]_Alta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'_Baja', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'-',<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// Linea divisoria<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'_Consulta', <BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>'_Modificar'<BR><SPAN style="WIDTH: 25px"></SPAN>}, FuncPrueba )"</TD></TR>
+<TR>
+<TD id=txt>Matriz num?rica, se ha marcado el caracter desencadenante precediendole del s?mbolo "_".</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">ColsOp</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[ColsOp] ColOp1, ColOp2, ..... , ColOpN [ | TitleSubtotal, TitleSubTotal, ... | ColSpanParaElTitle |  ? ] <br /><span style="font-weight: normal;">Sintaxis alternativa</span><br />[ColsOp] Campo=Valor, Campo=Valor, ...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Operaciones a realizar  en las columnas de los listados. Lista de operaciones aritméticas separadas por comas. Cada operación indicada corresponde a la columna de su posición en el listado. <br />En los listados, crea una fila mas con el resultado de las operaciones, es decir, las operaciones se efectúan en las columnas especificadas.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<p>Operaciones permitidas por columna  (en blanco sin operación):</p>
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td><strong>ColOp</strong> </td>
+<td>+ Suma. <br />C Cuenta registros.<br />#  Cuenta si no está vacio ni es cero. <br />S  Subtotal cuando la celda cambia de valor, varios niveles. <br />%  Calcula el tanto por ciento de la celda dentro de la columna.<br />L  Marca una linea divisoria en el PDF cuando cambia el valor. <br />M  Cálcula la media.</td>
+</tr>
+</tbody>
+</table>
+<p>Si se quiere pintar una cadena se pondrá entre comillas dobles o sencillas y si esta cadena se quiere justificar la precederá el caráctrr "<" para justificación izquierda, "=" para centrar y ">" para la justificación derecha.</p>
+Si se usan subtotales  estos estarán en las primeras columnas y por cada subtotal se puede poner una constante (TitleSubTotal) al pintar los subtotales y unir varias filas (ColSpanparaElTitle) en el título, si "TitleSubtotal" acaba en " C" o sólo es una "C" contará el número de registros de cada grupo, hay dos posibles variables entre llaves a sustituir en "TitleSubTotal" "{V}" el valor del campo y "{C}" valor del grupo.<br />Los subtotales manejan dos clases de css una para la cabecera de grupo de nivel 1,2,etc "GC1" y resumen de grupo de nivel 1,2,etc "GR1". Si solo está el tipo de parámetro "S" y no están "C", "+" o "#" sólo pintará las cabeceras.<br />Al utilizar el parámetro "S" no debería haber ninguna columna oculta, ya que distorsionaría la salida, si hay que ponerlos se pondrán al final del listado.<br />En la sintaxis alternativas no está disponible el parámetro "S" para calcular subtotales.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[ColsOp] ,,,#,,,+,+,+,,,</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[ColsOp] S,S,C,,+,+,+,+ | Obra: {v}, Proveedor: {v} | 2</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[ColsOp] S,S,,,,C,+,+,+,+ | obra: {v}, prov: {v} | 3 | R,L | 1,0.8 | 0.8,0.9 | 0</p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[ColsOp] nombre=C, total=+, cd_auto{prov,cd_prov,nm_prov}=C, cd_auto:cd_prov=C</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

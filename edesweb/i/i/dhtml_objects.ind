@@ -1,0 +1,143 @@
+[key] {key} = {key}.replace(/\s/g,'');
+[help] http://msdn.microsoft.com/workshop/author/dhtml/reference/objects/{key}.asp
+
+DHTML Objects
+	a
+	acronym
+	address
+	applet
+	area
+	attribute
+	b
+	base
+	baseFont
+	bdo
+	bgSound
+	big
+	blockQuote
+	body
+	br
+	button
+	caption
+	center
+	cite
+	clientInformation{obj_clientinformation}
+	clipboardData
+	code
+	col
+	colGroup
+	comment
+	currentStyle
+	custom
+	dataTransfer{obj_datatransfer}
+	dd
+	defaults
+	del
+	dfn
+	Dialog Helper{dialoghelper}
+	dir
+	div
+	dl
+	document{obj_document}
+	dt
+	em
+	embed
+	event{obj_event}
+	external
+	fieldSet
+	font
+	form
+	frame
+	frameSet
+	head
+	history{obj_history}
+	hn
+	hr
+	html
+	HTML Comment{htmlcomment}
+	i
+	iframe
+	img
+	implementation{obj_implementation}
+	IMPORT
+	input
+	input type=button{input_button}
+	input type=checkbox{input_checkbox}
+	input type=file{input_file}
+	input type=hidden{input_hidden}
+	input type=image{input_image}
+	input type=password{input_password}
+	input type=radio{input_radio}
+	input type=reset{input_reset}
+	input type=submit{input_submit}
+	input type=text{input_text}
+	ins
+	isIndex
+	kbd
+	label
+	legend
+	li
+	link
+	listing
+	location{obj_location}
+	map
+	marquee
+	menu
+	meta
+	namespace
+	navigator{obj_navigator}
+	nextID
+	noBR
+	noFrames
+	noScript
+	object
+	ol
+	optGroup
+	option
+	p
+	page
+	param
+	plainText
+	popup
+	pre
+	q
+	rt
+	ruby
+	rule
+	runtimeStyle
+	s
+	samp
+	screen{obj_screen}
+	script
+	select
+	selection{obj_selection}
+	small
+	span
+	strike
+	strong
+	style{obj_style}
+	style
+	styleSheet{obj_stylesheet}
+	sub
+	sup
+	table
+	tBody
+	td
+	textArea
+	TextNode
+	TextRange{obj_textrange}
+	TextRectangle
+	tFoot
+	th
+	tHead
+	title
+	tr
+	tt
+	u
+	ul
+	userProfile
+	var
+	wbr
+	window{obj_window}
+	xml
+	xmp

@@ -1,0 +1,136 @@
+#inClude(*) $lng/usu_clave.edf.lng
+[Title]=@titulo@
+[PHPIni]*
+if( isset($_CADUCADO) ) $_TITLE = '@caducado@';
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[MyData]cd_gs_user=_User
+[FormButtons]
+[CC]#passdoc|eFileGetVar('EMail.documents_pass');
+[OnChange]mR|pass|PassCalidad()
+[Stop]
+[JSIni]mR
+function PassCalidad(){
+var Clave=eGF('pass'), n, c, CalidadType=CalidadLeng=0, TypoChr = new Array(0,0,0,0,0), Color,
+DimColor = new Array('#ff0000','#ffcc00','#0000ff','#009900');
+if( Clave=='' ){
+S('#Complejidad').obj.children[0].style.width = S('#Fortaleza').obj.children[0].style.width = "0px";
+S('#Complejidad').attr("title",""); S('#Fortaleza').attr("title","");
+return;
+}
+for( n=0; n<Clave.length; n++ ){
+c = Clave.substr(n,1);
+if( 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(c)>-1 ){
+TypoChr[0] = 26;
+}else if( 'abcdefghijklmnopqrstuvwxyz '.indexOf(c)>-1 ){
+TypoChr[1] = 27;
+}else if( '0123456789'.indexOf(c)>-1 ){
+TypoChr[2] = 10;
+}else if( 'áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛãõÃÕ'.indexOf(c)>-1 ){
+TypoChr[3] = 30;
+}else if( 'ÑñÇçÜü.,:-=*_@ºª!¡(){}[]%/'.indexOf(c)>-1 ){
+TypoChr[4] = 26;
+}
+}
+for( n=0; n<TypoChr.length; n++ ) CalidadType += TypoChr[n];
+CalidadType = (CalidadType*100)/119;
+CalidadLeng = ( Clave.length>=32 ) ? 100 : (Clave.length*100)/32;
+if(      CalidadType<=25 ) Color = 0;
+else if( CalidadType<=50 ) Color = 1;
+else if( CalidadType<=75 ) Color = 2;
+else			   Color = 3;
+S('#Complejidad').obj.children[0].style.backgroundColor = DimColor[Color];
+S('#Complejidad').obj.children[0].style.width = ((S(':user_surname').obj.offsetWidth*CalidadType)/100)+'px';
+S('#Complejidad').attr("title", eRound(CalidadType,0)+'%');
+if(      CalidadLeng<=25 ) Color = 0;
+else if( CalidadLeng<=50 ) Color = 1;
+else if( CalidadLeng<=75 ) Color = 2;
+else			   Color = 3;
+S('#Fortaleza').obj.children[0].style.backgroundColor = DimColor[Color];
+S('#Fortaleza').obj.children[0].style.width = ((S(':user_surname').obj.offsetWidth*CalidadLeng)/100)+'px';
+S('#Fortaleza').attr("title", eRound(CalidadLeng,0)+'%');
+}
+[Fields]
+@Nombre@|user_name|X|T|20|user_surname|-|||
+@Apellidos@|user_surname|X|T|30||-|||
+-|@Clave de Acceso@|size=1
+{H} Consejo|NoTD
+@Clave@|pass|#|P|60|user_surname|ML||'#'.length>=@|@LongitudMinima@
+{H} Complejidad|NoTD
+{H} Fortaleza|NoTD
+@Repetir Clave@|_pass|#|P|60|user_surname|ML||#|
+|cd_gs_user|*|T|5||*|||
+|new_pass|+|T|1||*|||
+|dt_pass|F4|T|10||*|||
+|_window|*|T|10||*|||
+#passdoc ¿
+-|@Clave para documentos@|size=1
+@ClaveDoc@|pass_doc|#|P|65|user_surname|ML|||
+@Repetir ClaveDoc@|_pass_doc|#|P|65|user_surname|ML|||
+?
+[H]Consejo
+<td><td style='padding-left:4px;line-height:17px;'>@Es aconsejable una frase como clave@
+[H]Complejidad
+<td id=LD>@Complejidad@<td style='padding-left:5px'><span id=Complejidad style='display:block'><span style='height:100%;display:block'></span></span>
+[H]Fortaleza
+<td id=LD>@Fortaleza@<td style='padding-left:5px'><span id=Fortaleza style='display:block'><span style='height:100%;display:block'></span></span>
+[FormCheck]
+M | {pass}=={_pass}		 | @ClavesDistintas@
+¿ #passdoc ? M | {pass_doc}=={_pass_doc} | @ClavesDistintasDoc@
+[JSCheck]mR
+if( _ErrMensaje=='' ){
+document.FRM1.new_pass.value = 0;
+}
+[PHPForm]a,mR
+$setup = eFileGetVar("Login");
+$_Form['pass'][8] = str_replace('@', $setup["min_password"], $_Form['pass'][8]);
+$_Form['pass'][9] = str_replace('#', $setup["min_password"], $_Form['pass'][9]);
+$_Form['pass'][4]  = $setup["max_password"];
+$_Form['_pass'][4] = $setup["max_password"];
+[DBRead]?R
+$_Fila['pass'] = "";
+¿ #passdoc ? $_Fila['pass_doc'] = "";
+[JSEnd]mR
+function uS2D( str ){ return str.substring(6,8) +'-'+ str.substring(4,6) +'-'+ str.substring(0,4); }
+FRM1.dt_pass.value = uS2D(_D2S);
+FRM1._window.value = window.name;
+S('#Complejidad').obj.style.fontSize = S('#Fortaleza').obj.style.fontSize = "1px";
+S('#Complejidad').obj.style.width = S('#Fortaleza').obj.style.width = (S(':user_surname').obj.offsetWidth)+'px';
+S('#Complejidad').obj.style.height = S('#Fortaleza').obj.style.height = (S(':user_surname').obj.offsetHeight-6)+'px';
+if( S(':user_surname').css('border-color')!=undefined ){
+S('#Complejidad').obj.style.border = S('#Fortaleza').obj.style.border = 'solid 1px '+S(':user_surname').css('border-color');
+}else{
+S('#Complejidad').obj.style.border = S('#Fortaleza').obj.style.border = 'solid 1px #aaaaaa';
+}
+S('#Complejidad').obj.style.backgroundColor = S('#Fortaleza').obj.style.backgroundColor = '#cccccc';
+[PHPIni]A,M
+if( $_POST['pass_doc']<>'' ){
+include_once( '../../edesweb/itm/fuss.php' );
+$_POST['pass_doc'] = eFuss( $_POST['pass_doc'] );
+}
+[DBIni]M
+include_once( '../_datos/config/desktop.ini' );
+$uTipo = '';
+if( $_window=='HOME' ) $sTipo = 'L';
+qSelect('gs_user', 'pass,new_pass', "cd_gs_user='{$_User}'");
+$row = qArray();
+qFree();
+if( $pass==$row['pass'] ){
+eMessage('@NO PUEDE PONER LA MISMA CLAVE@', 'HSE'.$uTipo, 2000, 'history.go(-1);');
+}else if( $pass==$_ClaveReset ){
+eMessage('@NO PUEDE PONER LA CLAVE POR DEFECTO@','HSE'.$uTipo, 2000, 'history.go(-1);');
+}
+[DBEnd]M
+if( count($_POST)==2 ){
+eMessage('@CARACTER DESENCADENATE MODIFICADO@', 'HS');
+}else{
+eMessage('@CLAVE MODIFICADA@', 'HS');
+}
+[PHPEnd]a,?R
+if( eFileGetVar('Login.TriggerCharOff')===true ){
+?>
+<script type="text/javascript">
+</script>
+<?PHP
+}

@@ -1,0 +1,54 @@
+[Title]FORMATO/S
+[DBTable]gs_formato
+[DBIndex]cd_gs_formato
+[DBOrder]cd_gs_user,cd_gs_entidad,nm_gs_formato
+[DBSerial]cd_gs_formato
+[DBAddFilter]informe<>'S'
+[DBGatewayOne]cR,mR,bR|$a/d/listados_def.gs?MODO=$Opcion
+[PHPStart]*||UNIQUE
+function puedeVerTodosLosFormatos(){
+global $_Sql, $_Mode;
+$file = "../_datos/config/ver_formatos.php";
+$ok = false;
+if( file_exists($file) ){
+include($file);
+}
+if( $_SESSION["_WebMaster"]=="S" ) $ok = true;
+return $ok;
+}
+[]
+[CC]#Supervisor|puedeVerTodosLosFormatos()
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]#Supervisor
+Entidad|cd_gs_entidad|0|S|30||Q-d|||
+Nombre Formato|nm_gs_formato|D|T|60||MQ|||
+#(?) Usuario|_cd_gs_user|D|T|68|nm_gs_formato|Q|||
+#(?) Usuario|cd_gs_user|+|T|5||*Q|||
+Usuario|cd_gs_user{gs_user, cd_gs_user, user_name,' ',user_surname}|+|S|68|nm_gs_formato|-|||
+|cd_gs_formato|N|T|5||*Q*|||
+[Fields]
+Entidad|cd_gs_entidad|0|S|30||Q-d|||
+Nombre Formato|nm_gs_formato|D|T|60||MQ|||
+|cd_gs_user|N|T|5||*Q*|_User||
+|cd_gs_formato|N|T|5||*Q*|||
+[PHPEnd]?
+if( $_ASSIGN!='' && $cd_gs_entidad!='' ){
+?>
+<script type="text/javascript">
+eGO('cd_gs_entidad').parentNode.parentNode.style.display = 'none';
+eTabResize(1);
+</SCRIPT>
+<?PHP
+}
+[JSCheck]?
+if( DGI("_cd_gs_user")!=null && eGF("_cd_gs_user")=="" ) ePF("cd_gs_user", "", 0);
+[JSEnd]?
+if( DGI("_cd_gs_user")!=null ){
+ePF("_cd_gs_user", "<? $_SESSION["_UserName"] ?>");
+ePF("cd_gs_user", _User);
+}

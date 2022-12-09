@@ -1,0 +1,25 @@
+[Title]LISTA ROBINSON
+[DBTable]gs_robinson
+[DBIndex]email
+[DBOrder]email
+[Fields]
+Email|email|@|T|95||MQ||#|
+Nota|note|#|T|95||M|||
+|cd_gs_user|0|T|5||*|_User||
+|cdi|CDI|T|19||*|#y2s#||
+[PHPIni]a
+if( $_GET['email']<>"" && qCount("gs_robinson", "email='{$_GET['email']}'") ){
+eMessage('El EMail ya está en la "Lista Róbinson"', "HSE", 10);
+}
+[JSEnd]A
+var email = top.S("INPUT[value]", _WOPENER).each(function(pk,o){
+if( o.value=="{$_vF['email']}" ){
+var hijos = o.parentElement.children, n;
+for(n=0; n<hijos.length; n++){
+if( hijos[n]==o && n+1<hijos.length && hijos[n+1].tagName=="I" ){
+top.S(hijos[n+1]).css("color:red");
+break;
+}
+}
+}
+});

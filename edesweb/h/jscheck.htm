@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">JSCheck</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[JSCheck] Mode [ | NomDF,... [ | ListaCampos ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">
+<p>C?digo JavaScript para chequear el formulario al ejecutar antes del submit, pudiendo parar este mediante la funci?n "ePE()" una vez que se termine todo el c?digo de la etiqueta o pudiendo retornar en cualquier momento ejecutando un "return false;" si no se quiere realizar el submit. <br />Este c?digo se ejecuta despu?s de evaluar las condiciones individuales de los campos <br />(par?metro 9 de la etiqueta [Fields]) y las marcadas en la etiqueta [FormCheck] (condiciones entre campos).<br />Es decir, es el ?ltimo c?digo de condiciones a ejecutar. <br />Al entrar en esta etiqueta se globalizan todos los campos como variables javascript con el nombre del campo precedido de "$", si esta variable se modifica su valor ser? como usar la funci?n ePE(). Si el texto de error tiene una única zona entre comillas dobles este texto se verá en negrita.<br />Dentro de este Javascript se pueden poner l?neas independientes en PHP en la forma "<? C?digo PHP..... ?>". <br />N?tese que tambi?n se puede utilizar dentro del c?digo JavaScript la generaci?n condicional. <br /><br />Ver la función JavaScrip ePE() (putError)<br /><br />OpExe y Attribute "NoJsCheck" (bot?n)</p>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>Mode </td>
+<td> </td>
+</tr>
+<tr>
+<td>NomDF </td>
+<td> </td>
+</tr>
+<tr>
+<td>ListaCampos </td>
+<td>Lista de campos obligatorios, separados por coma, a marcar.<br />$_MarkFieldRequired: Marca los campos obligatorios (true/false/lista de campos).<br />$_MarkLabelRequired: Marca las etiquetas de los campos obligatorios (true/false).<br />Se marcarán todos los campos que en la columna condición del label [Fields] tenga alguna condición menos la condición "%".</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[JSCheck] a,mR<br />if( eGF("envio_pack")=="S" && eGF("permiso_pack")=="" ){<br />ePE("permiso_pack", "Para realizar el envío hace falta el código del permiso del PACK"); <br />}</p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[JSCheck] a,mR<br />if( $envio_pack=="S" && $permiso_pack=="" ){<br />$permiso_pack = "Para realizar el envío hace falta el código del permiso del PACK"; <br />}</p>
+</td>
+</tr>
+<tr>
+<td id="txt">forma alternativa para saber el valor de los campos y asignarles un error.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

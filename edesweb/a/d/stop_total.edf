@@ -1,0 +1,24 @@
+#include(*) lng
+[Title]=@PARADA TOTAL SIN ACCESO@
+[Button]*|[tools] @Desactivar TOTALMENTE@
+[MsgSubmit]*|¿Confirmar "PARADA TOTAL"?
+[Fields]
+@Mensaje<br>informativo<br>al entrar@|texto|#|A|500,80,10||M|||
+{I} <center style="margin-top:10px"><span style="color:red;">@¡¡¡ Solo se podrá reactivar borrando el fichero "/_tmp/err/stop.total" !!!@</SPAN></center>
+[DBIni]a
+@unlink('../_tmp/err/stop.total');
+if( file_exists('../_tmp/err/stop.access') ){
+unlink('../_tmp/err/stop.access');
+$di = opendir('../_tmp/err/');
+while( $file = readdir($di) ){
+if( ($file!='.') && ($file!='..') ){
+if( substr($file,-4)=='.ord' ) unlink("../_tmp/err/{$file}");
+}
+}
+closedir( $di );
+echo '<center style="margin-top:10px"><span style="color:red;">@¡¡¡ INTRANET REACTIVADA !!!@</SPAN></center>';
+}
+[DBIni]A
+file_put_contents('../_datos/config/closeprogram.cdi', time());
+file_put_contents('../_tmp/err/stop.total', addslashes(str_replace(array(chr(10),chr(13)), array('<br>',''), rtrim($texto))));
+eMessage( '@INTRANET TOTALMENTE DESACTIVADA@', 'HS' );

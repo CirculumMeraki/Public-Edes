@@ -1,0 +1,4 @@
+[PHPStart] a,?R,A,M || unique
+$_OpTreeTYPE = 'rol';
+
+#include(*) $a/plugin/usertree.inc

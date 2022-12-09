@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td id="Etiqueta">Card</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Card] %, MínimoAncho [,MáximoAncho] | ... | AnchoEnPxSeparación</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Convierte las fichas en tarjetas</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[PHPIni] l</code><br /><code>function uFunc($row){</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "&lt;div style='width:100%;text-align:left'&gt;";</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo '&lt;img src="g/background_clipri.png" height=100px&gt;';</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "&lt;/div&gt;";</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?&gt;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TABLE border=0px cellspacing=1px cellpadding=0px style="display:table"&gt;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tbody&gt;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TR&gt;&lt;TD rowspan=2&gt;&lt;img src="g/background_clipri.png" height=100px&gt;&lt;/TD&gt;&lt;TD class='title-color'&gt;&lt;?=$row[1]?&gt;&lt;/TD&gt;&lt;/TR&gt;</code><br /><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;TR&gt;&lt;TD style="font-weight:normal"&gt;&lt;?=$row[2]?&gt;&lt;/TD&gt;&lt;/TR&gt;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tbody&gt;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/TABLE&gt;</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;?PHP</code><br /><code>}</code><br /><br /><br /><code>[Fields] card</code><br /><code>. | cd_dele_semanal | 0 | T | 9 | | * | | |</code><br /><code>.-|Titulo2</code><br /><code>. = | cd_visita | X | S | 30 | | - | | |</code><br /><code>&gt;uFunc</code><br /><code>-</code><br /><code>Raz&oacute;n Visita | cd_visita | X | S | 30 | | - | | |</code><br /><code>. -</code><br /><code>Delegado | cd_delegado | X | S | 50 | | - | | |</code><br /><code>Empresa Visitada | cd_empre | + | S | 60 | | - | | |</code><br /><code>Fecha | dt_visita | F4 | T | 10 | | - | | |</code><br /><code>Ver | fichero as icon | X | T | 5 | | - | | |</code><br /><br /><code>. Fichero | fichero | X | T | 50 | | * | | |</code><br /><code>. Cliente | cd_cli | 0 | T | 5 | | * | | |</code><br /><br /></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table>
+ <br /><br /><br /><br /><br /><br /><br /><br /><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

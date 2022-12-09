@@ -1,0 +1,112 @@
+[Title]ACTUALIZAR eDes
+[Button]a|[&#230;] Actualizar eDes
+[UploadFile]fichero_edes|/_doc_|cd_gs_store|15.000.000|Seleccionar...|zip
+[UploadFile]fichero_app|/_doc_|fichero_app|10.000.000|Seleccionar...|zip
+#(A) [Expire] 0
+[Fields]
+Zip eDes|fichero_edes|f|F|60||MD|||
+Zip App|fichero_app|f|F|60||MD|||
+Reactualizar|_reactualizar|N|C|1||M|||
+-
+{P} InfoZip
+[P]InfoZip
+echo '<span style="font-family:monospace;color:green">';
+echo "eDes: ".file_get_contents("../../edesweb/web/aplication/_datos/config/version_edes.cdi").'<br>';
+echo "App.: ".file_get_contents("../_datos/config/version_app.cdi");
+echo '</span>';
+echo "<script>var UltimoEDes='{$cdi0}', UltimoApp='{$cdi1}';</script>";
+[JSCheck]a
+if( $fichero_edes=="" && $fichero_app=="" ) ePE("fichero_edes", "Tiene que seleccionar al menos un fichero.");
+if( $fichero_edes!="" ){
+if( S.is(".app.",$fichero_edes) ) ePE("fichero_edes", "El contenido no es el motor");
+if( S(":fichero_edes").attr("eFileUpdate")==UltimoEDes && _reactualizar=="" ) ePE("fichero_edes", "El motor ya se ha actualizado");
+}
+if( $fichero_app!="" ){
+if( !S.is(".app.",$fichero_app) ) ePE("fichero_app", "El contenido no es la App");
+if( S(":fichero_app").attr("eFileUpdate")==UltimoApp && $_reactualizar=="" ) ePE("fichero_edes", "La App ya se ha actualizado");
+}
+[DBIni]A
+function _ChmodDir($DirBase){
+chmod($DirBase, 0777);
+$di = opendir($DirBase);
+while( $file=readdir($di) ){
+if( $file!='.' && $file!='..' ){
+if( is_dir("{$DirBase}/{$file}") ){
+chmod("{$DirBase}/{$file}", 0777);
+_ChmodDir("{$DirBase}/{$file}");
+}else{
+chmod("{$DirBase}/{$file}", 0666);
+}
+}
+}
+closedir($di);
+}
+function uDelFile($path, $patron){
+$uDir = opendir($path);
+while( $uFile=readdir($uDir) ){
+if( $uFile=='.' || $uFile=='..' || is_dir($uFile) ) continue;
+if( preg_match($patron, $uFile) ){
+if( is_writable($path.$uFile) ){
+unlink($path.$uFile);
+}
+}
+}
+closedir($uDir);
+}
+$aDir = eGetCWD();
+$y2s = date('Y-m-d H:i:s');
+$dim = array(
+file_get_contents("../../edesweb/web/aplication/_datos/config/version_edes.cdi"),
+file_get_contents("../_datos/config/version_app.cdi")
+);
+$crearCss = "";
+$msg = "Motor actualizado";
+$fechas = explode("|", $_POST["_FILESUPDATE"]);
+$tmp = explode("|", $_POST["_FIELDSWITHFILES"]);
+for($n=0; $n<count($tmp); $n++){
+$tmp[$n] = trim($tmp[$n]);
+if( $_POST[$tmp[$n]]<>"" ){
+$t = explode(",", $fechas[$n]);
+$FechaHora = mktime($t[0],$t[1],$t[2], $t[3],$t[4],$t[5]);
+$origen = '../_tmp/zip/'.$_SESSION["_User"]."_".$n;
+if( $tmp[$n]=="fichero_edes" ){
+$if = 0;
+$destino = '../../ok_'.$_POST[$tmp[$n]];
+uDelFile("../../", '/^ok_edesweb_[0-9]{6}_z.zip$/');
+}else{
+$if = 1;
+$destino = '../ok_'.$_POST[$tmp[$n]];
+$crearCss = "top.gsCssReload(1);";
+$msg = "Motor actualizado.<br>Se recalculará el CSS.";
+uDelFile("../", '/^ok_edesweb.app.zip$/');
+file_put_contents("../_datos/config/version_app.cdi", date('Y-m-d H:i:s', $FechaHora));
+}
+$dim[$if] = date("Y-m-d H:i:s", $FechaHora);
+rename($origen, $destino);
+touch($destino, $FechaHora);
+chmod($destino, 0755);
+}
+}
+chmod("edes.php", 0666);
+if( file_exists("edesapp.php") ) chmod("edesapp.php", 0666);
+chdir("..");
+if( $_POST["fichero_app"]<>"" && $_SERVER['HTTP_HOST']<>"localhost" ){
+$ExeZip = "unzip -o ok_".$_POST["fichero_app"];
+exec($ExeZip, $DimOut, $valRet);
+_ChmodDir("_datos");
+chdir("http");
+_ChmodDir("css");
+_ChmodDir("g");
+_ChmodDir("fonts");
+_ChmodDir("lib");
+chdir("..");
+}
+chdir("..");
+if( $_POST["fichero_edes"]<>"" && $_SERVER['HTTP_HOST']<>"localhost" ){
+$ExeZip = "unzip -o ok_".$_POST["fichero_edes"];
+exec($ExeZip, $DimOut, $valRet);
+_ChmodDir("edesweb");
+_ChmodDir("lib");
+}
+chdir($aDir);
+eMessage($msg, "HS", 3, $crearCss);

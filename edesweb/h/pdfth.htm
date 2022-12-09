@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>PDFTh 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[PDFTh] Title1 [, Title2] ..... [, TitleN] [ | campo=etiqueta, ...]&nbsp; [ | campo=NomFuncion() ; [ campo=NomFuncion()] ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Título de las cabeceras del listado en PDF, si se deja en blanco no pondrá nada, si se pone un "=" o no se ha definido la columna&nbsp;pondrá la etiqueta del formulario.&nbsp; El segundo parámetro es para definir label de campos que no está en la definición del listado ni en la DB "gs_campo" y el tercer parámetro es para mostrar un valor distinto en el valor de la condición. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>Title1: Es el TH del listado<BR>Campo=Etiqueta: Cuando a un listado lo sacas con condiciones y los campos que condiciona no están definidos en "gs_campo" se pueden difinir con este parámetro. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[PDFTh] EMPRESA,R.SOCIAL,FECHA,IMPORTE<BR>[PDFTh] =,R.SOCIAL<BR><BR>
+<P>[PHPIni] *<BR>function LitaralEstado( $v ){<BR><SPAN style="WIDTH: 25px"></SPAN>if( $v=='[ABC]' ) return 'ACTIVOS';<BR><SPAN style="WIDTH: 25px"></SPAN>if( $v=='[DE]' ) return 'EN ESPERA';<BR><SPAN style="WIDTH: 25px"></SPAN>sqlQuery( "select nm_estado from estado where cd_estado='{$v}'" );<BR><SPAN style="WIDTH: 25px"></SPAN>$row = sqlRow();<BR><SPAN style="WIDTH: 25px"></SPAN>return $row[0];<BR>}</P>
+<P>[PDFTh] || estado=LitaralEstado();</P>
+<TR>
+<TD id=txt>En el segundo ejemplo solo se cambiará el nombre a la columna dos, las otras tres serán igual que la etiqueta del formulario.<BR>En el tercer caso varios de los posibles valores de condicionar el campo "cd_estado" es por un grupo de registros que no tienen un literal específico para definirlo para lo cual se llama a la función.</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,44 @@
+[Title]=GENERAR INFORME|l
+[Progress]*|Calculando Informe
+[FormAction]*|edes.php?Ll:$a/d/report_gen.zdf
+[RelationFields]cd_gs_entidad,cd_gs_formato
+[Button]?|<img src='edes.php?R:$a/g/grafica.gif'> Informe
+[PHPStart]c
+eInclude( $_Sql );
+$cd_gs_formato = $_GET['cd_gs_formato'];
+qQuery( "select F.cd_gs_entidad, E.nm_gs_entidad from gs_formato F, {$_SESSION['ShareDictionary']}gs_entidad E where F.cd_gs_formato={$cd_gs_formato} and F.cd_gs_entidad=E.cd_gs_entidad" );
+list( $cd_gs_entidad, $nm_gs_entidad ) = qRow();
+$_GET['cd_gs_entidad'] = $cd_gs_entidad;
+[PHPIni]c
+$_Form[0][_DEFAULT] = $cd_gs_entidad;
+$_Form[1][_DEFAULT] = $cd_gs_formato;
+$_TITLE .= ': '.$nm_gs_entidad;
+[Fields]
+Entidad|cd_gs_entidad|0|S|60||*Q|||
+Formato|cd_gs_formato|D|Ss|60||*Q|||
+|_cd_gs_entidad|+|T|5||*Q|||
+|_cd_gs_formato|+|T|5||*Q|||
+,Mostrar Ceros|_SeeZeros|D|C|1||Q|||
+,Columnas Iguales|_EqualColumns|D|C|1||Q|S||
+-|Gráfica|||||Q
+Externa|_ReportAll|D|C|1||Q|S||
+,Interna por Fila|_ReportCol|D|C|1||Q|S||
+,Interna por Columna|_ReportRow|D|C|1||Q|S||
+#include(c) /_datos/config/report_cnd_{$cd_gs_entidad}.idf
+[Label]_ReportAll|<img src='g/report_all.png'> Externa
+[Label]_ReportCol|,<img src='g/report_col.png' style='margin-left:20px'> Interna por Fila
+[Label]_ReportRow|,<img src='g/report_row.png' style='margin-left:20px'> Interna por Columna
+[JSIni]?
+_Question = false;
+[JSCheck]?
+if( DGI('cd_gs_entidad').getAttribute('vBAK')==null ){
+DGI('cd_gs_entidad').setAttribute('vBAK',eGF('cd_gs_entidad'));
+DGI('cd_gs_formato').setAttribute('vBAK',eGF('cd_gs_formato'));
+}
+if( eGF('cd_gs_formato')=='' ){
+ePF('cd_gs_entidad',eGO('cd_gs_entidad').vBAK);
+ePF('cd_gs_formato',eGO('cd_gs_formato').vBAK);
+}
+ePF('_cd_gs_entidad',eGF('cd_gs_entidad'));
+ePF('_cd_gs_formato',eGF('cd_gs_formato'));
+ePF('cd_gs_entidad,cd_gs_formato','',0);

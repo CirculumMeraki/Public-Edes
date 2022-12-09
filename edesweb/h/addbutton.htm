@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">AddButton</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[AddButton] Mode | Label | Title | ValorDelOnclick [ [ | InteriorDelStyle [ | NºTabsDondeSeVisualiza ] ]<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Añade botones al formulario, si se pone en un grupo de fichas se tendrá que poner en el GDF.<br />Los botones tendrán un "id" único "AddButton[NºBoton]". <br />En los parámetros "Label", "Title" y "ValorDelOnclick" se pueden poner variables de la forma {$NomVar} y llamas a función con < ?= ? ><br />El parámetro "NºTabsDondeSeVisualiza" es para que el botón solo sea visible en una o unas determinadas solapas, por ejemplo en "1,3" solo en la solapa 1 y en la 3.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddButton] cR | PDF | Imprimir ficha en PDF | ShowPDF()</code><br /><code>[AddButton] cR,bR | < img src="g/print_1.gif" /> | Imprimir | ImprimirDoc() </code><br /><code>Si se quiere hacerlo desde PHP se puede hacer desde [PHPIni] de la siguiente forma:</code><br /><code>$_ADDBUTTON[] = array(Label, Title, ValorDelOnclick); </code><br /><br /><code>[AddButton] * | Sin Icono || alert(1)</code><br /><br /><code>[AddButton] * | [U] Icono con Fuente || alert(2)                                             // para saber los valores del parámetro ver eIcon()</code><br /><code>[AddButton] * | < i class="ICONINPUT ICONUPDATE">U< /i> Icono con Fuente 2 || alert(3) </code><br /><br /><code>[AddButton] * | < img src="g/print_1.gif" /> Icono con IMG || alert(4) </code><br /><code>[AddButton] * | < img src="<!--?=eImg64(" /-->"> Icono Base64 || alert(5)</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[AddButton]</code><br /><code>      cR    | PDF | Imprimir ficha en PDF | ShowPDF()</code><br /><code>     cR,bR | < img src="g/print_1.gif" /> | Imprimir | ImprimirDoc() </code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

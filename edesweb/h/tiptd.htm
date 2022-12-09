@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>TipTD 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[TipTD] WhatCol | WhatInfo [ [ | Title | Width ]] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>En un listado, al colocar el puntero sobre una celda determinada, se muestra una subventana con la información especificada en el segundo parámetro. <BR>Suele utilizarse para visualizar columnas ocultas, por ejemplo en un listado de usuarios en el que una columna es el código de estado y sólo queremos ver la descripción al colocar el puntero del ratón por encima, para así no tener un listado demasiado ancho. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>WhatCol&nbsp;</TD>
+<TD>Especificamos los números de columna o nombres de campos (que aparecen en el listado) en los que deseamos que aparezca en el "Tip". <BR>También podemos poner un asterisco "*" para indicar que la ayuda se muestre en todas las columnas.</TD></TR>
+<TR>
+<TD>WhatInfo</TD>
+<TD>Especificamos qué números de columna o nombres de campos separados por comas (que aparecen en el listado) deseamos mostrar en el "Tip".</TD></TR>
+<TR>
+<TD>Title</TD>
+<TD>Este parámetro opcional será el título que aparecerá en la parte superior del "Tip". </TD></TR>
+<TR>
+<TD>Width</TD>
+<TD>Ancho de la subventana&nbsp;</TD></TR></TBODY></TABLE></STRONG>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[TipTD] empresa | cif,tlf |&nbsp;INF.ADICIONAL<BR><BR>[Fields]<BR>&nbsp; Empresa&nbsp;&nbsp;&nbsp;| empresa&nbsp; &nbsp;| X&nbsp;&nbsp; | T |&nbsp;40 || AQ |||<BR>&nbsp;&nbsp;TLF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| tlf&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;| T&nbsp;&nbsp; | T |&nbsp; 9&nbsp;|| -&nbsp; |||<BR>&nbsp;&nbsp;CIF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;cif&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| CIF | T |&nbsp; 9 || -&nbsp; |||<BR>&nbsp; Dirección&nbsp;| direccion&nbsp;| D&nbsp;&nbsp; | T | 40 || M&nbsp; |||<BR>&nbsp; ...</P>
+<TR>
+<TD id=txt>Al posicionarte encima del nombre de una empresa te mostrará en una subventana su cif y el teléfono con el título de "INF.ADICIONAL".</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

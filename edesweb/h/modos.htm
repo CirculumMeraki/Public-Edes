@@ -1,0 +1,348 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>MODOS 
+<TR>
+<TD id=Descripcion>El modo es la forma de atacar a un fichero de definici?n, es decir, cuando hablamos de "Ejecutar determinado c?digo o determinada etiqueta en modos "a", "mR" y "c", queremos decir que el c?digo se ejecutar? cuando se ataque al fichero de definici?n correspondiente en modo "a" (datos para un alta), "mR" (formulario con los datos para ser modificados) o "c" (pregunta de datos para una consulta). Se suele usar un solo fichero de definici?n para todas las acciones (modo) posibles. Los modos son c?clicos por ejemplo preguntas por una ficha para modificar (m), modifica el usuario la ficha (mR), modifica el servidor la tabla (M) y vuelve a preguntar (m) y as? sucesivamente.<BR><BR><SPAN style="WIDTH: 25px"><FONT face=Courier></FONT></SPAN><FONT face=Courier>a ---------&gt; </FONT><FONT face=Courier>A &gt;&gt; (a)<BR></FONT><SPAN style="WIDTH: 25px"></SPAN><FONT face=Courier>b --&gt; b</FONT><FONT face=Courier>R --&gt; </FONT><FONT face=Courier>B &gt;&gt; (b)<BR></FONT><SPAN style="WIDTH: 25px"></SPAN><FONT face=Courier>c --&gt; </FONT><FONT face=Courier>cR ------&gt;&gt;&nbsp;(c)<BR></FONT><SPAN style="WIDTH: 25px"></SPAN><FONT face=Courier>m --&gt; </FONT><FONT face=Courier>mR --&gt; </FONT><FONT face=Courier>M &gt;&gt; (m)<BR><SPAN style="WIDTH: 25px"></SPAN>l --&gt; L<BR></FONT><SPAN style="WIDTH: 25px"></SPAN><FONT face=Courier>s --&gt; </FONT><FONT face=Courier>S<BR><SPAN style="WIDTH: 25px"></SPAN>q --&gt;&nbsp;Q</FONT> 
+<P></P>
+<P>Los modos existentes son: <STRONG>ObjetoModo:edf</STRONG><BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold; TEXT-ALIGN: center" vAlign=middle>
+<COL>
+<TBODY>
+<TR>
+<TD>a</TD>
+<TD>Estado en el que se toma un formulario de datos vac?o que deber? ser rellenado, al menos, en una parte establecida, para realizar un alta de datos.</TD></TR>
+<TR>
+<TD>A</TD>
+<TD>Estado en el que se realiza el alta f?sica en la base de datos.</TD></TR>
+<TR>
+<TD>b</TD>
+<TD>Estado en el que se toma un formulario de datos vac?o que podr? ser rellenado todo o s?lo en parte, con objeto de localizar el registro que queremos dar de baja.</TD></TR>
+<TR>
+<TD>bR</TD>
+<TD>Estado en el que se devuelve un formulario que contiene los datos del registro que queremos dar de baja, espera la confirmaci?n de baja.</TD></TR>
+<TR>
+<TD>B</TD>
+<TD>Estado en el que se realiza la baja f?sica en la base de datos.</TD></TR>
+<TR>
+<TD>c</TD>
+<TD>Estado en el que se toma un formulario de datos vac?o que podr? ser rellenado todo o s?lo en parte, con objeto de localizar el registro/s a consultar.</TD></TR>
+<TR>
+<TD>cR</TD>
+<TD>Estado en el que se devuelve un formulario con los datos del registro que queremos consultar.</TD></TR>
+<TR>
+<TD>m</TD>
+<TD>Estado en el que se toma un formulario de datos vac?o que podr? ser rellenado todo o s?lo en parte, con objeto de localizar el registro que queremos modificar.</TD></TR>
+<TR>
+<TD>mR</TD>
+<TD>Estado en el que se devuelve un formulario que contiene los datos del registro que queremos modificar.</TD></TR>
+<TR>
+<TD>M</TD>
+<TD>Estado en el que se realiza la modifcaci?n f?sica en la base de datos.</TD></TR>
+<TR>
+<TD>l</TD>
+<TD>Estado en el que se devuelve un listado.</TD></TR>
+<TR>
+<TD>L</TD>
+<TD>Estado en el que se devuelve un listado de registros (*.lst).</TD></TR>
+<TR>
+<TD>s</TD>
+<TD>Estado en el que se toma un formulario de datos vac?o que podr? ser rellenado todo o s?lo en parte, con objeto de&nbsp; generar un select para utilizarlo nosotros.</TD></TR>
+<TR>
+<TD>S</TD>
+<TD>Estado en el que se devuelve el select solicitado en el modo "s", te devuelve la cadena del select sin ejecutarla.</TD></TR>
+<TR>
+<TD>q</TD>
+<TD>Estado en el que se toma un formulario de datos vac?o que podr? ser rellenado todo o s?lo en parte, con objeto de&nbsp; ejecutar un select para obtener un cursor. La diferencia con el modo "s" es que en este caso no podremos modificarlo, el select se ejecuta directamente devolvi?ndote un cursor.</TD></TR>
+<TR>
+<TD>Q</TD>
+<TD>Estado en el que se devuelve el resultado del select ejecutado tras el modo "q".</TD></TR>
+<TR>
+<TD>F</TD>
+<TD>Cualquiera de los modos: c, b, m, a, mR, cR, bR</TD></TR>
+<TR>
+<TD>L</TD>
+<TD>Cualquiera de los modos: l, ml, cl, bl</TD></TR></TBODY></TABLE><BR>SubModos en los listados<BR>
+<TABLE id=Opciones style="HEIGHT: 61px; WIDTH: 253px" cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>bl</TD>
+<TD>Listado de selecci?n para Borrar&nbsp;</TD></TR>
+<TR>
+<TD>cl</TD>
+<TD>Listado&nbsp;de selecci?n para Consultar</TD></TR>
+<TR>
+<TD>ml</TD>
+<TD>Listado de selecci?n para Modificar</TD></TR></TBODY></TABLE><BR>En los DF la "l" representa cuando estas en cualquier listado (cl,ml,bl,l)&nbsp;y "L" (l)&nbsp;s?lo cuando has ejecutado un listado de forma directa.</P>Otras acciones 
+<TABLE id=Opciones style="HEIGHT: 266px; WIDTH: 460px" cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp;R </TD>
+<TD>Lee fichero</TD></TR>
+<TR>
+<TD>&nbsp;E</TD>
+<TD>Ejecuta un script.<BR>&nbsp;'$':&nbsp;Dentro del motor<BR>&nbsp;'&gt;': Direcci?n indicada dentro del directorio "d".</TD></TR>
+<TR>
+<TD>&nbsp;P</TD>
+<TD>Texto plano ( Text/Plain )</TD></TR>
+<TR>
+<TD>&nbsp;X</TD>
+<TD>Tabla vinculada, un "text/plain"&nbsp;de una DB</TD></TR>
+<TR>
+<TD>&nbsp;T</TD>
+<TD>Tabla vinculada</TD></TR>
+<TR>
+<TD>&nbsp;V</TD>
+<TD>Visualizar un&nbsp;html / txt en una ventana virtual, par?metros:<BR><SPAN style="WIDTH: 25px"></SPAN>STYLE:</TD></TR>
+<TR>
+<TD>&nbsp;D</TD>
+<TD>&nbsp;Download, parametros:<BR><SPAN style="WIDTH: 25px"></SPAN>WHO: Si existe dejar? rastro de la descarga en "gs_acceso".<BR><SPAN style="WIDTH: 25px"></SPAN>FILE: Si existe ser? el nombre del fichero en el cliente</TD></TR>
+<TR>
+<TD>&nbsp;Y</TD>
+<TD>Para ejecutar script SDF, ej:<BR>top.eCallSrv( window, 'edes.php?Y:cd_post.sdf&amp;CPOSTAL='+eGF('_cd_postal') );</TD></TR></TBODY></TABLE><BR><BR>Modo en edici?n de Campo ( <STRONG><U>E</U></STRONG>dici?n, <STRONG><U>Vi</U></STRONG>sible e <STRONG><U>I</U></STRONG>nvisible )<BR>
+<TABLE id=Opciones style="HEIGHT: 236px; WIDTH: 170px" cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD rowSpan=2>&nbsp;Modo en<BR>&nbsp;Campo</TD>
+<TD colSpan=3>&nbsp;Qu?</TD>
+<TD colSpan=3>Edici?n A/M</TD></TR>
+<TR>
+<TD>E</TD>
+<TD>V</TD>
+<TD>I</TD>
+<TD>E</TD>
+<TD>V</TD>
+<TD>I</TD></TR>
+<TR>
+<TD>M / A</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>*&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;QM / MQ</TD>
+<TD>*</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>*&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;Q</TD>
+<TD>*</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;-</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;*</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;-Q</TD>
+<TD>&nbsp;</TD>
+<TD>*</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;Q-</TD>
+<TD>*&nbsp;</TD>
+<TD></TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;*</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;-Q-</TD>
+<TD>&nbsp;</TD>
+<TD>*&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;*&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;*</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;*&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;*Q</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>*</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;Q*</TD>
+<TD>* </TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;*</TD></TR>
+<TR>
+<TD>*Q*</TD>
+<TD></TD>
+<TD>&nbsp;</TD>
+<TD>*</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;*</TD></TR></TBODY></TABLE>
+<P>Modos seg?n ejecuci?n general<BR>
+<TABLE id=Opciones style="HEIGHT: 356px; WIDTH: 264px" cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>Modo</TD>
+<TD>Qu? </TD>
+<TD>DB </TD>
+<TD>Editable</TD>
+<TD>Visible</TD>
+<TD>Proceso Ext.</TD></TR>
+<TR>
+<TD>&nbsp;c</TD>
+<TD>?&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;cR</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>V&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;a</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;E</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;A</TD>
+<TD>&nbsp;</TD>
+<TD>D&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;b</TD>
+<TD>&nbsp;?</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;bR</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;V</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;B</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;D</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;l</TD>
+<TD>&nbsp;?</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;L</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;V</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;q</TD>
+<TD>&nbsp;?</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;Q</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>X&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;m</TD>
+<TD>&nbsp;?</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;mR</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>E&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;M</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;D</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;s</TD>
+<TD>&nbsp;?</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;S</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>&nbsp;X</TD></TR></TBODY></TABLE></P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

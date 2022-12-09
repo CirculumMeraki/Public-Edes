@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">slJSCheck</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">{slJSCheck} Mode<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Se comporta igual que la etiqueta [JSCheck] pero se aplica al formulario incrustado de las sublistas tipo "FormOnLine".<br />Al entrar en esta etiqueta se globalizan todos los campos como variables javascript con el nombre del campo precedido de "$", si esta variable se modifica su valor ser? como usar la funci?n ePE(). Si el texto de error tiene una ?nica zona entre comillas dobles este texto se verá en negrita.<br />El contenido de la función de usuario recibe los parámetros: "slID" es el id de la sublista, "slMODE" indicando el modo del chequeo ( I:Insert, U:Update, D:Delete ), "slROW" n?mero de fila implicada ( "0" si es alta ), "slROWS" el objeto de filas de la tabla de la sublista y slCol una matriz hash con el indice del nombre del campo (y el alias si lo tubiera) y devuelve la posición del listado, la condición de las filas utilizadas será: <br />
+<pre>	for(var n=1; n<slROWS.length; n++){
+		if( slROWS[n].LIBRE==undefined && slROWS[n].id!='PieLista' ){
+			...
+		}
+	}</pre>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

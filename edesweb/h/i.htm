@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>I 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{I} CódigoHTML 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Inserta código HTML en una fila&nbsp; del formulario 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>&nbsp;&nbsp; AUTONOMIA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| cd_auto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0&nbsp; | S |&nbsp; 2|,20| iQM |_Auto_||<BR>&nbsp; &nbsp;{i} &lt;tr&gt;&lt;td&gt;Celda de información&lt;/td&gt;&lt;/tr&gt;<BR>&nbsp;&nbsp; PROVINCIA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| cd_prov&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0&nbsp; | SS|&nbsp; 2|,20| iQM |_Prov_|| 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+</SCRIPT>
+</BODY></HTML>

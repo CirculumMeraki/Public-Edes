@@ -1,0 +1,252 @@
+#include(*) $lng/email.edf.lng
+[Title]=@GESTION DE EMAIL@|l
+[DBTable]gs_log_email
+[DBIndex]pk
+[DBSerial]pk
+[DBOrder]cdi desc
+[DBLimit]1000
+[UploadFile]_mail_file_0|//email|pk|500.000|@Ver fichero@|*|0
+[UploadFile]_mail_file_1|//email|pk|500.000|@Ver fichero@|*|1
+[UploadFile]_mail_file_2|//email|pk|500.000|@Ver fichero@|*|2
+[UploadFile]_mail_file_3|//email|pk|500.000|@Ver fichero@|*|3
+[UploadFile]_mail_file_4|//email|pk|500.000|@Ver fichero@|*|4
+[UploadFile]_mail_file_5|//email|pk|500.000|@Ver fichero@|*|5
+[UploadFile]_mail_file_6|//email|pk|500.000|@Ver fichero@|*|6
+[UploadFile]_mail_file_7|//email|pk|500.000|@Ver fichero@|*|7
+[UploadFile]_mail_file_8|//email|pk|500.000|@Ver fichero@|*|8
+[UploadFile]_mail_file_9|//email|pk|500.000|@Ver fichero@|*|9
+[OnChange]a|_mail_file_0,_mail_file_1,_mail_file_2,_mail_file_3,_mail_file_4,_mail_file_5,_mail_file_6,_mail_file_7,_mail_file_8,_mail_file_9|_uMuestraFile()
+[AddOption]*|send_receive|,; S,@Enviado@; R,@Recibido@
+[DelOption]a|mail_from||noEmpty
+[FieldBrowser]_cd_gs_user|mail_to|select eSqlConcat("user_name"," ","user_surname") usuario,email from gs_user where (eSqlConcat("user_name"," ","user_surname")) like # and email is not null and email<>'' and cd_gs_node={$_Node} order by usuario|7
+[FormButtons]|C
+[ColsWidth]mail_subject=400
+[Format]files=B
+[PDFWrap]3
+[THColSpan]mail_to,mail_from,MAIL
+[Fields]PDF
+E·R|send_receive|N|T|1||-|||
+@CDI@|cdi|CDI|T|19||-|||
+@Para@|mail_to|@|T|35||-|||
+@De@|mail_from|@|T|35||-|||
+@Asunto@|mail_subject|#D|T|75||-|||
+F|files|+|T|1||-|||
+[Fields]||trim
+|pk|*|T|5||*|||
+@EnviadosRecibidos@\@Enviado@·@Recibido@|send_receive|N|SV|10||Q-|||
+#!(l) ,@CDI@|cdi|CDI|T|19||MQ||#|
+@Usuario@|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|D|S|95||-L|_User|#|
+#(l) @CDI@|cdi|CDI|T|19||-|||
+@Para@|mail_to|@|T|95||MQ||#|
+@De@|mail_from|@|T|95||MQ||#|
+@CC@|mail_cc|#D|T|95||ML|||
+@CCO@|mail_cco|#D|T|95||ML|||
+@Asunto@|mail_subject|#D|T|95||MQ||#|
+@Cuerpo@|mail_message|#D|H|2000000,95,20|mail_to,240|ML|||
+#(l) @Ficheros@\F|files|+|T|1||-|||
+-|@Ficheros adjuntos@
+|_mail_file_0|f|F|95|-mail_to|MUDL|||
+|_mail_file_1|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_2|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_3|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_4|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_5|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_6|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_7|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_8|f|F|95|_mail_file_0|MUDL|||
+|_mail_file_9|f|F|95|_mail_file_0|MUDL|||
+#(?R,l)|files_name|#|T|256||*|||
+[DBAddFields]|CargaFiles()
+[PHPIni]?R
+function CargaFiles(){
+$tmp = explode("|", $GLOBALS["_vF"]["files_name"]);
+$dim = [];
+for($n=0; $n<count($tmp); $n++) $dim["_mail_file_".$n] = $tmp[$n];
+return $dim;
+}
+[JSEnd]?R
+S("input[name*=_mail_file_]").each(function(pk, o){
+eIndex(o.sourceIndex+1).onclick = function(){
+var o = S.event(window)
+i = o.sourceIndex,
+f = eIndex(i-1);
+top.eCallSrv(window,"edes.php?D://email/"+eGF("pk")+"_"+S.right(f.name,"_")+"."+S.right(f.value,".")+"&FILE="+f.value);
+return S.eventClear(window);
+};
+});
+[JSOnClickRow]l
+if( _ColName=="files" ){
+if( _vF["files_name"]!="" ){
+var tmp = _vF["files_name"].split("|"),n,dim=[["-Ficheros"]];
+for(n=0; n<tmp.length; n++) dim[n+1] = [tmp[n],"",n];
+S(_oTD).menu(dim, {noMark:true, function:function(pk, lab){
+top.eCallSrv(window,"edes.php?D://email/"+eGF("pk")+"_"+pk+"."+S.right(lab,".")+"&FILE="+lab);
+}});
+}
+}else{
+S.window("edes.php?FcR:$a/d/mail_one.edf&_SEEK=c&pk="+eGF("pk"));
+}
+[PHPForm]a
+global $_ADDOPTION, $_UPLOADFILE, $_WHERESELECT, $_ONLOAD;
+qQuery("select email from gs_user where cd_gs_user={$_SESSION['_User']}");
+list($xMail) = qRow();
+$xMail = trim($xMail);
+$_Form['mail_from'][_DEFAULT] = $xMail;
+if( qCount('gs_mailfrom', "cd_gs_user={$_SESSION['_User']}")>0 ){
+qQuery("select email from gs_user where cd_gs_user={$_SESSION['_User']}");
+list( $xMail ) = qRow();
+$xMail = trim($xMail);
+$_ADDOPTION['mail_from'] = "{$xMail},{$xMail}";
+$_Form['mail_from'][_CONTROL] = 'S';
+$_Form['mail_from'][_FIELD] = 'mail_from{gs_mailfrom, mailfrom, mailfrom mail2}';
+$_WHERESELECT[] = array('mail_from', "cd_gs_user={$_SESSION['_User']}");
+}else{
+$_Form['mail_from'][_MODE] = '-';
+}
+$xMaxFileSize = eFileGetVar('EMail.MaxFileSize');
+if( $xMaxFileSize!='' ) $_UPLOADFILE['_mail_file']['BYTS'] = $xMaxFileSize;
+if( $_GET['_email_user']<>'' ){
+qQuery("select email,user_name,user_surname from gs_user where cd_gs_user={$_GET['_email_user']}");
+list($xMail, $xNom, $xApe) = qRow();
+$xMail = trim($xMail);
+$_Form['_cd_gs_user'][_MODE] = '-';
+$_Form['_cd_gs_user'][_DEFAULT] = trim($xNom).' '.trim($xApe);
+$_Form['mail_to'][_MODE] = '-';
+$_Form['mail_to'][_DEFAULT] = trim($xMail);
+}else if( $_GET['mail_to']<>'' ){
+$_Form['_cd_gs_user'][_MODE] = '*';
+$_Form['mail_to'][_MODE] = '-';
+$_Form['mail_to'][_DEFAULT] = $_GET['mail_to'];
+}
+[JSCheck]a
+ePF('mail_message', '<html><head></head><body>'+eGF('mail_message')+'</body></html>');
+[JSIni]a
+function _uMuestraFile(){
+var n = S.right(S.event(window).name,1)*1;
+if( n<9 ){
+eShow("_mail_file_"+(++n), "TR");
+VerFicha();
+}
+}
+[JSEnd]a,?R
+for(var n=1; n<10; n++) if( eGF("_mail_file_"+n)=="" ) eHide("_mail_file_"+n, "TR");
+if( eGF("_mail_file_0")=="" )
+if( _WOPENER._MailFrom!=null ){
+ePF( 'mail_from', _WOPENER._MailFrom );
+eEF( 'mail_from', 0 );
+}
+if( eGF('mail_to')!='' ){
+eHide('mail_cc', 'TR');
+eHide('mail_cco', 'TR');
+}
+[JSEnd]cR,bR
+if( eGF("_mail_file_0")=="" ) eHide("_mail_file_0", "GROUP");
+[PHPEnd]a
+$Bloquear = eFileGetVar('EMail.ReadOnly');
+if( $Bloquear ) echo '<script type="text/javascript">eEF("mail_from",0);</script>';
+if( $_GET['_PassToMail']<>'' ){
+?>
+<script type="text/javascript">
+eHide('mail_cco','TR');
+var i = S.toTag(eGO('mail_message'),'TR').rowIndex+1,
+TR = TABNumber1.insertRow(i),
+TD = TR.insertCell(0);
+TR.style.display = 'none';
+TD = TR.insertCell(1);
+TD.appendChild( document.createElement('<INPUT NAME="_PassToMail" TYPE=TEXT value="<?=$_GET['_PassToMail']?>" SIZE=95 MAXLENGTH=95 style="display:none">') );
+</script>
+<?PHP
+}
+if( $_GET['_FileToMail']<>'' ){
+?>
+<script type="text/javascript">
+eHide('mail_cco','TR');
+var i = S.toTag(eGO('mail_message'),'TR').rowIndex+1,
+TR = TABNumber1.insertRow(i),
+TD = TR.insertCell(0);
+TD.style.textAlign = 'right';
+TD.textContent = '@Fichero@';
+TD = TR.insertCell(1);
+TD.appendChild( document.createElement('<INPUT NAME="_FileToMail" TYPE=TEXT value="<?=$_GET['_FileToMail']?>" SIZE=95 MAXLENGTH=95 readOnly  class="READONLY" onclick="_CpField()" style="widtgh:100%">') );
+TD.appendChild( document.createElement('<INPUT NAME="_PathToMail" TYPE=TEXT value="<?=$_GET['_PathToMail']?>" SIZE=95 MAXLENGTH=95 style="display:none">') );
+</script>
+<?PHP
+}
+[PHPIni]A
+$nFiles = 0; foreach($_FILES as $k=>$v) $nFiles++;
+$files_name = array();
+$DimFiles = false;
+if( $nFiles>0 ){
+$DimFiles = array();
+foreach($_FILES as $k=>$v){
+$tmp = explode('/',$_FILES[$k]['tmp_name']);
+$NomFile = $tmp[count($tmp)-1];
+$Path = substr($_FILES[$k]['tmp_name'],0,-strlen($NomFile));
+rename($_FILES[$k]['tmp_name'], $Path.$_POST[$k]);
+$DimFiles[] = $Path.$_POST[$k];
+$files_name[] = $_POST[$k];
+}
+if( $_POST['_FileToMail']<>'' ) $DimFiles[] = eScript($_POST['_PathToMail']).$_POST['_FileToMail'];
+}else if( $_POST['_FileToMail']<>'' ){
+$DimFiles = array();
+$DimFiles[] = eScript($_POST['_PathToMail']).$_POST['_FileToMail'];
+}
+if( $_POST['_FileToMail']<>'' && $_SESSION['_PassToMail']<>'' ){
+$mail_message = str_replace('<html><head></head><body>', '<html><head></head><body>La clave del fichero es: <b>'.$_SESSION['_PassToMail']."</b><br><br>", $mail_message);
+unset($_SESSION['_PassToMail']);
+}
+$TipoEMail = eFileGetVar('EMail.Log');
+if( strtoupper($TipoEMail)=='TXT' ){
+$NmFile = eScript('/'.'/email/'.$_User.'_'.eGetMicroTime().".eml");
+if( !file_exists(eScript('/'.'/email/')) ) eMessage('@NoDirLog@','HSE');
+$fd = fopen($NmFile, 'w');
+fputs($fd, '<!-- MAIL.TIME -->'.date('Y-m-d H:i:s')."\n");
+fputs($fd, '<!-- MAIL.USER -->'.$_User."\n");
+fputs($fd, '<!-- MAIL.NODE -->'.$_Node."\n");
+fputs($fd, '<!-- MAIL.FROM -->'.$mail_from."\n");
+fputs($fd, '<!-- MAIL.TO -->'.$mail_to."\n");
+fputs($fd, '<!-- MAIL.CC -->'.$mail_cc."\n");
+fputs($fd, '<!-- MAIL.CCO -->'.$mail_cco."\n");
+fputs($fd, '<!-- MAIL.SUBJECT -->'.$mail_subject."\n");
+fputs($fd, '<!-- MAIL.MESSAGE -->'."\n".$mail_message);
+if( $DimFiles!==false ){
+for($n=0; $n<count($DimFiles); $n++){
+$File = $DimFiles[$n];
+fputs($fd, "\n".'<!-- MAIL.FILE -->'.$File.'['.filesize($File)."]\n");
+$oFichero = fopen($File,'r');
+fputs($fd, '<!-- INI -->');
+fputs($fd, fread($oFichero,filesize($File)));
+fputs($fd, '<!-- END -->');
+fclose($oFichero);
+}
+}
+fclose($fd);
+}
+if( strtoupper($TipoEMail)=='DDBB' ){
+$files_name = implode("|", $files_name);
+$send_receive = $_vf["send_receive"];
+$cdi = date('Y-m-d H:i:s');
+qQuery("insert into gs_log_email
+(cd_gs_user, mail_to, mail_from, mail_cc, mail_cco, mail_subject, mail_message, files, files_name, send_receive, cdi) values
+('{$_SESSION['_User']}', '{$mail_to}', '{$mail_from}', '{$mail_cc}', '{$mail_cco}', '{$mail_subject}', '{$mail_message}', '{$nFiles}', '{$files_name}', '{$send_receive}', '{$cdi}')"
+);
+if( $nFiles>0 ){
+$id = qId();
+$n = 0;
+$path = eScript("/"."/email/");
+for($n=0; $n<count($DimFiles); $n++){
+$ext = ".".eFileExtension($DimFiles[$n]);
+copy($DimFiles[$n], "{$path}{$id}_{$n}{$ext}");
+}
+}
+}
+[DBEnd]B
+if( $_vF["files"]>0 ){
+$tmp = explode("|", $_vF["files_name"]);
+for($n=0; $n<count($tmp); $n++){
+$file = eScript("/"."/email/".$_vF["pk"]."_{$n}.".eFileExtension($tmp[$n]));
+@unlink($file);
+}
+}
+[PHPStart]b
+eMessage('Opción no permitida', 'HSE');

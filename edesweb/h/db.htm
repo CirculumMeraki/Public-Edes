@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>DB 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[DB] SQLFile, HostName, Database, User, Password<BR>...<BR>[DB] NomScript 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Especificar un nuevo controlador de bases de datos y sus parámetros.<BR>En el segundo formato la definición de la ddbb está en un script, si NomScript no tiene trayectoria lo buscará dentro de "/_datos/config/". 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>&nbsp;SQLFile</TD>
+<TD>- Nombre del controlador de la ddbb (mysql,&nbsp;informix, oracle o pdo<BR>-&nbsp;Nombre de script donde está la definición de la ddbb</TD></TR>
+<TR>
+<TD>&nbsp;HostName</TD>
+<TD>Nombre del servidor de BBDD</TD></TR>
+<TR>
+<TD>&nbsp;Database</TD>
+<TD>Nombre de la base de datos a utilizar</TD></TR>
+<TR>
+<TD>&nbsp;Usuario</TD>
+<TD>Usuario de la ddbb</TD></TR>
+<TR>
+<TD>&nbsp;Password</TD>
+<TD>Clave de la ddbb</TD></TR></TBODY></TABLE><BR>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>SQLFile&nbsp;</TD>
+<TD>&nbsp;En NomScript si no se pone trayectoria asumirá "/_datos/config"' y si el fichero no tiene extensión le pondrá ".ini"</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[DB] mysql, sabenet, inmuebles, entra, ertF4<BR>[DB] oracle 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

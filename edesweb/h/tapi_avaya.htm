@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>TAPI AVAYA 
+<TR>
+<TD id=Descripcion><STRONG>Controlador de centralitas digitales de la casa AVAYA</STRONG><BR>
+<TABLE id=Opciones style="WIDTH: 480px; HEIGHT: 440px" cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="TEXT-ALIGN: center">
+<TBODY>
+<TR>
+<TH>CODIGO </TH>
+<TH>EVENTO</TH>
+<TH>DESCRIPCION</TH></TR>
+<TR>
+<TD>0&nbsp;</TD>
+<TD>&nbsp;SYSON</TD>
+<TD>&nbsp;Encendido del sistema</TD></TR>
+<TR>
+<TD>1&nbsp;</TD>
+<TD>&nbsp;SYSOFF</TD>
+<TD>&nbsp;Apagado del sistema</TD></TR>
+<TR>
+<TD>3&nbsp;</TD>
+<TD>&nbsp;OFFERING</TD>
+<TD>&nbsp;Llamada entrante</TD></TR>
+<TR>
+<TD>4&nbsp;</TD>
+<TD>&nbsp;CONNECTED</TD>
+<TD>&nbsp;Línea conectada</TD></TR>
+<TR>
+<TD>5&nbsp;</TD>
+<TD>&nbsp;DISCONNECTED</TD>
+<TD>&nbsp;Línea desconectada</TD></TR>
+<TR>
+<TD>6</TD>
+<TD>&nbsp;IDLE</TD>
+<TD>&nbsp;Línea preparada</TD></TR>
+<TR>
+<TD>2&nbsp;</TD>
+<TD>&nbsp;RINGBACK</TD>
+<TD>&nbsp;Llamada saliente</TD></TR>
+<TR>
+<TD>9</TD>
+<TD>&nbsp;DIALTONE</TD>
+<TD>&nbsp;Línea abierta (el usuario descuelga el teléfono)</TD></TR>
+<TR>
+<TD>A</TD>
+<TD>&nbsp;DIALING</TD>
+<TD>&nbsp;Marcando</TD></TR>
+<TR>
+<TD>7</TD>
+<TD>&nbsp;BUSY</TD>
+<TD>&nbsp;Teléfono ocupado en una llamada saliente</TD></TR>
+<TR>
+<TD>8</TD>
+<TD>&nbsp;ONHOLD</TD>
+<TD>&nbsp;Llamada retenida</TD></TR>
+<TR>
+<TD>E&nbsp;</TD>
+<TD>&nbsp;ACCEPTED</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>G&nbsp;</TD>
+<TD>&nbsp;SPECIALINFO</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>H&nbsp;</TD>
+<TD>&nbsp;PROCEEDING</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>I&nbsp;</TD>
+<TD>&nbsp;CONFERENCED</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>J&nbsp;</TD>
+<TD>&nbsp;ONHOLDPENDCONF</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>K&nbsp;</TD>
+<TD>&nbsp;ONHOLDPENDTRANSFER</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>F&nbsp;</TD>
+<TD>&nbsp;UNKNOWN</TD>
+<TD>&nbsp;Sin uso</TD></TR>
+<TR>
+<TD>D&nbsp;</TD>
+<TD>&nbsp;ONCALLERID</TD>
+<TD>&nbsp;Identificador de la llamada entrante</TD></TR>
+<TR>
+<TD>C&nbsp;</TD>
+<TD>&nbsp;ONCALLEDID</TD>
+<TD>&nbsp;Identificador de la llamada saliente</TD></TR>
+<TR>
+<TD>B&nbsp;</TD>
+<TD>&nbsp;TRANSFER</TD>
+<TD>&nbsp;Llamada transferida a otro número de teléfono</TD></TR></TBODY></TABLE>
+<P><STRONG><U>Descripción de los parámetros:<BR><BR></U></STRONG><STRONG>Parámetro 1:</STRONG> Nombre del plugin<BR><STRONG>Parámetro 2:</STRONG> Número de líneas que puede manejar el teléfono. Si este parámetro se envía en blanco, por defecto toma el valor de 1.<BR><STRONG>Parámetro 3:</STRONG> String de eventos separados por coma que se quieren logear en la tabla GS_LOGTAPI.<BR><SPAN style="WIDTH: 25px"></SPAN>Cada vez que se produzca uno de los eventos indicados, se generará un nuevo registro en la tabla GS_LOGTAPI.<BR><SPAN style="WIDTH: 25px"></SPAN>Si este parámetro se envía en blanco no logeará.<BR><STRONG>Parámetro 4:</STRONG> Serialnumber del activex toptapi<BR><STRONG>Parámetro 5:</STRONG> LicenceKey del activex toptapi<BR><STRONG>Parámetro 6:</STRONG> Modo silencioso; <BR><SPAN style="WIDTH: 25px"></SPAN>Si se pone a 0, en la inicialicación del control mostrará un alert con la información de la extensión y en la finalización pedirá una confirmación para la desactivación del control.<BR><SPAN style="WIDTH: 25px"></SPAN>Si se pone a 1 no mostrará información en el inicio ni pedirá confirmación al final.<BR><SPAN style="WIDTH: 25px"></SPAN>Si no se pasa este parámetro, por defecto contiene 0;<BR><BR><U>Ejemplo:<BR></U>ePlugin( <BR><SPAN style="WIDTH: 25px"></SPAN>'tapi_ctl_avaya', <BR><SPAN style="WIDTH: 25px"></SPAN>3,<BR><SPAN style="WIDTH: 25px"></SPAN>'SYSON,SYSOFF,OFFERING,RINGBACK,CONNECTED,DISCONNECTED,IDLE,DIALING,BUSY,ONHOLD,TRANSFER',<BR><SPAN style="WIDTH: 25px"></SPAN>'...SerialNumber...',<BR><SPAN style="WIDTH: 25px"></SPAN>'...LicenceKey...',<BR><SPAN style="WIDTH: 25px"></SPAN>1<BR>);</P>
+<P></P><FONT color=#008000 size=2><I>
+<P>&nbsp;</P></I></FONT></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

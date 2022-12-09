@@ -1,0 +1,155 @@
+[Title]=ORDENES POR CHAT
+[NoButton]*
+[AddOption]*|tipo_imagen|,;DH,dialog_asks; DI,dialog_info; E,error; H,help; I,info; N,note; P,printer; S,seek; W,warning
+[TipForm]*|botones|a,c,y,n
+[AddCode]*|descripcion,i_mensaje,texto,m_texto|I|NotFilter=1
+[Fields]
+-|S.alert()||+
+Título|titulo|#|T|60|350|M|||
+Descipción|descripcion|#|A|900,60,5|350|M|||
+Botones|botones|#|T|60|350|M|||
+Aceptar|boton_a|#|C|1||M|||
+,Si|boton_y|#|C|1||M|||
+,No|boton_n|#|C|1||M|||
+,Cancelar|boton_c|#|C|1||M|||// ACCEPT=2, YES=1, NO=0, CANCEL=-1
+Imagen (url)|imagen|#|T|60|350|M|||
+Imagen (código)|tipo_imagen|#|SV|12||M|||
+{H} BotonEAlert
+-|S.info() &#47; S.error()||-
+Mensaje|i_mensaje|#|A|180,60,3|350|M|||
+Segundos|i_segundos|+,|T|2,1||M|||
+Title|i_titulo|#|T|60|350|M|||
+{H} BotonEInfo
+[P]Panel
+eAddButton("", "S.info()" , "uEnviar('info')");
+eAddButton("", "S.alert()", "uEnviar('alert')");
+eAddButton("", "Exit"	  , "uEnviar('exit')");
+[JSIni]*
+function uEnviar(type){
+alert(type);
+}
+var _uEAlert = '';
+function uEAlert(){
+var Img = eGF('tipo_imagen');
+if( Img=='' ) Img = eGF('imagen');
+var Func = eGF('funcion');
+if( Func!='' ) Func = ', '+Func
+var Botones = eGF('botones');
+if( Botones=='' ){
+if( eGF('boton_a')=='S' ) Botones = 'a';
+if( eGF('boton_y')=='S' ){
+if( Botones!='' ) Botones += ',';
+Botones += 'y';
+}
+if( eGF('boton_n')=='S' ){
+if( Botones!='' ) Botones += ',';
+Botones += 'n';
+}
+if( eGF('boton_c')=='S' ){
+if( Botones!='' ) Botones += ',';
+Botones += 'c';
+}
+}
+top.eAlert( eGF('titulo'), eGF('descripcion'), Botones, Img );
+_uEAlert = 'top.eAlert("'+eGF('titulo')+'", "'+eGF('descripcion').replace(/"/g,'\\"')+'", "'+Botones+'", "'+Img+'"'+Func+' );';
+_uEAlert = _uEAlert.replace(/\r/g,'').replace(/\n/g,'<br>');
+S.clipboardPut(_uEAlert);
+}
+var _uEInfo = '';
+function uEInfo(){
+var ms = eGF('i_mensaje');
+var sg = eGF('i_segundos');
+var it = eGF('i_titulo');
+if( ms=='' ) return;
+if( sg!='' ){
+if( it!='' ){
+top.eInfo( window, ms, sg, it );
+_uEInfo = 'top.eInfo( window, "'+ms+', "'+sg+'", "'+it+'" );';
+}else{
+top.eInfo( window, ms, sg );
+_uEInfo = 'top.eInfo( window, "'+ms+', "'+sg+'" );';
+}
+}else{
+top.eInfo( window, ms );
+_uEInfo = 'top.eInfo( window, "'+ms+'" );';
+}
+_uEInfo = _uEInfo.replace(/\r/g,'').replace(/\n/g,'<br>').replace(/"/g,'\\"');
+S.clipboardPut(_uEInfo);
+}
+var _uEInfoErr = '';
+function uEInfoError(){
+var ms = eGF('i_mensaje');
+var sg = eGF('i_segundos');
+var it = eGF('i_titulo');
+if( ms=='' ) return;
+if( sg!='' ){
+if( it!='' ){
+top.eInfoError( window, ms, sg, it );
+_uEInfoErr = 'top.eInfoError( window, "'+ms+', "'+sg+'", "'+it+'" );';
+}else{
+top.eInfoError( window, ms, sg );
+_uEInfoErr = 'top.eInfoError( window, "'+ms+', "'+sg+'" );';
+}
+}else{
+top.eInfoError( window, ms );
+_uEInfoErr = 'top.eInfoError( window, "'+ms+'" );';
+}
+_uEInfoErr = _uEInfoErr.replace(/\r/g,'').replace(/\n/g,'<br>').replace(/"/g,'\\"');
+S.clipboardPut(_uEInfoErr);
+}
+[H]BotonEAlert
+<span class='TABFootButton' style='width:100%;left-align:right'>
+<table id=OpButtons border=0px width=1px cellspacing=0px cellpadding=0px><tr><TD>
+<TABLE class=AddButton id="OpExe" onClick="uEAlert()" title="" border=0 cellspacing=0 cellpadding=0><TR>
+<TD style="padding-right:0px"><img src="edes.php?R:$a/g/desa.gif"></TD>
+<TD style="padding-left:4px">S.alert</TD>
+</TR></TABLE>
+<TD></table>
+</span>
+[H]BotonEInfo
+<span class='TABFootButton' style='width:100%;left-align:right'>
+<table id=OpButtons border=0px width=1px cellspacing=0px cellpadding=0px><tr><TD>
+<TABLE class=AddButton id="OpExe" onClick="uEInfo()" title="" border=0 cellspacing=0 cellpadding=0><TR>
+<TD style="padding-right:0px"><img src="edes.php?R:$a/g/desa.gif"></TD>
+<TD style="padding-left:4px">S.info</TD>
+</TR></TABLE>
+<TD>
+<TABLE class=AddButton id="OpExe" onClick="uEInfoError()" title="" border=0 cellspacing=0 cellpadding=0><TR>
+<TD style="padding-right:0px"><img src="edes.php?R:$a/g/desa.gif"></TD>
+<TD style="padding-left:4px">S.error</TD>
+</TR></TABLE>
+<TD></table>
+</span>
+[PHPIni]*
+eNodeSend(array("room"=>"tools", "type"=>"user_insert", "room_name"=>"NombreRoom", "room_pk"=>34, "user_pk"=>6));
+[PHPIni]*--
+include("../pik_config.php");
+function EnviarANode($records){
+global $urlNode, $phpNodeService, $phpNodeKey;
+$records["msg"] = utf8_encode($records["msg"]);
+if( isset($records["title"]) ) $records["title"] = utf8_encode($records["title"]);
+if( isset($records["title"]) ) $records["body"] = utf8_encode($records["body"]);
+$dataJson = json_encode($records);
+$ch = curl_init($urlNode.$phpNodeService);
+if( $ch===false ){
+return false;
+}else{
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJson);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+"phpNodeKey: ".$phpNodeKey,
+"Content-Type: application/json",
+"Content-Length: ".strlen($dataJson))
+);
+curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+$res = curl_exec($ch);
+curl_close($ch);
+if( $res=="" ){
+}else if( $res!="ok" ){
+}else if( $res=="ok" ){
+return true;
+}
+return false;
+}
+}

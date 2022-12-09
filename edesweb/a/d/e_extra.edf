@@ -1,0 +1,35 @@
+#include(*) lng
+[Title]@EXTRACCION/ES DE DATOS@
+[DBTable]gs_exp_file
+[DBIndex]cdi, fichero
+[DBOrder]cdi desc
+[OnLoad]cR|VerSql()
+[Format]
+$_vF[14] = urldecode($_vF[14].' '.$_vF[15].' '.$_vF[16]);
+$_vF[15] = '';
+$_vF[16] = '';
+[Fields]
+@Usuario@|cd_gs_user|+|T|5||Q-|||
+@Nombre@|cd_gs_user{gs_user,cd_gs_user,user_name}|0|S|7||A|||
+@Apellidos@|cd_gs_user{gs_user,cd_gs_user,user_surname}|0|S|7||A|||
+@Titulo extracción@|descripcion|X|T|60||Q-|||
+@Estado@\@E@|estado|X|T|1||Q-|||
+,@Tipo@\@T@|tipo|X|T|1||Q-|||
+,@Formato@\@F@|formato|X|T|3||Q-|||
+,@Comprimido@\@C@|comprimido|0|T|5||Q-|||
+,@Descargado@\@D@|descargado|0|T|7||Q-|||
+@Registros@\@Nº·Reg.@|t_reg|+|T|14||Q-|||
+@Se·tardó@|sg|+|T|14||Q-|||
+@Instante@|formato|X|T|19||Q-|#sy2s#||
+&#49;ª @Descarga@|download|X|T|19||Q-|||
+@Fichero@|fichero|X|T|20||Q-|||
+SQL|sql_1|X|A|255,85,12||-|||
+SQL|sql_2|X|A|255,85,3||*|||
+SQL|sql_3|X|A|255,85,3||*|||
+[JSIni]cR
+function VerSql(){
+FRM1.sql_1.value = unescape(FRM1.sql_1.value)+' '+unescape(FRM1.sql_2.value)+' '+unescape(FRM1.sql_3.value);
+FRM1.sql_1.value = FRM1.sql_1.value.replace(/\+/g,' ');
+FRM1.sql_2.value = '';
+FRM1.sql_3.value = '';
+}

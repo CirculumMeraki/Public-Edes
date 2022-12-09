@@ -1,0 +1,147 @@
+#Include(*) lng
+#Include(*) /_datos/config/structure.idf.lng | true
+[Title]=@TITULO@
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|10
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|10
+?
+[WhereSelect]*|cd_gs_tstructure|order by sort
+[AddOptionValue]cd_gs_tstructure|container
+[OnChange]*|cd_gs_tstructure|VerUsuraio()
+[FormAction]*|EjecutarOp()
+[AddButton]*|@Asignar filtro del padre@||AsignarFilterParent();
+[Fields]
+@Tipo@|cd_gs_tstructure|+|S|60|_cd_gs_user|M||#|
+@Directorio@|nm_structure|#D|T|60|_cd_gs_user|M||#|
+@Usuario@|_cd_gs_user|D|T|68||M|||
+|cd_gs_user|+|T|5||*|||
+|mfilter|#|T|25||*|||
+#Include(*) /_datos/config/structure.idf|true
+[JSIni]*
+var _ListFields = '';
+var _DimFilter = new Array();
+[JSEnd]*
+function FuncionAEjecutar(){
+_ErrMensaje = '';
+_ErrCampo = '';
+_ErrForm = -1;
+top.eSWHide( window );
+}
+top.eSWTools(window,'H',2);
+top.eSWTools(window,'H',3);
+top.eSWTools(window,'H',4);
+top.eSWOnClose( window, FuncionAEjecutar, false );
+setTimeout("top.eSWIResize( window, document.body.clientWidth+50, window.document.body.clientHeight+50 );",100);
+var n, Contar=false;
+for( n=0; n<document.FRM1.elements.length; n++ ){
+if( Contar && document.FRM1.elements[n].name.indexOf('_INPUT_')==-1 ){
+_DimFilter[_DimFilter.length] = document.FRM1.elements[n].name;
+}
+if( document.FRM1.elements[n].name=='mfilter' ) Contar = true;
+}
+LoadDatos();
+[PHPIni]*
+if( $_RELATIONFIELDS[0]!='' ) $RelationField = substr($_RELATIONFIELDS[0],1,-1);
+echo '<script type="text/javascript">_ListFields="'.$RelationField.'";</script>';
+[JSIni]*
+function LoadDatos(){
+DGI('AddButton1').style.display = (_WOPENER._FilterParent!='') ? 'block':'none';
+if( _WOPENER._FilterParent!='' ) DGI('AddButton1').title = '@FILTRO@: '+_WOPENER._FilterParent;
+eEF('cd_gs_tstructure,nm_structure,_cd_gs_user'+((_ListFields!='')?',':'')+_ListFields, true );
+ePF('cd_gs_tstructure',_WOPENER._SubFormDim[0],0);
+VerUsuraio();
+ePF('nm_structure',_WOPENER._SubFormDim[1],0);
+ePF('cd_gs_user',_WOPENER._SubFormDim[2],0);
+var tmp = _WOPENER._SubFormDim[4].split('(');
+ePF('_cd_gs_user',eTrim(tmp[0]),0);
+ePF('mfilter',_WOPENER._SubFormDim[5],0);
+var Datos = _WOPENER._SubFormDim[5].split(','), _ListDatos='';
+if( _DimFilter.length>0 ){
+for( var n=0; n<Datos.length; n++ ){
+if( (','+_ListFields+',').indexOf(','+_DimFilter[n]+',') == -1 ){
+ePF( _DimFilter[n], Datos[n], 0 );
+}else{
+if( _ListDatos!='' ) _ListDatos = _ListDatos+',';
+_ListDatos = _ListDatos + Datos[n];
+}
+}
+if( _ListFields!='' ){
+top.eRelationField( window, {'RelationFields':_ListFields, 'Values':_ListDatos} );
+}
+}
+eEF('cd_gs_tstructure,nm_structure,_cd_gs_user'+((_ListFields!='')?',':'')+_ListFields, (_WOPENER._SubFormDim[3]!='D') );
+switch(_WOPENER._SubFormDim[3]){
+case "I":
+setTimeout("eHide('_cd_gs_user','TR', false );",1);
+OpExe.rows[0].cells[0].children[0].src = 'g/op_insert.gif';
+OpExe.rows[0].cells[1].textContent = '@BotonCrear@';
+break;
+case "U":
+OpExe.rows[0].cells[0].children[0].src = 'g/op_update.gif';
+OpExe.rows[0].cells[1].textContent = '@BotonModificar@';
+break;
+case "D":
+OpExe.rows[0].cells[0].children[0].src = 'g/op_delete.gif';
+OpExe.rows[0].cells[1].textContent = '@BotonBorrar@';
+break;
+}
+eFocus('cd_gs_tstructure');
+}
+function EjecutarOp(){
+if( eGF('cd_gs_tstructure')=='' ) ePE('cd_gs_tstructure','@ErrorTipo@');
+if( eGF('nm_structure')=='' ) ePE('nm_structure','@ErrorDirectorio@');
+if( _ErrMensaje=='' ){
+var Filtro='', n;
+if( _DimFilter.length > 0 ){
+for( n=0; n<_DimFilter.length; n++ ){
+if( n>0 ) Filtro = Filtro+',';
+Filtro = Filtro + eGF(_DimFilter[n]);
+}
+ePF('mfilter',Filtro);
+}
+switch(_WOPENER._SubFormDim[3]){
+case "I":
+_WOPENER.uCrearDir( eGF('cd_gs_tstructure'), eGF('nm_structure'), eGF('cd_gs_user'), eGF('_cd_gs_user'), Filtro );
+break;
+case "U":
+_WOPENER.uModDir( eGF('cd_gs_tstructure'), eGF('nm_structure'), eGF('cd_gs_user'), eGF('_cd_gs_user'), Filtro );
+break;
+case "D":
+_WOPENER.uDelDir();
+break;
+}
+top.eSWHide( window );
+}else{
+eShowError();
+_ErrForm = -1;
+}
+}
+function VerUsuraio(){
+if( eGA('cd_gs_tstructure','container')=='S' ){
+eHide('_cd_gs_user','TR', false );
+if( _ListFields!='' ) eShow(_DimFilter[0],'-',false);
+}else if( eGA('cd_gs_tstructure','container')=='G' ){
+eHide('_cd_gs_user','TR', false );
+if( _ListFields!='' ) eHide(_DimFilter[0],'-',false);
+}else{
+eShow('_cd_gs_user','TR', false );
+if( _ListFields!='' ) eHide(_DimFilter[0],'-',false);
+}
+}
+function AsignarFilterParent(){
+ePF('mfilter',_WOPENER._FilterParent);
+if( _ListFields!='' ) top.eRelationField( window, {'RelationFields':_ListFields, 'Values':_WOPENER._FilterParent} );
+}
+[CallSrv]User
+if( eSqlType('mysql,mysqli') ){
+qQuery( 'select concat(user_name," ",user_surname), email from gs_user where cd_gs_user='.$User );
+}else{
+qQuery( "select user_name||' '||user_surname, email from gs_user where cd_gs_user=".$User );
+}
+list($NmUser) = qRow();
+echo '<script type="text/javascript">';
+echo 'window.frameElement.WOPENER.ePF("_cd_gs_user","'.$NmUser.'",false);';
+echo '</script>';
+eEnd();

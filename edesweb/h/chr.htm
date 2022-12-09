@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Chr</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Chr] Name | [TipoConversion] | AllowedChars [ | Expresi?nRegularDown  |  Expresi?nRegularExit [ [ | ChrOld | ChrNew ] ] Patron ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Crea un tipo de edici?n personalizado, que ?nicamente tendr? vigencia en el ?mbito en el que se encuentra la etiqueta (en el EDF actual), es decir, el <INPUT> s?lo admitir? los caracteres designados.<br />Se utilizar? esta etiqueta en los casos en los que no sea adecuado a nuestras necesidades ninguno de los tipos de edici?n predefinidos. <br />Los dos ?ltimos par?metros transfomar? car?cteres de ChrOld a ChrNew</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td><strong>Name</strong> </td>
+<td>Nombre del tipo de edici?n.</td>
+</tr>
+<tr>
+<td><strong>TipoConversion</strong></td>
+<td><strong>U:</strong> Convertir a may?sculas.<br /><strong>L:</strong> Convertir a min?sculas.<br />Vac?o acepta may?sculas y min?sculas.<br />Hay un avalor especial que es <strong>NoCheck</strong> que permite introducir cualquier car?cter.</td>
+</tr>
+<tr>
+<td><strong>AllowedChars</strong></td>
+<td>Caracteres permitidos</td>
+</tr>
+<tr>
+<td><strong>Expresi?nRegularDown</strong></td>
+<td>Expresi?n regular para chequear mientras se teclea</td>
+</tr>
+<tr>
+<td><strong>Expresi?nRegularExit</strong></td>
+<td>Expresi?n regular para chequear al aceptar la ficha</td>
+</tr>
+<tr>
+<td><strong>ChrOld</strong> </td>
+<td>Lista de car?cteres a transformar</td>
+</tr>
+<tr>
+<td><strong>ChrNew </strong></td>
+<td>Lista de car?cteres transformados</td>
+</tr>
+<tr>
+<td><strong>Patron</strong></td>
+<td>El carácter "#" representa cualquier caracter y cualquier otro sera generado automaticamente.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Chr] uNuevo | U | htsmkiwq@.:,;-<br />[Chr] letras | L | | a-zñçáéíóúâêîôûàèìòùäëïöüãõ</td>
+</tr>
+<tr>
+<td id="txt">El primer ejemplo crearía un nuevo tipo de edición llamado "uNuevo", las letras se convertirían a mayúsculas al ser pulsadas (es decir, se hace un toUpperCase), y se aceptarían los caracteres especificados en el parámetro "AllowedChars", el segundo ejemplo crea con expresiones regulares la entrada de números en formato exadecimal.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Chr] uTipo || 0123456789, ||| . | ,</td>
+</tr>
+<tr>
+<td id="txt">Al pulsar el car?cter "." lo convertir? al car?cter ",". Desde el teclado num?rico puedes meter la coma decimal.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Chr] HEX | U | 1234567890ABCDEF ||||| ##-##-##</td>
+</tr>
+<tr>
+<td id="txt">Pinta n?meros hexadecimales separandolos con un "-" cada dos posiciones</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

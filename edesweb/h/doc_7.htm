@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-DOCUMENTACION </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/doc.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=TABLA cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR>
+<TD id=TITULO>&nbsp; 
+<TR>
+<TD id=TEXTO>&nbsp;</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+TABLA.cellSpacing = 0;
+function HRef(){
+	var Obj = event.srcElement;
+	while( Obj.tagName != 'A' ) Obj = Obj.parentElement;
+	window.open( Obj.href );
+	return false;
+}
+var Obj = document.all.tags('A');
+for( var i=0; i<Obj.length; i++ ) Obj[i].onclick = HRef;
+</SCRIPT>
+</BODY></HTML>

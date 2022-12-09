@@ -1,0 +1,94 @@
+{g/tab.gif} Sistema
+
+	[$usuarioa.gif] Usuario actual
+		[$clave.gif] Modificar clave |#mR:$a/d/usu_clave&_SEEK&cd_gs_user=#user#
+		Datos Básicos		|#mR:$a/d/usu_basico&_SEEK&cd_gs_user=#user#
+		Variables Sesión	|:$a/d/usu_sesion
+			Consultar	|#cR:
+			Modificar	|#mR:
+		Configurar entorno |>/_datos/config/install.php
+		[$local.gif] Nodo
+			Consultar |#cR:$a/d/nodo.edf&_SEEK&cd_gs_node=#node#
+			Modificar |#mR:$a/d/nodo.edf&_SEEK&cd_gs_node=#node#
+
+	[$manteni.gif] Mantenimiento
+
+		[$local.gif] Locales	|:$a/d/nodo
+			Consultar	|#c:
+			Modificar	|#m:
+			Insertar	|#a:
+			Borrar		|#b:
+
+		[$office.gif] Departamentos |:$a/d/office
+			Consultar	|#c:
+			Modificar	|#m:
+			Insertar	|#a:
+			Borrar		|#b:
+
+		[$position.gif] Cargos	|:$a/d/position
+			Consultar	|#c:
+			Modificar	|#m:
+			Insertar	|#a:
+			Borrar		|#b:
+
+		[$usuario.gif] Usuarios	|:$a/d/usu_ficha
+			Consulta	|#c:
+			Modificar	|#m:
+			Insertar	|#a:
+			Borrar		|#b:
+			-
+			[$reset.gif] Resetear clave |#m:$a/d/usu_reset
+			[$user_lock_off.gif] Activar acceso |#m:$a/d/usu_activar
+			[$user_security.gif] Responsable seguridad | #m:$a/d/usu_security
+
+		[$pc.gif] PCs	|:$a/d/pc
+			Consultar	|#c:
+			Modificar	|#m:
+			Borrar		|#b:
+
+		[$arbol.gif] Arboles |:$a/d/m_arbol
+			Consultar	|#c:
+			Modificar	|#m:
+
+		[$opcion.gif] Opciones |:$a/d/m_opcion
+			Consultar	|#c:
+			Modificar	|#m:
+			-
+			Gestor de Opciones |>$a/d/tree.gs&TIPO=1
+			Status             |>$a/d/opstatus.gs
+			[$mapa.gif] Mapa de Opciones |>$a/d/mapa.gs
+
+		[$grafica.gif] Estadística
+			Navegadores		|#c:$a/d/e_nave
+			Accesos			|#c:$a/d/e_acceso
+			Conexiones		|#c:$a/d/e_cone
+			Conex. Distintas|#c:$a/d/e_cone_dis
+			Extracciones	|#c:$a/d/e_extra
+			Backups			|#c:$a/d/gs_backup
+
+		[$setup.gif] Estado del sistema
+			PHP
+				Rendimiento	|>$a/u/velocidad.gs
+				Información	|>$a/d/status.gs
+				PHP.ini		|>$a/u/tools.gs?I
+			De la CPU		|¿ strtoupper(substr(PHP_OS,0,3))!='WIN' ? >$a/d/server.gs?T
+			
+			Propiedades Explorador	| window.external.ShowBrowserUI("PrivacySettings",null)
+			Servidor Web Apache
+				Rendimiento		|¿ strtoupper(substr(PHP_OS,0,3))!='WIN' ? >$a/u/velocidad.gs
+				Velocidad de carga	|>$a/u/vcarga.gs
+				Gráfica			|¿ strtoupper(substr(PHP_OS,0,3))!='WIN' ? >$a/d/server.gs?G
+				Status en Tabla		|¿ strtoupper(substr(PHP_OS,0,3))!='WIN' ? m>$a/d/server.gs?S
+				Status original		|¿ strtoupper(substr(PHP_OS,0,3))!='WIN' ? m>$a/d/server.gs?O
+				Usuarios conectados	|>$a/u/conexiones.gs
+			Errores			| #c:$a/d/e_error
+			Errores Informe | #c:$a/d/e_errorr
+
+		[$web.gif] On/Off WEB
+			[$stop_m.gif] Modo consultas	|#a:$a/d/stop_mod
+			[$stop_t.gif] Parada TOTAL	|#a:$a/d/stop_total
+		-
+		[$helpdesk.gif] Help Desk | eHelpDesk()
+
+		-
+		Desarrolladores | >$a/u/_usuarios.gs

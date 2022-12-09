@@ -1,0 +1,86 @@
+#include(*) $lng/activity.edf.lng
+[Title]=SCRIPT DEL USUARIO|l
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]1 desc
+[DBAddFilter]edes='F' and cdi_ftp is null
+[DBGroupBy]2
+[MaxRec]0
+[FormAction]*|edes.php?Ll:
+[ColsOp]C
+[Format]
+if( $_vF[1][0]=='$' ) $_CellsStyle[1] = 'color:#ff00ff;font-weight:bold';
+if( $_vF[1]=='/_datos/config/sql.log' ){
+$GLOBALS['_LogDB'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/directory.log' ){
+$GLOBALS['_LogDIR'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/update.log' ){
+$GLOBALS['_LogScript'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}
+if( substr_count($_vF[1],'/tree/')>0 ) $_CellsStyle[1] = 'color:green;font-weight:bold';
+if( $_vF[2] > 1 ) $_CellsStyle[2] = 'background:#FFB5B5;font-weight:bold';
+[PDFCol],,0,0
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Actualizar por HTTP@|@Nº Desarrolladores por script@
+[Fields]
+#(?) @CDI@|cdi|CDI|T|19||MQ|||
+#!(?) @CDI@|max(cdi)|CDI|T|19||MQ|||
+@Script@|script|#|T|70||MQ|||
+@Desarrolladores@|'' as dev|N|T|50||-|||
+[PHPStart]l
+if( $_dia!='' ) $_DBADDFILTER = '';
+eInclude($_Sql);
+$_xAnd = (( $_DBADDFILTER!='' ) ? ' and ' : '' );
+qQuery("select count(distinct cd_gs_user) from {$_SESSION['ShareDictionary']}gs_activity where {$_DBADDFILTER}{$_xAnd} cd_gs_user={$_GET['cd_gs_user']} and cdi>='{$_dia} 00:00:00' and cdi<='{$_dia} 23:59:59'");
+list( $GLOBALS['TotalDesarrolladores'] ) = qRow();
+[JSEnd]l
+var TABLA = S("#BROWSE").obj;
+TABLA.rows[TABLA.rows.length-1].cells[2].textContent = '<?= $TotalDesarrolladores ?>';
+TABLA.rows[TABLA.rows.length-1].cells[2]..title = '@Total nº Desarrolladores distintos@';
+[DBSql]l
+$_TReg = qCount("{$_SESSION['ShareDictionary']}gs_activity", $_DBADDFILTER.$_xAnd.' cd_gs_user='.$_GET['cd_gs_user']." and cdi>='{$_dia} 00:00:00' and cdi<='{$_dia} 23:59:59'");
+if( $_TReg > 0 ){
+$DimScriptPorUser = array();
+$usuCursor = array();
+$DimUser = array();
+qQuery( "select max(cdi),script, '' from {$_SESSION['ShareDictionary']}gs_activity as a where ".$_DBADDFILTER.$_xAnd.' cd_gs_user='.$_GET['cd_gs_user']." and cdi>='{$_dia} 00:00:00' and cdi<='{$_dia} 23:59:59'".' group by 2 order by 1' );
+while( $r=qRow() ){
+$script = trim($r[1]);
+$nUsu = '';
+qQuery( "select distinct cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity where script='{$script}' and ".$_DBADDFILTER.$_xAnd.' cd_gs_user='.$_GET['cd_gs_user']." and cdi>='{$_dia} 00:00:00' and cdi<='{$_dia} 23:59:59'", $p );
+while( $u=qRow($p) ){
+$DimUser[$u[0]] = 1;
+if( $nUsu!='' ) $nUsu .= ',';
+$nUsu .= $u[0];
+$DimScriptPorUser[$u[0]]++;
+}
+$r[2] = $nUsu;
+$usuCursor[] = $r;
+}
+$Usuarios = '';
+foreach( $DimUser as $k=>$v ) $Usuarios .= ','.$k;
+if( $Usuarios[0]==',' ) $Usuarios = substr($Usuarios,1);
+if( $Usuarios!='' ){
+qQuery( "select cd_gs_user, user_name from gs_user where cd_gs_user in ( {$Usuarios} )" );
+while( $u=qRow() ) $DimUser[$u[0]] = trim($u[1]);
+for( $n=0; $n<count($usuCursor); $n++ ){
+$tmp = explode(',',$usuCursor[$n][2]);
+$usuCursor[$n][2] = '';
+for( $i=0; $i<count($tmp); $i++ ){
+if( $usuCursor[$n][2]!='' ) $usuCursor[$n][2] .= ', ';
+$usuCursor[$n][2] .= $DimUser[$tmp[$i]];
+}
+}
+}
+}
+[OnLoad]l|BROWSE.rows[0].cells[1].style.width=BROWSE.rows[0].cells[1].offsetWidth; document.ondblclick=null;
+[JSOnClickRow]l
+if( ColNumber==2 ){
+top.eSWOpen( window, 'Ll:$a/u/activity_df&_FILTER='+escape('script="'+eTrim(_oTR.cells[1].innerHTML)+'"'), '', false );
+}else{
+top.gsEdit(window, BROWSE.rows[RowNumber].cells[1].textContent );
+}

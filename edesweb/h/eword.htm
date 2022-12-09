@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eWord 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eWord( "Comando|Parametro|Parametro|..." ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Función para la comunicación con el Word. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones style="HEIGHT: 491px; WIDTH: 743px" cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL vAlign=middle>
+<COL vAlign=left>
+<COL vAlign=left>
+<TBODY>
+<TR>
+<TD>NEW, N</TD>
+<TD>Nuevo documento Excel, se crea de forma oculta.</TD>
+<TD>top.eWord("N|NomFile");</TD></TR>
+<TR>
+<TD>OPEN, O</TD>
+<TD>Abre un documento existente.</TD>
+<TD>top.eWord("O|NomFile");</TD></TR>
+<TR>
+<TD>VISIBLE, V</TD>
+<TD>Muestra (1/T/TRUE) u oculta (0/F/FALSE) el documento</TD>
+<TD>top.eWord("V|T");</TD></TR>
+<TR>
+<TD>SAVE, S</TD>
+<TD>Graba el documento</TD>
+<TD>top.eWord("S");</TD></TR>
+<TR>
+<TD>SAVEAS, SA</TD>
+<TD>Graba el documento</TD>
+<TD>top.eWord("SA|NomFile");</TD></TR>
+<TR>
+<TD>EXIT, E, QUIT,&nbsp;Q</TD>
+<TD>Cerrar el documento</TD>
+<TD>top.eWord("E");</TD></TR>
+<TR>
+<TD>FREE</TD>
+<TD>Libera la memoria usada.</TD>
+<TD>top.eWord("Free");</TD></TR>
+<TR>
+<TD>PRINT</TD>
+<TD>Imprime el documento actual.</TD>
+<TD>top.eWord("PRINT");</TD></TR>
+<TR>
+<TD>MARGIN</TD>
+<TD></TD>
+<TD>top.eWord("MARGIN|top,right,bottom,left");</TD></TR>
+<TR>
+<TD>ORIENTATION</TD>
+<TD></TD>
+<TD>top.eWord("ORIENTATION|NumColumn");</TD></TR>
+<TR>
+<TD>TEXT</TD>
+<TD></TD>
+<TD>top.eWord("TEXT|Motor edes");</TD></TR>
+<TR>
+<TD>SAVEASHTML</TD>
+<TD></TD>
+<TD>top.eWord("SAVEASHTML|NomFile");</TD></TR>
+<TR>
+<TD>
+<P>INSERTFILE</P></TD>
+<TD></TD>
+<TD>top.eWord("INSERTFILE|{dir}prueba.txt");</TD></TR>
+<TR>
+<TD>REPLACE</TD>
+<TD></TD>
+<TD>top.eWord("REPLACE|#|123")</TD></TR>
+<TR>
+<TD>REPLACESTYLE, RS</TD>
+<TD>Reemplaza y cambia el estilo, SubComandos:<BR><SPAN style="WIDTH: 25px"></SPAN>"B", "BOLD"<BR><SPAN style="WIDTH: 25px"></SPAN>"S", "SIZE"<BR><SPAN style="WIDTH: 25px"></SPAN>"C", "COLOR"<BR><SPAN style="WIDTH: 25px"></SPAN>"I", "ITALIC"<BR><SPAN style="WIDTH: 25px"></SPAN>"N", "NAME"<BR><SPAN style="WIDTH: 25px"></SPAN>"U", "UNDERLINE"<BR><SPAN style="WIDTH: 25px"></SPAN>"T", "TEXT"<BR><SPAN style="WIDTH: 25px"></SPAN>"CLEAR"</TD>
+<TD>WE.eWord("RS|...Txt a buscar...|C|1048320|B|1|S|30");<BR>WE.eWord("RS|...Txt a buscar...|U|1|N|Verdana");</TD></TR>
+<TR>
+<TD>PICTURE</TD>
+<TD></TD>
+<TD>top.eWord("PICTURE|Img|Img");</TD></TR>
+<TR>
+<TD>JUMP, J</TD>
+<TD>Salto de página (Jump)</TD>
+<TD>top.eWord("J");</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR style="DISPLAY: none">
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR>
+<TR style="DISPLAY: none">
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

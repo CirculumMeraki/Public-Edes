@@ -1,0 +1,9 @@
+[Title]=MARCA DE AGUA
+[UploadFile]watermark|/_datos/config|=watermark.png|100.000|Ver marca de agua|png
+[SessionVar]
+[Button]*|Grabar
+[Fields]
+Fichero|watermark|#D|F|60||MD||#|
+[PHPIni]*
+$_Form[0][_CONSTANTE] = 'watermark.png';
+#include(*) /_datos/config/file_manager.ini | true

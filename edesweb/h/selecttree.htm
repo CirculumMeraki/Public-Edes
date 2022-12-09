@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">SelectTree</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[SelectTree] Mode | Field</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Genera un selector en formato árbol pudiendo tener todos los registros cargados o irlos cargando según se necesitan</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[SelectTree] * | serial</code><br /><code>     load_level: 1</code><br /><code>     load_view : 1</code><br /><br /><code>     multiple: false</code><br /><code> </code><br /><code>     function:   //functionJS           opcional</code><br /><code>     server  :   //functionPHP          opcional</code><br /><code> </code><br /><code>     table   : motivos</code><br /><code>     index   : cd_reds_motivos_visita</code><br /><code>     caption : nm_reds_motivos_visita</code><br /><code>     level   : nivel</code><br /><code>     parent  : dependencia</code><br /><code>     order   : orden,nm_reds_motivos_visita</code><br /><code>     type    : tipo</code><br /><code> </code><br /><code>     icon_folder_open :</code><br /><code>     icon_folder_close:</code><br /><code>     icon_op:      </code><br /><code> </code><br /><code>     filter: cd_auto='{$_Auto_}'</code><br /><br /><code>[Fields]</code><br /><code>     Árbol | serial | + | ST | 4,40 | | iM | | # |</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

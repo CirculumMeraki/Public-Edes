@@ -1,0 +1,107 @@
+[Language] es,ca,en,fr
+1|Insertar|Inserir|Insert|Insertar
+10|SELECCIONAR # A RECUPERAR|SELECCIONAR # A RECUPERAR|SELECT # TO RECOVER|SELECCIONAR # A RECUPERAR
+11|Contador de páginas|Comptador de pàgines|Page counter|Contador de páginas
+12|Contador de registros|Comptador de registres|Register counter|Contador de registros
+13|Página actual|Pàgina actual|Actual Page|Página actual
+14|Registro actual|Registre actual|Actual Record|Registro actual
+15|Ultima página|Última pàgina|Last page|Ultima página
+16|Ultimo registro|Últim registre|Last record|Ultimo registro
+17|Grabar Ordenación|Gravar Ordenació|Ordenation Record|Grabar Ordenación
+18|Primeros #1 de #2 regístros|Primers #1 de #2 registres|First #1 of #2 records|Primeros #1 de #2 regístros
+19|Se ha llegado al límite de la extracción #1 de #2 regístros|S´ha arribat al límit de l´extracció #1 de #2 registres|extraction limit reached #1 of #2 records|Se ha llegado al límite de la extracción #1 de #2 regístros
+2|Modificar|Modificar|Modify|Modificar
+20|Página #1 de #2 (Total registros #3)|Pàgina #1 de #2 (Total registres #3)|Page #1 of #2 (Total records #3)|Página #1 de #2 (Total registros #3)
+21|# Registros|# Registres|# Records|# Registros
+22|Utilidades|Utilitats|Utilities|Utilidades~Title
+23|Selección en la ventana actual|Selecció en la finestra actual|Selection in current window|Selección en la ventana actual
+24|Registros por página|Registres per pàgina|Records per page|Registros por página
+25|Primera página|Primera pàgina|First page|Primera página
+26|Página anterior|Pàgina anterior|Previous page|Página anterior
+27|Página siguiente|Pàgina següent|Next page|Página siguiente
+28|Ultima página|Última pàgina|Last page|Ultima página
+29|Cadena a buscar|Cadena a buscar|String to search|Cadena a buscar
+3|Consultar|Consultar|View|Consultar~View Advice
+30|Click IZQ: Anterior\nClick DCH: Anterior (dato completo)|Clic ESQ: Anterior\nClic DRET: Anterior (dada complet)|Previous|Click IZQ: Anterior\nClick DCH: Anterior (dato completo)
+31|Click IZQ: Buscar\nClick DCH: Buscar (dato completo)|Clic ESQ: Buscar\nClic DRET: Buscar (dada complet)|Buscar|Search|Click IZQ: Buscar\nClick DCH: Buscar (dato completo)
+32|Click IZQ: Siguiente\nClick DCH: Siguiente (dato completo)|Clic ESQ: Següent\nClic DRET: Següent (dada complet)|Següent|Next|Click IZQ: Siguiente\nClick DCH: Siguiente (dato completo)
+33|Filtrar datos|Filtrar dades|Filter data|Filtrar datos
+34|Click IZQ: PDF en Color\nClick DCH: PDF en B/N|Click ESQ: Canviar a PDF Color\nClic DRET: Canviar a PDF B/N|Click IZQ: PDF Color\nClick DCH: PDF B/W|Click IZQ: PDF en Color\nClick DCH: PDF en B/N
+35|Click IZQ: Pasar a Excel\nClick DCH: Pasar a Excel la pantalla|Clic ESQ:Passar a Excel\nClic DRET: Passar a Excel la pantalla|Click IZQ: Convert to Excel\nClick DCH: Convert to Excel screen|Click IZQ: Pasar a Excel\nClick DCH: Pasar a Excel la pantalla
+61|Pasar a XML|Passar a XML|Convert to XML|Pasar a XML
+36|Pasar a Access|Passar a Access|Convert to Access|Pasar a Access
+37|Imprimir|Imprimir|Print|Imprimir
+38|Listado|Llistat|Listed|Listado
+39|Imprimir|Imprimir|Print|Imprimir
+4|Borrar|Esborrar|Delete|Borrar
+40|Ver gráfica|Veure gràfica|View chart|Ver gráfica
+41|Si|Si|Yes|Si
+42|No|No|No|No
+43|CONDICIONES|CONDICIONS|CONDITIONS|CONDICIONES
+78|CONDICIÓN|CONDICIÓN|CONDITION|CONDICIÓN
+44|Ver documento|Veure document|View document|Ver documento
+45|Editar documento|Editar document|Edit document|Editar documento
+46|dato vacío|dada buida|data empty|dato vacío
+47|dato relleno|dada farcida|data filled|dato relleno
+48|dato vacío - nulo|dada buida - nul·la|data empty - null|dato vacío - nulo
+49|dato no nulo|dada no nul·la|data not null|dato no nulo
+5|Utilidades|Utilitats|Utilities|Utilidades
+50|y|i|and|y
+51|o|o|or|o
+52|Página actual|Pàgina actual|Actual Page|Página actual
+53|Nº total de páginas|Nº total de pàgines|Total Pages Nº|Nº total de páginas
+54|No se puede mover la fila a la posición<br>indicada por ser de otro grupo.|No es pot moure la fila a la posició<br>indicada per ser d´un altre grup.|The row can not be moved to the indicated<br>position because it belongs to other group|No se puede mover la fila a la posición<br>indicada por ser de otro grupo.
+55|El tamaño máximo por fichero excede la configuración: # Bytes|La grandària màxima per fitxer excedeix la configuració: # Bytes|The maximum size for the data file surpass the configuration: # Bytes|El tamaño máximo por fichero excede la configuración: # Bytes
+56|ERROR:<br>Variable "#1" no definida correctamente<br>Contenido "#2"|ERROR:<br>Variable "#1" no definida correctament<br>Contingut "#2"|ERROR:<br>Variable "#1" not correctly defined<br>Content "#2"|ERROR:<br>Variable "#1" no definida correctamente<br>Contenido "#2"
+57|Página|Pàgina|Page|Página
+58|de|de|of|de
+59|Ver Fichero|Veure Fitxer|Ver Fichero|Ver Fichero
+6|LISTADO #|LLISTAT #|# LIST|LISTADO #
+60|Pasar a TXT||Convert to TXT|Pasar a TXT
+72|Pasar a CSV||Convert to CSV|Pasar a CSV
+
+7|SELECCIONAR # A MODIFICAR|SELECCIONAR # A MODIFICAR|SELECT # TO MODIFY|SELECCIONAR # A MODIFICAR
+8|SELECCIONAR # A CONSULTAR|SELECCIONAR # A CONSULTAR|SELECT # TO CONSULT|SELECCIONAR # A CONSULTAR
+9|SELECCIONAR # A BORRAR|SELECCIONAR # A ESBORRAR|SELECT # TO DELETE|SELECCIONAR # A BORRAR
+62|Volver al formulario|Tornar al formulari
+
+63|Pasar a PDF en Color|Canviar a PDF Color|Pasar a PDF Color|Pasar a PDF en Color
+64|Pasar a PDF en B/N|Canviar a PDF B/N|Pasar a PDF B/W|Pasar a PDF en B/N
+79|Pasar a PDF|Canviar a PDF|Pasar a PDF|Pasar a PDF
+
+65|Pasar a Excel|Passar a Excel|Convert to Excel|Pasar a Excel
+66|Pasar a Excel la pantalla|Passar a Excel la pantalla|Convert to Excel screen|Pasar a Excel la pantalla
+67|Cerrar
+
+68|Selección en una subventana|Selecció en una subventana|Selection in a subwindow|Selección en una subventana
+69|Selección en ficha deslizante|Selecció en fitxa lliscant|Selection in sliding form|Selección en ficha deslizante
+70|Selección en la ventana actual|Selecció en la finestra actual|Selection in current window|Selección en la ventana actual
+71|Modo SubVentana
+DocLabelUserTo|Para
+DocLabelUserFrom|De
+73|Criterio a filtrar
+74|Minimizar
+75|Gráficos
+76|Gráficos del Sistema
+77|Total registros|Total registres|Total records|Total registros
+80|Informe Resumido|Informe Resumit|Summary Report|Rapport Sommaire
+107|Informe Expandido|Informe Expandit|Expanded Report|Rapport étendu
+
+81|Click IZQ: Ver imagen\nClick DCH: Descargar imagen
+
+82|ÚLTIMOS REGISTROS GESTIONADOS:
+83|Columnas a visualizar
+84|Espaciado
+85|Filtrar...
+86|Opciones
+87|Ver condiciones
+88|Tarjetas
+89|Últimos registros
+99|Paginar
+100|Comparar Informes
+101|Exportar con Clave
+102|Exportar por EMail
+103|Exportar
+104|Recuperar registro borrado
+105|Ayuda
+106|Lineas verticales

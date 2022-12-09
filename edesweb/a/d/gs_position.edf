@@ -1,0 +1,9 @@
+[Title]CARGO/S
+[DBTable]gs_position
+[DBIndex]cd_gs_position; nm_gs_position
+[DBOrder]nm_gs_position
+[DBSerial]cd_gs_position
+[FormStatic]
+[Fields]
+|cd_gs_position|*|T|4||*|||
+Cargo|nm_gs_position|D|T|30||MQ|||

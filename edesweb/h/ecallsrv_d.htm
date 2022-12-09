@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eCallSrv 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eCallSrv(&nbsp;window, url [ , Condicion=true ] &nbsp;) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Conecta con el servidor por un iframe oculto. <BR>Si esta función se pone en el label [OnChange] y no se quiere que se ejecute al cargar la página la llamaremos con barra baja delante "_eCallSrv()" con los mismos parámetros. <BR>Aviso: si se descargan ficheros mediante esta función añadirle el parámetro "DOWNLOAD=1" para evitar problemas con algunas versiones de XP. <BR>Retorna el objeto window por el que se ha hecho la petición. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD><STRONG>window</STRONG>&nbsp; </TD>
+<TD>El objeto "window" de la ventana actual, en el caso de que se ejecute en una subventana y esta ventana se quiera cerrar antes de que&nbsp;el CallSrv&nbsp;termine en el parámetro se pondrá "top" para que se ejecute por el CallSrv del desktop.</TD></TR>
+<TR>
+<TD><STRONG>url</STRONG></TD>
+<TD>URL a ejecutar, esta función está en el desktop,&nbsp;se localiza mediante el puntero "top".&nbsp; Si en la llamada no está la cadena "edes.php?" le precederá al parámetro "url" la cadena "edes.php?E:" para ejecutar el script y si no tiene ningún punto "." le pondrá al final ".php".<BR>Existe una forma especial y sirve para llamar a zonas especificas del DF, estas zonas están dentro de la etiqueta [CallSrv] y es poniendo en este parametro una o varias variables asignandoles valores separadas por &amp;, el nombre de la primera variable será la etiqueta "[CallSrv] NomVar" que se ejecutará.</TD></TR>
+<TR>
+<TD><STRONG>Condicion</STRONG></TD>
+<TD>Parámetro opcional, si existe, se ejecutará la función si la condición es cierta.<BR>Este parámetro también puede tener el valor de la ventana actual "window" cuando el primer parámetro tiene el valor "_WOPENER", esto pasa cuando la ventana que llama al eCallSrv() se cierra inmediatamente despues de llamar a la función y se quiere manipular la ventana padre como en el último ejemplo.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[JSSelRow] l<BR>top.eCallSrv( window, 'edes.php?V:/http/_visor_.htm&amp;TITLE='+_Celda.innerHTML&nbsp;);<BR>return false;<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// evita que se edite la ficha</P>
+<TR>
+<TD id=txt>Este ejemplo muestra como estando en un listado se puede sacar una ventana tipo "Visor" ( al hacer click dentro o fuera de la ventana se ocultará ) esto se ejecuta con el parámetro "V" y la SubURL a ejecutar pudiendo esta tener dos parámetros opcionales que són "TITLE" y "STYLE" ( el contenido de STYLE se pasa con la función "escape()" ), el estilo se tomará de "visor.css".</TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[JSSelRow] cl | cen/gestion_pago.edf<BR>top.eCallSrv( window, 'NmAsa='+_aTR[12] );<BR>...<BR><BR>[CallSrv] NmAsa <SPAN style="WIDTH: 25px"></SPAN>// Funcion para poner el nombre de la Asamblea<BR>...<BR>echo '&lt;script&gt;';<BR>echo "window.frameElement.WOPENER.document.all.nm_asamblea.value = '{$UserNmAsamblea}';";<BR>echo '&lt;/script&gt;';</P></TD></TR>
+<TR>
+<TD id=txt>
+<P>Existe una forma especial y sirve para llamar a zonas especificas del DF, estas zonas están dentro de la etiqueta [CallSrv]<BR></P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

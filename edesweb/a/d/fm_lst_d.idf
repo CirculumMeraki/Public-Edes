@@ -1,0 +1,26 @@
+[Title]DOCUMENTO|l
+[Format]
+$_vF[8] = "<img src='g/l_d_".$_vF[7].".gif' onclick='VD()' t='{$_vF[7]}'>";
+[THColSpan]copyrighted,img,Características
+[ColsWidth]description=400
+[PDFCol]img=0
+[Fields]l
+|cd_gs_img|+|T|9||*|||
+Fichero|nm_gs_img|#D|F|30||-|||
+Categoría|cd_gs_img_class|+|S|20||-|||
+SubCategoría|cd_gs_img_sclass|+|Ss|20||-|||
+Descripción|description|#|A|70||-|||
+Copyright\©|copyrighted|N|C|1||-||=|
+Tamaño|bytes|+|T|10||-|||
+Tipo|extension|#D|T|4||-||=|
+|extension as img|#D|T|4||-||=|
+[PDFWrap]3,,true|description
+[PHPIni]l
+$_PDFLABELHIDDEN['type_file'] = 'NOTTOSHOW';
+$_AddShowFilter = array( 'CLASE: Documentos' );
+[JSIni]l
+function VD(){
+var TR = S.toTag(S.event(window),'TR');
+top.eCallSrv( window, 'edes.php?D://img/'+eTrim(TR.cells[0].textContent)+'.'+S.event(window).t+'&FILE='+eTrim(TR.cells[1].textContent) );
+return eClearEvent();
+}

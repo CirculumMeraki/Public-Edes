@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>RelationColFields 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[RelationColFields] CampoPadre, CampoHijo | Valor=NomCampoAlternativo 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Relaciona dos campos select, indica la columna a visualizar del CampoHijo. En un RelationFields los registros cambian en función del padre, son filtros en esta etiqueta lo que se condiciona es la columna a visualizar. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo><FONT color=#0000ff><FONT color=#0000ff size=2>
+<P><STRONG>[AddOption]</STRONG></FONT><FONT color=#000000 size=2> * </FONT><FONT color=#800000 size=2><STRONG>|</STRONG></FONT><FONT color=#000000 size=2> cd_sexo </FONT><FONT color=#800000 size=2><STRONG>|</STRONG></FONT><FONT size=2><FONT color=#000000> ,; H,Hombre; M,Mujer<BR><BR></FONT></FONT><STRONG>[RelationColFields]</STRONG></FONT> <FONT color=#000000 size=2>cd_sexo,cd_profe </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2><FONT color=#000000> M=nm_profe_m<BR><B><FONT color=#0000ff size=2></P>
+<P>[Fields]<BR><SPAN style="WIDTH: 25px"></SPAN></FONT></B></FONT></FONT>&nbsp;...<FONT size=2><FONT color=#000000><B><FONT color=#0000ff size=2><BR></B></FONT><FONT size=2><SPAN style="WIDTH: 25px"></SPAN>&nbsp;Sexo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> cd_sexo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> 0 </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> SV </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2>&nbsp; 6 </FONT><B><FONT color=#800000 size=2>|</B></FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> M </FONT><B><FONT color=#800000 size=2>|</B></FONT><B><FONT color=#800000 size=2>|</B></FONT><B><FONT color=#800000 size=2>|<BR></B></FONT><FONT size=2><SPAN style="WIDTH: 25px"></SPAN>,Profesión </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> cd_profe{profe_sexo,cd_profe,nm_profe_h} </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> 0 </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> S&nbsp; </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> 30 </FONT><B><FONT color=#800000 size=2>|</B></FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2> M </FONT><B><FONT color=#800000 size=2>|</B></FONT><B><FONT color=#800000 size=2>|</B></FONT><B><FONT color=#800000 size=2>|<BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;...</P></B></FONT></FONT></FONT>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+
+function ScrollTH(){ Esquema.rows[0].style.top = Esquema.parentElement.scrollTop; }
+Esquema.rows[0].style.position = 'relative';
+document.getElementsByTagName('DIV')[0].onscroll = ScrollTH;
+window.focus();
+</SCRIPT>
+</BODY></HTML>

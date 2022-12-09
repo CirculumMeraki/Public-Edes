@@ -1,0 +1,45 @@
+[Title]ENCUESTA/S
+[DBTable]ts_encuesta
+[DBIndex]cd_ts_encuesta
+[DBOrder]cd_ts_test,dt_inicio
+[DBSerial]cd_ts_encuesta
+[AddCode]*|dt_inicio|S|F. Inicio
+[AddCode]*|dt_usr_inicio|S|F. Desde
+[PDFCol]cd_ts_test=90
+[THColSpan]dt_inicio,dt_fin, Fecha Vigencia|dt_usr_inicio,dt_usr_fin, Fecha Alta de<br>usuarios
+[AddButton]cR|<img src='edes.php?R:$a/g/setup.gif'> Probar Encuesta||Probar()
+[DBRange]?|dt_inicio|_desde_v|_hasta_v
+[DBRange]?|dt_usr_inicio|_desde_u|_hasta_u
+[AddCode]*|_desde_v,_desde_u|S|Desde
+[AddCode]a,?R|dt_usr_fin|E|<img src='edes.php?R:$a/g/usuario.gif' onclick='uCountUser()' title='Contar el nº de usuarios que cumple la condición' style='margin-left:20px'>
+[Fields]?
+Cuestionario|cd_ts_test|+|S|150|450|MQ||#|
+{FS}{ Fecha inicial de la Vigencia de la Encuesta
+|_desde_v|F4|T|10||QF|||
+,Hasta|_hasta_v|F4|T|10||QF|||
+}
+{FS}{ Fecha inicial del Alta de los Usuarios
+|_desde_u|F4|T|10||QF|||
+,Hasta|_hasta_u|F4|T|10||QF|||
+}
+[Fields]else
+|cd_ts_encuesta|+|T|4||*|||
+Cuestionario|cd_ts_test|+|S|150|450|M||#|
+{FS}{ Vigencia de la Encuesta
+\Inicial|dt_inicio|F4|T|10||MF|||
+F. Final\Final|dt_fin|F4|T|10||MF|||
+Opcional|opcional|N|C|1||M|||
+}
+{FS}{ Fecha de alta de los Usuarios
+\Desde|dt_usr_inicio|F4|T|10||MF|||
+F. Hasta\Hasta|dt_usr_fin|F4|T|10||MF|||
+}
+Conclusión|conclusion|#|A|2000,80,10|450|ML|||
+[JSIni]a,?R
+function uCountUser(){
+}
+[JSIni]cR
+function Probar(){
+if( eGF('cd_ts_encuesta')!='' ) top.eSWOpen( window, 'edes.php?E:$a/d/ts_encuestar.gs&cd_ts_encuesta='+eGF('cd_ts_encuesta')+'&Probar=1', 'ENCUESTA', false, 500 );
+return eClearEvent();
+}

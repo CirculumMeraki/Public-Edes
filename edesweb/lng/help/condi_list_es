@@ -1,0 +1,10 @@
+<table class="HELPTABLE" style="border-collapse: collapse; background-color: transparent;" border="1">
+<tbody>
+<tr>
+<th style="width: 100%; text-align: center;"><strong>Ventana de selección múltiple</strong></th>
+</tr>
+<tr>
+<td style="width: 100%; background-color: transparent;">Lista de valores, uno por linea y/o separados por coma.<br />Esta consulta puede operar de 3 formas distintas:<br />   1: Te muestra todos los registros que encuentre de la lista.<br />   2: Si en la primera linea pones "<>" te mostrará todos los que hay menos los de la lista.<br />   3: Si en la primera linea pones "!=" te mostrará los que no estén de la lista.</td>
+</tr>
+</tbody>
+</table>

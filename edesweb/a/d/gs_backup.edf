@@ -1,0 +1,17 @@
+#include(*) lng
+[Title]@COPIA/S DE SEGURIDAD@
+[DBTable]gs_backup
+[DBOrder]cdi desc
+[FormAction]c|edes.php?Ll:
+[AddCode]*|cdi|a|&nbsp;&#40;aaaa-mm-dd hh:mm:ss)
+[Format],  ,b,   ,  ,
+[ColsWidth],30, ,200,40,420
+[PDFCol],20, ,30 ,13,72
+[RowColor]$row[5]=='@INICIO COPIA DE SEGURIDAD@'|style='color:#FF0000'
+[Fields]
+@Instante@|cdi|0|T|19||AQ|#sy2s#|#|
+@Nombre fichero@|file|#D|T|35||A|||
+@Tamaño@|size|-|T|15||A|||
+@Destino@|target|#D|T|50||A|||
+@Tipo@|type|#|A|100,80,1||A|||
+@Información@|info|#|A|255,80,3||A|||

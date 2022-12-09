@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBTable</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBTable] Table1 [, Table2] ... [, TableN] [ [ | SufijoISubList ] | TablaInfo1,,,, ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Nombre de la tabla de la base de datos a utilizar.<br />Se puede poner más de una tabla, en ese caso el motor las utilizará para el listado y podría nombrarse con un alias (Factura as F), debiéndose utilizar también en los campos.<br />En un archivo de definición ".LST" (listado). Al tener más de una tabla, en los campos hay que definir la tabla a que pertenecen.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Table1</strong>: Nombre de la tabla de la base de datos que estamos utilizando. <br />El tercer parámetro opcional es una lista de tablas a ver su estructura desde el editor pulsando F2. El editor tiene una opción para ver la estructura de las tablas definidas en la etiqueta [DBTable] si tu en alguna parte de PHP usas mas tablas y quieres poder consultar la estructura SQL desde el editor las añades en la etiqueta.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[DBTable] clientes</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[Title]   LISTADO DE EMPRESAS<BR>DATOS BASICOS</code><br /><code>[DBTable] empresa E, outer postal P</code><br /><code>[DBOrder] E.rsocial</code><br /><code>[Fields]</code><br /><code>  C.I.F        | E.cd_empresa | CIF | T |  9|| M |||</code><br /><code> ,CODIGO       | E.numero     | +   | T |  8|| M |||</code><br /><code> ,RAZON SOCIAL | E.rsocial    | X   | T | 10|| M |||</code><br /><code> ,DIRECCION    | E.direccion  | D   | T | 40|| M |||</code><br /><code> ,CP           | P.cpostal    | CP  | T | 10|| M |||</code><br /><code> ,LOCALIDAD    | P.poblacion  | X   | T | 40|| M |||</code><br /><code> ,TELEFONO     | E.tlf        | T   | T | 15|| M |||</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

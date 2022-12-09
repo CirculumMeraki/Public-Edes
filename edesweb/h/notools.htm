@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">NoTools</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[NoTools] OpcionesADesactivar[S]  [ [ | FuncionDeUsuario [ | UserFilterFunction [ | ExtensionesAdicionales [ | NºColumnasIguales ] ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Desactiva todas o algunas de las utilidades del listado. Si ponemos el nombre de una función de usuario esta se ejecutará al ejecutar las extracciones enviando la inicial de la acción a ejecutar y pudiendo devolver parámetros adicionales para la llamada por la URL al servidor.<br />Existe una función de usuario denominada "<strong>uFileSupport()</strong>" que si existe es llamada antes de descargar un listado en formato PDF, XLS, XML, MDB, TXT o CSV a esta función se le pasa el nombre del fichero, uno de los usos de esta función es que quede constancia de las extraciones que lo hará el desarrollador.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td><strong>OpcionesADesactivar</strong></td>
+<td>* Desactiva todas las utilidades<br />S Ordenanción ( Sort )<br />L Buscar datos ( Location )<br />P Imprimir ( Printer )<br />x Extraer a Excel ( XLS )<br />p Extraer a PDF ( PDF )<br />a Extraer a Access ( MDB )<br />m Extraer a XML<br /> t  Extaer a TXT<br /> v Extraer a CSV<br />C Chart<br />W Modo SubVentana</td>
+</tr>
+<tr>
+<td><strong>FuncionDeUsuario </strong></td>
+<td>Función de usuario a ejecutar al pulsar el icono</td>
+</tr>
+<tr>
+<td><strong>UserFilterFunction </strong></td>
+<td>Al filtrar datos pasará por la función de usuario indicada pasando el parámetro de lo que se va a buscar</td>
+</tr>
+<tr>
+<td><strong>ExtensionesAdicionales </strong></td>
+<td>Formato PDF, XLS, XML, TXT, MDB, CVS (aunque el usuario no lo tenga se podrá extraer en estos formatos).<br />Si se pone solamente la constante CMP en los lTools aparecerá un icono para comparar listados o informes, en este caso llevará un parámetro adicional NºColumnasIguales.<br />El parámetro CMP solo estará activo en informes que no sobrepase una página y no está presente la etiqueta [ColsOp] con "S" de grupos</td>
+</tr>
+<tr>
+<td><strong>NºColumnasIguales</strong> <strong> </strong></td>
+<td>Solo se define cuando el parámetro anterior es CMP e indica el nº de columnas que son iguales en la comparación (tendrán que estar al principio)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[NoTools] pxm                  // Desactiva las extracciones a PDF, XLS y MDB<br /><br />[NoTools] | uFuncUsuario       // Llama a una función de usuario para pasar variables adicionales al servidor<br />
+<p>[JSIni] l<br />function uFuncUsuario( Tipo ){<br />return 'Variable=Valor&Variable=Valor';<br />}</p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[NoTools] | | | TXT, XML// Añade las extracciones en formato TXT y XML para el edf actual</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[NoTools] | | | CMP | 2</td>
+</tr>
+<tr>
+<td id="txt">Compara dos listados / informes igualando las dos primeras columnas</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,35 @@
+[Title]CONSTRAINTS
+[DBTable]sysconstraints
+[DBIndex]constrid
+[DBOrder]constrid
+[DBSerial]constrid
+[DBLimit]1000,500
+[THColSpan]constrname,owner,ORIGEN|tabid,constrtype,DESTINO
+[Fields]
+Nombre|constrid|#D|T|30||MQ||#|
+tabla|constrname|#D|T|30||M|||
+campo|owner|#D|T|30||M|||
+tabla|tabid|#D|T|30||M|||
+campo|constrtype|#D|T|30||M|||
+[PHPIni]*
+$usuCursor = array();
+$cad_sql = 'SELECT b.constrname D, a.tabname E, d.tabname F, b.tabid G, b.constrid H, '; $cad_sql.= 'c.primary I, c.ptabid J FROM systables a, sysconstraints b, sysreferences c, '; $cad_sql.= 'systables d WHERE b.constrtype = "R" AND a.tabid = b.tabid AND ';
+$cad_sql.= 'b.constrid = c.constrid AND c.ptabid = d.tabid';
+qQuery($cad_sql);
+while ($Dim = qRow()) {
+$idx = trim($Dim[3]).'_'.trim($Dim[4]);
+$cad_sql2 = 'SELECT b.colname,b.colno from sysindexes a,syscolumns b where ';
+$cad_sql2.= 'a.part1 = b.colno and a.idxname matches "*'.$idx.'" and ';
+$cad_sql2.= 'b.tabid = "'.trim($Dim[3]).'"';
+qQuery($cad_sql2,$pru);
+$Dim2 = qRow($pru);
+$cam1 = trim($Dim2[0]);
+$idx = trim($Dim[6]).'_'.trim($Dim[5]);
+$cad_sql2 = 'SELECT b.colname,b.colno from sysindexes a,syscolumns b where ';
+$cad_sql2.= 'a.part1 = b.colno and a.idxname matches "*'.$idx.'" and ';
+$cad_sql2.= 'b.tabid = "'.trim($Dim[6]).'"';
+qQuery($cad_sql2,$pru);
+$Dim2 = qRow($pru);
+$cam2 = trim($Dim2[0]);
+$usuCursor[] = array( $Dim[0], $Dim[1], $cam1, $Dim[2], $cam2 );
+}

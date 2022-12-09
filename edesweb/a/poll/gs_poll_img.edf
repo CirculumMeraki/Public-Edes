@@ -1,0 +1,42 @@
+[Title]IMAGENES PARA ENCUESTAS
+[DBTable]gs_poll_img
+[DBIndex]cd_gs_poll_img
+[DBOrder]nm_gs_poll_img
+[DBSerial]cd_gs_poll_img
+[OptionsInList]fuabcm,o 							_
+| &#96; | EditarMapa | Mapa | cd_gs_node={$_Node}
+[UploadFile]fichero|/http/poll|cd_gs_poll_img|1.000.000|Imagen de fondo|png,jpg,jpeg,gif||50,50|_mini
+[AddCode]a,mR|fichero|I|eCopy='extension=format, tamayo=size'
+[AddCode]mR|dt_insert|E|<span id="EditarMapa" style="margin-left:75px">Editar mapa</span> <i class="ICONINPUT" onclick="EditarMapa()">&#281;</i>
+[AddOption]*|tipo|_
+,;					_
+F,Fondo;			_
+I,Imagen;			_
+M,Mapa
+[Format]
+if( eIsHTM() ) $_vF["img"] = "<img src='poll/".$_vF["cd_gs_poll_img"]."_mini.".$_vF["extension"]."'>";
+[PDFCol]img=0
+[Fields]l
+|cd_gs_poll_img|+|T|9||*|||
+Miniatura|extension as img|n|T|4||-||=|
+Imagen|nm_gs_poll_img|D|T|60||MQ|||
+Extensión|extension|n|T|4||-||=|
+Fichero|fichero|#|F|60||MQLD|||
+Tipo|tipo|D|SV|6||MQ|||
+|tipo as xtipo|D|T|1||*|||
+Fecha·Alta|dt_insert|F4|T|10||M|||
+[AddCode]a,?R|tamayo|A|Byts
+[Fields]
+|cd_gs_poll_img|+|T|9||*|||
+Fichero|fichero|#|F|60||MQLD||#|
+Tipo|tipo|D|SV|6||MQ||#|
+,Extensión|extension|n|T|4||-|||
+,Tamaño|tamayo|+|T|6||-|||
+,Fecha·Alta|dt_insert|F4|T|10||-|#today#|#|
+Imagen|nm_gs_poll_img|D|T|60||MQ||#|
+Diccionario|dct_gs_poll_img|d|A|1920,80,3|nm_gs_poll_img|MQDL|||
+|cd_gs_node|+|T|6||*Q*|_Node||
+[JSIni]mR,l
+function EditarMapa(){
+S.window("edes.php?Fa:$a/poll/mapa.edf&_pk="+$cd_gs_poll_img, {fullscreen:true});
+}

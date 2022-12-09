@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">3. Tipo edición</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Indica qué tipo de control de edición ha de aplicarse al campo para que el usuario sólo pueda introducir determinados patrones de caracteres.<br /><br />Los números ni las fechas admiten el "*" en las búsquedas.<br /><br />Los posibles filtros de control de edición son:<br /><br />
+<table id="Opciones" style="height: 691px; width: 936px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td style="width: 33px;" align="center">T</td>
+<td style="width: 892px;"> Teléfono, obligatorio 9 caracteres.<br /><br /> Si está activo el 3CX aparecerá un icono a la derecha del campo para llamar por teléfono, teniendo el usuario la posibilidad   de cambiar el número añadir un prefíjo variable mediante la función de usuario "FUNCTION_phone()".<br />          function FUNCTION_phone(tlf){<br />               return false;<br />               return tlf;<br />               return newtlf";<br />          }</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">0</td>
+<td style="width: 892px;">(cero) Sólo números (tipo string)</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">DNI</td>
+<td style="width: 892px;">DNI</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">NIF</td>
+<td style="width: 892px;"> Letra del NIF si la longitud es de 1 y el NIF completo si su longitud es de 9.</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">nif</td>
+<td style="width: 892px;"> Acepta tanto DNI como NIF de 9, si es un DNI formateará con ceros por la izquierda.</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">CIF</td>
+<td style="width: 892px;"> CIF de empresa</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">cif</td>
+<td style="width: 892px;"> CIF de empresa, se chequea sólo que los 7 carácteres del centro sean números.</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">CP</td>
+<td style="width: 892px;"> Código Postal</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">N</td>
+<td style="width: 892px;"> Nombre en mayúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">n</td>
+<td style="width: 892px;"> Nombre en minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">#N</td>
+<td style="width: 892px;"> Nombre con mayúsculas y minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">D</td>
+<td style="width: 892px;"> Dirección en mayúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">d</td>
+<td style="width: 892px;"> Dirección en minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">#D</td>
+<td style="width: 892px;"> Dirección con mayúsculas y minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">f</td>
+<td style="width: 892px;"> Nombre de fichero en minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">F</td>
+<td style="width: 892px;"> Nombre de fichero en mayúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">CDI</td>
+<td style="width: 892px;"> Fecha y hora en formato AAAA-MM-DD HH:MM:SS</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">F4</td>
+<td style="width: 892px;"> Fecha con 4 dígitos para el año</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">P4</td>
+<td style="width: 892px;"> Periodo con 4 dígitos para el año</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">C</td>
+<td style="width: 892px;"> Password / Clave</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">X</td>
+<td style="width: 892px;"> Cualquier cosa en mayúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">x</td>
+<td style="width: 892px;"> Cualquier cosa en minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">#X</td>
+<td style="width: 892px;"> Cualquier cosa en mayúsculas y minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">DC</td>
+<td style="width: 892px;"> Dígitos de control de la cuenta corriente</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">NSS</td>
+<td style="width: 892px;"> Número de la Seguridad Social (son 11 caracteres)</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">TC</td>
+<td style="width: 892px;"> Tarjeta de crédito (solo nº, sin desarrollar el chequeo)</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">H</td>
+<td style="width: 892px;"> Hora</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">@</td>
+<td style="width: 892px;"> Dirección de correo</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">W</td>
+<td style="width: 892px;"> Dirección de web, si el nombre del campo es "facebook" o "twitter" pondrá su logo particular.</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">*</td>
+<td style="width: 892px;"> Campo Autoincremental / serial, por tanto no se grabará.</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">#</td>
+<td style="width: 892px;"> Campo de notas, puede contener cualquier contenido, permite retornos de carro (textarea) </td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">#L</td>
+<td style="width: 892px;"> Igual que '#' pero solo minúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">#U</td>
+<td style="width: 892px;"> Igual que '#' pero solo mayúsculas</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">+</td>
+<td style="width: 892px;"> (signo más)  Nº positivos</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">-</td>
+<td style="width: 892px;"> (signo menos)  Nº positivos y negativos</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">+,</td>
+<td style="width: 892px;"> (signo más seguido de una coma) Nº positivos que pueden contener decimales</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">-,</td>
+<td style="width: 892px;"> (signo menos seguido de una coma) Nº positivos y negativos, ambos pueden contener decimales </td>
+</tr>
+<!-- <TR-->
+<tr>
+<td style="width: 33px;" align="center">CLR</td>
+<td style="width: 892px;"> Tipo de campo para guardar un color hexadecimal (CoLoR)</td>
+</tr>
+<tr>
+<td style="width: 33px;" align="center">IP</td>
+<td style="width: 892px;"> IP</td>
+</tr>
+</tbody>
+</table>
+<br />Si se quiere evitar el filtrar caracteres se puede definir la siguiente etiqueta:<br />[AddCode] a,mR | field | I | NotFilter=1<br /><br />Los campos que se quiera que admitan acentos se pondrá la propiedad "eAccent=1"<br />[AddCode] a,mR | field | I | eAccent=1</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">Los campos numéricos se puede definir el comportamiento del valor "cero" con la variable "_ShowZero"<br />1.- Se muestra el valor cero.<br />0.- Si es cero se muestra el campo vacio, valor por defecto.<br />-1.- Se muestra cero solo si se mete el valor cero, es decir que en un campo numérico si pones cero se verá y si lo borras se verá vacio.</td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[JSIni] *<br />&nbsp; &nbsp; &nbsp;_ShowZero = 1;</td>
+</tr>
+<tr>
+<td id="txt">Si sequiere definir en comportamiento de forma global se definirá en el fichero de configuración "group.var" apartado "Tab" y propiedad "ShowZero".</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

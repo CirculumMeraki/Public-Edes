@@ -1,0 +1,130 @@
+#include(*) $lng/activity.edf.lng
+[Title]=GESTOR DE COPIAS
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]1 desc
+[DBAddFilter]script not like '/_bak_/update/%' and script not like '/tree/%'
+[FormAction]*|edes.php?Ll:
+[MaxRec]0
+[ColsOp]C
+[PDFCol],,0,0
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Actualizar por HTTP@|@Nº Desarrolladores por script@
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[AddCode]?|_desdecdi_hours,_hastacdi_hours|I|noConditions
+[AddCode]?|_desdeftp_hours,_hastaftp_hours|I|noConditions
+[DBRange]?|cdi|_desdecdi|_hastacdi
+[DBRange]?|cdi_ftp|_desdeftp|_hastaftp
+[OnChange]?|_paquete|SoloPaquetes()
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]?
+CDI @Instante Desde@|_desdecdi|F4|T|10||QF|#today#||
+,|_desdecdi_hours|H|T|8||Q|||
+,  @Hasta@|_hastacdi|F4|T|10||QF|||
+,|_hastacdi_hours|H|T|8||Q|||
+FTP @Instante Desde@|_desdeftp|F4|T|10||QF|||
+,|_desdeftp_hours|H|T|8||Q|||
+,  @Hasta@|_hastaftp|F4|T|10||QF|||
+,|_hastaftp_hours|H|T|8||Q|||
+Paquetes|_paquete|#|C|1||Q|||
+@Script@|script|#|T|70|+_hastacdi_hours|MQ|||
+@Usuario@|_cd_gs_user|D|T|68|script|Q|||
+#(?) @Usuario@|cd_gs_user|+|T|5|script|*Q|||
+#!(?) @Usuario@|cd_gs_user|+|S|68|script|-|||
+[PHPIni]*
+function LoadUser(){
+if( eSqlType('mysql,mysqli') ){
+$sql = "select cd_gs_user,concat(user_name,' ',user_surname) from gs_user where cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 2";
+}else{
+$sql = "select cd_gs_user,user_name||' '||user_surname from gs_user where cd_gs_user in (select cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity) order by 2";
+}
+$Dim = array(array('',''));
+qQuery($sql);
+while($r=qRow()) $Dim[] = $r;
+return $Dim;
+}
+[Fields]
+@CDI@|cdi|CDI|T|19||-||=|
+FTP|cdi_ftp|CDI|T|19||-||=|
+@Script@|script|#|T|70||-|||
+@Desarrolladores@|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname|N|S|50||-|||
+[JSIni]?
+_Question = false;
+function SoloPaquetes(){
+if( eGF('_paquete')=='S' ){
+ePF('script','');
+eHide('script','tr');
+}else eShow('script','TR');
+}
+[PHPIni]l
+$_nDaily = eFileGetVar('../_d_/cfg/edes.ini->$_nDaily');
+if( $_nDaily>0 ) $_DBADDFILTER .= ' and cdi>="'.date( 'Y-m-d H:i:s', mktime( date('H'),date('i'),date('s'), date('m'), date('d')-$_nDaily, date('Y'))).'"';
+[PHPEnd]?
+$_nDaily = eFileGetVar('../_d_/cfg/edes.ini->$_nDaily');
+if( $_nDaily>0 ){
+list($Fecha, $Dia) = explode(' ', date( 'Y-m-d H:i:s', mktime( date('H'),date('i'),date('s'), date('m'), date('d')-$_nDaily, date('Y'))));
+echo '<script type="text/javascript">';
+echo "ePF('_desdecdi','{$Fecha}');";
+echo "ePF('_desdecdi_hours','{$Dia}');";
+echo '</script>';
+}
+[JSOnClickRow]l
+if( !parent._CargarScript ){
+eHideBusy();
+_WOPENER.PonSolapa(1);
+top.eInfo(window,'No caben mas solapas');
+return;
+}
+if( _oTR.style.fontStyle=='italic' ) return;
+_WOPENER.document.getElementsByTagName('TABLE')[0].rows[0].style.display = 'block';
+_WOPENER.DGI("MENU").style.display = 'block';
+_WOPENER.document.getElementsByTagName('TABLE')[0].rows[1].style.display = 'block';
+DGI("GROUPTITLE").style.display = 'none';
+var Obj = S("#_GRTAB", _WOPENER).obj.rows[0], n;
+for( n=1; n<Obj.cells.length-1; n++ ){
+Obj.cells[n].style.borderBottomWidth = "1px";
+Obj.cells[n].className = 'Op';
+}
+parent._iSource++;
+var oAncho = S("#_GRTAB", _WOPENER).obj.offsetWidth;
+var TD = Obj.insertCell(Obj.cells.length-1);
+TD.onclick = _WOPENER.PonSolapa;
+TD.className = 'OpOn';
+TD.style.borderBottomWidth = "0px";
+TD.id = 'tab_'+parent._iSource;
+var tmp = _ValCol['script'].replace(/\\/g,'/').split('/');
+TD.innerHTML = tmp[tmp.length-1]+'<br><span onclick=_WOPENER.PonSolapa>'+_ValCol['cdi']+'</span>';
+TD.title = _ValCol['cdi'];
+TD.pk = _ValCol['script']+_ValCol['cdi'];
+eHideBusy();
+if( oAncho<S("#_GRTAB", _WOPENER).obj.offsetWidth ){
+S(TD).nodeRemove();
+parent._CargarScript = false;
+return;
+}
+_oTR.style.fontStyle = 'italic';
+for(var n=0; n<_oTR.cells.length; n++) _oTR.cells[n].style.color = "#cccccc";
+var Obj = S("#_GRTAB", _WOPENER).obj.rows[0];
+for(n=0; n<Obj.cells.length; n++){
+Obj.cells[n].style.display = 'none';
+}
+var TD = Obj.insertCell();
+TD.style.width = '100%';
+TD.style.height = '100%';
+TD.id = 'pag_'+parent._iSource;
+var ta = document.createElement('IFRAME');
+ta.id = 'iSource_'+parent._iSource;
+ta.frameBorder = 0;
+ta.WOPENER = _WOPENER;
+ta.FSCREEN = 0;
+ta.eDes = window;
+ta.MODAL = 0;
+ta.style.width = '100%';
+ta.style.height = '100%';
+TD.appendChild(ta);
+ta.src = 'edes.php?E:$t/source.gs&SCRIPT='+_ValCol['script']+'&CDI='+_ValCol['cdi'];

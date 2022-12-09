@@ -1,0 +1,785 @@
+[Title]=CONFIGURACIÓN COLORES PDF
+[AutoMenu]*
+[NoButton]*
+[AddButton]*|[&#218;] Deshacer todo|Restaura los colores originales|uAccion("D");
+[AddButton]*|[Star] Aplicar colores|Estable los colores por defecto|uAccion("OK");
+[AddButton]*|[&#114;] Refrescar||uRefresca(this)
+[AddButton]*|[V] Vista previa||S.submit(window);RestaurarCkeckbox();
+[JSInclude]a|$itm/etoneselect
+[CSSAdd]*
+.Circle {
+font-size: 100%;
+font-family: Arial, sans-serif;
+width: 12px;
+height: 12px;
+box-sizing: initial;
+display: inline-block;
+cursor:pointer;
+border-radius: 50%;
+box-sizing: content-box;
+padding:5px;
+margin:0px auto;
+display: inline-flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+-webkit-box-shadow: 2px 2px 1px 0px rgba(50, 50, 50, 0.65);
+-moz-box-shadow:    2px 2px 1px 0px rgba(50, 50, 50, 0.65);
+box-shadow:         2px 2px 1px 0px rgba(50, 50, 50, 0.65);
+}
+[PHPIni]*
+function uCircle($x, $papel, $field, $conclick=true){
+echo "<span class='Circle' eLink='{$field}'".(($conclick)?" onclick='uSelPaleta(this)'":"")." style='background-color:{$papel};color:".eColorContrastBW2($papel)."'>{$x}</span>";
+}
+function uStep($propiedad){
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>').nextValue()">s</i><?PHP
+}
+[JSIni]*
+var _RefrescarPDF = false,
+_pRefrescarPDF = null;
+function uAccion(op){
+S.alert({
+parameter:op,
+icon:'DH',
+button:"Y,N",
+text:"¿Confirmar <b>"+'"'+((op=="D")?"Deshacer todo":"Aplicar colores")+'"'+"</b>?",
+function: function(yn, fields, arg){
+if(yn==1){
+S(":_OPCION_").val(arg);
+S.submit(window);
+}
+}
+});
+}
+function uRefresca(o){
+if( _RefrescarPDF ){
+_RefrescarPDF = false;
+o.title = "Refrescar OFF";
+o.childNodes[1].textContent = "Refrescar";
+S(o).class("+OFF");
+}else{
+_RefrescarPDF = true;
+o.title = "Refrescar ON";
+o.childNodes[1].textContent = "Refrescar";
+S(o).class("-OFF");
+}
+}
+function RecargarListado(){
+uIFRAME.location.href = "edes.php?Ll:$a/d/view_inf_pdf.edf";
+if( !_RefrescarPDF ) S.info("Grabado");
+}
+function uContraste(color){
+return top.eColorContrastBW2(color);
+}
+function setCirculo(oCirculo, nPaleta, papel){
+var campo = S(oCirculo).attr("eLink");
+if( nPaleta=="C" ){
+var campo2 = S.replace(campo, "_color", "")+"_background";
+if( S(":"+campo2).exists() ){
+papel = S(":"+campo2).val();
+S(oCirculo).color(uContraste(uContraste(papel)), uContraste(papel)).text("C");
+S(":_PLT_"+campo).val(nPaleta);
+S(":"+campo).color(uContraste(uContraste(papel)), uContraste(papel)).val(uContraste(papel));
+}
+}else{
+S(oCirculo).color(uContraste(papel), papel).text(nPaleta);
+if( S(":_PLT_"+campo).exists() ){
+S(":_PLT_"+campo).val(nPaleta);
+}
+if( S(":_PRC_"+campo).exists() ){
+papel = S.colorTone(papel, S(":_PRC_"+campo).val()*1);
+}
+S(":"+campo).color(uContraste(papel), papel).val(papel);
+if( /\_background$/.test(campo) ){
+var campoColor = S.replace(campo, "_background", "")+"_color";
+if( S(":"+campoColor).exists() ){
+if( S(":_PLT_"+campoColor).val()=="C" ){
+S(":"+campoColor).color(uContraste(uContraste(papel)), uContraste(papel)).val(uContraste(papel));
+S("SPAN[eLink='"+campoColor+"']").color(uContraste(uContraste(papel)), uContraste(papel));
+}
+}
+}
+}
+uShow(S.replace(campo, "_background","", "_color",""));
+}
+function uSelPaleta(o){
+var dimTitulo = ["","Principal","Grupo","Total","Fondo","Textos", "SubTotal"], n=1;
+var _DimPaleta = [['-Paleta']];
+S("INPUT[name^=_color]").each(function(k,o){
+_DimPaleta.push([n+". "+dimTitulo[n++], "", "", "", "", "background:"+o.value+";color:"+top.eColorContrastBW2(o.value)]);
+});
+S(o).menu(_DimPaleta, {function:function(op, label, tribber, tr, table, oCirculo){
+setCirculo(oCirculo, tr.cells[1].innerText[0], S.rgb2hex(S(tr).cssVal("background-color")));
+}}, o);
+}
+function uShow(nm){
+var o = S(":_VIEW_"+nm);
+if( o.exists() ){
+if( S(":"+nm+"_color").exists() ){
+S(o).color(S(":"+nm+"_color").val());
+}
+if( S(":"+nm+"_background").exists() ){
+S(o).background(S(":"+nm+"_background").val());
+}
+if( S(":"+nm+"_bold").exists() ){
+S(o).css("font-weight:"+((S(":"+nm+"_bold").val()=="S")?"bold":"normal"));
+}
+if( S(":"+nm+"_italic").exists() ){
+S(o).css("font-style:"+((S(":"+nm+"_italic").val()=="S")?"italic":"normal"));
+}
+}
+if( _RefrescarPDF ){
+clearInterval(_pRefrescarPDF);
+_pRefrescarPDF = setTimeout(function(){
+S.submit(window);
+}, 500);
+}
+}
+function RestaurarCkeckbox(){
+S("INPUT[name$=_bold], INPUT[name$=_italic]").each(function(k,o){
+o.type = "checkbox";
+});
+}
+[JSEnd]*
+var o = S("#AddButton3").obj;
+_RefrescarPDF = false;
+o.title = "Refrescar";
+o.childNodes[1].textContent = "Refrescar";
+S(o).class("+OFF");
+S([":TD_bold", ":GreenBar_bold", ":TH_italic", ":TD_italic", ":GreenBar_italic", ":Totals_italic"]).class("+OFF");
+S("INPUT[name^='_PRC_']").each(function(k,o){
+o.onchange = function(ev){
+var o = ev.target,
+xNom = S.left(o.name,5,0),
+campo = xNom,
+oDestino = S(":"+xNom),
+oCirculo = S("SPAN[eLink='"+xNom+"']"),
+papel = S.rgb2hex(oCirculo.cssVal("background-color")),
+degradado = S.colorTone(papel, o.value);
+oDestino.val(degradado);
+oDestino.color(uContraste(degradado), degradado);
+xNom = S.replace(xNom, "_background", "", "_color","");
+if( !/_color$/.test(campo) && S(":"+xNom+"_color").exists() ){
+color = S(":"+xNom+"_background").val();
+var lapiz = uContraste(uContraste(color));
+S(":"+xNom+"_color").color(lapiz, uContraste(color)).val(uContraste(color));
+S("SPAN[eLink='"+xNom+"_color']").color(lapiz, uContraste(color))
+}
+uShow(xNom);
+}
+});
+S("INPUT[name$='_bold']").each(function(k,o){
+o.onchange = function(ev){
+var xNom = S.replace(ev.target.name, "_bold", "");
+S(":_VIEW_"+xNom).css("font-weight:"+((S(o).val()=="S")?"bold":"normal"));
+}
+});
+S("INPUT[name$='_italic']").each(function(k,o){
+o.onchange = function(ev){
+var xNom = S.replace(ev.target.name, "_italic", "");
+S(":_VIEW_"+xNom).css("font-style:"+((S(o).val()=="S")?"italic":"normal"));
+}
+});
+function uCambiaColorPaleta(dim){
+S("SPAN.Circle").each(function(k,o,num,dim){
+if( !/^_color_/.test(S(o).attr("eLink")) && o.innerText==dim[1] ){
+var papel = dim[0],
+campo = S(o).attr("eLink"),
+degradado, color;
+S(o).color(uContraste(dim[0]), dim[0]);
+if( S(":_PRC_"+campo).exists() ){
+degradado = S.colorTone(papel, S(":_PRC_"+campo).val()*1);
+S(":"+campo).color(uContraste(papel), degradado).val(degradado);
+}else{
+S(":"+campo).color(uContraste(papel), papel).text(papel);
+}
+xNom = S.replace(campo, "_background", "", "_color", "");
+if( !/_color$/.test(campo) && S(":"+xNom+"_color").exists() ){
+color = S(":"+xNom+"_background").val();
+var lapiz = uContraste(uContraste(color));
+S(":"+xNom+"_color").color(lapiz, uContraste(color)).val(uContraste(color));
+S("SPAN[eLink='"+xNom+"_color']").color(lapiz, uContraste(color))
+}
+uShow(xNom);
+}
+}, {arg:dim});
+}
+S("INPUT[name^='_color_']").each(function(k,o){
+o.onchange = function(ev){
+var o = ev.target,
+oCirculo = S("SPAN[eLink='"+o.name+"']");
+oCirculo.color(uContraste(o.value), o.value);
+setTimeout(function(){
+uCambiaColorPaleta([o.value, oCirculo.text()]);
+}, 1);
+}
+});
+[Fields]7
+{P} colores|NoTD
+[P]colores
+echo "<td colspan=7>";
+eAddField("| _OPCION_ | D | T | 1 || * |||");
+global $_COLORPALETTE;
+for($n=1; $n<count($_COLORPALETTE); $n++){
+list($label, $cb) = explode(",", $_COLORPALETTE[$n][0]);
+$defaul = trim($_COLORPALETTE[$n][1]);
+if( $n>1 ) echo "&nbsp;&nbsp;&nbsp;";
+echo trim($label);
+eAddField("| _color_{$n} | clr | T | 7 | | M |{$defaul}| |");
+uCircle($n, $defaul, "_color_{$n}", false);
+if( $n==5 ){
+echo '<i class="ICONINPUT" onclick="eSelectRGB(null,1,eToneSelect,184)" oncontextmenu="eSelectRGB(null,1,_listColor,184)"  title="Seleccionar color">&#184;</i>';
+}else{
+echo '<i class="ICONINPUT" onclick="eSelectRGB(null,1,eToneSelect,184)" oncontextmenu="eSelectRGB(null,1,_listColor,185)"  title="Seleccionar color">&#185;</i>';
+}
+}
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+echo "<tr>";
+echo "<td>Company<td>";
+$propiedad = "Company";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td>Date<td>";
+$propiedad = "Date";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td>Line<td>";
+$propiedad = "HR";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<tr>";
+echo "<td>Title text<td>";
+$propiedad = "Title_text";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td>Circle<td>";
+$propiedad = "Circle";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td>Title value<td>";
+$propiedad = "Title_value";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<tr>";
+echo "<td>Order text<td>";
+$propiedad = "Order_text";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td><td>";
+echo "<td>Order value<td>";
+$propiedad = "Order_value";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<tr>";
+echo "<td>Condition text<td>";
+$propiedad = "Condition_text";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td><td>";
+echo "<td>Condition value<td>";
+$propiedad = "Condition_value";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<tr>";
+echo "<td>ShowRecipient<td>";
+$propiedad = "SHOWRECIPIENT";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td><td>";
+echo "<td>CdScript<td>";
+$propiedad = "CDSCRIPT";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+echo "<tr>";
+echo "<td>Grid<td>";
+$propiedad = "TABLE";
+$cb = "b";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "<td>Foot Title<td>";
+$propiedad = "FootTitle";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "<td>Pag. Number<td>";
+$propiedad = "PagNumber";
+$cb = "c";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+echo "<tr>";
+echo "<td colspan=7>";
+echo "<TABLE border=0px cellspacing=0px cellpadding=0px style='display: contents;'>";
+echo "<thead>";
+echo "<TR><TH></TH><TH align='center'>Color</TH><TH align='center'>Background</TH><TH>Bold</TH><TH>Italic</TH><TH align='center'>Show</TH></TR>";
+echo "</thead>";
+echo "<tbody>";
+echo "<TR><TD> </TD><TD>";
+$propiedad = "TH";
+$cb = "cb";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "</TD><TD>";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "</TD><TD>";
+eAddField("| TH_bold |D|C|1||M|||");
+echo "</TD><TD>";
+eAddField("| TH_italic |D|C|1||-|||");
+echo '</TD><TD><input name="_VIEW_TH" size=5 value="Header" style="width:337px" readOnly>';
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+for($n=1; $n<5; $n++){
+echo "<TR><TD> </TD><TD>";
+$propiedad = "GroupHeader_{$n}";
+$cb = "cb";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "</TD><TD>";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background |clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "</TD><TD>";
+eAddField("| {$propiedad}_bold	|D|C|1||M|||");
+echo "</TD><TD>";
+eAddField("| {$propiedad}_italic|D|C|1||M|||");
+echo "</TD><TD><input name='_VIEW_{$propiedad}' size=5 value='Grupo {$n}' style='width:337px' readOnly>";
+}
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+echo "<TR><TD> </TD><TD>";
+$propiedad = "TD";
+$cb = "cb";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "</TD><TD>";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "</TD><TD>";
+eAddField("| TD_bold |D|C|1||-|||");
+echo "</TD><TD>";
+eAddField("| TD_italic |D|C|1||-|||");
+echo '</TD><TD><input name="_VIEW_TD" size=5 value="Data" style="width:337px" readOnly>';
+echo "<TR><TD> </TD><TD>";
+$propiedad = "GreenBar";
+$cb = "cb";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "</TD><TD>";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "</TD><TD>";
+eAddField("| GreenBar_bold |D|C|1||-|||");
+echo "</TD><TD>";
+eAddField("| GreenBar_italic |D|C|1||-|||");
+echo '</TD><TD><input name="_VIEW_GreenBar" size=5 value="GreenBar" style="width:337px" readOnly>';
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+for($n=4; $n>0; $n--){
+echo "<TR><TD> </TD><TD>";
+$propiedad = "GroupSubTotal_{$n}";
+$cb = "cb";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "</TD><TD>";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "</TD><TD>";
+eAddField("| {$propiedad}_bold	|D|C|1||M|||");
+echo "</TD><TD>";
+eAddField("| {$propiedad}_italic	|D|C|1||M|||");
+echo "</TD><TD><input name='_VIEW_{$propiedad}' size=5 value='SubTotal Grupo {$n}' style='width:337px' readOnly>";
+}
+echo '<tr st="" ttr="-" a="3"><td colspan="20" height="3px"><div class="Separator"></div></td></tr>';
+echo "<TR><TD> </TD><TD>";
+$propiedad = "Totals";
+$cb = "cb";
+if( preg_match('/c/i', $cb) ){
+eAddField("| {$propiedad}_color	|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_color");
+eAddField("| _PRC_{$propiedad}_color |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_color |D|T|2||*|||");
+uStep("{$propiedad}_color");
+}
+echo "</TD><TD>";
+if( preg_match('/b/i', $cb) ){
+eAddField("| {$propiedad}_background|clr|T|7||-|||");
+uCircle("", "", "{$propiedad}_background");
+eAddField("| _PRC_{$propiedad}_background |-|T|2||M|||");
+eAddField("| _PLT_{$propiedad}_background |D|T|2||*|||");
+?><i class='ICONINPUT' onclick="S(':_PRC_<?=$propiedad?>_background').nextValue()" onmousewheel="S(':_PRC_<?=$propiedad?>_background').nextValue()">s</i><?PHP
+}
+echo "</TD><TD>";
+eAddField("| Totals_bold	|D|C|1||M|||");
+echo "</TD><TD>";
+eAddField("| Totals_italic	|D|C|1||-|||");
+echo "</TD><TD><input name='_VIEW_Totals' size=5 value='Totales' style='width:337px' readOnly>";
+echo "</tbody>";
+echo "</TABLE>";
+[HTMIni]a
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:table; border:0px solid red">
+<tr>
+<td valign=middle align=center style='border:0px solid blue'>
+[HTMEnd]a
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td valign=middle align=center width=100% id=cIFrame style='border:0px solid green'>
+<SCRIPT type="text/javascript">
+top.eNewIFrame(window, "cIFrame", "uIFRAME", "edes.php?Ll:$a/d/view_inf_pdf.edf");
+</SCRIPT>
+</td>
+</tr>
+</table>
+[PHPEnd]a
+echo '<script>';
+echo 'S.public(1);';
+if( file_exists("css/pdf_tmp.css") ){
+$dim = file("css/pdf_tmp.css");
+echo 'S("#AddButton1").visible();';
+}else{
+$dim = file("css/pdf.css");
+echo 'S(["#AddButton1","#AddButton2"]).hidden();';
+}
+for($n=0; $n<count($dim); $n++){
+echo "\n";
+$regla = trim($dim[$n]);
+if( substr_count($regla,"{") ){
+list($regla) = explode("{",$regla);
+$regla = trim($regla);
+if( $regla[0]=="." || $regla[0]=="#" ) $regla = substr($regla,1);
+for($i=$n+1; $i<count($dim); $i++){
+$txt = trim($dim[$i]);
+if( $txt=="" ) continue;
+if( $txt=="}" ) break;
+list($propiedad, $rem) = explode("/"."*",$txt);
+list($rem) = explode("*"."/",$rem);
+$rem = trim($rem);
+list($propiedad, $valor) = explode(":",$propiedad);
+$propiedad = strtolower(trim($propiedad));
+$valor = trim($valor);
+if( substr($valor,-1)==";" ) $valor = trim(substr($valor,0,-1));
+if( preg_match('/^(color|background)$/', $propiedad) ){
+$valor = strtoupper($valor);
+echo "S(':{$regla}_{$propiedad}').val('{$valor}');";
+echo "S(':{$regla}_{$propiedad}').color(uContraste('{$valor}'), '{$valor}');";
+}else if( preg_match('/^(font-weight)$/', $propiedad) ){
+echo "S(':{$regla}_bold').val(('{$valor}'=='bold')?'S':'');";
+}else if( preg_match('/^(font-style)$/', $propiedad) ){
+echo "S(':{$regla}_italic').val(('{$valor}'=='italic')?'S':'');";
+}
+if( $rem!="" && $regla!="_COLORPALETTE" ){
+list($nPaleta, $nDegradado) = explode(",", eNsp($rem));
+echo "S('SPAN[eLink=\'{$regla}_{$propiedad}\']').text('{$nPaleta}');";
+echo "S(':_PLT_{$regla}_{$propiedad}').val('{$nPaleta}');";
+if( $nDegradado!="" && $nDegradado!="0" ){
+$valor = $_COLORPALETTE[$nPaleta][1];
+}
+$valor = strtoupper($valor);
+echo "S('SPAN[eLink=\'{$regla}_{$propiedad}\']').color(uContraste('{$valor}'), '{$valor}');";
+if( $nPaleta=="C" ){
+}
+if( $nDegradado!="" && $nDegradado!="0" ){
+echo "S(':_PRC_{$regla}_{$propiedad}').val('{$nDegradado}');";
+}
+}
+}
+$n = $i-1;
+}
+}
+?>
+S("INPUT[eLinkPaper]").each(function(k,o){
+S(":"+o.getAttribute("eLinkPaper")).background(o.value);
+});
+S("INPUT[eLinkColor]").each(function(k,o){
+S(":"+o.getAttribute("eLinkColor")).color(o.value);
+});
+S("INPUT[name^='_VIEW_']").each(function(k,o){
+uShow(S.left(o.name,6,0));
+});
+S("INPUT[name^='_color_']").each(function(k,o){
+S(o).color(uContraste(o.value), o.value);
+});
+S("INPUT[name^='_PRC_']").each(function(k,o){
+if( o.value!="" ){
+var campo = S.left(o.name,5,0),
+oCirculo = S("SPAN[eLink='"+campo+"']");
+setCirculo(oCirculo, oCirculo.text()[0], S.rgb2hex(S(oCirculo).cssVal("background-color")));
+}
+});
+<?PHP
+echo 'S.public();';
+echo '</script>';
+[PHPIni]A
+eInit();
+if( $_POST["_OPCION_"]=="D" ){
+@unlink("css/pdf_tmp.css");
+?>
+<script>
+if( window.frameElement.WOPENER.RecargarListado ){
+var win = window.frameElement.WOPENER;
+}else{
+var win = window.frameElement.WOPENER.WOPENER;
+}
+win.location.reload();
+</script>
+<?PHP
+eEnd();
+}
+if( file_exists("css/pdf_tmp.css") ){
+$dim = file("css/pdf_tmp.css");
+}else{
+$dim = file("css/pdf.css");
+}
+foreach($_POST as $k=>$v){
+if( $k=="_OPCION_" ) continue;
+$guiones = substr_count($k, "_");
+if( substr($k,0,7)=="_color_" ){
+CambiaColorPDF($dim, "_COLORPALETTE", $k, $v);
+}else if( $guiones==1 ){
+list($propiedad, $atributo) = explode("_", $k);
+CambiaColorPDF($dim, $propiedad, $atributo, $v);
+}else if( $guiones==2 ){
+eExplodeLast($k, "_", $propiedad, $atributo);
+CambiaColorPDF($dim, $propiedad, $atributo, $v);
+}else{
+}
+}
+if( $_POST["_OPCION_"]=="OK" ){
+file_put_contents("{$_SESSION['_PathCSS']}/pdf.css", implode("\n",$dim));
+@unlink("{$_SESSION['_PathCSS']}/pdf_tmp.css");
+}else{
+file_put_contents("{$_SESSION['_PathCSS']}/pdf_tmp.css", implode("\n",$dim));
+$_SESSION["VAR_TMP"]["pdf.css"] = "pdf_tmp.css";
+}
+?>
+<script>
+if( window.frameElement.WOPENER.RecargarListado ){
+var win = window.frameElement.WOPENER;
+}else{
+var win = window.frameElement.WOPENER.WOPENER;
+}
+<?PHP if( $_POST["_OPCION_"]=="OK" ){ ?>
+win.location.reload();
+<?PHP }else{ ?>
+top.S(["#AddButton1","#AddButton2"], win).visible();
+top.S(":_OPCION_", win).val("");
+win.RecargarListado();
+<?PHP } ?>
+</script>
+<?PHP
+eEnd();
+function CambiaColorPDF(&$dim, $bPropiedad, $bAtributo, $bValor){
+for($n=0; $n<count($dim); $n++){
+$regla = trim($dim[$n]);
+$dim[$n] = rtrim($dim[$n]);
+if( substr_count($regla,"{") ){
+list($regla) = explode("{",$regla);
+$regla = trim($regla);
+if( $regla[0]=="." || $regla[0]=="#" ) $regla = substr($regla,1);
+if( $regla==$bPropiedad ){
+if( $bAtributo=="bold" ){
+$bAtributo = "font-weight";
+$bValor = ($bValor=="S")? "bold":"normal";
+}else if( $bAtributo=="italic" ){
+$bAtributo = "font-style";
+$bValor = ($bValor=="S")? "italic":"normal";
+}
+for($i=$n+1; $i<count($dim); $i++){
+$txt = trim($dim[$i]);
+$dim[$i] = rtrim($dim[$i]);
+if( $txt=="}" ){
+eTrace("error 1: ".$bPropiedad.'.'.$bAtributo);
+return;
+}
+list($propiedad, $rem) = explode("/"."*",$txt);
+list($propiedad, $valor) = explode(":",$propiedad);
+$propiedad = strtolower(trim($propiedad));
+$valor = trim($valor);
+if( $rem!="" ){
+list($rem) = explode("*"."/",$rem);
+if(substr_count($rem, ",")>0 ){
+$rem = "\t\t/"."* ".$_POST["_PLT_{$regla}_{$propiedad}"].",".$_POST["_PRC_{$regla}_{$propiedad}"]." *"."/\n";
+}else{
+$rem = "\t\t/"."* ".trim($rem)." *"."/\n";
+}
+}
+if( $propiedad==$bAtributo ){
+$dim[$i] = "\t{$bAtributo}: {$bValor};{$rem}";
+return;
+}
+}
+}
+}
+}
+}
+[PHPIni]a
+unset($_SESSION["VAR_TMP"]);
+echo "<script>var _DimPaleta = [['-Paleta']];";
+$p=0;
+$_COLORPALETTE = array(array("",""));
+if( file_exists("css/pdf_tmp.css") ){
+$dim = file("css/pdf_tmp.css");
+}else{
+$dim = file("css/pdf.css");
+}
+for($n=0; $n<count($dim); $n++){
+$regla = trim($dim[$n]);
+if( substr_count($regla,"{") ){
+list($regla) = explode("{",$regla);
+if( trim($regla)=="._COLORPALETTE" ){
+for($i=$n+1; $i<count($dim); $i++){
+$txt = trim($dim[$i]);
+if( $txt=="" ) continue;
+if( $txt=="}" ) break 2;
+list($propiedad, $rem) = explode("/"."*",$txt);
+list($rem) = explode("*"."/",$rem);
+$rem = trim($rem);
+list($propiedad, $valor) = explode(":",$propiedad);
+$propiedad = strtolower(trim($propiedad));
+$valor = trim($valor);
+if( substr($valor,-1)==";" ) $valor = trim(substr($valor,0,-1));
+$_COLORPALETTE[] = array($rem, $valor);
+$p++;
+echo "_DimPaleta.push(['{$p}. {$rem}','','','','','background:{$valor};color:".eColorContrastBW2($valor)."']);";
+}
+}
+}
+}
+echo "_DimPaleta.push(['-']);";
+echo "_DimPaleta.push(['C. [Color de Contraste]','','C']);";
+echo "</script>";

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>FS 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>{FS}{ Title [ | Style ]<BR>&nbsp;&nbsp; ...<BR>} 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Esta sub-etiqueta sólo se puede utilizar en el interior de la etiqueta [Fields]. <BR>Agrupa los campos que existan entre :FS: y :FS , poniéndoles un marco alrededor e insertando el Título en la parte superior izquierda del mismo, o dicho de otro modo, ubicar los campos indicados dentro de la misma celda, mostrar su borde e insertarle un texto en la parte superior izquierda. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>Title&nbsp;</TD>
+<TD>Texto a ubicar en la parte superior izquierda del recuadro.</TD></TR>
+<TR>
+<TD>Style</TD>
+<TD>&nbsp;Datos internos del parámetro "style". </TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[Fields] </P>
+<P>{FS}{ Superficie y Distribución <BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;]M2.Construidos\M2&lt;br&gt;Construidos | mconstruido&nbsp; | -,| T | 6 | 42 | M&nbsp; || # | <BR><SPAN style="WIDTH: 25px"></SPAN>,]M2.Utiles&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | vutil&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 6 | 42 | ML ||&nbsp;&nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]M2.Registrados\M2&lt;br&gt;Reg.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | vregistrad&nbsp;&nbsp; | + | T | 6 | 42 | M&nbsp; || &nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]M2.Parcela\M2&lt;br&gt;Parcela&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | mparcela&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 6 | 42 | M&nbsp; || &nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Dormitorios&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | _dormitorios | + |[*]| 4 | 28 | ML || &nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Salones&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | salones&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 2 | 18 | ML || &nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Baños&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | banos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| + | T | 2 | 18 | ML || &nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Aseos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aseos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 2 | 18 | ML || &nbsp; | <BR><SPAN style="WIDTH: 25px"></SPAN>,]Trasteros&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | trastero&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 4 | 28 | ML || &nbsp;&nbsp;| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Garajes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | garajes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 4 | 27 | ML || &nbsp;&nbsp;| <BR>}</P>
+<P>#(a,mR) {FS}{ Estado <BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;]Llaves&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | llaves&nbsp;&nbsp;&nbsp;&nbsp; | X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Cartel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | cartel&nbsp;&nbsp;&nbsp;&nbsp; | X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Exterior&nbsp;&nbsp;&nbsp; | exterior&nbsp;&nbsp; | X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Ascensor&nbsp;&nbsp;&nbsp; | ascensor&nbsp;&nbsp; | X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Amueblado&nbsp;&nbsp; | amueblado&nbsp; | X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Habitado&nbsp;&nbsp;&nbsp; | habitado&nbsp;&nbsp;&nbsp;| X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Plano&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| plano&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | X | C | 1 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Calefacción | calefacion | X | C | 1 || ML ||| <BR>} </P>
+<P>#(mR,cR) {FS}{ Datos Operativos<BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;]Propiedad&nbsp; | cd_propiedad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0 | M | 6 || ML || # |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Antigüedad | anti&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 3 || ML || # |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Estado&nbsp;&nbsp;&nbsp;&nbsp; | cd_estado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0 | M | 6 || ML || # |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Plantas&nbsp;&nbsp;&nbsp;&nbsp;| eplanta&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 3 || ML ||&nbsp;&nbsp; |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Portal&nbsp;&nbsp;&nbsp;&nbsp; | cd_portal&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0 | M | 4 || ML || # |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Operación&nbsp; | cd_operacion&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0 | M | 4 || ML || # |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Contrato&nbsp;&nbsp; | cd_contrato&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 0 | M | 3 || ML || # |<BR><SPAN style="WIDTH: 25px"></SPAN>,]Asesor&nbsp;&nbsp;&nbsp;&nbsp; | cd_gs_user{gs_user,cd_gs_user,user_surname}| 0 | S | 3 || ML || # |<BR>}<BR><BR>{FS}{ Costes&nbsp;<BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;]Gastos Comunidad | gcomunidad | + | T | 8 || ML ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]PVP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | pvp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 8 || M&nbsp; ||| <BR><SPAN style="WIDTH: 25px"></SPAN>,]Precio M2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;| pvpm2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | + | T | 8 || ML ||| <BR>}&nbsp; </P>
+<P>{FS}{ Notas <BR><SPAN style="WIDTH: 25px"></SPAN>&nbsp;] | observaciones | # | A | 1000,112,4 || ML ||| <BR>}&nbsp; </P>
+<TR>
+<TD id=txt><FONT face=Courier></FONT></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT language=JavaScript>
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>

@@ -1,0 +1,86 @@
+#include(*) lng
+[Title]=@RESETEAR CLAVE DE USUARIO@
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]user_surname, user_name
+[DBSerial]cd_gs_user
+[Cursor]
+[Button]mR|@Confirmar@
+[MsgAnswer]M|@Clave reseteada@
+[Assign]mR|dt_pass
+[Fields]2
+     @Usuario@                                 | cd_gs_user   | +  | T | 5  |               | AQcp |         |  |
+  ,  Poner clave por defecto y no enviar email | _default     | #  | C | 1  | <user_surname | M    |         |  |
+     @Nombre@                                  | user_name    | X  | T | 20 |               | AQ   |         |  |
+  ,2 @Apellidos@                               | user_surname | X  | T | 30 |               | AQ   |         |  |
+     @Local@                                   | cd_gs_node   | X  | S | 60 | +user_surname | AQ   |         |  |
+                                               | dt_pass      | F4 | T | 10 |               | *    | #today# |  |
+     Email                                     | email        | #  | T | 65 | cd_gs_node    | -    |         |  |
+                                               | login        | #  | T | 65 |               | *    |         |  |
+[DBIni]M
+$uNewText = "";
+$ApplicationName = eFileGetVar('Setup.ApplicationName');
+$EMailSystem = eFileGetVar('Setup.EMailSystem');
+eFileGetVar('Login', true);
+array_push($DimNomVar, 'pass');
+array_push($DimValor , $ClaveReset);
+$_vF['pass'] = $ClaveReset;
+if( $UserPasswordByEmail && $_vF['email']!='' && $EMailSystem!='' && $_vF["_default"]=="" ){
+$str = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+$LonClave = 6;
+$MinNum = 2;
+$MinChr = 2;
+if( $min_password>$LonClave ) $LonClave = $min_password;
+switch( $key_case ){
+case '0':
+break;
+case '1':
+$str = strtolower($str);
+break;
+case '2':
+$str .= "abcdefghijklmnpqrstuvwxyz";
+break;
+}
+$nMinNum = 0;
+$nMinChr = 0;
+while( $nMinNum<$MinNum || $nMinChr<$MinChr ){
+$nMinNum = 0;
+$nMinChr = 0;
+$Pass = "";
+for($i=0; $i<$LonClave; $i++){
+$c = substr($str,rand(0,strlen($str)-1),1);
+$Pass .= $c;
+if( is_numeric($c) ){
+$nMinNum++;
+}else{
+$nMinChr++;
+}
+}
+}
+$txt = '@Nueva clave@: '.$Pass;
+if( file_exists( eScript('/_datos/config/pass_remember@LNG@.html') ) ){
+$txt = file_get_contents( eScript('/_datos/config/pass_remember@LNG@.html') );
+}else if( file_exists( eScript('/_datos/config/pass_remember.html') ) ){
+$txt = file_get_contents( eScript('/_datos/config/pass_remember.html') );
+}
+$txt = str_replace('{COMPANY}' , $ApplicationName, $txt);
+$txt = str_replace('{PASSWORD}', $Pass, $txt);
+$txt = str_replace('{LOGIN}'   , $_vF['login'], $txt);
+if( substr_count($txt, "<!"."-- changeData --".">")>0 ){
+$txt = str_replace("{background}", eFileGetVar('/_datos/config/core.css->$pDesktop'), $txt);
+$txt = str_replace("{color}", eFileGetVar('/_datos/config/core.css->$cDesktop'), $txt);
+}
+list($url) = explode("edes.php", $_SERVER['HTTP_REFERER']);
+$txt = str_replace('src="g/'   , 'src="'.$url.'g/', $txt);
+if( eMail($_vF['email'], '@CLAVE DE USUARIO RESETEADA@', $txt, $EMailSystem) ){
+$_vF['pass'] = strtoupper(md5($Pass));
+$uNewText = '@Clave reseteada enviada por email@';
+}else{
+$uNewText = '@Clave reseteada con valor por defecto@';
+}
+	}else{
+		$uNewText = '@Clave reseteada con valor por defecto@';
+}
+eUnSet('email');
+[DBEnd]M
+if( $uNewText!='' ) $_MSGANSWER[0] = $uNewText;

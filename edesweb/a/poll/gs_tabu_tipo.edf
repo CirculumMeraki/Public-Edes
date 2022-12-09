@@ -1,0 +1,11 @@
+[Title]=TIPO DE PALABRAS TABU
+[DBTable]gs_tabu_tipo
+[DBIndex]cd_gs_tabu_tipo; nm_gs_tabu_tipo
+[DBOrder]nm_gs_tabu_tipo
+[DBSerial]cd_gs_tabu_tipo
+[FormStatic]
+[OptionsInList]abcm
+[AddCode]a,mR|nm_gs_tabu_tipo|I|eAccent=1
+[Fields]
+|cd_gs_tabu_tipo|+|T|9||*|||
+Tipo de palabra|nm_gs_tabu_tipo|D|T|25||MQ||#|

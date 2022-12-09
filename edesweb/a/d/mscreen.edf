@@ -1,0 +1,47 @@
+[Title]=LISTADO DE PANTALLAS CAPTURADAS
+[Fields]
+Nº|numero|+|T|2||-|||
+Título de la ventana|titulo|N|T|50||-|||
+|tools|N|T|10||-|||
+[DBSql]l
+$usuCursor[] = array( '','' );
+[JSIni]l
+function uMod(){
+var Obj = S.event(window);
+Obj = S.toTag(Obj,'TR');
+WE.eScreenTask('screen_'+Obj.cells[0].textContent);
+}
+var _DelObj;
+function uDel(){
+_DelObj = S.event(window);
+top.eAlert( "MENSAJE", "Confirmar borrar la pantalla", "A,C", "DH", uDelOk );
+}
+function uDelOk( ok ){
+if( ok!=2 ) return;
+var Obj = S.toTag(_DelObj,'TR');
+var i = Obj.cells[0].textContent*1;
+top.eFileDelete('{dir}tmp/screen_'+i+'.png');
+BROWSE.deleteRow(Obj.rowIndex);
+}
+[JSEnd]l
+BROWSE.deleteRow(1);
+var Dim = top.eFileDir('{dir}tmp'),nDim = new Array();
+var n,TR,TD,x,i=0;
+for( n=0; n<Dim.length; n++ ){
+if( Dim[n][0].substring(0,7)=="screen_" && Dim[n][0].indexOf('.png')>-1 ){
+x = Dim[n][0].split('.');
+x = x[0].split('_');
+nDim[i++] = x[1]*1;
+}
+}
+nDim.sort();
+for( n=0; n<nDim.length; n++ ){
+i = nDim[n];
+TR = BROWSE.insertRow();
+TD = TR.insertCell();
+TD.textContent = i;
+TD = TR.insertCell();
+TD.textContent = top._xMScreen[i];
+TD = TR.insertCell();
+TD.innerHTML = "<img src='g/l_op_update.gif' onclick='uMod()'><img src='g/l_op_delete.gif' onclick='uDel()'>";
+}

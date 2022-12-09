@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>DBView
+<TR>
+<TD id=tSintaxis>SINTAXIS
+<TR>
+<TD id=Sintaxis>[DBView] NmView, Field1, Field2, ...
+<TR>
+<TD id=tDescripcion>DESCRIPCION
+<TR>
+<TD id=Descripcion>Permite buscar y consultar datos de otra tabla.
+<TR>
+<TD id=tParametro>PARAMETROS
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>NmView&nbsp;</TD>
+<TD>Nombre de la vista&nbsp;</TD></TR>
+<TR>
+<TD>Field1,...&nbsp;</TD>
+<TD>Lista de campos que tiene que estar accesibles en la vista en&nbsp;la&nbsp;tabla definida en DBTable</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO
+<TR>
+<TD id=Ejemplo>[DBTable] tareas<BR>[DBView] view_tareas, dni, nombre, apellidos<BR>[OnChange] a | dni | ChequeaDNI_Ok_y_PoneNombreYApellidos()
+<TR>
+<TD id=txt>Por ejemplo tienes una tabla de personas y otra de tareas, para poder gestionar las tareas preguntando en personas y tareas, se crea una vista "view_tareas" con todos los datos de la tabla "tareas" y con los 3 campos de personas dni, nombre y apellidos. Solo hay que tener encuenta que en el alta tiene que existir la persona y definir su pk.</TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

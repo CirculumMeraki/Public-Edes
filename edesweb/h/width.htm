@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Width</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Width] L:F | Field [,Field2, Field3,...] | Width / = [ | MínimoAncho]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Define el ancho de la columna del control o su etiqueta en el formulario.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>L:F</td>
+<td>El primer parámetro indica qué estamos tratando, el campo (F) o su etiqueta (L). </td>
+</tr>
+<tr>
+<td>Field</td>
+<td>Lista de campos separados por "," o un "*" para definir todos.</td>
+</tr>
+<tr>
+<td>Width</td>
+<td>Puede tener 3 valores:<br />- Ancho en píxels.<br />- El carácter "=" con una lista de campos pondrá el ancho mas desfavorable .<br />- Nombre de un campo para aliniarlos con respecto a este.</td>
+</tr>
+<tr>
+<td>MínimoAncho</td>
+<td> Solo en caso de poner el parámetro "Width" como "="</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Width] F | dt_alta | 200</td>
+</tr>
+<tr>
+<td id="txt">La columna en donde se ubica el campo dt_alta tendrá una anchura de 200 píxels.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Width] L | cd_auto,cd_prov,cd_coma,cd_muni,cd_distri | =</td>
+</tr>
+<tr>
+<td id="txt">Pone el ancho mas desfavorable.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Width] L | cd_auto,cd_prov,cd_coma,cd_muni,cd_distri | = | 150</td>
+</tr>
+<tr>
+<td id="txt">Pone 150 si el ancho mas desfavorable es menor a 150.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[Width] L | cd_auto,cd_prov,cd_coma,cd_muni,cd_distri | direccion</td>
+</tr>
+<tr>
+<td id="txt">Alinea los campos con el campo "direccion"</td>
+</tr>
+</tbody>
+</table>
+<p> </p><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

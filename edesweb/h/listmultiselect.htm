@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">ListMultiSelect</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[ListMultiSelect] Label | script.php / functionJavascript() [ | CheckRow [ | row ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Mostrará un listado pudiendo seleccionar cualquier número de filas, ejecutando despues un script php o una funcion javascript.<br />Si se ejecuta un script php le llegará un array en el campo $_POST["_PK_MULTISELECT_"].<br />Si se ejecuta una funcion javascript recibir? una matriz en el primer argumento.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" style="height: 126px; width: 616px;" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="font-weight: bold;" /> </colgroup>
+<tbody>
+<tr>
+<td>Label </td>
+<td> Label del botón a ejecutar al terminar la selección.</td>
+</tr>
+<tr>
+<td>script.php / functionJavascript() </td>
+<td> - script php<br /> - nombre de función javascript<br />(permite incruscar variables php)</td>
+</tr>
+<tr>
+<td>CheckRow</td>
+<td> Función javascript para confirmar/denegar que se pueda seleccionar la fila</td>
+</tr>
+<tr>
+<td>row </td>
+<td> Por defecto enviará los el campo indice de la tabla<br /> Constante para indicar que se enviarán los rowIndex y no el campo indice</td>
+</tr>
+</tbody>
+</table>
+Para marcar filas en la carga se hace mediante la etiqueta [Format] <br />[Format]<br />if( $_vF[...HayQueMarcar...] ){<br />   $_vF[..ColumnaDeLaMarca...] = true;// la última mas uno<br />   $_RowClass = "MarkedRow";<br />}</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[ListMultiSelect] Terminar selección | prueba.php<br /><br />Fichero "prueba.php":<br /><!--?PHP<br /-->// array: $_POST["_PK_MULTISELECT_"]<br />?></p>
+</td>
+</tr>
+<tr>
+<td id="txt">Llamada a un script php.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[ListMultiSelect] Terminar selecci?n | pruebaJS | uCheckUser</p>
+<p>[JSIni] mR<br />function pruebaJS(dim){<br />   ...<br />}<br /><br />function uCheckUser(oTR, oTD, Op,Action){<br />   //Op: [C]heck / [U]nCheck / [I]nvest<br />   //Action: [I]ndividual / [M]asiva <br />   return true/false;<br />}</p>
+</td>
+</tr>
+<tr>
+<td id="txt">Llamada a una función javascript.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

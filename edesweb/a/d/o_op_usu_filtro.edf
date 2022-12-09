@@ -1,0 +1,75 @@
+[Title]=Seleccionar Aplicación
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBIndex]cd_gs_op
+[DBOrder]cd_gs_op
+[DBLimit]50000,50000
+[Expire]300
+[PHPStart]l
+$_TopMaxRec = 5000;
+[NoSort]
+[Cursor]NO
+[TipTH]Acceso=Opciones asignadas por el árbol, seq _insert=Opciones Activadas Individualmente, seq _delete=Opciones Desactivadas Individualmente
+[Fields]
+seq|seq|+|T|9||*|||
+cd_gs_op|cd_gs_op|+|T|9||*|||
+Indent|indent|+|T|4||*|||
+type|type|N|T|1||*|||
+Aplicación|caption|D|T|80||-|||
+[ColsOp],,,,c,+,+
+[Format],,,, ,b,b
+$_CellsClass[4] = 'n'.$_vF[2];
+if( $_vF[3]=='F' ){
+$_vF[4] = '<img src=g/tree_1.gif onclick=EV()>'.$_vF[4];
+$_vF[5] = $_vF[6] = '';
+}
+[DBSql]l
+$OpNo = "'U'";
+if( $_Development ) $OpNo .= "";
+else if( $_Test ) $OpNo .= ",'D'";
+else $OpNo .= ",'D','T'";
+$xUserWhereIn = '';
+if( $_GET['_UserWhereIn'] ) $xUserWhereIn = ' and U.cd_gs_user in (select cd_gs_user from gs_user_in where user_op='.$_SESSION['_User'].')';
+$xPermission = ( $xUserWhereIn!='' ) ? '' : " and permission='S'";
+qQuery( "select seq, cd_gs_op, indent, type, caption
+from {$_SESSION['ShareDictionary']}gs_op where type='F' and show_type not in ({$OpNo}) and indent<2
+order by seq" );
+$_TReg = 1;
+[PHPEnd]l
+global $_ModeLabel;
+include_once( '../_datos/config/manager_op.ini' );
+echo '<script type="text/javascript">';
+echo 'var _uMode = { ".~":"Modo a Marcar"';
+foreach( $_ModeLabel as $k=>$v ){
+echo ",'.{$k}':'{$v}'";
+}
+echo ",'.-':''";
+echo ",'.*':'Limpiar'";
+echo '};';
+echo '</script>';
+[JSIni]*
+function EV(){
+S(S.event(window).parentNode).eventClick();
+}
+[JSOnClickRow]l
+if( eGF('indent')==10 ){
+top.eInfo(window,'Tiene que marcar una aplicación');
+return;
+}
+var Filtro = '';
+if( (_oTR.rowIndex+2)==BROWSE.rows.length ){
+Filtro = 'seq>='+eGF('seq');
+}else{
+Filtro = 'seq>='+eGF('seq')+' and seq<'+eTrim(BROWSE.rows[_oTR.rowIndex+1].cells[0].textContent);
+}
+top.eSWOpen( window, 'edes.php?Ll:$a/d/o_op_usu.edf&cd_gs_op='+eGF('cd_gs_op')+'&_cm=c&_FILTER='+escape(Filtro) );
+[CSSAdd]l
+.n0 { padding-left:   5px; }
+.n1 { padding-left:  22px; }
+.n2 { padding-left:  39px; }
+.n3 { padding-left:  56px; }
+.n4 { padding-left:  73px; }
+.n5 { padding-left:  90px; }
+.n6 { padding-left: 107px; }
+.n7 { padding-left: 124px; }
+.n8 { padding-left: 141px; }
+.n9 { padding-left: 158px; }

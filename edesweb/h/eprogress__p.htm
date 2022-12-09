@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eProgress 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eProgress( $Realizado, $Titulo='', $TextoEnBarra='', $TextoDetalle='' [ ,&nbsp; $Sound=M&nbsp;] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Cuando se realiza un proceso que tarde mucho podemos ir informando del paso en el que estamos, si en "Realizado" ponemos. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>$Realizado</TD>
+<TD>Un n? del 0 al 100 o una cadena del "0/n" al "n/n", para que se inicie el proceso el primer valor tiene que ser "0" y si queremos que termine y defe la barra de progreso 1l "100", si queremos mostrar otra&nbsp;cosa&nbsp;en lugar de mandarle el valor "100" llamaremos a la funci?n "eProgressHidden()"&nbsp;</TD></TR>
+<TR>
+<TD>$Titulo</TD>
+<TD>T?tulo de la barra de progreso</TD></TR>
+<TR>
+<TD>$TextoEnBarra</TD>
+<TD>Si ponemos un "%" pondr? el % en n?mero que lleva en cada momento&nbsp;</TD></TR>
+<TR>
+<TD>$TextoDetalle</TD>
+<TD>Nombre del subproceso que se est? ejecutando</TD></TR>
+<TR>
+<TD>$Sound</TD>
+<TD>Por defecto ejecutar? la funci?n eSound("M"), si se quiere que no suene habr? que pasar una cadena vac?a.</TD></TR></TBODY></TABLE>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

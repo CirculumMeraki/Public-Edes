@@ -1,0 +1,12 @@
+[Title]=TRADUCIR MENU
+[DBTable]{$_SESSION['ShareDictionary']}gs_op
+[DBIndex]cd_gs_op
+[DBOrder]caption
+[DBLimit]10000
+[MaxRec]FULL
+[DBAddFilter]caption<>'' and caption is not null
+[EditList]caption,tip
+[Fields]
+Cd gs op|cd_gs_op|-|T|9||-|||
+Caption|caption|#|A|255,80,3||M|||
+Tip|tip|#|A|255,80,3||M|||

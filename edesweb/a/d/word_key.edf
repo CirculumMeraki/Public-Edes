@@ -1,0 +1,155 @@
+[Title]=Seleccionar palabras clave
+[DBTable]gs_dct
+[DBLimit]20000
+[Fields]
+Palabra Clave|dct_work|#|T|30||M|||
+NºVeces|repeticiones|+|T|5||M|||
+[PHPStart]l
+list(,$_uCampoDestino) = explode('"',$_FILTER);
+[DBSql]*
+if( $_GET['_DCT_SUFFIX']!='' ) $_FILTER = substr($_FILTER,0,-1).$_DCT_SUFFIX.substr($_FILTER,-1);
+$EmptyList = true;
+qQuery("select dct_work, count(*) from gs_dct where {$_FILTER} group by 1 order by 1");
+[JSOnClickRow]l
+var Valor = _ValorWork;
+if( (','+Valor+',').indexOf(','+_Columna[0]+',')==-1 ){
+var MaxLen = _WOPENER.DGI('{$_uCampoDestino}')._MaxLength;
+if( Valor.length+1+_Columna[0].length > MaxLen ){
+S("body").tip("La palabra no cabe en el campo de búsqueda", 1.5);
+return;
+}
+var oWidth = document.body.scrollWidth,
+oHeight = document.body.scrollHeight,
+TR = uSELECCION.insertRow(),
+TD = TR.insertCell();
+TD.className = 'Celda';
+TD.textContent = _Columna[0];
+if( Valor!='' ) Valor = Valor+',';
+Valor += _Columna[0];
+_ValorWork = Valor;
+_oTD.parentNode.style.fontWeight = "bold";
+if( oWidth<document.body.scrollWidth || oHeight<document.body.scrollHeight ) top.eSWIResize(window, document.body.scrollWidth, document.body.scrollHeight);
+}else{
+_oTD.parentNode.style.fontWeight = "";
+S("#uSELECCION TBODY TD").each(function(k,o){
+if( o.textContent==_Columna[0] ){
+S("#uSELECCION").obj.deleteRow(o.parentNode.rowIndex);
+return null;
+}
+});
+var dim = Valor.split(","), txt="", n, nDim=[];
+for(n=0; n<dim.length; n++){
+if( S.trim(dim[n])!=_Columna[0] ) nDim.push(dim[n]);
+}
+_ValorWork = S.trim(nDim.join(","));
+}
+[HTMIni]l
+<table border=0px cellspacing=0px cellpadding=0px style="width:100%;height:100%;display:-webkit-inline-box;">
+<tr>
+<td valign=top align=center>
+[HTMEnd]l
+</td>
+<td>&nbsp;&nbsp;
+</td>
+<td align=center width=100% style="vertical-align:top">
+<TABLE id=NewCONTENEDOR cellspacing=0px cellpadding=0px border=0px style='background:transparent'>
+<TR>
+<TD valign=top style='padding:0px; background:transparent;'>
+<TABLE id=uSELECCION onclick='uDelTD()' class="BROWSE" cellspacing=2px cellpadding=1px>
+<TR><TH style='white-space:nowrap; cursor:default;' id=xTHAccion>Palabras seleccionadas</TH></TR>
+<TBODY>
+</TBODY>
+</TABLE>
+</TD>
+<TD id=SiteCONTENEDOR valign=top align=center style='background:transparent'></TD>
+</TR>
+</TABLE>
+<SCRIPT type="text/javascript">
+var _ValorWork = S.nsp(_WOPENER.DGI('{$_uCampoDestino}').value);
+function uDelTD(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+var dim = _ValorWork.split(","), txt="", n, nDim=[];
+for(n=0; n<dim.length; n++){
+if( S.trim(dim[n])!=Obj.textContent ){
+nDim.push(dim[n]);
+}else{
+S("#BROWSE TBODY TD").each(function(k,o){
+if( o.textContent==Obj.textContent ){
+o.parentNode.style.fontWeight = "normal";
+return null;
+}
+});
+}
+}
+_ValorWork = S.trim(nDim.join(","));
+uSELECCION.deleteRow(Obj.parentNode.rowIndex);
+}
+var Valor = _WOPENER.DGI('{$_uCampoDestino}').value;
+if( Valor!='' ){
+var Dim = S.nsp(Valor).split(','), n;
+for(n=0; n<Dim.length; n++){
+var TR = uSELECCION.insertRow(),
+TD = TR.insertCell();
+TD.className = 'Celda';
+TD.textContent = eTrim(Dim[n]);
+}
+S("#BROWSE TBODY TD").each(function(k,o){
+if( S.is(o.textContent, Dim) ){
+o.parentNode.style.fontWeight = "bold";
+}
+});
+}
+function uGrabar(){
+_WOPENER.DGI('{$_uCampoDestino}').value = _ValorWork;
+S(window).window();
+}
+</SCRIPT>
+</td>
+</tr>
+</table>
+[PHPEnd]l
+eAddButton("U", "Aceptar", "uGrabar()", "", "id=BotonGrabar");
+[JSEnd]l
+setTimeout(function(){
+var xy = S(".AddButton").xy(),
+ws = S.windowSize(window),
+boton = S("#BotonGrabar");
+S("#CONTENEDOR").css("margin-bottom", boton.css("height")+5);
+boton.css("position:fixed;left:"+((ws.width/2)-(boton.css("width")/2))+"px;bottom:0px")
+}, 1000);
+[HTMEnd]l-
+<TABLE id=NewCONTENEDOR cellspacing=0 cellpadding=0 border=0 style='background:transparent'>
+<TR>
+<TD valign=top style='padding-right:20px; background:transparent;'>
+<TABLE id=uSELECCION onclick='uDelTD()' class="BROWSE" cellspacing=2px cellpadding=1px>
+<TR><TH style='white-space:nowrap; cursor:default;' id=xTHAccion>Palabras seleccionadas</TH></TR>
+</TABLE>
+</TD>
+<TD id=SiteCONTENEDOR valign=top align=center style='background:transparent'></TD>
+</TR>
+</TABLE>
+<SCRIPT type="text/javascript">
+function uDelTD(){
+var Obj = S.event(window);
+if( Obj.tagName!='TD' ) return;
+var Valor = ','+_WOPENER.DGI('{$_uCampoDestino}').value+',';
+Valor = Valor.replace( ','+Obj.textContent+',', ',' );
+if( Valor.substr(0,1)==',' ) Valor = Valor.substr(1);
+if( Valor.substr(Valor.length-1)==',' ) Valor = Valor.substr(0, Valor.length-1);
+ePPF('{$_uCampoDestino}', Valor);
+uSELECCION.deleteRow(Obj.parentNode.rowIndex);
+}
+DGI("CONTENEDOR").appendChild(NewCONTENEDOR);
+DGI("SiteCONTENEDOR").appendChild(DGI("BROWSE"));
+var Valor = _WOPENER.DGI('{$_uCampoDestino}').value;
+if( Valor!='' ){
+var Dim = Valor.split(','), n;
+for(n=0; n<Dim.length; n++){
+var TR = uSELECCION.insertRow(),
+TD = TR.insertCell();
+TD.className = 'Celda';
+TD.textContent = eTrim(Dim[n]);
+}
+}
+</SCRIPT>

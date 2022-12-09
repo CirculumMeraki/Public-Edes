@@ -1,0 +1,568 @@
+[Title]=DEFINICION DE INFORME: #
+#(l)[Title]   =SELECCIONAR INFORME: #
+[DBTable]gs_formato
+[DBIndex]cd_gs_formato
+[DBOrder]nm_gs_formato
+[DBSerial]cd_gs_formato
+[NoEditFilled]*||cd_gs_entidad
+[Assign]?|cd_gs_entidad
+[PersistentVar]_cd_gs_entidad,_DB
+[TipForm]*|*|titulo_list|Título del Informe, si se deja en blanco se pondrá el Nombre
+[OnChange]a,mR|grupo|CambiaGrupo()
+#(w) [EditList] nm_gs_formato
+[FormButtons]VvUuDd
+[Fields]
+#(?) Entidad|cd_gs_entidad|0|S|30||-Q*|$_GET['_cd_gs_entidad']|#|
+#!(?) Entidad|cd_gs_entidad|0|T|3||-Q*|$_GET['_cd_gs_entidad']|#|
+#(a,?R) {P} INFORME
+|cd_gs_formato|+|T|9||*|||
+Nombre|nm_gs_formato|D|T|60|420|MQ||#|
+Título|titulo_list|#|A|255,80,3|420|M|||
+Descripción|descripcion|#|A|255,80,3|420|M|||
+|formato|#|A|500,80,6||*|||
+|ordenacion|#|T|36||*|||
+Nº de Grupos|grupo|+|T|1||MS|||
+|cd_gs_user|+|T|5||*Q*|_User|#|
+|informe|D|T|1||*Q*|S|#|
+#include(a,mR) /_datos/config/report_ed_{$_cd_gs_entidad}.idf|true
+[AddButton]a,mR|<i class="ICONINPUT ICONINSERT">[</i> Probar Informe||uProbarInforme()
+[JSIni]a,mR
+function CambiaGrupo(){
+var Objs = S("SPAN[id='eCONTAINER']").dim;
+if( eGF('grupo')>=Objs[1].children[0].rows.length ){
+if( Objs[1].children[0].rows.length > 0 ){
+ePF('grupo',Objs[1].children[0].rows.length-1);
+}else ePF('grupo',0);
+}
+}
+var _report_def_ = '';
+function uProbarInforme(){
+var Objs = S("SPAN[id='eCONTAINER']").dim,
+i, n, p=0, TABLA, TR, TD, Dim = new Array('','');
+if( (Objs[1].children[0].rows.length + Objs[2].children[0].rows.length) == 0 ){
+top.eInfoError( window, 'En la zona "FILAS" o "COLUMNAS" tiene que poner algún campo.');
+return;
+}
+if( Objs[1].children[0].rows.length==0 ){
+top.eInfoError( window, 'En la zona "FILAS" tiene que poner algún campo.');
+return;
+}
+if( Objs[2].children[0].rows.length > 1 ){
+top.eInfoError( window, 'En la zona "COLUMNAS" solo se puede poner un campo.');
+return;
+}
+for( n=0; n<Objs.length; n++ ){
+if( Objs[n].getAttribute('eSOURCE')!=1 ){
+TABLA = Objs[n].children[0];
+for( i=0; i<TABLA.rows.length; i++ ){
+Dim[p] += TABLA.rows[i].cells[0].getAttribute("pk")+','+TABLA.rows[i].cells[1].textContent+'#';
+}
+p++;
+}
+}
+_report_def_ = eGF('cd_gs_entidad')+"|"+Dim[0]+"|"+Dim[1]+"|"+eGF('grupo')+"|"+eGF('nm_gs_formato')+"|"+eGF('titulo_list');
+var Win = top.eSWOpen( window, 'edes.php?Fc:$a/d/report_filter&_InformeDirecto=S&_cd_gs_entidad='+eGF('cd_gs_entidad'), 'PRUEBA DE INFORME', false );
+}
+[JSCheck]a,mR
+var Objs = S("SPAN[id='eCONTAINER']").dim,
+i, n, p=0, TABLA, TR, TD, Dim = new Array('','');
+for(n=0; n<Objs.length; n++){
+if( Objs[n].getAttribute('eSOURCE')!=1 ){
+TABLA = Objs[n].children[0];
+for( i=0; i<TABLA.rows.length; i++ ){
+Dim[p] += TABLA.rows[i].cells[0].getAttribute("pk")+','+TABLA.rows[i].cells[1].textContent+'#';
+}
+p++;
+}
+}
+if( eGF('grupo')>=Objs[1].children[0].rows.length ){
+if( Objs[1].children[0].rows.length > 0 ){
+ePF('grupo',Objs[1].children[0].rows.length-1);
+}else ePF('grupo',0);
+}
+if( (Objs[1].children[0].rows.length + Objs[2].children[0].rows.length) == 0 ){
+ePE('nm_gs_formato','En la zona "FILAS" o "COLUMNAS" tiene que poner algún campo.');
+}else if( Objs[2].children[0].rows.length > 1 ) ePE('nm_gs_formato','En la zona "COLUMNAS" solo se puede poner un campo.');
+ePF('formato',Dim[0]);
+ePF('ordenacion',Dim[1]);
+[CSSAdd]*
+#DEFINFORME .n0{
+padding-left:5px;
+FONT-WEIGHT: bold;
+cursor:pointer;
+}
+#DEFINFORME .n1{
+padding-left:25px;
+}
+#DEFINFORME {
+width: 512px;
+height: 332px;
+border:1px solid #cccccc;
+margin-left: 0px;
+margin-bottom: 3px;
+}
+#DEFINFORME TH {
+background: #cccccc;
+color: #000000;
+padding-bottom:1px;
+}
+#DEFINFORME TD {
+background: #ffffff;
+color: #000000;
+}
+#DEFINFORME SPAN {
+border-right-color: #cccccc;
+}
+#CARRITO {
+border:1px solid #cccccc;
+background: #eeeeee;
+color: #000000;
+padding: 2px 10px 2px 10px;
+}
+.eDESTINO {
+padding-left: 5px;
+}
+.eDESTINO2 {
+padding-left: 5px;
+width: 18px;
+border-left: solid 1px #cccccc;
+cursor:pointer;
+}
+[OnLoad]a,?R|ResizeDefInforme()
+[JSIni]a,?R
+function ResizeDefInforme(){
+var Obj = DGI("DEFCOLUMNAS");
+Obj.style.height = Obj.parentNode.offsetHeight;
+S("#THColumnas").css("border-top-color", "#f8f8f8");
+}
+function eDragUser(){
+var Obj = S.event(window);
+if( Obj.tagname=='IMG' ) Obj = Obj.parentNode;
+if( Obj.tagName!='TD' || Obj.className!='n0' ) return;
+var TR = S.toTag(Obj,'TABLE').rows, n,
+OnOff = (Obj.getAttribute('Visible')==0)?'block':'none',
+nV = ((Obj.getAttribute('Visible')==1)? 0:1),
+i = Obj.parentNode.rowIndex+1;
+for(n=0; n<TR.length; n++){
+if( TR[n].cells[0].className=='n1' ) TR[n].style.display = 'none';
+else TR[n].cells[0].setAttribute('Visible',0);
+}
+Obj.setAttribute('Visible',nV);
+for(n=i; n<TR.length; n++){
+if( TR[n].cells[0].className=='n1' ){
+TR[n].style.display = OnOff;
+}else break;
+}
+}
+function uMenu2( Op, OpTextContent, Obj, OpObj, VarUser ){
+switch( Op ){
+case null:
+break;
+default:
+Obj.textContent = Op;
+Obj.title = OpTextContent;
+}
+}
+function uMenu(){
+if( _Mode!='a' && _Mode!='mR' ) return;
+var td = S.event(window).getAttribute("td"), Dim = new Array();
+switch( td ){
+case 'T': case '':
+return;
+case 'N':
+Dim = {
+'.-':'Formato Numérico',
+'.C':'Contar',
+'.S':'Sumar'
+};
+break;
+case 'F':
+Dim = {
+'.-1':'Formato Fecha',
+'.F' :'Fecha',
+'.-2':'',
+'.Fa':'Año',
+'.FP':'Año y Mes',
+'.-3':'',
+'.F6':'Semestral',
+'.F4':'Cuatrimestral',
+'.F3':'Trimestral',
+'.-4':'',
+'.FM':'Mes Nombre',
+'.Fm':'Mes en Nº',
+'.-5':'',
+'.FS':'Semana del Año',
+'.-6':'',
+'.FD':'Día del Año',
+'.Fd':'Día del Mes',
+'.Fs':'Día de la Semana',
+'.-7':'',
+'.FA':'Nº de Años',
+'.FR':'Rango de Años'
+};
+break;
+case 'P':
+Dim = {
+'.-1':'Formato Periodo',
+'.P' :'Periodo',
+'.-2':'',
+'.PA':'Año',
+'.-3':'',
+'.P6':'Semestral',
+'.P4':'Cuatrimestral',
+'.P3':'Trimestral',
+'.-4':'',
+'.PM':'Mes Nombre',
+'.Pm':'Mes en Nº'
+};
+break;
+case 'S':
+Dim = {
+'.-1':'Formato Select',
+'.SC':'Código',
+'.SL':'Literal'
+};
+break;
+case 'I':
+Dim = {
+'.-1':'Formato Instante',
+'.I' :'Instante',
+'.-2':'',
+'.F':'Fecha',
+'.-3':'',
+'.Fa':'Año',
+'.FP':'Año y Mes',
+'.-4':'',
+'.F6':'Semestral',
+'.F4':'Cuatrimestral',
+'.F3':'Trimestral',
+'.-5':'',
+'.FM':'Nombre del Mes',
+'.Fm':'Nº del Mes',
+'.-6':'',
+'.FD':'Día del Año',
+'.Fd':'Día del Mes',
+'.Fs':'Día de la Semana',
+'.-7':'',
+'.FA':'Nº de Años',
+'.-8':'',
+'.FH':'Hora',
+'.Fh':'Hora y minuto',
+'.Fi':'Minuto'
+};
+break;
+case 'C':
+Dim = {
+'.-1':'Formato Select',
+'.S2':'Mostrar Si y No',
+'.S1':'Mostrar Si'
+};
+break;
+}
+top.eMenu(window, S.event(window), Dim, uMenu2);
+}
+[JSIni]a,?R
+var _DragObj = null,
+_DragIniX,
+_DragIniY,
+_DragX,
+_DragY;
+function eDragInRow(TABLA, O){
+if( TABLA.rows.length==0 ) return 0;
+var D = ePosition(TABLA);
+if( O.x > D.x && O.x < D.x+D.w ){
+if( O.y > D.y && O.y < D.y+D.h ){
+for( n=0; n<TABLA.rows.length; n++ ){
+D = ePosition(TABLA.rows[n].cells[0]);
+if( O.x > D.x && O.x < D.x+D.w ){
+if( O.y > D.y && O.y < D.y+D.h ) return n;
+}
+}
+}
+}
+return TABLA.rows.length;
+}
+function ePosition(el){
+var x,y,w,h, r=el.getBoundingClientRect();
+x = r.left; w = el.clientWidth; y = r.top; h = el.clientHeight;
+return {x: x, y: y, w: w, h: h};
+}
+function noEvents(){
+S.eventClear(window);
+return false;
+}
+function eDragDown(id){
+_DragObj = (typeof(id)=='string') ? DGI(id) : id;
+_DragX = event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft;
+_DragY = event.clientY + document.documentElement.scrollTop  + document.body.scrollTop;
+document.body.onmousemove = eDragMov;
+document.body.onmouseup = eDragStop;
+_DragIniX = parseInt(_DragObj.style.left);
+_DragIniY = parseInt(_DragObj.style.top);
+return noEvents();
+}
+function eDragMov(){
+var xAhora = event.clientX + document.documentElement.scrollLeft + document.body.scrollLeft,
+yAhora = event.clientY + document.documentElement.scrollTop  + document.body.scrollTop;
+_DragObj.style.left = (_DragIniX + xAhora - _DragX)+"px";
+_DragObj.style.top  = (_DragIniY + yAhora - _DragY)+"px";
+return noEvents();
+}
+function eDragStop(){
+document.body.onmousemove = null;
+document.body.onmouseup = null;
+}
+function eDragCapture(){
+var Obj = S.event(window);
+if( Obj.tagName=='TD' && Obj.getAttribute('eBUSY')!=1 && Obj.className!='n0' && Obj.cellIndex==0 ){
+if( _Mode!='a' && _Mode!='mR' ) return;
+var CARRITO = DGI("CARRITO");
+CARRITO.textContent = Obj.textContent;
+CARRITO.style.display = 'block';
+var p = ePosition(Obj);
+CARRITO.style.left = px(p.x + parseInt(S(Obj).css("paddingLeft")) - 11);
+CARRITO.style.top = px(p.y + parseInt(S(Obj).css("paddingTop")) - 3);
+if( (parseInt(CARRITO.style.left)+CARRITO.offsetWidth-5) < event.clientX ){
+CARRITO.style.display = 'none';
+return noEvents(event);
+}
+CARRITO.Obj = Obj;
+Obj.style.color = '#eeeeee';
+if( Obj.parentNode.parentNode.parentNode.parentNode.getAttribute('eSOURCE')==1 ) Obj.setAttribute('eBUSY',1);
+eDragDown('CARRITO');
+return noEvents(event);
+}else if( typeof(eDragUser)=='function' ){
+eDragUser();
+}
+}
+function eDragUp(){
+var Objs = S("SPAN[id='eCONTAINER']").dim, Ok = false, i,
+CARRITO = DGI("CARRITO"),
+Origen = ePosition(CARRITO), Destino, n, TABLA, TR, TD, std=' ', ktd='';
+Origen.x += event.offsetX;
+Origen.y += event.offsetY;
+for(n=0; n<Objs.length; n++){
+Destino = ePosition(Objs[n]);
+if( Origen.x>Destino.x && Origen.x<Destino.x+Destino.w ){
+if( Origen.y>Destino.y && Origen.y<Destino.y+Destino.h ){
+TABLA = Objs[n].children[0];
+for(i=0; i<TABLA.rows.length; i++){
+if( TABLA.rows[i].cells[0].getAttribute("pk")==CARRITO.Obj.getAttribute("pk") ){
+TABLA.rows[i].cells[0].style.color = '';
+if( Objs[n].getAttribute('eSOURCE')==1 ){
+TABLA.rows[i].cells[0].setAttribute('eBUSY',0);
+if( CARRITO.Obj.parentNode.parentNode.parentNode.parentNode.getAttribute('eSOURCE')==0 ){
+Ok = true;
+TD = CARRITO.Obj;
+TR = TD.parentNode;
+if( TR.cells.length==2 ){
+std = TR.cells[1].textContent;
+ktd = TR.cells[1].getAttribute("td");
+}
+S(TR).nodeRemove();
+}
+}else{
+Ok = false;
+}
+break;
+}
+}
+if( !Ok && Objs[n].getAttribute('eSOURCE')==0 ){
+if( CARRITO.Obj.parentNode.parentNode.parentNode.parentNode.getAttribute('eSOURCE')==0 ){
+TD = CARRITO.Obj;
+TR = TD.parentNode;
+if( TR.cells.length==2 ){
+std = TR.cells[1].textContent;
+ktd = TR.cells[1].getAttribute("td");
+}
+S(TR).nodeRemove();
+}
+TR = TABLA.insertRow(eDragInRow(TABLA,Origen));
+TD = TR.insertCell();
+TD.textContent = CARRITO.Obj.textContent;
+TD.setAttribute("pk", CARRITO.Obj.getAttribute("pk"));
+TD.className = 'eDESTINO';
+TD = TR.insertCell();
+TD.textContent = std;
+TD.setAttribute("td", (CARRITO.Obj.getAttribute("td")!=null)? CARRITO.Obj.getAttribute("td") : ktd);
+TD.className = 'eDESTINO2';
+TD.onclick = uMenu;
+}
+CARRITO.style.display = 'none';
+Ok = true;
+break;
+}
+}
+}
+if( !Ok ){
+CARRITO.Obj.style.color = '';
+CARRITO.Obj.setAttribute('eBUSY',0);
+CARRITO.style.display = 'none';
+}
+}
+[P]INFORME
+$DimTitle = array(
+'C'=>'Contar',
+'S'=>'Sumar',
+'F'=>'Fecha',
+'Fa'=>'Año',
+'FP'=>'Año y Mes',
+'F6'=>'Semestral',
+'F4'=>'Cuatrimestral',
+'F3'=>'Trimestral',
+'FM'=>'Mes Nombre',
+'Fm'=>'Mes en Nº',
+'FS'=>'Semana del Año',
+'FD'=>'Día del Año',
+'Fd'=>'Día del Mes',
+'Fs'=>'Día de la Semana',
+'FA'=>'Nº de Años',
+'FR'=>'Rango de Años',
+'P'=>'Periodo',
+'PA'=>'Año',
+'P6'=>'Semestral',
+'P4'=>'Cuatrimestral',
+'P3'=>'Trimestral',
+'PM'=>'Mes Nombre',
+'Pm'=>'Mes en Nº',
+'SC'=>'Código',
+'SL'=>'Literal',
+'I'=>'Instante',
+'F'=>'Fecha',
+'Fa'=>'Año',
+'FP'=>'Año y Mes',
+'F6'=>'Semestral',
+'F4'=>'Cuatrimestral',
+'F3'=>'Trimestral',
+'FM'=>'Nombre del Mes',
+'Fm'=>'Nº del Mes',
+'FD'=>'Día del Año',
+'Fd'=>'Día del Mes',
+'Fs'=>'Día de la Semana',
+'FA'=>'Nº de Años',
+'FH'=>'Hora',
+'Fh'=>'Hora y minuto',
+'Fi'=>'Minuto',
+'S2'=>'Mostrar Si y No',
+'S1'=>'Mostrar Si'
+);
+?>
+<div id=CARRITO style='z-index:10;position:absolute;display:none;cursor:move;' onmousedown="eDragDown(this)" onmouseup="eDragUp()"></div>
+<?PHP
+global $_Mode;
+if( isset($_GET['_cd_gs_entidad']) ) $cd_gs_entidad = $_GET['_cd_gs_entidad'];
+if( isset($_POST['cd_gs_entidad']) ) $cd_gs_entidad = $_POST['cd_gs_entidad'];
+if( strlen($_Mode)==2 ){
+if( isset($_GET['cd_gs_formato']) ){
+qQuery("select cd_gs_formato, cd_gs_entidad, formato, ordenacion from gs_formato where cd_gs_formato={$_GET['cd_gs_formato']}");
+list($cd_gs_formato, $cd_gs_entidad, $formato, $ordenacion) = qRow();
+}else{
+qQuery("select cd_gs_formato, cd_gs_entidad, formato, ordenacion from gs_formato where ".qGetWhere());
+list($cd_gs_formato, $cd_gs_entidad, $formato, $ordenacion) = qRow();
+}
+}
+qQuery("select export_level from gs_user where cd_gs_user='{$_SESSION['_User']}'");
+list($_export_level_) = qRow();
+$_export_level_ = $_export_level_*1;
+echo '<table border=0 cellspacing=0 cellpadding=0 id=DEFINFORME style="line-height:1.2;">';
+echo '<col style="width:50%"><col style="width:50%">';
+echo '<tr style="height:1px"><th>CAMPOS</th><th>FILAS <img src="g/report_col_x.png" style="margin-left:10px"></th></tr>';
+echo '<tr>';
+echo '<td valign=top>';
+echo '<span style="height:100%;width:100%;overflow-y:auto;border-right:1px solid;display:block;" id=eCONTAINER eSOURCE=1>';
+$txt = str_replace('##', '#', trim($formato).'#'.trim($ordenacion));
+$Dim = explode('#',$txt);
+for($n=0; $n<count($Dim); $n++){
+list( $c, $f ) = explode(',',$Dim[$n]);
+$Dim[$n] = $c;
+}
+echo '<table onmousedown="eDragCapture()" style="cursor:pointer;width:100%" onselectstart="return false;" class="col_1c">';
+$Old = '#';
+$nc = 0;
+qQuery("select G.nm_gs_grupo, C.etiqueta, C.label_inf, C.cd_gs_campo, C.tipo_dato from {$_SESSION['ShareDictionary']}gs_campo C left join {$_SESSION['ShareDictionary']}gs_grupo G on C.cd_gs_grupo=G.cd_gs_grupo
+where C.cd_gs_entidad='{$cd_gs_entidad}' and C.informe='S' and C.nivel>=0 and (C.nivel<={$_export_level_} or C.nivel is null)
+order by G.orden,C.orden", $p1);
+while( $r=qArray($p1) ){
+$r['nm_gs_grupo'] = trim($r['nm_gs_grupo']);
+if( $Old!=$r['nm_gs_grupo'] ){
+echo '<tr><td class=n0 Visible=0><img src="g/c2_0.gif"> '.str_replace('·',' ',$r['nm_gs_grupo']);
+$Old = $r['nm_gs_grupo'];
+}
+$Etiqueta = (trim($r['label_inf'])!='') ? trim($r['label_inf']) : trim($r['etiqueta']);
+if( in_array($r['cd_gs_campo'],$Dim) ){
+echo '<tr id=o><td class="n1" pk='.$r['cd_gs_campo'].' td="'.$r['tipo_dato'].'" cr="'.$r['campo_ref'].'" eBUSY=1 style="color:#eeeeee">'.str_replace('·',' ',$Etiqueta);
+}else{
+echo '<tr id=o><td class="n1" pk='.$r['cd_gs_campo'].' td="'.$r['tipo_dato'].'" cr="'.$r['campo_ref'].'">'.str_replace('·',' ',$Etiqueta);
+}
+$nc++;
+}
+if( $nc==0 ){
+eMessage("No hay campos para generar informes", "HSE");
+}
+echo '</table>';
+echo '</span>';
+echo '</td>';
+echo '<td valign=top>';
+echo '<table border=0 cellspacing=0 cellpadding=0 style="height:100%;width:100%" id=DEFCOLUMNAS>';
+echo '<tr style="height:50%"><td valign=top>';
+?>
+<span style='width:100%; height:100%; overflow-y:auto;display:block;' id=eCONTAINER eSOURCE=0>
+<table onmousedown="eDragCapture()" style='cursor:pointer;width:100%' onselectstart='return false;' class="col_1c">
+<col><col>
+<?PHP
+$formato = trim($formato);
+$Dim = explode('#',$formato);
+for( $n=0; $n<count($Dim); $n++ ){
+if( trim($Dim[$n])!='' && trim($Dim[$n])!=',' ){
+list( $Cod, $Trans ) = explode(',',$Dim[$n]);
+qQuery( "select etiqueta, label_inf, cd_gs_campo, tipo_dato from {$_SESSION['ShareDictionary']}gs_campo where cd_gs_campo={$Cod}", $p1 );
+$r = qArray($p1);
+$Etiqueta = (trim($r['label_inf'])!='') ? trim($r['label_inf']) : trim($r['etiqueta']);
+echo '<tr><td pk='.$r['cd_gs_campo'].' class=eDESTINO>'.str_replace('·',' ',$Etiqueta);
+if( trim($Trans)=='' ) $Trans = '&nbsp;';
+echo '<td class=eDESTINO2 onclick=uMenu() td="'.$r['tipo_dato'].'" cr="'.$r['campo_ref'].'" title="'.$DimTitle[$Trans].'">'.$Trans;
+}
+}
+?>
+</table>
+</span>
+<?PHP
+echo '</td></tr>';
+echo '<tr style="height:1px"><th id="THColumnas" style="border-top-width:3px; border-top-style:double;">COLUMNAS <img src="g/report_col_y.png" style="margin-left:10px"></th></tr>';
+echo '<tr style="height:50%"><td>';
+?>
+<span style='width:100%; height:100%; overflow-y:auto;display:block;' id=eCONTAINER eSOURCE=0>
+<table onmousedown="eDragCapture()" style='cursor:pointer;width:100%' onselectstart='return false;' class="col_1c">
+<col><col>
+<?PHP
+$ordenacion = trim($ordenacion);
+$Dim = explode('#',$ordenacion);
+for( $n=0; $n<count($Dim); $n++ ){
+list( $Cod, $Trans ) = explode(',',$Dim[$n]);
+if( trim($Dim[$n])!='' && trim($Dim[$n])!=',' ){
+qQuery( "select etiqueta, label_inf, cd_gs_campo, tipo_dato from {$_SESSION['ShareDictionary']}gs_campo where cd_gs_campo={$Cod}", $p1 );
+$r = qArray($p1);
+$Etiqueta = (trim($r['label_inf'])!='') ? trim($r['label_inf']) : trim($r['etiqueta']);
+echo '<tr><td pk='.$r['cd_gs_campo'].' class=eDESTINO>'.str_replace('·',' ',$Etiqueta);
+if( trim($Trans)=='' ) $Trans = '&nbsp;';
+echo '<td class=eDESTINO2 onclick=uMenu() td="'.$r['tipo_dato'].'" title="'.$DimTitle[$Trans].'">'.$Trans;
+}
+}
+?>
+</table>
+</span>
+<?PHP
+echo '</td></tr>';
+echo '</table>';
+echo '</td>';
+echo '</tr>';
+echo '</table>';
+[PHPIni]a,?,?R,l
+$uEntidad = 0;
+if( $_GET['_cd_gs_entidad']!='' ) $uEntidad = $_GET['_cd_gs_entidad'];
+if( $_POST['_cd_gs_entidad']!='' ) $uEntidad = $_POST['_cd_gs_entidad'];
+if( $uEntidad>0 ){
+qQuery( "select nm_gs_entidad from {$_SESSION['ShareDictionary']}gs_entidad where cd_gs_entidad={$uEntidad}" );
+list( $uEntidad ) = qRow();
+$_TITLE = str_replace( '#', $uEntidad, $_TITLE );
+}

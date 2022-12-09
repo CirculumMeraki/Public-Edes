@@ -1,0 +1,45 @@
+[Title]Ver Tablas BD - Informix
+[SubTitle]
+[DBLimit]1000
+[MaxRec]
+[TotalsRows]
+[Align]I,D,D,D
+[Format],M,M,M
+[NoSort]
+[PDFVar]PDF_Grid = true
+[Fields]
+\Tabla|a|X|T|30||A|||
+\Campos|b|+|T|9||A|||
+\Indices|c|+|T|9||A|||
+\Registros|d|+|T|11||A|||
+[DBSql]l
+$query = 'select tabid,tabname,ncols,nindexes from systables where tabtype = "T" order by tabid';
+sql_Query ($query);
+$usuCursor = array();
+$i = 0;$tabid = '';
+$tab = array();
+while( $row = qRow() ){
+if ($tabid != trim($row[0])){
+$tabid = trim($row[0]);
+$tab[$i][0] = trim($row[0]);
+$query2 = 'select B.tabname from syssyntable as A,systables as B where A.btabid = "'.trim($row[0]).'" and A.tabid = B.tabid';
+sql_Query ($query2,$pru);
+$syn = 0;
+while( $row2 = qRow($pru) ){
+$syn = 1;
+$tab[$i][1] = trim($row2[0]);
+}
+if ($syn == 0)
+$tab[$i][1] = trim($row[1]);
+$tab[$i][2] = trim($row[2]);
+$tab[$i][3] = trim($row[3]);
+$query2 = 'select count(*) as n from '.$tab[$i][1];
+sql_Query ($query2,$pru);
+$row2 = qRow($pru);
+$tab[$i][4] = trim($row2[0]);
+$i++;
+}
+}
+for ($i=0;$i<count($tab);$i++){
+array_push( $usuCursor, array( $tab[$i][1],$tab[$i][2],$tab[$i][3],$tab[$i][4] ) );
+}

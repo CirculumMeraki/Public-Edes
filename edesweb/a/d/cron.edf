@@ -1,0 +1,42 @@
+[Title]CRON
+[DBTable]cron
+[DBIndex]cd_cron
+[DBOrder]tipo
+[DBSerial]cd_cron
+[FormStatic]
+[AddOption]*|estado|,; P,Procesandose; E,Error; T,Terminado; A,Aplazado
+[AddOption]*|tipo|,; 1,Horario; 2,Diario; 3,Semanal; 4,Mensual; 5,Anual; 6,Una vez
+[width]L|dia|100
+[THColSpan]tf_lunes, tf_domingo, DIAS DE LA SEMANA
+[Fields]2
+#(l) CRON|cd_cron|+|T|3||-|||
+Tipo|tipo|+|SV|7||MQ||#|
+,Estado|estado|N|SV|12||MQ|||
+,Activo|activo|N|C|1||M|||
+#!(l) ,CRON|cd_cron|+|T|3||a:*; *=-|||
+,2 F.Alta|dt_alta|F4|T|10||-|#today#||
+Descripción|nm_cron|D|T|80||MQ||#|
+,2 F.Inicio|dt_inicio|F4|T|10||MF|#today#||
+-
+Comando|comando|#|T|80||MQ||#|
+,2 F.Baja|dt_baja|F4|T|10||MF|||
+Requisito|cd_padre:cd_cron|+|S|80||M|||
+,Nº Orden|orden|+|T|4|<dt_baja|M|||
+-
+Hora inicial|hora_ini|+|T|2||M|||
+,Hora final|hora_fin|+|T|2||M|||
+,Día|dia|-|T|2||M|||
+,Mes|mes|+|T|2||M|||
+Lunes\L|tf_lunes|N|C|1||M|||
+,Martes\M|tf_martes|N|C|1||M|||
+,Miércoles\X|tf_miercoles|N|C|1||M|||
+,Jueves\J|tf_jueves|N|C|1||M|||
+,Viernes\V|tf_viernes|N|C|1||M|||
+,Sábado\S|tf_sabado|N|C|1||M|||
+,Domingo\D|tf_domingo|N|C|1||M|||
+-|Ultima ejecución
+Inicio|ys_ini|CDI|T|19||-|||
+,Control|control|H8|T|8|>duracion|-|||
+,Texto Error|txt_error|#D|T|50||-L|||
+Final|ys_fin|CDI|T|19||-|||
+,Duración|duracion|H8|T|8||-|||

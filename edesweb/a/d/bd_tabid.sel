@@ -1,0 +1,37 @@
+<?PHP
+$arbol = '../../';
+session_start();
+if( !session_is_registered('_arbol_') ){
+include('index.html'); exit;
+}
+include_once( $arbol.'lib/'.$_Sql.'.inc' );
+global $_Conexion;
+$cad_sql = 'select tabid,tabname from systables where tabtype = "T" order by tabid';
+$_Result = ifx_query( $cad_sql, $_Conexion, IFX_SCROLL );
+$Dim = ifx_fetch_row( $_Result, 'NEXT' );
+$i = 0;
+$tabid = '';
+while (is_Array($Dim)) {
+if ($tabid != trim($Dim['tabid'])){
+$cad_sql2 = 'select B.tabname from syssyntable as A,systables as B where A.btabid = "'.trim($Dim["tabid"]).'" and A.tabid = B.tabid';
+$_Result2 = ifx_query( $cad_sql2, $_Conexion, IFX_SCROLL );
+$Dim2 = ifx_fetch_row( $_Result2, 'NEXT' );
+$syn = 0;
+while (is_Array($Dim2)) {
+$syn = 1;
+$tab[$i] = trim($Dim2['tabname']).",".trim($Dim['tabid']);
+$i++;
+$Dim2 = ifx_fetch_row( $_Result2, 'NEXT' );
+}
+$tab[$i] = trim($Dim['tabname']).",".trim($Dim['tabid']);
+$tabid = trim($Dim['tabid']);
+$i++;
+}
+$Dim = ifx_fetch_row( $_Result, 'NEXT' );
+}
+sort($tab);
+for ($i=0;$i<count($tab);$i++){
+$tabla = explode (",", $tab[$i]);
+echo "<OPTION VALUE='".$tabla[1]."'>".$tabla[0]."</OPTION>";
+}
+?>

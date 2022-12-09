@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>CheckList 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[CheckList] Field | NmCol | Field/Select/FuncUser/OptionList [ |&nbsp;TypeList=''&nbsp;&nbsp;| NmRowPDF=1 [ | AltoEnPx ]] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>En un campo "Field" se puede guardar "n" selecciones de una lista de checkbox, el número de selecciones depende del ancho del campo "Field" que deber?a ser un varchar.<BR>[CHECKLIST] prueba | 4 | select cd_auto, nm_auto from auto order by 2 | wrap | 2 <BR><BR>Si se quiere marcar todos los campos del CheckList hay que llamar a la funci?n eCheckListAll( Campo, true/false ) y algunos en particular con eCheckListPut( Campo, ValoresSeparadosPorComa )<BR><BR>
+<DIV style="WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; COLOR: rgb(34,34,34); FONT: 12px arial, sans-serif; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; -webkit-text-stroke-width: 0px">[JSInclude] * | $js/eCheckListAll</DIV>
+<DIV style="WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; COLOR: rgb(34,34,34); FONT: 12px arial, sans-serif; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; -webkit-text-stroke-width: 0px">[JSEnd] *</DIV>
+<DIV style="WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; COLOR: rgb(34,34,34); FONT: 12px arial, sans-serif; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; -webkit-text-stroke-width: 0px">eCheckListAll( "NmField", true );<BR>
+<DIV style="WHITE-SPACE: normal; WORD-SPACING: 0px; TEXT-TRANSFORM: none; COLOR: rgb(34,34,34); FONT: 12px arial, sans-serif; LETTER-SPACING: normal; BACKGROUND-COLOR: rgb(255,255,255); TEXT-INDENT: 0px; -webkit-text-stroke-width: 0px">eCheckListAll( "NmField", ",01,15,09," );</DIV></DIV>
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>&nbsp;Field&nbsp;&nbsp;</TD>
+<TD>&nbsp;Nombre del campo, del tipo varchar</TD></TR>
+<TR>
+<TD>&nbsp;NmCol </TD>
+<TD>&nbsp;N?mero de columnas de checkbox</TD></TR>
+<TR>
+<TD>&nbsp;Field/Select/FuncUser/OptionList &nbsp;</TD>
+<TD>&nbsp;Select para generar los checkbox.<BR>&nbsp;Nombre de campo del tipo "cd_[NmTable]" (IDA)<BR>&nbsp;Funci?n de usuario que deber? devolver una matriz de dos dimensiones.<BR>&nbsp;Lista de opciones como en la etiqueta [AddOption]</TD></TR>
+<TR>
+<TD>&nbsp;TypeList</TD>
+<TD>&nbsp;Tipo de visualizaci?n en los listados:<BR><SPAN style="WIDTH: 25px"></SPAN>- Vacio: Se ven los c?digos<BR><SPAN style="WIDTH: 25px"></SPAN>- wrap: Se ver? los literales cada uno en una linea<BR><SPAN style="WIDTH: 25px"></SPAN>-&nbsp;nowrap: Se ver?n los literales en una sola linea separados por coma<BR><SPAN style="WIDTH: 25px"></SPAN><FONT color=#ff0000>- Box: Futura prestaci?n se ver?n los c?digos y al ponerte encima se ver?n los literales</FONT></TD></TR>
+<TR>
+<TD>&nbsp;NmRowPDF</TD>
+<TD>&nbsp;En caso de "TypeList=wrap" indica el n?mero m?ximo&nbsp;de lineas a mostrar en un PDF</TD></TR>
+<TR>
+<TD>&nbsp;AltoEnPx</TD>
+<TD>&nbsp;Define el alto en px del contenedor, por defecto no hay contenedor, si se pone "0" se pondr? contenedo ajustado al tama?o del objeto</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[CheckList] prueba | 4 | select cd_auto, nm_auto from auto order by 2 | wrap | 4 <BR><BR>[Fields]<BR>&nbsp; Prueba | prueba&nbsp;| o | T | 40 | | M&nbsp;|&nbsp;|&nbsp;| 
+<TR>
+<TD id=txt>En el campo "prueba" se guardar? una selecci?n de autonom?as, en un listado se ver? cada autonom?a seleccionada en una linea y al sacarlo por PDF como m?ximo se ver?n 4 selecciones. 
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[CheckList] prueba | 4 |&nbsp;cd_auto<BR>[CheckList] prueba | 4 | C,Consultas; M,Modificaciones; B,Borrado | wrap | 4</TD></TR>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>
+<P>[CheckList] prueba | 4 | uCargar()</P>
+<P>[PHPIni] *<BR>function uCargar(){<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim = array();<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[] = array(1,1111);<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[] = array(2,2222);<BR><SPAN style="WIDTH: 25px"></SPAN>$Dim[] = array(3,3333);<BR><SPAN style="WIDTH: 25px"></SPAN>return $Dim;<BR>}</P></TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

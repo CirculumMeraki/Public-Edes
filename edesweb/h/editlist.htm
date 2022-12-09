@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="width: 100%;" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">EditList</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[EditList]  ListaDeCampos [ | NomFunCheck [ | InteriorStyle[/InteriorPar] [ | ModoGrabación [ | NomFuncIni [ | ScriptPHP | DDBB ] ] ] ] ] ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Edita las celdas de un listado de forma interactiva, pulsando en la celda con el botón derecho se entra en modo edición y con enter, el tabulador o las teclas del cursor te desplazas entre celdas editables. No se pueden editar campos definidos en [DBIndex] y el indice tiene que ser simple.<br />Esta etiqueta s?lo est? activa en el modo "l" y en el submodo "ml". <br />Cuando se edita select el valor real del seslect se guarda en el TD en el atributo "v", cuando es modificado.<br />Es compatible con {iSubList}.<br />Si se quiere ejecutar la edición ademas con el click izquierdo ponga la etiqueta [EditListClick].<br />Tipo de datos no soportados: A, H, F, f, P, ICON, los [SelectMultiple] y los campos que esten en el [DBIndex]<br />Se desactivará en las iSubList las etiquetas [JSOnClickRow] y [JSSelRow].</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>ListaDeCampos</strong>: Lista de campos separados por coma, solo est? operativo en campos de texto, n?meros y select , faltan los campos tipo: radio, checkbox y file.<br />La información se graba al salir de cada celda si ha tenido cambios, se entra en modo edici?n con el bot?n derecho y te puedes desplazar con enter, el tabulador y las teclas del cursor arriba y abajo.<br />Se descartan de esta lista los campos indices de la etiqueta [DBIndex].<br />Se puede desactivar la edici?n de una o varias celdas de las columnas editables poni?ndolas como "disabled = true;"<br /><strong>NomFuncCheck</strong>: Parámetro opcional para validar la etiqueta a imprimir, retorna una cadena vacia para indicar dato correcto y un mensaje de error en caso contrario, si el texto a devolver empieza por "=" le quitar? y asignar? a la celda el resto del valor. Se puede mandar mas valores adjuntos a la celda mediate la variable "ADDVALUE" en el < TR >con la estructura  ADDVALUE=NomCampo="ValorCelda",  NomCampo="ValorCelda", ... ( es parte de la sentencia "update" ).<br /><strong>InteriorStyle</strong>: Normalmente es para dar color a las columnas editables, si se deja en blanco pondrá la clase "EditList", si se pone el caracter "/" podrá la parte izquierda para las filas impares y la parte derecha para las filas pares.<br /><strong>ModoGrabación</strong>: Forma de grabar los datos: <br />     NoSave.- No se graba nada ( tambi?n se activa la edici?n con el bot?n izquierdo del rat?n ). <br />     Cell.- Se graba al salir de la celda si ha habido algún cambio, valor por defecto. <br />     Row.- Se graba al cambiar de fila si ha habido algún cambio. <br />     Table.- Se graban todos los registros al pulsar el botón. <br /><strong>NomFuncIni</strong>: Nombre de función que se ejecutará antes de entrar a editar la celda, la funci?n devolver? true para entrar a editar y false para no permitir la edici?n en la celda actual. Se pasan tres parámetros: el objeto TR, el texto de la celda pulsada y su cellIndex.<br /><strong>ScriptPHP</strong>: Script a ejecutar antes de modificar el dato en la tabla, si en este script se quiere anular la modificaci?n del dato se podr? utilizar la funci?n "eEditListResetCell()" ejemplo:<br />     ...<br />     < SCRIPT LANGUAGE="JavaScript" ><br />          top.eAlert( "ERROR", "No se ha realizado la modificación.", "A", "E", window.frameElement.WOPENER.eEditListResetCell );<br />     < /SCRIPT ><br />     ...<br />     < ? eEnd(); <br />     eEnd();<br /><strong>DDBB:</strong> Para acceder a una base de datos distinta (otro driver)</td>
+</tr>
+</tbody>
+<colgroup><col /> </colgroup>
+<tbody>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[EditList] Field1, Field2 || color:#000000; background:#efebe1;</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[EditList] nm_prov | usuFunc()</code> <code><br />[Fields]</code><br /><code>...</code><br /><br /><code>[JSIni] l</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function usuFunc(NomField, oRow, OldValue, NewValue, oTD, NCol, pkOld, pkNew){</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// pkOld, pkNew: es solo en caso de que sea un select</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "";// Dato correcto</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "..."; // Dato incorrecto y no dejar&aacute; pasar</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "=NuevoValor";// Nuevo valor a grabar, lo que est? despues del "="</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[EditList] precio1, precio2, precio3, precio4, precio5, precio6 | uTotal()</code> <code><br />[JSIni] l</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function uTotal(NomField, oRow, OldValue, NewValue, oTD, NCol){</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var valor = eClearThousands( oRow.cells[6].innerText ) * eClearThousands( NewValue );</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oRow.cells[ eGCol(NomField)+1 ].innerText = eShowThousands( valor );</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oRow.setAttribute("ADDVALUE", 'total'+NomField.substr(NomField.length-1,1) +'="' +valor +'"');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Manda un campo adicional al grabar</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return ""; // Dato correcto</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code><br /><br /><code>&lt;u&gt;Ejemplo para activar la edici?n con el bot?n izquierdo:&lt;/u&gt;</code><br /><code>[JSSelRow] l</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( _oTD.cellIndex==7 ) setTimeout('_oTD.fireEvent("oncontextmenu")', 1);</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>[EditList] * | uCheckFila || TABLE</code> <code><br />[JSIni] ml</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function uCheckFila(datos, oTR, xTH, def){<br /></code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// tambi&eacute;n disponemos del valor de los campos mediante las variables "$" mas nombre campo.<br /><code>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "";</code><br /><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

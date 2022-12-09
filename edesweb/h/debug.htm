@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Debug</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[Debug] Mode | Type [ [ | Usuario ]  | LabelARastrear ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Ejecutar el archivo de definición en modo debug, en el grupo de fichas sólo está disponible en el GDF.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> <strong>Mode</strong></td>
+<td> </td>
+</tr>
+<tr>
+<td> <strong>Type</strong></td>
+<td>Tipo de debug (ver tabla).  </td>
+</tr>
+<tr>
+<td> <strong>Usuario</strong></td>
+<td> Si se pone el nº de usuario la etiqueta solo tendrá efecto para ese usuario.<br />En el DF se puede poner indistintamente el valor numérico o el literal, pero si se quiere modificar el valor del Debug dentro de código PHP se tiene que utilizar el valor numérico.</td>
+</tr>
+<tr>
+<td> <strong>LabelARastrear</strong></td>
+<td>Cuando "Type==TMP" admite este parámetro, pudiendo se este el nombre de la etiqueta a rastrear o "JS" para indicar todos los javascript,  que en las etiquetas multilinea se introducirá código para detectar donde se produce el error mediante la variables "__eLINE__" que se le asignará un valor en cada linea, sabiendo en caso de error con que valor quedó la variable, le añadimos el parámetro ",console" en lugar de generar la variable de rastreo generará la instrucción "console.log(...Código...)".</td>
+</tr>
+</tbody>
+</table>
+<br />Los posibles valores para el parámetro Type son: <br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td>0</td>
+<td>OFF</td>
+<td>Desactivado</td>
+</tr>
+<tr>
+<td>1</td>
+<td>SQL</td>
+<td>Se imprimen todas las salidas SQL</td>
+</tr>
+<tr>
+<td>2</td>
+<td>TMP</td>
+<td>No se borran del subdirectorio temporal los includes PHP del usuario como son "DBIni" y "PHPForm", etc.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>BORDER</td>
+<td>Pinta los bordes de las celdas del formulario</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SaveSQL</td>
+<td>Se graban todas las sentencias SQL en el modo indicado.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>InOut</td>
+<td>Se mostrará una tabla con la lista de campos con el valor de entrada y el que se grabaría en la DB en las operaciones de Alta y Modificación, sin llegar a modificarla.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>WInOut</td>
+<td>Igual que el 5 pero se abre en una ventana nueva descargando la página.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>NoZip</td>
+<td>Se desactiva la compresión de la página, aveces no se puede ver el código de la página con la compresión activa.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Flag</td>
+<td>En las etiquetas multilinea de JavaScript se mostrará un "alert()" indicando inicio y fin del código.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>DF</td>
+<td>Mostrará el código del DF ( Definition File ) a ejecutar, al poner este parámetro la etiqueta se debe de poner al principio del script o ponerlo temporalmente en "sql.ini".</td>
+</tr>
+<tr>
+<td>10</td>
+<td>SaveSQLH</td>
+<td>Igual que "SaveSQL" pero mantiene el historial</td>
+</tr>
+<tr>
+<td>11</td>
+<td>SaveDF</td>
+<td>Grabará en gsTron el código del DF ( Definition File ) a ejecutar, al poner este parámetro la etiqueta se debe de poner al principio del script o ponerlo temporalmente en "sql.ini".</td>
+</tr>
+<tr>
+<td>12</td>
+<td>phpInfo </td>
+<td>Mostrará sólo el resultado de la función "phpinfo()".</td>
+</tr>
+<tr>
+<td>13</td>
+<td>ViewFields</td>
+<td>Mostrará una ventana con los campos antes de enviar al servidor en el alta y en la modificación.</td>
+</tr>
+<tr>
+<td>20</td>
+<td>SelInfo</td>
+<td>Se rastrea todas las operaciones de la etiqueta [SELINFO].</td>
+</tr>
+<tr>
+<td>30</td>
+<td>ErrSQL</td>
+<td>Las funciones SQL devolverán el valor -1si se produce algún error y no se parará la ejecución.</td>
+</tr>
+<tr>
+<td>31</td>
+<td>HTM</td>
+<td>Se graban las páginas a enviar al pc en "/_tmp/log/[_User]_ddHHiiss.htm" ( date('dHis') ).</td>
+</tr>
+<tr>
+<td> </td>
+<td>DATA</td>
+<td>Muestra la información de las matrices $_POST, $_GET y $_FILE.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"> </td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

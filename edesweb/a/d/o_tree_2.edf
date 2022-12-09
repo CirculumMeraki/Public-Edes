@@ -1,0 +1,122 @@
+[Title]=ARBOLES x USUARIOS y MODO
+[DBTable]{$_SESSION['ShareDictionary']}gs_tree
+[DBIndex]cd_gs_tree
+[DBOrder]nm_gs_tree
+[TipTH]permission=Permiso de entrada
+[ColsOp]nm_gs_tree=C, n_usu=+
+[Fields]
+|cd_gs_tree|+|T|9||*|||
+Arbol|nm_gs_tree|D|T|60||-|||
+I|I|+|T|6||-|||
+Total·Usuarios|n_usu|+|T|5||-|||
+P|permission|D|C|3||-||=|
+[CSSAdd]l
+IMG { cursor:default; }
+[PHPForm]l
+global $_Mode, $_COLSOP, $_ALIGN, $_TIPTH, $_PDFTH, $_NOZEROFORMATTOTALS, $_NOZERO, $_COLSCOLOR, $_THCOLSPAN, $_ModeLabel;
+global $_FORMAT, $_FORMATTOTALS, $_PosModo;
+$_FORMAT = array('','');
+$_FORMATTOTALS = array('','');
+$_COLSCOLOR = array('','');
+$_NOZERO = array('','');
+$_NOZEROFORMATTOTALS = array('','');
+$_PDFTH = array('','');
+$_TIPTH = array('','');
+$_ALIGN = array('','');
+$_COLSOP = array('','C');
+$tmp = $_Form;
+$_Form = array();
+$_Form['cd_gs_tree'] = $tmp['cd_gs_tree'];
+$_Form['nm_gs_tree'] = $tmp['nm_gs_tree'];
+$Primero = $Ultimo = '';
+$n = 1;
+foreach( $_Mode as $k=>$v ){
+$_PosModo[++$n] = $k;
+if( $Primero=='' ) $Primero = $k;
+$Ultimo = $k;
+$_Form[$k] = $tmp['I'];
+$_Form[$k][0] = "&nbsp;{$k}&nbsp;";
+$_Form[$k][1] = $k;
+$_PDFTH[$k][0] = "&nbsp;{$k}&nbsp;";
+$_NOZERO[] = 'S';
+$_NOZEROFORMATTOTALS[] = 'S';
+$_COLSOP[] = '+';
+$_ALIGN[] = ' id=d';
+$_TIPTH[] = $_ModeLabel[$k];
+$_COLSCOLOR[] = 'class=EditList';
+$_FORMAT[] = 'eNumberFormat(#,0)';
+$_FORMATTOTALS[] = 'eNumberFormat(#,0)';
+}
+$_THCOLSPAN[0] = "{$Primero},{$Ultimo},MODO";
+$_Form['n_usu'] = $tmp['n_usu'];
+$_TIPTH[] = '';
+$_NOZERO[] = 'S';
+$_NOZEROFORMATTOTALS[] = 'S';
+$_COLSOP[] = '+';
+$_ALIGN[] = ' id=d';
+$_FORMAT[] = 'eNumberFormat(#,0)';
+$_FORMATTOTALS[] = 'eNumberFormat(#,0)';
+$_Form['permission'] = $tmp['permission'];
+$_ALIGN[] = ' id=c';
+$_TIPTH[] = 'Permiso de entrada';
+$_COLSOP[] = '#';
+[Format]
+global $_ModeNoTree, $_PosModo;
+$n = count($_vF)-2;
+for( $i=2; $i<$n; $i++ ){
+if( $_ModeNoTree[ $_PosModo[$i].$_vF[0] ]=='' ){
+if( $_vF[$i] > 0 ) $GLOBALS['_ModosDesaparecidos'] .= $_vF[0].','.$_PosModo[$i].';';
+$_CellsStyle[$i] = 'background:#cccccc;cursor:default;';
+}
+}
+$_CellsStyle[$n] = 'cursor:pointer;';
+[PHPIni]l
+if( file_exists('../_datos/config/manager_op_filter.php') ) include('../_datos/config/manager_op_filter.php');
+$FilterUser = str_replace('#.','u.',$FilterUser);
+if( $FilterUser<>'' ) $FilterUser = ' and '.$FilterUser;
+$_ModosDesaparecidos = '';
+$_PosModo = array();
+$_ModeNoTree = array();
+qQuery("select o.mode, t.cd_gs_tree from {$_SESSION['ShareDictionary']}gs_tree_op t, {$_SESSION['ShareDictionary']}gs_op o where t.cd_gs_op=o.cd_gs_op and o.mode<>'' group by 1,2 order by 1,2");
+while( $r=qRow()) $_ModeNoTree[$r[0].$r[1]] = 1;
+include_once('../_datos/config/manager_op.ini');
+$_CountExecute = "select count(*) from {$_SESSION['ShareDictionary']}gs_tree";
+$_SQLExecute = 'select cd_gs_tree, nm_gs_tree, ';
+foreach( $_Mode as $k=>$v ){
+$_SQLExecute .= "(select count(*) from gs_user_tree t, gs_user u where t.cd_gs_tree={$_SESSION['ShareDictionary']}gs_tree.cd_gs_tree and instr(mode,'{$k}')>0 and t.cd_gs_user=u.cd_gs_user and u.permission='S' {$FilterUser}), ";
+}
+$_SQLExecute .= "(select count(*) from gs_user_tree t, gs_user u where t.cd_gs_tree={$_SESSION['ShareDictionary']}gs_tree.cd_gs_tree and t.cd_gs_user=u.cd_gs_user and u.permission='S' {$FilterUser} ), ";
+$_SQLExecute .= " permission from {$_SESSION['ShareDictionary']}gs_tree order by nm_gs_tree";
+[PHPEnd]l
+if( $_ModosDesaparecidos<>'' ){
+?>
+<script type="text/javascript">
+function uBorrarModos(){
+top.eCallSrv( window, 'PurgarArboles=<?=$_ModosDesaparecidos?>' );
+}
+</script>
+<br><center><button onclick="uBorrarModos()" class=Boton>Borrar Modos sin usu</button></center>
+<?PHP
+}
+[JSOnClickRow]l
+if( ColNumber > 1 && ColNumber < _Columna.length-2 ){
+if( _Celda.textContent == 0 ) return;
+top.eSWOpen( window, 'Ll:$a/d/o_user_mode.edf&_FILTER='+escape('cd_gs_tree='+_Columna[0]+'&mode like "%'+eTrim(BROWSE.rows[1].cells[ColNumber-2].textContent)+'%"') );
+}else if( ColNumber == _Columna.length-2 ){
+top.eSWOpen( window, 'Ll:$a/d/o_user_mode.edf&_FILTER='+escape('cd_gs_tree='+_Columna[0]) );
+}
+[CallSrv]PurgarArboles
+$Dim = explode(';',$PurgarArboles);
+for( $n=0; $n<count($Dim)-1; $n++ ){
+list( $Arbol, $Modo ) = explode(',',$Dim[$n]);
+qQuery( "update gs_user_tree set mode=replace(mode,',{$Modo}','') where cd_gs_tree={$Arbol}" );
+qQuery( "update gs_user_tree set mode=replace(mode,'{$Modo},','') where cd_gs_tree={$Arbol}" );
+qQuery( "update gs_user_tree set mode='' where cd_gs_tree={$Arbol} and mode='{$Modo}'" );
+}
+qQuery( "delete from gs_user_tree where mode=''" );
+?>
+<script type="text/javascript">
+top.eInfo( window.frameElement.WOPENER, 'Modos sin uso borrados' );
+window.frameElement.WOPENER.location.href = window.frameElement.WOPENER.location.href;
+</script>
+<?PHP

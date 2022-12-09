@@ -1,0 +1,147 @@
+[Title]=GENERAR INFORME|l
+[Progress]*|Calculando Informe
+¿ !isset($_GET['_BACKGROUND']) ? [FormAction] * | edes.php?Ll:$a/d/report_gen.zdf
+¿  isset($_GET['_BACKGROUND']) ? [FormAction] * | edes.php?B:$report.gs
+[RelationFields]_cd_gs_entidad,_cd_gs_formato
+[WhereSelect]*|_cd_gs_formato|informe='S' and cd_gs_entidad={$_cd_gs_entidad} and cd_gs_user in ({$_User},1)
+[Button]?|<i class="ICONINPUT ICONINSERT">[</i> Informe
+[AddOption]*|_gs_formato_|V,CSV; H,HTML; A,MDB; P,PDF; T,TXT; X,XLS; M,XML
+[OnChange]*|_cd_gs_formato|top.eCallSrv( window, 'WithAgeRange='+eGF('_cd_gs_formato') );
+[Chr]uRNG||0123456789.,|||.-/|,,,
+[AddCode]?|_ReportAgeRange|E|<img src='g/t_op_menu.png' onclick='uVerRango()' oncontextmenu='uDelRango()' title='Rangos mas frecuentes\nBorrar Historial'><span style='font-size:80%;margin-left:5px'>(25,35,45)</span>
+[Fields]
+Entidad|_cd_gs_entidad:cd_gs_entidad|0|S|60||Q|$_GET['_cd_gs_entidad']|\#|
+Formato|_cd_gs_formato:cd_gs_formato|D|Ss|60||Qd||\#|
+#(d) ,SqlToTron|_SqlToTron_|X|C|1||Q|||
+|_report_def_|#|A|300,60,5||*Q|||
+¿ isset($_GET['_BACKGROUND']) ? Título Informe|_Report_title_|X|T|60||Q||\#|
+¿ isset($_GET['_BACKGROUND']) ? Formato|_gs_formato_|N|SV|5||Q|H||
+Rango de Años|_ReportAgeRange|uRNG|T|60||Q|||
+Columnas Iguales|_EqualColumns|D|C|1||Q|S||
+,Mostrar Ceros|_SeeZeros|D|C|1|>_EqualColumns|Q|||
+,Mostrar columnas sin datos|_EmptyColumns|D|C|1||Q|S||
+-|Gráfica|||||Q
+Externa|_ReportAll|D|C|1||Q|||
+,Interna por Fila|_ReportCol|D|C|1||Q|||
+,Interna por Columna|_ReportRow|D|C|1||Q|||
+#include(c) /_datos/config/report_cnd_{$_cd_gs_entidad}.idf|true
+[Label]_ReportAll|<img src='g/report_all.png'> Externa
+[Label]_ReportCol|,<img src='g/report_col.png' style='margin-left:20px'> Interna por Fila
+[Label]_ReportRow|,<img src='g/report_row.png' style='margin-left:20px'> Interna por Columna
+[PHPStart]c
+$_SELECT_DDBB['_cd_gs_entidad'] = array($_SESSION['_iSql'],'sql');
+$_SELECT_DDBB['_cd_gs_formato'] = array($_SESSION['_iSql'],'sql');
+[JSEnd]c
+setTimeout("eFocus('_cd_gs_formato');",500);
+[PHPIni]c
+if( !isset($_GET['_InformeDirecto']) ){
+$NomCampo = '_cd_gs_formato';
+if( isset($_SELECT_DDBB[$NomCampo]) && $GLOBALS['_Sql']<>$_SELECT_DDBB[$NomCampo][0] ){
+eInclude($_SELECT_DDBB[$NomCampo][0].'.class');
+switch( $_SELECT_DDBB[$NomCampo][0] ){
+case 'mysql':
+$db = new eMySql();
+break;
+case 'mysqli':
+$db = new eMySqli();
+break;
+case 'informix':
+$db = new eInformix();
+break;
+case 'oracle':
+$db = new eOracle();
+break;
+case 'pdo':
+$db = new ePdo();
+break;
+}
+$db->qConnect($_SELECT_DDBB[$NomCampo][1]);
+$TotalReg = $db->qCount( 'gs_formato', "informe='S' and cd_gs_entidad={$_cd_gs_entidad} and cd_gs_user in ({$_User},1)" );
+$db->qEnd();
+}else{
+$TotalReg = qCount( 'gs_formato', "informe='S' and cd_gs_entidad={$_cd_gs_entidad} and cd_gs_user in ({$_User},1)" );
+}
+if( $TotalReg==0 ){
+eMessage('No hay ningún formato para "Generar Informes"','HSE',7);
+}
+}
+[JSIni]?
+_Question = false;
+[PHPEnd]?
+if( $_GET['_InformeDirecto']=='S' ){
+?>
+<script type="text/javascript">
+ePF('_INPUT__cd_gs_formato', ePGF('nm_gs_formato') );
+eEF("_cd_gs_formato",0);
+ePF('_report_def_',_WOPENER._report_def_);
+ePF('_cd_gs_formato',-1);
+if( _WOPENER._report_def_.indexOf(',FR#')==-1 ){
+ePF( "_ReportAgeRange", "" );
+eHide( "_ReportAgeRange", "TR", !false );
+}
+</script>
+<?PHP
+}
+if( isset($_GET['_cd_gs_entidad']) ){
+?>
+<script type="text/javascript">
+eEF('_cd_gs_entidad',0);
+</script>
+<?PHP
+}
+[PHPEnd]?
+echo '<script type="text/javascript">';
+echo 'var uDimRango = new Array();';
+echo 'uDimRango[".-"] = "Rangos Frecuentes";';
+$uFile = '../_datos/usr/'.$_SESSION['_User'].'.frq';
+if( file_exists($uFile) ){
+$Dim = file($uFile);
+$MasFrecuente = array();
+for( $n=0; $n<count($Dim) && $n<10; $n++ ){
+list($v,$d) = explode(';',$Dim[$n]);
+if( trim($d)!='' ) echo "uDimRango['.".trim($d)."'] = '".trim($d)."';";
+}
+}else{
+echo "eIndex(eGO('_ReportAgeRange').sourceIndex+1).style.display = 'none';";
+}
+?>
+function uVerRango2( Op, OpTextContent ){
+if( Op==null ) return;
+ePF('_ReportAgeRange',OpTextContent.replace('.',''));
+}
+function uVerRango(){
+top.eMenu( window, S.event(window), uDimRango, uVerRango2 );
+}
+function _uDelRango( Op ){
+if( Op==2 ){
+top.eCallSrv(window,'DelRango=1');
+eIndex(eGO('_ReportAgeRange').sourceIndex+1).style.display = 'none';
+}
+}
+function uDelRango(){
+top.eAlert('CONFIRMAR','¿Quiere borrar todo el historial del "Rango de Años"?', 'A,C','DH', _uDelRango );
+eClearEvent();
+}
+<?PHP
+echo '</script>';
+[CallSrv]DelRango
+echo '<script type="text/javascript">';
+$uFile = '../_datos/usr/'.$_SESSION['_User'].'.frq';
+if( file_exists($uFile) ) @unlink($uFile);
+echo "top.eInfo(window.frameElement.WOPENER,'Historial borrado');";
+echo '</script>';
+[CallSrv]WithAgeRange
+echo '<script type="text/javascript">';
+echo 'var _WOPENER = window.frameElement.WOPENER;';
+if( $WithAgeRange > -1 ){
+qQuery( "select cd_gs_entidad, formato, ordenacion from gs_formato where cd_gs_formato='{$WithAgeRange}'" );
+list( $cd_gs_entidad, $formato, $ordenacion ) = qRow();
+$txt = str_replace(' ','',$formato.','.$ordenacion);
+if( substr_count($txt,'FR')>0 ){
+echo '_WOPENER.eShow( "_ReportAgeRange", "TR", true );';
+}else{
+echo '_WOPENER.eHide( "_ReportAgeRange", "TR", true );';
+echo '_WOPENER.ePF( "_ReportAgeRange", "" );';
+}
+}
+echo '</script>';

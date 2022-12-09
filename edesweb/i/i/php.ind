@@ -1,0 +1,57 @@
+[key] {key} = {key}.replace(/_/g, '-').replace(/\s/g, '')
+[help] http://nl.php.net/manual/es/control-structures.{key}.php
+
+PHP
+	Palabras reservadas
+		case
+		continue
+		else
+		elseif
+		for
+		switch
+		while
+
+		array
+		bool
+		break
+		char
+		class
+		default
+		do
+		double
+		endfor
+		endif
+		endwhile
+		extends
+		float
+		function
+		global
+		if
+		include
+		int
+		integer
+		long
+		mixed
+		new
+		object
+		old_function
+		php
+		real
+		require
+		return
+		static
+		string
+		var
+		void
+		__FILE__
+		__LINE__
+		E_ERROR
+		E_NOTICE
+		E_PARSE
+		E_WARNING
+		FALSE
+		PHP_OS
+		PHP_VERSION
+		TRUE
+		@
+		$

@@ -1,0 +1,273 @@
+[Title]=ULTIMAS NOVEDADES
+#(a) [Title] NOVEDADES
+[DBTable]gs_novedad
+[DBIndex]codigo
+[DBOrder]cdi DESC
+[DBSerial]codigo
+[DBMemo]resumen
+[DBLimit]1000,20
+[OnLoad]l|if( top.eIsWindow(window) ) top.eSWResize(window);
+[AutoMenu]l|1
+[Cursor]
+[ColsWidth]65,150,600
+[PDFCol]19, 50, 95
+[PDFWrap]5
+[PDFVar]PDF_Grid = true
+¿ $GLOBALS['_PSOURCE']=='WDESKTOP' ? [TEMPLATE] l | $novedades.htm
+[CC]#ConDesktop|eFileGetVar("Setup.Desktop")==""
+¿#ConDesktop? [AddCode] a,mR | titulo | A | <img id=iMenu src=g/tree_op.gif onclick=uMenu() title='@Seleccionar opciones@'>
+[CSSAdd]*-
+#edCONTAINER
+border-radius:50px;
+}
+[]
+INPUT, TEXTAREA {
+padding:5px !important;
+border-radius:5px;
+}
+BODY {
+line-height: 2.5;
+}
+[]
+* {
+font-size:14px !important;
+}
+padding:5px !important;
+border-radius:3px;
+}
+document,body{
+font-size: 16px !important;
+line-height: 1.9;
+}
+label{
+font-size: 16px !important;
+}
+[Fields]2
+@Instante@|cdi|CDI|T|19||AQ|#sy2s#||
+#!(a,mR) @Título@|titulo|X|T|90|resumen|MQ||#|
+#(a,mR) @Título@|titulo|X|T|90|resumen|MQ||#|
+@Descripción@|resumen|#|H|1000000,90,8|600,350|MQ||#|
+|codigo|0|T|7||*|||
+|cd_gs_user|0|T|7||*|_User||
+|dt_alta|F4|T|10||*|#today#||
+¿#ConDesktop? #Include(a,?R) $a/d/optree.zdf
+[SetVar]_MaxImageSize = 565,-1
+[SetVar]_MaxImageLength = 500000
+[Format]
+$_CellsStyle[2] = 'cursor:default';
+[PHPForm]a,mR
+$MaxSize = eFileGetVar('New.PageSize');
+if( $MaxSize>0 ){
+$_Form['resumen'][_SIZE] = $MaxSize.',90,8';
+$GLOBALS['_MAXIMAGELENGTH'] = $MaxSize;
+}
+[PHPEnd]a,mR
+echo '<div id=_ooMENU></div>';
+echo '<script type="text/javascript">';
+echo 'var _IMG = "data:image/gif;base64,'.base64_encode( file_get_contents('g/tree_0.gif') ).'";';
+echo '</script>';
+[JSIni]a,mR
+function ExeOp( Op, OpTextContent, Obj ){
+switch( Op ){
+case "T":
+_TreeOpLoad(0,DGI("iMenu"));
+break;
+case "M":
+_TreeOpLoad(1,DGI("iMenu"));
+break;
+}
+}
+function uMenu(){
+if( DGI('edMENUS')!=null && edMENUS.offsetWidth > 0 ){
+top.eMenu( window, S.event(window), { 'T':'@Opciones afectadas@', 'M':'@Incrustar opciones en el mensaje@' }, ExeOp );
+}else{
+_TreeOpLoad(0,DGI("iMenu"));
+}
+}
+[JSIni]a,?R
+if( top.eIsWindow(window) ) setTimeout('top.eSWIResize(window);',1);
+[JSEnd]l
+var Color = top.eGetCss( window, '.Celda', Array('BACKGROUND','COLOR') );
+setTimeout("Recalcula();",1000);
+[PHPIni]a,?R
+eInclude('lib');
+$cPapel = $cLapiz = '';
+echo '<style>';
+$Dim = file( "{$_SESSION['_PathCSS']}/lista.css" );
+for( $n=0; $n<count($Dim); $n++ ){
+$tmp = explode('{',$Dim[$n]);
+if( trim($tmp[0])=='.Celda' ){
+echo '.edOUT{';
+for( $i=$n+1; $i<count($Dim); $i++ ){
+$tmp = explode(';',$Dim[$i]);
+$tmp = explode(':',$tmp[0]);
+if( strToUpper(trim($tmp[0]))=='BACKGROUND' ){
+echo 'BACKGROUND:'.$tmp[1].';';
+$cPapel = trim($tmp[1]);
+}else if( strToUpper(trim($tmp[0]))=='COLOR' ){
+echo 'COLOR:'.$tmp[1].';';
+$cLapiz = trim($tmp[1]);
+}else if( trim($tmp[0])=='}' ){
+break;
+}
+}
+echo '}';
+break;
+}
+}
+$r = new eColor();
+echo '.edOVER{';
+echo 'BACKGROUND:'.$r->Tone($cPapel,2).';';
+echo 'COLOR:'.$cLapiz.';';
+echo '}';
+echo '#edMENUS {';
+echo 'BACKGROUND:'.$r->Tone($cPapel,2).';';
+echo '}';
+echo '</style>';
+[DBSql]l
+qQuery( "select cd_type_tree, cd_gs_rol, like_user from gs_user where cd_gs_user={$_User}" );
+$row = qArray();
+$_TypeTree = ( (!isset($row['cd_type_tree'])) ? '' : $row['cd_type_tree'] );
+if( $_TypeTree=='P' ){
+$_UserTree = $_User;
+}else if( $_TypeTree=='R' ){
+$_UserTree = $row['cd_gs_rol'];
+}else if( $_TypeTree=='U' ){
+$DimUser = array();
+$DimUser[] = $_User;
+$LikeUser = $row['like_user'];
+do {
+if( !in_array( $LikeUser, $DimUser ) ){
+qQuery( "select cd_type_tree,cd_gs_rol,like_user, cd_gs_user from gs_user where cd_gs_user='{$LikeUser}'", $p1 );
+$oUsu = qArray( $p1 );
+$DimUser[] = $LikeUser;
+$LikeUser = $oUsu['like_user'];
+}else{
+eMessage( '@ERROR: PERMISOS HEREDADOS@', 'HELS' );
+}
+} while( $oUsu['cd_type_tree']=='U' );
+$_TypeTree = $oUsu['cd_type_tree'];
+if( $_TypeTree=='P' ){
+$_UserTree = $oUsu['cd_gs_user'];
+}else if( $_TypeTree=='R' ){
+$_UserTree = $oUsu['cd_gs_rol'];
+}
+}else if( $_TypeTree==''  ){
+$_UserTree = '';
+}
+$OpNo = "'U'";
+if( $_Development ) $OpNo .= "";
+else if( $_Test ) $OpNo .= ",'D'";
+else $OpNo .= ",'D','T'";
+$TypeUR = ( ($_TypeTree=='P') ? 'user' : 'rol' );
+if( eSqlType('mysql,mysqli') ){
+qQuery( "select distinct o.cd_gs_op
+from {$_SESSION['ShareDictionary']}gs_op o left join {$_SESSION['ShareDictionary']}gs_tree_op t on o.cd_gs_op = t.cd_gs_op
+where
+show_type not in ({$OpNo})
+and
+(
+(
+instr(         (select mode     from gs_{$TypeUR}_tree where cd_gs_{$TypeUR}={$_UserTree} and cd_gs_tree=t.cd_gs_tree), o.mode ) > 0
+or
+o.cd_gs_op  in (select cd_gs_op from gs_{$TypeUR}_op   where cd_gs_{$TypeUR}={$_UserTree} and cd_gs_tree=t.cd_gs_tree and action='I')
+)
+and
+o.cd_gs_op not in (select cd_gs_op from gs_{$TypeUR}_op   where cd_gs_{$TypeUR}={$_UserTree} and cd_gs_op=o.cd_gs_op and action='D')
+)
+" );
+}else{
+qQuery( "select distinct o.cd_gs_op
+from {$_SESSION['ShareDictionary']}gs_op o left join {$_SESSION['ShareDictionary']}gs_tree_op t on o.cd_gs_op = t.cd_gs_op
+where
+show_type not in ({$OpNo})
+and
+(
+(
+instr(         (select mode     from gs_{$TypeUR}_tree where cd_gs_{$TypeUR}={$_UserTree} and cd_gs_tree=t.cd_gs_tree), o.mode ) > 0
+or
+o.cd_gs_op  in (select cd_gs_op from gs_{$TypeUR}_op   where cd_gs_{$TypeUR}={$_UserTree} and cd_gs_tree=t.cd_gs_tree and action='I')
+)
+and
+o.cd_gs_op not in (select cd_gs_op from gs_{$TypeUR}_op   where cd_gs_{$TypeUR}={$_UserTree} and cd_gs_op=o.cd_gs_op and action='D')
+)
+" );
+}
+$DimOp = array();
+while( $r=qRow() ) $DimOp[$r[0]] = 1;
+if( $_UserTree=='' ){
+$Where = qGetWhere( '' );
+if( $Where!='' ) $Where = ' where '.$Where;
+qQuery( "select cdi,titulo,resumen,codigo,cd_gs_user,dt_alta, options from gs_novedad {$Where} order by cdi DESC" );
+}else{
+$Where = qGetWhere( '' );
+if( $Where!='' ) $Where = ' where '.$Where;
+qQuery( "select cdi,titulo,resumen,codigo,cd_gs_user,dt_alta, options from gs_novedad {$Where} order by cdi DESC" );
+}
+$usuCursor = array();
+while( $r=qRow() ){
+$DimOp[$r[0]] = 1;
+$Ok = false;
+if( $r[6]=='' ){
+$Ok = true;
+}else{
+$tmp = explode(',',$r[6]);
+for( $n=0; $n<count($tmp); $n++ ) if( isset($DimOp[$tmp[$n]]) && $DimOp[$tmp[$n]]==1 ){
+$Ok = true;
+break;
+}
+}
+if( $Ok ) $usuCursor[] = array( $r[0], $r[1], $r[2], $r[3], $r[4], $r[5] );
+}
+if( $_PSOURCE=='WDESKTOP' && count($usuCursor)==0 ){
+eInit();
+echo '<script type="text/javascript">';
+echo 'top.eLoading(0,window);';
+echo 'top.S("body").tip("@No hay novedades este mes@",3);';
+echo 'setTimeout(function(){top.eSWClose(window);},250);';
+echo '</script>';
+eEnd();
+}
+[PHPIni]l
+$EmptyList = true;
+[JSEnd]l|WDESKTOP
+function uFin(){
+top.eToDoRun();
+}
+function uLeido(){
+uLEIDO.style.display = 'none';
+top.eCallSrv( window, 'edes.php?E:$a/d/gs_novedades.gs' );
+}
+var usObj = DGI('BROWSE');
+if( usObj.rows.length == 1 ){
+DGI("UtilListICO").style.display = 'none';
+top.S("body").tip('4-@No hay novedades este mes@',3);
+}else{
+if( !top._SinNovedad ){
+document.write('<br><center><INPUT id="uLEIDO" class="Boton" TYPE="button" VALUE="@LEIDO@" onclick="uLeido()" style="cursor:pointer"></center>');
+}else{
+}
+document.body.style.marginTop = 15;
+if( top.DGI('MainMenu')!=undefined ){
+window.frameElement.eExit = uFin;
+top.DGI('MainMenu').style.zIndex = top.DGI('swM_'+window.frameElement.id.substring(4)).style.zIndex - 1;
+}
+}
+[CSSAdd]l
+#n0 { padding-left:   5px; }
+#n1 { padding-left:  22px; }
+#n2 { padding-left:  39px; }
+#n3 { padding-left:  56px; }
+#n4 { padding-left:  73px; }
+#n5 { padding-left:  90px; }
+#n6 { padding-left: 107px; }
+#n7 { padding-left: 124px; }
+#n8 { padding-left: 141px; }
+#n9 { padding-left: 158px; }
+.HTML_IN_TD {
+width:100%;
+}
+#CNT .HTML_IN_TD {
+vertical-align:top;
+}
+[Exit]

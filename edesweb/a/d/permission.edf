@@ -1,0 +1,56 @@
+[Title]PERMISOS POR USUARIO
+[DBTable]{$_SESSION['ShareDictionary']}gs_permission
+[DBIndex]cd_gs_user
+[DBOrder]cd_gs_user,cd_gs_tpermission
+[NoButton]a
+¿  eSqlType('mysql,mysqli') ? [FieldBrowser] _cd_gs_user | cd_gs_user | select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1 | 7
+¿ !eSqlType('mysql,mysqli') ? [FieldBrowser] _cd_gs_user | cd_gs_user | select   user_name\|\|" "\|\|user_surname,cd_gs_user from gs_user where   user_name\|\|" "\|\|user_surname like # order by 1 | 7
+[AddOption]*|license_type|,; I,Icono; O,Opción; S,Fuente; V,Variable
+[OnChange]a|_cd_gs_user,license_type,solo_activos|_uVerPermisos();
+[Fields]
+cd_gs_user|cd_gs_user|0|T|9||*Q*|||
+Usuario|_cd_gs_user|N|T|50||QM|||
+Tipo·permiso|license_type|N|SV|9||QM||#|
+,Permisos activos|solo_activos|N|C|1||QM|||
+[JSEnd]a
+var txt = S(document.body).css("filter");
+if( txt.indexOf('startcolorstr')>-1 && txt.indexOf('endcolorstr')>-1 ){
+var iColor = txt.substr(txt.indexOf('startcolorstr')+14,7);
+var fColor = txt.substr(txt.indexOf('endcolorstr')+12,7);
+document.body.style.filter = txt.replace(fColor,iColor);
+}
+function _uVerPermisos(){
+if( eGF('cd_gs_user')!='' && eGF('license_type')!='' ){
+top.eInfo(window,'Calculando',1);
+switch( eGF('license_type') ){
+case 'O':
+window.uIFRAME.location.href = 'edes.php?E:$a/d/permission_op.gs&Activos='+eGF('solo_activos');
+break;
+case 'I':
+window.uIFRAME.location.href = 'edes.php?E:$a/d/permission_ico.gs&Activos='+eGF('solo_activos');
+break;
+case 'V':
+case 'S':
+window.uIFRAME.location.href = 'edes.php?Ll:$a/d/permission_scr.edf&User='+eGF('cd_gs_user')+'&Type='+eGF('license_type')+'&Activos='+eGF('solo_activos');
+break;
+default:
+}
+}else{
+window.uIFRAME.location.href = 'edes.php?E:/_datos/config/empty_frame.htm';
+}
+}
+[HTMIni]*
+<table border=0 cellspacing=0 cellpadding=0 style='width:100%;height:100%;'>
+<tr>
+<td valign=middle align=center height=1>
+[HTMEnd]*
+</td>
+</tr>
+<tr>
+<td valign=middle align=center height=100% id=cIFrame>
+<script type="text/javascript">
+top.eNewIframe( window, 'cIFrame', 'uIFRAME', 'edes.php?E:/_datos/config/empty_frame.htm' );
+</SCRIPT>
+</td>
+</tr>
+</table>

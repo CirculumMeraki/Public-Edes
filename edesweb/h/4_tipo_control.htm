@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" style="he-ight: 5574px; width: 100%;" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td id="Etiqueta" style="height: 18px;">4. Tipo de control</td>
+</tr>
+<tr style="height: 18px;">
+<td id="tDescripcion" style="height: 18px;">DESCRIPCION</td>
+</tr>
+<tr style="h-eight: 5250px;">
+<td id="Descripcion" style="h-eight: 5250px;">Es el tipo de control que contiene el campo.<br />TIPO DE CONTROL<br />
+<table id="Opciones" style="he-ight: 291px; width: 612px;" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="text-align: center;" /> <col /> </colgroup>
+<tbody>
+<tr>
+<td> T</td>
+<td> Text</td>
+</tr>
+<tr>
+<td> A</td>
+<td> TextArea. La longitud se definir? como: "LongMax,ColAncho,LinAlto" </td>
+</tr>
+<tr>
+<td> R</td>
+<td> RadioBottom. </td>
+</tr>
+<tr>
+<td> C</td>
+<td> Checkbox, grabará "S" o vacío.</td>
+</tr>
+<tr>
+<td> S</td>
+<td> Select</td>
+</tr>
+<tr>
+<td> Ss</td>
+<td> SubSelect</td>
+</tr>
+<tr>
+<td> SS</td>
+<td> SubSelect en una subventana <span style="color: #ff0000;">- No operativo actualmente -</span></td>
+</tr>
+<tr>
+<td> ST</td>
+<td> SelectTree. Arbol de selección (solo disponible en los modos: b,c,m)</td>
+</tr>
+<tr>
+<td> H</td>
+<td> TextArea con HTML , Para el control de imagenes hay dos variables: _MaxImageSize y _MaxImageLength.<br />Si queremos utilizar checkbox definiremos en php la variable "$_EDCHECKBOX = true;"</td>
+</tr>
+<tr>
+<td> P</td>
+<td> PASSWORD </td>
+</tr>
+<tr>
+<td> F</td>
+<td> File sencillo </td>
+</tr>
+<tr>
+<td> f</td>
+<td> File multiple </td>
+</tr>
+<tr>
+<td> IMG</td>
+<td> Fichero de imagen visible en los listados </td>
+</tr>
+<tr>
+<td> ICON</td>
+<td> Fichero accesible desde los listados mediante un icono </td>
+</tr>
+<tr>
+<td> G</td>
+<td> Gráfico</td>
+</tr>
+<tr>
+<td>  I</td>
+<td> Solo en modo listado para el tipo de control "F" mostrará un Icono para ver el fichero</td>
+</tr>
+<tr>
+<td>  -</td>
+<td>Campo tipo range con un campo con el valor en el lado izquierdo</td>
+</tr>
+<tr>
+<td>  =</td>
+<td>Campo tipo range con un tooltip visible en la parte superior</td>
+</tr>
+</tbody>
+</table>
+ <br /><br /><br />Si en "LongMax" ponemos "-1" no se pondrá limite a la longitud.<br /><br />Si es tipo de control "G" en la definición de "Fields", en la posición 2 se pone el nombre del gráfico, que estará hubicado en el directorio de los gráficos "g" y en las posiciones 5 y 6 el ancho y alto del gráfico respectivamente de forma opcional y en la posición 10 el nombre de la función a ejecutar al hacer click ( opcional ).<br /><br />Ejemplo de tipo de control "I" (icono):<br /><span style="font-family: Courier;">[UploadFile] fichero  | /_doc_/str | cd_gs_store | 500.000 | | gif,jpg,png,bmp,avi,txt,doc,pdf,xls,htm,html,pps,ppt,js<br />[Fields]<br /></span><span style="font-family: Courier;">     ...<br /></span><span style="font-family: Courier;">     Fichero   | fichero      | f | F | 40 | | MQDCPSU | | | <br /></span><span style="font-family: Courier;">     #(l) Tipo | fichero tipo | X | I |    | | -       | | |</span> <br /><br />Además se pueden utilizar los siguientes tipos de control:<br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2"><colgroup> <col style="text-align: center;" /> <col /> </colgroup>
+<tbody>
+<tr>
+<td> [] </td>
+<td>Campo espejo ( texto / select ) </td>
+</tr>
+<tr>
+<td> [S]</td>
+<td>Campo calco select </td>
+</tr>
+<tr>
+<td> [*]</td>
+<td>Campo calco texto</td>
+</tr>
+<tr>
+<td> [NmSubList]</td>
+<td>Nombre de SubList</td>
+</tr>
+</tbody>
+</table>
+<br />Si la columna 7(modo) contiene:
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> B</td>
+<td>Se podrá buscar con condiciones (busca en d/NomCampo.fdf, sale una ficha de búsqueda)  </td>
+</tr>
+<tr>
+<td> b</td>
+<td>Se podrá buscar (busca en d/NomCampo.ldf, sale un listado para buscar) </td>
+</tr>
+<tr>
+<td> c</td>
+<td>Se podrá copiar el contenido</td>
+</tr>
+<tr>
+<td> p</td>
+<td>Se podrá hacer paste de la copia </td>
+</tr>
+<tr>
+<td> q</td>
+<td>Inserta la linea de gráfico descrita por la etiqueta [grafico] ??</td>
+</tr>
+</tbody>
+</table>
+<br /> <br />TIPO DE CONTROL ESPECIAL  <br /><br />SELECT<br /><br />Otro tipo de control es el select, que por su frecuencia de uso e importancia lo tratamos separadamente:<br /><br />Para utilizar este tipo de control hay que darle suficiente información al motor para que en función del tipo de select sepa qué datos tiene que mostrar, de dónde "cogerlos" y cómo están relacionados, esta información se la deberemos introducir en el segundo parámetro (nombre del campo).<br /><br />Se puede definir que todos los select en modo consulta sean de múltiple selección con "_SelectMultiple=true" o algunos determinados con " _SelectMultipleField[...NmField...]".<br />Los select en modo cR y bR así como los no editables viajan todos los opction, si se quiere que no viajen se definirá mediante la variables "$_NOSELECTFILL":<br />     - Todos los campos...............: $_NOSELECTFILL['*'] = true; <br />     - Solo determinados campos: $_NOSELECTFILL[...NmField...] = true;<br /><br />A los select se les puede dar un alto máximo determinado en la columna 5 "Ancho en carácteres" se definen tres parámetros separados por coma:<br />1. Ancho del interior del select si lo hay, si en la columna "Modo" ponemos una "I" o una "i" para ver/editar el interior del select.<br />2. Ancho del select<br />3: Alto en número de lineas del select, por defecto son 11, también con la tecla F3 lo expandirá.<br />Hay también una varibale para cambiar la altura de todos los select y es "$_MaxRowSelect" definiendola en el fichero "sql.ini".<br /><br /><span style="font-family: Courier;"><span style="color: #ff0080;">[Fields] ?<br /></span></span><span style="font-family: Courier;"><span style="color: #ff0080;">     Fechas | dt_desde | F4 | T  | 10      | | AFQ  |||<br /></span></span><span style="color: #ff0080; font-family: Courier;">     Nombre | name     | #D | SV | 20,,5   | | AQ   |||     // Ampliando el alto del select<br /></span><span style="color: #ff0080; font-family: Courier;">     Pais   | cd_pais  | #D | S  | 3,30,15 | | AQI  |||     // Ampliando el alto del select<br /></span><span style="color: #ff0080; font-family: Courier;">     Pais   | cd_pais  | #D | S  | 3,30    | | AQI  |||<br /></span><br />Se puede definir select con dos columnas de label que depende de una condición para mostrar una u otra, por ejemplo se quiere sacar un texto en función del sexo.<br /><br /><code>[AddOption] * | sexo | ,; H,Hombre; M,Mujer</code><br /><code>[SelectColLabel] sexo,cd_profe | nm_profe_m | M</code><br /><br /><code>[Fields]</code><br /><code>     Sexo       | sexo                                | X | SV | 10 | | M | | # | </code><br /><code>     SelectSexo | cd_profe{profe,cd_profe,nm_profe_h} | X | S  | 60 | | M | | # | </code><br /><br />Existe una forma estándar abreviada:<br /><br />
+<table id="Opciones" style="height: 41px; width: 163px;" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td style="width: 19.2px;"> S</td>
+<td style="width: 132.8px;">Select normal</td>
+</tr>
+<tr>
+<td style="width: 19.2px;"> </td>
+<td style="width: 132.8px;"> </td>
+</tr>
+</tbody>
+</table>
+<br />Cuando el Select o el SubSelect tiene muchos registros se puede definir para que se comporte como un select normal o pueda funcionar primero como filtro y si tiene un n?mero de registros menor que [DBLimit] o con filtro y luego de cargar el select se comporte normal. Si el color del select es naranja es que funciona como filtro, si el color cuando tiene el foco es mas oscuro que el resto de campos se comporta como un select norma y si vaciamos su contenido se pondr? en modo filtro. la etiqueta para este comportamiento es:<br /><span style="color: #ff0080;">     <code>[AddCode]  * | ...NmField... | I | eFilter=1</code><br /></span>Para poder definir el tama?o m?ximo de registros de los select cuando se puede filtrar es:<br /><code><span style="color: #ff0080;">[PHPIni]  *<br /></span><span style="color: #ff8000;"><span style="color: #ff0080;">     $_DBLIMITSELECT = 100;</span><br /></span></code><br />Si se quiere que el select se despliege al tener el foco:<br /><span style="color: #ff0080;">      <code>[AddCode]  * | ...NmField... | I | eFocusOpen=1</code></span><br />Estando en el input del select pulsamos F3 este se despliegar? y cuando est? desplegado si volvemos a pulsar F3 se abrir? se abrir? lo m?ximo posible.<br />En alta y modificación si un select no tiene un option vacío establece el campo como obligatorio.<br /><br />Existen tres formatos diferentes de suministrarle la informaci?n al motor, cual de ellas utilicemos depender? de lo que queramos mostrar al usuario y del nombre de los campos y las tablas.  <br /><br />Formato 1: Tablas y campos con informaci?n impl?cita en el nombre<br /><br />Ejemplo: <span style="font-family: Courier;"> <br /></span><span style="color: #ff0080;"><span style="font-family: Courier;">DBTable] prod  <br />[Fields]  <br /></span><span style="font-family: Courier;">     Zona | cd_zona | D | S | 30|| MQ |||</span>  <br /> </span><br />La tabla "prod" entre otros, contiene el campo "cd_zona".  <br />La tabla "zona" contiene los campos "cd_zona" y "nm_zona".  <br /><br />Crea un select cuyo contenido visual para el usuario ser? el campo "nm_zona" de la tabla "zona" y grabar? el contenido del campo "cd_zona" de la tabla "zona" en el campo "cd_zona" de la tabla "prod".  <br /><br />Formato 2: Tablas<br /><br />Este formato se utiliza cuando se tiene un campo que no cumple la nomenclatura de un select (formato 1) pero la tabla a la que hace referencia s?, por ejemplo si tienes un campo llamado "codprov" en lugar de poner: <br /><br /><span style="color: #ff0080; font-family: Courier;">     codprov{ prov, cd_prov, nm_prov }<br /></span><br />Si quieres sacar mas de un campo con constantes para delimitar ( esto se puede definir en el fichero de configuraci?n para macros de campos "defaux.ini" ):<br /><br /><span style="color: #ff0080;"><span style="font-family: Courier;">     cd_gs_user{ gs_user, cd_gs_user, user_name, ", ", user_surname }</span>  <br /></span><br />pondremos:  <br /> <br /><span style="font-family: Courier;"><span style="color: #ff0080;">     codprov:cd_prov </span> <br /></span>   <br />Explicado de otra forma, si el campo no tiene en el nombre la informaci?n impl?cita pero la tabla s? est? bien estructurada se utiliza el nombre del campo que trata la ficha y el nombre del campo con informaci?n impl?cita que identifica la relaci?n con la tabla, los dos campos van separados por dos puntos ":".  <br /> <br /><span style="color: #ff0080;"><span style="font-family: Courier;">     Etiqueta | [NombreCampo1]:cd_[NombreCampo2] | TipoEdicion | TipoSelect | %u2026</span>  <br /></span> <br />Se mostrará un select visualizando el campo nm_[NombreCampo2] de la tabla [NombreCampo2]  <br />y grabando en el campo cd_[NombreCampo1] el campo cd_[NombreCampo2]  <br /><br /><span style="color: #ff0080;"><span style="font-family: Courier;">     Código Cliente | cd_clientes:nm_clientes | + | S | ...</span>  <br /></span> <br />En este ejemplo se crea un select mostrando los nombres de los clientes de la tabla Clientes y almacenando el campo cd_clientes de la tabla clientes.  <br /> <br />Formato 3: Tablas y campos sin informaci?n en el nombre<br /><br /><span style="font-family: Courier;">     </span><span style="color: #ff0080;"><span style="font-family: Courier;">NomCampo{ NomTabla, CampoaGrabar, CampoaVisualizar }</span>  <br /></span> <br /> o también:  <br /> <br /><span style="font-family: Courier;"><span style="color: #ff0080;">     NomCampo{ NomTabla, CampoaGrabar, CampoaVisualizar, [CampoaGrabar2] [,CampoaGrabar3]...[,CampoaGrabarX]}</span>  <br /></span> <br /> Por ejemplo:  <br /> <br /><code><span style="color: #ff0080;">[DBTable] avisos  <br />[Fields]  <br /></span><span style="color: #ff0080;">     Medio | medio{medios,cd_medio,nm_medio}</span><span style="color: #ff0080;">| D | S | 4 || MQ || # |<br /><br />[Fields] <br /></span><span style="color: #ff0080;">     Medio | medio{medios,cd_medio,nm_medio,', ',field2}  | D | S | 4 || MQ || # |</span></code><span style="font-family: Courier New;"><span style="color: #ff0080;"><br /></span> </span> <br />Creará un select de la tabla "medios" mostrando el campo "nm_medio" y grabando el campo "cd_medio" en el campo "medio" de la tabla "avisos".  <br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> <span style="color: #ff0000;">SS</span></td>
+<td> Subselect o Select con dependencia de otros select desde una subventana <span style="color: #ff0000;">- No operativo actualmente -</span> </td>
+</tr>
+<tr>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+ <br />Se trata de un select que depende de otro select, es decir, en funci?n de lo que seleccione el usuario en el select padre, este select se cargar? con unos datos determinados.<br /><br />Ejemplo: <br /><span style="color: #ff0080;"><span style="font-family: Courier;">[DBTable] prod <br />[RelationFields] cd_tinmueble,cd_stinmueble <br /><br />[Fields] <br /></span><span style="font-family: Courier;">      Tipo de inmueble | cd_tinmueble  | D | S  | 4 || MQ |||  <br /></span><span style="font-family: Courier;">     ,Subtipo          | cd_stinmueble | D | Ss | 4 || MQ |||</span>  </span><br /><br />El archivo con extensi?n ".ldf" (el nombre del archivo es el nombre del campo sin el preficjo "cd_" y terminado en ".ldf") en este caso no hace falta, pero se puede definir: <br /><br /><code><span style="color: #ff0080;"><span style="font-family: Courier;">[DBTable] stinmueble <br />[DBIndex] cd_tinmueble,cd_stinmueble <br />[DBOrder] cd_tinmueble,cd_stinmueble<br /> <br />[Fileds] <br /></span><span style="font-family: Courier;">     Cod_stinmueble | cd_stinmueble | S | T | 4  || AQ ||| <br /></span><span style="font-family: Courier;">     Nom_stinmueble | nm_stinmueble | D | T | 30 || M  |||</span></span></code> <br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> Ss</td>
+<td>Es igual que "SS" pero el SubSelect se carga autom?ticamente y en el caso de "SS" se elige el valor de una ventana.</td>
+</tr>
+<tr>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<br />A este tipo de select NO le hace falta el fichero "campo.ldf", pero si est? el sistema lo utilizar?. <br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> SV</td>
+<td>Select virtual </td>
+</tr>
+<tr>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+ <br />Es un select vacío que se rellena con la etiqueta [AddOption], puede tener lineas divisorias mediante el símbolo "~".<br /><br />Ejemplo: <br /><code>[DBTable] prod</code><br /><code>[AddOption] a,mR,cR | tipo_operacion | ,; V,Venta; A,Alquiler; X,Venta o Alquiler</code><br /><br /><code>[Fields] </code><br /><code>     Tipo de operación | tipo_operacion | D | SV | 15 || M |||  </code><br /><br />Creará un select mostrando los items: Venta,Alquiler, Venta o Alquiler. Y grabará V,A ? X respectivamente en el campo "tipo_operacion" de la tabla "prod".<br /><br />Ver etiqueta [AddOption]<br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> X</td>
+<td>Se selecciona desde otro iframe sobre una tabla auxiliar cargada con anterioridad.  </td>
+</tr>
+<tr>
+<td> M</td>
+<td>Select múltiple.</td>
+</tr>
+<tr>
+<td>SP</td>
+<td>Select Personalizado.</td>
+</tr>
+<tr>
+<td> s</td>
+<td>Select tabulado: La tabla necesita tener los campos "NIVEL" para saber el nivel de tabulaci?n y el campo "ORDEN" para la ordenaci?n.</td>
+</tr>
+</tbody>
+</table>
+<br /><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> SX</td>
+<td>Select especial</td>
+</tr>
+<tr>
+<td> </td>
+<td>Está programado e incrustado. Se hace un include del directorio donde est? el fichero de definici?n con el nombre del campo y extensi?n ".sel" de "Select" con los siguientes parámetros: $Modo, $Campo y $Valor.<br />Se tiene que devolver una matriz de dos dimensiones con el "value" y con el "innerText".</td>
+</tr>
+</tbody>
+</table>
+Ejemplo:<br /><span style="font-family: Courier;"><span style="color: #ff0080;">     $Dim = array( array('','') );     // Si se quiere el primer indice vacio<br />     qSelect( 'gs_user', 'cd_gs_user,user_surname,user_name', "", 'user_surname,user_name' );       <br />     while( $row = qRow() ){ <br />         $Dim[] = array( $row[0], $row[1]." ".$row[2] ); <br />     } <br />     qFree();<br />     return $Dim;</span></span><br />
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> SL</td>
+<td>Select Local: El select está cargado en un iframe auxiliar.</td>
+</tr>
+<tr>
+<td> </td>
+<td>Se define la carga en el fichero "auxiliar.usu" y por ejemplo, para que la tabla "autonomias" no se mande continuamente ( solo se mande en la carga ) se pondr?:</td>
+</tr>
+</tbody>
+</table>
+<br />eLoadSelect( 'autonomias', 'auto', 'cd_auto,nm_auto', '', 'nm_auto' ); <br />eLoadSelect( $NomCampoSelect, $Tabla, $Campos, $Condicion, $Orden );<br /><br />CHECKBOX:<br />Los campos del tipo checkbox se puede provocar que tengan un valor distinto de " "/"S"/"<>S" mediante la etiqueta [AddCode], ejemplo:<br />[AddCode] * | Campo | I | uValue="Valor1|Valor2|Valor3"<br />El Valor1 es cuando no se ha clickeado ninguna vez.<br />El Valor2 es cuando el checkbox se le ha clickeado una sola vez.<br />El Valor3 es cuando el checkbox se le ha clickeado dos veces y solo activo en ? Qu? ficha ...?. <br />Si al buscar no se quiere que los checkbox pasen por los 3 estados se pondr? la variable javascript "_Question = false;".<br /><br />FILE:<br />Los campos de tipo file si en "sql.ini" est? definida la variable "$_DefaultPathType" se puede definir el directorio de lectura por defecto (pulsando el bot?n derecho en el icono de "Examinar"), esta variable puede tomar tres valores si no est? definida o est? en blanco no se podr? configurar el directorio de lectura si tiene una "G" de "Global" habr? una ?nica configuraci?n por usuario y si se defice como "S" de "Script" se tendr? una configuraci?n por usuario y por script. Si se pone global y en determinados script se quiere otra definici?n, a demas, se meter? en el [PHPIni] la variable "$_DefaultPathFile" que ser? el nombre del fichero de configuraci?n.<br />Si se usa so la variable "$_DefaultPathFile" solo estar? activa en el edf donde se defina<br /><br />Varios: <br />Si en la columna 6 (ancho en p?xels) ponemos un valor ser? el ancho del select en p?xels. <br />Si en la columna 7 (modo) ponemos una "i" se ver? en un INPUTEXT el valor real del select, si ponemos 'I' se podrá editar. En estos dos casos para indicar el ancho el control que muestra el valor interno del select pondremos en la zona del tama?o "AnchoSelect,AnchoVisor", en la columna de la longitud se puede indicar el tama?o del select del valor interno y del valor extero separado por coma. <br />La etiqueta [AddOption] añadirá "<br /><br />" al select por la parte delantera<br />La etiqueta [DelOption] eliminará "" del select.</td>
+</tr>
+<tr style="display: none;">
+<td id="tParametro" style="height: 0px;">     PARAMETROS</td>
+</tr>
+<tr style="height: 252px;">
+<td id="Parametro" style="height: 252px;"><span style="font-family: sans-serif;"><code>[Fields]</code><br /><code>    Arbol   | serial   |  +  | ST | 4,40 |   | iM  |   | # | </code><br /><br /><code>[SelectTree] * | serial</code><br /><code>     load_level:2                         //nº de niveles a leer</code><br /><code>     load_view:1                          //nº de niveles a mostrar la primera vez</code><br /><code>     table :motivos                       //nombre de la tabla</code><br /><code>     index :cd_reds_motivos_visita        //campo clave</code><br /><code>     caption :nm_reds_motivos_visita      //campo a visualizar</code><br /><code>     level :nivel                         //campo que identifica el nivel de la opci?n</code><br /><code>     parent :dependencia                  //agrupa los hijos de un padre</code><br /><code>     order :orden,nm_reds_motivos_visita  //ordenación</code><br /><code>     type :tipo                           //campo donde se define si es un folder(f) o una opci?n (O)</code><br /><code>     icon_op: g/d5_doc_0.png              //opcional, por defecto no muestra icono en las opciones si en las carpetas</code></span></td>
+</tr>
+<tr style="display: none;">
+<td id="tEjemplo" style="height: 0px;">EJEMPLO</td>
+</tr>
+<tr style="height: 18px;">
+<td id="Ejemplo" style="height: 18px;">Se mostrará un select en formato árbol de opciones que podrá ir cargando las opciones según se necesite.</td>
+</tr>
+<tr>
+<td id="txt"><code>[Fields]</code><br /><code>     Range 1 | range_1 | + | - | 0,25,100,5 | 300 | M | | |          // 0,25,100,5 -> min,default,max,step</code><br /><code>     Range 2 | range_2 | + | = | 0,25,100,5 | 300 | M | | |</code></td>
+</tr>
+<tr style="height: 18px;">
+<td id="Ejemplo" style="height: 18px;">Los campos con tipo de control: "F", "IMG", "ICON"</td>
+</tr>
+<tr style="height: 18px;">
+<td id="txt" style="height: 18px;"><code>[UploadFile] imagen | /d/_check/ddbb | pk | 1.000.000 | Selecciona imagen | gif,jpg,png,svg | img_ </code><br /><br /><code>[File]</code><br /><code>.    Label  | Field  | TE | TC  | Lng |       Px       | Mod  | Default | Cnd | Msg Error</code><br /><code>     Imagen | imagen | f  | IMG | 50  | 300,200/100,50 | MDUF |         |     | // parámetro "F" hace un FIT de su contenedor</code><br /><code>     Imagen | imagen | f  | IMG | 50  | 300,200/100,50 | MDUH |         |     | // parámetro "H" el alto de la imagen (height) será el 100% del alto de su contenedor</code><br /><code>     Imagen | imagen | f  | IMG | 50  | 300,200/100,50 | MDUW |         |     | // parámetro "W" el ancho de la imagen (width) será 2l 100% del ancho de su contenedor</code><br /><br />- La columna "Px" define el ancho y alto en los formulario y el ancho y alto en los listados</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

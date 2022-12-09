@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">FixZone</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[FixZone] Mode</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">En una multificha (GDF) fija las primeras filas de campos para verlas y editarlas desde cualquier solapa (Tab). <br />En el primer archivo EDF perteneciente al grupo de fichas marcaremos hasta qué campo queremos que llegue la zona fija de la siguiente forma {Z}.<br />Si no se quisiera ningún campo visible desde todas las solapas tendremos que poner {Z} inmediatamente después de la etiqueta [Fields].</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"> </td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>Fichero GDF:</code><br /><code>[FixZone] *</code><br /><br /><code>Primer [TAB], fichero EDF:</code><br /><code>[Fields]</code><br /><code>serial    | cd_obra   | * | T |   4 |          | *    ||   |</code><br /><code>Código    | cd_obra2  | D | T |   3 |          | AQcp || = |</code><br /><code>Nombre    | nm_obra   | D | T | 255 |      400 | MQ   || # |</code><br /><code>{Z}</code><br /><code>- | Dirección</code><br /><code>Dirección | direccion | D | T |  50 | +nm_obra | M    || # |</code><br /><code>...</code></td>
+</tr>
+<tr>
+<td id="txt"><code>Desde [Fields] hasta {Z} todos los campos serán visibles y editables desde cualquier solapa.</code></td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

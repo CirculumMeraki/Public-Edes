@@ -1,0 +1,68 @@
+#!(l) [CSSAdd] * | fch_{$_GRUPOMENU}
+#(l)  [CSSAdd] * | lst_{$_GRUPOMENU}
+[Title]= LISTAR USUARIO&#47;ARBOLES|l
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBSerial]cd_gs_user
+[DBOrder]nombre,tree
+[FormAction]*|Ll:
+[WhereSelect]?|cd_rama|nm_rama[1,3] != "(F)"
+[OnChange]?|dni|ePadLeft(this,8);
+[PDFVar]PDF_Grid = true
+[RelationFields]cd_auto,cd_prov,cd_coma
+[AddOption]?|permission|,; S,Activado; N,Desactivado; C,Caducado
+[NoEditFilled]*|Session
+[ColsNoRepeat]user_name,email
+[Fields]l
+Usuario|user_name|X|T|40||-|||
+Email|email|X|T|57||-|||
+Arbol|arbol|X|T|40||-|||
+[Fields]?
+DNI|dni|DNI|T|8||AQcpLq|||
+,Usuario|cd_gs_user|+|T|8|<user_name|Q|||
+Apellidos|user_surname|X|T|30|user_name|Q|||
+Nombre|user_name|X|T|20|294|Q|||
+Local|cd_gs_node|X|S|7|user_name|Q|||
+E-Mail|email|@|T|65|user_name|QEq|||
+Arbol|cd_gs_tree|+|S|40|user_name|Q|||
+Acceso SIC|permission|X|SV|10|100|MQ|||
+[JSIni]?
+_SelectMultiple = true;
+[DBSql]l
+$where = qGetWhere("", true, $Dim);
+$whereTree = "";
+if( substr_count($where, "cd_gs_tree=")>0 ){
+$where = "";
+for($n=0; $n<count($Dim); $n++){
+if( substr_count($Dim[$n], "cd_gs_tree=")>0 ){
+if( $whereTree!="" ) $whereTree .= " and ";
+$whereTree = $Dim[$n];
+}else{
+if( $where!="" ) $where .= " and ";
+$where .= $Dim[$n];
+}
+}
+if( $whereTree!="" ) $whereTree = " and ".$whereTree;
+}
+if( $where!="" ) $where = " where ".$where;
+if( eSqlType('mysql,mysqli') ){
+qQuery("select
+(select concat(user_surname,', ',user_name) from gs_user where cd_gs_user=gs_user_tree.cd_gs_user) nombre,
+(select email							from gs_user where cd_gs_user=gs_user_tree.cd_gs_user) email,
+(select nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where cd_gs_tree=gs_user_tree.cd_gs_tree) tree
+from gs_user_tree
+where cd_gs_user in (select cd_gs_user from gs_user {$where}) {$whereTree}
+order by nombre,tree");
+}else{
+qQuery("select
+(select user_surname||', '||user_name	from gs_user where cd_gs_user=gs_user_tree.cd_gs_user) nombre,
+(select email							from gs_user where cd_gs_user=gs_user_tree.cd_gs_user) email,
+(select nm_gs_tree from {$_SESSION['ShareDictionary']}gs_tree where cd_gs_tree=gs_user_tree.cd_gs_tree) tree
+from gs_user_tree
+where cd_gs_user in (select cd_gs_user from gs_user {$where}) {$whereTree}
+order by nombre,tree");
+}
+$usuCursor = array();
+while( $r=qRow() ){
+$usuCursor[] = $r;
+}

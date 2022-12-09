@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">DBLog</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[DBLog] Key,  [ Key1] ... [,KeyN]  [ [ | ScriptPHP ] | NmTable ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Activa la grabación de todas las sentencias SQL en la tabla "gs_log".<br />Los campos indices indicados "<strong>Key"</strong> servirán más tarde para poder localizar la información que se ha introducido en el log.<br />Este log será visible mediante un icono de acceos al log cuando se consulta la ficha, teniendo que activar en el usuario el campo "Log Historial" para tener el icono.<br />hay otro tipo de log que se asigna desde el usuario "Log Usuario" que se puede usar de 3 formas distintas:<br />1.- Analizando el log mostrar quien dió el alta y el último que modico la ficha, declarando en el DF la siguiente variable:<br />$_LogUser = 'I:[LabelAlta], U:[LabelModificación], D:[LabelBaja]';<br />2.- Insertando en la propia tabla los campos de: fecha y usuario de las acciones de alta, modificación y alta (6 campos), pudiendose definir de dos formas distintas:<br />$_LogUser = '[CampoFechaAlta],[CampoUserAlta], [CampoFechaModificación],[CampoUserModificación], [CampoFechaBaja],[CampoUserBaja]|[LabelAlta], [LabelModificación], [LabelBaja]';<br />$_LogUser = '[PrefijoFecha],[PrefijoUser]|[SufijoAlta],[SufijoModificación],[SufijoBaja]|[LabelAlta], [LabelModificación], [LabelBaja]'; <br />3.- Ver datos ocultos de la ficha:<br />$_LogUser = 'hidden | [Campo], [Campo], ...| [Label], [Label], ...| [Tipo], [Tipo], ...<br />El tipo puede ser: [T]exto, [F]echa y [N]umérico (se le puede añadir el nº de decimales)<br /><br />La declaración de la variable $_LogUser se puede hacer en la etiqueta [PHPIni] cR,mR</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> <strong>Key</strong></td>
+<td> Campos clave.</td>
+</tr>
+<tr>
+<td> <strong>ScriptPHP</strong></td>
+<td> Script PHP opcional para formatear la salida. Puede verse un código por defecto y se quiere mostrar su literal, etc.</td>
+</tr>
+<tr>
+<td> <strong>NmTable</strong></td>
+<td> Es el nombre de la tabla con el que se va a grabar, si no se pone pondrá el contenido de [DBTable]</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">[DBLog] dni</td>
+</tr>
+<tr>
+<td id="txt">Esta orden activa la grabación de las sentencias de SQL en la tabla "gs_log", y toma como índice el campo "dni". Esta información se accederá desde la propia ficha.</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[Fields]</code><br /><code>...</code><br /><code>#(a) ,   | dt_alta           | F4 | T | 10        |     | *   | #today# |   | </code><br /><code>#(a) ,   | user_alta         | +  | T | 4         |     | *   | _User   |   | </code><br /><code>#(mR) ,  | dt_modificacion   | F4 | T | 10        |     | *   | #today# |   | </code><br /><code>#(mR) ,  | user_modificacion | +  | T | 4         |     | *   | _User   |   |</code></p>
+<p><code>[Assign] mR | dt_modificacion,user_modificacion</code></p>
+<p><code>[PHPIni] ?R</code><br /><code>$_LogUser = 'dt_,user_|alta,modificacion,baja|Alta,Modificación,Baja';</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt">Para ver este log hay que activar al usuario la casilla "Log Usuario" y se accederá desde la propia ficha</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

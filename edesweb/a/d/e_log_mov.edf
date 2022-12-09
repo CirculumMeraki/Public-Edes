@@ -1,0 +1,67 @@
+[Title]=LISTADO AFILIADOS GESTIONADOS|l
+[SubTitle]
+[DBTable]gs_log
+[DBOrder]cdi desc
+[DBLimit]50000,1000
+[AddCode]c|_dni|A|<img src='g/buscar.gif' onClick="FunPadre(this,'B','FRM1;_dni=dni, cd_gs_user=cd_gs_user,_nombre=user_name, _apel=user_surname : $a/d/usu_ficha.edf');">
+[OnChange]c|_dni|ePadLeft(this,8); _eCallSrv(window,'USUARIO='+this.value+'&TIPO=D')
+[OnChange]c|cd_gs_user|_eCallSrv(window,'USUARIO='+this.value+'&TIPO=N')
+[FormAction]c|edes.php?Ll:
+[ColsOp],C
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi|_desde|_hasta
+[Fields]?
+DNI|_dni|DNI|T|8||Qcp|||
+,Usuario|cd_gs_user|+|T|8|<_hasta_hours|Q|||
+Apellidos|_apel|N|T|50|+_hasta_hours|-Q|||
+Nombre|_nombre|N|T|50|+_hasta_hours|-Q|||
+Fecha Desde|_desde|F4|T|10||QF|||
+,|_desde_hours|H|T|8||Q|||
+,Hasta|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+|cdi|CDI|T|19||-|||
+TABLA|tabla|X|T|15||*Q*|persona||
+[Fields]l
+|clave|+|T|9||*|||
+FECHA|cdi|X|T|19||A|||
+DNI|clave{persona,cd_persona,dni}|X|S|9||A|||
+AFILIADO|clave{persona,cd_persona,apel1,' ',apel2,', ',nombre}|X|S|50||A|||
+OPERACION|operacion|X|SV|12||A|||
+[AddOption]*|operacion|,; A,Alta; B,Baja; M,Modificación, U,Unificación
+[JSCheck]c
+if( eGF('cd_gs_user')=='' ) ePE('cd_gs_user','Falta introducir el dato "USUARIO"');
+if( eGF('_desde')=='' && eGF('_hasta')=='' ) ePE('_desde','Falta introducir el dato "FECHA DESDE"');
+[JSOnClickRow]*
+top.eSWOpen( window, 'edes.php?GcR:cen/persona.gdf&_SEEK&cd_persona='+eGF('clave')+'&_LOG=S' );
+[PHPIni]l
+$_PDFLABELHIDDEN['tabla'] = 'NOTTOSHOW';
+[CallSrv]USUARIO
+echo "<!DOCTYPE HTML><HTML><HEAD>";
+_FileNoCache('edes.js');
+echo "<script type='text/javascript'>";
+echo "var Obj = _WOPENER;";
+$_TReg = 0;
+if( $USUARIO=='' ){
+}else if( $TIPO=='N' ){
+$Filtro = "cd_gs_user={$USUARIO}";
+qCount( 'gs_user', $Filtro );
+}else{
+$Filtro = "dni='{$USUARIO}'";
+qCount( 'gs_user', $Filtro );
+}
+if( $_TReg > 0 ){
+qQuery( 'select dni, user_surname, user_name, cd_gs_user from gs_user where '.$Filtro );
+$row = qRow();
+echo "Obj.FRM1._dni.value = '".$row[0]."';";
+echo "Obj.FRM1._apel.value = '".$row[1]."';";
+echo "Obj.FRM1._nombre.value = '".$row[2]."';";
+echo "Obj.FRM1.cd_gs_user.value = '".$row[3]."';";
+} else {
+echo "Obj.FRM1._dni.value = '';";
+echo "Obj.FRM1._apel.value = '';";
+echo "Obj.FRM1._nombre.value = '';";
+echo "Obj.FRM1.cd_gs_user.value = '';";
+if( $USUARIO!='' ) echo "top.eInfo(window,'USUARIO NO EXISTE');";
+}
+echo '</SCRIPT></HEAD><BODY></BODY></HTML>';
+eEnd();

@@ -1,0 +1,71 @@
+[Title]=IMAGEN CORPORATIVA
+[DBTable]gs_portfolio
+[DBIndex]cd_gs_portfolio; nm_gs_portfolio||true
+[DBOrder]nm_gs_portfolio
+[DBSerial]cd_gs_portfolio
+[AutoMenu]*
+[OptionsInList]fuabcm,o 		_
+| &#96; | EditarMapa | Mapa
+[UploadFile]fichero|/_datos/portfolio|cd_gs_portfolio|1.000.000|Imagen|png,jpg,jpeg,gif||50,50|_mini
+[AddCode]a,mR|fichero|I|eCopy='extension=format, tamayo=size'
+[AddOption]*|tipo|_
+,;					_
+B,Borde;			_
+F,Firma;			_
+N,Fondo;			_
+I,Imagen;			_
+L,Logo;				_
+S,Sello
+[OnChange]*|tipo|EsUnaFirma()
+[JSIni]*
+function EsUnaFirma(){
+if( $tipo=="F" ){
+eShow("cd_gs_user,_cd_gs_user","TR", false);
+}else{
+eHide("cd_gs_user,_cd_gs_user","TR", false);
+}
+}
+[Format]
+if( eIsHTM() ) $_vF["img"] = "<img src='edes.php?R:/_datos/portfolio/".$_vF["cd_gs_portfolio"]."_mini.".$_vF["extension"]."'>";
+[PDFCol]img=0
+[Fields]l
+|cd_gs_portfolio|+|T|9||*|||
+Miniatura|extension as img|n|T|4||-||=|
+Imagen|nm_gs_portfolio|D|T|60||MQ|||
+Extensión|extension|n|T|4||-||=|
+Fichero|fichero|#|F|60||MQLD|||
+Tipo|tipo|D|SV|6||MQ|||
+|tipo as xtipo|D|T|1||*|||
+Ancho|width|+|T|5||-|||
+Alto|height|+|T|5||-|||
+Fecha·Alta|dt_insert|F4|T|10||M|||
+[AddCode]a,?R|tamayo|A|Byts
+[AddCode]a,?R|width,height|A|px
+#!(?) [DefAux] cd_gs_user | gs_user, cd_gs_user, user_name,' ',user_surname
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]
+|cd_gs_portfolio|+|T|9||*|||
+Nombre|nm_gs_portfolio|#|T|60||MQ||#|
+Fichero|fichero|#|F|60||MQLD||#|
+Tipo|tipo|D|SV|6||MQ||#|
+,Extensión|extension|n|T|4||-||#|
+,Tamaño|tamayo|+|T|6||-|||
+,Fecha·Alta|dt_insert|F4|T|10||-|#today#|#|
+#(?) Usuario|_cd_gs_user|D|T|68|nm_gs_portfolio|Q|||
+#(?) Usuario|cd_gs_user|+|T|5||*Q|||
+#!(?) Usuario|cd_gs_user|+|S|68|nm_gs_portfolio|M|||
+Token|token|#|T|15||M|||
+,Ancho|width|+|T|5||-|||
+,Alto|height|+|T|5||-|||
+|cd_gs_node|+|T|6||*Q*|_Node||
+[PHPStart]A,M
+eUnset("width,height");
+[DBEnd]A,M
+$file = "../_datos/portfolio/".$_vF["cd_gs_portfolio"].".".$_vF["extension"];
+list($w, $h) = getimagesize($file);
+qQuery("update gs_portfolio set width='{$w}', height='{$h}' where cd_gs_portfolio=".$_vF["cd_gs_portfolio"]);

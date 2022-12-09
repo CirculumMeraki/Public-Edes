@@ -1,0 +1,31 @@
+#include(*) $lng/usu_ficha.edf.lng
+[Title]=FUNCIONES
+[DBTable]gs_str
+[DBIndex]cd_gs_str
+[WinClose]
+[Fields]
+Departamento|_nm_departamento|#D|T|60||-|||
+|cd_gs_str|+|T|9||*||#|
+Puesto|_nm_gs_str|#D|T|60||-|||
+-|FUNCIONES DEL PUESTO
+[Plugin]*|$a/plugin/usertree.form|20|20|C|300|450
+[Plugin]*|$a/plugin/usertree.body
+[PHPIni]mR
+if( qCount( 'gs_str', "cd_gs_str='{$_GET['cd_gs_str']}'" )==0 ){
+qQuery( "insert into gs_str ( cd_gs_str, cd_type_tree ) values ( '{$_GET['cd_gs_str']}', 'P' )" );
+}
+[PHPIni]mR,M
+$_OpTreeTYPE = 'str';
+$RolPermission = 'str';
+[Label]cd_type_tree,cd_gs_rol,_cd_gs_user|x
+[JSEnd]mR
+eEF('cd_type_tree',0);
+ePF('cd_gs_str',_WOPENER._SubFormDim[0]);
+ePF('_nm_gs_str',_WOPENER._SubFormDim[1]);
+ePF('_nm_departamento',_WOPENER._SubFormDim[2]);
+S.toTag(eGO('cd_type_tree'),'TR').cells[0].textContent = '';
+S.toTag(eGO('cd_gs_rol'),'TR').cells[0].textContent = '';
+S.toTag(eGO('_cd_gs_user'),'TR').cells[0].textContent = '';
+eHide('cd_type_tree,cd_gs_rol,_cd_gs_user');
+[JSEnd]*--
+eEF('cd_type_tree',0);

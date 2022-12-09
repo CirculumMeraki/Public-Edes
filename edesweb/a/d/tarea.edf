@@ -1,0 +1,41 @@
+[Title]TAREA/S
+[DBTable]gs_tarea
+[DBIndex]cd_gs_tarea
+[DBOrder]prioridad_ds,cd_gs_tarea
+[DBSerial]cd_gs_tarea
+[AddOption]*|tipo_tarea|,; S,Sugerencia; M,Mejora; O,Nueva opción; E,Error
+[AddOption]*|prioridad_pt|,; 0,Nula; 1,Baja; 2,Media; 3,Alta; 4,Urgente
+[Fields]
+Código|cd_gs_tarea|+|T|9||*|||
+Tipo tarea|tipo_tarea|N|SV|1||MQ||#|
+,Prioridad|prioridad_pt|+|SV|2||MQ||#|
+,|prioridad_ds|+|T|2||*|||
+,Fecha tope|f_tope|F4|T|10||MF|||
+,Informar cuando esté Ok|contestar_ok|N|C|1||M|||
+Resumen|resumen|D|T|50|nota_pt|MQ||#|
+Descripción|nota_pt|D|A|2000,100,6||M|||
+URL|url|#D|T|60||M|||
+Usuario|cd_gs_user|-|T|5||*|_User||
+Arbol|cd_gs_tree|-|T|3||*|_Tree||
+Nodo|cd_gs_node|-|T|3||*|_Node||
+{FS}{ Documentación
+<|[documentos]|o|||||||
+}
+[SubList]a,A,mR,cR|documentos|
+{slSql} select codigo,cd_gs_doc,nm_gs_doc,fichero,cdi,fichero as ext from gs_doc where codigo='{cd_gs_tarea}' order by nm_gs_doc
+{slTH} codigo,cd_foto,DESCRIPCION,FICHERO,CDI,Ver
+{slAlign} o,o,I,I,I,C
+{slFormat} , , , , ,<img src='g/d_@.gif' onclick='VerDocumento()' title='_@_'>
+{slTipIcon} gif,Ver imagen; jpg,Ver imagen; png,Ver imagen; avi,Ver película; txt,Ver fichero de texto; doc,Ver fichero Work; xls,Ver fichero Excel; pdf,Ver fichero PDF
+{slWin} ,7
+{slMenu} a,mR | Alta:Fa, Modificar:FmR, Borrar:FbR | $a/d/tarea_doc | codigo=0, cd_gs_doc=1
+[JSCheck]a
+ePF( 'prioridad_ds', eGF('prioridad_pt') );
+[JSEnd]a,cR,mR
+function VerDocumento(){
+var Obj=S.event(window).parentNode.parentNode;
+if( Obj.tagName != 'TR' ) return;
+var NomFile = Obj.cells[3].textContent;
+var Ext = NomFile.split('.');
+top.eCallSrv( window, 'edes.php?D:/_d_/doc/'+Obj.cells[1].textContent+'.'+Ext[Ext.length-1] );
+}

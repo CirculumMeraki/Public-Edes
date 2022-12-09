@@ -1,0 +1,196 @@
+[Language] es,ca,en,fr
+10|Click IZQ: Resultado de la búsqueda\nClick IZQ+[ctrl]: Resultado de la búsqueda en una subventana\nClick DCH: Ficha de búsqueda + listado de resultados|Clic ESQ: Resultat de la cerca\nClic ESQ [ctrl]: Resultat de la cerca en una subfinestra\nClic DRET: Fitxa de cerca + llistat de resultats|Click IZQ: Search Result\nClick DCH: Search record results list|Click IZQ: Resultado de la búsqueda\nClick DCH: Ficha de búsqueda lista de resultados
+133|Click DCH+[ctrl]: Cambiar la acción|Clic DRET+[ctrl]: Canviar la acció|Click DCH+[ctrl]: Cambiar la acción|Click DCH+[ctrl]: Cambiar la acción
+100|Subrayado|Subratllat|Subrayado|Subrayado
+101|Elimina formato|Elimina format|Elimina formato|Elimina formato
+102|Color texto|Color text|Color texto|Color texto
+103|Color fondo|Color fons|Color fondo|Color fondo
+104|Extra Grande|Extra Gran|Extra Grande|Extra Grande
+105|Grande|Gran|Grande|Grande
+106|Normal|Normal|Normal|Normal
+107|Justificación izquierda|Justificació esquerra|Justificación izquierda|Justificación izquierda
+108|Centrado|Centrat|Centrado|Centrado
+109|Justificación completa|Justificació completa|Justificación completa|Justificación completa
+110|Disminuir sangría|Disminuir sagnia|Disminuir sangría|Disminuir sangría
+111|Aumentar sangría|Augmentar sagnia|Aumentar sangría|Aumentar sangría
+112|Lista ordenada|Llista ordenada|Lista ordenada|Lista ordenada
+113|Lista con marcas|Llista amb marques|Lista con marcas|Lista con marcas
+114|Insertar imagen|Inserir imatge|Insertar imagen|Insertar imagen
+115|Corrector ortográfico|Corrector ortogràfic|Corrector ortográfico|Corrector ortográfico
+116|Anular cambios|Anul·lar canvis|Anular cambios|Anular cambios
+117|Grabar|Gravar|Grabar|Grabar
+118|Color por defecto|Color per defecte|Color por defecto|Color por defecto
+119|Click IZQ: Acción a ejecutar|Click ESQ: Acció a executar|Search Result|Resultado de la búsqueda
+12|Limpiar datos|Netejar dades|Clear data|Limpiar datos
+120|Nuevo párrafo|Nou paràgraf|Nuevo párrafo|Nuevo párrafo
+121|Checkbox\nClick DCH conmuta "checked"|Checkbox\nClic DRET commuta "checked"|Checkbox\nClick DCH conmuta "checked"|Checkbox\nClick DCH conmuta "checked"
+122|Facebook|Facebook|Facebook|Facebook
+123|Twitter|Twitter|Twitter|Twitter
+124|Contar|Explicar|Contar|Contar
+125|Click DCH: Ultimos resultados|Clic DRET: Últims resultats|Click DCH: Ultimos resultados|Click DCH: Ultimos resultados
+13|Click IZQ: Consultar|Clic ESQ: Consultar|Click IZQ: Consult|Click IZQ: Consultar
+14|Click DCH: Buscar para Consultar|Clic DRET: Buscar per Consultar|Click DCH: Search para Consultar|Click DCH: Buscar para Consultar
+15|Click IZQ: Modificar|Clic ESQ: Modificar|Click IZQ: Modify|Click IZQ: Modificar
+16|Click DCH: Buscar para Modificar|Click DRET: Buscar per Modificar|Click DCH: Search to Modify|Click DCH: Buscar para Modificar
+17|Click IZQ: Borrar|Clic ESQ: Esborrar|Click IZQ: Delete|Click IZQ: Borrar
+18|Click DCH: Buscar para Borrar|Clic DRET: Buscar per Esborrar|Click DCH: Search to Delete|Click DCH: Buscar para Borrar
+19|Insertar|Inserir|Insert|Insertar
+2|Insertar|Inserir|Insert|Insertar
+20|Log de Usuarios|Log d´Usuaris|Users Log|Log de Usuarios
+21|Otros datos|Altres dades|Other data|Otros datos
+22|Histórico de Movimientos|Històric de Moviments|History of Movements|Histórico de Movimientos
+24|Menú de acceso rápido
+25|Cerrar ventana|Tancar finestra|Close window|Cerrar ventana
+26|Ver fichero|Veure fitxer|View file|Ver fichero
+
+27|Calendario|Calendari|Calendar|Calendario
+134|Calendario de Periodos|Calendari de Períodes|Calendario de Periodos|Calendario de Periodos
+
+28|Correo electrónico|Correu electrònic|Email|Correo electrónico
+169|Click IZQ: Enviar EMail\nClick DCH: Insertar EMail en Lista Róbinson
+
+29|Web|Web|Web|Web
+3|Borrar|Esborrar|Delete|Borrar
+30|Corrector ortográfico|Corrector ortogràfic|Speller|Corrector ortográfico
+31|Imprimir documento\n(del servidor)|Imprimir document\n(del servidor)|Print document\n(from server)|Imprimir documento\n(del servidor)
+32|Examinar...|Examinar...|Examine...|Examinar...
+
+177|Click IZQ: Examinar...\nClick DCH: Previsualizar|Examinar...|Examine...|Examinar...
+178|Previsualizar/Descargar|Previsualizar/Descargar|Previsualizar/Descargar|Previsualizar/Descargar
+
+144|Click IZQ: Examinar...\nClick DCH: Establece un directorio por defecto|Click IZQ: Examinar...\nClick DCH: Establece un directorio por defecto|Click IZQ: Examinar...\nClick DCH: Establece un directorio por defecto|Click IZQ: Examinar...\nClick DCH: Establece un directorio por defecto
+
+33|Seleccionar fichero|Seleccionar fitxer|Select file|Seleccionar fichero
+
+34|Ver documento\n(del PC)|Veure document\n(del PC)|View document\n(from PC)|Ver documento\n(del PC)
+35|(del PC)|(del PC)|(PC's)|(del PC)
+
+36|Ver documento\n(del servidor)|Veure document\n(del servidor)|View document\n(from server)|Ver documento\n(del servidor)
+37|(del servidor)|(del servidor)|(server's)|(del servidor)
+
+38|Borrar documento\n(del servidor)|Esborrar document\n(del servidor)|Delete document\n(from server)|Borrar documento\n(del servidor)
+
+39|Modificar documento\n(del servidor)|Modificar document\n(del servidor)|Modify document\n(from server)|Modificar documento\n(del servidor)
+4|Recuperar de papelera|Recuperar de paperera|Recover from trash|Recuperar de papelera
+
+40|Imprimir documento\n(del servidor)|Imprimir document\n(del servidor)|Print document\n(from server)|Imprimir documento\n(del servidor)
+
+41|Escanear documento|Escanejar document|Scan document|Escanear documento
+42|Borrar entrada|Esborrar entrada|Delete entry|Borrar entrada
+43|Añadir Entrada|Afegir Entrada|Add entry|Añadir Entrada
+44|Desactiva el select|Desactiva el select|Disable select|Desactiva el select
+142|Activa el select|Activa el select|Activate select|Activa el select
+
+45|Calendario|Calendari|Calendar|Calendario
+46|Buscar|Buscar|Search|Buscar
+47|Seleccionar palabras clave|Seleccionar paraules clau|Select key words|Seleccionar palabras clave
+48|Copiar|Copiar|Copy|Copiar
+49|Pegar|Pegar|Paste|Pegar
+5|Enviar a papelera|Enviar a paperera|Send to trash|Enviar a papelera
+50|Fijar valor por defecto|Fixar valor per defecte|Set value by default|Fijar valor por defecto
+168|Eliminar valor por defecto
+51|Memorizar|Memoritzar|Memorize|Memorizar
+52|Copiar del exterior|Copiar de l´exterior|Copy from the exterior|Copiar del exterior
+53|ERROR en el Modo "#"|ERROR en la Manera "#"|ERROR in the "#" Mode|ERROR en el Modo "#"
+54|ERROR:<br>Objeto "#" no encontrado|ERROR:<br>Objecte "#" no oposat|ERROR:<br>Item "#" not found|ERROR:<br>Objeto "#" no encontrado
+55|El tamaño máximo por fichero excede la configuración: # Bytes|La grandària màxima per fitxer excedeix la configuració: # Bytes|The maximum size for the data file surpass the configuration: # Bytes|El tamaño máximo por fichero excede la configuración: # Bytes
+56|Ver Fichero|Veure Fitxer|View File|Ver Fichero
+57|ERROR:<BR>El parámetro "#" solo puede usarse con indices de un solo campo|ERROR:<BR>El paràmetre "#" solament pot usar-se amb índexs d´un sol camp|ERROR:<BR>The parameter "#" can only be used with just one field indexes|ERROR:<BR>El parámetro "#" solo puede usarse con indices de un solo campo
+58|ERROR:<br>Tipo de Control "#1" no soportado<br>Tipo de Edición "#2"<BR>En el campo "#3"|ERROR:<br>Tipus de Control "#1" no suportat<br>Tipus d\'Edició \"#2\"<BR>En el camp \"#3\"|ERROR:<br>Control Type "#1" not supported<br>Edition Type "#2"<BR>In the field "#3"|ERROR:<br>Tipo de Control "#1" no soportado<br>Tipo de Edición "#2"<BR>En el campo "#3"
+59|ERROR:<br>El fichero "#" no está devolviendo una matriz|ERROR:<br>El fitxer "#" no està retornant una matriu|ERROR:<br>The data file "#" is not giving back a matrix|ERROR:<br>El fichero "#" no está devolviendo una matriz
+6|Nueva Consulta|Nova Consulta|New search|Nueva Consulta
+60|Registros encontrados: #1<br>Nº máximo de registros a visualizar: #2<br>Active más condiciones|Registres oposats: #1<br>Nº màxim de registres a visualitzar: #2<br>Activi més condicions|Records found: #1<br>Maximum Nº of records to extract: #2<br>Activate more conditions|Registros encontrados: #1<br>Nº máximo de registros a extraer: #2<br>Active más condiciones
+61|Demasiados registros a extraer.<br>Nº máximo de registros a visualizar: #.<br>Active más condiciones|Massa registres a extreure.<br>Nº màxim de registres a visualitzar: #.<br>Activi més condicions|Too many records to extract.<br>Maximum Records Nº to extract: #.<br>Activate more conditions|Demasiados registros a extraer.<br>Nº máximo de registros a extraer: #.<br>Active más condiciones
+62|Registros encontrados FUERA DE TU AMBITO: #1<br>Nº máximo de registros a visualizar: #2<br>Active más condiciones|Registres oposats FORA DEL TEU ÀMBIT: #1<br>Nº màxim de registres a visualitzar: #2<br>Activi més condicions|Records found OUTSIDE YOUR FIELD: #1<br>Maximum Nº of records to extract: #2<br>Activate more conditions|Registros encontrados FUERA DE TU AMBITO: #1<br>Nº máximo de registros a extraer: #2<br>Active más condiciones
+63|Demasiados registros a extraer.<br>Nº máximo de registros a visualizar: #<br>Active más condiciones|Massa registres a extreure.<br>Nº màxim de registres a visualitzar: #<br>Activi més condicions|Too many records to extract.<br>Maximum Records Nº to extract: #.<br>Activate more conditions|Demasiados registros a extraer.<br>Nº máximo de registros a extraer: #<br>Active más condiciones
+64|Objeto no soportado "#"|Objecte no suportat "#"|Non supported Item "#"|Objeto no soportado "#"
+65|Ya hay un registro igual|Ja hi ha un registre igual|This record is alredy in use|Ya hay un registro igual
+66|No hay registros|No hi ha registres|There are no records|No hay registros
+67|No hay registros que cumplan la condición|No hi ha registres que compleixin la condició|There are no records that can carry on the condition|No hay registros que cumplan la condición
+68|INSERTADO|INSERIT|ADDED|INSERTADO
+143|INSERTADO|INSERIT|ADDED|INSERTADO ~ Se inserta en la auxiliar y en el select
+69|MODIFICADO|MODIFICAT|MODIFIED|MODIFICADO
+7|Modificar|Modificar|Modify|Modificar
+70|BORRADO|ESBORRAT|DELETED|BORRADO
+71|RECUPERADO|RECUPERAT|RECOVERED|RECUPERADO
+72|Cargando PDF|Carregant PDF|Loading PDF|Cargando PDF
+73|Cargando XLS|Carregant XLS|Loading XLS|Cargando XLS
+74|Cargando MDB|Carregant MDB|Loading MDB|Cargando Acceso
+75|ERROR: Fichero excede el máximo tamaño permitido|ERROR: Fitxer excedeix la màxima grandària permesa|ERROR: The Data file surpass the maximum size allowed|ERROR: Fichero excede el máximo tamaño permitido
+76|ERROR: Fichero demasiado grande|ERROR: Fitxer massa gran|ERROR: The Data file is too big|ERROR: Fichero demasiado grande
+77|ERROR: Fichero incompleto|ERROR: Fitxer incomplet|ERROR: Incomplete data file|ERROR: Fichero incompleto
+78|ERROR: Fichero no cargado|ERROR: Fitxer no carregat|ERROR: Data file not loaded|ERROR: Fichero no cargado
+79|ENVIADO A PAPELERA|ENVIAT A PAPERERA|SENT TO TRASH|ENVIADO A PAPELERA
+8|Buscar|Buscar|Search|Buscar
+80|FICHA #|FITXA #|FILE OF #|FICHA #
+81|RECUPERAR #|RECUPERAR #|RECOVER #|RECUPERAR #
+82|CONSULTAR #|CONSULTAR #|VIEW #|CONSULTAR #
+83|MODIFICAR #|MODIFICAR #|MODIFY #|MODIFICAR #
+84|INSERTAR #|INSERIR #|INSERT #|INSERTAR #
+85|BORRAR #|ESBORRAR #|DELETE #|BORRAR #
+86|VARIABLES MODIFICADAS|VARIABLES MODIFICADES|VARIABLES MODIFIED|VARIABLES MODIFICADAS
+87|Acción no soportada|Acció no suportada|Non supported action|Acción no soportada
+88|ERROR: FICHERO EXCEDE EL MAXIMO TAMAÑO PERMITIDO|ERROR: FITXER EXCEDEIX LA MÀXIMA GRANDÀRIA PERMESA|ERROR: THE DATA FILE SURPASS THE MAXIMUM SIZE ALLOWED|ERROR: FICHERO EXCEDE EL MAXIMO TAMAÑO PERMITIDO
+89|ERROR: FICHERO DEMASIADO GRANDE|ERROR: FITXER MASSA GRAN|ERROR: THE DATA FILE IR TOO BIG|ERROR: FICHERO DEMASIADO GRANDE
+90|ERROR: FICHERO INCOMPLETO|ERROR: FITXER INCOMPLET|ERROR: INCOMPLETE DATA FILE|ERROR: FICHERO INCOMPLETO
+91|ERROR: FICHERO DEMASIADO GRANDE|ERROR: FITXER MASSA GRAN|ERROR: THE DATA FILE IR TOO BIG|ERROR: FICHERO DEMASIADO GRANDE
+92|ERROR: FICHERO NO COPIADO "#"|ERROR: FITXER NO COPIAT "#"|ERROR: "#" Data file not copied|ERROR: FICHERO NO COPIADO "#"
+93|OPERACION ANULADA.<br>El registro ha sido modificado por otro<br>usuario desde que visualizó la ficha.<br>Vuelva a realizar la operación|OPERACIÓ ANUL·LADA.<br>El registre ha estat modificat per<br>un altre usuari des que va visualitzar la fitxa.<br>Torni a realitzar l\'operació|OPERATION CANCELED.<br>The record has been modified by other<br>user since you saw the form.<br>Try to do the operation again|OPERACION ANULADA.<br>El registro ha sido modificado por otro<br>usuario desde que visualizó la ficha.<br>Vuelva a realizar la operación
+94|ERROR:<br>NO SE HA PODIDO RECUPERAR EL REGISTRO<br>POR ESTAR ACTIVO ACTUALMENTE|ERROR:<br>NO S´HA POGUT RECUPERAR EL REGISTRE<br>PER ESTAR ACTIU ACTUALMENT|ERROR:<br>THE RECORD COULD NOT BE RECOVERED<br>DUE TO BEING ACTIVE AT PRESENT|ERROR:<br>NO SE HA PODIDO RECUPERAR EL REGISTRO<br>POR ESTAR ACTIVO ACTUALMENTE
+95|ERROR: NO SE HA BORRADO EL FICHERO ADJUNTO|ERROR: NO S´HA ESBORRAT EL FITXER ADJUNT|ERROR: THE ATTACHED FILE DATA IS NOT DELETED|ERROR: NO SE HA BORRADO EL FICHERO ADJUNTO
+96|ERROR en el Campo "#"|ERROR en el Camp "#"|ERROR in the Field "#"|ERROR en el Campo "#"
+97|Click DCH: Elimina selección|Clic DRET: Elimina selecció|Click DCH: Elimina selección|Click DCH: Elimina selección
+98|Negrita|Negreta|Negrita|Negrita
+99|Itálica|Itàlica|Itálica|Itálica
+126|Procesando...|Processant...|Procesando...|Procesando...
+127|Enviando fichero "#"|Enviant fitxer "#"|Enviando fichero "#"|Enviando fichero "#"
+128|Preparando fichero "#"|Preparant fitxer "#"|Preparando fichero "#"|Preparando fichero "#"
+129|Minimizar|Minimitzar|Minimize|Minimizar
+130|Maximizar|Maximitzar|Maximize|Maximizar
+131|Fichero modificado|Fitxer modificat|Fichero modificado|Fichero modificado
+132|Descargar documento a modificar|Descarregar document a modificar|Descargar documento a modificar|Descargar documento a modificar
+
+135|ESPACIO EN DISCO|ESPAI EN DISC
+136|Espacio Total|Espai Total
+137|Espacio Libre|Espai Llibre
+138|Posible suplantación de identidad.<br>La aplicación se cerrará.|Possible suplantació d´identitat.<br>L´aplicació es tancarà.
+139|IMPORTAR #|IMPORTAR #
+140|La opción de IMPORTAR solo se puede ejecutar en la ventana principal|L´opció d´IMPORTAR solament es pot executar en la finestra principal
+141|No hay espacio libre en esta opción|No hi ha espai lliure en aquesta opció
+
+145|Buscar para ... ~ MENU
+164|Cambiar a ... ~ MENU
+
+146|Borrar
+147|Consultar
+148|Modificar
+149|Insertar
+161|Convertir en contar
+155|Convertir en consulta
+
+150|Opciones ~ MENU
+151|Borrar
+152|Modificar
+153|Consultar
+
+154|Limpiar datos
+156|Resultado en SubVentana
+157|Búsqueda con SubListado
+158|Histórico de Movimientos
+159|Log de Usuarios
+160|Otros datos
+
+162|( Sin datos )
+163|( Con datos )
+
+165|Seleccionar
+166|Borrar
+167|Lista de selección
+170|Resultado en ventana actual
+171|- Para mover la imagen haga click sobre ella y desplace el ratón.<br>- Para cambiar el tamaño pulse la tecla control+rueda del ratón,<br>si a la vez pulsa la tecla shift el zoom será 10 veces mayor.<br>- Para ajustar la imagen pulse dobleclick.<br>- Para dejar la imagen original pulse el botón derecho del ratón.
+
+172|Valor no modificable en "#"
+173|Campo obligatorio: #
+174|Error en la longitud del campo
+175|Error en el contenido del campo
+176|Listado

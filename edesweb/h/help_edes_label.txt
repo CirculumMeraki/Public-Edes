@@ -1,0 +1,258 @@
+# Version: 2019-08
+
+.[DBRange] Mode | Field | VarDesde | VarHasta [ [ | ValoresInclusive=true ] | CopiarEnVarHasta="" ]~Rellena el campo (Field) con la expresión del contenido de las variables "VarDesde" y "VarHasta" creando una condición de rango. El uso de esta etiqueta es para coger un rango de datos en dos campos virtuales diferentes. Un campo virtual es un campo de un formulario que empieza por "_" esto significa que estos campos en el servidor no se utilizan solo son para el usuario pero no se graban en las tabla, se pueden usar todos los tipos de datos.
+.[UploadFile] Field | Folder | Filename | Bytes [ | Title ] [ | Extensiones | Prefijo | Tamaños | Prefijos | ConCopia ]~Configura el envío de archivos al servidor.
+.[Line]
+[AccessFields] ListaFields [ | NombreTabla ]~En los listados al hacer una exportación a Access puede definir el nombre de la tabla como el de los campos
+[AddButton] Mode | Label | Title | ValorDelOnclick [ [ | InteriorDelStyle [ | NºTabDondeSeVisualiza ] ]<br />...~Añade botones al formulario, si se pone en un grupo de fichas se tendrá que poner en el GDF.
+[AddCode] Mode | Field [,Field,..] | [S:B:I:A:E] | HTMLCode<br />...~A?ade c?digo HTML antes, dentro o despu?s de la definici?n del campo.
+[AddIcon] Mode | Html~Añade iconos en las fichas en la parte inferior izquierda.
+[AddLTools] Label | function~
+[AddOptionValue] Field | ListaFields~De los controles tipo select (S) y subselect (Ss) se pueden recuperar mas valores de campos de la tabla añadiéndolos como atributos en el "option". Por ejemplo tienes un select con los tipos de acabado de un objeto y de forma oculta te has traído el valor de incremento para el coste total.
+[AddOption] Mode | Field [,Field,Field,,] | Options_List [ | Color [,BackgroundColor [,fontWeight ]]; Color [,BackgroundColor [,fontWeight ]] ; ... ]<br />...~En un control "SELECT" añade más opciones "option" al principio de la lista.
+[AddTools] Mode | Field[,...] | NombreUtilidad [ | FuncionAEjecutar [ | IconoAlternativo ] ]~ 
+[Align] AlignType_Col1 [,AlignType_Col2]...[,AlignType_ColN] <BR>~Alinea y&nbsp;oculta las columnas del listado.
+[Assign] Mode [ | ListaDeCampos ]~Esta etiqueta está ligada a la posición 8 de la etiqueta [Fields] el "valor por defecto".
+[AutoMenu] Mode [ | Option=false ]~
+[BCP] Modo | B/b/c/p  | Campo1,Campo2,..~Pone utilidades de ayuda en cualquier modo a un control, como son:
+[BackgroundImage] Mode | Image [ | Repeat=no-repeat [ | Position=bottom right [ | AreaPrincipal=true ] ] ]~Muestra una imagen de fondo en las pantallas, es la definición de la etiqueta CSS de "background-image".
+[Button] Mode | [ButtonText] [ [ | Tip] | ModoDelIcono ]~Configura el texto y/o icono del botón del submit.
+[CC] #ConditionName | Condition~Asigna el resultado de la condición a evaluar al nombre de la condición.
+[CSSAdd] Mode [ [ | Filename [ , Filename2, ... ] ] | VarInSql<BR>...~A?adir un nuevo archivo de hojas de estilo en cascada al documento actual, no se suprime o elimina la hoja de estilo por defecto.
+[CSSPrint] Mode | Filename~Define la hoja de estilo a la hora de imprimir, por defecto se proporciona el fichero "ficha_print.css".&nbsp;
+[CSS] Mode | Filename~Sustituye la hoja de estilo que se carga por defecto por la indicada en el parámetro filename, en caso de no ser un fichero externo la etiqueta será multilinea.
+[Cache] Mode~Establece la vigencia de la cache hasta la hora especificada en desktop.ini->_CachePc o hasta las 23:55:55
+[CallSrvRow] url | NmFunction | TextProgress [ | TextEnd ]~Genera una llamada a la función "NmFunction" por cada fila del listado con la "url", generando un proceso masivo
+[CallSrv] NomEtiqueta~Desde la función top.eCallSrv() se puede llamar a zonas de un DF, cada zona se identifica por un NomEtiqueta y todo el código a ejecutar se encuentra dentro de la etiqueta [CallSrv]
+[ChangeFilter] NmField | Function / Sql / Definici?n Select virtual [ | true ] | memory ] | full ]~En un listado cuando se muestran las condiciones se puede poner que la condici?n se pueda cambiar desde el listado mostrando un men? de valores, si este men? se pulsa con la tecla "control" presionada&nbsp;se ejecutar? en una subventana.
+[ChartCol] NumCol | AnchoGráfica | TítuloCol | NomGráficoPositivo | NomGráficoNegativo [| AltoGráfico]~Añade una columna al final del listado mostrando una gráfica de barras.
+[ChartGoogle] ...valores de google...~
+[ChartGrid] NumCol, NumCol,,,~Las gráficas las mete en una tabla al final del listado, los parámetros de la etiqueta son las celdas que tiene cada fila.
+[ChartRow] NCol [,NCol,... | AnchoGraf [ | AltoGraf=100 ]~Añade una fila al final del listado mostrando una gráfica de las columnas indicadas.
+[Chart] ChartType | Cols | NColTitle [ | XAxisTitle | YAxisTitle | MaxRec | TitleColor | TitleAxisColor | Value | ... | Title | NomImg | Ancho | Alto ]<BR>...~Muestra una o varias gráficas con los valores de las columnas que se indiquen, para tener mas de una gráfica se pondrá una definición por cada gráfica. Obviamente, solamente tiene validez en listados.
+[CheckList] Field | NmCol | Field/Select/FuncUser/OptionList [ | TypeList='' | NmRowPDF=1 [ | AltoEnPx ]]~En un campo "Field" se puede guardar "n" selecciones de una lista de checkbox, el número de selecciones depende del ancho del campo "Field" que deber?a ser un varchar.
+[Chr] Name | [TipoConversion] | AllowedChars [ | Expresi?nRegularDown | Expresi?nRegularExit [ [ | ChrOld | ChrNew ] ] Patron ]~Crea un tipo de edici?n personalizado, que ?nicamente tendr? vigencia en el ?mbito en el que se encuentra la etiqueta (en el EDF actual), es decir, el &lt;INPUT&gt; s?lo admitir? los caracteres designados.
+[ColsColor] Colors, Colors, ...<BR>~Lista de colores de las columnas en un listado.
+[ColsNoRepeat] ,...<br /> ~En los listados dato a dejar en blanco si se repite en la fila anterior. Esta etiqueta solo tendrá efecto en html y pdf, si se pone el parámetro "classNameTD" le pondrá la clase para poder identificarlo.
+[ColsOpPrefix] PrefijoGrupo1 [ | PrefijoGrupo2 ... ]~Cuando se hacen listados con grupos se puede poner un prefijo al valor del grupo. Esta etiqueta siempre va acompañada con [ColsOp] y pone el prefijo por cada parámetro de "S" de grupo.
+[ColsOp] ColOp1, ColOp2, ..... , ColOpN [ | TitleSubtotal, TitleSubTotal, ... | ColSpanParaElTitle |  ? ] <br />~Operaciones a realizar  en las columnas de los listados. Lista de operaciones aritméticas separadas por comas. Cada operación indicada corresponde a la columna de su posición en el listado.
+[ColsWidth] ColWidth1 [,ColWidth2] ...... [,ColWidth1N] [ | ListaColumnasAnchoDesfavorable | ] word-break ] ]<BR>~Separados por comas, se indica el ancho en p?xels de cada columna del listado.
+[Count]  [ TextoAMostrar / Función ]~Hace un count de la DB y lo muestra en pantalla, esta etiqueta sólo funciona en los modos: "c", "b" y "m", lo normal es usarlo en el modo "c".
+[Cursor]~En los listados, resalta la fila sobre la que se sitúa el cursor del ratón.
+[DBAddFields] [Prefijo] | FieldsList~Con esta etiqueta podemos añadir más campos (de cualquiera de las tablas del contexto actual) a la sentencia SQL.
+[DBAddFilter] Condition [ | FielsNoInfo [ | _PDFCONDITIONHIDDEN [ | _PDFCONDITIONHIDDEN ... ] ] ]~Condición que se añade a la cláusula "where", en el caso de que sea un grupo de fichas la etiqueta se pondrá en el GDF (script principal del grupo de fichas).
+[DBAddSql] Senctencia Sql~Añade campos al cursor actual atraves de sentencias SQL. Los campos de la condición se pondrán entre llaves, si en lugar de campos se quiere utilizar variables se pondrá {$NomVar}, la diferencia es el signo '$' en las variables, también si se encuentra un par de parentesis se invocará a la función que deberá retornar el valor de busqueda. La etiqueta solo está implementada en las fichas simples.
+[DBBakDelete] [ DateField, UserField ]~Sirbe para antes de borrar un registro copiarlo a una tabla paralela, con la misma estructura, solamente que al nombre de la tabla le añadimos el sufijo "_dlt", contración de (deleted) y viceversa. la tabla o tablas deben existir previamente.
+[DBChild] Tabla, Tabla, ...~Al borrar el registro auxiliar vaciará, que no borrará, los regristros que contengan este valor
+[DBEnd] Mode [ [ | NomEDF/else,... ] | ListaDeCampos ]<BR>...~Operaciones SQL despues de la operación del motor.
+[DBFilterIn] FieldIndex, Table, Condition1 [, Condition2 , .... ]~Se filtra a traves de otra tabla, se gener? un "FieldIndex in (select FieldIndex from Table where Condition1, ...)", la lista de condiciones solo se tiene encuenta la condiciones que tengan valor.
+[DBGatewayOne] Mode | ScriptPHP / Funcion<br />..~Esta etiqueta sólo tiene validez en archivos EDF simples (no en grupos de fichas).
+[DBGateway] Mode | ScriptPHP~Esta etiqueta sólo tiene validez en archivos EDF simples (no en grupos de fichas).
+[DBGroupBy] Fields [Fields,...]~Lista de campos a generar el "Group By".
+[DBIndex] FieldsList [; FieldsList [ | Edit [ | CheckIndex [ | ShowFields [ | Message [ | FuncUser [ | DDBB ] ] ] ] ] ] ]~Sirve para seleccionar los índices únicos de la tabla elegida en
+[DBInsertOnly] ~Al modificar un registro de una tabla se convierte en un alta, poniendo el registro original el campo "status" a "H" de histórico y añadiendo siempre los campos "cd_gs_user" y "cdi".
+[DBIni] Mode [ | NomEDF, ... / else ]<br />...~Este código se ejecutará justo antes de atacar a la base de datos, una vez hecho el submit.
+[DBInsert] Mode [ | NomDF, ... / else ]<br />...~Código PHP a ejecutar después de dar un alta desde una ventana auxiliar y antes de cerrarla, lo que se genere está dentro de una zona javascript.
+[DBJoinTable] Table1.Field = Table2.Field | c1, c2~Solo activo al exportar datos
+[DBLimit] MaxRec [,Number [, MinRec [, Texto ] ] ]~Modifica la variable de configuraci?n situada en el archivo "sql.ini"&nbsp;, que por defecto marca el l?mite m?ximo de&nbsp;filas que se env?an al navegador.&nbsp; Los par?metros "Number" y "MinRec" funcionan como con la etiqueta [MaxRec]. Si el&nbsp;segundo par?metro es negativo indicar? que solo mostrar? los "n" primeros registros. Esto no tiene ning?n efecto si la salida es por PDF o XLS.
+[DBLog] Key, [ Key1] ... [,KeyN] [ [ | ScriptPHP ] | NmTable ]~Activa la grabación de todas las sentencias SQL en la tabla "gs_log".
+[DBMemo] FieldsList~En los campos indicados, al ser enviados al servidor se transformarán ciertos caracteres para que la grabación en la tabla sea correcta. En las multifichas se definirá en el GDF.
+[DBOrder] Field [DESC] [, Field [DESC]] ... [, Field [DESC]]~Columnas de ordenación para los listados, en el caso del grupo de fichas (GDF) se debe poner en la primera de ellas.
+[DBParent] Tabla, Tabla, ...~Al borrar el registro borrará los registros hijos
+[DBRLock]~Si la etiqueta está presente al modificar y borrar registros se chequeará que el registro no ha sufrido ninguna modificación desde que fué leido hasta el momento de la grabación.
+[DBReadRow] Mode | NmFunction~En los listados antes de generar cada fila se puede ejecutar una función de usuario para tener un filtro adicional o modificar los datos a mostarar, la función tiene que devolver un valor logico indicando si el registro se mostrará o no.
+[DBRead] Mode [ | NomDF/else,... ]<BR>...~Incluir código PHP después de leer un registro, solo en fichas.
+[DBSelRec] Mode [ | NomDF/else,... ]<BR>...~En el modo seleccionado se ejecutará el código PHP indicado.
+[DBSequence] NmSequence/NO~Para la ddbb de oracle (tienen que definirse la etiqueta [DBSerial]) define un sequencial, tiene tres posibilidades:
+[DBSerial] Field [ | Sequence ]~El campo de la tabla indicada en la etiqueta [DBTable] es un campo serial o autoincremental.
+[DBSql] Mode [ | NomDF/else,... ]<BR>...~En los listados no deja que el motor genere la sentencia SQL sino la indicada por&nbsp;nosotros. Con esta etiqueta se para la sentencia sql del formulario y se envía al motor de Base de datos la creada posteriormente por el usuario.&nbsp; Ya que el motor no genera el cursor habrá que asignar el número total de registros a extraer a la variable "
+[DBTableRelation] Table | Fields,... | Where~Permite buscar fichas por campos de otra tabla ( no soportado en Oracle).
+[DBTable] Table1 [, Table2] ... [, TableN] [ [ | SufijoISubList ] | TablaInfo1,,,, ]~Nombre de la tabla de la base de datos a utilizar.
+[DBUnion] Delimitador, VariableDate, DesdeAño, HastaAño~Cuando tenemos tablas partidas por años se puede listar por "n" años. Genera un grupo de tablas (si existen) haciendo una unión entre ellas
+[DBView] NmView, Field1, Field2, ...~Permite buscar y consultar datos de otra tabla.
+[DB] SQLFile, HostName, Database, User, Password<BR>...~Especificar un nuevo controlador de bases de datos y sus parámetros.
+[Debug] Mode | Type [ [ | Usuario ]  | LabelARastrear ]~Ejecutar el archivo de definición en modo debug, en el grupo de fichas sólo está disponible en el GDF.
+[DefAux] Field | RelationTable, FieldToSave, FieldToShow~Es una forma alternativa de especificar el formato IDA para el campo especificado, esta definición también se puede hacer a nivel global grabandolo en el fichero de configuración "defaux.ini" editable desde gsEdit en el apartado ficheros de configuración, este fichero se hubica en el directorio de datos (d). Para usar este fichero de macros primero en la etiqueta [Fields] en la definición de los campos en la columna del nombre del campo pondremos una almuadilla mas un nombre ( #NomMacro ) y en el fichero "defaux.ini" el mismo macro mas una barra vertical como delimitador y a continuación la definición por la que se debe sustituir, por ejemplo.
+[DefaultVal] Mode | FieldsList~Pone el valor por defecto en el modo indicado
+[DelFilter] Mode | DefinitionFile | FieldsToDelete [ [ [ [ | Title ] | NoList ] | IncludePhp ] | UrlSubmit ]~Realiza una b?squeda alternativa si no encuentra registros en la b?squeda actual, es decir, cuando se hace una consulta con filtro y no encuentra registros, quita las condiciones&nbsp;definidas en [DelFilter] y si hay mas&nbsp;condiciones har? una nueva&nbsp;b?squeda sin ellas, mostrando los resultados seg?n marque el fichero de definici?n se?alado en la etiqueta.
+[DelOption] Mode | Field | OptionsList [ | noEmpty ]<br />...~El campo especificado debe ser un campo tipo "
+[EditListClick]~Esta etiqueta activa la edición en [EditList] con el botón izquierdo, si se pulsase en una columna sin edición se entraría a la ficha.
+[EditList]  ListaDeCampos [ | NomFunCheck [ | InteriorDeLaColumna [ | ModoGrabaci?n [ | NomFuncIni [ | ScriptPHP | DDBB ] ] ] ] ] ]~Edita las celdas de un listado de forma interactiva, pulsando en la celda con el bot?n derecho se entra en modo edici?n y con enter, el tabulador o las teclas del cursor te desplazas entre celdas editables. No se pueden editar campos definidos en [DBIndex] y el indice tiene que ser simple.
+[EditMirror] FieldsList~Sólo en fichas que componen grupos de fichas.
+[Enter] CampoOrigen, CampoDestino1, CampoDestino2, ... [ | CampoOrigen, CampoDestino1, CampoDestino2, ... ] ...~Para saltar a un campo determinado al dar al "Enter", cuando en un formulario tienes mas de una columna de campos y cada columna es de un tema, para no ir saltando de tema se uas esta etiqueta.
+[ErrorLabel] Label=Field | ...~Al hacer referencia en los mensajes de error en el cliente de los campos se toma la etiqueta, si el campo no la tiene o se quiere poner otra.
+[Exit]~En los DF anidados, utilizando la directiva "#include()", al encontrar la etiqueta [Exit] terminará de parsear el DF.
+[Expire] Seconds~Establece el máximo número de segundos que se le permite a un script ejecutarse, si se establece a cero, no se impone ningún límite. Esta etiqueta solo es necesaria si hay que cambiar el valor por defecto de PHP.&nbsp;
+[Export]~Matriz para exportar datos.
+[ExtForm] Mode | Filename~El motor realiza un "include" del archivo especificado para poder sustituir el formulario HTML generado y así utilizar nuestro propio formulario, el formulario se genera con la etiqueta [SaveForm] el fichero que se genera se puede modificar y luego es incluido mediante esta etiqueta. Opción no disponible en el grupo de fichas.
+[FieldBrowser] Field | ListFieldsAsign | SQL/Function [ | NRowsVisible ] | NColsVisible ] | NmFieldsToSend ] ] ]~Selecci?n de uno o mas datos mediante un browser interactivo, si la etiqueta se quisiera utilizar en los modos "?R" habr?a que acompa?arla de la etiqueta [ShowFields] para poder ver el dato al cargar la ficha.
+[FieldSet] Mode | FromField, ToField, Title~Agrupa los campos que existan dentro de la etiqueta [Fields] desde FromField hasta ToField poniendoles un marco alrededor e insertando la Etiqueta en la parte superior izquierda del mismo, también se puede utilizar dentro de la etiqueta [Fields] el comando "{FS}".
+[Fields] [ TCol / ISubList / Condition ]  [ | Mode ]  [ [ | XLS / XML / PDF / MDB / TXT / CSV / iSubList  / MIX / TRIM ]~
+[FileLog] tabla, fichero, cdi, user, maxNumCopias~Guarda un número determinado de modificaciones de un fichero, pudiendo consultar este log mediante un icono de acceso al lado del campo y en una sublista donde los iconos de gestión.
+[FileMultiple] Field [ | DatosACopiar ]~Permite seleccionar mas de un fichero a la vez, solo en Fichas.
+[FileVar] NomFile~Consulta o Modifica mediante un formulario un fichero plano con variables de configuración, solo está activo en los modos 'cR' y 'mR'.
+[FixZoneTitle] Title~Título de las fichas incorporadas a un grupo de fichas (GDF) cuando en la primera de ellas se ha utilizado la etiqueta [FixZone].
+[FixZone] Mode~En una multificha (GDF) fija las primeras filas de campos para verlas y editarlas desde cualquier solapa (Tab).
+[FootTitle] Linea de C?digo PHP~Crea un subt?tulo pegado a la parte inferior de un listado. Al sacar el PDF tambi?n se ejecutar? esta linea, para saber si es un PDF o no utilizar la funci?n eIsPDF(), en caso de ser PDF deberemos devolver una cadena pudiendo imprimir varias lineas utilizando "&lt;BR&gt;".
+[ForUsers] Mode | ListaDeUsurios/CondicionPHP/SQLCount [ | MensajeAMostrar ]~Solo permitirá la ejecución del DF en el modo indicado a los códigos de usuarios que estén dentro de
+[FormAction] Mode | Action~Modifica el valor por defecto de la acción del formulario &nbsp;"&lt;FORM ACTION='...'&gt;"
+[FormButtons] OpFicha [ | OpcionesNoDisponibles ]~
+[FormCheck] <BR>Mode | JSCondition | Message~
+[FormPosition] XCoord, YCoord [, D:E]~Aplicable en los EDF aplicados a las multifichas.
+[FormStatic] <BR>[FormStatic] NomSubLista | CampoDestino=CampoOrigen, ... | Operaciones en Fila | Operaciones en Columna | NomFuncUsu | CódigoHTML~Esta etiqueta tiene dos comportamientos dependiendo de si tiene parámetros o no:
+[FormType] Mode | Type~Tipo de contorno de las fichas.&nbsp;
+[FormWidths] Mode | ColWidth1 [, ColWidth2] ... [, ColWidthN]~Marca el ancho de las columnas de la rejilla en donde se ubican los datos del formulario.
+[FormatTotals] FormatCol1 [, FormatCol2] ..... [, FormatColN] [[ | ColSpan ]   [ iSubList ] [ | AlineaciónColPrimera]~Formatea las columnas de la línea de totales de un listado.
+[Format] FormatCol1 [, FormatCol2] ..... [, FormatColN]  [ |  iSubList / NoZero ]<br />...~En los listados, formatea las columnas de datos que se deseen.  Se puede poner una funci?n PHP en la cual se sustituir? el c?digo asci '#' por el valor del campo a formatear en esa columna. Los valores de la fila a pintar vienen en la matriz "
+[FreeFields] Field [ , Field, ... ]~Los campos que le llegan al usuario desactivados, en el formulario,&nbsp;al mandarlos al servidor no pueden cambiar su contenido, excepto si los definimos en esta etiqueta.
+[GPFields] Fields | Caracteres~Es una etiqueta para agilizar la prueba de formularios. Si tienes que probar el alta de un formulario de muchos campos en cada prueba tienes que introducir cada vez todos los datos, pues si pulsas el botón derecho en la página principal para sacar el menú de desarrollo tienes dos iconos uno de 'Copy' y otro de 'Paste' para copiar y reproducir los datos del formulario y para que puedas dar altas seguidas y los datos puedan variar para eso es esta etiqueta, si pones una lista de caracteres los generará de forma aleatoria en el campo y si pones un '+' pondrá un número secuencial, es decir primero defines mediante la etiqueta [GPFields] los campos que tienen que cambiar su valor al ser campos únicos ( ej el DNI, el CIF, etc ), despues rellenas un alta y antes de dar a submit haces "copy" con el menú del desktop o el de la pagina actual, haces submit y la proxima vez que salga la ficha de alta si pulsas a "Paste" se copiaran todos los valores de los campos del alta actual variando los valores de los campos indicados en las etiquetas [GPFields]..
+[GesAux] Mode | Field | Script | i,u,d~Permite el mantenimiento de una tabla axuliar desde el campo select.
+[Graph] [R/C/A] | ROW(y) | COL(x) | TERRITORIO(x) | ALL COL(x) | LegendTitle | Variable=Valor, ...~Genera gráficas partiendo del listado.
+[GreenBar]~En los listados utiliza fondos de colores alternativos para cada línea.
+[Grid] Field [ | [%][M][2][b] [ | Definicion ] ]<BR>...~En un listado te hace el cruce entre varios campos. A continuación de la etiquéta se puede introducir el código del interior de la función para calcular la columna donde se colocará el dato, el parámetro que recibe es "$Value" y este código tiene que terminar con el comando "return" y el número de columna donde se colocará el dato.
+[GroupLabels] NomEti-1 [ | NomEti-2 ] ...<BR> NomCampo [ | DefNomEti-1 ] ...~Agrupa etiquetas para definirlas todas a la vez
+[HTMEnd] Mode [ | NomDF/else,... ]<BR>...~Añade código HTML justo antes del final del BODY, es decir, antes de la etiqueta "&lt;/BODY&gt;".
+[HTMHead] Mode [ | NomDF,... ]<BR> ...~Incluir código HTML dentro del &lt;HEAD&gt;. Por lo general se utiliza para incluir&nbsp; etiquetas: &lt;META&gt;,&nbsp;&lt;LINK&gt; o &lt;STYLE&gt;, pero también se pude incluir código Javascrip para controlar etiquetas Html como el ejemplo que se muestra.
+[HTMIni] Mode [ | NomDF/else,... ]<BR>...~Después de la etiqueta "&lt;BODY&gt;" inserta el código HTML que indiquemos. En el grupo de fichas se pondrá en el fichero "gdf".&nbsp;&nbsp;Si ponemos una hoja de estilo incrustada las clases en lugar de indicarlas con un punto, como este es un comentario, las indicaremos con el punto pero con carácteres extendidos "&amp;#46;".
+[Header] Definition~Genera la función Header() de PHP.
+[HelpHTML] IdHelp~ 
+[HelpMarkdown] idHelp~ 
+[Help] Mode [ | CódigoHelp ]~Clave de acceso a la ayuda.
+[Icon] Mode | Field,... | KeyIcon | InteriorDelObjeto [ | filled ]<br />...~Pone iconos del sistema, es igual que llamar a la funcion eIcon(). Si KeyIcon no existe mostrará una imagen con ese nombre del directorio "g".
+[InsertToSeek] [LabelButton] | [ReqFilter]~Esta etiqueta es solo para el grupo de fichas en modo alta y sirve para que con un grupo de fichas se pueda ejecutar una búsqueda.
+[JPCheck] Mode [ | ListaVarSession ]~Esta etiqueta se ejecuta inmediatamente despues de [JSCheck] y tiene la particularidad que se ejecuta tanto en el cliente como en el servidor y sirve para hacer el mismo chequeo en los dos entornos.
+[JSCheck] Mode [ | NomDF,... [ | ListaCampos ] ]~
+[JSDim] Mode | MatrixName | SQLExpr~Manda una matriz de una o mas dimensiones al cliente al final de la página en Javascript, antes de la etiqueta [JSEnd].
+[JSEnd] Mode [ | NomDF/else,... ]<BR>...~En los modos indicados, se inserta el código Javascript al final del HTML.
+[JSGatewayOne] Mode<br />     ...~Esta etiqueta sólo tiene validez en archivos EDF simples (no en grupos de fichas).
+[JSHead] Mode [ | NomDF/else,... ]<BR> ...~Añade código Javascript al final de la etiqueta "&lt;HEAD&gt;". En todas las etiquetas multilinea de JavaScript se puede asignar variables de PHP de la forma &lt;? $NomVar ?&gt;, se puede utilizar también &lt;?= ?&gt; y poner el ";" al final de la variable.
+[JSInclude] Mode | FilesToInclude~Incluye la lista separada por comas de los archivos JavaScript especificados.
+[JSIni] Mode [ | NomDF/else,... ]<BR>...~
+[JSOnClickRow] Mode [ [ | NomDF/else,... ] | NumCol/NomCol, NumCol/NomCol,... ] <br />...~
+[JSSelRow] Mode [ | NomDF/else,... ]<BR>...~Código&nbsp;Javascript a ejecutar cuando se selecciona un registro de un listado. Suele usarse para copiar información de la ventana actual a la ventana padre. Se pasan las siguientes variables
+[JSSelRows] [FuncUser] | [NmIcon]~Te permite seleccionar un grupo amplio de registros desde un listado.
+[JsOnLoad] Mode [ | NomDF/else,... ]<BR>...~Cófigo a ejecutarse en el onload, si se crean funciones en este espacio solo serán accesibles desde la carga. Realmente lo que se hace es crear la función _JsOnLoad() donde se mete el contenido de esta etiqueta.
+[Jump] NomDF~Salta a ejecutar otro fichero de definicion (DF). Una de sus utilizaciones es para cuando queremos poner una lupa de busqueda/selección en la ficha pondremos en la columna "modo" una "B" para buscar mediante una ficha ( poniendo condiciones ) o una "b" para seleccionar desde un listado, estas busquedas llamarán a los script "[NomCampo].fdf" y a "[NomCampo].ldf" respectibamente, estos script se utilizan para mostrar varios campos de las entidades a seleccionar pero cuando se puede hacer con el mismo script de la entidad en los DF "fdf" y "ldf" pondremos la etiqueta [Jump] para que salte a su script, es decir estará ejecutando otro script evitando duplicar el código.
+[Label] Fields | Texto a mostrar~Esta etiqueta se utiliza para cuando quieres mostrar mucha información , ya sea texto con o sin html, y no quieres que en la definición de los campos en la etiqueta [Fields] se vea tan farragoso al formatear los parámetros y que la primera columna sea muy ancha..
+[Language] Idioma1 [,Idioma2,...] | VariablesPublicas | Tron=false<BR> VarLNG | TextoIdioma1 [ | TextoIdioma2 | ... ] [ ~ Comentario ]~
+[Link] Field, Field, Field, ...~Relaciona que los campos sean editables si su predecesor está relleno.
+[ListCheckBox] Tipo | ON | OFF~Define como se visualizan los "checkbox" en los listados. En el fichero de configuración "sql.ini" se configura la visualización general mediante la variables "$_CheckBox".
+[ListCompareTH] TH,TH,TH,...~Título de la columna en la comparación de listados, si "TH" lo dejas en blanco, no pintará nada y si quieres que sea el valor del formulario se pondrá un "=". Esta etiqueta solo está activa si se utiliza la etiqueta [ListCompare].
+[ListCompare] ListaDeCampos | RanfoDeFechasIni, RanfoDeFechasFin[ | Lista de Nº de columnas [| nb,nb ] ]~Listado comparando los datos entre un rango de fechas
+[ListMultiSelect] Label | script.php / functionJavascript() [ | CheckRow [ | row ] ]~Mostrará un listado pudiendo seleccionar cualquier número de filas, ejecutando despues un script php o una funcion javascript.
+[ListWidth] px/%~Define el ancho total de un listado
+[LoadIni] ListaDFaCargar~Lista de ficheros a cargar en el arranque
+[LoadProcedure] NomProcedure [,NomProcedure,....]~Lee un procedimiento almacenado, pudiendo modificarlo posteriormente.
+[LoadSel] ListaDFaCargar~Lista de ficheros a cargar al seleccionar la etiqueta
+[LoadTrigger] NomScript, ...~
+[LocalSelect] Field=NomSelect [, Field=NomSelect] ..... [, Field=NomSelect]~Para optimizar el rendimiento de la Intranet es posible enviar "&lt;SELECT&gt;" con datos al Cliente una sola vez y más tarde utilizar esos mismos datos sin que el servidor tenga que volver a mandarselos, es útil por ejemplo con tablas que se usan frecuentemente.
+[Location] Mode~En los modos indicados, se muestra en la parte superior de la ficha la ruta de opciones sobre la que se está operando.
+[LockFile] dd/hh:mm (NºUsuario)~Bloquea el fichero&nbsp;para escritura dejandolo visible para el resto y pudiendo desbloquearlo solamente el usuario que lo bloqueo o el supervisor, esta etiqueta solo se puede poner y quitar desde el icono de gsEdit.
+[MaxRec] Number/FULL [ [ [,MinRec] | FunctionUltimaPag [ | FunctionEnCadaPag | Increment ] ] ]~
+[MenuIcons]~
+[Mirror] FieldsToReflect~Sólo en fichas que componen grupos de fichas.
+[MsgAnswer] Mode | MessageOK [ [ | MessageERROR [ | JSOnClick | sgEjecutaJS ] ]~En los modos especificados, mensaje a mostrar al realizar alguna operaci?n de disco.
+[MsgSubmit] Mode | Message/FunctionJS [ [ [ | CondicionJS ] | AnchoPx [ | TextAlign ]~Con esta etiqueta podemos mostrar al usuario un mensaje de confirmación antes de hacer el submit. En el lado del cliente se puede modificar el contenido del mensaje mediante la variable javascript "_MsgSubmit". En caso de que el mensaje de confirmación se muestre en función de unas condiciones se especificará con el tercer parámetro "CondicionJS".
+[MsgTime] OkMilliseconds, ErrorMilliseconds~Configura el tiempo de visión de los mensajes de INSERTADO, MODIFICADO, etc., que aparecen después de aceptar una ficha o Grupo de fichas.
+[MyData] Nomcampo=VariableDeSesión~En los modos de consulta o modificación muestra la ficha o multificha ejecutando la busqueda mediante la etiqueta [MyData] para sacar la ficha directamente sin pasar por la ficha de búsqueda, esto evita que se llame a una ficha sin permisos.
+[NaN] Mode | NombreNaN | TextoBoton | TituloEnFichas~Gestión de tablas NaN, relaciona la tabla "A" con la "B" mediante una de relación "AB". Este proceso sólo está en los modos "cl" y "ml".
+[NoAbort]~Esta etiqueta evita que se pueda interrumpir procesos críticos&nbsp;aunque el usuario cierre la aplicación, en cuyo caso el proceso continuará en el servidor hasta que se termine.
+[NoButton] Mode~En los modo indicados no se pintará el botón pertinente.
+[NoEditFilledSession] Mode~No permite editar las variables de sesión si están rellenas.
+[NoEditFilled] Mode [ [ | session ] | ListaDeCampos ]~Evita la edición de los campos que esten rellenos con un valor por defecto cuando este tenga contenido. Puedes tener usuarios con distinto tipo de campos a editar.
+[NoEdit] Mode | FieldsList~Los campos incluídos no será editables en los modos indicados.
+[NoSelectFill] Campo1,Campos2,... / *~En los modo de alta y modificación los select no editables viajan rellenos (con todos los options) a no ser que se defina en esta etiqueta en cuyo caso solo se rellenará el valor que tenga por defecto.
+[NoSelectRow]~Desactiva poder seleccionar una fila en un listado de selección.
+[NoSort]~Desactiva la ordenación en los listados.
+[NoTools] OpcionesADesactivar[S] [ [ | FuncionDeUsuario [ | UserFilterFunction [ | ExtensionesAdicionales [ | NºColumnasIguales ] ] ] ]~Desactiva todas o algunas de las utilidades del listado. Si ponemos el nombre de una función de usuario esta se ejecutará al ejecutar las extracciones enviando la inicial de la acción a ejecutar y pudiendo devolver parámetros adicionales para la llamada por la URL al servidor.
+[Note]<br /> ...~Al encontrar esta etiqueta se dejará de leer la definición, es decir, se ignorará todo el contenido desde esta etiqueta hasta el final del script.
+[OnChange] Mode | Field [,Field,..] | JavaScript [[ | FuncUsuario() | SeEjecutaEnLaCarga ]]<br />...~Cada vez que cambie el valor del campo se ejecutara el código JavaScript asociado.
+[OnLoad] Mode | LineaJavaScript/JavaScriptFunction~En los modos indicados, ejecuta una función o el código&nbsp;JavaScript inmediatamente después de haber cargado la página.
+[OptionsInList] Opciones | [[Icon] / Condicion] | serFunction | label [ | Condition ]~Ejecutar un listado con opciones de mantenimiento, la opción se ejecutará como "edes.php?Lcl:..", el modo en que se ejecuta indica la opción por defecto a ejecutar en el listado, también puede ser "ml", o "bl".
+[Options] Mode [ | NomDF, ... ] <BR>~En las fichas se activa un icono de "Menú de opciones", si se ejecuta una ventana nueva con "top.eSWOpen()" se buscará la url en el árbol del usuario y si no tiene acceso a esta opción no saldrá en la lista de opciones y si la url no existe en el árbol para ningún árbol si se mostrará.
+[OtherDF] Mode | EDF | Condition~Incluye otro archivo EDF si hay un sólo registro y cumple la condición especificada, esta etiqueta solo está activa en el grupo de fichas.
+[PDFBreakPage] ListaDecampos~Si el valor de la lista de campos cambia hará un salto de página en la salida PDF.
+[PDFColBorder] Ancho, Ancho<BR>~Ancho de la linea vertical de las columnas en los PDF, el valor menor será "0.1" que es el valor por defecto de cada columna, si se quiere que la linea no se vea se pondrá "0". El número de parámetros es el numero de columnas mas uno al haber una linea mas que columnas.
+[PDFCol] NumChr1 [, NumChr2] ..... [, NumChrN] <BR>~Número de carácteres que contiene cada columna del listado PDF.
+[PDFColsShade] Sombra%, Sombra%, , , <BR>~Da sombra a las columnas indicadas en el PDF, el % tiene que se mayor de "0" y menor de "100".
+[PDFForm]~Genera la respuesta de una consulta en Fichas en formato PDF.
+[PDFInclude] Modo [ | AddMargenTop=0 ]~Inserta código PHP fundamentalmente instrucciones para modificar el PDF al principio y/o final de cada página con posibilidad de crear una primera hoja de portada y una última hoja. El Modo se puede definir con las iniciales o con el literal. Es una etiqueta multilinea, no se pueden definir funciones en esta zona y las variables a las que se accede son:
+[PDFLabel] NomFile | OffsetX,OffsetY | Ancho,Alto | MargenRight,MargenBottom | NEtiPorLinea,NEtiPorColumna [ | AltoLetra [ |TipoLetra [[ | NomFunctionUsu | padding ]]]]<BR>...~Generación de etiquetas, fichas y sobres&nbsp;en formato PDF. Tener en cuenta que si se quiere pintar la parte visible de un select como por ejemplo "cd_via" habrá que poner "nm_via".
+[PDFListCompare] TH, TH, TH, ...~Título de las columnas de la comparación de listados al sacarlo por PDF o XLS, si se deja en blanco no mostrará nada, si se pone un "=" pondrá el texto que sale en el formulario. Está etiqueta solo está activa si se utiliza la etiqueta [ListCompare].
+[PDFList]~Genera el listado en formato PDF.
+[PDFPhp] Type | NomFile~Código PHP a incluir al generar salidas a PDF. Se utiliza para generar funciones para imprimir datos. Por defecto lo busca en el subdirectorio 'd'.
+[PDFSaveVar] Variable,,,~Preserva el valor de las variables indicadas al sacar PDF o al paginar.
+[PDFTh] Title1 [, Title2] ..... [, TitleN] [ | campo=etiqueta, ...] [ | campo=NomFuncion() ; [ campo=NomFuncion()] ]~Título de las cabeceras del listado en PDF, si se deja en blanco no pondrá nada, si se pone un "=" o no se ha definido la columna&nbsp;pondrá la etiqueta del formulario.&nbsp; El segundo parámetro es para definir label de campos que no está en la definición del listado ni en la DB "gs_campo" y el tercer parámetro es para mostrar un valor distinto en el valor de la condición.
+[PDFVar] PDFVar = Value<br />...~Nos permite modificar variables de configurac?on del PDF, es opcional el "$" delante de la variable as? como el ";".
+[PDFWrap] MáximasLineas [ [ [,RespetarRetornosDeCarro=true] [, Grid=false ] ] | ListaCamposWrap ]~Multilínea en en los PDF en los textos que sean mas ancho que la columna a visualizar.
+[PHPCheck] Mode [ | NomDF,... ]<BR>...~Es igual que la etiqueta JsCheck de javascript pero en el servidor y con php.
+[PHPEnd] Mode [[ | NomDF/else,... ] | UNIQUE ]<BR>...~Añade código PHP justo antes del final del BODY, es decir, antes de la etiqueta "&lt;/BODY&gt;".
+[PHPForm] Mode [[ | NomDF/else,... ] | UNIQUE ]<BR>...~Incluir codigo PHP para manipular la matriz que genera el formulario.
+[PHPHead] Mode [[ | NomDF/else,... ] | UNIQUE ]<BR>...~Código PHP al final de la etiqueta &lt;HEAD&gt;
+[PHPIni] Mode [[ | NomDF/else,... ] | UNIQUE ]<BR>...~Código PHP despues de la etiqueta &lt;BODY&gt;
+[PHPMenuIcons] Mode [ | DF,.. / else ]~Etiqueta sólo activa en el grupo de fichas y se utiliza para meter iconos o gráficos debajo del menú del grupo de fichas. Realmente es el código a insertar en esa zona.
+[PHPNextPage] Mode [ | Script ]~Código a ejecutar en los listados paginados cada vez que se cambie de página.
+[PHPSession] VariableCiente=VariableDeSesion, ... [ MensajeDeError ]~Chequea en el lado del servidor que las variables de sesión que tenga el usuario asignadas sean las mismas que se manda en el POST y en el GET. Empareja cada variable de sesión con su variable POST o GET que esté presente&nbsp;en el script
+[PHPStart] Mode [ [ | NomDF,.../else ] | UNIQUE ]<BR>...~PHP a ejecutar en el inicio, esta etiqueta se debe poner la primeta en el DF.
+[PagFoot] PieDePagina~Establece el pié de página, por defecto está como "&amp;b&amp;bPág. &amp;p/&amp;P".
+[PagMargin] Top, Right, Bottom, Left~
+[PagRotate]~Rota la página al imprimir, poniendola horizontal.
+[PagTitle] Titulo~Titulo de la página impresa, por defecto se toma el valor de la variable "$_CopyRight".
+[PersistentVar] NomVar[ ,NomVar, ...]~Preserva el valor de la variable que se envíe por URL por todos los modos, estas deben empezar por barra baja,&nbsp;nómbre de&nbsp;variable sin "$", el nombre no puede coincidir con ningún campo del formulario.
+[PreserverVar] [Variable,,,]~Preserva el valor de todas las variables que le llegan al listado, pudiendo poner como parámetro otras variables, esto se utiliza por ejemplo si el título del listado es variable y se tiene la opción de pasarlo a PDF, etc.
+[Progress] ListaDeCampos | Titulo [ | ListaDeDetalle ]~Se muestra una barra de progreso, el cálculo del tiempo es estimado con relación al último cálculo
+[RadioList] Field | NmCol | Field/Select/FuncUser/OptionList [ | TypeList='' [ | AltoEnPx ]]~Muestra un grupo de raiobutton.
+[Radio] Field | Config | Value1,Text1 [; Value2,Text2]...[; ValueN,TextN] | Title | [Long1] [,Long2] ..... [, LongN] [ | QuitaSelección ]~Define el comportamiento de los &lt;imput&gt; tipo 'Radio'
+[RelationFields] FieldList [ [ [ | CampoASaltarse ]  | Saltar=true ]  [ | FieldListInMemory  ]<br />...~Forma dependencias entre campos para utilizarlos en los "SELECT's" anidados. A parte de esta etiqueta en la etiqueta [Fields] hay que definir la lista de campos del tipo "Ss" SubSelect, el primer campo puede ser del tipo que se quiera, normalmente será un "S" Select o un "T" Texto.
+[RelationSubList] SubListPadre, SubListHija, CampoDeRelaci?n~Relaciona dos sublistas
+[ReqFilter]~Activa el filtro obligatorio para las búsquedas, es decir, obliga al usuario a introducir condiciones en los formularios de búsqueda, no se tiene en cuenta los valores por defecto ya que no es un filtro puesto directamente por el usuario.
+[RowColor] Condition | CSS~En un listado podemos modificar el color de las filas en función de ciertas condiciones, por ejemplo para resaltar valores negativos.
+[RowsOp] ColOp1, ColOp2, ..... , ColOpN [ | LongitudCampo ]<BR>~Operaciones a realizar por cada fila, solo en listados, crea una columna&nbsp;al final con el resultado de las operaciones especificadas, es decir, realiza operaciones aritm?ticas verticalmente.
+[SDF] Field [ | script[.sdf] [ | icon [ | FieldSeek | titleSubWin ] ] ] ]~Define la selección de datos de otra tabla
+[SaveForm] Mode | NomFile~Orden de desarrollo para grabar la parte del formulario a un fichero php externo para modificarlo y adaptarlo, cuando con eDes no se le puede dar la forma que se quiere. Las opciones "c", "b", "m" y "a" si no tiene valores por defecto se puede usar tal cual pero si utilizáramos la opción por ejemplo "mR" que contendría datos hay que sustituir los datos por variables PHP para que se adapte a cualquier situación. Esta etiqueta solo se usa en desarrollo para generar la base del fichero a modificar una vez generado se quitará y en su lugar se usara [ExtForm] para importar el formulario personalizado. Opción no disponible en el grupo de fichas.
+[SaveTrace] Mode~Deja el rastro en el LOG en el proceso actual.
+[SelInfo] Mode | Field |  SourceFile [ | TAB / T / LIST / L / NOEVENT ]<br />     TargetField = SourceField~Ayuda a seleccionar un dato en una ficha auxiliar o de listados mediante el código "B" en la columna modo de los campos, se buscará el registro metiendo condiciones en una ficha y seleccionándolo desde la lista.  Esta etiqueta puede ser multilinea pudiendo el tercer parametro ponerse en varias lineas incluida si se quiere en la linea de la etiqueta, con la siguiente sintaxis:
+[SelectColLabel] CampoPadre, CampoHijo | AddField | Valor~Define la columna del select a visualizar en función de una condición, tienes un select con dos columnas de texto mostrando una u otra en función del valor del CampoPadre. El uso habitual es poner los textos de un select en función del campo "sexo".
+[SelectMultiple] a,?R | Field | LongitudDelCampo [ | SQL [ | Sort=false ] ]<BR>[SelectMultiple]  ?   | ListaFields~Mantenimiento de un campo que se puede seleccionar ,mas de un option alimentado por un select.
+[SelectTree] Mode | Field~Genera un selector en formato árbol pudiendo tener todos los registros cargados o irlos cargando según se necesitan
+[SessionVar]~El motor generará un formulario con las variables de sesión y permitirá al usuario modificarlas.
+[SetVar] NmVar = [ Value / Value,Value,.. ]~Asigna valores a variables del sistema, en el grupo de fichas irá en el gdf. El caracter "$" es opcional así como el ";" final.
+[ShowFields] Mode | Field [,Field,...] | SearchExpr<br />...~Muestra campos que no existen en la tabla actual.
+[ShowFilter] [SubMode]~Muestra las condiciones en un listado, esta etiqueta se puede definir en el segundo parámetro de la etiqueta [Title]
+[SkipTD] Mode | FieldsList~El formato de un formulario es "Etiqueta + Control", si se omite la etiqueta o ésta se ubica encima del control el motor dejará vacía la celda en donde debería ubicarse dicha etiqueta. La etiqueta SkipTD mueve el control a la izquierda para no dejar vacía esa celda.
+[SlideCol] NumeroDeColumnas~Fija las "n"&nbsp;primeras columnas visibles del listado para que al realizar scroll horizontal de la ventana se pueda seguir visualizando.
+[SortList] Mode | Field [ | FieldsIguales ]~Te permite ordenar manualmente un listado. Cuando tienes una tabla auxiliar y necesitas una ordenación particular puedes poner un campo para indicar la ordenación y ordenarla después de introducir los datos de forma visual. Para seleccionar las filas habrá que hacer click en la columna de ordenación "
+[Stop] Modo~Mediante esta etiqueta se para el ciclo de las acciones de las fichas, por ejemplo si queremos que el usuario modifique su clave y una vez modificada queremos que se termine el proceso. Si se está ejecutando en una subventana esta se cerrará después del mensaje.
+[SubListDF] NameSubLIst | FileName | FieldRelation~
+[SubList] Mode | Id [ | TituloSuperior | TituloVentana ]~Crea un listado, con posibilidad de mantenimiento, dentro de una ficha o grupo de fichas.
+[SubSelectMemory] Campo [,...]~Modifica el comportamiento de la etiqueta "RelationFields" haciendo que el SubSelect se calcule en el lado del cliente, quitando algunas prestaciones de los SubSelect, tambi?n se puede definir dentro de la etiqueta [RelationFields] . Por cada campo se genera una matriz con el mismo nombre que el campo precedido por dos giones bajos.
+[SubTitle] [Text]~Crea un subt?tulo pegado a la parte superior de un listado (justo debajo del t?tulo), es c?digo PHP. Si se pone solo la etiqueta sin valor pondr? como subtitulo la fecha a la izquierda y la hora a la derecha, ser?a equivalente al siguiente ejemplo.
+[SubWin] Mode | WindowName~Genera pseudo ventanas dentro de la página. Para desde una función controlar la ventana que se ha generado se localizará por su nombre con una barra baja delante "_WindowName", la ventana es invocada mediante la función&nbsp; eLoadDiv()&nbsp;
+[SubmitHidden] Mode~Ejecuta el submit por un iframe oculto en los modos: a,mR,bR,cR. si existe la funci?n&nbsp;"FUNCTION_SubmitHidden" la ejecutar? pasando dos par?metros, el primero si la operaci?n ha sido correcta (true/false) y el segundo el mensaje a mostar.
+[TDStyle] Modo | ListaDeCampos | InteriorDelEstilo~Define el "style" que tendrá la celda "TD" que contiene el campo.
+[THColSpan] FieldBegin, FieldEnd, Title [ | FieldBegin, FieldEnd, Title |...]~Genera una fila de TH uniendo varias columnas, unirá desde "FieldBegin" hasta "FiledEnd" poniendole "Title" como nombre del grupo de columnas, si el nombre del campo se define con llaves "cd_prove{prove,cd_prove,cif}" el nombre del campo será "cif" en este caso. El literal del "Label" del colspan no puede repetirse en los "Label" de la segunda linea de TH.
+[TXTLog] mode | ficheroDeLog [ | prefijo [ | y/ym ] ]~Se graba en un fichero plano en los modos "A", "B" y "M" la petición POST y GET
+[Tab] Mode | [{srcIcon}] TabText | [-]EDF [ | TitleOpMenu [ | FuncUser ] ]  [-NoZone]~Se utiliza en la definici?n de los grupos de fichas (GDF).
+[Template] Modo | NombreScript~Toma un fichero en HTML o PHP que genera un listado y el motor incrusta las filas, la zona a repetir por cada fila se delimita por:
+[TipForm] Mode [ | L/F/* ] | Field [ | Text [ | Width [ | Sg ] ] ]<BR>...~Genera un TITLE en un determinado campo, la ayuda es visible al ponerte con el rat?n encima del label y/o del campo, tambi?n cuando el foco se pone en un campo que tiene ayuda se mostrar? durante 2 segundos independientemente de su tiempo de exposici?n y pulsado F1 se mostrar? la yuda sin tiempo de caducidad.
+[TipTD] WhatCol | WhatInfo [ [ | Title | Width ]]~En un listado, al colocar el puntero sobre una celda determinada, se muestra una subventana con la información especificada en el segundo parámetro.
+[TipTHTop] ColTitle1 [| ColTitle2] ... [| ColTitleN]~Cuando en un listado hay dos TH se muestra un Title en la cabecera de la fila primera y con [TipTH] de la segunda fila.
+[TipTH] ColTitle1 [| ColTitle2] ... [| ColTitleN] <BR>~Se muestra un Title en la cabecera del listado &lt;TH&gt;.
+[Title2] Segundo título~Muestra una segunda linea de título en los listados, alineado a la izquierda.
+[TitleIcon] Mode | IconoHtml [ | NomDF,... / else ] <br />[TitleIcon] Mode | HPCV   [ [ [ | NomDF,... / else ] | FileHelp ]  | ClaveHelp ]~A la derecha del titulo de la ficha se puede poner uno o mas iconos de acceso rápido, así como en los listados a la izquierda de los lTools.
+[TitleToExtract] Texto~En la opciñon "Log de Descargas" cambia el nombre del documento que por defecto será lo definido en la etiqueta [Title]
+[Title] Text [ [ | ModeCondicion / FuncionDeUsuario ]  | NoTitle ] <BR>[Title] Text Tab | Text List [ [ | ModeCondicion / FuncionDeUsuario ] | NoTitle ]~Pone título a una ficha, grupo de fichas o listado. Se puede poner etiquetas HTML. Si se quiere poner el "title" desde [HTMIni] para cojer el mismo tipo de letra, color y fondo se referenciará con el "ID=TITULO" ej:
+[TotalsRows]~Coloca un color de fondo a la última fila del listado.
+[TypeForm] NombreTipoGifSinExtensión | BordeFormulario [|EstiloDeLaFicha]~
+[Unsel] ListFields | PrefijoNewPost~Elimina los campos del post, con posibilidad de crear una copia en la matriz post con un prefijo.
+[WhereSelect] Mode | Field | SQLCondition<br />...~Es la condición / filtro ( WHERE ) a ejecutar en el campo select y el "order by".
+[Width] L:F | Field [,Field2, Field3,...] | Width / = [ | MínimoAncho]~Define el ancho de la columna del control o su etiqueta en el formulario.
+[WinCloseESC]~Solo en el caso de las subventana si está esta etiqueta al pulsar la tecla ESC se cerrará la subventana.
+[WinClose] [ NomDF,... ]~Al finalizar el proceso de selección en una ventana auxiliar cerrar ésta automáticamente.
+[WinForm] Width, Height [ , Scroll [ , Title ] ]~Marca el ancho y el alto en píxeles al mostrar una subventana&nbsp;con un formulario.
+[WinList] Width, Height [ , Scroll [, Title ] ]~Define&nbsp;el ancho y el alto en píxeles al mostrar una ventana auxiliar con un listado, además centra la ventana.
+[WinNew] Width, Height [,Scroll]~En los listados de selección, si deseamos ver la ficha en una nueva ventana para poder ver más de una ficha a la vez, esta etiqueta define el tamaño de esa nueva ventana.
+[WinSel] Mode | Field | Mode:DF~Ventana incrustada de selección
+[WinTitle] Title~Define el título de la ventana del explorador en ventanas auxiliares.
+[WinTools] Mode | IconosAOcultar~Oculta uno o varios iconos de la subventana
+[iTools] Mode | Label | NmFunction [ Label | NmFunction ] ...~Añade opciones, sólo en modo desarrollo, al&nbsp;menú contextual iTools.

@@ -1,0 +1,22 @@
+[Title]=localStorage
+[DBTable]{$_SESSION['ShareDictionary']}gs_storage
+[DBIndex]type_storage,key_storage
+[DBOrder]type_storage,key_storage
+[AddOption]*|type_storage|,; x,Texto; c,CSS; r,Recurso
+[Assign]a,mR|cdi
+[AddCode]?R|text_es|I|eCode eFitHeight
+[Fields]||trim
+Type storage|type_storage|n|SV|7||AQ||#|
+,  Key storage|key_storage|#|T|30|200|AQ||#|
+,  Cdi|cdi|CDI|T|19|<note|-|#y2s#|#|
+Text es|text_es|#|A|9000,90,10||MQ|||
+Text en|text_en|#|A|2000,90,5||ML|||
+Text ca|text_ca|#|A|2000,90,5||ML|||
+Text fr|text_fr|#|A|2000,90,5||ML|||
+Note|note|#|A|100,90,2||M|||
+[JSEnd]?R
+if( $type_storage=="r" ){
+S("TEXTAREA").each(function(k,o){
+if( o.name!="text_es" && S.left(o.name,5)=="text_" ) eHide(o.name, "TR");
+});
+}

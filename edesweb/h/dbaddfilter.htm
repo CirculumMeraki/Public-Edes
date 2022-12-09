@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>DBAddFilter 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[DBAddFilter] Condition [ | FielsNoInfo [ |&nbsp;_PDFCONDITIONHIDDEN&nbsp; [ | _PDFCONDITIONHIDDEN ... ] ]&nbsp;] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Condición que se añade a la cláusula "where", en el caso de que sea un grupo de fichas la etiqueta se pondrá en el GDF (script principal del grupo de fichas).<BR>Se pueden poner variables encerradas entre llaves, por ejemplo: "{$_Node}" si se tiene que utilizar comillas se deben de utilizar las comillas simples.<BR>También puede ser una función, sin parámetros, que devolverá la condición a añadir. <BR>hay una forma especial para buscar registros con condiciones de otras tablas, poniendo un "=" antes del "where" a añadir y poniendo el alias del campo de la tabla padre como "#." o devolverlo desde una función.<BR><SPAN style="WIDTH: 25px"></SPAN>[DBAddFilter] =exists (select [campo] from [tabla] where #.[campo]=10000) <BR><SPAN style="WIDTH: 25px"></SPAN>[DBAddFilter] =FuncUser() <BR>Si se quiere utilizar la variable $_DBADDFILTER" para cambiar el filtro de forma dinámica es posible tener conflicto con los alias de los campos en este caso todos los campos que necesiten alias de la tabla principal de definirán con el alias "#" siendo por ejemplo&nbsp;$_DBADDFILTER = "#.campo in ( select ...)" 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD><STRONG>Condition</STRONG>&nbsp;</TD>
+<TD>Condición SQL. Si hay select o se utilizan mas de una tabla y el nombre de los campos a usar está en varias tablas se le tendrá que anteponer el alias siendo "A" el alias de la tabla principal y cada select que se utilice de otra tabla "B", "C", etc. <BR>Se puede utilizar esta etiqueta para los subselect cuando estos los ejecutan un "ldf".&nbsp;&nbsp;</TD></TR>
+<TR>
+<TD><STRONG>FielsNoInfo</STRONG> </TD>
+<TD>&nbsp;Lista de campos a no informar en los listados ni PDF cuando se muestran las condiciones del listado.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[DBAddFilter] estado=3 <BR>[DBAddFilter] gs_node={$_Node}<BR>[DBAddFilter] HesdeHace2Dias()<BR>[DBAddFilter]&nbsp;cd_prov in (select cd_auto from auto)<BR>[DBAddFilter]&nbsp;=exists (select cd_auto from auto where cd_auto=#.cd_prov)<BR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

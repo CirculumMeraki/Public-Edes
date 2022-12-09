@@ -1,0 +1,39 @@
+#(m)  [Title] =HABLAR CON ...
+#(l)  [Title] =SELECCIONA USUARIO A LLAMAR
+#(mR) [Title] =USUARIO A LLAMAR
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]user_surname, user_name
+[AddButton]mR|<IMG src='g/chat_call.gif'>|Llamar|eChatLlamar()
+[Button]mR|Buscar
+[FormButtons]
+[Cursor]
+[TipForm]*|phone2|Segundo Teléfono
+[WhereSelect]*|cd_gs_tree|permission='S'
+[Fields]?|2
+Usuario|cd_gs_user|+|T|5||Q|||
+Nombre|user_name|X|T|20||Qd|||
+,2 Apellidos|user_surname|X|T|30||Q|||
+Local|cd_gs_node|+|S|3,60||Qi|||
+Cargo|cd_gs_position|+|S|30||Q|||
+[Fields]
+Usuario|cd_gs_user|+|T|5||-|||
+Nombre|user_name|X|T|20||A|||
+,Apellidos|user_surname|X|T|30||A|||
+Local|cd_gs_node|+|S|3,60|/+user_surname|Ai|||
+Teléfonos|phone|T|T|9||AL|||
+,|phone2|T|T|9||AL|||
+,Cargo|cd_gs_position|+|S|30|>user_surname/user_surname|A|||
+E-Mail|email|@|T|65|+user_surname|ALE|||
+-|MENSAJE
+<|_mensaje|#|A|250,90,3|+user_surname|ML|||
+-|FICHEROS ADJUNTOS
+<|_fichero|f|F|60|337|ML|||
+[UploadFile]_fichero||cd_gs_user|3000000|Ver Fichero
+[JSIni]*
+window.external.eChatSelUser()
+[JSEnd]mR
+function eChatLlamar(){
+window.external.eChatCall( eGF('cd_gs_user'), eGF('user_name')+' '+eGF('user_surname'), '' );
+top.eSWClose(window);
+}

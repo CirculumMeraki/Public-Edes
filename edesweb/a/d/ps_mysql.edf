@@ -1,0 +1,14 @@
+[Title]=LISTA DE PROCESOS MySql
+[Fields]
+Id|Id|+|T|10||-|||
+Host|Host|D|T|30||-|||
+db|db|D|T|30||-|||
+Command|Command|D|T|30||-|||
+Time|Time|D|T|10||-|||
+[DBSql]l
+$usuCursor = array();
+$resultado = mysql_list_processes($_HndDB);
+while( $fila = qArray($resultado) ){
+$usuCursor[] = array( $fila["Id"], $fila["Host"], $fila["db"], $fila["Command"], $fila["Time"] );
+}
+mysql_free_result($resultado);

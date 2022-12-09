@@ -1,0 +1,126 @@
+#(?) [Title] =CALCULAR INACTIVIDAD DESARROLLADOR
+#(l) [Title] =PERIODOS DE INACTIVIDAD DESARROLLADOR
+[DBLimit]5000,1000
+[FormAction]c|edes.php?Ll:
+[AddOption]c|_nombre|NomUsuarios()
+[Fields]?
+Fechas estadística|_desde|F4|T|10||AFQ|||
+Nombre desarrollador|_nombre|#D|SV|20|,,5|AQ|||
+[Fields]
+Horas|horas|H|T|5||-|||
+Rango·horario|rangohoras|H|T|13||-|||
+[JSCheck]?
+if( eGF('_nombre')=='' ) ePE('_nombre','Necesita indicar el nombre del desarrollador');
+[PHPIni]c
+$uNumDes = count(NomUsuarios());
+if( $uNumDes==0 ) eMessage('No hay ningún fichero de log','HS');
+$_Form[1][5] = '200,12,'.$uNumDes;
+function NomUsuarios(){
+$p = array();
+$t = array();
+$di = opendir( '../_d_/log/' );
+while( $file = readdir( $di ) ){
+if( ($file != '.') && ($file != '..') ){
+if( !is_dir('../_d_/log/'.$file) ){
+if( substr($file,0,9)=='opstatus.' ){
+list( ,$nUser ) = explode('.',$file);
+qQuery( "select user_name from gs_user where cd_gs_user='{$nUser}'");
+list( $Nombre ) = qRow();
+$t[] = "{$Nombre}|{$nUser}";
+}
+}
+}
+}
+closedir( $di );
+sort($t);
+for( $n=0; $n<count($t); $n++ ){
+$tmp = explode( '|', $t[$n] );
+$p[] = array( $tmp[1], $tmp[0] );
+}
+return $p;
+}
+[DBSql]l
+$usuCursor = array();
+$Horas = array();
+$Accesos = array();
+$Dim = array();
+$zp = gzopen( "../_d_/log/activity.{$_User}", "r" );
+while( !gzeof($zp) ){
+$Dim[] = gzgets( $zp, 1000 );
+}
+gzclose($zp);
+if( $_desde=='' ){
+$_desde = date('Y-m-d');
+}else{
+}
+$_TITLE .= ' <u>'.$_INPUT__nombre.'</u> '.eYmd2Dmy($_desde).'';
+$Inicio = '';
+$Final = '';
+$TCaracteres = 0;
+$TGrabaciones = 0;
+$DimTmp = array();
+$TMinutos = 0;
+$uMinuto = 0;
+$uHora = '00:00';
+for( $n=0; $n<count($Dim); $n++ ){
+$Dim[$n] = str_replace( '  ', ' ', $Dim[$n] );
+$tmp = explode( ' ',$Dim[$n] );
+if( $tmp[0]==$_desde ){
+list( $h, $m ) = explode(':',$tmp[1]);
+$Minuto = $h*60+$m;
+$Accesos[] = $Minuto;
+if( $Inicio == '' ) $Inicio = $tmp[1];
+$Final = $tmp[1];
+$DimTmp[] = str_pad( $Minuto-$uMinuto, 8,'0',STR_PAD_LEFT ).'|'.$uHora.' - '.substr($tmp[1],0,5);
+$uHora = substr($tmp[1],0,5);
+$uMinuto = $Minuto;
+if( count($tmp)>5 ){
+if( ($tmp[2]=='ED' || $tmp[2]=='E+') && $tmp[3]=='W' ){
+if( substr_count($tmp[5],'/') == 1 and substr_count($tmp[4],'/edesweb/t/__')==0 ){
+list(,$byts) = explode( '/', $tmp[5] );
+list( $h, $m ) = explode(':',$tmp[1]);
+$Minuto = $h*60+$m;
+$Horas[] = array( $tmp[1], $Minuto, $byts );
+$Accesos[] = $Minuto;
+$TCaracteres += (int)$byts;
+$TGrabaciones++;
+}
+}
+}
+}
+}
+sort( $DimTmp );
+for( $n=count($DimTmp)-2; $n>0; $n-- ){
+list( $m, $t ) = explode( '|', $DimTmp[$n] );
+$m = (int)$m;
+if( $m > 1 ){
+$h = 0;
+$sm = $m;
+if( $m > 59 ){
+$h = floor( $m/60 );
+$sm = $m-($h*60);
+}
+$t2 = str_pad( $h, 2,'0',STR_PAD_LEFT ).':'.str_pad( $sm, 2,'0',STR_PAD_LEFT );
+$usuCursor[] = array( $t2, $t );
+}else break;
+}
+$TMinutos += CalculaTiempo( $Inicio, $Final );
+$TH = 0;
+if( $TMinutos > 60 ){
+$TH = floor($TMinutos/60);
+$TM = $TMinutos - ($TH*60);
+}else{
+$TM = $TMinutos;
+}
+$RangTiempo = $TH.':'.str_pad( $TM, 2, '0', STR_PAD_LEFT);
+if( $TMinutos==0 ) $TMinutos = 0.00001;
+if( $TGrabaciones==0 ) $TGrabaciones = 0.00001;
+$ChrPorMinuto = eNumberFormat(($TCaracteres/$TMinutos), 2);
+$GrabarPorMinuto = eNumberFormat(($TMinutos/$TGrabaciones), 2);
+$_FOOTTITLE = "echo '<b>{$RangTiempo}</b> Horas de trabajo ( ".substr($Inicio,0,5).' - '.substr($Final,0,5)." ).<br><b>{$ChrPorMinuto}</b> Carácteres por minuto ( ".eNumberFormat($TCaracteres)." ).<br><b>{$GrabarPorMinuto}</b> Minutos entre grabaciones.';";
+function CalculaTiempo( $Inicio, $Final ){
+list( $h, $m ) = explode(':',$Inicio);
+$MinDesde = $h*60+$m;
+list( $h, $m ) = explode(':',$Final);
+return ( ($h*60+$m)-$MinDesde );
+}

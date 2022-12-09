@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>JSSelRows 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[JSSelRows] [FuncUser] | [NmIcon] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Te permite seleccionar un grupo amplio de registros desde un listado. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>FuncUser&nbsp;</TD>
+<TD>Nombre de la funci?n del usuario en la ventana padre, solo en el caso&nbsp;de que la selecci?n sea desde una subventana.<BR>Si&nbsp;se pone el par?metro llamar? a la funci?n en la ventana desde donde se hace la llamada con dos par?metros: una matriz&nbsp;con el campo indice y otra matriz con la posici?n de la fila en el listado, si se sale de la funci?n con true cerrar? la subventana.<BR>La funci?n puede estar en la ventana actual.<BR>Si no se pone el par?metro se ejecutar? el edf&nbsp;y se interceptar? la llamada con:<BR>[PHPIni] M<BR><SPAN style="WIDTH: 25px"></SPAN>if( isset($_POST['_DATAJSSELROWS']) ){<SPAN style="WIDTH: 25px"></SPAN>// Variable donde vendra una lista de los valores del campo serial separados por coma.<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>eEnd();<BR>}</TD></TR>
+<TR>
+<TD>NmIcon</TD>
+<TD>Nombre del icono alternativo, al seleccionar la fila se mostrar? un icono para marcar la fila, pudiendo definir el icono a visualizar.</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>Script padre<BR>------------<BR><BR>[JSIni] a,mR<BR>function MiFuncion( pk, pos ){<BR><SPAN style="WIDTH: 25px"></SPAN>//pk: matriz del pk de los registros seleccionados<BR><SPAN style="WIDTH: 25px"></SPAN>//pos: matriz de n?mero de fila del listado<BR><SPAN style="WIDTH: 25px"></SPAN>return true;<SPAN style="WIDTH: 25px"></SPAN>// Si todo correcto devolveremos "true" si no "false"<BR>}</P>
+<P>[AddButton] * | Seleccionar || top.eSWOpen( window, 'Ll:...edf', 'PRUEBA DE SELECCION' );<BR><BR><BR>Script de selecci?n<BR>-------------------<BR><BR>[JSSelRows] MiFuncion</P>
+<TR>
+<TD id=txt>Desde un script se llama a una subvenana para recoger los valores seleccionados 
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo>[JSSelRows] <BR>[PHPIni] M<BR><SPAN style="WIDTH: 25px"></SPAN>if( isset($_POST['_DATAJSSELROWS']) ){<SPAN style="WIDTH: 25px"></SPAN>// Variable donde vendra una lista de los valores del campo serial separados por coma.<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>...<BR><SPAN style="WIDTH: 25px"></SPAN>eEnd();<BR>}</TD></TR>
+<TR>
+<TD id=txt>El propio script recoge los valores</TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

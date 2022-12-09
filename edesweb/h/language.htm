@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>Language 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Language] Idioma1 [,Idioma2,...] | VariablesPublicas | Tron=false<BR>&nbsp; VarLNG&nbsp; | TextoIdioma1 [ | TextoIdioma2 | ... ] [ ~ Comentario ]<BR>&nbsp; ... 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>
+<P>Esta etiqueta se tienen que definir la primera y se utiliza para tener la aplicación en mas de un idioma.&nbsp;el DF donde se quiera poner el texto "TextoIdioma1" se pondrá "@VarLNG@", las variables tienen el mismo nombre que la primera columna con el caracter "@" antes y despues de la variable.<BR>Hay una variable de sesión $_SESSION['_LANGUAGE_'] donde se mantiene la extensión del lenguage a visualizar.<BR>Hay una variable global "@LNG@" para añadir el caracter "_" mas la extensión del lenguage.<BR>y las funciones eLng(), y eLngLoad()&nbsp;<BR>y la variable $_Lng[$Cod], $_LngPublic['@'.$Cod.'@'] <BR>Desde el fichero "sql.ini" se puede activar una variable de configuración de [Language] para ver los textos que se han traducido y es "$_LanguageTron" que indicará el caracter de inicio y el final de todos los textos traducidos se suele poner el caracter Alt+126 "~". <BR>Para utilizar el traductor "gsTranslater" es aconsejable utilizar la variable "_PROMP", "_PROMP2",&nbsp;"$_PROMP" o "$_PROMP2"&nbsp;para pasar variables de cadena a las funciones o pasar cadenas delimitadas por comillas. <BR>Hay unas variables genéricas en&nbsp; el top que son:<BR><SPAN style="WIDTH: 25px"></SPAN>_xMESSAGE<BR><SPAN style="WIDTH: 25px"></SPAN>_xCONFIRM<BR><SPAN style="WIDTH: 25px"></SPAN>_xWARNING<BR><SPAN style="WIDTH: 25px"></SPAN>_xERROR<BR><BR><SPAN style="WIDTH: 25px"></SPAN>_xACCEPT<BR><SPAN style="WIDTH: 25px"></SPAN>_xYES<BR><SPAN style="WIDTH: 25px"></SPAN>_xNO<BR><SPAN style="WIDTH: 25px"></SPAN>_xCANCEL</P>
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR style="DISPLAY: none">
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

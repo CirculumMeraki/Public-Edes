@@ -1,0 +1,42 @@
+[Title]INCIDENCIA A INSERTAR
+[DBTable]gs_desarrollo
+[DBIndex]codigo
+[DBOrder]cd_prioridad DESC, cdi_solicitud DESC
+[DBSerial]codigo
+[DBMemo]descripcion,respuesta
+[Cursor]
+[Stop]
+[AddOption]*|cd_tipo|,; O,Nueva opción; M,Mejora; E,Error; S,Sugerencia
+[AddOption]*|cd_prioridad|,; 1,Baja; 2,Media; 3,Alta; 4,Urgente
+[AddOption]*|cd_estado|,; P,Pendiente; D,En Desarrollo; T,Terminada
+[DefAux]usu_solicitud|gs_user, cd_gs_user, user_name as a
+[DefAux]usu_terminado|gs_user, cd_gs_user, user_name as b
+[UploadFile]fichero|/_tmp/err|codigo|3000000||gif,jpg,png,doc,xls,txt,pdf,mdb|file_
+[Fields]
+Tipo de desarrollo|cd_tipo|X|SV|12||MQ|E||
+,Nivel de prioridad\Prioridad|cd_prioridad|X|SV|5||MQ|||
+,Fecha tope resolución|dt_tope|F4|T|10||MQF|||
+#!(a) Estado|cd_estado|X|SV|1||MQ|||
+Resumen|resumen|X|T|50|450|M|||
+Descripción|descripcion|#|A|1500,85,8|450|ML|||
+Fichero|fichero|#|F|65||AL|||
+#(a) ¿
+|cdi_solicitud|X|T|19||*|#y2s#||
+,|usu_solicitud|0|S|7||*|_User||
+?¿
+Respuesta|respuesta|#|A|1500,85,5|450|ML|||
+Solicitado el|cdi_solicitud|X|T|19||-Q-|||
+,por\Solicitado por|usu_solicitud|0|S|7||I-|_User||
+Terminado el|cdi_terminado|X|T|19||MQ|||
+,por\Realizado por|usu_terminado|0|S|7||I-|||
+?
+,|codigo|*|T|7||*Q*|||
+[JSCheck]a,mR
+if( eGF('resumen')+eGF('descripcion')=='' ){
+ePE('resumen', 'Tiene que introducir el "Resumen" y/o la "Descripción"' );
+}else{
+top.eFilePut( "c:/edesweb/tmp/edes_err.png", "/_tmp/err/scr_"+top._User+".png" );
+if( eGF('resumen')=='' ) ePF( 'resumen', eTrim(eGF('descripcion').substring(0,47))+'...' );
+}
+[DBEnd]A
+rename( "../_tmp/err/scr_".$_User.".png", "../_tmp/err/scr_".$_IdRegistro['gs_desarrollo'].".png" );

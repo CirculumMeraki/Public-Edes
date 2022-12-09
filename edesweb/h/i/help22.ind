@@ -1,0 +1,61 @@
+[help] edes.gs?R:$h/{key}.htm
+[edit] edes.gs?AE:$h/{key}.htm&T=A&PLANTILLA=help2&TRACE=Etiquetas eDes
+
+eDes - Varios
+	Funciones
+		JS
+			Ficha
+				pE
+				gC
+				pC
+				gO
+				dtos
+				Trim
+				PonMiles
+				QuitaMiles
+				okdni
+				formatea
+				TerminadoEn
+				CallSrv
+				NumForm
+				ValSelect
+				VerSolapa
+				ControlFRM
+				gsVentana
+			Listado
+				nC
+				gC
+		PHP
+			SQL
+				sql_Conecta
+				sql_Busca
+				sql_Inserta
+				sql_Modifica
+				sql_Borra
+				sql_Libera
+				sql_Desconecta
+				sql_Query
+				sql_Cuenta
+				sql_Fila
+				sql_Array
+				sql_Id
+				sql_Seek
+	Modos
+		Modos
+	Arbol
+		Prefijos
+	Etiqueta fields
+		1 Etiqueta
+		2 Nombre campo
+		3 Tipo edición
+		4 Tipo control
+		5 Longitud del campo
+		6 Ancho en pixels
+		7 Modo
+		8 Valor por defecto
+		9 Condición del campo
+		10 Mensaje de error
+	Varias
+		Código condicional
+		IDA
+		Varios

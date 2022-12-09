@@ -1,0 +1,51 @@
+[Title]=EDITOR MARKDOWN
+[TitleIcon]*|H||$markdown
+[TitleIcon]*|[V, title='Visualizar' onclick='uVisualizar()']
+[Button]*|[u] Modificar
+[Fields]
+|TEXTO|#|A|-1,80,15|600,500|A|||
+|_MARK|D|T|30||*|||
+[PHPStart]A
+if( $_GET["_VISUALIZAR"]=="1" ){
+include("../../edesweb/markdown.inc");
+$txt = eMarkdown($_POST["TEXTO"]);
+eExeScript('top.S.info("'.str_replace('"',"&#34;",$txt).'"); top.S(".TIP").class("+HELP");');
+}
+$file = $_POST["_MARK"];
+$file = str_replace(array("/",","), array("_","."), $file);
+$file = str_replace(array(".TITLEICON"), array(""), $file);
+if( $file[0]=="$" ){
+if( $_SESSION["_D_"]<>"~" ){
+echo "¡¡¡SIN PERMISO DE MODIFICACIÓN!!!";
+}
+$file = substr($file,1);
+$file = "../../edesweb/lng/help/".$file;
+}else{
+$file = "../help/tip/".$file;
+}
+file_put_contents($file, $_POST["TEXTO"]);
+eMessage("Ayuda modificada", "HS");
+[PHPIni]*
+echo '<TEXTAREA name="TEXTO_OLD" id="TEXTO_OLD" COLS=100 ROWS=30 MAXLENGTH=-1 WRAP=VIRTUAL style="display:none">';
+$file = $_GET["_MARK"];
+if( $file[0]=="$" ){
+if( $_SESSION["_D_"]<>"~" ){
+echo "¡¡¡SIN PERMISO DE MODIFICACIÓN!!!";
+}
+$file = substr($file,1);
+$file = "../../edesweb/lng/help/".$file;
+}else{
+$file = "../help/tip/".$file;
+}
+echo file_get_contents($file);
+echo '</TEXTAREA>';
+[JSIni]*
+function uVisualizar(){
+S(window).callSrvPost(_Action+"&_VISUALIZAR=1", {TEXTO:S(":TEXTO").val(), _MARK:S(":_MARK").val()});
+}
+[JSEnd]*
+ePF("TEXTO", S("#TEXTO_OLD").val());
+ePF("_MARK", "<?=$_GET["_MARK"]?>");
+S("#TABNumber1").class("+col_0n");
+var o = S(":TEXTO").obj;
+o["eHelp"] = function(){uVisualizar()};

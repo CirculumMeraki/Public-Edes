@@ -1,0 +1,5 @@
+[Language] es,ca,en,fr
+0|ERROR
+1|La etiqueta [OptionsInList] tiene que definirse antes de la etiqueta [Fields]
+2|La etiqueta [DBIndex] tiene que definirse antes de la etiqueta [OptionsInList]
+3|La etiqueta [DBTable] tiene que definirse antes de la etiqueta [OptionsInList]

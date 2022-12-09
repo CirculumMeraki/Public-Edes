@@ -1,0 +1,104 @@
+[Title]   =LOG DE DESCARGAS | l
+
+[DBTable]  gs_acceso
+
+#Include(l) /_datos/config/history.ayo | true
+
+.[DBUnion]  _, y, 0, -5
+[DBIndex]  num_acceso
+[DBOrder]  cdi desc
+[DBSerial] num_acceso
+[DBLimit]  5000,500
+
+[FormAction] * | Ll:
+
+[AddOption] ? | modo | ,; D,Documento; L,Etiqueta; E,Extracción; T,Ficha; ('l'.'cl','ml','bl'),Listado; S,Pantalla; V,Sobres		// V.Envelope
+[AddOption] l | modo | ,; D,Documento; L,Etiqueta; E,Extracción; T,Ficha; l,Listado; ml,Listado; cl,Listado; bl,Listado; S,Pantalla; V,Sobres
+
+[AddCode] ? | _desde_hours,_hasta_hours | I | noConditions
+[DBRange] ? | cdi | _desde | _hasta
+
+[CC] #MySQL | $GLOBALS['_Sql']=='mysql'
+#MySQL ¿ 
+	[FieldBrowser] _cd_gs_user | cd_gs_user | select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1 | 7
+?¿
+	[FieldBrowser] _cd_gs_user | cd_gs_user | select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1 | 7
+?
+
+[Format]
+if( $_vF[6]=='ZIP' || $_vF[6]=='UNL' ) $_vF[6] = 'MDB';		// Tabla
+if( file_exists('g/l_d_'.strtolower($_vF[6]).'.gif') ){
+	$_vF[7] = '<img src=g/l_d_'.strtolower($_vF[6]).'.gif onclick=DD('.$_vF[7].') title="Formato: '.$_vF[6].'">';
+}else{
+	$_vF[7] = '<img src=g/l_d_.gif onclick=DD('.$_vF[7].')>';
+}
+
+
+[ColsOp] cdi=C, registros=+
+[PDFCol] cd_gs_user=55,cd_gs_node=55	//, num_acceso=0
+
+[Fields]
+    Instante desde            | _desde                                                    | F4  | T  | 10 |  | QF |   |   | 
+   ,                          | _desde_hours                                              | H   | T  | 8  |  | Q  |   |   | 
+   ,Hasta                     | _hasta                                                    | F4  | T  | 10 |  | QF |   |   | 
+   ,                          | _hasta_hours                                              | H   | T  | 8  |  | Q  |   |   | 
+
+    Instante                  | cdi                                                       | CDI | T  | 19 |  | -  |   |   | 
+    Formato                   | modo                                                      | D   | SV | 10 |  | Q- |   |   | 
+    Registros                 | registros                                                 | +   | T  | 9  |  | M  |   | # | 
+    Documento                 | pagina                                                    | D   | T  | 20 |  | -  |   |   | 
+
+#(?) Usuario                  | _cd_gs_user                                               | D   | T  | 68 |  | Q  |   |   | 
+#(?) Usuario                  | cd_gs_user                                                | +   | T  | 5  |  | *Q |   |   | 
+#(l) Usuario                  | cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname} | +   | S  | 50 |  | -  |   |   | 
+ 
+    Nodo                      | cd_gs_node                                                | 0   | S  | 50 |  | Q- |   | # | 
+    Extensión del fichero\Ext | tabla                                                     | D   | T  | 3  |  | *  |   | = | 
+#(l) Descargar fichero\&nbsp; | num_acceso                                                | D   | T  | 9  |  | -  |   | = | 
+                              | objeto                                                    | D   | T  | 1  |  | *Q | D |   | 
+
+
+[PHPIni] l
+$_LOG_FILE_DOWNLOAD = str_replace('\\','/',$_LOG_FILE_DOWNLOAD);
+if( substr($_LOG_FILE_DOWNLOAD,-1)!='/' ) $_LOG_FILE_DOWNLOAD = $_LOG_FILE_DOWNLOAD.'/';
+echo '<script>';
+	echo "var uPath='{$_LOG_FILE_DOWNLOAD}';";
+echo '</script>';
+
+
+[JSIni] l
+function DD(n){
+	var TR = top.eToTag(event.srcElement,'TR');	
+	top.eInfo(window,'Descargando fichero...',-1);
+	top.eCallSrv( window, 'edes.php?E:$exportlog.gs&FILE='+n );
+}
+
+[PHPIni] *
+$fDesde = eFileGetVar('LogDownload.LogFileStartDate');
+if( $fDesde!='' ) $fDesde = str_replace('-','',eDmy2Ymd($fDesde));
+$DesdeFecha = max( date( 'Ymd', mktime( date('H'), date('i'), date('s'), date('m'), date('d')-$_LOG_FILE_DAYS, date('Y') ) ), $fDesde );
+echo '<script>';
+echo "var _DesdeFecha = '{$DesdeFecha}';";
+echo '</script>';
+if( $_Mode=='l' ){
+	if( $_POST['_desde']==eYmd2DmY($DesdeFecha) ){
+		if( $_POST['_hasta']=='' ) eDelShowFilter('cdi'); 
+	}
+}
+
+
+[JSCheck] ?
+if( eGF('_desde')!='' && eD2S(eGF('_desde')) < _DesdeFecha ){
+	ePE('_desde', 'La fecha "desde" tiene que ser mayor al día '+eS2D(_DesdeFecha) );
+}else if( eGF('_desde')=='' ){
+	ePF('_desde',eS2D(_DesdeFecha));
+}
+
+
+[Note]
+
+Parámetros en eCallSrv()
+	$_GET['_TReg']	Total de registros
+	$_GET['_Type']	Extension del fichero
+	$_GET['_Mode']	D,Extracciones; P,Pantalla; E,Etiquetas; F,Fichas; X,Documento; ,Listados;  L,Listados; l,Listados; ml,Listados; cl,Listados; bl,Listados
+	$_GET['_Doc']	Nombre del documento especial

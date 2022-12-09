@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td id="Etiqueta">LocalSelect</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[LocalSelect] Field=NomSelect [, Field=NomSelect] ..... [, Field=NomSelect]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Para optimizar el rendimiento de la Intranet es posible enviar "&lt;SELECT&gt;" con datos al Cliente una sola vez y más tarde utilizar esos mismos datos sin que el servidor tenga que volver a mandarselos, es útil por ejemplo con tablas que se usan frecuentemente.<br />El select se configura en el archivo "aux_page.ini".</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Field: </strong>Nombre de campo existente en la etiqueta [Fields]. <br /><strong>NomSelect: </strong>Nombre del select definido en el archivo "aux_page.ini"</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p>[LocalSelect] cd_auto=autonomias</p>
+<p>[Fields]<br />Autonomía | cd_auto | 0 | SL | 2 | | IMQ || = |<br />...<br /><br />- En el fichero de configuración "aux_page.ini" tendrá que ponerse la carga de las autonomías<br /><span style="font-size: small;"> eLoadSelect( </span><span style="color: #800080; font-size: small;">'autonomias'</span><span style="font-size: small;"> , </span><span style="color: #800080; font-size: small;">'auto'</span><span style="font-size: small;">, </span><span style="color: #800080; font-size: small;">'cd_auto,nm_auto'</span><span style="font-size: small;">, </span><span style="color: #800080; font-size: small;">''</span><span style="font-size: small;">, </span><span style="color: #800080; font-size: small;">'nm_auto'</span><span style="font-size: small;"> );</span></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

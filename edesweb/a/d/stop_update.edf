@@ -1,0 +1,60 @@
+#include(*) lng
+[Title]=@MODO SOLO CONSULTAS@
+[Button]*|@Desactivar mantenimiento@
+[Fields]
+@Mensaje@|texto|#|A|500,80,10||M|||
+-|@Lista de usuarios sin restricciones@
+@Usuario@|_cd_gs_user|D|T|60||M|||
+|_cd_gs_user_BAK|D|T|60||*|||
+{P} ListaUser
+[P]ListaUser
+global $_User, $_Sql;
+echo '<table class=LstFieldBrowser border=0px cellspacing=0px cellpadding=1px id=ListaUser width=100px>';
+echo '<col style="display:none"><col><col>';
+if( eSqlType('mysql,mysqli') ){
+qQuery( "select concat(user_name,' ',user_surname),cd_gs_user from gs_user where cd_gs_user={$_User}" );
+}else{
+qQuery( "select user_name||' '||user_surname,cd_gs_user from gs_user where cd_gs_user={$_User}" );
+}
+list( $Nom ) = qRow();
+echo '<tr><td>'.$_User.'<td>&nbsp<td>'.$Nom;
+echo '</table>';
+[OnLoad]*|eAlign( 'ListaUser', '>', '_cd_gs_user' );
+[AddCode]*|_cd_gs_user|E|<img src='g/t_op_insert.gif' onclick=AddSelect() title="@Insertar entrada@">
+[JSIni]*
+function AddSelect(){
+var User = eGF('_cd_gs_user_BAK'), Insertar = true;
+if( User=='' ) return;
+for( var f=0; f<ListaUser.rows.length; f++ ) if( ListaUser.rows[f].cells[0].textContent==User ){
+Insertar = false;
+top.eInfo(window,'Usuario ya seleccionado');
+}
+if( Insertar ){
+var TR = ListaUser.insertRow();
+TR.insertCell().textContent = User;
+TR.insertCell().innerHTML = "<img src='g/t_op_delete.gif' onclick='S(this.parentNode.parentNode).nodeRemove()' style='margin-right:2px' title='"+eLng(95)+"'>";
+TR.insertCell().textContent = eGF('_cd_gs_user');
+eAlign( 'ListaUser', '>', '_cd_gs_user' );
+}
+ePF('_cd_gs_user','',0);
+ePF('_cd_gs_user_BAK','',0);
+}
+[JSCheck]*
+for( var f=0; f<ListaUser.rows.length; f++ ) ePF('_cd_gs_user_BAK', eGF('_cd_gs_user_BAK')+','+ListaUser.rows[f].cells[0].textContent );
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|_cd_gs_user_BAK|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # and cd_gs_node={$_Node} order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|_cd_gs_user_BAK|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # and cd_gs_node={$_Node} order by 1|7
+?
+[PHPForm]a
+if( $GLOBALS['_AvisosCada'] < 1 ) eMessage('@La opción de solo consultas está desactivada (sql.ini)@','HSE');
+[DBIni]A
+if( trim($texto)=='' ){
+if( file_exists( eScript('/_tmp/err/stop.update') ) ) unlink( eScript('/_tmp/err/stop.update') );
+if( file_exists( eScript('/_tmp/err/stop.user') ) ) unlink( eScript('/_tmp/err/stop.user') );
+}else{
+file_put_contents( '../_tmp/err/stop.update',  str_replace(chr(13),'',str_replace(chr(10),'<br>',rtrim($texto))) );
+if( trim($_cd_gs_user_BAK)!='' ) file_put_contents( '../_tmp/err/stop.user', trim($_cd_gs_user_BAK).',' );
+}
+eMessage( '@INTRANET SOLO EN MODO CONSULTAS@', 'HS' );

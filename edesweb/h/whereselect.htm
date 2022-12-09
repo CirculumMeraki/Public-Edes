@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1" cellpadding="2">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">WhereSelect</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[WhereSelect] Mode | Field | SQLCondition<br />...</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Es la condición / filtro ( WHERE ) a ejecutar en el campo select y el "order by".<br />En el parámetro "SQLCondition" podremos poner una variable php de la forma "{$Var}", esta variable deberá ser pública para tener acceso a ella.<br />También se puede cambiar la ordenación del select añadiendo en "SQLCondition" el texto "desc", pudiendo contener este parámetro solo una condición, una condición mas la ordenación descendente o solo el tipo de ordenación.<br />En los listados no está activo pero sí en las zonas EditList.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro"><strong>Field: </strong>Nombre de un campo existente en la etiqueta [Fields]. <br /><strong>SQLCondition:</strong> Condición SQL</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo"><code>
+[WhereSelect] *    | cd_tipovia   | cd_tipo='V'<br />
+[WhereSelect] mR,a | cd_propiedad | nm_propiedad[1,3] != "(*)"<br /><br />
+[WhereSelect]<br />     * | cd_prov | desc<br />
+     * | cd_prov | nm_prov < 'D' desc<br />
+     c | cd_prov | nm_prov like '%I%' order by nm_prov desc<br />
+     c | cd_prov | order by nm_prov desc</code></td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

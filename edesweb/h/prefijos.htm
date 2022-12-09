@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Arbol de opciones: Prefijos</td>
+</tr>
+<tr>
+<td id="Descripcion">Hay dos formas de definir las acciones en el arbol de opciones, puedes definir el modo en la opción y el script a ejecutar con sus parametros si los tiene en su carpeta o definir todo en cada opción, siempre que sea rentable en espacio se debe optar por la primera opción. Ejemplo:<br /><br /><span style="font-family: Courier New;">Autonomias      | :auto<br />   Alta         | #a:<br /></span><span style="font-family: Courier New;">   Baja         </span><span style="font-family: Courier New;">| #b:<br /></span><span style="font-family: Courier New;">   Consulta     </span><span style="font-family: Courier New;">| #c:<br /></span><span style="font-family: Courier New;">   Modificaci?n | #m:<br /></span><span style="font-family: Courier New;">   Listado      </span><span style="font-family: Courier New;">| =l:<br /><br /></span><span style="font-family: Courier New;">Autonomias<br /></span><span style="font-family: Courier New;">   Alta         </span><span style="font-family: Courier New;">| #a:auto<br /></span><span style="font-family: Courier New;">   Baja         </span><span style="font-family: Courier New;">| #b:auto<br /></span><span style="font-family: Courier New;">   Consulta     </span><span style="font-family: Courier New;">| #c:auto<br /></span><span style="font-family: Courier New;">   Modificaci?n | #m:auto<br /></span><span style="font-family: Courier New;">   Listado      </span><span style="font-family: Courier New;">| =l:auto<br /></span><br />
+<table id="Opciones" style="height: 301px; width: 803px;" border="0" cellspacing="1px" cellpadding="2px"><colgroup> <col style="width: 50px; text-align: center;" /> <col /> </colgroup>
+<tbody>
+<tr>
+<td>.</td>
+<td>Si anteponemos un punto a la opción mostrará el mensaje "Opción sin implantar"</td>
+</tr>
+<tr>
+<td>W</td>
+<td>Si la opci?n se ejecuta con Control+Click se habrir? en una ventana maximizada.</td>
+</tr>
+<tr>
+<td>w</td>
+<td>Aunque la opci?n se ejecute con Control+Click se habrir? en la zona de trabajo (IWORK).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ejecuta en 2? plano en una nueva ventana</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ejecuta en 2? plano con "http:" en nueva ventana</td>
+</tr>
+<tr>
+<td>?</td>
+<td>Pregunta antes de ejecutar y te muestra el nombre de la opci?n para que confirmes.</td>
+</tr>
+<tr>
+<td nowrap="nowrap">?n</td>
+<td>Pregunta antes de ejecutar y te muestra el nombre de la opci?n y de "n-1" carpetas padre.</td>
+</tr>
+<tr>
+<td>m</td>
+<td>Ejecuta ocultando la columna izquierda de opciones, es como ejecutar la funci?n eAutoMenu(1), solo en desktop '0' y '1'.</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Ejecuta ocultando todo el desktop, es como ejecutar la funci?n eAutoMenu(2)</td>
+</tr>
+<tr>
+<td>(</td>
+<td>Ejecuta funci?n javascript cargada en el desktop.</td>
+</tr>
+<tr>
+<td>{}</td>
+<td>Si en la URL encuentra un par de corchetes tomar? su contenido y te pedir? datos mediante la ventana promp() cambiando en la URL el contenido de los corchetes y ellos mismos por el dato introducido en el promp(), con una llamada se puede acceder a muchos DF, ejemplo: <br /><span style="font-family: Courier New;">Altas varias | #a:{Nombre de tabla:}.edf</span></td>
+</tr>
+<tr>
+<td>-</td>
+<td>Mostrar? una linea divisoria ( el nombre de la opci?n es solo un "-" ). </td>
+</tr>
+<tr>
+<td>-LABEL</td>
+<td>Mostrar? "LABEL" como t?tulo de grupo de opciones en los desktop con submenus verticales. </td>
+</tr>
+<tr>
+<td>+</td>
+<td>Un signo "+" delante del nombre de la carpeta del primer nivel mostrar? su contenido visible en los desktop '0' y '1'. </td>
+</tr>
+<tr>
+<td>??</td>
+<td>Condici?n PHP si el resultado no es "true" no ir? la opci?n en el ?rbol, si la condici?n est? en una carpeta no ir?n sus opciones.</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<table id="Opciones" style="height: 151px; width: 330px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td> F</td>
+<td>Ficha</td>
+</tr>
+<tr>
+<td> L</td>
+<td>Listado</td>
+</tr>
+<tr>
+<td> G</td>
+<td>Grupo de Fichas</td>
+</tr>
+<tr>
+<td> E</td>
+<td>Ejecuta cualquier p?gina pasando por el motor </td>
+</tr>
+<tr>
+<td> J</td>
+<td>Ejecuta cualquier p?gina sin pasar por el motor</td>
+</tr>
+<tr>
+<td> B</td>
+<td>Ejecutar un php en background</td>
+</tr>
+<tr>
+<td> [</td>
+<td>Abre una nueva ventana</td>
+</tr>
+<tr>
+<td> (</td>
+<td>Si contiene un "(" ejecutar? esa funci?n de JavaScript</td>
+</tr>
+</tbody>
+</table>
+- Par?metros de una nueva ventana:<br />[ {RST} {Ancho,Alto} ] NomVentana, DirURL<br />- '<strong>R</strong>': resizable<br />- '<strong>S</strong>': scrollbars<br />- '<strong>T</strong>': toolbar<br />- '<strong>-'</strong>:  Titulo<br />- '<strong>></strong>': Barra est?ndar<br />- '<strong>=</strong>': Titulo y Status<br />- '<strong>*</strong>':  La ventana por defecto<br />- '<strong>#</strong>':  FullScreen<br />
+<p> </p>
+<p> </p>
+<table id="Opciones" style="height: 56px; width: 548px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>this</td>
+<td>El DF se llamar? como el serial de la tabla gs_opcion </td>
+</tr>
+<tr>
+<td>parent</td>
+<td>El DF se llamar? como el serial de la tabla gs_opcion del padre de la opci?n, su carpeta</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<table id="Opciones" style="height: 41px; width: 258px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>#user#</td>
+<td> Lo sustituir? por el n? de usuario</td>
+</tr>
+<tr>
+<td>#node#</td>
+<td> Lo sustituir? por el n? de nodo</td>
+</tr>
+</tbody>
+</table>
+<br />Otras formas de llamar al motor, normalmente desde fuera del Arbol de Opciones<br />
+<table id="Opciones" style="height: 156px; width: 436px;" border="0" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr>
+<td>X</td>
+<td>Hoja de c?lculo </td>
+</tr>
+<tr>
+<td>H</td>
+<td>Editor HTML </td>
+</tr>
+<tr>
+<td>R</td>
+<td>Read Fichero </td>
+</tr>
+<tr>
+<td>D</td>
+<td>Descargar Fichero. Par?metro opcional "FILE" para dar nombre al archivo.  </td>
+</tr>
+<tr>
+<td>V</td>
+<td>Visualizar p?gina html / txt en ventana virtual</td>
+</tr>
+<tr>
+<td>S</td>
+<td>SubSelect</td>
+</tr>
+<tr>
+<td>T</td>
+<td>Tabla vinculada </td>
+</tr>
+</tbody>
+</table>
+<br /><strong><u>Columna Alias</u></strong><br />Si en esta columna del Gestor de Opciones poner el alias "development" desde la opci?n de desarrollador "Mostrar opciones ocultas" todas las opciones con el Alias "development" ser?n visibles, para ello a parte de ponerle el alias tiene que definir la columna como oculta.<br /><br /><strong><u>Modo alternativo<br /></u></strong>Cuando se pone la web en modo consultas no se podr?n ejecutar los modos "a,b,m,mR,bR" pero hay veces que el modo no es el real ya que por ejemplo ejecutas el modo "a" para pedir datos y al hacer submit se ejecuta un listado [FormAction], para conocer el modo real en estos casos se pondr? despues del modo una coma y el modo real, ejemplo: "Fa,l:autonomia.edf" estaremos ejecutando en modo alta pero la ejecuci?n real ser? un listado.<br /><br /><strong><u>Prefijo especial<br /></u></strong>Se puede ejecutar paginas en otro servidor que tambien tenga el motor "eDes" anteponiendo al modo la inicial "R" de Remote, para ello en el fichero de configuraci?n "sql.ini" deberemos declarar la variable "<strong><span style="font-size: small;">$_REMOTESRV" </span></strong>que contendr? la direcci?n web del servidor remoto y si no es un puerto estandar le a?adiremos dos puntos y el n?mero del puerto ej.<br /><span style="font-family: Courier;">$_REMOTESRV = '</span><a href="http://999.999.999.999/"><span style="font-family: Courier;">http://999.999.999.999</span></a><span style="font-family: Courier;">';<br /></span><span style="font-family: Courier;">$_REMOTESRV = '</span><a href="http://999.999.999.999/"><span style="font-family: Courier;">http://999.999.999.999</span></a><span style="font-family: Courier;">:80';<br /></span>En el servidor remoto se crear? un fichero de permisos en <span style="font-family: Courier;">"/_datos/config/{$REMOTE_ADDR}.remote", en la variable $REMOTE_ADDR se sustituir? los puntos y los dos puntos (".",":") por guiones, </span>con la siguiente estructura:<br /><span style="font-family: Courier;">$_Node = ...N? del Nodo...<br /></span><span style="font-family: Courier;">Variable de Sesi?n = Valor<br /></span><span style="font-family: Courier;">.....<br /></span><span style="font-family: Courier;">Script | Modo | ListaUsuarios | ListaNodos<br /></span><span style="font-family: Courier;">...<br /></span><br /><strong><u>Opciones condicionales<br /></u></strong>En el label de las opciones se puede poner una condici?n para que una determinada opci?n solo la tenga un determinado usuario para ello el label empezar? por el signo de interrogaci?n "?" una condici?n PHP, el signo de final de interrogaci?n "?", el label y la Acci?n a ejecutar si la tiene las variables mas utilizadas para ello son: "$_User", "$_Node" y la matriz asociativa "$_aUser" con todos los campos del usuario, ejemplo:<br /><span style="font-family: Courier;">? $_User==10 ? Baja | #b:<br /></span><span style="font-family: Courier;">? $_aUser['...NomCampo...']=='...Valor...' ? Alta | #a:<br /></span><br /><strong><u>Los iconos<br /></u></strong>- Si terminan en "_0." tendr?n dos estados cerrado "_0." y abierto "_1."<br />- Si empiezan por "_of_" ser? un icono flotante que la copia podr? tener dos estados "_2." y "_3."<br />- Para desde el arbol activar el icono flotante se pulsar? al icono con el bot?n derecho esto lo activar? y desactivar? y para mover el icono flotante le capturaremos dejando pulsado el bot?n derecho sobre ?l y moviendo el rat?n para desplazarlo.<br /><br /><strong><u>Ejemplos:</u></strong><br />top.eCallSrv( window, 'edes.php?V:htm/ejemplo.htm&TITLE='+_Celda.innerHTML+'&STYLE='+escape('color:red;background:blue;') );<br />Los par?metros TITLE, WIDTH, HEIGHT, LEFT, TOP, CSS, STYLE son opcionales, este ?ltimo modifica los valores por defecto de la hoja de estilo "visor.css", los par?metros num?ricos se pueden dar en "%".<br /><br />En el desktop se puede poner una funci?n para llamar a una ventana y editar una p?gina HTML.<br /><span style="font-family: Courier;">function uEditCuotaServicioHTM(){<br /></span><span style="font-family: Courier;">eSWOpen( window, 'edes.php?iE:pagina.htm&T=H&D=P&TRACE=-1', 'Editor HTML: Titulo', true, 0 );<br /></span><span style="font-family: Courier;">}</span><br /><br />Para visualizar ?nicamente una imagen, un flash o un video en una subventana se puede hacer la llamada:<br /><span style="font-family: Courier;">top.eSWOpen( window, "edes.php?IMG:[NombreObjeto]", "TITULO" );<br /></span>Si se quiere que la ventana con la imagen ocupe todo el desktop, se le a?adir? el par?metro "MAXIMIZE:<br /><span style="font-family: Courier;">top.eSWOpen( window, "edes.php?IMG:[NombreObjeto]&MAXIMIZE=1', "TITULO", true, 0 );<br /></span><br /><br /><strong><u>Ejecuci?n en background:</u></strong><br />Si le pasamos el par?metro "phpinfo" grabar? en fichero "/_tmp/_background.info" con la informaci?n del servidor. <br /><br /><strong><u>eAlterMenu:</u></strong><br />Si existe la funci?n de usuario "eAlterMenu( ArrayMenu )" al cargar el ?rbol de menus se llamar? a la funci?n para que se pueda alterar.<br /><br /><strong><u>Edici?n de ficheros ".INI":</u></strong><br />Se puede editar y consultar en formato de ficha ficheros de configuraci?n (php) con extensi?n "ini" mediante la siguiente des URL:<br />- Para consultar: edes.php?FcR:[Fichero.ini]<br />- Para modificar: edes.php?FmR:[Fichero.ini]<br /><br />Ese sistema coger? todas las variables y crear? una entrada en el formulario, en funci?n del valor de la variable as? pondr? el tipo de edici?n, siendo campos de texto, numericos con y sin decimales, checkbox y select.<br />Los comentarios en una sola linea ser?n textos de separaci?n o agrupaci?n de los campos.<br />Los comentarios a continuaci?n de una variable ser? su Label, si este label empieza por:<br /> "-" el campo solo ser? de consulta<br />"*" ser? un campo oculto<br />"[" indica que es un select indicado [ValorInterno,ValorExterno;...]<br />Si el valor del campo empieza por "#" y es un valor de color en exadecimal de 6 posiciones pondr? una ayuda de selecci?n de color.<br />Se marca en el formulario los comandos php: if, else, elseif, switch, case y default<br />Con la secuencia "" despues del label se puede poner datos adicionales como en [AddCode]<br />Si existe un fichero con el mismo nombre pero con extensi?n "js" se incluir? ese c?digo, como si fuera la etiqueta [JSEnd] *<br />Se pueden hacer comentarios multilinea.</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

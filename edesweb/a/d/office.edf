@@ -1,0 +1,10 @@
+#include(*) lng
+[Title]@titulo@
+[DBTable]gs_office
+[DBIndex]cd_gs_office
+[DBOrder]nm_gs_office
+[DBSerial]cd_gs_office
+[FormStatic]
+[Fields]
+|cd_gs_office|+|T|4||*|||
+@Departamento@|nm_gs_office|D|T|40||QM|||

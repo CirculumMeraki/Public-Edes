@@ -1,0 +1,37 @@
+[Title]VIDEO|l
+[Format]
+$_vF[2] = substr($_vF[2],0,strrpos($_vF[2],'.'));
+if( trim($_vF[1])!='' ){
+$Ext = explode('.',$_vF[1]); $Ext = $Ext[count($Ext)-1];
+$_vF[1] = '<img src="edes.php?R:/'.'/img/'.$_vF[0].'.'.$Ext.'" style="height:50">';
+}
+$_vF[13] = "<img src='g/t_d_avi.gif' onclick='VD()' t='{$_vF[12]}'>";
+[THColSpan]copyrighted,img,Características
+[ColsWidth]description=400
+[PDFCol]img_video=0, copyrighted=0, quality=0, img=0
+[Fields]l
+|cd_gs_img|+|T|9||*|||
+Miniatura|img_video|#D|F|30||-|||
+Fichero|nm_gs_img|#D|F|20||-|||
+Categoría|cd_gs_img_class|+|S|20||-|||
+SubCategoría|cd_gs_img_sclass|+|Ss|20||-|||
+Descripción|description|#|A|70||-|||
+Copyright\©|copyrighted|N|C|1||-||=|
+Calidad|quality|N|SV|5||-|||
+Tamaño|bytes|+|T|13||-|||
+Ancho px\Ancho|width_px|+|T|4||-|||
+Alto px\Alto|height_px|+|T|4||-|||
+Duración|duration|H8|T|8||-||=|
+Tipo|extension|#D|T|4||-||=|
+|extension as img|#D|T|4||-||=|
+[PDFWrap]3,,true|description
+[PHPIni]l
+$_PDFLABELHIDDEN['type_file'] = 'NOTTOSHOW';
+$_AddShowFilter = array( 'CLASE: Videos' );
+[JSIni]l
+function VD(){
+var TR = S.toTag(S.event(window),'TR');
+top.eInfo(window,'Descargando video...',-1);
+top.eCallSrv( window, 'edes.php?D://img/'+eTrim(TR.cells[0].textContent)+'.'+S.event(window).t+'&FILE='+eTrim(TR.cells[1].textContent) );
+return eClearEvent();
+}

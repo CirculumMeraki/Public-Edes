@@ -1,0 +1,53 @@
+<p style="text-align: center;"><strong>Ayuda Markdown</strong></p>
+<table style="border-collapse: collapse; width: 41.7638%; height: 675px;" border="1">
+<tbody>
+<tr>
+<td style="width: 37.0525%;">Linea divisoria</td>
+<td style="width: 52.3799%;">&nbsp;***<br />&nbsp;---<br />&nbsp;___<br />* * *<br />- - -<br />_ _ _</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Negrita&nbsp;+&nbsp;cursiva</td>
+<td style="width: 52.3799%;">***</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Negrita</td>
+<td style="width: 52.3799%;">**</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Cursiva</td>
+<td style="width: 52.3799%;">*</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Trozo de c&oacute;digo</td>
+<td style="width: 52.3799%;">~~~</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Linea de c&oacute;digo</td>
+<td style="width: 52.3799%;">`</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Lista desordenada</td>
+<td style="width: 52.3799%;">-<br />*<br />+<br />(4 espacios por cada tabulador)</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Lista ordenada</td>
+<td style="width: 52.3799%;">1.<br />2.<br />n.<br />(4 espacios por cada tabulador)</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Encabezados<br />(h1, ... h6)</td>
+<td style="width: 52.3799%;">#<br />##<br />###<br />####<br />#####<br />######</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Imagen</td>
+<td style="width: 52.3799%;">![Texto alternativo](url...)<br />(url relativa/absoluta)</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Enalce (Link)</td>
+<td style="width: 52.3799%;">[Texto del link](url...)<br />(url relativa/absoluta)</td>
+</tr>
+<tr>
+<td style="width: 37.0525%;">Tabla</td>
+<td style="width: 52.3799%;">|xxxx|xxxx|xxxx|<br />|:-----|:-----:|-----:|<br />|xxxx|xxxx|xxxx|<br />|xxxx|xxxx|xxxx|</td>
+</tr>
+</tbody>
+</table>

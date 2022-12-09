@@ -1,0 +1,48 @@
+[Title]SELECCIONAR IMAGEN
+[DBTable]gs_poll_img
+[DBIndex]cd_gs_poll_img
+[DBOrder]nm_gs_poll_img
+[DBSerial]cd_gs_poll_img
+[NoTools]PW
+[UploadFile]fichero|/http/poll|cd_gs_poll_img|1.000.000|Imagen de fondo|png,jpg,jpeg,gif||50,50|_mini
+[AddOption]*|tipo|_
+,;					_
+F,Fondo;			_
+I,Imagen;			_
+M,Mapa
+[Format]
+$_vF["img"] = "<img src='edes.php?R://gs_poll/".$_vF["cd_gs_poll_img"]."_mini.".$_vF["extension"]."'>";
+[Fields]l
+|cd_gs_poll_img|+|T|9||*|||
+Miniatura|extension as img|n|T|4||-||=|
+Imagen|nm_gs_poll_img|D|T|60||MQ|||
+Extensión|extension|n|T|4||-||=|
+Fichero|fichero|#|F|60||MQLD|||
+Tipo|tipo|D|SV|6||MQ|||
+|tipo as xtipo|D|T|1||*|||
+Fecha·Alta|dt_insert|F4|T|10||M|||
+Mapa|mapa|#|A|1920,80||*|||
+[JSSelRow]*|$form.php
+_WOPENER.InsertImagen($cd_gs_poll_img+"."+$extension);
+[JSSelRow]*|$a/poll/gs_question.edf
+var campo = S.url(window,"CAMPO"), pk, n, dim={}, txt="<table>";
+if( campo=="mapa_img" ){
+ePPF(campo, $cd_gs_poll_img+"."+$extension);
+ePPF("_INPUT_"+campo, $nm_gs_poll_img);
+dim = S.json($mapa);
+for(pk in dim){
+if( /^area_/.test(pk) && dim[pk]!="" ){
+n = dim["pk_"+S.right(pk,"_")];
+txt += "<tr><td><input name='area_"+n+"' type=checkbox><td>"+n+"<td>"+dim[pk];
+}
+}
+txt += "</table>";
+S("#mapa_span", _WOPENER).html(txt);
+}else{
+ePPF(campo, $cd_gs_poll_img+"."+$extension);
+ePPF("_INPUT_"+campo, $nm_gs_poll_img);
+}
+[JSSelRow]*|else
+var campo = S.url(window,"CAMPO");
+ePPF(campo, $cd_gs_poll_img+"."+$extension);
+ePPF("_INPUT_"+campo, $nm_gs_poll_img);

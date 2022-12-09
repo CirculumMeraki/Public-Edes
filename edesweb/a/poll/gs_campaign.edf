@@ -1,0 +1,27 @@
+[Title]CAMPAÑA
+[DBTable]gs_campaign
+[DBIndex]cd_gs_campaign
+[DBOrder]cd_gs_poll,dt_start
+[DBSerial]cd_gs_campaign
+#(l) [DBAddFilter] cd_gs_poll={$cd_gs_poll}
+[OptionsInList]fuabcm,o				_
+| &#91; | Estadistica | Estadística
+[PersistentVar]cd_gs_poll
+[AddOption]*|encuestados|,; U,Usuarios
+[THColSpan]dt_start,hour_start,INICIO|dt_end,hour_end,FINALIZACIÓN
+[Fields]2
+pk|cd_gs_campaign|+|T|9||*|||
+Encuesta|cd_gs_poll|0|S|60||-Q-||#|
+Fecha de inicio\Fecha|dt_start|F4|T|10||AQF||#|
+,2 =Hora de inicio\Hora|hour_start|H2|T|2||M|||
+Fecha finalización\Fecha|dt_end|F4|T|10||MF|||
+,2 =Hora de finalización\Hora|hour_end|H2|T|2||M|||
+|cd_gs_poll pk_poll|+|T|5||*|||
+Encuestados|encuestados|D|SV|25||QM|||
+,Obligatoria|obligatoria|D|C|1||M|||
+,Nº·Aplazamientos|intentos|+|T|1||MS|||
+#Include(*) /_datos/config/poll.edf|true
+[JSIni]*
+function Estadistica(oRow, pk){
+window.open("edes.php?E:$a/poll/poll_resultado.php&cd_gs_poll="+$pk_poll+"&cd_gs_campaign="+$cd_gs_campaign);
+}

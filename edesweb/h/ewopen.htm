@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>eWOpen 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eWOpen( EspecialURL, Condicion, Mensaje, ConIframe ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Abre una nueva ventana estándar del navegador de forma mas cómoda controlando y centrando la ventana, con posibilidad de que se habra solo si se cumple cierta condición y en su defecto se mostraría un error.&nbsp; 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>EspecialURL</STRONG>:&nbsp; Este parámetro contiene la configuración de la ventana, su nombre y la URL.<BR>SRT[*Ancho,Alto] NomVentana, Url <BR>SRT: Flag para indicar: Resizable, Scrollbars y Toolbar.<BR>[-] Ventana solo con la línea de título superior<BR>[#] Ventana sin explorador visible, fullscreen.<BR>[*] Ventana por defecto del window <BR>[=] Ventana con la línea de títulos y la de estatus <BR>[&gt;] Ventana con el 'toolbar' para poder avanzar y retroceder página.<BR>[D] Ventana definida por el usuario.<BR>[eSWOpen] Ventana del sistema se utiliza cuando desde el arbol de opciones se quiere ejecutar siempre en una subventana del sistema, ej:<BR><SPAN style="WIDTH: 25px"></SPAN>[eSWOpen]http://....<BR><BR><STRONG>Condicion</STRONG>: Condición a cumplir para que se habra la ventana.<BR><STRONG>Mensaje</STRONG>: Si se especifica condición y no se cumple se mostrará este mensaje.<BR><STRONG>ConIFrame</STRONG>: Los valores posibles son true o false. <BR>Si se indica el valor true se abre una ventana con un IFrame y dentro de éste se llama a la URL, esto es para evitar que en el título mientras se está cargando la página se vea la dirección URL. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>top.eWOpen( '[-200,200]NomVentana,URL' ); <BR>top.eWOpen( '[-200,200]NomVentana' );&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>//.Ventana en blanco <BR>top.eWOpen( 'left=400,status=1,top=50,width=300,height=300[D]NomVen,http://...' ); <BR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,170 @@
+[Title]ENCUESTA
+[DBTable]gs_poll
+[DBIndex]cd_gs_poll
+[DBOrder]nm_gs_poll
+[DBSerial]cd_gs_poll
+[AutoMenu]*
+[WhereSelect]a,mR|cd_gs_poll_tipo|cd_gs_node={$_Node}
+[OptionsInList]fuabcm,o							_
+| &#200; | Preguntas		| Preguntas 		_
+| &#260; | Campayas			| Campañas			_
+| &#206; | >Imagenes		| Imágenes			_
+| copy   | DuplicarEncuesta | Duplicar encuesta	_
+| &#230; | >Configurar	 	| Configurar			| cd_gs_node={$_Node}
+[AddTools]a,mR|color_ini,color_end|eToneSelect||B
+[Format]
+if( $_vF["image"]!="" ) $_vF["image"] = "S";
+if( $_vF["color_ini"]!="" ) $_CellsStyle["color_ini"] = "background-color:{$_vF["color_ini"]};color:".eColorContrastBW2($_vF["color_ini"]);
+if( $_vF["color_end"]!="" ) $_CellsStyle["color_end"] = "background-color:{$_vF["color_end"]};color:".eColorContrastBW2($_vF["color_end"]);
+[AddButton]
+a,?R | [v] Visor | Se puede dejar visible y cambiar datos. | _uVerPregunta()
+[JSIni]a,?R
+var _winVisor = null;
+function _uVerPregunta(){
+if( DGI('edMENUS')!=null && DGI('edMENUS').style.display=='block' ) edSave();
+if( _winVisor==null || !_winVisor.location.href ){
+_winVisor = S.window("edes.php?E:$a/poll/poll_test.php&cd_gs_poll="+S(":cd_gs_poll").val()+"&_QUESTIONMEM=1", {title:"VISOR PREGUNTA", width:600, height:700, modal:false, maximize:false});
+}else{
+_winVisor.location.replace("edes.php?E:$a/poll/poll_test.php&cd_gs_poll="+S(":cd_gs_poll").val()+"&_QUESTIONMEM=1");
+}
+}
+[JSEnd]a,?R
+S(window).windowIcon("CLOSE", function(){
+if( _winVisor!=null && _winVisor.location.href ) S(_winVisor).window();
+return true;
+});
+[JSCheck]a,mR
+if( _winVisor!=null && _winVisor.location.href ) S(_winVisor).window();
+[AddCode]a,mR|image,cabecera_img,pie_img|I|onclick="uSelectImagen(this)"
+[Icon]a,mR|image,cabecera_img,pie_img|==&#118;|onclick="uSelectImagen(this)" oncontextmenu="uVerImagen(this)" title="Click IZQ: Seleccionar imagen del servidor\nClick DCH: Ver imagen"
+[Icon]a,mR|image,cabecera_img,pie_img|D|onclick="uDeleteImagen(this)" title="Quita la imagen seleccionada"
+[Icon]a,mR|image,cabecera_img,pie_img|M|onclick="Imagenes()" title="Gestión de imagenes"
+[AddOption]a,?R|image,cabecera_img,pie_img|uNombreImage()
+[PHPIni]a,?R
+function uNombreImage($nmCampo=""){
+global $_vF;
+$p = array();
+if( $_vF[$nmCampo]!="" ){
+qQuery("select * from gs_poll_img where cd_gs_poll_img='".$_vF[$nmCampo]."'");
+$r = qArray();
+if( $r["cd_gs_poll_img"]!="" ) $p[0] = array($r["cd_gs_poll_img"].".".$r["extension"], $r["nm_gs_poll_img"]);
+}
+return $p;
+}
+[AddOption]*|cabecera_img_type, pie_img_type|_
+LF,Izquierda fluir;	_
+RF,Derecha fluir;	_
+U,Arriba;			_
+D,Abajo;			_
+L,Izquierda;		_
+R,Derecha
+[THColSpan]color_ini,color_end,Color
+[Fields]
+PK|cd_gs_poll|+|T|9||*|||
+#(l) Tipo|cd_gs_poll_tipo|+|S|25||-|||
+Nombre|nm_gs_poll|D|T|60||MQ||#|
+#(l) Número·Preguntas|(select count(*) from gs_question where cd_gs_poll=A.cd_gs_poll)|+|T|3||-|||
+#!(l) Tipo|cd_gs_poll_tipo|+|S|25||MQ||#|
+,Para·movil|tf_movil|D|C|1||M|||
+Fecha·alta|dt_add|F4|T|10||-|#today#|#|
+,Fecha última utilización\Última·utilización|dt_used|F4|T|10||*|||
+Image de fondo|image|#|SV|60||-L|||
+Color·inicial\Inicial|color_ini|clr|T|7||M|||
+,Color·final\Final|color_end|clr|T|7||M|||
+<Navegar hacia atras|tf_retroceder|D|C|1||ML|||
+,Grabar en cada respuesta|tf_save_answer|D|C|1||ML|||
+,Saltar automaticamente|tf_jump_auto|D|C|1||ML|||
+Descriptión|description|#|A|1000,80,3|nm_gs_poll|ML|||
+-
+Texto Cabecera|cabecera_texto|#|H|2000,80,10|nm_gs_poll,|ML|||
+Imagen|cabecera_img|#|SV|60|300|-L|||
+,Posición|cabecera_img_type|D|SV|15|100|ML|||
+-
+Texto Pie|pie_texto|#|H|2000,80,3|nm_gs_poll,|ML|||
+Imagen|pie_img|#|SV|60|300|-L|||
+,Posición|pie_img_type|D|SV|15|100|ML|||
+|cd_gs_node|+|T|6||*Q*|_Node||
+[TipForm]a,mR|*|cabecera_texto, pie_texto|Datos a sustituir:<br><b>{nombre}</b> por el nombre del encuestado.<br><b>{apellidos}</b> por los apellidos del encuestado.
+[JSIni]a,?R
+function uSelectImagen(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+S.window("edes.php?Lcl:$a/poll/gs_poll_img_sel.edf&_FILTER="+escape("tipo='"+(campo=="image" ? "F":"I")+"'")+"&CAMPO="+campo, {modal:true});
+}
+function uDeleteImagen(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+ePF(campo, "");
+}
+function uVerImagen(o){
+var campo = S("INPUT", S.toTag(o,"TR")).obj.name;
+if( eGF(campo)!="" ){
+campo = eGF(campo).split(".")[0];
+top.eCallSrv(window,"edes.php?E:$/a/poll/poll_img.php&IMG="+campo);
+}
+return S.eventClear(window);
+}
+function Imagenes(){
+S.window("edes.php?Lgl:$a/poll/gs_poll_img.edf", {fullscreen:true});
+}
+[JSIni]l
+function Campayas(oRow, pk){
+S.window("edes.php?Lgl:$a/poll/gs_campaign.edf&cd_gs_poll="+pk, {fullscreen:true});
+}
+function Preguntas(oRow, pk){
+S.window("edes.php?Lml:$a/poll/gs_question.edf&_cd_gs_poll="+pk+"&_cd_gs_question=-1", {fullscreen:true});
+}
+function Imagenes(){
+S.window("edes.php?Lgl:$a/poll/gs_poll_img.edf", {fullscreen:true});
+}
+function Configurar(o){
+var dim =[
+["-Menú"],
+["Palabras Tabú", "", "PT"],
+["Tipo Encuesta", "", "TE"]
+];
+if( top._D_!="" ){
+dim.push(["-"]);
+dim.push(["Diplomas", "", "DI", null, null, "color:red"]);
+dim.push(["Firmas", "", "FI", null, null, "color:red"]);
+}
+S(o).menu(dim, {function:
+function(op){
+switch( op ){
+case "PT":
+S.window("edes.php?Lgl:$a/poll/gs_tabu.edf", {title:"PALABRAS TABU", fullscreen:true});
+break;
+case "TE":
+S.window("edes.php?Lml:$a/poll/gs_poll_tipo.edf", {title:"TIPO DE ENCUESTAS", fullscreen:true});
+break;
+case "DI":
+S.window("edes.php?Lgl:$a/d/form.edf&_PERSISTENVAR=cd_gs_form_type&cd_gs_form_type=1", {title:"DIPLOMAS", fullscreen:true});
+break;
+case "FI":
+break;
+default:
+}
+}
+}, {type:"12,11,1"});
+}
+function DuplicarEncuesta(oRow, pk){
+var txt = oRow.outerHTML,
+i = oRow.rowIndex;
+S("#BROWSE").tr("O", i+1, txt);
+_Celda = S("#BROWSE").obj.rows[i+1].cells[_Celda.cellIndex];
+_Celda.parentNode.style.fontStyle = "italic";
+ePF("cd_gs_poll",0);
+ePF("nm_gs_poll","(ENCUESTA DUPLICADA)");
+if( typeof($cdi__)!="undefined" ){
+ePF("cdi__", S.date('Y-m-d H:i:s'));
+ePF("action__", "Insertado");
+}
+S.callSrv("DuplicarReg="+pk+"&rowIndex="+(i+1), window);
+}
+[PHPIni]l
+if( qCount("gs_poll_tipo", "cd_gs_node=".$_SESSION["_Node"])==0 ){
+eExeScript('location.replace("edes.php?Lml:$a/poll/gs_poll_tipo.edf&_FILTER="+escape(\'cd_gs_node='.$_SESSION["_Node"].'\'));');
+}
+[DBEnd]B
+qQuery("delete from gs_campaign where cd_gs_poll=".$_vF["cd_gs_poll"]);
+qQuery("delete from gs_question where cd_gs_poll=".$_vF["cd_gs_poll"]);
+qQuery("delete from gs_poll_dct where cd_gs_poll=".$_vF["cd_gs_poll"]);
+qQuery("delete from gs_reply    where cd_gs_poll=".$_vF["cd_gs_poll"]);

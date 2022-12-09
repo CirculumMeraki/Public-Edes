@@ -1,0 +1,130 @@
+[Title]IMPRESO
+[DBTable]gs_form
+[DBIndex]cd_gs_form; cd_gs_node, nm_gs_form; token
+[DBOrder]cd_gs_node, nm_gs_form
+[DBSerial]cd_gs_form
+[AutoMenu]*
+[PersistentVar]cd_gs_form_type
+[NoEditFilled]*
+[OptionsInList]fu,abcm,o					 			_
+| ==&#281;	| EditarPDF		  | Editar				_
+| print		| ImprimirPDF	  | Imprimir			_
+| copy		| DuplicarImpreso | Duplicar Impreso	_
+| ==&#230;	| >TipoDeImpresos | Tipo Impresos		_
+| ==&#123;  | SiguienteHoja   | Ver impreso		    _
+| ==&#124;  | SiguienteHoja2  | Siguiente impreso	| cd_gs_form_type={$cd_gs_form_type}
+[PHPEnd]l
+if( $_GET["cd_gs_form_type"]!="" ){
+?>
+<script>
+var n = S(".MENUFOOTLIST .OP").length;
+S(S(".MENUFOOTLIST .OP").dim[n-1]).class("+OFF");
+</script>
+<?PHP
+}
+[JSIni]l
+function TipoDeImpresos(o){
+if( !S(o).class("?OFF") ){
+S.window("edes.php?Lcl:$a/d/form_type.edf", {fullscreen:true});
+}
+}
+function EditarPDF(oRow, pk){
+if( !window.screenTop && !window.screenY ){
+S.info("<span style='text-align:left; display:table;'>Ponga el explorador en pantalla completa (F11)<br>para entrar al editor.</span>");
+top.S.focusOff();
+}else{
+S.window("edes.php?E:$form.php&cd_gs_form="+pk, {title:"Impreso: "+$nm_gs_form, fullscreen:true});
+}
+}
+function ImprimirPDF(oRow, pk){
+var win = S.window("edes.php?E:$form_pdf.php&cd_gs_form="+pk, {title:"DESCARGAR PDF", fullscreen:true});
+S.windowView(win);
+}
+function DuplicarImpreso(oRow, pk){
+var txt = oRow.outerHTML,
+i = oRow.rowIndex;
+S("#BROWSE").tr("O", i+1, txt);
+_Celda = S("#BROWSE").obj.rows[i+1].cells[_Celda.cellIndex];
+_Celda.parentNode.style.fontStyle = "italic";
+ePF("cd_gs_form",0);
+ePF("nm_gs_form","(IMPRESO DUPLICADO)");
+if( typeof($cdi__)!="undefined" ){
+ePF("cdi__", S.date('Y-m-d H:i:s'));
+ePF("action__", "Insertado");
+}
+S.callSrv("DuplicarForm="+pk+"&rowIndex="+(i+1), window);
+}
+[CallSrv]DuplicarForm
+qQuery("CREATE TEMPORARY TABLE _tmp_{$_User} SELECT * FROM gs_form WHERE cd_gs_form={$DuplicarForm}");
+qQuery("UPDATE _tmp_{$_User} SET cd_gs_form=0, nm_gs_form='(IMPRESO DUPLICADO)' WHERE cd_gs_form={$DuplicarForm}");
+qQuery("INSERT INTO gs_form SELECT * FROM _tmp_{$_User} WHERE cd_gs_form=0");
+$id = qId();
+$cdi = date('Y-m-d H:i:s');
+$script = '$a/poll/gs_form.edf';
+qQuery("insert into gs_last (cd_gs_user, cdi, action, ac_return, script, db_field, db_value) values ({$_User}, '{$cdi}', 'A', 'FaR', '{$script}', 'cd_gs_form', {$id})");
+?>
+<script>
+var win = window.frameElement.WOPENER;
+win._Celda.parentNode.cells[win._NumCol["cd_gs_form"]].innerText = "<?=$id?>";
+top.S.info("Impreso duplicado");
+</script>
+<?PHP
+[WhereSelect]mR|next_form|cd_gs_form<>{$_GET["cd_gs_form"]}
+[Assign]mR|dt_update
+[Fields]
+pk|cd_gs_form|+|T|9||*|||
+Documento|nm_gs_form|D|T|60||MQ||#|
+Tipo|cd_gs_form_type|+|S|40|nm_gs_form|MQ||#|
+#(d) Token|token|#|T|30|nm_gs_form|MQ|||
+#!(d) Token|token|#|T|30|nm_gs_form|*|||
+Descripción|description|#|A|2000,80,5|nm_gs_form|ML|||
+#(mR) Añadir impreso|next_form:cd_gs_form|+|S|40|nm_gs_form|MQ|||
+Fecha Alta|dt_add|F4|T|10||-|#today#|#|
+,Fecha última·Modificación|dt_update|F4|T|10|<nm_gs_form|-|#today#|#|
+,|cd_gs_node|+|T|5||*|_Node|#|
+#(l) Opciones\Op|next_form|D|#|1||-||=|
+[JSIni]l
+function SiguienteHoja(pk){
+debugger;
+S.window("edes.php?E:$form_visor.php&cd_gs_form="+$cd_gs_form);
+return S.eventClear(window);
+if( pk==undefined ){
+var tr = BROWSE.rows[_RowEdit];
+pk = $cd_gs_form;
+}
+S.window("edes.php?E:$form_visor.php&cd_gs_form="+pk);
+return S.eventClear(window);
+}
+function SiguienteHoja2(pk){
+S.window("edes.php?E:$form_visor.php&cd_gs_form="+$next_form);
+return S.eventClear(window);
+}
+[Format]
+if( $_vF["next_form"]>0 ){
+$_vF["next_form"] = eIcon("v"," onclick='SiguienteHoja()' title='Visualizar'").eIcon("==|"," onclick='SiguienteHoja(".$_vF["next_form"].")' title='Visializar el impreso asociado'");
+}else{
+$_vF["next_form"] = eIcon("v"," onclick='SiguienteHoja()' title='Visualizar'").eIcon("==|"," style='visibility:hidden'");
+}
+[JSIni]l-
+function FUNCTION_OptionsInList(oTR){
+debugger;
+return "o4,o5";
+return true;
+}
+[PHPStart]*
+$_OptionsInListMenuRow = false;
+$_ListToolsMenuType = "H";
+[JSEnd]l--
+S(window).menuRow("#BROWSE", [
+'<i class="ICONINPUT" op="1" onclick="SiguienteHoja()" title="Visualizar">V</i>',
+'<i class="ICONINPUT" op="2" onclick="SiguienteHoja()" title="Visializar el impreso asociado">|</i>'
+], function(){
+debugger;
+return true;
+});
+[PHPIni]a
+if( qCount("gs_form_type", "cd_gs_node={$_Node}")==0 ){
+eExeScript('location.href="edes.php?Fa:$a/d/form_type.edf"');
+}
+[DBEnd]A
+eExeScript("var _WOPENER=window.frameElement.WOPENER;".$_JSSTART.'top.S.window("edes.php?E:$form.php&cd_gs_form='.$_vF["cd_gs_form"].'", {title:"Impreso: '.$_vF["nm_gs_form"].'", fullscreen:true}); if(top.S(window).windowIs())top.S.windowClose(window);');

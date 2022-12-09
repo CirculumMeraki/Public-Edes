@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>Help 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[Help] Mode [ |&nbsp;CódigoHelp ] 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Clave de acceso a la ayuda.<BR>En el fichero de configuración "sql.ini" está la variable "$_HelpType" que activa o desactiva el uso de la ayuda por los usuarios, aunque no su edición por los desarrolladores que los controla la variable de configuración "$_HelpType".<BR>Si se hace una página sin el motor y se quiere incorporar la ayuda se pondrá en el BODY lo siguiente:<BR><SPAN style="WIDTH: 25px"></SPAN>onhelp='return <U>top</U>.gsHelp( "<U>NomFileHelp</U>", event )'<BR>Donde <U>NomFileHelp</U> es el nombre del fichero de ayuda.<BR>Si el contenido de la ayuda ponemos el carácter "&gt;" seguido de un nombre de fichero de ayuda, al mostrar la ayuda saltará a ese fichero. <BR>En los iconos de los uTools la clave de la ayuda será el nombre del gráfico o el valor del atributo "HELP" si se ha definido en el icono. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>CódigoHelp:<BR><SPAN style="WIDTH: 25px"></SPAN>- Si la etiqueta [Help] no se pone tomará el valor del nombre del script.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si se deja vacio tomará el valor del&nbsp;&nbsp;"EDF" + "_" + "Modo", es decir una ayuda distinta para cada modo.<BR><SPAN style="WIDTH: 25px"></SPAN>- Si es otro texto, será ese texto, si este texto contiene el caracter "#" será sustituido por el modo. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>[Help] * | = 
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,25 @@
+[Help]fields.htm
+[Title]Field
+[Fields]
+Condición intérprete|ConditionLine|#|T|50||M|||
+Posición|Position|#|T|50||M|||
+Etiqueta General|Label_tab|#|T|50||M|||
+Etiqueta Listados|Label_lis|#|T|50||M|||
+Etiqueta Error|Label_err|#|T|50||M|||
+-
+Campo|Field|d|T|50||M||#||fields
+Tipo Edición|TE|#|T|50||M||||tipoEdicion
+Tipo Control|TC|#|S|50||M||#||C,Chekbox; F,File; f,File Múltiple; P,Password; R,Radiobutton; S,Select; ST,Select Tree; Ss,SubSelect; T,Text; A,Textarea; H,Textarea con HTML; ~; G,Gráfico; ICON,Imagen con icono en listados; IMG,Imagen visible en listados; -,Rango con input; =,Rango sin input; I,En listados con tipo ''F'' Icono ver fichero
+Longitud|Lng|#|T|50||M||#|
+-
+Alineación|px_align|#|T|50||M|||
+Ancho (px/campo)|px_dimensiones|#|T|50||M|||
+Modo|Mode|#|T|30||M||||modo
+Prestaciones|Prestacion|#|T|30||M||||prestacion
+Valor por defecto|Default|#|T|50||M|||
+Condición campo|Condition|#|T|50||M|||
+Mensaje Error|Error|#|T|50||M|||
+-
+Rem|Rem|#|T|50||M|||
+[JSCheck]
+return true;

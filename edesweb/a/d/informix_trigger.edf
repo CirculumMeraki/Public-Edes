@@ -1,0 +1,17 @@
+[Title]TRIGGERS
+[DBTable]systriggers
+[DBIndex]trigid
+[DBOrder]trigname
+[DBSerial]trigid
+[AddOption]*|event|D,Delete; I,Insert; U,Update; S,Select; d,INSTEAD OF Delete; i,INSTEAD OF Insert; u,INSTEAD OF Update (IDS);
+[Fields]
+trigid|trigid|-|T|9||*Q*||#|
+trigname|trigname|#|A|128,80,1||MQ|||
+owner|owner|#D|T|32||MQ|||
+event|event|#D|SV|1||M|||
+old|old|#|A|128,80,1||ML|||
+new|new|#|A|128,80,1||ML|||
+[JSOnClickRow]l
+var n = eGF("trigname").replace(/\s/g,'');
+top.eCallSrv( window, 'edes.php?V:&TITLE=TRIGGER: '+eGF("trigname")+'&TRIGNAME='+eGF("trigname")+'&WIDTH=100%&HEIGHT=100%&SCRIPT=$t/sql_script.gs&STYLE='+escape('font-family:monospace') );
+return false;

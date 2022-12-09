@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eSelectLoad 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eSelectLoad( Field [, DependeDe [, Sql [, PutValor [, NmFunction [, ScriptPHP ]]]]] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Recarga un select de forma dinámica. 
+<TR style="DISPLAY: none">
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>--- EDF Principal ---<BR><B><FONT color=#0000ff size=2>[AddCode]</B></FONT><FONT color=#000000 size=2> a,mR </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT color=#000000 size=2> color </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT color=#000000 size=2> A </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2><FONT color=#000000> &lt;img src='g/t_op_insert.gif' title='Alta&nbsp;color' onclick='AltaColor()'&gt;<BR></FONT></FONT><B><FONT color=#0000ff size=2>[JSIni]</B></FONT><FONT size=2><FONT color=#000000> a,mR<BR></FONT></FONT><FONT color=#0000ff size=2>function AltaTalla(){<BR></FONT><FONT size=2><SPAN style="WIDTH: 25px"></SPAN>top.eSWOpen( window, 'edes.php?Fa:talla', 'ALTA DE TALLA' );<BR></FONT><B><FONT color=#808000 size=2>}<BR></B></FONT><FONT color=#0000ff size=2>function AltaColor(){<BR></FONT><FONT size=2><SPAN style="WIDTH: 25px"></SPAN>top.eSWOpen( window, 'edes.php?Fa:color', 'ALTA DE COLOR' );<BR></FONT><B><FONT color=#808000 size=2>}<BR></B></FONT><BR>--- EDF Mantenimiento de auxiliar ---<BR><B><FONT color=#0000ff size=2><BR>[MsgAnswer]</B></FONT><FONT color=#000000 size=2> A </FONT><B><FONT color=#800000 size=2>|</B></FONT><FONT size=2><FONT color=#000000> RecargarTalla()<BR><FONT size=2><BR>¿ $_PSOURCE=="pedido.edf" ? </FONT><B><FONT color=#0000ff size=2>[WinClose]</B></FONT><BR></FONT></FONT><B><FONT color=#0000ff size=2><BR>[PHPIni]</B></FONT><FONT size=2><FONT color=#000000> A<BR></FONT></FONT><FONT color=#0000ff size=2>function RecargarTalla(){<BR></FONT><FONT size=2>&nbsp;&nbsp; return 'GRABADO&lt;script&gt;if( _PSOURCE=="pedido.edf" ){ _WOPENER.eSelectLoad( "talla",<BR>&nbsp;&nbsp; "cd_familia", "talla" ); }&lt;/script&gt;';<BR></FONT><B><FONT color=#808000 size=2>}<BR><FONT size=2>
+<P>// _WOPENER.eSelectLoad( "_talla", "_cd_familia", "_talla{talla,cd_talla,nm_talla}" );</P></FONT></B></FONT>
+<TR>
+<TD id=txt></TD></TR>
+<TR>
+<TD id=tEjemplo>EJEMPLO</TD></TR>
+<TR>
+<TD id=Ejemplo><FONT size=2>eSelectLoad( "cd_auto" );<BR>eSelectLoad( "pk_auto", null, "pk_auto:cd_auto", '02' );<BR>eSelectLoad( "cd_auto", null, "cd_auto{auto,cd_auto,nm_auto}" );<BR>eSelectLoad( "cd_auto", null, "select cd_auto,nm_auto from auto" );<BR>eSelectLoad( "cd_prov", "cd_auto", null, null, null, "man/script.php?para1=11&amp;para2=22" );<BR></FONT></TD></TR>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

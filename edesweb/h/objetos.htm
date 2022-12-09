@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">Objetos</td>
+</tr>
+<tr>
+<td id="Descripcion">
+<p><strong>Ficha</strong>: Llamamos genéricamente "ficha" a la ventana simple que está compuesta de un solo archivo EDF.<br />Una ficha puede desempeñar distintos propósitos, altas, modificaciones, bajas, filtro de datos para selección de un registro, etc. Las fichas también pueden manejar en modo consulta y modificación ficheros ".ini" de forma transparente, si existe un fichero con el mismo nombre pero con la extensión ".js" lo cargará como si fuera la etiqueta [JSEnd].<br /><br /><strong>MultiFicha</strong>: Las multifichas son agrupaciones de fichas. Cada una de las fichas se muestra en una solapa diferente y normalmente están relacionadas entre sí, de esta forma podemos tener mucha información en pantalla, perfectamente organizada y además sin tener que hacer ningún scroll de la ventana. <br /><br /><strong>Listado</strong>: Los listados pueden tener dos propósitos, bien visualizar simplemente los datos en forma de lista o bien seleccionar un dato para llevarlo a otra ventana. <br />Tipos de listado:<br />- Normal<br />- Agrupaciones<br />- Comparativas<br />- De rejilla<br />- Listado editable<br />- Listado de ordenación<br />Exportación en todos los listados a:<br />- PDF ( b/n y color )<br />- XLS<br />- XML<br />- CSV<br />- TXT<br />Gráficas  compatibles con Flash de la casa  <strong>PHP/SWF Charts </strong>(<a href="http://www.maani.us/charts/index.php">http://www.maani.us/charts/index.php</a>). <br /><br /><strong>Etiquetas</strong>: En formato PDF ( fichas )<br /><br /><strong>Count</strong>: Modulo de recuentos.<br /><br /><strong>Visor</strong>: ( los css son: visor.css y about.css )<br /><br /><strong>Gestor de Opciones</strong>: <br />Gestor de múltiples árboles de opciones, por grupos de opciones según modo<br />Asignación por roles<br />Asignación individual<br />Personalización de iconos del desktop según perfil<br />En Fichas/Multifichas y listados se puede personalizar según el usuario<br /><br /><strong>Gestor de Idiomas</strong>: <br /><br /><strong>Gestor de Ayudas</strong>: Ayuda incorporada en todas las entidades<br /><br /><strong>Login</strong>:  <br />Con encriptación de clave y posibilidad de camuflar la clave en la entrada del password.<br />Contra ddbb, ldap, sso<br /><br /><strong>Desktop</strong>: Cuatro tipos.<br />Ventana "Acerca de"<br />Multitud de opciones del sistema<br /><strong>Controladores de base de datos</strong><br />MySql<br />MySqli<br />Informix<br />Oracle<br />PDO<br /><strong>Generador de extracciones</strong>: a nivel usuario.<br /><br /><strong>Editor HTML</strong>:<br /><br /><br /><strong>Gestor de Incidencias:</strong></p>
+</td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for(var i=0; i<Ejemplo.length; i++){
+			if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

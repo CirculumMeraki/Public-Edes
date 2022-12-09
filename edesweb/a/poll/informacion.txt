@@ -1,0 +1,275 @@
+Directorio de imagenes: /http/poll
+
+Tipos de pregunta.....: gs_question.respuesta_type
+	C , Checkbox
+	A , Comentario
+	FE, Fin Encuesta
+	T , Linea de texto
+	M , Menú
+	MM, Menú Multiple
+	B , Multiples lineas de texto
+	P , Puntuación						 (de 0 a 10)
+	R , Radio
+	K , Ranking						 (ordenar)
+	V , Valoración						 (estrellas)
+	--- Sin uso actual ---
+	X , Asociación
+	S , Control Deslizante
+	U , Datos de Contacto
+	D , Fecha
+	D H ,Fecha y hora
+	H , Hora
+	G , * Login
+	Z , Mapa de calor
+	O , Palabras ocultas
+	L , Página libre
+	I , * Registro
+	J , Rejilla
+	F , Subir fichero
+
+Encuesta sin campos adicionales:
+	A, Comentario: No tiene campos
+	T, Linea de texto
+
+   ===================================================================================
+   PREGUNTA
+   ==================================================================================
+   Encuesta                            | cd_gs_poll            | 0   | S  | 60
+   (pk)                                | cd_gs_question        | +   | T  | 9
+   Nº Pregunta                         | orden                 | +   | T  | 2
+   Pregunta                            | pregunta              | #   | A  | 2000,60,1
+   Marcar listado (solo para diseño)   | marcar_tr             | D   | C  | 1
+   Imagen                              | pregunta_img          | #   | SV | 60
+   -
+   Tipo de Respuesta                   | respuesta_type        | D   | SV | 1,,30
+   Orden aleatorio                     | respuesta_aleatoria   | D   | C  | 1
+   Respuesta con imagen                | respuesta_conimg      | D   | C  | 1
+   Respuesta con puntos                | respuesta_conpnt      | D   | C  | 1
+   Nº de respuestas: de                | respuestas_min        | +   | T  | 1
+   a                                   | respuestas_max        | +   | T  | 1
+   Respuesta obligatoria               | respuesta_obligatoria | D   | C  | 1
+   Texto libre                         | respuestas_libre      | D   | SV | 10
+   (solo para diseño)                  | respuesta_con_salto   | D   | T  | 1
+
+
+   ===================================================================================
+   RESPUESTA
+   ===================================================================================  [K] Ranking / [C] Checkbox / [R] Radio / [M] Menú
+   Respuesta                           | respuesta_1_fld       | #   | A  | 900,60,1
+   Puntos                              | respuesta_1_pnt       | +,  | T  | 2,2
+   Jump                                | respuesta_1_jump      | -   | T  | 6  
+   Imagen                              | respuesta_1_img       | #   | SV | 60 
+   ...
+   -----------------------------------------------------------------------------------  [V] Valoración (estrellas)
+   Máxima valoración                   | ranking               | +   | T  | 2  
+   Forma                               | ranking_forma         | n   | SV | 16 
+   Color inicial                       | ranking_color_ini     | HEX | T  | 7  
+   final                               | ranking_color_end     | HEX | T  | 7  
+   Imagen                              | ranking_img           | #   | SV | 60 
+   ···················································································
+   Etiqueta                            | ranking_1             | #   | A  | 900,60,1
+   Jump                                | ranking_1_jump        | -   | T  | 6       
+   Puntos                              | ranking_1_pnt         | +,  | T  | 2,2     
+   ...
+   -----------------------------------------------------------------------------------  [P] Puntuación (de 0 a 10)
+   Etiqueta valor "0"                  | valoracion_1          | #   | T  | 60      
+   Jump                                | valoracion_1_jump     | -   | T  | 6       
+   Etiqueta valor "10"                 | valoracion_2          | #   | T  | 60       
+   Jump                                | valoracion_2_jump     | -   | T  | 6        
+   -----------------------------------------------------------------------------------  [MM] Menú Multiple
+   Menú Multiple                       | menu_extendido        | #   | A  | 4000,80,20
+   -----------------------------------------------------------------------------------	[B] Multiples lineas de texto
+   Pregunta                            | pregunta_1            | #   | T  | 30         
+   ...
+   -----------------------------------------------------------------------------------  [FE] Fin Encuesta / [L] Página libre
+   Texto de la página                  | pagina_texto          | #   | H  | 2000,80,20
+   Posición Imagen                     | pagina_img_type       | D   | SV | 60        
+   Imagen                              | pagina_img            | #   | SV | 60        
+   -----------------------------------------------------------------------------------
+
+
+   ===================================================================================
+   RESPUESTAS DESACTIVADAS
+   ===================================================================================
+   Mapa                                | mapa_img              | #   | SV | 60         
+                                       | mapa_json             | #   | T  | 256        
+   -----------------------------------------------------------------------------------
+   Lado izquierdo                      | slide_1               | #   | T  | 30         
+   Jump                                | slide_1_jump          | -   | T  | 6    
+   Centro                              | slide_2               | #   | T  | 30   
+   Jump                                | slide_2_jump          | -   | T  | 6    
+   Lado derecho                        | slide_3               | #   | T  | 30   
+   Jump                                | slide_3_jump          | -   | T  | 6    
+   Rango de                            | slide_min             | -   | T  | 5    
+   a                                   | slide_max             | -   | T  | 5   
+   Tamaño del paso                     | slide_step            | -   | T  | 5   
+   con entrada                         | slide_type            | N   | C  | 1   
+   -----------------------------------------------------------------------------------
+   Nombre                              | user_nombre           | D   | C  | 1   
+   Sexo                                | user_sexo             | D   | C  | 1   
+   Edad                                | user_edad             | D   | C  | 1   
+   Fecha de nacimiento                 | user_nacimiento       | D   | C  | 1   
+   Empresa                             | user_empresa          | D   | C  | 1   
+   Dirección                           | user_direccion        | D   | C  | 1   
+   Localidad                           | user_localidad        | D   | C  | 1   
+   Provincia                           | user_provincia        | D   | C  | 1   
+   Código postal                       | user_cpostal          | D   | C  | 1   
+   País                                | user_pais             | D   | C  | 1   
+   EMail                               | user_email            | D   | C  | 1   
+   Teléfono                            | user_telefono         | D   | C  | 1   
+   -----------------------------------------------------------------------------------
+   Interior Rejilla                    | rejilla_tipo          | D   | SV | 15        
+   Nº de columnas                      | rejilla_col           | +   | T  | 1         
+   Nº de filas                         | rejilla_row           | +   | T  | 1         
+   Respuestas por Fila: de             | rejilla_row_min       | +   | T  | 1         
+   a                                   | rejilla_row_max       | +   | T  | 1         
+   Respuestas por Columna: de          | rejilla_col_min       | +   | T  | 1         
+   a                                   | rejilla_col_max       | +   | T  | 1          
+   Respuestas por Rejilla: de          | rejilla_min           | +   | T  | 1          
+   a                                   | rejilla_max           | +   | T  | 1          
+                                       | rejilla_contenido     | #   | A  | 2000,80,10 
+   -----------------------------------------------------------------------------------
+   Origen                              | unir_pregunta_1       | #   | T  | 30         
+   Destino                             | unir_respuesta_1      | #   | T  | 30         
+   Puntos                              | unir_1_pnt            | +,  | T  | 2,2        
+   Imagen                              | unir_1_img            | #   | SV | 60         
+   ...
+   -----------------------------------------------------------------------------------
+   Frase (palabras ocultas entre "{}") | hueco_pregunta_1      | #   | A  | 1000,80,5  
+   Puntos                              | hueco_1_pnt           | +,  | T  | 2,2        
+   Palabras ocultas                    | hueco_respuesta_1     | #   | T  | 30         
+   Imagen                              | hueco_1_img           | #   | SV | 60         
+   ...
+   -----------------------------------------------------------------------------------
+
+
+Ejemplo de json:
+
+{
+	"cd_gs_poll":"9",
+	"_INPUT_cd_gs_poll":"TEST - CALCULO DE PUNTOS",
+	"cd_gs_question":"1",
+	"orden":"1",
+	"pregunta":"Pregunta 1",
+	"marcar_tr":"",
+	"pregunta_img":"",
+	"_INPUT_pregunta_img":"",
+	"respuesta_type":"R",
+	"_INPUT_respuesta_type":"Radio",
+	"respuesta_aleatoria":"",
+	"respuesta_conimg":"",
+	"respuesta_conpnt":"S",
+	"respuestas_min":"1",
+	"respuestas_max":"0",
+	"respuesta_obligatoria":"",
+	"respuestas_libre":"",
+	"_INPUT_respuestas_libre":"",
+	"respuesta_con_salto":"S",
+
+	"respuesta_1_fld":"uno",
+	"respuesta_1_pnt":"1",
+	"respuesta_1_jump":"0",
+	"respuesta_1_img":"",
+	"_INPUT_respuesta_1_img":"",
+
+	"respuesta_2_fld":"dos",
+	"respuesta_2_pnt":"2",
+	"respuesta_2_jump":"-1",
+	"respuesta_2_img":"",
+	"_INPUT_respuesta_2_img":"",
+
+	"respuesta_3_fld":"",
+	"respuesta_3_pnt":"0",
+	"respuesta_3_jump":"0",
+	"respuesta_3_img":"",
+	"_INPUT_respuesta_3_img":"",
+
+	"ranking":"5",
+	"ranking_forma":"",
+	"_INPUT_ranking_forma":"",
+	"ranking_color_ini":"",
+	"ranking_color_end":"",
+	"ranking_img":"",
+	"_INPUT_ranking_img":"",
+	"ranking_1":"",
+	"ranking_1_jump":"0",
+	"ranking_1_pnt":"0",
+	"ranking_2":"",
+	"ranking_2_jump":"0",
+	"ranking_2_pnt":"0",
+	"ranking_3":"",
+	"ranking_3_jump":"0",
+	"ranking_3_pnt":"0",
+	"ranking_4":"",
+	"ranking_4_jump":"0",
+	"ranking_4_pnt":"0",
+	"ranking_5":"",
+	"ranking_5_jump":"0",
+	"ranking_5_pnt":"0",
+
+	"valoracion_1":"",
+	"valoracion_1_jump":"0",
+	"valoracion_2":"",
+	"valoracion_2_jump":"0",
+
+	"menu_extendido":"",
+	"pagina_texto":"",
+	"pagina_img_type":"LF",
+	"_INPUT_pagina_img_type":"Izquierda fluir",
+	"pagina_img":"",
+	"_INPUT_pagina_img":"",
+
+	"rejilla_tipo":"M",
+	"_INPUT_rejilla_tipo":"",
+	"rejilla_col":"2",
+	"rejilla_row":"2",
+	"rejilla_row_min":"0",
+	"rejilla_row_max":"0",
+	"rejilla_col_min":"0",
+	"rejilla_col_max":"0",
+	"rejilla_min":"0",
+	"rejilla_max":"0",
+	"rejilla_contenido":"",
+
+	"unir_pregunta_1":"",
+	"unir_respuesta_1":"",
+	"unir_1_pnt":"0",
+	"unir_1_img":"",
+	"_INPUT_unir_1_img":"",
+
+	"hueco_pregunta_1":"",
+	"hueco_1_pnt":"0",
+	"hueco_respuesta_1":"",
+	"hueco_1_img":"",
+	"_INPUT_hueco_1_img":"",
+
+	"pregunta_1":"",
+
+	"mapa_img":"",
+	"_INPUT_mapa_img":"",
+	"mapa_json":"",
+
+	"slide_1":"",
+	"slide_1_jump":"0",
+	"slide_2":"",
+	"slide_2_jump":"0",
+	"slide_3":"",
+	"slide_3_jump":"0",
+	"slide_min":"0",
+	"slide_max":"0",
+	"slide_step":"0",
+	"slide_type":"",
+
+	"user_nombre":"S",
+	"user_sexo":"S",
+	"user_edad":"S",
+	"user_nacimiento":"S",
+	"user_empresa":"S",
+	"user_direccion":"S",
+	"user_localidad":"S",
+	"user_provincia":"S",
+	"user_cpostal":"S",
+	"user_pais":"S",
+	"user_email":"S",
+	"user_telefono":"S"
+}

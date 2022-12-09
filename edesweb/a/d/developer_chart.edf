@@ -1,0 +1,212 @@
+#(?) [Title] =¿ GRAFICA DE ACTIVIDAD ?
+#(l) [Title] =GRAFICA DE ACTIVIDAD
+[DBLimit]5000,1000
+[FormAction]c|edes.php?Ll:
+[PDFSaveVar]_Form, _todo
+[AddOption]c|_nombre|NomUsuarios()
+[AutoMenu]*|1
+[Fields]?
+Fecha a mostrar|_desde|F4|T|10||AFQ|||
+Nombre desarrollador|_nombre|#D|SV|20|,,5|AQ|||
+[ColsOp],+,+
+[Format],b,b
+[Fields]
+Hora|hora|H|T|19||-|||
+Byts GRABADOS|grabado|-|T|6||-|||
+Accesos|accesos|-|T|6||-|||
+[JSEnd]l
+DGI("BROWSE").style.display = 'none';
+[ChartGrid]1,1
+[Chart]line|1|0|HORA|BYTS||||||ACTIVIDAD||890|410
+$Chart['chart_rect'] = array(
+'x'=>45,
+'y'=>30,
+'width'=>820,
+'height'=>360
+);
+$Chart['legend_rect']['x'] = 45;
+$Chart['legend_rect']['y'] = 10;
+$Chart['legend_rect']['width'] = 820;
+$Chart['legend_rect']['height'] = 10;
+[Chart]line|2|0|HORA|BYTS||||||ACCESOS||890|150
+$Chart['chart_rect'] = array(
+'x'=>45,
+'y'=>30,
+'width'=>820,
+'height'=>100
+);
+$Chart['axis_value']['max'] = 10;
+$Chart['legend_rect']['x'] = 45;
+$Chart['legend_rect']['y'] = 5;
+$Chart['legend_rect']['width'] = 820;
+$Chart['legend_rect']['height'] = 10;
+[JSCheck]?
+if( eGF('_nombre')=='' ) ePE('_nombre','Necesita indicar el nombre del desarrollador');
+[PHPIni]c
+$uNumDes = count(NomUsuarios());
+if( $uNumDes==0 ) eMessage('No hay ningún fichero de log','HS');
+$_Form[1][5] = '200,12,'.$uNumDes;
+function NomUsuarios(){
+$p = array();
+$t = array();
+$di = opendir( '../_d_/log/' );
+while( $file = readdir( $di ) ){
+if( ($file != '.') && ($file != '..') ){
+if( !is_dir('../_d_/log/'.$file) ){
+if( substr($file,0,9)=='opstatus.' ){
+list( ,$nUser ) = explode('.',$file);
+qQuery( "select user_name from gs_user where cd_gs_user='{$nUser}'" );
+list( $Nombre ) = qRow();
+$t[] = "{$Nombre}|{$nUser}";
+}
+}
+}
+}
+closedir( $di );
+sort($t);
+for( $n=0; $n<count($t); $n++ ){
+$tmp = explode( '|', $t[$n] );
+$p[] = array( $tmp[1], $tmp[0] );
+}
+return $p;
+}
+[DBSql]l
+$usuCursor = array();
+$Horas = array();
+$Accesos = array();
+$Dim = array();
+$zp = gzopen( "../_d_/log/activity.{$_User}", "r" );
+while( !gzeof($zp) ){
+$Dim[] = gzgets( $zp, 1000 );
+}
+gzclose($zp);
+if( $_desde=='' ){
+$_desde = date('Y-m-d');
+}else{
+}
+$_TITLE .= ' <u>ww'.$_INPUT__nombre.'</u> '.eYmd2Dmy($_desde).'';
+$Inicio = '';
+$Final = '';
+$TCaracteres = 0;
+$TGrabaciones = 0;
+$TMinutos = 0;
+$TAccesos = 0;
+$Mediana = array();
+$Media = array();
+for( $n=0; $n<count($Dim); $n++ ){
+$Dim[$n] = str_replace( '  ', ' ', $Dim[$n] );
+$tmp = explode( ' ',$Dim[$n] );
+if( $tmp[0]==$_desde ){
+list( $h, $m ) = explode(':',$tmp[1]);
+$Minuto = $h*60+$m;
+$Accesos[] = $Minuto;
+if( $Inicio == '' ) $Inicio = $tmp[1];
+$Final = $tmp[1];
+$TAccesos++;
+if( count($tmp)>5 ){
+if( ($tmp[2]=='ED' || $tmp[2]=='E+') && $tmp[3]=='W' ){
+if( substr_count($tmp[5],'/') == 1 and substr_count($tmp[4],'/edesweb/t/__')==0 ){
+list(,$byts) = explode( '/', $tmp[5] );
+if( substr($tmp[4],0,3)=='../' ) $tmp[4] = substr($tmp[4],2);
+list( $h, $m ) = explode(':',$tmp[1]);
+$Minuto = $h*60+$m;
+$Horas[] = array( $tmp[1], $Minuto, $byts );
+$Accesos[] = $Minuto;
+if( $byts!=0 ) $Mediana[] = $byts;
+$Media[] = $byts;
+$TCaracteres += (int)$byts;
+$TGrabaciones++;
+}
+}
+}
+}
+}
+if( $TAccesos > 0 ){
+list( $h, $m ) = explode(':',$Inicio);
+if( $m!=0 ){
+$sm = $m;
+$m = floor($m/15)*15;
+if( $sm == $m ) $m-=15;
+}
+$MinutoIni = $h*60+$m;
+list( $h, $m ) = explode(':',$Final);
+$m = floor(($m+10)/10)*10;
+$MinutoFin = $h*60+$m+5;
+$Rango = array();
+for( $n=$MinutoIni; $n<$MinutoFin; $n+=5 ){
+$h = floor($n/60);
+$m = $n-($h*60);
+$Rango[$n] = array( str_pad($h,2,'0',STR_PAD_LEFT).':'.str_pad($m,2,'0',STR_PAD_LEFT), 0, 0 );
+}
+for( $n=0; $n<count($Horas); $n++ ){
+for( $i=$MinutoIni; $i<$MinutoFin; $i+=5 ){
+if( $i > $Horas[$n][1] ){
+$Rango[$i][1] += $Horas[$n][2];
+break;
+}
+}
+}
+for( $n=0; $n<count($Accesos); $n++ ){
+for( $i=$MinutoIni; $i<$MinutoFin; $i+=5 ){
+if( $i > $Accesos[$n] ){
+$Rango[$i][2]++;
+break;
+}
+}
+}
+$Max = 0;
+$h = 0;
+foreach( $Rango as $k=>$v ){
+if( $h==0 ){
+$usuCursor[] = array( $v[0], $v[1], $v[2] );
+}else{
+$usuCursor[] = array( '', $v[1], $v[2] );
+}
+if( $v[2] > $Max ) $Max = $v[2];
+if( ++$h==3 ) $h=0;
+}
+$TMinutos += CalculaTiempo( $Inicio, $Final );
+$TH = 0;
+if( $TMinutos > 60 ){
+$TH = floor($TMinutos/60);
+$TM = $TMinutos - ($TH*60);
+}else{
+$TM = $TMinutos;
+}
+$RangTiempo = $TH.':'.str_pad( $TM, 2, '0', STR_PAD_LEFT);
+if( $TMinutos==0 ) $TMinutos = 0.00001;
+if( $TGrabaciones==0 ) $TGrabaciones = 0.00001;
+$ChrPorMinuto = eNumberFormat(($TCaracteres/$TMinutos), 2);
+$GrabarPorMinuto = eNumberFormat(($TMinutos/$TGrabaciones), 2);
+$AccesosPorMinuto = eNumberFormat(($TAccesos/$TMinutos), 2);
+$Mediana = 0;
+if( count($Mediana) > 2 ){
+sort($Mediana);
+if( count($Mediana) % 2 == 0 ){
+$n = (count($Mediana)/2)-1;
+$Mediana = ($Mediana[$n]+$Mediana[$n+1])/2;
+}else{
+$n = floor(count($Mediana)/2);
+$Mediana = $Mediana[$n];
+}
+}
+?>
+<div style="position:absolute; left:5px; top:3px">
+<b><?= $RangTiempo; ?></b> Horas de trabajo ( <?= substr($Inicio,0,5).' - '.substr($Final,0,5); ?> ).<br>
+<b><?= $ChrPorMinuto; ?></b> Carácteres por minuto ( <?= eNumberFormat($TCaracteres); ?> ).<br>
+<b><?= $GrabarPorMinuto; ?></b> Minutos entre grabaciones.<br>
+<b><?= $AccesosPorMinuto; ?></b> Accesos por minuto.<br>
+<img src=g/doc_0.gif onclick='top.eSWOpen(window,"edes.php?Ll:$a/d/developer_ichart.edf&_ASSIGN=c&_INPUT__nombre=<?= $_INPUT__nombre; ?>&_desde=<?= $_desde; ?>","INACTIVIDAD",false)' title='Inactividad'> I<br>
+<img src=g/doc_0.gif onclick='top.eSWOpen(window,"edes.php?Ll:$a/d/developer.edf&_ASSIGN=c&_INPUT__nombre=<?= $_INPUT__nombre; ?>&_desde=<?= $_desde; ?>&_resumen=S","RESUMEN",false)' title='Resumen'> R<br>
+<img src=g/doc_0.gif onclick='top.eSWOpen(window,"edes.php?Ll:$a/d/developer.edf&_ASSIGN=c&_INPUT__nombre=<?= $_INPUT__nombre; ?>&_desde=<?= $_desde; ?>&_resumen=N","SCRIPT MODIFICADOS",false)' title='Script modificados'> M<br>
+<img src=g/doc_0.gif onclick='top.eSWOpen(window,"edes.php?Ll:$a/d/developer.edf&_ASSIGN=c&_INPUT__nombre=<?= $_INPUT__nombre; ?>&_desde=<?= $_desde; ?>&_resumen=N&_todo=S","TODA LA ACTIVIDAD",false)' title='Toda la actividad'> E<br>
+<img src=g/doc_0.gif onclick='top.eSWOpen(window,"edes.php?Ll:$a/d/developer_cmp.edf&_ASSIGN=c&_desde=<?= $_desde; ?>","COMPARATIVA",false)' title='Comparativa'> C
+</div>
+<?PHP
+}
+function CalculaTiempo( $Inicio, $Final ){
+list( $h, $m ) = explode(':',$Inicio);
+$MinDesde = $h*60+$m;
+list( $h, $m ) = explode(':',$Final);
+return ( ($h*60+$m)-$MinDesde );
+}

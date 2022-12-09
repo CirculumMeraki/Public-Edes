@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE>HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><table id="Esquema" width="100%" cellspacing="1px" cellpadding="2px">
+<tbody>
+<tr style="position: relative;">
+<td id="Etiqueta">SortList</td>
+</tr>
+<tr>
+<td id="tSintaxis">SINTAXIS</td>
+</tr>
+<tr>
+<td id="Sintaxis">[SortList] Mode | Field [ | FieldsIguales ]</td>
+</tr>
+<tr>
+<td id="tDescripcion">DESCRIPCION</td>
+</tr>
+<tr>
+<td id="Descripcion">Te permite ordenar manualmente un listado. Cuando tienes una tabla auxiliar y necesitas una ordenación particular puedes poner un campo para indicar la ordenación y ordenarla después de introducir los datos de forma visual. Para seleccionar las filas habrá que hacer click en la columna de ordenación "<strong>Field</strong>" donde se verá el icono del sistema para ordenar, si el listado tiene paginación esta columna se ocultará.</td>
+</tr>
+<tr>
+<td id="tParametro">PARAMETROS</td>
+</tr>
+<tr>
+<td id="Parametro">
+<table id="Opciones" border="0" cellspacing="1" cellpadding="2">
+<tbody>
+<tr>
+<td> <strong>Mode</strong></td>
+<td> Modo en el que el listado se puede reordenar, tener en cuenta los submodos "ml" y  "cl".</td>
+</tr>
+<tr>
+<td> <strong>Field</strong></td>
+<td> Campo donde se guarda la ordenación particular.</td>
+</tr>
+<tr>
+<td> <strong>FieldsIguales</strong></td>
+<td> Lista de campos que tienen que tener el mismo valor para poder mover las filas</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td id="tEjemplo">EJEMPLO</td>
+</tr>
+<tr>
+<td id="Ejemplo">
+<p><code>[SortList] l | orden | cd_gs_entidad,cd_gs_grupo</code></p>
+<p><code>[Fields]<strong><span style="color: #0000ff; font-size: small;"><br /></span></strong>         | cd_gs_campo   | * | T  | 2  || * |||</code><br /><code>Entidad  | cd_gs_entidad | 0 | S  | 30 || - |||</code><br /><code>Grupo    | cd_gs_grupo   | D | Ss | 30 || - |||</code><br /><code>Etiqueta | etiqueta      | # | T  | 20 || - |||</code><br /><code>Orden    | orden         | + | T  | 3  || - |||</code></p>
+</td>
+</tr>
+<tr>
+<td id="txt"> </td>
+</tr>
+</tbody>
+</table><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length==undefined && Ejemplo.innerHTML.length==0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for(var i=0; i<Ejemplo.length; i++){
+		if( Ejemplo[i].innerHTML.length==0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length==0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

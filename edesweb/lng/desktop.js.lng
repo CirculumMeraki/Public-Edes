@@ -1,0 +1,285 @@
+[Language] es,ca,en,fr
+1|Copiar|Copiar|Copy|Copiar
+10|No se ha podido copiar el fichero\n"#1" como "#2"|No s´ha pogut copiar el fitxer\n\"#1\" com \"#2\"|It has not been possible to copy the data file\n"#1" as "#2"|No se ha podido copiar el fichero\n"#1" como "#2"
+100|No hay registros|No hi ha registres|There are no records|No hay registros
+101|Ocurrencias: #|Ocurrències: #|Matches: #|Ocurrencias: #
+102|Cadena no encontrada|Cadena no oposada|String not found|Cadena no encontrada
+103|Error al buscar|Error en buscar|Error searching|Error al buscar
+104|Selección en una subventana|Selecció en una subventana|Selection in a subwindow|Selección en una subventana
+105|Selección en ficha deslizante|Selecció en fitxa lliscant|Selection in sliding form|Selección en ficha deslizante
+106|Selección en la ventana actual|Selecció en la finestra actual|Selection in current window|Selección en la ventana actual
+107|Está en el principio|Està en el principi|You are at the beginning|Está en el principio
+108|Está en el final|Està en el final|You are at the end|Está en el final
+109|Máximo número de registros #|Màxim nombre de registres #|Maximum number of records #|Máximo número de registros #
+11|No se ha podido renombrar el fichero\n"#1" como "#2"|No s´ha pogut renombrar el fitxer\n\"#1\" com \"#2\"|It has not been possible to name data file\n"#1" as "#2"|No se ha podido renombrar el fichero\n"#1" como "#2"
+110|Máximo número de páginas #|Màxim nombre de pàgines #|Maximum number of pages #|Máximo número de páginas #
+111|Página actual|Pàgina actual|Actual Page|Página actual
+112|Contador de páginas|Comptador de pàgines|Page counter|Contador de páginas
+113|Ultima página|Última pàgina|Last page|Ultima página
+114|Registro actual|Registre actual|Actual Record|Registro actual
+115|Contador de registros|Comptador de registres|Register counter|Contador de registros
+116|Ultimo registro|Últim registre|Last record|Ultimo registro
+117|Un registro borrado no puede seleccionarse|Un registre esborrat no pot seleccionar-se|A deleted record can not be selected|Un registro borrado no puede seleccionarse
+118|Está en el primer registro|Està en el primer registre|You are at the first record|Está en el primer registro
+119|Está en el último registro|Està en l´últim registre|You are in the last record|Está en el último registro
+12|El fichero no es accesible, puede tener\ncarácteres no validos o espacios en blanco|El fitxer no és accessible, pot tenir\ncaràcters no valguts o espais en blanc|The data file is not available, it must have \ncharacters not applied or blank spaces|El fichero no es accesible, puede tener\ncarácteres no validos o espacios en blanco
+120|Fichero "#" no encontrado|Fitxer "#" no trobat|"#" Data file not found|Fichero "#" no encontrado
+121|Fichero "#" no se puede leer|Fitxer "#" no es pot llegir|"#" Data file can not be read|Fichero "#" no se puede leer
+122|Error en PERIODO|Error en PERÍODE|Error in PERIOD|Error en PERIODO
+123|Mes actual
+124|Año anterior|Any passat|Previous year|Año anterior
+125|Mes anterior|Mes anterior|Previous month|Mes anterior
+126|Siguiente mes|Següent mes|Next month|Siguiente mes
+127|Siguiente año|Següent any|Next year|Siguiente año
+128|Cerrar Calendario|Tancar Calendari|Close Calendar|Cerrar Calendario
+129|Fecha actual|Data actual|Actual Date|Fecha actual
+13|Microsoft Office Word no instalado|Microsoft Office Word no instal·lat|Microsoft Office Word is not instaled|Microsoft Office Word no instalado
+130|No admite mas líneas|No admet mes línies|No more lines are admitted|No admite mas líneas
+131|Individual CSS|Individual CSS|Individual CSS|Individual CSS
+132|ERROR|ERROR|ERROR|ERROR
+133|Cargando|Carregant|Loading|Cargando
+134|Modificando|Modificant|Modifying|Modificando
+135|Editor HTML: Ayuda de Teclado|Editor HTML: Ajuda de Teclat|HTML Editor: Ayuda de Teclado|Editor HTML: Ayuda de Teclado
+136|Insertar|Inserir|Insert|Insertar
+137|Modificar|Modificar|Modify|Modificar
+138|Borrar|Esborrar|Delete|Borrar
+139|SubListado sin datos|SubLlistat sense dades|SubListado sin datos|SubListado sin datos
+14|Error en el formato del campo|Error en el format del camp|Error in the field's format|Error en el formato del campo
+141|Falta por definir la etiqueta <b>"{slMenu}"</b><br>del objeto <b>"#1"</b><br>en el modo <b>"#2"</b>|Falta per definir l´etiqueta<b>\"{slMenu}\"</b><br>de l´objecte <b>\"#1\"</b><br>en la manera <b>\"#2\"</b>|Falta por definir la etiqueta <b>"{slMenu}"</b><br>del objeto <b>"#1"</b><br>en el modo <b>"#2"</b>|Falta por definir la etiqueta <b>"{slMenu}"</b><br>del objeto <b>"#1"</b><br>en el modo <b>"#2"</b>
+142|Enviando fichero...|Enviant fitxer...|Enviando fichero...|Enviando fichero...
+143|Leyendo fichero...|Llegint fitxer...|Leyendo fichero...|Leyendo fichero...
+144|El fichero está en uso|El fitxer està en ús|El fichero "#" está en uso|El fichero esta en uso
+145|No caben más caracteres|No caben mes caràcters|No caben más caracteres|No caben más caracteres
+146|Izquierda|Esquerra|Izquierda|Izquierda
+147|Derecha|Dreta|Derecha|Derecha
+148|Seleccionar imagen|Seleccionar imatge|Seleccionar imagen|Seleccionar imagen
+149|Insertando imagen|Inserint imatge|Insertando imagen|Insertando imagen
+15|Ver Aviso|Veure Avís|View|Ver Aviso
+150|Grabando...|Gravant...|Grabando...|Grabando...
+151|MENSAJE DEL SISTEMA|MISSATGE DEL SISTEMA|MENSAJE DEL SISTEMA|MENSAJE DEL SISTEMA
+152|Zona capturada|Zona capturada|Zona capturada|Zona capturada
+153|Opción ya abiera|Opció ja oberta|Opción ya abiera|Opción ya abiera
+154|No se ha podido grabar la pantalla|No s´ha pogut gravar la pantalla|No se ha podido grabar la pantalla|No se ha podido grabar la pantalla
+155|Formato de color hexadecimal erroneo|Format de color hexadecimal erroni|Formato de color hexadecimal erroneo|Formato de color hexadecimal erroneo
+156|Captura de pantallas activada con Control·F12|Captura de pantalles activada amb Control F12|Captura de pantallas activada con Control·F12|
+157|Captura de pantallas desactivada<br>Control·F12 para Capturar Errores|Captura de pantalles desactivada<br>Control F12 per Capturar Errors|Captura de pantallas desactivada<br>Control·F12 para Capturar Errores|
+16|Cancelar|Cancel·lar|Cancel|Cancelar
+17|Eliminar Aviso|Eliminar Avís|Delete Warning|Elimiar Aviso
+18|Posponer # minutos|Posposar # minuts|Postpone # minutes|Posponer # minutos
+19|Posponer 1 hora|Posposar 1 hora|Postpone 1 hour|Posponer 1 hora
+2|Imprimiendo...|Imprimint...|Printing...|Imprimiendo...
+20|Posponer 1 día|Posposar 1 dia|Postpone 1 day|Posponer 1 día
+21|Demasiados parámetros|Massa paràmetres|Too many parameters|Demasiados parámetros
+22|Editor HTML: Condiciones de Seguridad|Editor HTML: Condicions de Seguretat|HTML Editor: Security Conditions|Editor HTML: Condiciones de Seguridad
+23|SOLICITUD DE INCIDENCIA|SOL·LICITUD D´INCIDÈNCIA|BUG FORM|SOLICITUD DE INCIDENCIA
+24|VISOR ESCRITORIO REMOTO|VISOR ESCRIPTORI REMOT|REMOTE DESKTOP VIEWER|VISOR ESCRITORIO REMOTO
+25|Pantalla enviada|Pantalla enviada|Screen sent|Pantalla enviada
+26|Error al enviar la pantalla|Error en enviar la pantalla|Error sending screen|Error al enviar la pantalla
+27|Grabado|Gravat|Saved|Grabado
+28|Plantilla no encontrada|Plantilla no trobada|Template not found|Plantilla no encontrada
+29|No se ha realizado la modificación|No s´ha realitzat la modificació|Modification not realized|No se ha realizado la modificación
+3|Problemas con la impresora|Problemes amb la impressora|Problems with the printer|Problemas con la impresora
+30|Confirmar salir de la aplicación|Confirmar sortir de l´aplicació|Confirm exit from the aplication|Confirmar salir de la aplicación
+31|Registro no encontrado|Registre no oposat|Record not found|Registro no encontrado
+32|La página se está cargando|La pàgina s´està carregant|The page is loading|La página se está cargando
+33|Microsoft Office Excel no instalado|Microsoft Office Excel no instal·lat|Microsoft Office Excel is not instaled|Microsoft Office Excel no instalado
+34|Generando Excel...|Generant Excel...|Generating Excel...|Generando Excel...
+35|No admite mas caracteres|No admet mes caràcters|No more typefaces are allowed|No admite mas caracteres
+36|ERROR:\nTipo de Edición "#1" no soportado\nen el campo "#2"|ERROR:\nTipus d´edició \"#1\" no suportat\nen el camp \"#2\"|ERROR:\nEdition type "#1" not supported \nin the field "#2"|ERROR:\nTipo de Edición "#1" no soportado\nen el campo "#2"
+37|Valor copiado|Valor copiat|Value copied|Valor copiado
+38|Valor pegado|Valor pegat|Value pasted|Valor pegado
+39|Falta introducir el dato "#"|Falta introduir la dada \"#\"|"#" Detail Missing|Falta introducir el dato "#"
+168|El dato "#" no puede estar en modo alta|El dato "#" no puede estar en modo alta
+4|GESTION DE INCIDENCIAS|GESTIÓ D´INCIDÈNCIES|BUG TRACKER|GESTION DE INCIDENCIAS
+40|Falta rellenar completamente el dato "#"|Falta omplir completament la dada "#"|Missing completely fill in the data "#"|Complétez complètement les données "#"
+41|Falta introducir el dato "#"|Falta introduir la dada "#"|"#" Detail Missing|Falta introducir el dato "#"
+42|Error en el dato "#"|Error en la dada "#"|Error on "#"|Error en el dato "#"
+43|ERRORES ENCONTRADOS|ERRORS OPOSATS|ERRORS FOUND|ERRORES ENCONTRADOS
+44|El dato "#" no tiene acceso de modificación|La dada "#" no té accés de modificació|The data/detail "#" does not have modification access|El dato "#" no tiene acceso de modificación
+45|Código Postal inexistente|Codi Postal inexistent|Postal Code non-existent|Código Postal inexistente
+46|"#" con carácteres no permitidos|"#" amb caràcters no permesos|"#" with not allowed characters|"#" con carácteres no permitidos
+47|NIF erroneo|NIF erroni|incorrect NIF|NIF erroneo
+48|Fecha incorrecta en el dato "#"|Data incorrecta en la dada "#"|Incorrect Date in the data/detail "#"|Fecha incorrecta en el dato "#"
+49|Periodo incorrecto en el dato "#"|Període incorrecte en la dada "#"|Incorrect period in the "#" data|Periodo incorrecto en el dato "#"
+5|Formato "#" desconocido|Format "#" desconegut|Format "#" unknow|Formato "#" desconocido
+50|Hora incorrecta en el dato "#"|Hora incorrecta en la dada "#"|Incorrect time in the data "#"|Hora incorrecta en el dato "#"
+51|Error en la longitud del Dígito de Control (DC)|Error en la longitud del Dígit de Control (DC)|Error in the Control Digit's (DC) length|Error en la longitud del Dígito de Control (DC)
+52|Dirección de correo erronea en el dato "#"|Adreça de correu errònia en la dada "#"|Mail direction incorrect in the detail "#"|Dirección de correo erronea en el dato "#"
+53|Formato erroneo en el dato "#"|Format erroni en la dada "#"|Incorrect data in the "#" data|Formato erroneo en el dato "#"
+54|Error en la longitud del dato|Error en la longitud de la dada|Error in the data length|Error en la longitud del dato
+55|Error en la longitud del dato "#"|Error en la longitud de la dada "#"|Error in the data length "#"|Error en la longitud del dato "#"
+56|Condición "*" innecesaria|Condició "*" innecessària|Condition "*" unnecessary|Condición "*" innecesaria
+57|Condición "#" incorrecta|Condició "#" incorrecta|Condition "#" incorrect|Condición "#" incorrecta
+58|Si pone "*" no puede usar el resto de símbolos|Si posa "*" no pot usar la resta de símbols|While using "*" the other symbols are unavailable|Si pone "*" no puede usar el resto de símbolos
+59|Condiciones "#" no permitida|Condicions "#" no permesa|Conditions "#" not allowed|Condiciones "#" no permitida
+6|El fichero no es accesible, puede tener\ncarácteres no validos o espacios en blanco.|El fitxer no és accessible, pot tenir\ncaràcters no valguts o espais en blanc.|The data file is not available, it must have\ncharacters not applied or blank spaces|El fichero no es accesible, puede tener\ncarácteres no validos o espacios en blanco.
+60|Demasiadas condiciones del tipo "#"|Massa condicions del tipus "#"|Too many type "#" conditions|Demasiadas condiciones del tipo "#"
+61|Las condiciones "#1" y "#2" no pueden ir juntas|Les condicions "#1" i "#2" no poden anar juntes|The conditions "#1" and "#2" can not go together|Las condiciones "#1" y "#2" no pueden ir juntas
+62|La condicion "#" no puede ir al final|La condició "#" no pot anar al final|The condition "#" can not go at the end|La condicion "#" no puede ir al final
+63|Posición incorrecta de la condición|Posició incorrecta de la condició|Wrong position in the condition|Posición incorrecta de la condición
+64|FECHA|DATA|DATE|FECHA
+65|PERIODO|PERÍODE|PERIOD|PERIODO
+66|NUMERO|NOMBRE|NUMBER|NUMERO
+67|CDI|CDI|CDI|CDI
+68|HORA|HORA|HOUR|HORA
+162|la longitud del campo|la longitud del camp|la longitud del campo|la longitud del campo
+69|Error en #|Error en #|Error in #|Error en #
+7|Error indeterminado|Error indeterminat|Undetermined error|Error indeterminado
+70|Fichero demasiado grande, máximo # byts|Fitxer massa gran, màxim # byts|Data file too big, maximum # bytes|Fichero demasiado grande, máximo # byts
+71|Extensión del fichero no permitida|Extensió del fitxer no permesa|Data file extention not allowed|Extensión del fichero no permitida
+72|Nombre de fichero demasiado largo|Nom de fitxer massa llarg|File Name too large|Nombre de fichero demasiado largo
+73|Borrar el fichero "#"|Esborrar el fitxer "#"|Delete file "#"|Borrar el fichero "#"
+74|Ventana selección|Finestra selecció|Selection window|Ventana selección
+75|Calculando...|Calculant...|Calculating...|Calculando...
+76|No se puede mostrar todos los datos\nIntroduzca nuevo criterio de búsqueda|No es pot mostrar totes les dades\nIntrodueixi un nou criteri de cerca|Full Data can not be shown\nType new search filter|No se puede mostrar todos los datos\nIntroduzca nuevo criterio de búsqueda
+269|Es obligatorio introducir datos de busqueda
+77|Un campo en el formulario FRM# no tiene atributo "name"|Un camp en el formulari FRM# no té atribut "name"|There is a formulary field FRM# that does not have the complement "name"|Un campo en el formulario FRM# no tiene atributo "name"
+78|La selección no cabe en el campo contenedor|La selecció no cap en el camp contenidor|The selection does not fit in the container field|La selección no cabe en el campo contenedor
+79|ERROR:\nEl control "#" no se puede activar|ERROR:\nEl control "#" no es pot activar|ERROR:\nThe control "#" can not activate|ERROR:\nEl control "#" no se puede activar
+8|MAPA DE OPCIONES|MAPA D´OPCIONS|OPTIONS MAP|MAPA DE OPCIONES
+80|ERROR: Campo "#" no definido|ERROR: Camp "#" no definit|ERROR: Field "#" not definited|ERROR: Campo "#" no definido
+81|Campo "#1" no encontrado en #2|Camp "#1" no trobat en #2|Field "#1" not found in #2|Campo "#1" no encontrado en #2
+82|El campo "#1" o su valor "#2" no encontrado en ePF()|El camp "#1" o el seu valor "#2" no trobat en ePF()|The field "#1" or its value "#2" was not found in ePF()|El campo "#1" o su valor "#2" no encontrado en ePF()
+83|HISTÓRICO DE MOVIMIENTOS|HISTÒRIC DE MOVIMENTS|MOVEMENTS HISTORY|HISTÓRICO DE MOVIMIENTOS
+84|A INSERTAR|A INSERIR|TO INSERT|A INSERTAR
+85|A MODIFICAR|A MODIFICAR|TO MODIFY|A MODIFICAR
+86|A BORRAR|A ESBORRAR|TO DELETE|A BORRAR
+87|A CONSULTAR|A CONSULTAR|TO CONSULT|A CONSULTAR
+88|El objeto "#" no existe|L´objecte "#" no existeix|Item "#" does not exist|El objeto "#" no existe
+89|El select superior tiene que tener valor|El select superior ha de tenir valor|The superior select must have a value|El select superior tiene que tener valor
+9|No se ha podido borrar el fichero "#"|No s´ha pogut esborrar el fitxer "#"|It has not been possible to delete the data file"#"|No se ha podido borrar el fichero "#"
+90|Activa el select|Activa el select|Activate select|Activa el select
+91|Desactiva el select|Desactiva el select|Disable select|Desactiva el select
+92|Calculando #1/#2|Calculant #1/#2|Calculating #1/#2|Calculando #1/#2
+93|Entrada repetida|Entrada repetida|Repeated entry|Entrada repetida
+94|Demasiadas entradas|Massa entrades|Too many entries|Demasiadas entradas
+95|Borrar entrada|Esborrar entrada|Delete entry|Borrar entrada
+96|Módulo de Gráficas no encontrado|Mòdul de Gràfiques no oposat|Graphic component not found|Módulo de Gráficas no encontrado
+97|ERROR:\n\nFalta definir la gráfica número #|ERROR:\n\nFalta definir la gràfica nombre #|ERROR:\n\nGraphic number # must be defined|ERROR:\n\nFalta definir la gráfica número #
+98|ERROR:\nEl tipo de gráfica "*" no se permite con [ChartGrid]|ERROR:\nEl tipus de gràfica "*" no es permes amb [ChartGrid]|ERROR:\nThe graphic type "*" is not allowed with [ChartGrid]|ERROR:\nEl tipo de gráfica "*" no se permite con [ChartGrid]
+99|Tipo gráfica|Tipus gràfica|Chart type|Tipo gráfica
+158|Enviando fichero "#"|Enviant fitxer "#"|Enviando fichero "#"|Enviando fichero "#"
+191|Error enviando fichero "#"|Error enviant fitxer "#"|Error enviando fichero "#"|Error enviando fichero "#"
+159|Preparando fichero "#"|Preparant fitxer "#"|Preparando fichero "#"|Preparando fichero "#"
+160|Frases demasiado largas en "#1" máximo #2 carácteres|Frases massa llargues en "#1" màxim #2 caràcters|Frases demasiado largas en "#1" máximo #2 carácteres|Frases demasiado largas en "#1" máximo #2 carácteres
+161|Fichero "#" descargado|Fitxer "#" descarregat|Fichero "#" descargado|Fichero "#" descargado
+163|CLAVE DE ACCESO|CLAU DE ACCÉS|CLAVE DE ACCESO|CLAVE DE ACCESO
+164|Tamaño fuente|Grandària font|Font size|Tamaño fuente
+165|Extragrande|Extragran|Extra large|Extragrande
+166|Grande|Gran|Large|Grande
+167|Normal|Normal|Normal|Normal
+169|No hay fichero|No hi ha fitxer|No file|Aucun fichier
+170|Seleccione el directorio por defecto para lectura
+171|Ya está en el mes actual
+
+172|Enero
+173|Febrero
+174|Marzo
+175|Abril
+176|Mayo
+177|Junio
+178|Julio
+179|Agosto
+180|Septiembre
+181|Octubre
+182|Noviembre
+183|Diciembre
+
+184|Domingo|Diumenge|Sunday|Domingo
+185|Lunes|Dilluns|Monday|Lunes
+186|Martes|Dimarts|Tuesday|Martes
+187|Miércoles|Dimecres|Wednesday|Miércoles
+188|Jueves|Dijous|Thursday|Jueves
+189|Viernes|Divendres|Friday|Viernes
+190|Sábado|Dissabte|Saturday|Sábado
+
+192|Destinatario~PDFWhatRecipient
+193|Clave~PDFWhatPassword
+194|PETICIÓN DE DATOS~PDFWhatData
+195|Descargar~PDF Download
+196|Creado por~PDF
+
+197|Falta seleccionar la subficha "#"
+198|La subficha "#" no puede estar en modo alta
+199|Si continúa se perderán los datos<br>introducidos en la ficha.
+200|El dato "#" es obligatorio
+
+201|Lu|L|Mo|L~Lunes
+202|Ma|M|Tu|M~Martes
+203|Mi|X|We|X~Miercoles
+204|Ju|J|Th|J~Jueves
+205|Vi|V|Fr|V~Viernes
+206|Sá|S|Sa|S~Sábado
+207|Do|D|Su|D~Domingo
+
+208|Seleccionar Periodo Actual
+
+209|MENSAJE|MISSATGE|MESSAGE|MENSAJE
+210|CONFIRMAR|CONFIRMAR|CONFIRM|CONFIRMAR
+211|AVISO|AVÍS|ADVICE|AVISO
+212|ERROR|ERROR|ERROR|ERROR
+213|Aceptar|Aceptar|Accept|Aceptar
+214|Si|Si|Yes|Si
+215|No|No|No|No
+216|Cancelar|Cancel·lar|Cancel|Cancelar
+217|Imprimir
+218|Confirmar la opción de imprimir|Confirmar l´opció d´imprimir|Confirm the print option|Confirmar la opción de imprimir
+219|Cargando...|Carregant...|Loading...|Cargando...
+220|Sistema ocupado|Sistema ocupat|System in use|Sistema ocupado
+221|Acción no permitida|Acció no permesa|Action not allowed|Acción no permitida
+222|Enviando fichero...|Enviant fitxer...|Enviando fichero...|Enviando fichero...
+223|Grabado
+224|Calculando...
+225|Descargando...
+
+226|Insertar	~ SubList
+227|Modificar	~ SubList
+228|Borrar	~ SubList
+
+229|Memorizando valores por defecto...
+230|Borrando valores por defecto...
+231|Por motivos internos en # minutos se cerrará la aplicación.
+
+232|Esta opción no se puede ejecutar en una subventana
+
+233|Fila a mover	~ [SortList]
+234|Fila liberada	~ [SortList]
+235|Fila movida	~ [SortList]
+236|Seleccionar año y mes
+
+237|Insertado|Inserit|Added|Insertado	~ al dar de alta un registro en [EditList]
+238|Modificado|Modificat|Modified|Modificado	~ al modificar un registro en [EditList]
+239|El dato "#" tiene que estar totalmente relleno o vacío
+
+240|Error condición repetida
+241|Error en el valor de la condición
+242|Error en la condición
+243|Falta el valor de la condición
+244|Falta la condición
+245|Se ha producido un error, código #.
+246|Zona completa
+247|La primera columna no puede ser numérica
+248|Columna "#" repetida
+249|Falta alguna columna numérica
+250|Faltan definir mas columnas
+251|Las gráficas de este tipo no admiten valores negativos
+252|El fichero no se puede previsualizar
+253|Fichero demasiado grande para previsualizar
+254|Sistema parado por mantenimiento.
+255|Se avisó a las #.
+256|La aplicación se cerrará en
+
+257|Falta definir la variable "S.setup.maxFileUploads"
+258|Nombre de fichero demasiado largo<br>"#"
+259|Extensión no permitida "#1"<br>"#2"
+260|Fichero demasiado grande<br>"#1"<br>#2 > #3
+261|Carácteres no permitidos en el nombre del fichero
+262|Fichero "#" repetido
+
+263|Confirmar cerrar la aplicación
+264|Hay ficheros pendientes de enviar
+265|Si cierra perderá datos
+266|Se ha perdido la sessión.<br>La aplicación se cerrará.
+267|Aplicación cerrada.
+
+268|Configurar impresora

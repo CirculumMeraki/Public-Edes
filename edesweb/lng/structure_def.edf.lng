@@ -1,0 +1,26 @@
+[Language] es,ca
+TITULO | ESTRUCTURA | ESTRUCTURA
+Tipo | Tipo | Tipus
+Directorio | Directorio | Directori
+Usuario | Usuario | Usuari
+FILTRO | FILTRO | FILTRE
+ErrorTipo | Falta definir el "TIPO" | Falta definir el "TIPUS"
+ErrorDirectorio | Falta definir el "DIRECTORIO" | Falta definir el "DIRECTORI"
+Asignar filtro del padre | Asignar filtro del padre | Assignar filtre del pare
+BotonCrear | Crear | Crear
+BotonModificar | Modificar | Modificar
+BotonBorrar |  Borrar | Esborrar
+TitleList | ESTRUCTURA ORGANIZATIVA | ESTRUCTURA ORGANITZATIVA
+TitleOpOpciones | Opciones | Opcions
+OpCrear | Crear | Crear
+OpModificar | Modificar | Modificar
+OpBorrar | Borrar | Esborrar
+OpMover | Mover | Moure
+OpFunciones | Funciones | Funcions
+NoEsPuesto | No es un puesto | No és un lloc
+SelecPadre | Selecciona la Carpeta Padre | Selecciona la Carpeta Pare
+MovCancelado | Movimiento Cancelado | Moviment Cancel·lat
+Directorio Modificado | Directorio Modificado | Directori modificat
+Directorio Movido | Directorio Movido | Directori Mogut
+Directorio Borrado | Directorio Borrado | Directori Esborrat
+Directorio Creado | Directorio Creado | Directori Creat

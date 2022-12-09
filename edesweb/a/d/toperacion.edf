@@ -1,0 +1,11 @@
+[Title]TIPO OPERACION
+[DBTable]{$_SESSION['ShareDictionary']}gs_toperacion
+[DBIndex]cd_gs_toperacion
+[DBOrder]orden
+[FormStatic]
+[Fields]
+Código|cd_gs_toperacion|#D|T|3||AQ|||
+Nombre|nm_gs_toperacion|#D|T|40||MQ|||
+NªOrden|orden|+|T|4||M|||
+Grupo|grupo|#D|T|10||M|||
+Activa|activa|#D|C|1||M|||

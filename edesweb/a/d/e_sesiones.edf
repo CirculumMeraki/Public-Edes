@@ -1,0 +1,96 @@
+[Title]SESIONES ACTIVAS
+[DBOrder]conexion
+[Fields]
+|flag_color|0|T|1||*|||
+conexión|conexion|+|T|8||M|||
+entrada|CDI|CDI|T|19||M|||
+última conexión|filetime|CDI|T|19||M|||
+nodo|nodo|+|T|4||M|||
+usuario|usuario|+|T|5||M|||
+arbol|arbol|+|T|3||M|||
+cache&nbsp;pc|cachepc|H|T|8||M|||
+[DBSql]*
+$sSesion = $_SESSION['_D_'];
+$TxtSesion = '';
+$usuCursor = array();
+$Comando = '_CachePc';
+$Valor = '';
+$ModCachePC = false;
+$DirBase = session_save_path();
+$di = opendir( $DirBase );
+$nActivos = 0;
+$uTotalReg = 0;
+while( $file = readdir( $di ) ){
+if( $file != '.' && $file != '..' ){
+if( !is_dir( "{$DirBase}/{$file}" ) ){
+if( substr( $file, 0, 5 ) == 'sess_' ){
+$Cursor = array();
+$NomFile = $DirBase.'/'.$file;
+$df = fopen($NomFile,'r');
+$stxt = fread($df,5000);
+fclose($df);
+if( $ModCachePC ){
+$txt = '';
+$Activo = false;
+for( $n=0; $n<strlen($stxt); $n++){
+$c = substr( $stxt, $n, 1 );
+if( $c=='"' ) $Activo = !$Activo;
+if( $c==';' && $Activo ) $c = '~';
+$txt .= $c;
+}
+$Dim = explode(';',$txt);
+for( $n=0; $n<count($Dim); $n++){
+$Dim[$n] = str_replace('~',';',$Dim[$n]);
+$tmp = explode('|',$Dim[$n]);
+$tmp[0] = trim($tmp[0]);
+if( $tmp[0] == $Comando ){
+$txt = str_replace( $Dim[$n], $tmp[0].'|'.substr(serialize($Valor),0,-1), $txt );
+}
+}
+$df = fopen($NomFile,'w');
+fwrite($df,$txt);
+fclose($df);
+}
+$uTotalReg++;
+$_filetime_ = date( 'Y-m-d H:i:s', filemtime($NomFile) );
+if( $_filetime_ < date( 'Y-m-d H:i:s', mktime( date('H'), date('i'), date('s')-get_cfg_var('session.gc_maxlifetime'), date('m'), date('d'), date('Y') ) ) ){
+$Cursor[0] = 1;
+}else{
+$Cursor[0] = 0;
+$nActivos++;
+}
+$Cursor[1] = 'PEPE';
+if( $sSesion == $_SESSION['_D_'] && $TxtSesion == '' ) $TxtSesion = $stxt;
+$usuCursor[] = $Cursor;
+}
+}
+}
+}
+closedir( $di );
+if( $uTotalReg > $_DBLIMIT ) eMessage('DEMASIADAS SESIONES ACTIVAS ('.$uTotalReg.')','HES');
+$tmp = explode( ' ', $_DBORDER );
+$uTipoOrden = ( $tmp[1]!='' ) ? strtoupper($tmp[1]) : 'ASC' ;
+$_DBORDER = $tmp[0];
+$uOrdenar = 0;
+for( $n=1; $n<count($_Form); $n++ ) if( $_Form[$n][1] == $_DBORDER ) $uOrdenar = $n;
+$usuCursor = qsort_multiarray( $usuCursor, $uOrdenar, $uTipoOrden );
+$_FOOTTITLE = 'echo "<div width=100% align=left>TOTAL SESIONES ACTIVAS: ".count($usuCursor)."/".$nActivos."</div>";';
+function MemVariables( $stxt, $Cursor, $_Form ){
+$vars = preg_split( '/([a-z,A-Z]+)\|/', $stxt, -1, (8 | 16) );
+for( $i=0; $vars[$i]; $i++ ){
+$tmp = unserialize($vars[$i]);
+$Cursor[$i+1] = $tmp;
+}
+return $Cursor;
+session_decode($stxt);
+for( $n=1; $n<count($_Form); $n++ ){
+$variable = '_'.$_Form[$n][1].'_';
+if( isset($_SESSION[$variable]) ){
+$Cursor[$n] = ${$variable};
+if( $variable == '_CDI_' ) $Cursor[$n] = date ('Y-m-d H:i:s',$Cursor[$n]);
+}
+}
+return $Cursor;
+}
+[JSEnd]*
+for( var r=1; r<BROWSE.rows.length; r++ ) if( BROWSE.rows[r].cells[0].textContent*1 == 1 ) BROWSE.rows[r].style.color = 'red';

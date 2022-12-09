@@ -1,0 +1,43 @@
+#include(*) lng
+		
+     [Title] @CONEXION/ES@
+#(l) [Title] @LISTADO DE CONEXIONES@
+
+[DBTable] gs_conexion
+[DBIndex] id
+[DBOrder] cdi desc
+[DBLimit] 2000,250
+.#Include(l) /_datos/config/history.ayo | true
+[Debug]  * | savesqlh
+[Cursor]
+[AutoMenu] l | 1
+
+[AddCode] ? | _desde_hours,_hasta_hours | I | noConditions
+[DBRange] ? | cdi | _desde | _hasta
+
+[DBAddFilter] cd_gs_user not in (select cd_gs_user from gs_user where system_user='S')
+
+[Fields]
+    @Instante Desde@ | _desde                                                     | F4  | T | 10 |  | QF | #today# |  | 
+   ,                 | _desde_hours                                               | H   | T | 8  |  | Q  |         |  | 
+   ,@Hasta@          | _hasta                                                     | F4  | T | 10 |  | QF |         |  | 
+   ,                 | _hasta_hours                                               | H   | T | 8  |  | Q  |         |  | 
+    @Instante@       | cdi                                                        | CDI | T | 19 |  | -  |         |  | 
+
+    @DNI@            | cd_gs_user{gs_user,cd_gs_user,dni}                         | 0   | S | 7  |  | A  |         |  | 
+    @Nombre@         | cd_gs_user{gs_user,cd_gs_user,user_surname,', ',user_name} | 0   | S | 60 |  | A  |         |  | 
+    @Local@          | cd_gs_node                                                 | 0   | S | 60 |  | Q- |         |  | 
+.    @Arbol@         | cd_gs_tree                                                 | 0   | S | 60 |  | Q- |         |  | 
+    @Sg@             | sg_carga                                                   | +   | T | 3  |  | A  |         |  | 
+    @IP@             | ip                                                         | X   | T | 15 |  | Q- |         |  | 
+.  ,Exe              | exe                                                        | X   | T | 1  |  | QL |         |  | 
+.   Conexión         | conexion                                                   | +   | T | 7  |  | QL |         |  | 
+    @Id@             | id                                                         | X   | T | 40 |  | *  |         |  | 
+.   Navegador        | cd_gs_navegador                                            | 0   | S | 60 |  | Q- |         |  | 
+
+.#(l) Tiempo         | timediff( A.cdi_fin, A.cdi )                               | H   | T | 10 |  | -  |         |  | 
+
+
+[Note]
+Informix:
+	select extend( cdi_fin, hour to second)-extend( cdi, hour to second) from gs_conexion; H:mm:s

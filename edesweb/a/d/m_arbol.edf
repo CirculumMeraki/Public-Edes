@@ -1,0 +1,176 @@
+#include(*) lng
+[Title]@MANTENIMIENTO DE ARBOLES@
+[DBTable]{$_SESSION['ShareDictionary']}gs_tree|gs_user
+[DBIndex]cd_gs_tree
+[DBOrder]nm_gs_tree
+[DBSerial]cd_gs_tree
+[MaxRec]30
+[Cursor]
+[ColsColor]PieLista
+[THColSpan]nm_gs_tree,cd_gs_tree,@Arbol de opciones@|permission,email,@Prestaciones@|a,c,@PERMISO USUARIOS@
+[ColsOp]#, , ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,+,+,+
+[FormatTotals], , ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,b,b,b
+[PDFTh], , ,AVI,PER,EXT,IMP,XLS,XML,PDF,MDB,CSV,NOV,COR, , ,
+[Format], , ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,   ,B,B,B
+$_vF["a"] = uCuentaUsuarios($_vF[2],'S');
+$_vF["b"] = uCuentaUsuarios($_vF[2],'N');
+$_vF["c"] = uCuentaUsuarios($_vF[2],'C');
+[PHPStart]l
+include_once('../_datos/config/desktop.ini');
+[PHPIni]l
+$UsuSinTree = qCount("gs_user", "cd_gs_tree not in (select cd_gs_tree from {$_SESSION['ShareDictionary']}gs_tree)");
+if( $UsuSinTree>0 )  $_FOOTTITLE = 'echo eLng("Usuarios sin árbol de opciones", eNumberFormat($UsuSinTree));';
+if( $_FOOTTITLE!='' ) $_FOOTTITLE .= 'echo "<br>";';
+$UsuTotal = qCount('gs_user', '', $cur);
+$_FOOTTITLE .= 'echo "<b>".eLng("Usuarios registrados", eNumberFormat($UsuTotal))."</b>";';
+[PHPIni]l
+function uCuentaUsuarios( $nArbol, $AB ){
+global $_Sql, $_SqlPDOType;
+eFileGetVar("Login", true);
+$_PassDaysToExpire = $PassDaysToExpire;
+eLogDebug( 'SQL: '.$_Sql.' : '.$AB );
+if( eSqlType('pdo.informix') ){
+$Hoy = date('d-m-Y');
+$SinEntrar = date('d-m-Y', mktime(0,0,0, date('m'), date('d')-$_PassDaysToExpire, date('Y')));
+if( isset($_PassDaysToExpire) && $_PassDaysToExpire>0 ){
+if( $AB=='S' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and permission='S' and (
+( dt_del is null and dt_access_last is null and dt_add>'{$SinEntrar}' ) or
+( dt_del is null and dt_access_last>'{$SinEntrar}' ) or
+( dt_del>='{$Hoy}' and dt_access_last>'{$SinEntrar}' ) or
+( dt_del>='{$Hoy}' and dt_access_last is null and dt_add>'{$SinEntrar}' )
+)", $Cur );
+}else if( $AB=='N' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and (
+( permission not in ('S','C') or ( permission='S' and dt_del<'{$Hoy}' ) )
+)", $Cur );
+}else if( $AB=='C' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and (
+permission='C' or
+( permission='S' and dt_del is null and dt_access_last is null and dt_add<='{$SinEntrar}' ) or
+( permission='S' and dt_del is null and dt_access_last<='{$SinEntrar}' ) or
+( permission='S' and dt_del>='{$Hoy}' and dt_access_last<='{$SinEntrar}' ) or
+( permission='S' and dt_del>='{$Hoy}' and dt_access_last is null and dt_add<='{$SinEntrar}' )
+)", $Cur );
+}
+}else{
+if( $AB=='S' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and permission='S' and (
+( dt_del is null or dt_del>='{$Hoy}' )
+)", $Cur );
+}else if( $AB=='N' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and (
+( permission<>'S' or ( permission='S' and dt_del<'{$Hoy}' ) )
+)", $Cur );
+}else if( $AB=='C' ){
+return 0;
+}
+}
+}else{
+$Hoy = date('Y-m-d');
+$SinEntrar = date( 'Y-m-d', mktime( 0,0,0, date('m'), date('d')-$_PassDaysToExpire, date('Y') ) );
+if( isset($_PassDaysToExpire) && $_PassDaysToExpire>0 ){
+if( $AB=='S' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and permission='S' and (
+( (dt_del is null or dt_del='0000-00-00') and (dt_access_last is null or dt_access_last='0000-00-00') and dt_add<>'0000-00-00' and dt_add>'{$SinEntrar}' ) or
+( (dt_del is null or dt_del='0000-00-00') and dt_access_last<>'0000-00-00' and dt_access_last>'{$SinEntrar}' ) or
+( dt_del>='{$Hoy}' and dt_access_last<>'0000-00-00'  and dt_access_last>'{$SinEntrar}' ) or
+( dt_del>='{$Hoy}' and (dt_access_last is null or dt_access_last='0000-00-00') and dt_add>'{$SinEntrar}' )
+)", $Cur );
+}else if( $AB=='N' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and (
+permission not in ('S','C') or
+( permission='S' and dt_del is not null and dt_del<>'0000-00-00' and dt_del<'{$Hoy}' )
+)", $Cur );
+}else if( $AB=='C' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and (
+permission='C' or
+( permission='S' and (dt_del is null or dt_del='0000-00-00') and (dt_access_last is null or dt_access_last='0000-00-00') and dt_add<='{$SinEntrar}' ) or
+( permission='S' and (dt_del is null or dt_del='0000-00-00') and dt_access_last<>'0000-00-00' and dt_access_last<='{$SinEntrar}' ) or
+( permission='S' and dt_del>='{$Hoy}' and dt_access_last<='{$SinEntrar}' ) or
+( permission='S' and dt_del>='{$Hoy}' and (dt_access_last is null or dt_access_last='0000-00-00') and dt_add<>'0000-00-00' and dt_add<='{$SinEntrar}' )
+)", $Cur );
+}
+}else{
+if( $AB=='S' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and permission='S' and (
+( dt_del is null or dt_del='0000-00-00' or dt_del>='{$Hoy}' )
+)", $Cur );
+}else if( $AB=='N' ){
+return qCount( 'gs_user', "cd_gs_tree={$nArbol} and (
+permission<>'S' or
+( permission='S' and dt_del is not null and dt_del<>'0000-00-00' and dt_del<'{$Hoy}' )
+)", $Cur );
+}else if( $AB=='C' ){
+return 0;
+}
+}
+}
+}
+[GroupLabels]Align|TipTH
+nm_gs_tree	| | @Nombre del Arbol@
+filename		| | @Nombre del Fichero@
+cd_gs_tree	|d| @Número@
+warnings		|c| @Minutos entre sincronizaciones@
+permission	|c| @Permiso@
+extract		|c| @Extraer datos@
+print			|c| @Imprimir@
+excel			|c| @Pasar a Excel@
+mdb			|c| @Pasar a Access@
+pdf			|c| @Pasar a PDF@
+news			|c| @Novedades@
+email			|c| @Correo@
+[CC]#ToExpire|eFileGetVar("Login.$PassDaysToExpire")>0
+[Fields]a,?R|2
+@Nombre@|nm_gs_tree|X|T|60||MQ||#|
+,2 @Minutos entre sincronizaciones@\<img src='g/aviso.gif' title='@Avisos@'>|warnings|+|T|2|17|*|||//MS
+,\@Nº@|cd_gs_tree|*|T|2||l=-; *=*|||
+,2 @Eliminar primer nivel@|rmvfstlvl|X|c|1||ML|||
+-
+{columns}{ 6
+@Permiso@\<img src='g/permiso.gif' title='@Permiso@'>|permission|X|c|1||M|||
+,2 @Imprimir@\<img src='g/print_1.gif' title='@Imprimir@'>|print|X|c|1||M|||
+,3 @Novedades@\<img src='g/nove_1.gif' title='@Novedades@'>|news|X|c|1||M|||
+,4 @Correo@\<img src='g/l_email.gif' title='@Correo@'>|email|X|c|1||-|||
+,6 @Extraer@\<img src='g/extraer_1.gif' title='@Extraer datos@'>|extract|X|c|1||M|||
+2 @Pasar a Excel@\<img src='g/l_d_xls.gif' title='@Pasar a Excel@'>|excel|X|c|1||M|||
+,3 @Pasar a XML@\<img src='g/l_d_xml.gif' title='@Pasar a XML@'>|xml|X|c|1||M|||
+,4 @Pasar a PDF@\<img src='g/l_d_pdf.gif' title='@Pasar a PDF@'>|pdf|X|c|1||M|||
+,5 @Pasar a TXT@\<img src='g/l_d_txt.gif' title='@Pasar a TXT@'>|txt|X|c|1||M|||
+,6 @Pasar a CSV@\<img src='g/l_d_csv.gif' title='@Pasar a CSV@'>|csv|X|c|1||M|||
+,@Pasar a Access@\<img src='g/l_d_mdb.gif' title='@Pasar a Access@'>|mdb|X|c|1||*|||
+}
+@Descripción@|description|#|A|255,85,15|+csv|ML|||
+[Fields]else|2
+@Nombre@|nm_gs_tree|X|T|30||MQ||#|
+,\@Nº@|cd_gs_tree|+|T|2||l=-; *=*|||
++2 @Minutos entre sincronizaciones@\<img src='g/aviso.gif' title='@Avisos@'>|warnings|+|T|2|17|*|||//MS
+@Permiso@\<img src='g/permiso.gif' title='@Permiso@'>|permission|X|c|1||M|||
+,@Extraer@\<img src='g/extraer_1.gif' title='@Extraer datos@'>|extract|X|c|1||M|||
+,@Imprimir@\<img src='g/print_1.gif' title='@Imprimir@'>|print|X|c|1||M|||
+,@Pasar a Excel@\<img src='g/l_d_xls.gif' title='@Pasar a Excel@'>|excel|X|c|1||M|||
+,@Pasar a XML@\<img src='g/l_d_xml.gif' title='@Pasar a XML@'>|xml|X|c|1||M|||
+,@Pasar a PDF@\<img src='g/l_d_pdf.gif' title='@Pasar a PDF@'>|pdf|X|c|1||M|||
+,@Pasar a Access@\<img src='g/l_d_mdb.gif' title='@Pasar a Access@'>|mdb|X|c|1||M|||
+,@Pasar a TXT@\<img src='g/l_d_txt.gif' title='@Pasar a TXT@'>|txt|X|c|1||M|||
+,@Pasar a CSV@\<img src='g/l_d_csv.gif' title='@Pasar a CSV@'>|csv|X|c|1||M|||
+,@Novedades@\<img src='g/nove_1.gif' title='@Novedades@'>|news|X|c|1||M|||
+,@Correo@\<img src='g/l_email.gif' title='@Correo@'>|email|X|c|1||-|||
+@Descripción@|description|#|A|255,85,15|+csv|ML|||
+#(l) @ACTIVOS@|cd_gs_tree as a|+|T|5||M|||
+#(l) @DE BAJA@|cd_gs_tree as b|+|T|5||M|||
+#ToExpire ¿
+@CADUCADOS@|cd_gs_tree as c|+|T|5||M|||
+?¿
+@CADUCADOS@|cd_gs_tree as c|+|T|5||*|||
+?
+[JSEnd]l
+function VerUsuarios(){
+var Obj = S.event(window);
+if( Obj.tagName == 'TD' ){
+var url = 'edes.php?Ll:$a/d/usu_ficha.edf&_FILTER='+escape('cd_gs_tree='+Obj.parentNode.cells[2].textContent);
+top.eSWOpen( window, url, '@USUARIOS DEL ARBOL@'.replace('#',eGF('nm_gs_tree')) );
+}
+eClearEvent();
+}
+DGI("BROWSE").oncontextmenu = VerUsuarios;

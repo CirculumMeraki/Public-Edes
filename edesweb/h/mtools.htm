@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>mTools 
+<TR>
+<TD id=Descripcion>
+<P>SubMenú de opciones&nbsp;incrustada en el desktop, se visualiza pulsado con el botón derecho sobre el desktop.<BR><BR>Opciones de desarrollo desde dentro de la aplicación.</P>
+<UL>
+<LI>La opción Get/Put te permite consultar y modificar objetos de la ventana central, cada vez que metes se graba en el clipboard.<BR>si encuentra un "=" hará una asignación y si no será ver los datos, en caso de empezar por '&lt;' en resultado en lugar de verse en una ventada de 'alert()' se copiará al clipboard. 
+<LI>Si pulsas botón derecho encima del Menú saldrá el menú de window y si se pulsa fuera se ocultará.&nbsp; 
+<LI>Para entrar en el Login gráfico y meter carácteres en minúsculas se pulsará el 'Shift+Drch'. 
+<LI>Hay 3 zonas pulsables para ocultar/mostrar zonas del escritorio que son: La barra vertical izquierda y las 2 barritas horizontales superior y central. 
+<LI>Si te colocas en la parte inferior izquierda te da información del tiempo de carga , si eres desarrollador del&nbsp;número de conexión y en la segunda linea del&nbsp;"tip" los segundos de carga de la&nbsp;última página. 
+<LI>Iconos flotantes si pulsas con el botón derecho encima creará una copia que la podrás mover pulsando con el botón derecho y sin soltarlo arrastras el icono y para hacerlo desaparecer volverás a pulsar en el icono original con el botón derecho ( $_mf_0.gif, $_of_0.gif ).</LI></UL>
+<P>Al pasar por encima del título de la aplicación aparece el nombre del usuario.<BR>- El la página principal en la zona de menús pulsando el botón derecho sale un submenú de desarrollo con:<BR><SPAN style="WIDTH: 25px"></SPAN>- Opciones:<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Editar Fuente<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Editar Ayuda<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Editor Windows. Si se pulsa en el icono solicitará el nombre del fichero a editar<BR><SPAN style="WIDTH: 25px"></SPAN>- Iconos<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- DF Privado<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Get/Put Objetos ( memoriza la ultima entrada o lo que esté en el portapapeles)<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Ver los valores de formulario ( View internal data window )<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Quita la pantalla de Cargando<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Copy: Copia el contenido de los campos del formulario<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Paste: Rellena el formulario con los campos copiados<BR><BR>- Si en cualquier página se pulsa botón derecho aparecerá el Menú "iTools" mostrando las opciones de:<BR><SPAN style="WIDTH: 25px"></SPAN>- gsEdit: &nbsp;Editarás el script que ha generado la página con gsEdit, aunque ponga el mensaje de que no existe lo creará, si lo hacemos encima de un control tipo select y está puesto una etiqueta [RelationFields] editará el script que realiza el SubSelect.<BR><SPAN style="WIDTH: 25px"></SPAN>- gsStyle:<BR><SPAN style="WIDTH: 25px"></SPAN>-&nbsp;EditPlus: si los tienes, aunque ponga el mensaje de que no existe lo creará.<BR><SPAN style="WIDTH: 25px"></SPAN>- gsObject:&nbsp;Sobre cualquier objeto te mostrará toda la información del objeto<BR><SPAN style="WIDTH: 25px"></SPAN>- gsHelp:&nbsp;Si el EDF tiene la etiqueta "[HELP]" Editará la ayuda<BR><SPAN style="WIDTH: 25px"></SPAN>- Reload:&nbsp;Recargará la página.<BR><BR><SPAN style="WIDTH: 25px"></SPAN>Cuando se para la WEB para consultas la forma de reactivarla es mediante un usuario con su PC autorizado y con la autorización de Reactivar Web vuelva a entrar en la aplicación escribiendo a continuación de su clave <STRONG>"&amp;ACTIVARWEB"</STRONG> para poner el caracter "&amp;" tiene que pulsar a la vez la tecla [AltGr].</P>
+<P></P>
+<P></P><SPAN style="WIDTH: 25px"></SPAN>Para que alguien pueda entrar mientras la WEB está desactivada tiene que haber un fichero en "<STRONG>_tmp/error/{$_User}.ord</STRONG>".<BR><SPAN style="WIDTH: 25px"></SPAN>Cuando la Web está parada se ejecutará la página '<STRONG>_datos/config/stop.php'.</STRONG><BR><BR>Permite las Consultas '_tmp/error/stop_mod.web'<BR>Web parada '_tmp/error/stop.web';<BR><BR>- Al pulsar imprimir con la tecla "control" pulsada se grabará una captura de la ficha que este en la pantalla o en una subventana&nbsp;en un fichero word en "c:/edes_aplication.doc", si existe el fichero lo usa y añade la imagen al final.<BR></TD></TR></TBODY></TABLE>
+<SCRIPT>document.title=Etiqueta.innerText;</SCRIPT>
+</DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

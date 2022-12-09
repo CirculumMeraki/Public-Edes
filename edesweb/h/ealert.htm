@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV id=CONTENIDO style="OVERFLOW: auto; BORDER-TOP: 0px; HEIGHT: 100%; BORDER-RIGHT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; FLOAT: left; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: 0px">
+<TABLE id=Esquema cellSpacing=1 cellPadding=2 width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>eAlert 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>eAlert( Titulo, Descripción [ , Botones, Img, MyFunc, DimForm, DimParametros, MyFuncCheck&nbsp;] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Sustituye las funciones de javascript alert(), prompt() y confirm() unificándolas en una sola para unificar la estética de toda la aplicación y ampliando la función prompt() en varios campos. Hay una diferencia sustancial en la forma de operar en las funciones originales la ejecución se para al ejecutar las opciones y continua una vez aceptado la ventana en esta función la estrategia hay que cambiarla ya que cuando llamas a la función la ejecución del programa no se para, para simularlo lo que se hace es pasar a eAlert() el nombre de la función a ejecutar después de aceptar los datos, ha esta función se le pasará el valor del botón pulsado, una matriz con los valores de los campos si se ha definido "DimForm" y la matriz "DimParametros". Se pueden uar las teclas "<STRONG>F10</STRONG>", <STRONG>"Enter"</STRONG>&nbsp;y "<STRONG>ESC</STRONG>" para aceptar y cancelar. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>&nbsp;Titulo</TD>
+<TD>Título de la ventana o cadena vacía</TD></TR>
+<TR>
+<TD>&nbsp;Descripción</TD>
+<TD>Descripción o cadena vacía, para hacer un salto de línea utilizar "n".<BR>Se puede pasar un objeto para mostrar una tabla, este tiene la siguiente estructura<BR>{<BR><SPAN style="WIDTH: 25px"></SPAN>class: [ ],<SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>// por defecto "INFO" (también esta disponible "GRILL" y cualquier otra clase que esté en el top<BR><SPAN style="WIDTH: 25px"></SPAN>style: [ ],<BR><SPAN style="WIDTH: 25px"></SPAN>head: [ ],<BR><SPAN style="WIDTH: 25px"></SPAN><STRONG>body: [ ],</STRONG><BR><SPAN style="WIDTH: 25px"></SPAN>foot: [ ]<BR>}<BR>Siendo obligatorio solo el "body", en "style" se pueden pasar las iniciales de [L]eft, [C]enter, [R]ight, [B]old o el contenido de la propiedad style. ejemplo:<BR>{<BR><SPAN style="WIDTH: 25px"></SPAN>style: ["","B"],<BR><SPAN style="WIDTH: 25px"></SPAN>body: [&nbsp; ["DNI","00000000"],&nbsp;&nbsp;["Nombre","NOMBRE"],&nbsp;&nbsp;["Apellidos","APELLIDO1 APELLIDO2"],&nbsp;&nbsp;["EMail","email<A href="mailto:email@ejemplo.es">@ejemplo.es</A>"]&nbsp; ]<BR>}</TD></TR>
+<TR>
+<TD>&nbsp;Botones</TD>
+<TD>Cadena separada por comas con el nombre de los botones a mostrar, es el único parámetro obligatorio.<BR>&nbsp;<SPAN style="WIDTH: 25px"></SPAN>ACCEPT=2, YES=1, NO=0, CANCEL=-1<BR>También puede ser una cadena con sólo las iniciales separadas por coma. Si queremos un texto alternativo pondremos la barra vertical "|" despues de indicar lo botones y los textos de los botones separados por coma ( si el nombre del botón tiene algún espacio en blanco y no se quiere que haga retorno de carro lo pondremos en le bormato "&amp;nbsp;" ) ejemplo "A,C|Ver,Elimiar".<BR>También podría ser sin botón con el parámetro "-", para desactivar este mensaje se tiene que ejecutar la función "eAlertHide()"</TD></TR>
+<TR>
+<TD>&nbsp;Img</TD>
+<TD>Nombre de Imagen</TD></TR>
+<TR>
+<TD>&nbsp;MyFunc</TD>
+<TD>Función de usuario / ObjetoField, los parametros que recibe son:<BR><SPAN style="WIDTH: 25px"></SPAN>Op<BR><SPAN style="WIDTH: 25px"></SPAN>DimValores<BR><SPAN style="WIDTH: 25px"></SPAN>DatosAdicionales<BR><SPAN style="WIDTH: 25px"></SPAN>DimObj</TD></TR>
+<TR>
+<TD>&nbsp;DimForm</TD>
+<TD>Matriz múltiple para generar un formulario<BR><SPAN style="WIDTH: 25px"></SPAN>0.- Label<BR><SPAN style="WIDTH: 25px"></SPAN>1.- Longitud del control<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Si es un número será un input<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Si vale "0" la posición 0 indicará el SRC de una imagen y el indice 1 será el title de la imagen.<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Si es una cadena en la cual se definirá el ancho y el alto separado por coma será un textarea<BR><SPAN style="WIDTH: 25px"></SPAN>2.- Expresión regular mientras escribes, si es null o cadena vacia no se podrá editar.<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Si es una matriz generará un select<BR><SPAN style="WIDTH: 25px"></SPAN><SPAN style="WIDTH: 25px"></SPAN>- Si se define un textarea recordar añadir en la expresión "rn" para permitir los retornos de carro.<BR><SPAN style="WIDTH: 25px"></SPAN>3.- Expresión regular al salir del campo<BR><SPAN style="WIDTH: 25px"></SPAN>4.- Valor por defecto</TD></TR>
+<TR>
+<TD>&nbsp;DimParametros&nbsp;</TD>
+<TD>&nbsp;Matriz&nbsp;(numérica o hash) con los datos adicionales&nbsp;a pasar a la función de usuario, si solo se va a pasar un valor no pasará como madriz sino como variable.</TD></TR>
+<TR>
+<TD>&nbsp;MyFuncCheck </TD>
+<TD>&nbsp;Función de usuario que será llamada en el Inicio, al pasar de campo y al salir.<BR>&nbsp;En el inicio se pasarán los parámetros:&nbsp;"I", ListaDeCampos, null <BR>&nbsp;Al pasar de campo: "C", ListaDeCampos, ObjActual<BR>&nbsp;Al salir: "E", ListaDeCampos, null, Op, MatrizDeDatos </TD></TR></TBODY></TABLE><BR>Parámetros que recibe la función de usuario si se define.<BR>
+<TABLE id=Opciones cellSpacing=1 cellPadding=2 border=0>
+<COLGROUP>
+<COL style="FONT-WEIGHT: bold">
+<TBODY>
+<TR>
+<TD>&nbsp;1&nbsp;</TD>
+<TD>Accion a ejecutar: &nbsp;ACCEPT=2, YES=1, NO=0, CANCEL=-1&nbsp;</TD></TR>
+<TR>
+<TD>&nbsp;2&nbsp;</TD>
+<TD>Matriz con los datos&nbsp;del formulario</TD></TR>
+<TR>
+<TD>&nbsp;3&nbsp;</TD>
+<TD>Matriz &nbsp;a pasar a la función</TD></TR>
+<TR>
+<TD>&nbsp;4</TD>
+<TD>Object del foco</TD></TR></TBODY></TABLE><BR>En el nombre de la imagen se puede poner su inicial representativa:<BR>
+<TABLE id=Opciones style="HEIGHT: 181px; WIDTH: 157px" cellSpacing=1 cellPadding=2 border=0>
+<TBODY>
+<TR>
+<TD>
+<P align=center>DH</P></TD>
+<TD>&nbsp;g/sys_dialog_asks.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>DI</P></TD>
+<TD>&nbsp;g/sys_dialog_info.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>E</P></TD>
+<TD>&nbsp;g/sys_error.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>H</P></TD>
+<TD>&nbsp;g/sys_help.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>I</P></TD>
+<TD>&nbsp;g/sys_info.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>N</P></TD>
+<TD>&nbsp;g/sys_note.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>P</P></TD>
+<TD>&nbsp;g/sys_printer.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>S</P></TD>
+<TD>&nbsp;g/sys_seek.gif</TD></TR>
+<TR>
+<TD>
+<P align=center>W</P></TD>
+<TD>&nbsp;g/sys_warning.gif</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>top.eAlert( "ERROR", "Error indeterminado", "ACCEPT", "g/stop.gif", MyFunction );<BR><BR>top.eAlert( "MENSAJE DE IMPRESION", "Coloque papel blanco en la impresora y pulse aceptar.", "accept,cancel", "sys_printer.gif", MyFunction );<BR><BR>top.eAlert( "", "Proceso terminado", "A" );<BR><BR>top.eAlert( "ENTRADA DE DATOS", "", "accept,cancel", null, MyFunction , Array( <BR>&nbsp;&nbsp;Array('Precio'&nbsp; , 20, '^[0-9]*$' ),<BR>&nbsp;&nbsp;Array('Artículo', 30, '^[A-Zs]*$' ),<BR>&nbsp;&nbsp;Array('Periodo' ,&nbsp; 7, '^[0-9-]*$', '^[12][0-9]{3}-[0-1]{1}[0-9]{1}', '2007-01' )<BR>&nbsp; Array('Nota', "60,10", '^[a-zA-Z0-9 áéíóúñÑüÜçÇºª_-/()&lt;&gt;{}¡!¿?;.:,%@'"srn]*$' ),<BR>) );<BR><BR></P>
+<P>// Despues del mensaje pone el foco en el campo<BR>top.eAlert( 'ERROR', 'El Código Postal no existe', 'A', 'E', document.all.cd_postal );<BR><BR>- Para añadir un Select Virtual: &nbsp;&nbsp;Array('Type', 6, {'F':'Folder', 'O':'Option', 'L':'Separator'}, 'O' ),<BR>- Para añadir una linea:&nbsp;Array('-'),<BR>- Para añadir una imagen: Array('g/buscar.gif' ),</P>
+<TR>
+<TD id=txt><BR></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

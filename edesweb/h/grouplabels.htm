@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>GroupLabels 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[GroupLabels] NomEti-1 [ | NomEti-2 ] ...<BR>&nbsp; NomCampo [ | DefNomEti-1 ] ...
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Agrupa etiquetas para definirlas todas a la vez 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro><STRONG>NomEti: </STRONG>Cualquiera de las siguientes etiquetas:<BR>
+<TABLE id=Opciones cellSpacing=1px cellPadding=2px border=0>
+<TBODY>
+<TR>
+<TD>Align</TD></TR>
+<TR>
+<TD>Format</TD></TR>
+<TR>
+<TD>TipTh</TD></TR>
+<TR>
+<TD>\ (en [Fields], separador de etiqueta de campo y texto para la cabecera de los listados)</TD></TR>
+<TR>
+<TD>ColsWidth</TD></TR>
+<TR>
+<TD>ColsColor</TD></TR></TBODY></TABLE><STRONG>NomCampo </STRONG>: Campo existente en la etiqueta [Fields]. <BR><STRONG>DefNomEti: </STRONG>Parámetros en función de las etiquetas EDES definidas en el parámetro EDESLabel. 
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>[GroupLabels] Align | TipTH<BR>nm_gs_tree | | Nombre del Arbol<BR>fichero&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | Nombre del Fichero<BR>cd_gs_tree |d| Número<BR>avisos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |c| Minutos entre sincronizaciones<BR>permiso&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |c| Permiso<BR>extraer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |c| Extraer datos<BR>imprimir&nbsp;&nbsp;&nbsp;&nbsp; |c| Imprimir<BR>excel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |c| Pasar a Excel<BR>novedades&nbsp;&nbsp;&nbsp; |c| Novedades<BR>correo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |c| Correo</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+
+window.focus();
+</SCRIPT>
+</BODY></HTML>

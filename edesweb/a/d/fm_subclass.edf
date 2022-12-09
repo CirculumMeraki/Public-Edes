@@ -1,0 +1,10 @@
+[Title]SUBCATEGORIA/S MULTIMEDIA
+[DBTable]gs_img_sclass
+[DBIndex]cd_gs_img_sclass; nm_gs_img_sclass
+[DBOrder]nm_gs_img_sclass
+[DBSerial]cd_gs_img_sclass
+#include(*) /_datos/config/file_manager.ini | true
+[Fields]
+|cd_gs_img_sclass|+|T|9||*|||
+Categoría|cd_gs_img_class|+|S|30||MQd||#|
+SubCategoría|nm_gs_img_sclass|D|T|30||MQ||#|

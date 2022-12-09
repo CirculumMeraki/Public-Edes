@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV id=CONTENIDO style="BORDER-RIGHT: 0px; BORDER-TOP: 0px; PADDING-LEFT: 0px; FLOAT: left; MARGIN: 0px; OVERFLOW: auto; BORDER-LEFT: 0px; WIDTH: 100%; BORDER-BOTTOM: 0px; HEIGHT: 100%">
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>gsEdit 
+<TR>
+<TD id=Descripcion>
+<UL>
+<LI>
+<DIV>Al visualizar la ayuda se copia la etiqueta en el clipboard. </DIV>
+<LI>La tecla F9 memoriza la posición actual y F8 salta de posición en posición, si es Mayúsculas+F8 saltará hacia atrás. 
+<LI>Estando en el nombre de una función si pulsas Control+F8 te iras a la función y con Alt+F8 regresaras, puedes ir a cualquier número de funciones y luego regresar.
+<LI>Si marcamos una etiqueta con los corchetes y pulsamos F1 se abrirá una ventana con la ayuda de esa etiqueta, si pulsamos&nbsp;Control+F1 se habrirá la ayuda en formato "chm". 
+<DIV></DIV>
+<LI>
+<DIV>Si marcas un campo, pulsas la tecla 'Alt' y sueltas el boton izquierdo te pedirá si quieres abrir los ficheros: '*.fdf', '*.sel' y '*.ldf', y si el nombre tiene un punto el fichero tal cual.</DIV>
+<LI>
+<DIV>Estando en un campo si lo cambias o borras su contenido al pulsar escape se restaura el valor original.</DIV>
+<LI>
+<DIV>Con F10 se graba la hoja en la que estamos y si se pulsa Control+F10 la graba formateando la etiqueta [FIELDS].<BR>- Copiar : Control+Insert / Control+C<BR>- Pegar: Shift+Insert / Control+V<BR>- Control+Tab: Salta a la siguiente solapa<BR>- Control+Shift+Tab: Salta a la solapa anterior</DIV>
+<LI>
+<DIV>Dispone de una ventana de ejecución&nbsp;inmediata de PHP , HTML con javaScript y SQL.</DIV>
+<LI>
+<DIV>En la opción buscar cadena en servidor si delante de la cadena a buscar ponemos el carácter "|" buscará el campo solo dentro de la etiqueta [Fields].</DIV>
+<LI>
+<DIV>Desde los intreprete si pulsas F10 se ejecutará el script.</DIV>
+<LI>
+<DIV>Seleccionar el nombre de un fichero con la tecla 'Alt' pulsada se abrirá el fichero.</DIV>
+<LI>
+<DIV>Para subir/bajar la música si hacemos click con la tecla "Control" pulsada subirá/bajará de 10 en 10.</DIV>
+<LI>
+<DIV>Si grabas un fichero vacio lo borrará de disco.</DIV>
+<LI>
+<DIV>En la opción de "Buscar en el Servidor", por defecto te toma la cadena que tengas en el clipboard, una vez en la ventana de los ficheros encontrados tenemos dos opciones:<BR><SPAN style="WIDTH: 25px"></SPAN>- Con Click se vera el dichero.<BR><SPAN style="WIDTH: 25px"></SPAN>- Con Control+Botón Dch se editará con gsEdit.<BR><SPAN style="WIDTH: 25px"></SPAN>- Con Control+Alt+Botón Dch se editará con el editor asociado ( configurable en "edes.ini" )</DIV>
+<LI>
+<DIV>Si en la solapa pulsas con el botón derecho se descargará.</DIV>
+<LI>
+<DIV>En opción de ver las etiquetas del fichero salen en orden de aparición pero si pulsamos el botón derecho se ordenarán.</DIV>
+<LI>
+<DIV>En la opción de ver la estructura de una tabla&nbsp; si pulsamos el botón derecho se ordenarán.</DIV>
+<LI>
+<DIV>Se puede trabajar en multiusuario ya que detecta antes de grabar si ha habido algún cambio en el fichero, en cuyo caso no lo machaca.</DIV>
+<LI>
+<DIV>Para utilizar otros editores ( en arbol.ini )<BR>&nbsp;$_ExternalApps[ ] = array( 'EditPlus', 'd:/EdPlus/editplus.exe', 'S' );<BR>&nbsp;$_ExternalApps[ ] = array( Etiqueta , DirExe, TipoAplicación&nbsp;);<BR>El tipo de aplicación puede ser:<BR><SPAN style="WIDTH: 25px"></SPAN>S - Codigo fuente ( Source )<BR><SPAN style="WIDTH: 25px"></SPAN>P - Picture ( gráficos )<BR><SPAN style="WIDTH: 25px"></SPAN>''&nbsp; -&nbsp;Otras aplicaciónes</DIV>
+<LI>
+<DIV>Al seleccionar texto si la longitud es menor de 60 carácteres te lo pondrá como dato de busqueda.</DIV>
+<LI>
+<DIV>Hay dos etiquetas para el propio editor:</DIV>
+<UL>
+<LI>
+<DIV>[LoadIni] Lista de ficheros a cargar en el arranque</DIV>
+<LI>
+<DIV>[LoadSel] Lista de ficheros a cargar al seleccionar la etiqueta con los corchetes.</DIV>
+<LI>
+<DIV>[DBGateway] y [DBGatewayOne] Al seleccionar la etiqueta incluyendo los corchetes se cargará el fuente en el editor.</DIV></LI></UL>
+<LI>El interprete SQL acepta los comandos SQL mas las siguientes ordenes: 
+<LI>Si ponemos solo el nombre de una tabla ejecutará "select * from NomTabla". 
+<LI>La orden "tables" te muestra un listado con todas las tablas, pudiendo ver su estructura si pulsamos en el nombre, también puede ser "tables NomTabla,NomTabla,," y con expresiones regulares ( ej: /^gs_/ todas las tablas que empiezan por "gs_" ) saldrá un listado con esas tablas unicamente y al pulsar saldrá la estructura, esta estructura se puede desplazar la ventana por la pantalla, minimizar y maximizar con un doble click y ocultar con el botón derecho. 
+<LI>La orden "structure NomTabla [,NomTabla,NomTabla,,]" te muestra la estructura de esa tabla. 
+<LI>Se pueden encadenar sentencias SQL separadas por ";". 
+<LI>Un guión "-" dibujará una linea de separación, que como siempre se pondrá con otras instruciones se tendrá que poner como "-;" con punto y coma al final. 
+<LI>Se pueden definir variables dentro de la ventana de SQL como " $NomVar = ' Valor ' ;" e incrustando la variable encerradas entre llaves. 
+<LI>Admite los comentarios de linea si empieza por "." o por "//". 
+<LI>Admite comentarios de multilinea si empieza una linea por "/*" y "*/" en una sola linea. 
+<LI>Admite comentarios de fin de código "[Note]" no teniendo en cuenta nada apartir del comando. 
+<LI>"help" / "?" muestra la ayuda. 
+<LI>"help sql" muestra la ayuda del controlador de base de datos actual o se puede poner "help mysql", "help informix", "help spl" o "help oracle" 
+<LI>"fields" lista los campos de todas las tablas. 
+<LI>Si ejecutas un "select" que solo tengan un registro al pulsar en el TH combertirá el listado en una ficha y esta al pulsar en el nombre del campo&nbsp;en listado. 
+<LI>Al ver el submenú de "Ver etiquetas" si pulsamos el botón derecho en la primera columna se ordenará por orden alfabético. 
+<LI>En el icono "Estructura SQL" te muestra las&nbsp;tablas definidas en [DBTable] pero si lo pulsamos con la tecla control pulsada te preguntará la lista de tablas a mostrar separadas por coma. 
+<LI>Estando en pantalla completa en el visor de PHP o de SQL pulsado F10 vuelves al interprete para al estar programando pulses F10 para ejecutarlo conmutar a la ventana de resultados y de esta con F10 otra vez regresar a su editor. 
+<LI>En el interprete en los iconos de "Leer PHP / HTM / SQL" si hacemos click con la tecla control pulsada nos preguntará el nombre del escript temporal a editar en lugar del nombre por defecto. 
+<LI>Si en el intreprete de PHP dividimos la pantalla para ver la ventana de resutados y quisieramos fijar la posición de la ventana de resultados haremos click en ejecutar PHP con la tecla de control pulsada con lo que mantendrá la posición del scroll todas las ejecuciones, esto también funciona con ventana completa. 
+<LI>El tamaño de la fuente del fichero que se está editando se puede cambiar el tamaño pulsando la tecla control y con la rueda del ratón.
+<LI>Las copias de seguridad se hacen por defecto por día de la semana.</LI></UL></TD></TR></TBODY></TABLE>
+<SCRIPT>document.title=Etiqueta.innerText;</SCRIPT>
+</DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

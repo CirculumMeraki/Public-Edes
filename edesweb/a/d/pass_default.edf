@@ -1,0 +1,58 @@
+#include(*) $lng/usu_clave.edf.lng
+[Title]=@CAMBIAR CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS@
+[Button]a|@Modificar@
+[Chr]uChr||ABCDEFGHIJKLMNÑOPQRSTUVWXYZÇÜabcdefghijklmnñopqrstuvwxyzçü0123456789 .,:-=*_@ºª!¡(){}[]%/áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛãõÃÕ
+[Fields]
+@Clave@|pass|uChr|P|10|200|M||'#'.length>=@|@LongitudMinima@
+@Repetir Clave@|_pass|uChr|P|10|200|M||#|
+|oldpass|C|P|10||*||#|
+[FormCheck]a
+A | {pass}=={_pass} | @ClavesDistintas@
+[JSCheck]a
+if( _e_(eGF('pass')).toUpperCase()==eGF('oldpass') ){
+ePE('pass','@No puede poner la clave actual@');
+}else{
+document.FRM1.pass.value = _e_(document.FRM1.pass.value).toUpperCase();
+document.FRM1._pass.value = _e_(document.FRM1._pass.value).toUpperCase();
+}
+[PHPForm]a-mR
+$uDim = file( "{$_SESSION['_PathCSS']}/login.css" );
+for( $u=0; $u<count($uDim); $u++ ){
+list( $uValor, $uLong ) = explode(':',$uDim[$u] );
+list( $uLong ) = explode(';',$uLong );
+$uLong = trim($uLong);
+switch( trim($uValor) ){
+case 'min_login':
+case 'max_login':
+break;
+case 'min_password':
+$_Form['pass'][8] = str_replace('@',$uLong,$_Form['pass'][8]);
+$_Form['pass'][9] = str_replace('@',$uLong,$_Form['pass'][9]);
+break;
+case 'max_password':
+$_Form['pass'][4]  = $uLong;
+$_Form['_pass'][4] = $uLong;
+break;
+}
+}
+include_once( '../_datos/config/desktop.ini' );
+$_Form['oldpass'][7] = $_ClaveReset;
+[PHPForm]a
+global $_CHR, $_TIPFORM;
+eFileGetVar('Login', true);
+if( $min_password!='' ){
+$_Form['pass'][8] = str_replace('@', $min_password, $_Form['pass'][8]);
+$_Form['pass'][9] = str_replace('#', $min_password, $_Form['pass'][9]);
+}
+}
+}
+*/
+if( $max_password!='' ){
+$_Form['pass'][4]  = $max_password;
+$_Form['_pass'][4] = $max_password;
+}
+$_Form['oldpass'][7] = $ClaveReset;
+$_TIPFORM['pass']['F'] = $Dim[2];
+[PHPStart]A
+eFilePutVar('group.var', array(array('Login.ClaveReset', $_POST['pass'])));
+eMessage('@MODIFICADA CLAVE POR DEFECTO<br>PARA LOS NUEVOS USUARIOS@', 'HS');

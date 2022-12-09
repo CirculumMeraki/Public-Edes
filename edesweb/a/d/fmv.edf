@@ -1,0 +1,807 @@
+[Title]BANCO DE VIDEOS
+[DBIndex]cd_gs_img;md5||true|nm_gs_img|EL VIDEO YA EXISTE
+#include(*) /_datos/config/file_manager.ini | true
+[DBTable]gs_img
+[DBOrder]nm_gs_img
+[DBSerial]cd_gs_img
+[DBMemo]dct_label, description
+[PersistentVar]_Type, _SelectionFunction, _Masivo, _Copiar
+[AddOption]*|type_file|,; A,Audio; D,Documento; I,Icono; P,Imagen; S,Sonido; V,Video
+[AddOption]*|quality|,; L,Baja; A,Media; H,Alta
+[AddOption]*|visibility|,; G,Grupo; N,Nodo; U,Usuario
+[AddOption]*|_formato|,; H,Horizontal; V,Vertical; C,Cuadrada
+¿ #V ? [UploadFile] nm_gs_img | //img | cd_gs_img | 2.000.000.000 | Ver video       | avi,mkv,mp3,mp4,flv, wav,mid,midi,ra,ash,aif,cda,snd,voc,amf ||||| false
+¿ #V ? [UploadFile] img_video | //img | cd_gs_img |       100.000 | Miniatura       | jpg,jpeg,gif,png
+[OnChange]a,mR|nm_gs_img|_DatosImg(this)
+[OnChange]a,mR,?|visibility|_Visibilidad()
+[OnChange]a,mR,?|cd_gs_group|_Grupo()
+[WhereSelect]*|cd_gs_img_class|type_file='V'
+[RelationFields]cd_gs_img_class,cd_gs_img_sclass
+[Fields]?
+Clase|type_file|N|SV|16||*Q||#|
+Calidad|quality|N|SV|5||Q||#|
+,Copyright|copyrighted|N|C|1||Q|||
+Categoría|cd_gs_img_class|+|S|30||Q||#|
+SubCategoría|cd_gs_img_sclass|+|Ss|30||Q|||
+,Ver solo Video|_solofotos|N|C|1||Q|||
+Fecha creación|creation_date|F4|T|10||QF|||
+,|cd_gs_created_by|+|T|5||*Q*|||
+,Creado por|_cd_gs_created_by|D|T|60|<caption|Q|||
+Etiquetas|dct_label|#L|A|2000,80,4,30|520|QD|||
+Visibilidad|visibility|N|SV|10||Q|||
+,Grupo|cd_gs_group|+|Ss|50||Q|||
+|cd_gs_folder|+|T|9||*Q*|||
+Carpeta|_cd_gs_folder|D|T|68|+cd_gs_group|-Q|||
+Fecha de Alta Desde|_desde|F4|T|10||QF|||
+,|_desde_hours|H|T|8||Q|||
+,Hasta|_hasta|F4|T|10||QF|||
+,|_hasta_hours|H|T|8||Q|||
+|cdi_insert|CDI|T|19||-|||
+[AddCode]?|_desde_hours,_hasta_hours|I|noConditions
+[DBRange]?|cdi_insert|_desde|_hasta
+[JSIni]*
+if( top.eIsWindow(window) ) top.eSWResize(window);
+[JSIni]l
+function VD(){
+var TR = S.toTag(S.event(window),'TR');
+top.eCallSrv( window, 'edes.php?D://img/'+eTrim(TR.cells[0].textContent)+'.'+S.event(window).t+'&FILE='+eTrim(TR.cells[1].textContent) );
+return eClearEvent();
+}
+[JSCheck]c
+if( eGF('_solofotos')=='S' ) _Action = _Action.replace('?FcR:','?Ll:');
+[JSCheck]a
+if( eGF('type_file')=='V' ){
+frames["uIFrame"].document.all.src = '';
+top.eClearPag( frames["uIFrame"] );
+}
+[PHPStart]l
+if( $_POST['_solofotos']=='S' ) $_DBGATEWAY = $_DBGATEWAYONE = '$a/d/fm_show.gs';
+eUnSet('_solofotos');
+[Format]
+if( trim($_vF[1])!='' ){
+$Ext = explode('.',$_vF[1]); $Ext = $Ext[count($Ext)-1];
+$_vF[1] = '<img src="edes.php?R:/'.'/img/'.$_vF[0].'.'.$Ext.'" style="height:50">';
+}
+$_vF[9] = "<img src='g/t_d_avi.gif' onclick='VD()', t='{$_vF[10]}'>";
+[THColSpan]copyrighted,extension,Características
+[ColsWidth]description=400
+[Fields]l
+|cd_gs_img|+|T|9||*|||
+Miniatura|img_video|#D|F|30||-|||
+Fichero|nm_gs_img|#D|F|60||-|||
+Categoría|cd_gs_img_class|+|S|30||-|||
+SubCategoría|cd_gs_img_sclass|+|Ss|30||-|||
+Descripción|description|#|A|2000,80,4|450|-|||
+Copyright\©|copyrighted|N|C|1||-||=|
+Calidad|quality|N|SV|5||-|||
+Tamaño|bytes|+|T|11||-|||
+Duración|duration|H8|T|8||-||=|
+Tipo|extension|#D|T|4||-||=|
+[FieldBrowser]_cd_gs_created_by|cd_gs_created_by|select nm_gs_created_by,cd_gs_created_by from gs_created_by where nm_gs_created_by like # order by 1|7
+[RelationFields]visibility, cd_gs_group
+[AddCode]a,?,?R|cd_gs_group|I|DynamicSQL=SqlGroup
+[PHPIni]a,?,?R
+function SqlGroup(){
+global $_vF;
+if( $_vF['visibility']=='G' ){
+qQuery( 'select cd_gs_group,nm_gs_group from gs_group where cd_gs_user='.$_SESSION['_User'].' or exists ( select cd_gs_user from gs_group_user where cd_gs_group=gs_group.cd_gs_group and cd_gs_user='.$_SESSION['_User'].' ) order by 2' );
+}else{
+qQuery( 'select cd_gs_group,nm_gs_group from gs_group where 1=2' );
+}
+}
+[JSIni]a,?,?R
+function SqlGroup(){
+if( eGF('visibility')=='G' ){
+return Array( 'select cd_gs_group,nm_gs_group from gs_group where cd_gs_user='+_User+' or exists ( select cd_gs_user from gs_group_user where cd_gs_group=gs_group.cd_gs_group and cd_gs_user='+_User+' ) order by 2', eGF('cd_gs_group') );
+}else{
+return Array( '', '' );
+}
+}
+[PHPIni]a,?mR
+$Extensiones = strtolower($_UPLOADFILE['nm_gs_img']['EXT']);
+echo "<script type='text/javascript'>var _DimExt = '{$Extensiones}'.split(',');</script>";
+[AddCode]a,mR|_working_directory|E|<img id='DestinoDoc' src='g/c2_0.gif' title='Seleccionar directorio de trabajo' style='margin-left:2px;margin-top:3px' onclick='uCarpetaDestino()'>
+[PHPForm]mR
+if( $_vF['type_file']<>'D' ) $_Form['nm_gs_img'][_MODE] = str_replace('O','',$_Form['nm_gs_img'][_MODE]);
+[PHPIni]a
+global $_ADDCODE, $_Masivo;
+[Fields]else|2
+|cd_gs_img|+|T|9||a=*; *=*|||
+Fichero|nm_gs_img|#D|F|60|+cd_gs_group|MDO||#|
+Miniatura|img_video|#D|F|30|+cd_gs_group|MD|||
+Clase|type_file|N|T|1||*|||
+Categoría|cd_gs_img_class|+|S|30||M||#|
+SubCategoría|cd_gs_img_sclass|+|Ss|30||M|||
+,Calidad|quality|N|SV|5||M|||
+,Copyright|copyrighted|N|C|1||M|||
+Descripción|description|#|A|2000,80,4|520|M|||
+Fecha creación|creation_date|F4|T|10||MF|||
+,|cd_gs_created_by|+|T|5||*Q*|||
+,Creado por|_cd_gs_created_by|D|T|60|<caption|QM|||
+Etiquetas|dct_label|#L|A|2000,80,4,30|520|MD|||
+Visibilidad|visibility|N|SV|10||M|||
+,Grupo|cd_gs_group|+|Ss|50||M|||
+|cd_gs_folder|+|T|9||*|||
+Carpeta|_cd_gs_folder|D|T|68|+cd_gs_group|-|||
+Modificar|op_update|N|C|1||M|S||
+,Borrar|op_delete|N|C|1||M|S||
+-
+Tamaño|bytes|+|T|11||-|||
+,Dimensiones|width_px|+|T|4||-|||
+,|height_px|+|T|4||-|||
+,Duración|duration|H8|T|8||-|||
+,Tipo|extension|#L|T|4||-|||
+Fecha Alta|cdi_insert|CDI|T|19||-|#y2s#||
+,Fecha Modificación|cdi_update|CDI|T|19||-|#y2s#||
+Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|0|S|80|520|-|_User||
+|md5|#D|T|32||*|||
+[AddCode]a,mR|copy_of|E|<img src='g/t_op_view.gif' onclick='uVerPadre()' title='Ver Imagen del servidor'><img src='g/buscar.gif' onclick='uSelImgPadre()' title='Seleccionar la imagen padre'>
+[JSIni]a,mR
+function uSelImgPadre( Img ){
+top.eSWOpen( window, "edes.php?Fc:$a/d/fm.edf&_Type='"+eGF('type_file')+"'&_SelectionFunction=uSelImg&_ASSIGN=c&_solofotos=S", "Seleccionar" );
+}
+function uSelImg( Img, Cod, Nombre ){
+eGO('copy_of').Imagen = Img;
+ePF('copy_of',Cod);
+ePF('_INPUT_copy_of',Nombre);
+}
+function uVerPadre(){
+if( eGF('copy_of')!='' ) top.eCallSrv( window, 'edes.php?D:'+eGO('copy_of').Imagen );
+}
+[JSIni]a,mR
+function uCarpetaDestino(){
+var Dir = top.eDirectorySelect( 'Seleccionar directorio', 'MyComputer', true );
+if( Dir!='' ){
+ePF('_working_directory',Dir);
+DGI('DestinoDoc').src = (DGI('DestinoDoc').src+'').replace('_0.','_1.');
+WE.eFileWriteAll(WE._DirEDes+'docpath.put',Dir );
+}
+}
+[AddCode]*|height_px|B|<span style='margin:0 4 0 2'>x</span>
+[TipForm]*|width_px|Ancho en px
+[TipForm]*|height_px|Alto en px
+[PHPStart]A
+$uDate = date('Y-m-d H:i:s');
+$_POST['cdi_insert'] = $uDate;
+$_POST['cdi_update'] = $uDate;
+[PHPStart]A,M
+$_POST['extension'] = eStrLower($_POST['extension']);
+[PHPStart]M
+$_POST['cdi_update'] = date('Y-m-d H:i:s');
+[JSEnd]a,?
+eEF('cd_gs_group',0);
+eGO('IdSelDir').className = "OFF";
+eGO('IdSelDir').style.cursor = 'default';
+ePF('type_file',eGF('_Type'));
+eEF('type_file',0);
+[JSEnd]?
+setTimeout('_Visibilidad();',100);
+[JSEnd]a,mR,?
+if( top.eIsWindow(window) ) top.eSWResize(window);
+[JSEnd]mR
+if( _User!=eGF('cd_gs_user') ){
+eEF('op_update,op_delete',false);
+if( DGI('op_copy')!=null ) eEF('op_copy',false);
+if( eGF('op_update')!='S' ){
+eEF('*',false);
+eDisableButton();
+}
+}
+[JSEnd]bR
+if( _User!=eGF('cd_gs_user') && eGF('op_delete')=='' ) eDisableButton();
+[JSIni]a,mR
+function uFilePut( FilePC ){
+if( FilePC==eGO('nm_gs_img').NewValue ){
+top.eFilePutAsync( FilePC, '/_tmp/zip/'+_User+'_'+Date.parse(new Date()), '$a/d/img.gs', '$_MD5="'+eGF('md5')+'";$_DB="NO";', 'Fichero "'+eGF('nm_gs_img')+'" grabado' );
+}else{
+var tmp = eGF('img_video').split('.');
+top.eFilePutAsync( FilePC, '/_tmp/zip/tip_'+_User+'_'+Date.parse(new Date())+'.'+tmp[tmp.length-1], '$a/d/img_vtip.gs', '$_MD5="'+eGF('md5')+'";$_DB="NO";', '' );
+}
+}
+[JSIni]a,mR,?
+function uCreadoPor(){
+top.eSWOpen( window, 'edes.php?Fa:$a/d/img_created_by' );
+}
+function _Visibilidad(){
+while( DGI('oDirectorios').rows.length > 0 ) DGI('oDirectorios').deleteRow(0);
+switch( eGF('visibility') ){
+case "G":
+eEF('cd_gs_group',1);
+_Grupo();
+break;
+case "N":
+eEF('cd_gs_group',0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+eGO('IdSelDir').className = "";
+eGO('IdSelDir').style.cursor = 'pointer';
+break;
+case "U":
+eEF('cd_gs_group',0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+eGO('IdSelDir').className = "";
+eGO('IdSelDir').style.cursor = 'pointer';
+break;
+default:
+eEF('cd_gs_group',0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+eGO('IdSelDir').className = "OFF";
+eGO('IdSelDir').style.cursor = 'default';
+}
+}
+function _Grupo(){
+while( DGI('oDirectorios').rows.length > 0 ) DGI('oDirectorios').deleteRow(0);
+ePF('cd_gs_folder,_cd_gs_folder','');
+if( eGF('cd_gs_group') < 1 ){
+eGO('IdSelDir').className = "OFF";
+eGO('IdSelDir').style.cursor = 'default';
+}else{
+eGO('IdSelDir').className = "";
+eGO('IdSelDir').style.cursor = 'pointer';
+}
+}
+[DBEnd]?R
+if( $_vF['cd_gs_folder']!='' ){
+qQuery( "select nm_gs_folder from gs_folder where cd_gs_folder={$_vF['cd_gs_folder']}", $p1 );
+list( $Folder ) = qRow($p1);
+$_vF['_cd_gs_folder'] = $Folder;
+}
+[JSIni]a,?R,?
+var _FileTrimName = true;
+function _NoUnique(){
+ePF('nm_gs_img','');
+}
+function _Copyright( Obj ){
+eEF('sign_image',(eGF('copyrighted')=='S'));
+if( eGF('copyrighted')!='S' ) ePF('sign_image','');
+}
+function _Dimensiones( Obj ){
+DGI('uIFrame').style.display = 'block';
+NecesitaZoom( Obj.offsetWidth, Obj.offsetHeight );
+}
+function NecesitaZoom( Ancho, Alto ){
+if( DGI('IdZoom')!=null ){
+DGI('IdZoom').children[0].style.display = 'block';
+DGI('IdZoom').children[1].style.display = 'none';
+if( Ancho==undefined ){
+var Img = frames['uIFrame'].document.getElementsByTagName('IMG')[0];
+Ancho = Img.offsetWidth;
+Alto =  Img.offsetHeight;
+}
+if( DGI('uIFrame').scrollWidth < Ancho || DGI('uIFrame').scrollHeight < Alto ){
+DGI('IdZoom').style.display = 'block';
+}else{
+DGI('IdZoom').style.display = 'none';
+}
+}
+}
+var _VideoAnchoCaratula = 200;
+var _VideoAltoCaratula = 200;
+var _VideoXCaratula = 0;
+var _VideoConControles = 46;
+var _wVideo = _hVideo = null;
+function _TamayoVideo(Fin){
+if( frames["uIFrame"].document.all.oVIDEO.width==0 || frames["uIFrame"].document.all.oVIDEO.height==0 ){
+setTimeout('_TamayoVideo()',100);
+}else{
+if( Fin==undefined ){
+setTimeout('_TamayoVideo(1)',100);
+return;
+}
+_wVideo = frames["uIFrame"].document.all.oVIDEO.width;
+_hVideo = frames["uIFrame"].document.all.oVIDEO.height;
+ePF('width_px',_wVideo);
+ePF('height_px',_hVideo);
+frames["uIFrame"].document.all.oVIDEO.style.width = ((_VideoAltoCaratula*_wVideo)/_hVideo);
+frames["uIFrame"].document.all.oVIDEO.style.height = _VideoAltoCaratula+_VideoConControles;
+setTimeout('CapturarCaratula()',1000);
+}
+}
+function xyMargenes( Obj, Dim ){
+Dim[0] += _BorderWidth( S(Obj).css("borderLeftWidth") );
+Dim[0] += _BorderWidth( S(Obj).css("marginLeft") );
+Dim[0] += _BorderWidth( S(Obj).css("paddingLeft") );
+Dim[1] += _BorderWidth( S(Obj).css("borderTopWidth") );
+Dim[1] += _BorderWidth( S(Obj).css("marginTop") );
+Dim[1] += _BorderWidth( S(Obj).css("paddingTop") );
+return Dim;
+}
+function CapturarCaratula(){
+var xy1 = eXY( top.DGI('IWORK') );
+xyMargenes( top.document.body, xy1 );
+xyMargenes( top.DGI('IWORK'), xy1 );
+var xy2 = eXY( DGI('uIFrame') );
+xyMargenes( DGI('uIFrame'), xy1 );
+var xy3 = eXY( frames["uIFrame"].document.all.oVIDEO );
+xy3 = new Array( 0,0, _VideoAnchoCaratula,_VideoAltoCaratula );
+xyMargenes( frames["uIFrame"].document.all.oVIDEO, xy3 );
+var x = xy1[0]+xy2[0]+xy3[0];
+var y = xy1[1]+xy2[1]+xy3[1];
+var NomFile = 'Caratula';
+WE.eCaptureScreen( _VideoXCaratula+x,y, _VideoXCaratula+xy3[2],xy3[3], NomFile );
+with( frames["uIFrame"].document.all.Caratula ){
+src = "";
+src = WE._DirEDes + "tmp/" + NomFile + ".png";
+style.marginLeft = _VideoXCaratula;
+}
+eGO('img_video').eFILENAME = eGO('img_video').NewValue = WE._DirEDes + "tmp/" + NomFile + ".png";
+eGO('img_video').eUpload = 1;
+ePF('img_video',NomFile + ".png" );
+top.eInfo(window,'Imagen capturada');
+}
+function _DatosImg( Obj ){
+if( Obj.NewValue!='' ){
+top.eInfo(window,'Calculando');
+ePF('bytes',top.eFileSize(Obj.NewValue));
+if( eGF('type_file')!='V' ){
+var sMD5 = WE.eFileMD5(Obj.NewValue);
+ePF('md5',sMD5);
+}
+var Dim = Obj.NewValue.split('.');
+ePF('extension',Dim[Dim.length-1].toLowerCase());
+if( eGF('_Type')=='P' || eGF('_Type')=='I' || (eGF('_Type')=='V' && _Mode=='a') ){
+if( DGI('AddButton1')!=null ) DGI('AddButton1').style.display = 'none';
+Ver = true;
+if( Ver ){
+if( eGF('type_file')=='I' ){
+var txt = "<HTML><HEAD><META http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><TITLE></TITLE></HEAD><BODY style='background:"+top.eGetCss(window,'BODY','*')+"' oncontextmenu='return false'><table style='width:100%;height:100%;text-align:center;vertical-align:middle;'><tr><td><IMG src='"+Obj.NewValue+"'><"+"SCRIPT type='text/javascript'>setTimeout(\"window.frameElement.WOPENER._Dimensiones(document.body.children[0])\",250);</"+"SCRIPT></td></tr></table></BODY></HTML>";
+}else if( eGF('type_file')=='P' ){
+var txt = "<HTML><HEAD><META http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><TITLE></TITLE></HEAD><BODY style='background:"+top.eGetCss(window,'BODY','*')+"' oncontextmenu='return false'><IMG src='"+Obj.NewValue+"'><"+"SCRIPT type='text/javascript'>setTimeout(\"window.frameElement.WOPENER._Dimensiones(document.body.children[0])\",250);</"+"SCRIPT></BODY></HTML>";
+}else if( eGF('type_file')=='V' ){
+var txt = "<HTML><HEAD><META http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><TITLE></TITLE></HEAD><BODY style='margin:0;padding:0;background:"+top.eGetCss(window,'BODY','*')+"' oncontextmenu='return false'>";
+txt += "<embed src='"+Obj.NewValue+"' style='border:solid 1px #cccccc' id='oVIDEO' autostart='true'>";
+txt += "<br><br><input type=button onclick='window.frameElement.WOPENER.CapturarCaratula()' value='Capturar Imagen'><br><br>";
+txt += "<img id=Caratula src='' style='border:solid 1px #cccccc'>";
+txt += "</BODY></HTML>";
+ePF( 'duration', WE.eVideoDuration(Obj.NewValue) );
+_wVideo = _hVideo = null;
+DGI('ControlMiniatura').style.display = 'block';
+}
+}else{
+var txt = "<HTML><HEAD><META http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><TITLE></TITLE></HEAD><BODY style='background:"+top.eGetCss(window,'BODY','*')+"' oncontextmenu='return false'></BODY></HTML>";
+}
+frames['uIFrame'].document.open();
+frames['uIFrame'].document.write(txt);
+frames['uIFrame'].document.close();
+if( DGI('AddButton1')!=null && Ver ) DGI('AddButton1').style.display = 'block';
+if( eGF('type_file')=='V' ) _TamayoVideo();
+}
+top.eInfoHide();
+}else{
+if( eGF('_Type')=='P' || eGF('_Type')=='I' || eGF('_Type')=='V' ){
+var txt = "<HTML><HEAD><META http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><TITLE></TITLE></HEAD><BODY style='background:"+top.eGetCss(window,'BODY','*')+"' oncontextmenu='return false'></BODY></HTML>";
+frames['uIFrame'].document.open();
+frames['uIFrame'].document.write(txt);
+frames['uIFrame'].document.close();
+}
+ePF('bytes,extension','');
+¿ #PI ?	ePF('width_px,height_px','');
+if( DGI('IdZoom')!=null ) DGI('IdZoom').style.display = 'none';
+if( DGI('AddButton1')!=null ) DGI('AddButton1').style.display = 'none';
+}
+}
+[HTMIni]a
+<script type="text/javascript">
+function RefrescaVideo(v){
+var _wVideo = frames["uIFrame"].document.all.oVIDEO.width;
+var _hVideo = frames["uIFrame"].document.all.oVIDEO.height;
+frames["uIFrame"].document.all.oVIDEO.style.width = ((_VideoAltoCaratula*_wVideo)/_hVideo);
+frames["uIFrame"].document.all.oVIDEO.style.height = v + _VideoConControles;
+}
+function uAnchoVideo(Obj){
+_VideoAnchoCaratula = parseInt(Obj.textContent);
+setTimeout('CapturarCaratula();',100);
+}
+function uAltoVideo(Obj){
+_VideoAltoCaratula = parseInt(Obj.textContent);
+RefrescaVideo(parseInt(Obj.textContent));
+setTimeout('CapturarCaratula();',100);
+}
+function uXVideo(Obj){
+_VideoXCaratula = parseInt(Obj.textContent);
+setTimeout('CapturarCaratula();',100);
+}
+function uControlesVideo(Obj){
+_VideoConControles = parseInt(Obj.textContent);
+RefrescaVideo(parseInt(Obj.textContent));
+setTimeout('CapturarCaratula();',100);
+}
+</script>
+<table border=0 cellspacing=0 cellpadding=0 style='width:100%;height:100%;'>
+<tr>
+<td valign=middle align=center width=100% id=cIFrame style="padding:10px 0px 10px 10px">
+<script type="text/javascript">
+top.eNewIframe( window, 'cIFrame', 'uIFrame', 'edes.php?R:/_datos/config/empty_page.htm' );
+</SCRIPT>
+</td>
+<td valign=middle align=center>
+<table id=ControlMiniatura border=0 style='display:none;position:absolute;top:10px'>
+<tr>
+<th><th>Miniatura<th>
+<tr>
+<td align=right>Ancho
+<td colspan=2>
+<div class=SliderOFF style='width:300px'>
+<div id='CaratulaAncho' style='cursor:pointer; width:30px; height:14px;' onmousedown=eSlider(this,30,300,this,uAnchoVideo)></div>
+</div>
+<td rowspan=3 valign=bottom> <img src='g/sys_save.gif' style='height:24px' title='Grabar' onclick='top.eCallSrv( window, "edes.php?E:CallSrv="+_Source+"&VideoCaratula="+_VideoAnchoCaratula+","+_VideoAltoCaratula+","+_VideoXCaratula+","+_VideoConControles );'>
+</td></tr>
+<tr>
+<td align=right>Alto
+<td colspan=2>
+<div class=SliderOFF style='width:300'>
+<div id='CaratulaAlto' style='cursor:pointer; width:30; height:14;' onmousedown=eSlider(this,30,300,this,uAltoVideo)></div>
+</div>
+</td></tr>
+<tr>
+<td align=right>Coor. X
+<td colspan=2>
+<div class=SliderOFF style='width:300px'>
+<div id='CaratulaX' style='cursor:pointer; width:30px; height:14px;' onmousedown=eSlider(this,0,100,this,uXVideo)></div>
+</div>
+</td></tr>
+<tr>
+<td align=right>Alto Controles
+<td colspan=2>
+<div class=SliderOFF style='width:300px'>
+<div id='CaratulaControles' style='cursor:pointer; width:30px; height:14px; margin-left:135px;' onmousedown=eSlider(this,0,100,this,uControlesVideo)></div>
+</div>
+</td></tr>
+</table>
+<script type="text/javascript">
+eSliderSet(DGI('CaratulaAncho'),_VideoAnchoCaratula);
+eSliderSet(DGI('CaratulaAlto'),_VideoAltoCaratula);
+eSliderSet(DGI('CaratulaX'),_VideoXCaratula);
+eSliderSet(DGI('CaratulaControles'),_VideoConControles);
+</script>
+[CallSrv]VideoCaratula
+file_put_contents( '../_datos/usr/video.'.$_User, $VideoCaratula );
+echo '<script type="text/javascript">top.eInfo(top,"Grabado");</script>';
+[PHPIni]a
+$VideoAncho = 200;
+$VideoAlto = 200;
+$VideoXCaratula = 0;
+$VideoControles = 46;
+if( file_exists('../_datos/usr/video.'.$_User) ) list( $VideoAncho, $VideoAlto, $VideoXCaratula, $VideoControles ) = explode( ',', file_get_contents('../_datos/usr/video.'.$_User) );
+echo '<script type="text/javascript">';
+echo "var _VideoAnchoCaratula = {$VideoAncho};";
+echo "var _VideoAltoCaratula = {$VideoAlto};";
+echo "var _VideoXCaratula = {$VideoXCaratula};";
+echo "var _VideoConControles = {$VideoControles};";
+echo '</script>';
+[HTMEnd]a
+</td>
+</tr>
+</table>
+[CSSAdd]a,mR,?
+#cDirectorios {
+border: 2px solid #6c7b82;
+padding: 0px;
+background: #6c7b82;
+width: 350px;
+cursor:default;
+display:none;
+position:absolute;
+}
+#cDirectorios span {
+border: 0px solid #6c7b82;
+margin: 0px;
+padding:0px;
+filter: progid:dximagetransform.microsoft.gradient(gradienttype=0,startcolorstr=#FFFFFF, endcolorstr=#FFFFCC);
+width:100%;
+height:100%;
+}
+#cDirectorios #tdDirectorios {
+height:200px;
+}
+#cDirectorios TABLE {
+background: transparent;
+}
+#cDirectorios TH {
+background: #a0b5cf;
+color: #ffffff;
+}
+#cDirectorios .dTitulo{
+border-bottom: 1px solid #6c7b82;
+}
+#cDirectorios TD {
+text-align: left;
+}
+#cDirectorios TD IMG {
+padding:0px;
+width:16px;
+height:16px;
+margin-right:5px;
+margin-top:1px;
+margin-bottom:3px;
+}
+.n0 { margin-left:5px; }
+.n1 { margin-left:20px; }
+.n2 { margin-left:35px; }
+.n3 { margin-left:50px; }
+.n4 { margin-left:65px; }
+.n5 { margin-left:80px; }
+.n6 { margin-left:95px; }
+.n7 { margin-left:110px; }
+.n8 { margin-left:125px; }
+.n9 { margin-left:140px; }
+[AddCode]a,mR,?|_cd_gs_folder|A|<img src="g/c1_0.gif" onclick="uViewDir()" id=IdSelDir style="margin-left:3px;vertical-align:middle;" title="Seleccionar directorio">
+[AddCode]a,mR|_cd_gs_created_by|A|<img src="g/t_op_insert.gif" onclick="uCreadoPor()" title='Añadir nuevo "Creado por"'>
+[JSIni]a,mR,?
+var _SourceFolder;
+function uViewDir(){
+if( eGF('visibility')=='' || ( eGF('visibility')=='G' && eGF('cd_gs_group')=='' ) ) return;
+if( eGO('_INPUT_visibility').readOnly ) return;
+_SourceFolder = S.event(window).sourceIndex
+var Obj = document.children[_SourceFolder-1];
+var xy = top.eXY(Obj);
+with( DGI("cDirectorios").style ){
+zIndex = 1;
+top = px(xy[1]+2);
+left = px(xy[0]+2);
+display = 'block';
+}
+S.modal(DGI("cDirectorios"));
+if(  DGI('oDirectorios').rows.length==0 ){
+top.eCallSrv( window, 'LoadDir=0&DesdeTR=-1&DesdeTABLE='+DGI('oDirectorios').sourceIndex+'&type_folder='+eGF('visibility')+'&cd_gs_group='+eGF('cd_gs_group')+'&Indent=0', window );
+}
+}
+function uCrearDirPadre2( Op, Label, Nivel ){
+if( Op!=2 ) return;
+if( Label=='' ) return;
+var TR = ( _oMenu==null ) ? oDirectorios.insertRow() : oDirectorios.insertRow(_oMenu.rowIndex+1);
+var TD = TR.insertCell(0);
+TD.innerHTML = '<img src="g/c1_1.gif" class="n'+Nivel[0]+'" cElemento=-1 cPadre='+Nivel[1]+'>'+Label;
+top.eCallSrv( window, 'CrearDir="'+Label+'"&Nivel='+Nivel[0]+'&cPadre='+Nivel[1]+'&SourceIndex='+TD.children[0].sourceIndex+'&type_folder='+eGF('visibility')+'&cd_gs_group='+eGF('cd_gs_group'), window );
+}
+function uCrearDirPadre( nivel, Padre ){
+top.eAlert( "CREAR DIRECTORIO", "", "accept,cancel", null, uCrearDirPadre2, Array(
+Array('Directorio', 30, "[A-ZÇÜÑa-zçüñ0-9 ªº'.-]$" )
+), Array(nivel,Padre) );
+}
+function uModDirPadre2( Op, Label, Nivel ){
+if( Op!=2 ) return;
+if( Label=='' ) return;
+_oMenu.cells[0].innerHTML = _oMenu.cells[0].children[0].outerHTML + Label;
+top.eCallSrv( window, 'ModificarDir="'+Label+'"&cElemento='+_oMenu.cells[0].children[0].cElemento+'&type_folder='+eGF('visibility')+'&cd_gs_group='+eGF('cd_gs_group'), window );
+}
+function uModDirPadre( txt, nivel ){
+top.eAlert( "MODIFICAR DIRECTORIO", "", "accept,cancel", null, uModDirPadre2, Array(
+Array('Directorio', 30,  "[A-ZÇÜÑa-zçüñ0-9 ªº'.-]$", '', txt )
+), nivel );
+}
+function uDelDirPadre2( Op ){
+if( Op!=2 ) return;
+top.eCallSrv( window, 'BorrarDir='+_oMenu.cells[0].children[0].cElemento+'&cPadre='+_oMenu.cells[0].children[0].cPadre+'&type_folder='+eGF('visibility')+'&cd_gs_group='+eGF('cd_gs_group'), window );
+S.toTag(_oMenu,'TABLE').deleteRow(_oMenu.rowIndex);
+}
+function uDelDirPadre( txt ){
+top.eAlert( "BORRAR DIRECTORIO", "", "accept,cancel", null, uDelDirPadre2, Array(
+Array('Directorio', 30, '', '', txt )
+) );
+}
+function uSelDir(){
+var Obj = S.event(window);
+if( Obj.tagName=='IMG' ) Obj = Obj.parentNode;
+if( Obj.tagName=='TR' ) return;
+if( Obj.tagName=='TH' ){
+var cPadre = 0;
+var Indent = 0;
+}else{
+var cPadre = Obj.children[0].cElemento;
+var Indent = parseInt(Obj.children[0].className.substr(1))+1;
+}
+if( _MoverFolder!=null ){
+if( _MoverFolder.sourceIndex == Obj.parentNode.sourceIndex ){
+top.eInfoError( window, 'Movimiento Cancelado' );
+_MoverFolder = null;
+return;
+}
+_MoverFolder.cells[0].children[0].cPadre = cPadre;
+_MoverFolder.cells[0].children[0].className = 'n'+Indent;
+top.eCallSrv( window, 'MoverDir='+_MoverFolder.cells[0].children[0].cElemento+'&cPadre='+cPadre+'&Indent='+Indent+'&type_folder='+eGF('visibility')+'&cd_gs_group='+eGF('cd_gs_group'), window );
+if( _MoverFolder.rowIndex < Obj.parentNode.rowIndex ){
+oDirectorios.moveRow( _MoverFolder.rowIndex, Obj.parentNode.rowIndex );
+}else{
+oDirectorios.moveRow( _MoverFolder.rowIndex, (cPadre==0)?0:Obj.parentNode.rowIndex+1 );
+}
+_MoverFolder = null;
+}else{
+if( Obj.tagName!='TD' ) return;
+if( Obj.parentNode.cells[0].children[0].src.indexOf('_0.gif') > 0 ){
+eLoadingObj(Obj.parentNode.cells[0].children[0]);
+top.eCallSrv( window, 'LoadDir='+Obj.parentNode.cells[0].children[0].cElemento+'&DesdeTR='+Obj.parentNode.rowIndex+'&DesdeTABLE='+S.toTag(Obj,'TABLE').sourceIndex+'&type_folder='+eGF('visibility')+'&cd_gs_group='+eGF('cd_gs_group')+'&Indent='+Indent, window );
+}else{
+document.children[_SourceFolder-1].value = Obj.parentNode.cells[0].textContent;
+document.children[document.children[_SourceFolder-1].name.substr(1)].value = Obj.parentNode.cells[0].children[0].cElemento;
+DGI('cDirectorios').style.display = 'none';
+S.modalDelete(window);
+}
+}
+}
+var _MoverFolder = null;
+function uToolsDir2( Op, OpTextContent, Obj, OpObj ){
+switch(Op){
+case "A":
+uCrearDirPadre( parseInt(_oMenu.cells[0].children[0].className.substr(1))+1, _oMenu.cells[0].children[0].cElemento );
+break;
+case "B":
+uDelDirPadre( _oMenu.cells[0].textContent );
+break;
+case "M":
+uModDirPadre( _oMenu.cells[0].textContent, parseInt(_oMenu.cells[0].children[0].className.substr(1)) );
+break;
+case "V":
+if( _oMenu.cells[0].children[0].src.indexOf('_0.')==-1 ){
+_MoverFolder = _oMenu;
+top.eInfo(window,'Selecciona la Carpeta Padre');
+}else{
+top.eInfoError(window,'Solo se pueden mover las carpetas hijas');
+}
+break;
+}
+}
+var _oMenu;
+function uToolsDir(){
+_MoverFolder = null;
+_oMenu = S.toTag(S.event(window),'TR');
+top.eMenu( window, _oMenu, {
+'-':'Opciones',
+'A':'[g/op_insert.gif]Nuevo',
+'M':'[g/op_update.gif]Modificar',
+'B':'[g/op_delete.gif]Borrar',
+'V':'[g/t_op_sel.gif]Mover'
+}, uToolsDir2 );
+return top.eClearEvent(null,window);
+}
+function eLoadingObj( Obj ){
+if( typeof(Obj)=='undefined' ){
+PROCESANDO.style.display = 'none';
+}else{
+var xy = top.eXY( Obj );
+with( PROCESANDO.style ){
+display = 'block';
+left = px(xy[0]);
+top = px(xy[1]);
+}
+}
+}
+[PHPEnd]a,mR,?
+?>
+<span id='cDirectorios'><span>
+<table border=0 cellspacing=0 cellpadding=0 width='100%' onclick='uSelDir()' oncontextmenu='uToolsDir()'>
+<col style='width:15px;text-align:center'><col style='width:155px'>
+<tr><th colspan=2 class='dTitulo'>
+<table border=0 cellspacing=0 cellpadding=0 width='100%'><tr>
+<th style='padding:5'> DIRECTORIOS </th>
+<th width=1px><img src='g/op_insert.gif' onclick='_oMenu=null;uCrearDirPadre(0,0)' title='Crear directorio'></th>
+<th width=1px><img src='g/cerrar_1.gif' onclick='S.modalDelete(window); DGI("cDirectorios").style.display="none"' title='Cerrar directorio' style='margin-left:3px;margin-right:3px'></th>
+</tr></table>
+</th></tr>
+<tr><td id='tdDirectorios'>
+<div style='overflow-y:auto;height:100%'>
+<table id='oDirectorios' border=0 cellspacing=0 cellpadding=1px width='100%'>
+<?PHP
+if( $_Mode=='mR' ){
+if( $cd_gs_group=='' ) $cd_gs_group = 0;
+qQuery( "select * from gs_folder where cd_gs_user={$_User} and indent=0 and type_folder='{$type_folder}' and cd_gs_group='{$cd_gs_group}' order by nm_gs_folder" );
+while( $r=qArray() ){
+$TieneHijos = ( (qCount( 'gs_folder', "cd_folder_parent={$r['cd_gs_folder']}", $p ) > 0 ) ? 0 : 1 );
+echo "<tr><td><img src='g/c1_{$TieneHijos}.gif' class='n0' cElemento={$r['cd_gs_folder']} cPadre={$r['cd_folder_parent']}>".trim($r['nm_gs_folder']).'</td></tr>';
+}
+}
+?>
+</table>
+</div>
+</td></tr>
+</table>
+</span></span>
+<img id=PROCESANDO src="g/procesando.gif" style="position:absolute;display:none">
+<?PHP
+¿ #A ? [AddCode] ?R | copyrighted | A | <span id='LstCanciones'>&nbsp;&nbsp;&nbsp;Canciones <img src='g/t_d_wav.gif' onclick='uLstCanciones()' title='Lista de canciones'></span>
+[PHPEnd]?R
+if( $_Type=='A' ){
+if( qCount( 'gs_song', "cd_gs_img={$_vF[cd_gs_img]}" )==0 ){
+echo '<script type="text/javascript">document.children["LstCanciones"].style.display = "none";</script>';
+}else{
+?>
+<script type="text/javascript">
+function uLstCanciones(){
+top.eSWOpen( window, 'edes.php?Ll:$a/d/song.edf&_FILTER="'+escape('cd_gs_img='+eGF('cd_gs_img'))+'"&_STOP' );
+}
+</script>
+<?PHP
+}
+}
+[CallSrv]MoverDir
+if( $cd_gs_group=='' ) $cd_gs_group = 0;
+qQuery( "update gs_folder set cd_folder_parent='{$cPadre}', indent={$Indent} where cd_gs_folder={$MoverDir}" );
+echo '<script type="text/javascript">';
+echo 'top.eInfo( window.frameElement.WOPENER, "Directorio Movido" );';
+echo '</script>';
+eEnd();
+[CallSrv]BorrarDir
+function BorrarHijos( $BorrarDir ){
+qQuery( "select * from gs_folder where cd_folder_parent={$BorrarDir}", $p1 );
+while( $r=qArray($p1) ){
+if( $r['cd_folder_parent'] > 0 ) BorrarHijos( $r['cd_gs_folder'] );
+qQuery( "update gs_img set cd_gs_folder={$cPadre} where cd_gs_folder={$r['cd_gs_folder']}", $p2 );
+qQuery( "delete from gs_folder where cd_gs_folder={$r['cd_gs_folder']}", $p2 );
+}
+}
+BorrarHijos( $BorrarDir );
+qQuery( "update gs_img set cd_gs_folder={$cPadre} where cd_gs_folder={$BorrarDir}", $p2 );
+qQuery( "delete from gs_folder where cd_gs_folder={$BorrarDir}" );
+echo '<script type="text/javascript">';
+echo 'top.eInfo( window.frameElement.WOPENER, "Directorio Borrado" );';
+echo '</script>';
+eEnd();
+[CallSrv]LoadDir
+if( $cd_gs_group=='' ) $cd_gs_group = 0;
+echo '<script type="text/javascript">';
+echo 'var _WOPENER = window.frameElement.WOPENER;';
+echo 'var DimFolder = new Array();';
+if( $type_folder=='U' ){
+qQuery( "select * from gs_folder where cd_folder_parent={$LoadDir} and type_folder='{$type_folder}' and cd_gs_group='{$cd_gs_group}' and cd_gs_user='{$_User}' order by nm_gs_folder" );
+}else{
+qQuery( "select * from gs_folder where cd_folder_parent={$LoadDir} and type_folder='{$type_folder}' and cd_gs_group='{$cd_gs_group}' order by nm_gs_folder" );
+}
+$n=0;
+while( $r=qArray() ){
+$TieneHijos = ( (qCount( 'gs_folder', "cd_folder_parent={$r['cd_gs_folder']}", $p ) > 0 ) ? 0 : 1 );
+echo "DimFolder[{$n}] = ".'"';
+echo "<img src='g/c1_{$TieneHijos}.gif' class='n{$Indent}' cElemento={$r['cd_gs_folder']} cPadre={$r['cd_folder_parent']}>".trim($r['nm_gs_folder']);
+echo '";';
+$n++;
+}
+?>
+if( DimFolder.length > 0 ){
+var TABLA = _WOPENER.document.children[<?=$DesdeTABLE?>];
+for( var n=DimFolder.length-1; n>=0; n-- ){
+var TR = TABLA.insertRow(<?=$DesdeTR+1?>);
+var TD = TR.insertCell(0);
+TD.innerHTML = DimFolder[n];
+}
+<?PHP  if( $DesdeTR > 0 ){ ?>
+TABLA.rows[<?=$DesdeTR?>].cells[0].children[0].src = TABLA.rows[<?=$DesdeTR?>].cells[0].children[0].src.replace('_0.gif','_1.gif');
+<?PHP  } ?>
+}
+_WOPENER.eLoadingObj();
+</script>
+<?PHP
+eEnd();
+[CallSrv]ModificarDir
+if( eSqlType('oracle') ){
+$ModificarDir = str_replace("'","''",$ModificarDir);
+}else{
+}
+qQuery( "update gs_folder set nm_gs_folder='{$ModificarDir}' where cd_gs_folder={$cElemento}" );
+?>
+<script type="text/javascript">
+var _WOPENER = window.frameElement.WOPENER;
+top.eInfo(_WOPENER,'Directorio modificado');
+</script>
+<?PHP
+eEnd();
+[CallSrv]CrearDir
+eTrace( $CrearDir );
+eTrace( $Nivel );
+eTrace( $cPadre );
+eTrace( $SourceIndex );
+if( eSqlType('oracle') ){
+$CrearDir = str_replace("'","''",$CrearDir);
+}else{
+}
+if( $cd_gs_group=='' ) $cd_gs_group = 0;
+$Ahora = date('Y-m-d H:i:s');
+qQuery( "insert into gs_folder ( nm_gs_folder ,   type_folder  ,cd_gs_user,  cd_gs_group , indent ,cd_folder_parent,cdi_insert,cdi_update )
+values ( '{$CrearDir}','{$type_folder}', {$_User} ,{$cd_gs_group},{$Nivel},    {$cPadre}   ,'{$Ahora}','{$Ahora}' )" );
+$Id = qId();
+eTrace( $Id );
+?>
+<script type="text/javascript">
+var _WOPENER = window.frameElement.WOPENER;
+_WOPENER.document.children[<?=$SourceIndex?>].cElemento = <?=$Id?>;
+top.eInfo(_WOPENER,'Directorio creado');
+</script>
+<?PHP
+eEnd();

@@ -1,0 +1,32 @@
+[Title]=ACTUALIZAR INTRANET
+[Button]*|Actualizar
+[Fields]
+Directorio origen|dir_origen|#|T|40||M||#|
+[AddCode]*|dir_origen|E|<img src='g/seek.png' onclick='uSelectDir()' title='Buscar Directorio a enviar al servidor'>
+[JSIni]*
+function uSelectDir(){
+var dir = top.eDirectorySelect( 'Directorio a enviar al servidor', '' );
+ePF('dir_origen',dir);
+}
+[JSCheck]a
+if( eGF('dir_origen')=='' ){
+ePE('dir_origen','Falta definir el "Directorio de origen"',true);
+return false;
+}
+uEnviarFicheros( eGF('dir_origen'), eGF('dir_origen') );
+top.eInfo(window,'Directorio actualizado',7);
+return false;
+[JSIni]a
+function uEnviarFicheros( NomDir, DirDel ){
+var PutDir = (NomDir.replace(DirDel,'/')).replace(/\\/g,'/');
+if( PutDir.substr(0,2)=='/'+'/' ) PutDir = PutDir.substr(1);
+var file = top.eFileDir( NomDir ), n;
+for( n=0; n<file.length-1; n++ ){
+top.eInfo(window,'Copiando '+PutDir+'/'+file[n][0],7);
+top.eFilePut( NomDir+'\\'+file[n][0], PutDir+'/'+file[n][0] );
+}
+var dir = WE.eDirectoryDir2( NomDir ).split('~');
+for( n=0; n<dir.length; n++ ){
+if( dir[n]!='' && dir[n]!='-1' ) uEnviarFicheros( dir[n], DirDel );
+}
+}

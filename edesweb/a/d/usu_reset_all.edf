@@ -1,0 +1,103 @@
+[Title]=RESETEAR LA CLAVE A TODOS LOS USUARIOS
+[DBTable]gs_user
+[DBIndex]cd_gs_user
+[DBOrder]user_surname, user_name
+[DBSerial]cd_gs_user
+[Button]a|[&#250;] Resetear clave
+[Fields]a
+Resetear a "system_user"|system_user|X|C|1||A|||
+EMail de prueba|email|@|T|65||A|$_UserEMail||
+[PHPStart]A
+$prueba = $_POST["email"];
+$addWhere = (($_POST["system_user"]=="S") ? "" : "and (system_user<>'S' or system_user is null)");
+$ApplicationName = eFileGetVar('Setup.ApplicationName');
+$EMailSystem = eFileGetVar('Setup.EMailSystem');
+list($url) = explode("edes.php", $_SERVER['HTTP_REFERER']);
+eFileGetVar('Login', true);
+if( !$UserPasswordByEmail ){
+eMessage("Sistema configurado para no enviar claves por EMail", "HSE");
+}
+$nEnvios = 0;
+$nErrores = array();
+qQuery("select * from gs_user where (dt_del is null or dt_del='0000-00-00') and permission='S' {$addWhere} and email>'' and new_pass=0", $p1);
+while($r=qArray($p1)){
+$pass = newPassword($r, $url, $ApplicationName, $EMailSystem, $min_password, $key_case, "CLAVE DE USUARIO RESETEADA", $prueba);
+if( $prueba<>"" ){
+if( $pass=="-1" ){
+$nErrores[] = $r["cd_gs_user"];
+}else{
+$nEnvios++;
+}
+break;
+}
+if( $pass=="-1" ){
+$nErrores[] = $r["cd_gs_user"];
+}else{
+$nEnvios++;
+$sql = "update gs_user set pass='{$pass}', new_pass=1 where cd_gs_user=".$r["cd_gs_user"];
+qQuery($sql);
+}
+}
+$mensaje = "Claves reseteadas enviadas por email.";
+if( $prueba<>"" ) $mensaje = "EMail de prueba a ".$prueba;
+$mensaje .= "<br>Envios: ".$nEnvios;
+if( count($nErrores)>0 ){
+$mensaje = "<br><br>EMail no enviados: ".count($nErrores)."<br><span style='font-size:12px;'>";
+for($n=0; $n<500; $n++){
+$mensaje .= $n.",";
+if( $n>0 && $n%20==0 ) $mensaje .= "<br>";
+}
+$mensaje .= "</span>";
+}
+eMessage($mensaje, "HS");
+function newPassword($r, $url, $ApplicationName, $EMailSystem, $min_password, $key_case, $asunto, $prueba){
+if( $prueba<>"" ) $r['email'] = $prueba;
+$str = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
+$LonClave = 6;
+$MinNum = 2;
+$MinChr = 2;
+if( $min_password>$LonClave ) $LonClave = $min_password;
+switch( $key_case ){
+case '0':
+break;
+case '1':
+$str = strtolower($str);
+break;
+case '2':
+$str .= "abcdefghijklmnpqrstuvwxyz";
+break;
+}
+$nMinNum = 0;
+$nMinChr = 0;
+while( $nMinNum<$MinNum || $nMinChr<$MinChr ){
+$nMinNum = 0;
+$nMinChr = 0;
+$Pass = "";
+for($i=0; $i<$LonClave; $i++){
+$c = substr($str,rand(0,strlen($str)-1),1);
+$Pass .= $c;
+if( is_numeric($c) ){
+$nMinNum++;
+}else{
+$nMinChr++;
+}
+}
+}
+$txt = '@Nueva clave@: '.$Pass;
+if( file_exists( eScript('/_datos/config/pass_remember@LNG@.html') ) ){
+$txt = file_get_contents( eScript('/_datos/config/pass_remember@LNG@.html') );
+}else if( file_exists( eScript('/_datos/config/pass_remember.html') ) ){
+$txt = file_get_contents( eScript('/_datos/config/pass_remember.html') );
+}
+$txt = str_replace('{COMPANY}' , $ApplicationName, $txt);
+$txt = str_replace('{PASSWORD}', $Pass, $txt);
+$txt = str_replace('{EMAIL}'   , $r['email'], $txt);
+$txt = str_replace('src="g/'   , 'src="'.$url.'g/', $txt);
+$txt = "<!DOCTYPE HTML><HTML><HEAD></HEAD><BODY>".$txt."</BODY></HTML>";
+if( eMail($r['email'], $asunto, $txt, $EMailSystem) ){
+$r['pass'] = strtoupper(md5($Pass));
+return $r["pass"];
+}else{
+return "-1";
+}
+}

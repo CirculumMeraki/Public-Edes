@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP </TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/help2.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] -->
+<DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR style="POSITION: relative">
+<TD id=Etiqueta>ePrintWord 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>ePrintWord( NomPlantilla, DimVariables, SgClose [, Setup, CopiarComo, GrabarCambios, DimJS&nbsp;] ) 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Imprime un documento MSWord de forma oculta sustituyendo el valor de variables dentro del documento. 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TABLE id=Opciones border=0 cellSpacing=1 cellPadding=2>
+<TBODY>
+<TR>
+<TD>&nbsp;NomPlantilla</TD>
+<TD>Nombre completo de la plantilla ( fichero local ).</TD></TR>
+<TR>
+<TD>&nbsp;DimVariables</TD>
+<TD>Matriz de dos dimensiones conteniendo el nombre de las variables a sustituir y su contenido.</TD></TR>
+<TR>
+<TD>&nbsp;SgClose</TD>
+<TD>Segundos en cerrarse la instancia del Word, hay que dejarle el tiempo suficiente para que pueda imprimir y después a los segundos indicados se cerrará la instancia del Word, si el valor es menor de uno no imprimirá, si es "0"&nbsp;dejará la instancia visible y si es "-1" invisible y cerrará la instancia.</TD></TR>
+<TR>
+<TD>&nbsp;Setup</TD>
+<TD>Cadena de valores de configuración separados por comas (si algún parametro no se quiere tocar sedejará vacia su posición)&nbsp;con la siguiente disposición: "PageWidth, PageHeight, TopMargin, RightMargin, BottomMargin,&nbsp;LeftMargin"</TD></TR>
+<TR>
+<TD>&nbsp;CopiarComo</TD>
+<TD>Copia "NomPlantilla" con el nombre "CopiarComo".</TD></TR>
+<TR>
+<TD>&nbsp;GrabarCambios&nbsp;</TD>
+<TD>Los cambios se graban los cambios cuando está el parámetro "CopiarComo".</TD></TR>
+<TR>
+<TD>&nbsp;DimJS</TD>
+<TD>Matriz con ordenes javascript a ejecutar antes de salir de la función. Ejemplos:<BR><SPAN style="WIDTH: 25px"></SPAN>ActiveDocument.CheckSpelling();<BR><SPAN style="WIDTH: 25px"></SPAN>ActiveDocument.CheckGrammar();</TD></TR></TBODY></TABLE>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<P>top.ePrintWord( 'c:/edes/doc/tiket.doc', Array( <BR><SPAN style="WIDTH: 25px"></SPAN>Array("%%importe%%", uImporte),<BR><SPAN style="WIDTH: 25px"></SPAN>Array("%%iva%%"&nbsp;&nbsp;&nbsp; , '6,00'&nbsp; ), <BR><SPAN style="WIDTH: 25px"></SPAN>Array("%%total%%"&nbsp; , uTotal&nbsp; ) ), <BR>10, true );</P>
+<TR>
+<TD id=txt></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( document.getElementById("Ejemplo")!=null ){
+	if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+		tEjemplo.parentElement.style.display = 'none';
+	}else{
+		for( var i=0; i<Ejemplo.length; i++ ){
+			if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+		}
+	}
+}
+if( document.getElementById("Parametro")!=null && Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

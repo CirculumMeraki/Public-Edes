@@ -1,0 +1,484 @@
+#include(*) lng
+[Title]=@ACTUALIZAR SCRIPT POR HTTP@
+[DBTable]{$_SESSION['ShareDictionary']}gs_activity
+[DBIndex]cd_gs_user,cdi
+[DBOrder]1 desc
+[DBAddFilter](edes='F' or edes='P' or edes='C') and cdi_ftp is null
+[DBGroupBy]2
+[MaxRec]0
+[PHPStart]*
+@include("../_d_/".$_SESSION["_User"].".dvl");
+if( count($_gsDirAccess)>0 ){
+$_DBADDFILTER = "(edes='F' or edes='P') and cdi_ftp is null and cd_gs_user=".$_SESSION["_User"];
+}
+$txt = "";
+for($n=0; $n<count($_gsDirAccess); $n++){
+$_gsDirAccess[$n] = trim($_gsDirAccess[$n]);
+if( $_gsDirAccess[$n]!="" ){
+if( substr($_gsDirAccess[$n],0,2)=="d/" ) $_gsDirAccess[$n] = substr($_gsDirAccess[$n],2);
+if( substr($_gsDirAccess[$n],-1)<>"/" ) $_gsDirAccess[$n] .= "/";
+if( $txt!="" ) $txt .= " or ";
+$txt .= " script like '".$_gsDirAccess[$n]."%'";
+}
+}
+if( $txt!="" ) $_DBADDFILTER .= " and (".$txt.")";
+[FormAction]*|edes.php?Ll:
+[ColsOp]C
+[Format]
+$_vF[2] = '<img src="edes.php?R:$t/g/s/check_n.gif" onclick="AnularFTP()">';
+if( $_vF[1][0]=='$' ){
+$_CellsStyle[1] = 'color:#ff00ff;font-weight:bold';
+}
+if( $_vF[1]=='/_datos/config/sql.log' ){
+$GLOBALS['_LogDB'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}else if( $_vF[1]=='/_datos/config/directory.log' ){
+$GLOBALS['_LogDIR'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}else if( $_vF[1]=='/_datos/config/update.log' ){
+$GLOBALS['_LogScript'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+}else if( substr_count($_vF[1],'/_datos/config/')>0 ){
+$_CellsStyle[1] = 'color:blue;font-weight:bold';
+}
+if( substr($_vF[1],0,23)=='/_bak_/update/_update_.' ){
+$GLOBALS['_LogDB'] = true;
+$_CellsStyle[1] = 'color:red;font-weight:bold';
+$_CellsStyle[3] = 'background:red;';
+$_vF[3] = '<i class="ICONWINDOW" onclick="CpFTP()" oncontextmenu="TestFTP()" title="@Botón derecho Lista de Ficheros@">w</i>';
+}else{
+$_vF[3] = '<i class="ICONWINDOW" onclick="CpFTP()">w</i>';
+}
+if( substr_count($_vF[1],'/tree/')>0 ){
+$_CellsStyle[1] = 'color:green;font-weight:bold';
+}
+if( $_vF[4] > 1 ) $_CellsStyle[4] = 'background:#FFB5B5;font-weight:bold';
+[PDFCol],,0,0
+[TipTH]@Ultima fecha de grabación@|@Nombre del Script@|@Anular la actualización@|@Actualizar por HTTP@|@Nº Desarrolladores por script@
+[ColsWidth]script=250, dev=250
+[Fields]
+@CDI@|cdi|CDI|T|19||MQ|#sy2s#||
+@Script@|script|#|T|70||MQ|||
+@Anular@|'' as ico|x|T|1||-||=|
+@HTTP@|'' as ftp|x|T|1||-||=|
+@Desarrolladores@|'' as dev|N|T|50||-|||
+[PHPStart]l
+eInclude($_Sql);
+qQuery("select count(distinct cd_gs_user) from {$_SESSION['ShareDictionary']}gs_activity where {$_DBADDFILTER}");
+list( $GLOBALS['TotalDesarrolladores'] ) = qRow();
+[JSEnd]l
+DGI('BROWSE').rows[DGI('BROWSE').rows.length-1].cells[4].textContent = '<?= $GLOBALS['TotalDesarrolladores'] ?>';
+DGI('BROWSE').rows[DGI('BROWSE').rows.length-1].cells[4].title = '@Total nº Desarrolladores distintos@';
+[DBSql]l
+$Condi = qGetWhere('');
+$_TReg = qCount("{$_SESSION['ShareDictionary']}gs_activity", $Condi);
+if( $_TReg>0 ){
+$DimScriptPorUser = array();
+$usuCursor = array();
+$DimUser = array();
+qQuery("select max(cdi),script,'' ico,'' ftp, '' from {$_SESSION['ShareDictionary']}gs_activity as a where {$Condi} group by 2 order by 1");
+while( $r=qRow() ){
+$script = trim($r[1]);
+$nUsu = '';
+qQuery("select distinct cd_gs_user from {$_SESSION['ShareDictionary']}gs_activity where script='{$script}' and ".$_DBADDFILTER, $p);
+while( $u=qRow($p) ){
+$DimUser[$u[0]] = 1;
+if( $nUsu!='' ) $nUsu .= ',';
+$nUsu .= $u[0];
+$DimScriptPorUser[$u[0]]++;
+}
+$r[4] = $nUsu;
+$usuCursor[] = $r;
+}
+$Usuarios = '';
+foreach( $DimUser as $k=>$v ) $Usuarios .= ','.$k;
+if( $Usuarios[0]==',' ) $Usuarios = substr($Usuarios,1);
+if( $Usuarios!='' ){
+qQuery("select cd_gs_user, user_name from gs_user where cd_gs_user in ( {$Usuarios} )");
+while( $u=qRow() ) $DimUser[$u[0]] = trim($u[1]);
+for($n=0; $n<count($usuCursor); $n++){
+$tmp = explode(',',$usuCursor[$n][4]);
+$usuCursor[$n][4] = '';
+for( $i=0; $i<count($tmp); $i++ ){
+if( $usuCursor[$n][4]!='' ) $usuCursor[$n][4] .= ', ';
+$usuCursor[$n][4] .= $DimUser[$tmp[$i]];
+}
+}
+}
+$Dim = array();
+foreach( $DimScriptPorUser as $k=>$v ) $Dim[] = $DimUser[$k].'|'.$v;
+if( count($Dim) > 1 ){
+sort($Dim);
+echo '<table class="SUBMENU" style="position:absolute;left:10px;top:10px; background:#cccccc">';
+echo "<COL style='text-align:left;' class='Celda'><COL style='text-align:right;' class='Celda'>";
+echo '<tr><th colspan=2>&nbsp;Script Pendientes&nbsp;</th></tr>';
+for( $n=0; $n<count($Dim); $n++ ){
+list($k,$v) = explode('|',$Dim[$n]);
+echo "<tr><td id=Celda>{$k}</td><td id=Celda>{$v}</td></tr>";
+}
+echo '</table>';
+}
+}
+[OnLoad]l|BROWSE.rows[0].cells[1].style.width=BROWSE.rows[0].cells[1].offsetWidth; document.ondblclick=null;
+[JSOnClickRow]l
+if( ColNumber==2 || ColNumber==3 ){
+eClearEvent();
+S(BROWSE.rows[RowNumber].cells[ColNumber].children[0]).eventClick();
+}else{
+top.eSWOpen(window, 'Ll:$a/u/activity_df&_FILTER='+escape('script="'+eTrim(_oTR.cells[1].innerHTML)+'"'), '', false);
+}
+[JSIni]l
+function _testCURL(){
+top.eCallSrv(window, 'TESTCURL=1&TO="'+_Server[0][0]+'"');
+}
+function _UpdateSrv(http, file, origen, md5, label){
+top.eInfo(window, 'Copiando "<b>'+file+'</b>" en "<b>'+label+'</b>"...', 3);
+top.eCallSrv(window, 'COPY="'+file+'"&TO="'+http+'"');
+}
+function AnulaTR(nTR, File){
+BROWSE.deleteRow(nTR);
+BROWSE.rows[BROWSE.rows.length-1].cells[0].textContent = BROWSE.rows.length-2;
+if( File=='/_datos/config/sql.log' ) DGI("TodoDB").style.display = 'none';
+if( File=='/_datos/config/directory.log' ) DGI("TodoDIR").style.display = 'none';
+if( File=='/_datos/config/update.log' ) DGI("TodoSCRIPT").style.display = 'none';
+MovTitulos();
+}
+function AnularFTP(){
+var _FilaCp = S.event(window).parentNode.parentNode.rowIndex,
+File = S.event(window).parentNode.parentNode.cells[1].textContent;
+top.eCallSrv(window, 'NoFTP="'+File+'"&FILA='+_FilaCp);
+AnulaTR(_FilaCp, File);
+MovTitulos();
+eClearEvent();
+}
+function _CpFTP(Op, OpTextContent){
+if( Op==null ) return;
+Op = _DimExe[Op];
+var Dim = Op.split('|'), n;
+if( Dim[0]!='*' ){
+_UpdateSrv(Dim[0], Dim[2], _Origen, Dim[1], OpTextContent);
+}else{
+for(n=0; n<_Server.length-2; n++){
+_UpdateSrv(_Server[n][0], Dim[2], _Origen, _Server[n][1], _Server[n][2]);
+var txt = eTrim(Dim[2]);
+txt = txt.substring(txt.length-4);
+if( txt==".unl" ) break;
+}
+top.eCallSrv(window, 'NoFTP="'+Dim[2]+'"&FILA='+_FilaCp, window);
+AnulaTR(_FilaCp, Dim[2]);
+}
+}
+var _FilaCp, _DimExe=[];
+function CpFTP(){
+var File = eTrim(S.event(window).parentNode.parentNode.cells[1].textContent), n;
+_FilaCp = S.event(window).parentNode.parentNode.rowIndex;
+if( _Server.length>1 ){
+var Dim = new Array();
+for(n=0; n<_Server.length; n++){
+if( _Server[n][0]!="-" ){
+_DimExe[n] = _Server[n][0]+"|"+_Server[n][1]+"|"+File;
+Dim[n] = _Server[n][2];
+}else{
+Dim[n] = "-";
+}
+}
+top.eMenu(window, S.event(window), Dim, _CpFTP);
+}else{
+_UpdateSrv(_Server[0][0], File, _Origen, _Server[0][1], _Server[0][2]);
+top.eCallSrv(window, 'NoFTP="'+File+'"&FILA='+_FilaCp, window);
+AnulaTR(_FilaCp, File);
+}
+}
+function TestFTP(){
+var File = S.toTag(S.event(window),'TR').cells[1].textContent;
+top.eCallSrv(window, 'TestFTP="'+File+'"');
+return eClearEvent();
+}
+function OcultaIcons(){
+DGI("BROWSE").style.display = DGI("TodoNo").style.display = DGI("TodoSi").style.display = 'none';
+DGI("TodoDB").style.display = DGI("TodoDIR").style.display = DGI("TodoSCRIPT").style.display = 'none';
+}
+function AnularFTP_all_2(Op){
+if( Op!=2 ) return;
+var txt='', n;
+for(n=1; n<BROWSE.rows.length-1; n++) txt += BROWSE.rows[n].cells[1].textContent+'|';
+top.eCallSrv(window, 'NoFTP="'+txt+'"&FILA=0', window);
+OcultaIcons();
+}
+function AnularFTP_all(){
+top.eAlert(S.lng(209), "@Confirmar Anular todos los script@", 'A,C', 'g/sys_delete.gif', AnularFTP_all_2);
+}
+function CpFTP_all_3(Op, OpTextContent){
+if( Op==null ) return;
+Op = _DimExe[Op];
+var Dim = Op.split('|'), txt='', f, n;
+for(f=BROWSE.rows.length-2; f>0; f--){
+if( BROWSE.rows[f].style.display != 'none' ){
+Dim[2] = BROWSE.rows[f].cells[1].textContent;
+txt += Dim[2]+'|';
+if( Dim[0]!='*' ){
+_UpdateSrv(Dim[0], Dim[2], _Origen, Dim[1], OpTextContent);
+}else{
+for(n=0; n<_Server.length-2; n++){
+_UpdateSrv(_Server[n][0], Dim[2], _Origen, _Server[n][1], _Server[n][2]);
+var txt2 = eTrim(Dim[2]);
+txt = txt2.substring(txt2.length-4);
+if( txt2=='.unl' ) break;
+}
+AnulaTR(f, Dim[2]);
+}
+}
+}
+if( txt!='' ) top.eCallSrv(window, 'NoFTP="'+txt+'"&FILA=0', window);
+if( Dim[0]=='*' ) OcultaIcons();
+}
+function CpFTP_all_2( Op ){
+if( Op!=2 ) return;
+if( _Server.length>1 ){
+var Dim = new Array(), n;
+for(n=0; n<_Server.length; n++){
+if( _Server[n][0]!='-' ){
+_DimExe[n] = _Server[n][0]+"|"+_Server[n][1]+"|"+File;
+Dim[n] = _Server[n][2];
+}else{
+Dim[n] = '-';
+}
+}
+top.eMenu( window, _Icono, Dim, CpFTP_all_3 );
+}else{
+var txt = '', n;
+for(n=BROWSE.rows.length-2; n>0; n--){
+if( BROWSE.rows[n].style.display!='none' ){
+var File = eTrim(BROWSE.rows[n].cells[1].textContent);
+_UpdateSrv(_Server[0][0], File, _Origen, _Server[0][1], _Server[0][2]);
+txt += File+'|';
+}
+}
+top.eCallSrv(window, 'NoFTP="'+txt+'"&FILA=0', window);
+OcultaIcons();
+}
+}
+var _Icono;
+function CpFTP_all(){
+_Icono = S.event(window);
+top.eAlert(S.lng(209), "@Confirmar Copiar todos los script@", 'A,C', 'g/sys_update.gif', CpFTP_all_2);
+}
+function EditDB(){
+top.gsEdit(window, "/_datos/config/sql.log");
+}
+function EditDIR(){
+top.gsEdit(window, "/_datos/config/directory.log");
+}
+function EditScript(){
+top.gsEdit(window, "/_datos/config/update.log");
+}
+[PHPIni]l
+$_LogDB = false;
+$_LogDIR = false;
+$_LogScript = false;
+[PHPEnd]l
+if( $_SESSION['_D_']=='' ){
+$_LogDB = false;
+$_LogDIR = false;
+$_LogScript = false;
+}
+echo '<br><br><center>';
+echo '<i id="TodoNo" class="ICONWINDOW" onclick="AnularFTP_all()" style="margin-right:10px" title="@Anular todos los script@">&#334;</i>';
+echo '<i id="TodoSi" class="ICONWINDOW" onclick="CpFTP_all()" style="margin-right:10px" title="@Copiar todos los script@">w</i>';
+echo '<i id="TodoDB" class="ICONWINDOW" onclick="EditDB()" style="margin-right:10px" title="@Edita log de Base de datos@" style="display:'.(($_LogDB)?'':'none').'">&#249;</i>';
+echo '<i id="TodoDIR" class="ICONWINDOW" onclick="EditDIR()" title="@Edita log de Directorios@" style="display:'.(($_LogDIR)?'':'none').'">&#170;</i>';
+echo '<i id="TodoSCRIPT" class="ICONWINDOW" onclick="EditScript()" title="@Edita log de Script@" style="display:'.(($_LogScript)?'':'none').'">&#281;</i>';
+if( $_SESSION["_D_"]=="~" || $_SESSION["_D_"]=="A" ){
+echo '<i class="ICONWINDOW" onclick="_testCURL()" title="Test de sincronización">&#258;</i>';
+}
+echo '</center>';
+$_HttpConfigLoad = true;
+$Dim = include(eScript('$a/u/_http.gs'));
+$IdSrv = _IDSRV();
+echo '<script type="text/javascript">';
+echo '_Origen = "'.$IdSrv.'";';
+echo 'var _Server = new Array();';
+$_SESSION["_ServerTarget"] = array();
+$_SESSION["_ServerTarget"]["ORIGEN"] = $IdSrv;
+$i = 0;
+for( $n=0; $n<count($Dim); $n++ ) if( $IdSrv<>$Dim[$n][1] ){
+if( count($Dim[$n])==3 ){
+$_SESSION["_ServerTarget"][$Dim[$n][0]] = $Dim[$n][1];
+echo "_Server[{$i}] = Array('{$Dim[$n][0]}','','{$Dim[$n][2]}');";
+$i++;
+}
+}
+if( $i>1 ){
+echo "_Server[{$i}] = Array('-','');";
+echo "_Server[{$i}+1] = Array('*','','TODO');";
+}
+if( count($Dim)==0 || $i==0 ) echo 'BROWSE.children[0].children[3].style.display=DGI("TodoSi").style.display="none"';
+echo '</script>';
+[PHPEnd]?,l
+if( !$_Development ){
+echo '<script type="text/javascript">';
+echo 'eBlink(); document.body.style.backgroundColor="#ffbfbf";';
+echo 'top.eInfoError(window, "Está en el servidor de procesos");';
+echo '</script>';
+}
+[CallSrv]NoFTP
+$Dim = explode('|', $NoFTP);
+if( count($Dim)==1 ) $Dim[] = '';
+for( $n=0; $n<count($Dim)-1; $n++ ){
+$NoFTP = $Dim[$n];
+qQuery("update {$_SESSION['ShareDictionary']}gs_activity set cdi_ftp='".date('Y-m-d H:i:s')."' where cdi_ftp is null and script='{$NoFTP}'");
+}
+eEnd();
+[CallSrv]TestFTP
+$File = eScript( $TestFTP );
+if( file_exists($File) ){
+$MaxFileSize = filesize($File);
+$fp = fopen($File, 'r');
+$nd = 0;
+$Lista = '<b><u>@LISTA DE FICHEROS@</u></b><br>';
+$p = 0;
+do{
+$LongNombre = (int)fread( $fp, 2 );
+$NomFile = fread( $fp, $LongNombre );
+$LongFile = (int)fread( $fp, 8 );
+$p += 2+$LongNombre+8+$LongFile;
+fseek( $fp, $p );
+$nd++;
+if( $Lista!='' ) $Lista .= '<br>';
+$Lista .= $NomFile;
+} while( !feof($fp) and ftell($fp) < $MaxFileSize );
+fclose( $fp );
+}else{
+$Lista = '@ERROR: Fichero no encontrado@';
+}
+?>
+<script type="text/javascript">
+top.eInfo(window.frameElement.WOPENER, '<?= $Lista ?>', 7);
+</script>
+<?PHP
+eEnd();
+[CallSrv]COPY
+if( !function_exists("curl_init") ){
+die('<script type="text/javascript">alert("La función no existe");</script>');
+}
+$file = eScript($COPY);
+function loginSSO($user, $pass, $ssohost){
+include_once('../../lib/sso/new.openam.class.php');
+$sso = new OpenSSO($ssohost);
+try{
+$token = $sso->authenticate($user, $pass);
+}catch( Exception $msg ){
+ePrintR("Error de autenticación en SSO");
+}
+return $token;
+}
+eFileGetVar("SSOUpdate", true);
+if( $sso_url<>"" ){
+$token = loginSSO($sso_user, $sso_password, $sso_url);
+$headers = [
+"Cookie: {$sso_dir}={$token}"
+];
+}
+if( substr($TO,-1)=="/" ){
+$target_url = $TO.'edes.php?UPLOAD&FILE=';
+}else{
+$target_url = $TO.'/edes.php?UPLOAD&FILE=';
+}
+if( class_exists('cURLFile') ){
+$post = array(
+'TO_UPDATE' => 'eDes',
+'IDSRV' => $_SESSION["_ServerTarget"][$TO],
+'SS' => $_SESSION["_sesion_"],
+'file' => new cURLFile($file,'', $file),
+'file_name' => $COPY
+);
+}else{
+$post = array(
+'TO_UPDATE' => 'eDes',
+'IDSRV' => $_SESSION["_ServerTarget"][$TO],
+'SS' => $_SESSION["_sesion_"],
+'file' =>'@'.realpath($file),
+'file_name' => $COPY
+);
+}
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_URL, $target_url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+$result = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+if( $result!="ok" ){
+eTron("[Error de actualización] ".$result);
+die('<script type="text/javascript">alert("ERROR al enviar el fichero '.$COPY.'");</script>');
+}else{
+}
+eEnd();
+[CallSrv]TESTCURL
+if( !function_exists("curl_init") ){
+die('<script type="text/javascript">alert("La función no existe");</script>');
+}
+$file = eScript("/_tmp/curl_test.edes");
+$time = time();
+file_put_contents($file, $time);
+function loginSSO($user, $pass, $ssohost){
+include_once('../../lib/sso/new.openam.class.php');
+$sso = new OpenSSO($ssohost);
+try{
+$token = $sso->authenticate($user, $pass);
+}catch( Exception $msg ){
+ePrintR("Error de autenticación en SSO");
+}
+return $token;
+}
+eFileGetVar("SSOUpdate", true);
+if( $sso_url<>"" ){
+$token = loginSSO($sso_user, $sso_password, $sso_url);
+$headers = [
+"Cookie: {$sso_dir}={$token}"
+];
+}
+if( substr($TO,-1)=="/" ){
+$target_url = $TO.'edes.php?UPLOAD&FILE=';
+}else{
+$target_url = $TO.'/edes.php?UPLOAD&FILE=';
+}
+if( class_exists('cURLFile') ){
+$post = array(
+'TO_UPDATE' => 'test',
+'IDSRV' => $_SESSION["_ServerTarget"][$TO],
+'SS' => $_SESSION["_sesion_"],
+'file' => new cURLFile($file,'', $file),
+'file_name' => $COPY
+);
+}else{
+$post = array(
+'TO_UPDATE' => 'test',
+'IDSRV' => $_SESSION["_ServerTarget"][$TO],
+'SS' => $_SESSION["_sesion_"],
+'file' =>'@'.realpath($file),
+'file_name' => $COPY
+);
+}
+$ch = curl_init();
+if( $ch===false ) die('<script type="text/javascript">alert("ERROR al iniciar CURL");</script>');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_URL, $target_url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+$result = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+die('<script type="text/javascript">alert("Respuesta test['.$result.']");</script>');
+if( $result!=$time ){
+eTron("[Error de actualización] ".$result);
+die('<script type="text/javascript">alert("ERROR al ejecutar el test.");</script>');
+}else{
+die('<script type="text/javascript">alert("Test curl OK.");</script>');
+}
+eEnd();

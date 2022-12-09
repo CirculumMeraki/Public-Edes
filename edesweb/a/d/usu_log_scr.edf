@@ -1,0 +1,32 @@
+#include(*) lng
+[Title]=@titulo@
+[Button]*|<img src='g/remote_view.gif'> @Ver Pantallas@
+[FormAction]*|VerPantalla()
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[Fields]
+@Usuario@|_cd_gs_user|D|T|68||Q|||
+@Borrar Historial@|del_log|D|C|1||Q|S||
+|cd_gs_user|+|T|5||*Q|||
+-||||||Q
+{i} <tr><td colspan=2 style='color:red;width:500px;'>@Info@</td></tr>
+[JSIni]*
+_Question = false;
+function VerPantalla(){
+if( eGF('cd_gs_user') > 0 ){
+if( top._RemoteViewer!=undefined && top._RemoteViewer ){
+top.eInfo(window,'@Ya tiene abierta una sesión@');
+}else{
+top.eLoading(1,window);
+location.href = 'edes.php?E:$a/d/view_screens.gs&USER='+eGF('cd_gs_user')+'&DELLOG='+eGF('del_log')+'&SUBWIN='+((top.eIsWindow(window))?1:0);
+}
+}else{
+top.eInfo( window, '@Falta el dato "USUARIO"@' );
+}
+}
+[PHPIni]?
+$_NOSUBLIST = true;

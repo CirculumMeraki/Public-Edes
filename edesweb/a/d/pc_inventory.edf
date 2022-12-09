@@ -1,0 +1,120 @@
+[Title](SOLO .NET) INVENTARIO DE PC/S
+[DBTable]gs_pc_inventory
+[DBIndex]mac_address
+[DBOrder]cd_gs_user
+[Notoos]P
+[CC]#MySQL|eSqlType('mysql,mysqli')
+#MySQL ¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select concat(user_name," ",user_surname),cd_gs_user from gs_user where concat(user_name," ",user_surname) like # order by 1|7
+?¿
+[FieldBrowser]_cd_gs_user|cd_gs_user|select user_name&#124;&#124;' '&#124;&#124;user_surname,cd_gs_user from gs_user where (user_name&#124;&#124;' '&#124;&#124;user_surname) like # order by 1|7
+?
+[AddCode]?R|ip|E|<img id=VerPC src='edes.php?R:$a/g/pc.gif' onclick='VerInfo()' oncontextmenu='DownInfo()' title='Ver Report del PC\nDescargar Report' style='vertical-align:middle;margin-left:10px'><img id=VerIP src='edes.php?R:$a/g/ip.png' onclick='VerIp()' oncontextmenu='DownIp()' title='Ver Report de la Red\nDescargar Report' style='vertical-align:middle;margin-left:5'>
+[AddCode]?R|_tick_count|E|&nbsp;Dias / Horas:Minutos
+[AddCode]a,?R|mac_address, ip|i|style='font-family:monospace'
+[AddOption]*|maintenance|,; D,Sin Definir; S,Si; N,No
+[Fields]
+#(?) Usuario|_cd_gs_user|D|T|68||Q|||
+#(?) Usuario|cd_gs_user|+|T|5||*Q|||
+#!(?) Usuario|cd_gs_user{gs_user,cd_gs_user,user_name,' ',user_surname}|+|S|68||-|||
+Nodo|cd_gs_node|0|S|68||AQ|||
+Ubicación|location|D|T|68||MQ||#|
+Mantenimiento|maintenance|N|SV|12||MQ||#|
+-
+Mac Address|mac_address|D|T|12||AQ||#|
+,IP|ip|#D|T|15||A|||
+Nombre PC|machine_name|#D|T|50||A|||
+S.O. Versión|os_version|#D|T|80||A|||
+S.O.|os|#D|T|80||A|||
+Versión Min/Max|version_min_max|#D|T|20||A|||
+|tick_count|-|T|18||*|||
+Memoria RAM|ram|-|T|15||A|||
+,CDRom|cdrom|#D|C|1||A|||
+Processor|processor_identifier|#D|T|80||A|||
+Arquitectura|processor_architew6432|#D|T|20||A|||
+,\ARQ.|processor_architecture|#D|T|10||A|||
+Equipo|pcbrand|#D|T|30||A|||
+IE Versión|ie_version|#D|T|18||A|||
+,IE Versión eDes|ie_version_edes|#D|T|18||A|||
+Encendido desde|_tick_count|0|T|8||-|||
+-|HD
+Unidad|u1_unidad|#D|T|1||A||=|
+,Sistema|u1_sistema|#D|T|20||A|||
+,Nº Serie|u1_num_serie|-|T|18||A|||
+Capacidad|u1_byts_capacidad|-|T|18||A|||
+,Espacio Libre|u1_byts_libres|-|T|18|<u1_num_serie|A|||
+-|HD
+Unidad|u2_unidad|#D|T|1||A||=|
+,Sistema|u2_sistema|#D|T|20||A|||
+,Nº Serie|u2_num_serie|-|T|18||A|||
+Capacidad|u2_byts_capacidad|-|T|18||A|||
+,Espacio Libre|u2_byts_libres|-|T|18|<u2_num_serie|A|||
+-|Impresoras
+<|impresoras|-|A|2000,80,6|+os|AL|||
+-|Fecha Inventario
+Alta|cdi_insert|CDI|T|19||A|||
+,Ultimo chequeo|cdi_update|CDI|T|19||A|||
+|nm_user|N|T|50||*|||
+|nm_node|D|T|60||*|||
+#include(?R,l) /_datos/config/inventory.idf|true
+[THColSpan]u1_unidad,u1_byts_libres,UNIDAD "C"|u2_unidad,u2_byts_libres,UNIDAD "D"|cdi_insert,cdi_update,Fecha Inventario
+[PHPStart]?R,l
+eFileGetVar('Inventory', true);
+$_InvMinBtys = $InvMinBtys;
+if( $_InvMinBtys=='' ) $_InvMinBtys = 10;
+[Format]
+if( $_vF[31]!='' ) $_vF[0] = $_vF[31];
+if( $_vF[32]!='' ) $_vF[1] = $_vF[32];
+if( (($_vF[22]*$GLOBALS['_InvMinBtys'])/100) > $_vF[23] ) $_CellsStyle[23] = 'color:red';
+if( (($_vF[27]*$GLOBALS['_InvMinBtys'])/100) > $_vF[28] ) $_CellsStyle[28] = 'color:red';
+if( $_vF[24]=='' ) $_vF[25]=$_vF[26]=$_vF[27]=$_vF[28] = '';
+[JSIni]?R
+function VerInfo(){
+top.eSWOpen( window, 'edes.php?E:$vertxt.inc&FILE=/_datos/usr/'+eGF('mac_address')+'.pc', 'INFORMACION PC '+eGF('mac_address'), true, 0 );
+}
+function VerIp(){
+top.eSWOpen( window, 'edes.php?E:$vertxt.inc&FILE=/_datos/usr/'+eGF('mac_address')+'.ip', 'INFORMACION DE RED '+eGF('mac_address'), true, 0 );
+}
+function DownInfo(){
+top.eCallSrv( window, 'edes.php?D:/_datos/usr/'+eGF('mac_address')+'.pc&FILENAME=report_pc.txt' );
+return eClearEvent();
+}
+function DownIp(){
+top.eCallSrv( window, 'edes.php?D:/_datos/usr/'+eGF('mac_address')+'.ip&FILENAME=report_ip.txt' );
+return eClearEvent();
+}
+[PHPEnd]?R
+echo '<script type="text/javascript">';
+echo "ePF('_tick_count','".SgADias( $_vF['tick_count'] )."');";
+$File = '../_datos/usr/'.$_vF['mac_address'].'.pc';
+if( !file_exists($File) ){
+echo 'document.all.VerPC.style.display = "none";';
+}else{
+echo 'document.all.VerPC.title = document.all.VerPC.title+"'.'\n\n'.date('Y-m-d H:i:s',filemtime($File)).'";';
+}
+$File = '../_datos/usr/'.$_vF['mac_address'].'.ip';
+if( !file_exists($File) ){
+echo 'document.all.VerIP.style.display = "none";';
+}else{
+echo 'document.all.VerIP.title = document.all.VerIP.title+"'.'\n\n'.date('Y-m-d H:i:s',filemtime($File)).'";';
+}
+echo '</script>';
+function SgADias($s){
+$s = round($s/1000);
+$d = floor($s/86400);
+if( $d > 0 ) $s = $s - $d*86400;
+$h = floor($s/3600);
+if( $h > 0 ) $s = $s - $h*3600;
+$m = floor($s/60);
+if( $m > 0 ) $s = $s - $m*60;
+if($h<10) $h = '0'.$h;
+if($m<10) $m = '0'.$m;
+return $d.' / '.$h.':'.$m;
+}
+[JSIni]?R
+var _InvMinBtys = <?=$GLOBALS['_InvMinBtys']?>;
+[JSEnd]?R
+if( ((eGF('u1_byts_capacidad')*_InvMinBtys)/100) > eGF('u1_byts_libres') ) eGO('u1_byts_libres').style.color = 'red';
+if( ((eGF('u2_byts_capacidad')*_InvMinBtys)/100) > eGF('u2_byts_libres') ) eGO('u2_byts_libres').style.color = 'red';
+if( eGF('nm_user')!='' ) ePF('_INPUT_cd_gs_user',eGF('nm_user'));
+if( eGF('nm_node')!='' ) ePF('_INPUT_cd_gs_node',eGF('nm_node'));

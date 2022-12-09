@@ -1,0 +1,500 @@
+#include(*) lng
+
+
+[PHPIni] A
+include_once('../_datos/config/desktop.ini');
+$_POST['pass'] = $_ClaveReset;
+
+[DBIni] A
+include_once('../_datos/config/desktop.ini');
+.if( $GLOBALS['_gsObjeto']=='G' ) $_FIELDSLIST['pass'] = 'A';
+
+if( $_UserPasswordByEmail && $_vF['email']!='' && $_EMailSystem!='' ){
+	// Genera Password
+	$str = "ABCDEFGHJKLMNPQRSTUVWXYZ1234567890";
+	$LonClave = 6;
+	$MinNum = 2;
+	$MinChr = 2;
+	$nMinNum = 0;
+	$nMinChr = 0;
+	
+	eFileGetVar('Login');
+	if( $min_password > $LonClave ) $LonClave = $min_password;
+	switch( $key_case ){
+		case '0':		// Upper
+			break;
+		case '1':		// Lower
+			$str = strtolower($str);
+			break;
+		case '2':		// Upper and Lower
+			$str .= "abcdefghijklmnpqrstuvwxyz";
+			break;
+	}
+		
+	while( $nMinNum<$MinNum || $nMinChr<$MinChr ){
+		$nMinNum = 0;
+		$nMinChr = 0;
+		$Pass = "";
+		for( $i=0; $i<$LonClave; $i++ ){
+			$c = substr($str,rand(0,strlen($str)-1),1);
+			$Pass .= $c;
+			if( is_numeric($c) ){
+				$nMinNum++;
+			}else{
+				$nMinChr++;
+			}
+		}
+	}
+	//eTrace( 'Clave aleatoria: '.$Pass );
+
+	$txt = '@Nueva clave@: '.$Pass;
+	if( file_exists( eScript('/_datos/config/pass_new@LNG@.htm') ) ){
+		$txt = file_get_contents( eScript('/_datos/config/pass_new@LNG@.htm') );
+	}else if( file_exists( eScript('/_datos/config/pass_new.htm') ) ){
+		$txt = file_get_contents( eScript('/_datos/config/pass_new.htm') );
+	}
+	$txt = str_replace( '{$COMPANY}' , $_TituloApli, $txt );
+	$txt = str_replace( '{$EMAIL}'   , $_vF['email'], $txt );
+	$txt = str_replace( '{$PASSWORD}', $Pass, $txt );
+
+	if( eMail( $_vF['email'], '@CLAVE DE USUARIO@', $txt, $_EMailSystem ) ){
+		$_vF['pass'] = strtoupper(md5($Pass));
+		$uNewText = '@Clave enviada por email@';
+	}else{
+		$uNewText = '@Clave con valor por defecto@';
+	}
+}
+[DBEnd] A
+if( $uNewText!='' ) $_MSGANSWER[0] = $uNewText;
+
+	
+¿ eFileGetVar( '/_datos/config/desktop.ini->$_DesktopTreeType' )=='O' ? #include(*) $a/d/usu_ficha2.edf
+
+[Title] @USUARIO/S@ | l
+
+[LoadIni] $a/d/usu_ficha2.edf
+
+.[TitleIcon] cR,mR | <img src='edes.php?R:$a/g/setup.gif' onclick='uEncuestar()' title='Realizar Encuesta' style='margin-left:10;vertical-align:center'>
+.[JSIni] cR,mR
+.function uEncuestar(){
+.	top.eCallSrv( window, 'EncuestarA='+eGF('cd_gs_user') );
+.}
+.[CallSrv] EncuestarA
+.//ts_encuestado
+.qQuery('select * from ts_encuesta');
+.$r=qArray();
+.echo '<script>';
+.echo "top.eSWOpen( window, 'edes.php?E:".'$'."a/d/ts_encuestar.gs&cd_ts_encuesta={$r[cd_ts_encuesta]}&Usuario={$EncuestarA}', 'ENCUESTA', false, 500 );";
+.//echo "window.frameElement.WOPENER....;";
+.//echo "alert('{$EncuestarA}');";
+.echo '</script>';
+
+.[AddOption] * | cd_gs_tree | uTree()
+
+[CC] #FormaSS | ($_TaskStatus>0  && $_ViewDesktop=='S') || $_SESSION['_D_']!=''
+[CC] #FormaSN | !$_Variable['#FormaSS'] && (($_TaskStatus>0  && $_ViewDesktop!='S') || $_SESSION['_D_']!='')
+[CC] #FormaNS | !$_Variable['#FormaSS'] && (($_TaskStatus==0 && $_ViewDesktop=='S') || $_SESSION['_D_']!='')
+
+[PHPStart] * || unique
+function uTree(){									// Arboles incluidos en el tuyo
+	global $_Mode, $_Tree, $_NoContentTree;
+	$Dim[] = array('','');
+	if( $_NoContentTree==false && ( $_Mode=='a' || $_Mode=='mR' ) ){
+		qQuery( "select cd_gs_tree,nm_gs_tree from gs_tree where permission='S' and
+				(select count(*) from gs_op where substr(subtree_opt,gs_tree.cd_gs_tree,1)='1' ) > 0 and 
+				(select count(*) from gs_op where substr(subtree_opt,{$_Tree},1)='0' and substr(subtree_opt,gs_tree.cd_gs_tree,1)='1' ) = 0 
+				order by nm_gs_tree" );
+	}else{
+		qQuery( "select cd_gs_tree,nm_gs_tree from gs_tree order by nm_gs_tree" );
+	}
+	while( $r=qRow() ) $Dim[] = array( $r[0], rtrim($r[1]) );
+	return $Dim;
+}
+
+global $_SystemUser;
+include_once($Dir_.$_Sql.'.inc');
+qQuery( "select system_user,task_status,view_desktop from gs_user where cd_gs_user={$_User}" );
+list( $_SystemUser, $_TaskStatus, $_ViewDesktop ) = qRow();
+$_TaskStatus = (int)$_TaskStatus;
+
+
+[DBTable]  gs_user
+[DBIndex]  cd_gs_user; login | | true | user_name,user_surname | @USUARIO YA EXISTE@ | BorraOrigen
+[DBOrder]  user_name,user_surname
+[DBSerial] cd_gs_user
+[DBLimit]  5000,750,750
+¿ $_SystemUser!='S' ? [DBAddFilter] (system_user<>'S' or system_user is null or system_user='')
+
+[NoAbort]
+[Cursor]
+[AutoMenu] l | 1
+
+[AddOption] * | pc_with_id   | ,@No@; A,@Cualquier PC@ ; U,@Sus PCs@
+[AddOption] * | desktop_type | -1,@Por defecto@; 0,@Solapas@; 1,@Vertical@; 2,@Horizontal@
+[AddOption] * | permission   | S,@Si@; N,@No@; C,@Caducado@
+[AddOption] ? | permission   | ,; S,@Si@; N,@No@; C,@Caducado@; )'S'(,@Sin permiso@
+[AddOption] * | export_level | ,; 1,@Básico@; 2,@Medio@; 3,@Total@; 9,@INFORMATICA@
+
+
+[TipForm] * | phone2  | @Segundo Teléfono@
+[TipForm] * | ip      | @Primera IP@
+[TipForm] * | ip2     | @Segunda IP@
+[TipForm] * | ip_from | @IP-Inicial@
+[TipForm] * | ip_to   | @IP-Final@
+
+.[AddCode] cR | cd_gs_node | A | <img src='edes.php?R:$a/g/t_local.gif' style='margin-bottom:5;' title='@Consultar Local@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/nodo.edf&_SEEK&cd_gs_node="+eGF("cd_gs_node")+"&_NOBUTTON","LOCAL",false)'>
+.[AddCode] cR | cd_gs_node | A | <span style='margin-left:80;'>@Explorador@ <img src='g/t_web.gif' title='@Datos del explorador@' onclick='VerExplorer()'></span>
+[AddCode] cR | cd_gs_node | A | <span><img src='edes.php?R:$a/g/t_local.gif' title='@Consultar Local@' onclick='top.eSWOpen(window,"edes.php?FcR:$a/d/nodo.edf&_SEEK&cd_gs_node="+eGF("cd_gs_node")+"&_NOBUTTON","LOCAL",false)'>  <span style='margin-left:100px'>@Información@</span> <img src='g/t_web.gif' title='@Datos del explorador@' onclick='VerExplorer()'> <img id=PC src='edes.php?R:$a/g/t_pc.png' title='@Datos del PC@' onclick='VerPC()'></span>
+
+#!(t1) [WhereSelect] a,mR | cd_gs_tree | cd_gs_tree!=1
+[SlideCol]
+[OnChange] *  | dni | ePadLeft(this,8)
+[OnChange] mR | dni | eCallSrv( window, 'edes.php?E:check_dni.php&USER='+eGF('cd_gs_user')+'&DNI='+eGF('dni') );
+
+.[Chr] uChr || ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789ÇÜabcdefghijklmnñopqrstuvwxyzçü&.-_@
+.[TipForm] mR | trigger_chr | - Si no se pulsa el caracter la clave será lo introducido\n- Si se pulsa una vez será a partir de haberla pulsado\n- Y si se pulsa mas de una vez la clave estará entre las dos primeras pulsaciones
+
+[ListCheckBox] H | <img src=g/tf_1.gif>
+
+[GroupLabels] Format | TipTH
+	pc_total	| b
+	new_pass	| b
+	permission	|   | @Permiso@
+	log_user	|   | @Log Usuario@
+	log_history	|   | @Log Historial@
+	webmaster	|   | @WebMaster@
+	pc_with_id	| c
+
+
+[Fields] ? | 2
+    @DNI@                                       | dni            | DNI | T  | 8    |  | Qcp |  | # | 
+ ,2 @Usuario@                                   | cd_gs_user     | +   | T  | 4    |  | Q   |  |   | 
+    @Nombre@                                    | user_name      | X   | T  | 20   |  | Qd  |  | # | 
+ ,2 @Apellidos@                                 | user_surname   | X   | T  | 30   |  | Q   |  | # | 
+    @Local@                                     | cd_gs_node     | +   | S  | 3,60 |  | QI  |  | # | 
+    @Cargo@                                     | cd_gs_position | +   | S  | 30   |  | Q   |  |   | 
+   -                                            | @PERMISOS@     |     |    |      |  | Q   |  |   | 
+    @Arbol@                                     | cd_gs_tree     | +   | S  | 2,35 |  | Qi  |  | # | 
+ ,2 @Permiso@                                   | permission     | X   | SV | 11   |  | Q   |  |   | 
+¿ $GLOBALS['_SystemUser']=='S' ? ,@System·User@ | system_user    | X   | c  | 1    |  | Q   |  |   | 
+
+[CC] #ConIdioma | qCount('gs_language')>0
+
+[AddOptionValue] cd_gs_language | img_sel | lng_
+[Width] L | log_user | 143
+[PDFCol] ,,,,,,0,,,,,,0,,0,0,0,0,0,0,0,0,0,0
+
+[Fields] 3
+    @DNI@                                | dni             | DNI  | T  | 8        |                | Mcp      |         |   | 
+   ,@Usuario@                            | cd_gs_user      | +    | T  | 4        | >user_surname  | a=*; *=- |         |   | 
+ ,3 @Fecha·Alta@                         | dt_add          | F4   | T  | 10       |                | -        | #today# |   | 
+   ,                                     | dt_access_last  | F4   | T  | 10       |                | *        | #today# |   | 
+    @Nombre@                             | user_name       | X    | T  | 20       |                | M        |         | # | 
+   ,@Apellidos@                          | user_surname    | X    | T  | 30       |                | M        |         | # | 
+ ,3 @Fecha·Baja@                         | dt_del          | F4   | T  | 10       |                | MF       |         |   | 
+
+    @Local@                              | cd_gs_node      | +    | S  | 3,60     | /+user_surname | MI       |         | # | 
+ ,3 @LOPD@                               | dt_confidential | F4   | T  | 10       |                | -        |         |   | 
+	
+    @Teléfonos@                          | phone           | T    | T  | 9        |                | ML       |         |   | 
+   ,                                     | phone2          | T    | T  | 9        |                | ML       |         |   | 
+    @Departamento@                       | cd_gs_office    | +    | S  | 40       |                | M        |         |   | 
+   ,@Cargo@                              | cd_gs_position  | +    | S  | 30       |                | M        |         |   | 
+    @E-Mail@                             | email           | @    | T  | 65       | +user_surname  | MLE      |         |   | 
+- | @PERMISOS@
+    @Login@                              | login           | C    | T  | 65       | +user_surname  | M        |         |   | 
+
+    @Permiso@\@P@                        | permission      | N    | SV | 8        |                | M        | S       | # | 
+   ,@Arbol@                              | cd_gs_tree      | +    | S  | 2,43     |                | Mi       |         | # | 
+¿ $_SystemUser=='S' ? ,3 @System·User@   | system_user     | X    | c  | 1        |                | M        |         | % | 
+
+    &#49;ª IP - 2ª IP\1ª IP              | ip              | X    | T  | 15       | 87             | M        |         |   | 
+   ,\2ª IP                               | ip2             | X    | T  | 15       | 87             | M        |         |   | 
+ ,2 @Chequear·PC@                        | pc_with_id      | X    | SV | 12       |                | M        |         |   | 
+ ,3 @Altas·de PC@                        | pc_total        | +    | T  | 1        |                | Ms       |         |   | 
+
+    @IP Rango@\@IP·INI@                  | ip_from         | X    | T  | 15       | 87             | M        |         |   | 
+   ,\@IP·FIN@                            | ip_to           | X    | T  | 15       | 87             | M        |         |   | 
+ ,2 @Tipo desktop@                       | desktop_type    | -    | SV | 12       |                | M        | -1      |   | 
+ ,3 @Cambiar·clave@                      | new_pass        | +    | T  | 1        |                | MS       | 1       |   | 
+
+#ConIdioma ¿
+    @Idioma@                             | cd_gs_language  | n    | S  | 20       |                | M        | es      |   | 
+?¿
+    @Idioma@                             | cd_gs_language  | n    | T  | 20       |                | *        | es      |   | 
+?  
+
+ ,2 @Nivel Extracción@                   | export_level    | 0    | SV | 12       |                | ML       | 0       |   | 
+ ,3 @WebMaster@\@WM@                     | webmaster       | N    | c  | 1        |                | -        |         | % | 
+
+  2 @Log Usuario@\@LU@                   | log_user        | X    | c  | 1        |                | M        |         | % | 
+ ,3 @Log Histórico@\@LH@                 | log_history     | X    | C  | 1        |                | M        |         | % | 
+
+#FormaSS ¿
+  2 @Incidencias@                        | task_status     | N    | SV | 12       |                | ML       |         |   | 
+   ,@Visor Escritorio Remoto@            | view_desktop    | N    | C  | 1        |                | M        |         |   | 
+?
+¿ #FormaSN ? 2 @Incidencias@             | task_status     | N    | SV | 12       |                | ML       |         |   | 
+¿ #FormaNS ? 3 @Visor Escritorio Remoto@ | view_desktop    | N    | C  | 1        |                | M        |         |   | 
+
+.   <Caracter desencadenante             | trigger_chr     | uChr | T  | 1        |                | M        |         |   | 
+
+- | @OBSERVACIONES@
+   <                                     | notes           | #    | A  | 250,90,3 | +dt_del        | ML       |         |   | 
+                                         | ys_news         | *    | T  | 14       |                | *        | #y2s#   |   | 
+#(a)                                     | pass            | D    | T  | 32       |                | *        |         |   | 
+
+                                         | system_user     |      |    |          |                | h        |         |   | 
+
+
+[AddOption] * | task_status | ,; 1,@Iniciar@; 2,@Enviar@; 3,@Asignar@; 4,@Desarrollo@
+[TipForm]   * | task_status | @Desde que estado se crean incidencias@
+									 
+[JSCheck] a,mR
+WE.eLngPut( eGF('cd_gs_language') );
+
+
+[PHPForm] a,mR
+if( $_SESSION['_WebMaster']=='S' ) $_Form['webmaster'][6] = 'M';
+
+[JSIni] a,mR
+function BorraOrigen(){
+	ePF("dni,email",'',false);
+}
+
+[PHPIni] a,mR
+include_once('../_datos/config/desktop.ini');
+/*
+$Dim = file("{$_SESSION['_PathCSS']}/login.css");
+$tipo = 1;
+for( $n=0; $n<count($Dim); $n++ ){
+	if( substr( ltrim($Dim[$n]),0,9) == 'key_case:' ){
+		$tipo = trim(substr( $Dim[$n], strpos($Dim[$n],':')+1, strpos($Dim[$n],';')-strpos($Dim[$n],':')-1 ));
+		break;
+	}
+}
+$uTEdicion = Array( '#U','#L','#X' );		// key_case: 1;	// 0·Upper / 1·Lower/ 2·Upper and Lower
+*/
+//$_LoginType = 0;
+/*
+for( $n=0; $n<count($_Form); $n++ ){		// Para MultiFichas descrito mas abajo
+	if( count($_Form[$n])==1 ) continue;
+	switch( $_LoginType ){
+		case 0:			// DNI
+			if( $_Form[$n][_FIELD]=='dni' ){
+				$_Form[$n][_CONDITION] = '#';
+				$_JSCHECK .= 'document.FRM1.login.value = document.FRM1.dni.value;';		// Asigna el DNI como "Login" y quitarle la condición '#'
+				$_ONCHANGE[] = array( 'dni', 'ePF("login",this.value)', '' );
+			}
+			if( $_Form[$n][_FIELD]=='login' ) $_Form[$n][_MODE] = '*';
+			break;
+		case 1:			// EMail
+			if( $_Form[$n][_FIELD]=='email' ){
+				$_Form[$n][_CONDITION] = '#';
+				$_JSCHECK .= 'document.FRM1.login.value = document.FRM1.email.value;';		// Asigna el "EMAIL" como "Login" y quitarle la condición '#'
+				$_ONCHANGE[] = array( 'email', 'ePF("login",this.value)', '' );
+			}
+			if( $_Form[$n][_FIELD]=='login' ) $_Form[$n][_MODE] = '*';
+			break;
+		case 2:			// Login
+			if( $_Form[$n][_FIELD]=='login' ) $_Form[$n][_CONDITION] = '#';
+			break;
+	}
+}
+*/
+
+[PHPEnd] cR
+echo '<script>';
+echo 'function VerExplorer(){';
+	sql_Busca( 'gs_conexion', '*', "cd_gs_user={$_Fila['cd_gs_user']}", 'cdi desc' );
+	$row = sql_Array();
+	if( $row['cd_gs_navegador']!='' ){
+		echo 'top.eSWOpen(window,"edes.php?FcR:$a/d/e_nave.edf&_SEEK&'.'cd_gs_navegador='. $row['cd_gs_navegador'].'","@WTEXPLORADOR@",false );';
+	}else{
+		echo 'top.eInfo(window,"@No ha conectado nunca@");';
+	}
+echo '}';
+echo 'function VerPC(){';
+	echo "top.eSWOpen( window, 'edes.php?FcR:".'$'."a/d/pc_inventory.edf&_SEEK&cd_gs_user={$_vF['cd_gs_user']}' );";
+echo '}';
+eFileGetVar('Inventory');		//, $InvExe, $InvParameters, $InvFrequency, $InvType );
+if( $InvFrequencyBasic!='' ){
+	if( qCount( 'gs_pc_inventory', "cd_gs_user={$_vF['cd_gs_user']}" ) == 0 ) echo 'document.all.PC.style.display = "none";';
+}else{
+	echo 'document.all.PC.style.display = "none";';
+}
+echo '</script>';
+
+
+[PHPEnd] mR--
+if( $_NoContentTree==false ){	// $_IncludingTree
+	qQuery( "select count(*) from gs_tree where permission='S' and cd_gs_tree='{$_vF['cd_gs_tree']}' and 
+			(select count(*) from gs_op where substr(subtree_opt,gs_tree.cd_gs_tree,1)='1' ) > 0 and 
+			(select count(*) from gs_op where substr(subtree_opt,{$_Tree},1)='0' and substr(subtree_opt,gs_tree.cd_gs_tree,1)='1' ) = 0" );
+	list( $TReg ) = qRow();
+	if( $TReg==0 ){
+		?>
+		<script>
+			document.body.onload = function anonymous(){ eOp("cR"); }
+		</script>
+		<?PHP 
+	}
+}
+
+
+[Note]
+
+[PHPForm] a,mR						// Para MultiFichas
+global $_JSCHECK, $_ONCHANGE;
+include_once('../_datos/config/desktop.ini');
+
+for( $n=0; $n<count($_Form); $n++ ){
+	if( count($_Form[$n])==1 ) continue;
+
+	switch( $_LoginType ){
+		case 0:			// DNI
+			if( isset($_Form['dni'][_FIELD]) ){
+				$_Form['dni'][_CONDITION] = '#';
+				$_JSCHECK .= 'document.FRM1.login.value = document.FRM1.dni.value;';		// Asigna el DNI como "Login" y quitarle la condición '#'
+				$_ONCHANGE[] = array( 'dni', 'ePF("login",this.value)', '' );
+			}
+			if( isset($_Form['login'][_FIELD]) ) $_Form['login'][_MODE] = '*';
+			break;
+		case 1:			// EMail
+			if( isset($_Form['email'][_FIELD]) ){
+				$_Form['email'][_CONDITION] = '#';
+				$_JSCHECK .= 'document.FRM1.login.value = document.FRM1.email.value;';		// Asigna el "EMAIL" como "Login" y quitarle la condición '#'
+				$_ONCHANGE[] = array( 'email', 'ePF("login",this.value)', '' );
+			}
+			if( isset($_Form['login'][_FIELD]) ) $_Form['login'][_MODE] = '*';
+			break;
+		case 2:			// Login
+			if( isset($_Form['login'][_FIELD]) ) $_Form['login'][_CONDITION] = '#';
+			break;
+	}
+}
+
+
+. Para visualizar toda la convinatoria
+.select * from gs_user where user_name='FELIX';
+.update gs_user set view_desktop='S',task_status='1' where cd_gs_user=88;
+.update gs_user set view_desktop='' ,task_status='1' where cd_gs_user=88;
+.update gs_user set view_desktop='', task_status=''  where cd_gs_user=88;
+.update gs_user set view_desktop='S',task_status=''  where cd_gs_user=88;
+
+
+[PHPEnd] mR
+if( $_vF['cd_gs_tree']==1 && $_Tree!=1 ) eMessage('No tiene permisos para modificar esta ficha','HS');
+
+//Recalcula();WidthSubTitle();top.eITools(window);
+
+.[AddOption] a,?R,l | cd_gs_tree | ArbolesConPermiso()
+[PHPIni] a-?R
+function ArbolesConPermiso(){
+	$CdArbol = $GLOBALS['_Tree'];
+	$DimArbolesConPermiso = array();
+	$TOtrosArboles = 0;
+	$PosicionPadre = -1;
+	$n=0;
+	$DimArbol = array();
+	qQuery( 'select cd_gs_tree, nm_gs_tree from gs_tree order by cd_gs_tree' );
+	while( $r=qRow() ){
+		$n++;
+		$DimArbol[$n] = array( $r[0], $r[1] );
+		if( $r[0]==$CdArbol ) $PosicionPadre = $n;
+	}
+	if( $PosicionPadre == -1 ) return array(array(0,'ERROR: El árbol no existe'));
+
+	$TOpciones = qCount('gs_op');
+	qQuery( 'select subtree_opt from gs_op' );
+	list( $SubTree ) = qRow();
+	$sTArboles = strlen($SubTree);
+	$TArboles = qCount('gs_tree');
+	if( $sTArboles != $TArboles ) return array(array(0,'ERROR Descuadre Arboles/Opciones: '.$TArboles.'/'.$sTArboles ));
+
+	//echo 'Total árboles: '.$TArboles.'<br>'.'Arbol Padre: '.$PosicionPadre.' - '.$DimArbol[$PosicionPadre][0].': '.$DimArbol[$PosicionPadre][1].'<br>';
+
+	$Dim = array();
+	for( $a=1; $a<=$TArboles; $a++ ){
+		if( $PosicionPadre != $a ){
+			// Informix: $PosicionPadreHata+1  subtree_opt[{$PosicionPadre},{$PosicionPadreHasta}]
+			$TOpIguales = qCount( 'gs_op', "substr(subtree_opt,{$PosicionPadre},1)=substr(subtree_opt,{$a},1) or substr(subtree_opt,{$a},1)='0'" );
+			if( $TOpIguales==$TOpciones ){
+				$Dim[] = $DimArbol[$a][1].'|'.$DimArbol[$a][0];		//echo 'HIJO: '.$DimArbol[$a][0].': '.$DimArbol[$a][1].'<br>';
+			}else{
+				$TOtrosArboles++;
+			}
+		}else{
+			$Dim[] = $DimArbol[$a][1].'|'.$DimArbol[$a][0];			//echo 'PADRE: '.$DimArbol[$a][0].': '.$DimArbol[$a][1].'<br>';
+		}
+	}
+	//echo 'Otros árboles: '.$TOtrosArboles;
+
+	sort( $Dim );
+	for( $a=0; $a<count($Dim); $a++ ){
+		list( $n, $c ) = explode( '|', $Dim[$a] );
+		$DimArbolesConPermiso[] = array( $c, $n );
+	}
+	return $DimArbolesConPermiso;
+}
+
+
+[Note]
+[ListCheckBox] H | <img src=g/tf_1.gif>
+
+.[JSEnd] mR
+.if( eGF('cd_gs_tree')==1 ) eGO('cd_gs_tree').disabled = true;
+
+
+select * from gs_tree where permission='S' and
+(select count(*) from gs_op where substr(subtree_opt,gs_tree.cd_gs_tree,1)='1' ) > 0 and 
+(select count(*) from gs_op where substr(subtree_opt,{$MiArbol},1)='0' and substr(subtree_opt,gs_tree.cd_gs_tree,1)='1' ) = 0;
+
+
+[DBIni] A
+include_once('../_datos/config/desktop.ini');
+if( $_UserPasswordByEmail && $_vF['email']!='' && $_EMailSystem!='' ){
+	// Genera Password
+	$str = "ABCDEFGHIJKLMNPQRSTUVWXYZ1234567890";
+	$LonClave = 6;
+	$MinNum = 2;
+	$MinChr = 2;
+	while( $nMinNum<$MinNum || $nMinChr<$MinChr ){
+		$nMinNum = 0;
+		$nMinChr = 0;
+		$Pass = "";
+		for( $i=0; $i<$LonClave; $i++ ){
+			$c = substr($str,rand(0,strlen($str)-1),1);
+			$Pass .= $c;
+			if( is_numeric($c) ){
+				$nMinNum++;
+			}else{
+				$nMinChr++;
+			}
+		}
+	}
+	//eTrace( 'Clave aleatoria: '.$Pass );
+
+	$txt = 'Nueva clave: '.$Pass;
+	if( file_exists( eScript('/_datos/config/pass_new@LNG@.htm') ) ){
+		$txt = file_get_contents( eScript('/_datos/config/pass_new@LNG@.htm') );
+	}else if( file_exists( eScript('/_datos/config/pass_new.htm') ) ){
+		$txt = file_get_contents( eScript('/_datos/config/pass_new.htm') );
+	}
+	$txt = str_replace( '{$COMPANY}' , $_TituloApli, $txt );
+	$txt = str_replace( '{$PASSWORD}', $Pass, $txt );
+	$txt = str_replace( '{$SUPPORT}', $_EMailSystem, $txt );
+
+	list($sUrl) = explode('edes.php',$_SERVER["HTTP_REFERER"]);
+	$txt = str_replace( '{$URL}', $sUrl.'/edes.php/install.php', $txt );
+
+	$TextLoginType = array( 'DNI', 'EMail', 'Login' );
+	$txt = str_replace( '{$LOGINTYPE}', $TextLoginType[$_LoginType], $txt );
+
+	if( eMail( $_vF['email'], '@CLAVE DE USUARIO@', $txt, $_EMailSystem ) ){
+		$_vF['pass'] = strtoupper(md5($Pass));
+		$uNewText = '@Clave enviada por email@';
+	}else{
+		$uNewText = '@Clave con valor por defecto@';
+	}
+}

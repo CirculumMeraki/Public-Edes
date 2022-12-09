@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><TITLE> HELP EDES-LABELS</TITLE>
+<LINK REL="stylesheet" HREF="edes.php?R:$h/i/label.css" TYPE="text/css">
+</HEAD>
+<BODY style='margin:0px' scroll=no oncontextmenu='return false;' onhelp='return false'><!-- [HelpIni] --><DIV style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 100%; FLOAT: left; HEIGHT: 100%; OVERFLOW: auto; BORDER-TOP: 0px; BORDER-RIGHT: 0px" id=CONTENIDO>
+<TABLE id=Esquema cellSpacing=1px cellPadding=2px width="100%">
+<TBODY>
+<TR>
+<TD id=Etiqueta>CallSrv 
+<TR>
+<TD id=tSintaxis>SINTAXIS 
+<TR>
+<TD id=Sintaxis>[CallSrv] NomEtiqueta 
+<TR>
+<TD id=tDescripcion>DESCRIPCION 
+<TR>
+<TD id=Descripcion>Desde la función top.eCallSrv() se puede llamar a zonas de un DF, cada zona se identifica por un NomEtiqueta y todo el código a ejecutar se encuentra dentro de la etiqueta [CallSrv] 
+<TR>
+<TD id=tParametro>PARAMETROS 
+<TR>
+<TD id=Parametro>
+<TR>
+<TD id=tEjemplo>EJEMPLO 
+<TR>
+<TD id=Ejemplo>
+<TR>
+<TD id=txt>
+<P>[JSSelRow] cl | cen/gestion_pago.edf<BR>top.eCallSrv( _WOPENER, 'NmAsa='+_aTR[12], window );<BR><BR><BR>[CallSrv] NmAsa&nbsp;&nbsp;&nbsp;// Código&nbsp;para poner el nombre de la Asamblea<BR>$UserCdAsambleaR = $NmAsa;<BR>$arAU = substr($UserCdAsambleaR,0,2);<BR>$arPR = substr($UserCdAsambleaR,2,2);<BR>$arCO = substr($UserCdAsambleaR,4,2);<BR>$arMU = substr($UserCdAsambleaR,6,3);<BR>$arDI = substr($UserCdAsambleaR,9,2);</P>
+<P>$UserCdAsambleaR = $arAU.'·'.$arPR.'·'.$arCO.'·'.$arMU.'·'.$arDI;<BR>qQuery( "select nm_asamblea from asamblea where cd_auto='{$arAU}' and cd_prov='{$arPR}' and cd_coma='{$arCO}' and cd_muni='{$arMU}' and cd_distri='{$arDI}'" );<BR>list( $UserNmAsamblea ) = qArray();</P>
+<P>echo '&lt;script&gt;';<BR>echo "window.frameElement.WOPENER.document.all.nm_asamblea.value = '{$UserNmAsamblea}';";<BR>echo '&lt;/script&gt;';</P></TD></TR></TBODY></TABLE></DIV><!-- [HelpEnd] -->
+<SCRIPT LANGUAGE="JavaScript">
+Esquema.cellSpacing = 0;
+if( Ejemplo.length == undefined && Ejemplo.innerHTML.length == 0 ){
+	tEjemplo.parentElement.style.display = 'none';
+}else{
+	for( var i=0; i<Ejemplo.length; i++ ){
+		if( Ejemplo[i].innerHTML.length == 0 ) Ejemplo[i].parentElement.style.display = 'none';
+	}
+}
+if( Parametro.innerHTML.length == 0 ) tParametro.parentElement.style.display = 'none';
+if( window.frameElement.getAttribute("eSubWin")==1 ) Etiqueta.style.display = "none";
+window.focus();
+</SCRIPT>
+</BODY></HTML>

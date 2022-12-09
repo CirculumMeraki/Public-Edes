@@ -1,0 +1,3 @@
+¿ eSqlType('mysql,mysqli') ? [Jump] $a/d/no_option.inc
+¿ eSqlType('oracle') ? [Jump] $a/d/no_option.inc
+¿ eSqlType('informix') ? [Jump] $a/d/informix_view.edf
